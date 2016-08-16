@@ -1,0 +1,824 @@
+
+@font-face {
+    font-family: "veery-font-3";
+    src: url("veery-font-3.eot");
+    src: url("veery-font-3.eot?#iefix") format("embedded-opentype"),
+    url("veery-font-3.woff") format("woff"),
+    url("veery-font-3.ttf") format("truetype"),
+    url("veery-font-3.svg#Flaticon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+        font-family: "veery-font-3";
+        src: url("veery-font-3.svg#Flaticon") format("svg");
+    }
+}
+
+[class^="veery-font-3"]:before, [class*=" veery-font-3"]:before,
+[class^="veery-font-3"]:after, [class*=" veery-font-3"]:after {
+    font-family: veery-font-3;
+    font-style: normal;
+}
+
+.veery-font-3-alien:before {
+    content: "\f100";
+}
+
+.veery-font-3-ambulance:before {
+    content: "\f101";
+}
+
+.veery-font-3-ambulance-1:before {
+    content: "\f102";
+}
+
+.veery-font-3-aries:before {
+    content: "\f103";
+}
+
+.veery-font-3-armchair:before {
+    content: "\f104";
+}
+
+.veery-font-3-baby:before {
+    content: "\f105";
+}
+
+.veery-font-3-baby-1:before {
+    content: "\f106";
+}
+
+.veery-font-3-baby-girl:before {
+    content: "\f107";
+}
+
+.veery-font-3-back:before {
+    content: "\f108";
+}
+
+.veery-font-3-balance:before {
+    content: "\f109";
+}
+
+.veery-font-3-bar-chart:before {
+    content: "\f10a";
+}
+
+.veery-font-3-bar-chart-1:before {
+    content: "\f10b";
+}
+
+.veery-font-3-battery:before {
+    content: "\f10c";
+}
+
+.veery-font-3-battery-1:before {
+    content: "\f10d";
+}
+
+.veery-font-3-battery-2:before {
+    content: "\f10e";
+}
+
+.veery-font-3-battery-3:before {
+    content: "\f10f";
+}
+
+.veery-font-3-battery-4:before {
+    content: "\f110";
+}
+
+.veery-font-3-bedside-table:before {
+    content: "\f111";
+}
+
+.veery-font-3-beer:before {
+    content: "\f112";
+}
+
+.veery-font-3-binoculars:before {
+    content: "\f113";
+}
+
+.veery-font-3-blind:before {
+    content: "\f114";
+}
+
+.veery-font-3-book:before {
+    content: "\f115";
+}
+
+.veery-font-3-cancer:before {
+    content: "\f116";
+}
+
+.veery-font-3-car:before {
+    content: "\f117";
+}
+
+.veery-font-3-car-1:before {
+    content: "\f118";
+}
+
+.veery-font-3-car-2:before {
+    content: "\f119";
+}
+
+.veery-font-3-center-alignment:before {
+    content: "\f11a";
+}
+
+.veery-font-3-center-alignment-1:before {
+    content: "\f11b";
+}
+
+.veery-font-3-chicken:before {
+    content: "\f11c";
+}
+
+.veery-font-3-chicken-1:before {
+    content: "\f11d";
+}
+
+.veery-font-3-chicken-2:before {
+    content: "\f11e";
+}
+
+.veery-font-3-clock:before {
+    content: "\f11f";
+}
+
+.veery-font-3-clock-1:before {
+    content: "\f120";
+}
+
+.veery-font-3-clock-2:before {
+    content: "\f121";
+}
+
+.veery-font-3-clock-3:before {
+    content: "\f122";
+}
+
+.veery-font-3-clock-4:before {
+    content: "\f123";
+}
+
+.veery-font-3-cloud:before {
+    content: "\f124";
+}
+
+.veery-font-3-cloud-1:before {
+    content: "\f125";
+}
+
+.veery-font-3-cloud-2:before {
+    content: "\f126";
+}
+
+.veery-font-3-cloud-computing:before {
+    content: "\f127";
+}
+
+.veery-font-3-cloudy:before {
+    content: "\f128";
+}
+
+.veery-font-3-coins:before {
+    content: "\f129";
+}
+
+.veery-font-3-compass:before {
+    content: "\f12a";
+}
+
+.veery-font-3-conga:before {
+    content: "\f12b";
+}
+
+.veery-font-3-copy:before {
+    content: "\f12c";
+}
+
+.veery-font-3-corndog:before {
+    content: "\f12d";
+}
+
+.veery-font-3-cow:before {
+    content: "\f12e";
+}
+
+.veery-font-3-customer-service:before {
+    content: "\f12f";
+}
+
+.veery-font-3-cutlery:before {
+    content: "\f130";
+}
+
+.veery-font-3-diagonal-arrow:before {
+    content: "\f131";
+}
+
+.veery-font-3-diagonal-arrow-1:before {
+    content: "\f132";
+}
+
+.veery-font-3-diagonal-arrow-2:before {
+    content: "\f133";
+}
+
+.veery-font-3-diagonal-arrow-3:before {
+    content: "\f134";
+}
+
+.veery-font-3-diamond:before {
+    content: "\f135";
+}
+
+.veery-font-3-diaper:before {
+    content: "\f136";
+}
+
+.veery-font-3-download:before {
+    content: "\f137";
+}
+
+.veery-font-3-download-1:before {
+    content: "\f138";
+}
+
+.veery-font-3-electric-guitar:before {
+    content: "\f139";
+}
+
+.veery-font-3-emoticon:before {
+    content: "\f13a";
+}
+
+.veery-font-3-export:before {
+    content: "\f13b";
+}
+
+.veery-font-3-eye:before {
+    content: "\f13c";
+}
+
+.veery-font-3-eye-1:before {
+    content: "\f13d";
+}
+
+.veery-font-3-feeding-bottle:before {
+    content: "\f13e";
+}
+
+.veery-font-3-file:before {
+    content: "\f13f";
+}
+
+.veery-font-3-file-1:before {
+    content: "\f140";
+}
+
+.veery-font-3-file-2:before {
+    content: "\f141";
+}
+
+.veery-font-3-file-3:before {
+    content: "\f142";
+}
+
+.veery-font-3-film-strip:before {
+    content: "\f143";
+}
+
+.veery-font-3-flag:before {
+    content: "\f144";
+}
+
+.veery-font-3-flash:before {
+    content: "\f145";
+}
+
+.veery-font-3-fork:before {
+    content: "\f146";
+}
+
+.veery-font-3-fountain-pen:before {
+    content: "\f147";
+}
+
+.veery-font-3-fountain-pen-1:before {
+    content: "\f148";
+}
+
+.veery-font-3-fountain-pen-2:before {
+    content: "\f149";
+}
+
+.veery-font-3-fountain-pen-3:before {
+    content: "\f14a";
+}
+
+.veery-font-3-fountain-pen-4:before {
+    content: "\f14b";
+}
+
+.veery-font-3-gemini:before {
+    content: "\f14c";
+}
+
+.veery-font-3-glass-of-water:before {
+    content: "\f14d";
+}
+
+.veery-font-3-guitar:before {
+    content: "\f14e";
+}
+
+.veery-font-3-ham:before {
+    content: "\f14f";
+}
+
+.veery-font-3-happy:before {
+    content: "\f150";
+}
+
+.veery-font-3-happy-1:before {
+    content: "\f151";
+}
+
+.veery-font-3-head:before {
+    content: "\f152";
+}
+
+.veery-font-3-heavy-metal:before {
+    content: "\f153";
+}
+
+.veery-font-3-home:before {
+    content: "\f154";
+}
+
+.veery-font-3-home-1:before {
+    content: "\f155";
+}
+
+.veery-font-3-home-2:before {
+    content: "\f156";
+}
+
+.veery-font-3-home-3:before {
+    content: "\f157";
+}
+
+.veery-font-3-home-4:before {
+    content: "\f158";
+}
+
+.veery-font-3-horse:before {
+    content: "\f159";
+}
+
+.veery-font-3-id-card:before {
+    content: "\f15a";
+}
+
+.veery-font-3-jar:before {
+    content: "\f15b";
+}
+
+.veery-font-3-justify:before {
+    content: "\f15c";
+}
+
+.veery-font-3-laundry:before {
+    content: "\f15d";
+}
+
+.veery-font-3-laundry-1:before {
+    content: "\f15e";
+}
+
+.veery-font-3-laundry-2:before {
+    content: "\f15f";
+}
+
+.veery-font-3-laundry-3:before {
+    content: "\f160";
+}
+
+.veery-font-3-laundry-4:before {
+    content: "\f161";
+}
+
+.veery-font-3-laundry-5:before {
+    content: "\f162";
+}
+
+.veery-font-3-left-alignment:before {
+    content: "\f163";
+}
+
+.veery-font-3-left-alignment-1:before {
+    content: "\f164";
+}
+
+.veery-font-3-lemon:before {
+    content: "\f165";
+}
+
+.veery-font-3-lemon-1:before {
+    content: "\f166";
+}
+
+.veery-font-3-lemonade:before {
+    content: "\f167";
+}
+
+.veery-font-3-lemonade-1:before {
+    content: "\f168";
+}
+
+.veery-font-3-leo:before {
+    content: "\f169";
+}
+
+.veery-font-3-light-bulb:before {
+    content: "\f16a";
+}
+
+.veery-font-3-like:before {
+    content: "\f16b";
+}
+
+.veery-font-3-mail:before {
+    content: "\f16c";
+}
+
+.veery-font-3-mail-1:before {
+    content: "\f16d";
+}
+
+.veery-font-3-mail-2:before {
+    content: "\f16e";
+}
+
+.veery-font-3-mail-3:before {
+    content: "\f16f";
+}
+
+.veery-font-3-mail-4:before {
+    content: "\f170";
+}
+
+.veery-font-3-mail-5:before {
+    content: "\f171";
+}
+
+.veery-font-3-man:before {
+    content: "\f172";
+}
+
+.veery-font-3-man-1:before {
+    content: "\f173";
+}
+
+.veery-font-3-map:before {
+    content: "\f174";
+}
+
+.veery-font-3-maths:before {
+    content: "\f175";
+}
+
+.veery-font-3-medical-result:before {
+    content: "\f176";
+}
+
+.veery-font-3-money:before {
+    content: "\f177";
+}
+
+.veery-font-3-monitor:before {
+    content: "\f178";
+}
+
+.veery-font-3-monitor-1:before {
+    content: "\f179";
+}
+
+.veery-font-3-monitor-2:before {
+    content: "\f17a";
+}
+
+.veery-font-3-monitor-3:before {
+    content: "\f17b";
+}
+
+.veery-font-3-monitor-4:before {
+    content: "\f17c";
+}
+
+.veery-font-3-monitor-5:before {
+    content: "\f17d";
+}
+
+.veery-font-3-muted:before {
+    content: "\f17e";
+}
+
+.veery-font-3-next:before {
+    content: "\f17f";
+}
+
+.veery-font-3-ninja:before {
+    content: "\f180";
+}
+
+.veery-font-3-padlock:before {
+    content: "\f181";
+}
+
+.veery-font-3-padlock-1:before {
+    content: "\f182";
+}
+
+.veery-font-3-pear:before {
+    content: "\f183";
+}
+
+.veery-font-3-phone-call:before {
+    content: "\f184";
+}
+
+.veery-font-3-phone-call-1:before {
+    content: "\f185";
+}
+
+.veery-font-3-phone-call-2:before {
+    content: "\f186";
+}
+
+.veery-font-3-phone-call-3:before {
+    content: "\f187";
+}
+
+.veery-font-3-photo-camera:before {
+    content: "\f188";
+}
+
+.veery-font-3-pie-chart:before {
+    content: "\f189";
+}
+
+.veery-font-3-pie-chart-1:before {
+    content: "\f18a";
+}
+
+.veery-font-3-piggy-bank:before {
+    content: "\f18b";
+}
+
+.veery-font-3-pin:before {
+    content: "\f18c";
+}
+
+.veery-font-3-placeholder:before {
+    content: "\f18d";
+}
+
+.veery-font-3-placeholder-1:before {
+    content: "\f18e";
+}
+
+.veery-font-3-placeholder-2:before {
+    content: "\f18f";
+}
+
+.veery-font-3-plug:before {
+    content: "\f190";
+}
+
+.veery-font-3-plug-1:before {
+    content: "\f191";
+}
+
+.veery-font-3-pointing:before {
+    content: "\f192";
+}
+
+.veery-font-3-rain:before {
+    content: "\f193";
+}
+
+.veery-font-3-right-alignment:before {
+    content: "\f194";
+}
+
+.veery-font-3-right-alignment-1:before {
+    content: "\f195";
+}
+
+.veery-font-3-rolling-pin:before {
+    content: "\f196";
+}
+
+.veery-font-3-ruler:before {
+    content: "\f197";
+}
+
+.veery-font-3-ruler-1:before {
+    content: "\f198";
+}
+
+.veery-font-3-sad:before {
+    content: "\f199";
+}
+
+.veery-font-3-saturn:before {
+    content: "\f19a";
+}
+
+.veery-font-3-saturn-1:before {
+    content: "\f19b";
+}
+
+.veery-font-3-sausage:before {
+    content: "\f19c";
+}
+
+.veery-font-3-sheep:before {
+    content: "\f19d";
+}
+
+.veery-font-3-sheep-1:before {
+    content: "\f19e";
+}
+
+.veery-font-3-shield:before {
+    content: "\f19f";
+}
+
+.veery-font-3-shop:before {
+    content: "\f1a0";
+}
+
+.veery-font-3-shopping-bag:before {
+    content: "\f1a1";
+}
+
+.veery-font-3-shopping-basket:before {
+    content: "\f1a2";
+}
+
+.veery-font-3-smartphone:before {
+    content: "\f1a3";
+}
+
+.veery-font-3-smartphone-1:before {
+    content: "\f1a4";
+}
+
+.veery-font-3-smartphone-2:before {
+    content: "\f1a5";
+}
+
+.veery-font-3-smartphone-3:before {
+    content: "\f1a6";
+}
+
+.veery-font-3-smile:before {
+    content: "\f1a7";
+}
+
+.veery-font-3-socket:before {
+    content: "\f1a8";
+}
+
+.veery-font-3-speech-bubble:before {
+    content: "\f1a9";
+}
+
+.veery-font-3-speech-bubble-1:before {
+    content: "\f1aa";
+}
+
+.veery-font-3-speech-bubble-2:before {
+    content: "\f1ab";
+}
+
+.veery-font-3-speech-bubble-3:before {
+    content: "\f1ac";
+}
+
+.veery-font-3-spoon:before {
+    content: "\f1ad";
+}
+
+.veery-font-3-sun:before {
+    content: "\f1ae";
+}
+
+.veery-font-3-surprised:before {
+    content: "\f1af";
+}
+
+.veery-font-3-syringe:before {
+    content: "\f1b0";
+}
+
+.veery-font-3-table:before {
+    content: "\f1b1";
+}
+
+.veery-font-3-tap:before {
+    content: "\f1b2";
+}
+
+.veery-font-3-tap-1:before {
+    content: "\f1b3";
+}
+
+.veery-font-3-tap-2:before {
+    content: "\f1b4";
+}
+
+.veery-font-3-taurus:before {
+    content: "\f1b5";
+}
+
+.veery-font-3-telephone:before {
+    content: "\f1b6";
+}
+
+.veery-font-3-toaster:before {
+    content: "\f1b7";
+}
+
+.veery-font-3-ufo:before {
+    content: "\f1b8";
+}
+
+.veery-font-3-upload:before {
+    content: "\f1b9";
+}
+
+.veery-font-3-upload-1:before {
+    content: "\f1ba";
+}
+
+.veery-font-3-van:before {
+    content: "\f1bb";
+}
+
+.veery-font-3-victory:before {
+    content: "\f1bc";
+}
+
+.veery-font-3-video-camera:before {
+    content: "\f1bd";
+}
+
+.veery-font-3-video-camera-1:before {
+    content: "\f1be";
+}
+
+.veery-font-3-watermelon:before {
+    content: "\f1bf";
+}
+
+.veery-font-3-weight:before {
+    content: "\f1c0";
+}
+
+.veery-font-3-wifi:before {
+    content: "\f1c1";
+}
+
+.veery-font-3-wifi-1:before {
+    content: "\f1c2";
+}
+
+.veery-font-3-wifi-2:before {
+    content: "\f1c3";
+}
+
+.veery-font-3-wifi-3:before {
+    content: "\f1c4";
+}
+
+.veery-font-3-woman:before {
+    content: "\f1c5";
+}
+
+.veery-font-3-woman-1:before {
+    content: "\f1c6";
+}
+
+.veery-font-3-zip:before {
+    content: "\f1c7";
+}

@@ -1,0 +1,85 @@
+
+.console-nav-bar {
+    background: #0d1c34;
+    position: fixed;
+    width: 100%;
+}
+
+.console-navbar-brand {
+    color: #8298ae !important;
+}
+
+.bg-transparent {
+    background: transparent !important;
+}
+
+.border-radius-20 {
+    border-radius: 20px;
+}
+
+.dropdown-menu .divider {
+    background-color: #a1d700;
+}
+
+.console-drop-menu > li > a.drop-header {
+    color: #8298ae !important;
+}
+
+.console-drop-menu > li > a {
+    color: #8298ae !important;
+}
+
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+    background-color: #17373c;
+    color: #14d0a0 !important;
+}
+
+.menuitem-with-icon > a > i {
+    color: #14d0a0;
+}
+
+/* notification */
+.notification-icon {
+    background: #17373c;
+}
+
+.notification-icon.user-list {
+    background: transparent;
+}
+
+.notification-list:hover {
+    background: #17373c;
+}
+
+/*.notification-icon.inbox {*/
+/*background: #c7d1da;*/
+/*}*/
+
+.notification-time {
+    color: #d2c242;
+}
+
+.notification-icon > i {
+    color: #36BA45;
+}
+
+.online {
+    background: #36ba45;
+}
+
+.offline {
+    background: #d2c242;
+}
+
+.online-text {
+    text-transform: uppercase;
+    color: #36ba45;
+}
+
+.offline-text {
+    text-transform: uppercase;
+    color: #d2c242;
+}
+
+

@@ -1,0 +1,325 @@
+@import url("../fonts/font.css");
+@import url("overwrite-bootstrap.css");
+@import url("../fonts/main-icon-1/veery-font-1.css");
+@import url("../fonts/main-icon-2/veery-font-2.css");
+@import url("../fonts/main-icon-3/veery-font-3.css");
+
+body {
+    background: #f7f5f5;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    overflow-x: hidden;
+}
+
+/* #CONSOLE CSS */
+
+.version-beta {
+    position: absolute;
+    top: 15px;
+    left: 151px;
+    font-size: 10px;
+    color: #ffffff !important;
+}
+
+.console-profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.console-profile-img > img {
+    width: 45px;
+    height: 45px;
+}
+
+.console-profile-header {
+    text-align: right;
+    padding-top: 4px;
+}
+
+.console-profile-header > .login-name {
+    color: #ffffff !important;
+
+}
+
+.console-profile-header > .time {
+    color: #14d0a0 !important;
+    font-size: 12px;
+}
+
+.user-state {
+    position: absolute;
+    top: 0px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    right: 2px;
+}
+
+.console-main-search {
+    margin-left: 45px;
+}
+
+.main-search-txt {
+    border: 1px solid #8298ae;
+    min-width: 150px;
+}
+
+.console-drop-menu::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -10px;
+    margin: auto 0px;
+    text-align: center;
+    left: 143px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 22px solid white;
+}
+
+.console-drop-menu.add-new-page::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -10px;
+    margin: auto 0px;
+    text-align: center;
+    left: 20px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 22px solid white;
+}
+
+.console-drop-menu > li > a.drop-header {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 15px;
+    padding-top: 12px;
+    display: inline-block;
+}
+
+.console-drop-menu > li > a {
+    font-size: 15px;
+}
+
+.main-search-txt:focus {
+    border-color: #36ba45;
+}
+
+.menuitem {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.menuitem-with-icon {
+    padding-left: 9px;
+    padding-right: 43px;
+}
+
+.menuitem-with-icon > a > i {
+    display: inline-block;
+    text-align: right;
+    position: absolute;
+    right: 0;
+    padding-right: 20px;
+    color: #14d0a0;
+}
+
+.dropdown-menu > li > a.drop-header:focus,
+.dropdown-menu > li > a.drop-header:hover {
+    background-color: transparent !important;
+}
+
+.console-menu-icon {
+    margin-top: 4px;
+    background: #17373c;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding-top: 3px;
+    text-align: center;
+}
+
+.console-menu-icon > i {
+    font-size: 25px;
+    color: #97cb04;
+    cursor: pointer;
+}
+
+.console-menu-icon > i:hover {
+    color: #ffffff;
+}
+
+.console-left-icon {
+    display: inline-block;
+}
+
+/* #Console notification */
+.console-notification-header {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #f93f6a;
+    color: #ffffff;
+    top: -4px;
+    right: -4px;
+    text-align: center;
+    font-size: 6px;
+    padding-top: 5px;
+}
+
+.console-drop-menu.notification-menu {
+    min-width: 300px;
+    min-height: 355px;
+    padding-bottom: 0;
+}
+
+.console-drop-menu > li.notification-header > span.drop-sub-header {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 13px;
+    padding-top: 12px;
+    display: inline-block;
+    text-align: right;
+    float: right;
+    color: #36ba45 !important;
+    padding-right: 13px;
+}
+
+.console-drop-menu.notification-menu::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -10px;
+    margin: auto 0px;
+    text-align: center;
+    left: 260px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 22px solid white;
+}
+
+.console-notofication-wrapper {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    padding: 0px 5px 5px 0px;
+
+}
+
+.console-notofication-wrapper > .notification-status {
+    text-align: center;
+    display: none;
+}
+
+.notification-list {
+    display: block;
+    margin-top: 10px;
+    cursor: pointer;
+    padding: 5px 0px 3px 0px;
+    margin-left: 2px;
+    margin-right: 12px;
+}
+
+.notification-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    text-align: center;
+    padding-top: 12px;
+}
+
+.notification-icon.user-list {
+    padding-top: 0px;
+}
+
+.notification-icon.user-list > img {
+    width: 55px;
+    height: auto;
+}
+
+.notification-icon > i {
+    font-size: 23px;
+}
+
+.notification-text {
+    color: #8298ae !important;
+    padding: 5px 2px 0px 4px;
+    font-size: 13px;
+}
+
+.bold {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+}
+
+.notification-time {
+    text-align: left;
+    font-size: 10px;
+}
+
+.txt-notification-search {
+    height: 27px;
+    width: 117px;
+    border: 1px solid #8298ae;
+}
+
+.send-notification-wrapper {
+    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    position: absolute;
+    height: 412px;
+    top: 0;
+    border-radius: 5px;
+    display: none;
+}
+
+.send-notification-wrapper > .wrap {
+    padding: 100px 20px 10px 20px;
+}
+
+/*console phone wrapper */
+.console-phone-wrapper {
+    position: fixed;
+    width: 250px;
+    height: 350px;
+    background: #ffffff;
+    right: 0px;
+    top: 25%;
+    border-radius: 5px;
+}
+
+/* #MAIN css */
+::-webkit-input-placeholder {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    color: #8298ae !important;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    color: #8298ae !important;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    color: #8298ae !important;
+}
+
+:-ms-input-placeholder {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    color: #8298ae !important;
+}
+
+.m-left-10 {
+    margin-left: 10px;
+}
+
+.m-right-10 {
+    margin-right: 10px;
+}
+
+.p-left-15 {
+    padding-left: 15px;
+}
+

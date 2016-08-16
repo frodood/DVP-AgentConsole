@@ -1,0 +1,60 @@
+{
+  "d": [
+    {
+      "id": "A2356464",
+      "header": "Lorem Ipsum is simply dummy text of the....",
+      "type": "menu",
+      "icon": "main-icon-2-speech-bubble",
+      "time": "1 minutes ago",
+      "read": false
+    },
+    {
+      "id": "A2356464",
+      "header": "Lorem Ipsum is simply dummy text of the....",
+      "type": "menu",
+      "icon": "main-icon-2-heart-2",
+      "time": "10 minutes ago",
+      "read": false
+    },
+    {
+      "id": "A2356464",
+      "header": "Lorem Ipsum is simply dummy text of the....",
+      "type": "menu",
+      "icon": "main-icon-2-megaphone ",
+      "time": "15 minutes ago",
+      "read": false
+    },
+    {
+      "id": "A2356464",
+      "header": "Lorem Ipsum is simply dummy text of the....",
+      "type": "menu",
+      "icon": "main-icon-2-megaphone",
+      "time": "1 days  ago",
+      "read": true
+    },
+    {
+      "id": "A2356464",
+      "header": "Lorem Ipsum is simply dummy text of the....",
+      "type": "menu",
+      "icon": "main-icon-2-megaphone",
+      "time": "2 days  ago",
+      "read": true
+    },
+    {
+      "id": "A2356464",
+      "header": "Lorem Ipsum is simply dummy text of the....",
+      "type": "menu",
+      "icon": "main-icon-2-megaphone",
+      "time": "2 days  ago",
+      "read": true
+    },
+    {
+      "id": "A2356464",
+      "header": "Lorem Ipsum is simply dummy text of the....",
+      "type": "menu",
+      "icon": "main-icon-2-telephone-3",
+      "time": "2 days  ago",
+      "read": true
+    }
+  ]
+}

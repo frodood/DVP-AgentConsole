@@ -1,0 +1,254 @@
+<nav class="navbar navbar-default console-nav-bar" ng-controller="consoleCtrl">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand console-navbar-brand" href="#">Agent Console
+                <div class="version-beta">BETA</div>
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left console-main-search">
+                <div class="form-group">
+                    <input type="text" class="form-control bg-transparent border-radius-20 main-search-txt"
+                           placeholder="Search...">
+                </div>
+            </form>
+            <ul class="nav navbar-nav" uib-dropdown>
+                <li id="addNewPage" class="console-menu-icon m-left-10" uib-dropdown-toggle><i
+                        class="veery-font-1-add"></i></li>
+                <ul class="dropdown-menu console-drop-menu add-new-page" uib-dropdown-menu role="menu"
+                    aria-labelledby="btn-append-to-single-button">
+                    <li><a class="drop-header">Add new page</a></li>
+                    <li class="divider"></li>
+                    <li class="menuitem menuitem-with-icon" role="menuitem">
+                        <a href="#">Create new profile
+                            <i class="veery-font-1-user"></i></a>
+                    </li>
+                    <li class="menuitem menuitem-with-icon" role="menuitem"><a href="#">Create new ticket
+                        <i class="veery-font-1-add-2"></i></a></a></li>
+                </ul>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right" uib-dropdown>
+                <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i class="veery-font-1-more-1"></i>
+                    <ul class="dropdown-menu console-drop-menu notification-menu " uib-dropdown-menu role="menu"
+                        aria-labelledby="btn-append-to-single-button">
+
+                    </ul>
+                </li>
+
+                <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle>
+                    <i class="veery-font-3-mail-5"></i>
+                    <div class="console-notification-header">
+                        5
+                    </div>
+                    <ul class="dropdown-menu console-drop-menu notification-menu" uib-dropdown-menu role="menu"
+                        aria-labelledby="btn-append-to-single-button">
+                        <li class="notification-header">
+                            <a class="drop-header">Inbox </a>
+                            <span class="drop-sub-header">new (5)</span>
+                        </li>
+                        <li class="divider"></li>
+                        <div class="console-notofication-wrapper"
+                             ng-slimscroll
+                             opacity="0.1"
+                             distance="10px"
+                             height="355px"
+                             width="100%"
+                             ng-mouseover="chatWidgetscrollEnabled = true"
+                             ng-mouseleave="chatWidgetscrollEnabled = false"
+                             enabled="{{ chatWidgetscrollEnabled }}">
+                            <div class="notification-status">
+                                No new notification
+                            </div>
+                            <div class="row notification-list" ng-repeat="notifi in notifications">
+                                <div class="col-lg-3">
+                                    <div class="notification-icon inbox  ">
+                                        <i class=" {{notifi.icon}}"></i>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="notification-text">
+                                            {{notifi.header}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="notification-time">
+                                            {{notifi.time}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </ul>
+                </li>
+
+                <!-- send notification -->
+                <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle>
+                    <i class="veery-font-1-paper-plane"></i>
+                    <ul class="dropdown-menu console-drop-menu notification-menu" uib-dropdown-menu role="menu"
+                        aria-labelledby="btn-append-to-single-button">
+                        <li class="notification-header">
+                            <a class="drop-header"
+                               style="padding-top: 16px;
+                               padding-bottom: 15px;">
+                                Send notification
+                            </a>
+                            <span class="drop-sub-header">
+                                    <input type="text"
+                                           class="form-control bg-transparent txt-notification-search"
+                                           placeholder="Search...">
+                            </span>
+                        </li>
+
+                        <div class="console-notofication-wrapper"
+                             ng-slimscroll
+                             opacity="0.1"
+                             distance="10px"
+                             height="355px"
+                             width="100%"
+                             ng-mouseover="chatWidgetscrollEnabled = true"
+                             ng-mouseleave="chatWidgetscrollEnabled = false"
+                             enabled="{{ chatWidgetscrollEnabled }}">
+                            <div class="notification-status">
+                                No new notification
+                            </div>
+                            <div class="row notification-list" ng-repeat="agent in agentList">
+                                <div class="col-lg-3">
+                                    <div class="notification-icon user-list  ">
+                                        <img src="assets/img/avatar/oykun.jpg"
+                                             ng-src="{{agent.img}}">
+                                        <div class="user-state"
+                                             ng-class="agent.status"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="notification-text ">
+                                            {{agent.profileName}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="notification-time "
+                                             ng-class="agent.status=='online'?'online-text':'offline-text'">
+                                            {{agent.status}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="send-notification-wrapper">
+                            <div class="wrap">
+                                <div class="form-group">
+                                    <label for="txtSubject">Subject</label>
+                                    <input type="text" class="form-control" id="txtSubject">
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtMessage">Message</label>
+                                    <textarea id="txtMessage" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+
+                <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i
+                        class="veery-font-1-alarm"> </i>
+                    <div class="console-notification-header">
+                        1
+                    </div>
+                    <ul class="dropdown-menu console-drop-menu notification-menu" uib-dropdown-menu role="menu"
+                        aria-labelledby="btn-append-to-single-button">
+                        <li class="notification-header">
+                            <a class="drop-header">Notification center</a>
+                            <span class="drop-sub-header">new (1)</span>
+                        </li>
+                        <li class="divider"></li>
+                        <div class="console-notofication-wrapper"
+                             ng-slimscroll
+                             opacity="0.1"
+                             distance="10px"
+                             height="355px"
+                             width="100%"
+                             ng-mouseover="chatWidgetscrollEnabled = true"
+                             ng-mouseleave="chatWidgetscrollEnabled = false"
+                             enabled="{{ chatWidgetscrollEnabled }}">
+                            <div class="notification-status">
+                                No new notification
+                            </div>
+                            <div class="row notification-list" ng-repeat="notifi in notifications">
+                                <div class="col-lg-3">
+                                    <div class="notification-icon  ">
+                                        <i class=" {{notifi.icon}}"></i>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="notification-text">
+                                            {{notifi.header}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="notification-time">
+                                            {{notifi.time}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </ul>
+                </li>
+
+                <div id="consoleProfileImg" class="console-profile-img" uib-dropdown-toggle>
+                    <img src="assets/img/avatar/oykun.jpg">
+                    <div class="user-state online"></div>
+                </div>
+
+                <li class="dropdown console-profile-header ">
+                    <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
+                    >Hi,admin</a>
+                    <a class="time">Good Morning</a>
+
+                </li>
+                <ul class="dropdown-menu console-drop-menu" uib-dropdown-menu role="menu"
+                    aria-labelledby="btn-append-to-single-button">
+                    <li><a class="drop-header">Profile</a></li>
+                    <li class="divider"></li>
+                    <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
+                    <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
+
+                    <li><a class="drop-header">Filter</a></li>
+                    <li class="divider"></li>
+                    <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
+                    <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="menuitem" role="menuitem"><a href="#">Logout</a></li>
+                </ul>
+
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+
+<div class="console-phone-wrapper">
+
+</div>

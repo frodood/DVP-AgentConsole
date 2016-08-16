@@ -1,0 +1,46 @@
+{
+  "d": [
+    {
+      "id": "A2356464",
+      "img": "assets/img/avatar/amarkdalen.jpg",
+      "profileName": "Lorem Ipsum is simply dummy text of the....",
+      "status": "online"
+    },
+    {
+      "id": "A2356464",
+      "img": "assets/img/avatar/bobbyjkane.jpg",
+      "profileName": "Lorem Ipsum is simply dummy text of the....",
+      "status": "online"
+    },
+    {
+      "id": "A2356464",
+      "img": "assets/img/avatar/coreyweb.jpg",
+      "profileName": "Lorem Ipsum is simply dummy text of the....",
+      "status": "offline"
+    },
+    {
+      "id": "A2356464",
+      "img": "assets/img/avatar/jaman_01.jpg",
+      "profileName": "Lorem Ipsum is simply dummy text of the....",
+      "status": "online"
+    },
+    {
+      "id": "A2356464",
+      "img": "assets/img/avatar/robertoortiz.jpg",
+      "profileName": "Lorem Ipsum is simply dummy text of the....",
+      "status": "offline"
+    },
+    {
+      "id": "A2356464",
+      "img": "assets/img/avatar/Kevinthompson.jpg",
+      "profileName": "Lorem Ipsum is simply dummy text of the....",
+      "status": "offline"
+    },
+    {
+      "id": "A2356464",
+      "img": "assets/img/avatar/mko.jpg",
+      "profileName": "Lorem Ipsum is simply dummy text of the....",
+      "status": "online"
+    }
+  ]
+}

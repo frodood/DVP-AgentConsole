@@ -1,0 +1,1548 @@
+/*
+  Flaticon icon font: Flaticon
+  Creation date: 22/06/2016 15:41
+  */
+
+@font-face {
+    font-family: "veery-font-1";
+    src: url("veery-font-1.eot");
+    src: url("veery-font-1.eot?#iefix") format("embedded-opentype"),
+    url("veery-font-1.woff") format("woff"),
+    url("veery-font-1.ttf") format("truetype"),
+    url("veery-font-1.svg#Flaticon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+        font-family: "veery-font-1";
+        src: url("veery-font-1.svg#Flaticon") format("svg");
+    }
+}
+
+[class^="veery-font-1-"]:before, [class*="veery-font-1-"]:before,
+[class^="veery-font-1-"]:after, [class*=" veery-font-1-"]:after {
+    font-family: veery-font-1;
+    font-style: normal;
+}
+
+.veery-font-1-add:before {
+    content: "\f100";
+}
+
+.veery-font-1-add-1:before {
+    content: "\f101";
+}
+
+.veery-font-1-add-2:before {
+    content: "\f102";
+}
+
+.veery-font-1-add-3:before {
+    content: "\f103";
+}
+
+.veery-font-1-agenda:before {
+    content: "\f104";
+}
+
+.veery-font-1-alarm:before {
+    content: "\f105";
+}
+
+.veery-font-1-alarm-1:before {
+    content: "\f106";
+}
+
+.veery-font-1-alarm-clock:before {
+    content: "\f107";
+}
+
+.veery-font-1-alarm-clock-1:before {
+    content: "\f108";
+}
+
+.veery-font-1-albums:before {
+    content: "\f109";
+}
+
+.veery-font-1-app:before {
+    content: "\f10a";
+}
+
+.veery-font-1-archive:before {
+    content: "\f10b";
+}
+
+.veery-font-1-archive-1:before {
+    content: "\f10c";
+}
+
+.veery-font-1-archive-2:before {
+    content: "\f10d";
+}
+
+.veery-font-1-archive-3:before {
+    content: "\f10e";
+}
+
+.veery-font-1-attachment:before {
+    content: "\f10f";
+}
+
+.veery-font-1-back:before {
+    content: "\f110";
+}
+
+.veery-font-1-battery:before {
+    content: "\f111";
+}
+
+.veery-font-1-battery-1:before {
+    content: "\f112";
+}
+
+.veery-font-1-battery-2:before {
+    content: "\f113";
+}
+
+.veery-font-1-battery-3:before {
+    content: "\f114";
+}
+
+.veery-font-1-battery-4:before {
+    content: "\f115";
+}
+
+.veery-font-1-battery-5:before {
+    content: "\f116";
+}
+
+.veery-font-1-battery-6:before {
+    content: "\f117";
+}
+
+.veery-font-1-battery-7:before {
+    content: "\f118";
+}
+
+.veery-font-1-battery-8:before {
+    content: "\f119";
+}
+
+.veery-font-1-battery-9:before {
+    content: "\f11a";
+}
+
+.veery-font-1-binoculars:before {
+    content: "\f11b";
+}
+
+.veery-font-1-blueprint:before {
+    content: "\f11c";
+}
+
+.veery-font-1-bluetooth:before {
+    content: "\f11d";
+}
+
+.veery-font-1-bluetooth-1:before {
+    content: "\f11e";
+}
+
+.veery-font-1-bookmark:before {
+    content: "\f11f";
+}
+
+.veery-font-1-bookmark-1:before {
+    content: "\f120";
+}
+
+.veery-font-1-briefcase:before {
+    content: "\f121";
+}
+
+.veery-font-1-broken-link:before {
+    content: "\f122";
+}
+
+.veery-font-1-calculator:before {
+    content: "\f123";
+}
+
+.veery-font-1-calculator-1:before {
+    content: "\f124";
+}
+
+.veery-font-1-calendar:before {
+    content: "\f125";
+}
+
+.veery-font-1-calendar-1:before {
+    content: "\f126";
+}
+
+.veery-font-1-calendar-2:before {
+    content: "\f127";
+}
+
+.veery-font-1-calendar-3:before {
+    content: "\f128";
+}
+
+.veery-font-1-calendar-4:before {
+    content: "\f129";
+}
+
+.veery-font-1-calendar-5:before {
+    content: "\f12a";
+}
+
+.veery-font-1-calendar-6:before {
+    content: "\f12b";
+}
+
+.veery-font-1-calendar-7:before {
+    content: "\f12c";
+}
+
+.veery-font-1-checked:before {
+    content: "\f12d";
+}
+
+.veery-font-1-checked-1:before {
+    content: "\f12e";
+}
+
+.veery-font-1-clock:before {
+    content: "\f12f";
+}
+
+.veery-font-1-clock-1:before {
+    content: "\f130";
+}
+
+.veery-font-1-close:before {
+    content: "\f131";
+}
+
+.veery-font-1-cloud:before {
+    content: "\f132";
+}
+
+.veery-font-1-cloud-computing:before {
+    content: "\f133";
+}
+
+.veery-font-1-cloud-computing-1:before {
+    content: "\f134";
+}
+
+.veery-font-1-cloud-computing-2:before {
+    content: "\f135";
+}
+
+.veery-font-1-cloud-computing-3:before {
+    content: "\f136";
+}
+
+.veery-font-1-cloud-computing-4:before {
+    content: "\f137";
+}
+
+.veery-font-1-cloud-computing-5:before {
+    content: "\f138";
+}
+
+.veery-font-1-command:before {
+    content: "\f139";
+}
+
+.veery-font-1-compact-disc:before {
+    content: "\f13a";
+}
+
+.veery-font-1-compact-disc-1:before {
+    content: "\f13b";
+}
+
+.veery-font-1-compact-disc-2:before {
+    content: "\f13c";
+}
+
+.veery-font-1-compass:before {
+    content: "\f13d";
+}
+
+.veery-font-1-compose:before {
+    content: "\f13e";
+}
+
+.veery-font-1-controls:before {
+    content: "\f13f";
+}
+
+.veery-font-1-controls-1:before {
+    content: "\f140";
+}
+
+.veery-font-1-controls-2:before {
+    content: "\f141";
+}
+
+.veery-font-1-controls-3:before {
+    content: "\f142";
+}
+
+.veery-font-1-controls-4:before {
+    content: "\f143";
+}
+
+.veery-font-1-controls-5:before {
+    content: "\f144";
+}
+
+.veery-font-1-controls-6:before {
+    content: "\f145";
+}
+
+.veery-font-1-controls-7:before {
+    content: "\f146";
+}
+
+.veery-font-1-controls-8:before {
+    content: "\f147";
+}
+
+.veery-font-1-controls-9:before {
+    content: "\f148";
+}
+
+.veery-font-1-database:before {
+    content: "\f149";
+}
+
+.veery-font-1-database-1:before {
+    content: "\f14a";
+}
+
+.veery-font-1-database-2:before {
+    content: "\f14b";
+}
+
+.veery-font-1-database-3:before {
+    content: "\f14c";
+}
+
+.veery-font-1-diamond:before {
+    content: "\f14d";
+}
+
+.veery-font-1-diploma:before {
+    content: "\f14e";
+}
+
+.veery-font-1-dislike:before {
+    content: "\f14f";
+}
+
+.veery-font-1-dislike-1:before {
+    content: "\f150";
+}
+
+.veery-font-1-divide:before {
+    content: "\f151";
+}
+
+.veery-font-1-divide-1:before {
+    content: "\f152";
+}
+
+.veery-font-1-division:before {
+    content: "\f153";
+}
+
+.veery-font-1-document:before {
+    content: "\f154";
+}
+
+.veery-font-1-download:before {
+    content: "\f155";
+}
+
+.veery-font-1-edit:before {
+    content: "\f156";
+}
+
+.veery-font-1-edit-1:before {
+    content: "\f157";
+}
+
+.veery-font-1-eject:before {
+    content: "\f158";
+}
+
+.veery-font-1-eject-1:before {
+    content: "\f159";
+}
+
+.veery-font-1-equal:before {
+    content: "\f15a";
+}
+
+.veery-font-1-equal-1:before {
+    content: "\f15b";
+}
+
+.veery-font-1-equal-2:before {
+    content: "\f15c";
+}
+
+.veery-font-1-error:before {
+    content: "\f15d";
+}
+
+.veery-font-1-exit:before {
+    content: "\f15e";
+}
+
+.veery-font-1-exit-1:before {
+    content: "\f15f";
+}
+
+.veery-font-1-exit-2:before {
+    content: "\f160";
+}
+
+.veery-font-1-eyeglasses:before {
+    content: "\f161";
+}
+
+.veery-font-1-fast-forward:before {
+    content: "\f162";
+}
+
+.veery-font-1-fast-forward-1:before {
+    content: "\f163";
+}
+
+.veery-font-1-fax:before {
+    content: "\f164";
+}
+
+.veery-font-1-file:before {
+    content: "\f165";
+}
+
+.veery-font-1-file-1:before {
+    content: "\f166";
+}
+
+.veery-font-1-file-2:before {
+    content: "\f167";
+}
+
+.veery-font-1-film:before {
+    content: "\f168";
+}
+
+.veery-font-1-fingerprint:before {
+    content: "\f169";
+}
+
+.veery-font-1-flag:before {
+    content: "\f16a";
+}
+
+.veery-font-1-flag-1:before {
+    content: "\f16b";
+}
+
+.veery-font-1-flag-2:before {
+    content: "\f16c";
+}
+
+.veery-font-1-flag-3:before {
+    content: "\f16d";
+}
+
+.veery-font-1-flag-4:before {
+    content: "\f16e";
+}
+
+.veery-font-1-focus:before {
+    content: "\f16f";
+}
+
+.veery-font-1-folder:before {
+    content: "\f170";
+}
+
+.veery-font-1-folder-1:before {
+    content: "\f171";
+}
+
+.veery-font-1-folder-10:before {
+    content: "\f172";
+}
+
+.veery-font-1-folder-11:before {
+    content: "\f173";
+}
+
+.veery-font-1-folder-12:before {
+    content: "\f174";
+}
+
+.veery-font-1-folder-13:before {
+    content: "\f175";
+}
+
+.veery-font-1-folder-14:before {
+    content: "\f176";
+}
+
+.veery-font-1-folder-15:before {
+    content: "\f177";
+}
+
+.veery-font-1-folder-16:before {
+    content: "\f178";
+}
+
+.veery-font-1-folder-17:before {
+    content: "\f179";
+}
+
+.veery-font-1-folder-18:before {
+    content: "\f17a";
+}
+
+.veery-font-1-folder-19:before {
+    content: "\f17b";
+}
+
+.veery-font-1-folder-2:before {
+    content: "\f17c";
+}
+
+.veery-font-1-folder-3:before {
+    content: "\f17d";
+}
+
+.veery-font-1-folder-4:before {
+    content: "\f17e";
+}
+
+.veery-font-1-folder-5:before {
+    content: "\f17f";
+}
+
+.veery-font-1-folder-6:before {
+    content: "\f180";
+}
+
+.veery-font-1-folder-7:before {
+    content: "\f181";
+}
+
+.veery-font-1-folder-8:before {
+    content: "\f182";
+}
+
+.veery-font-1-folder-9:before {
+    content: "\f183";
+}
+
+.veery-font-1-forbidden:before {
+    content: "\f184";
+}
+
+.veery-font-1-funnel:before {
+    content: "\f185";
+}
+
+.veery-font-1-garbage:before {
+    content: "\f186";
+}
+
+.veery-font-1-garbage-1:before {
+    content: "\f187";
+}
+
+.veery-font-1-garbage-2:before {
+    content: "\f188";
+}
+
+.veery-font-1-gift:before {
+    content: "\f189";
+}
+
+.veery-font-1-help:before {
+    content: "\f18a";
+}
+
+.veery-font-1-hide:before {
+    content: "\f18b";
+}
+
+.veery-font-1-hold:before {
+    content: "\f18c";
+}
+
+.veery-font-1-home:before {
+    content: "\f18d";
+}
+
+.veery-font-1-home-1:before {
+    content: "\f18e";
+}
+
+.veery-font-1-home-2:before {
+    content: "\f18f";
+}
+
+.veery-font-1-hourglass:before {
+    content: "\f190";
+}
+
+.veery-font-1-hourglass-1:before {
+    content: "\f191";
+}
+
+.veery-font-1-hourglass-2:before {
+    content: "\f192";
+}
+
+.veery-font-1-hourglass-3:before {
+    content: "\f193";
+}
+
+.veery-font-1-house:before {
+    content: "\f194";
+}
+
+.veery-font-1-id-card:before {
+    content: "\f195";
+}
+
+.veery-font-1-id-card-1:before {
+    content: "\f196";
+}
+
+.veery-font-1-id-card-2:before {
+    content: "\f197";
+}
+
+.veery-font-1-id-card-3:before {
+    content: "\f198";
+}
+
+.veery-font-1-id-card-4:before {
+    content: "\f199";
+}
+
+.veery-font-1-id-card-5:before {
+    content: "\f19a";
+}
+
+.veery-font-1-idea:before {
+    content: "\f19b";
+}
+
+.veery-font-1-incoming:before {
+    content: "\f19c";
+}
+
+.veery-font-1-infinity:before {
+    content: "\f19d";
+}
+
+.veery-font-1-info:before {
+    content: "\f19e";
+}
+
+.veery-font-1-internet:before {
+    content: "\f19f";
+}
+
+.veery-font-1-key:before {
+    content: "\f1a0";
+}
+
+.veery-font-1-lamp:before {
+    content: "\f1a1";
+}
+
+.veery-font-1-layers:before {
+    content: "\f1a2";
+}
+
+.veery-font-1-layers-1:before {
+    content: "\f1a3";
+}
+
+.veery-font-1-like:before {
+    content: "\f1a4";
+}
+
+.veery-font-1-like-1:before {
+    content: "\f1a5";
+}
+
+.veery-font-1-like-2:before {
+    content: "\f1a6";
+}
+
+.veery-font-1-link:before {
+    content: "\f1a7";
+}
+
+.veery-font-1-list:before {
+    content: "\f1a8";
+}
+
+.veery-font-1-list-1:before {
+    content: "\f1a9";
+}
+
+.veery-font-1-lock:before {
+    content: "\f1aa";
+}
+
+.veery-font-1-lock-1:before {
+    content: "\f1ab";
+}
+
+.veery-font-1-locked:before {
+    content: "\f1ac";
+}
+
+.veery-font-1-locked-1:before {
+    content: "\f1ad";
+}
+
+.veery-font-1-locked-2:before {
+    content: "\f1ae";
+}
+
+.veery-font-1-locked-3:before {
+    content: "\f1af";
+}
+
+.veery-font-1-locked-4:before {
+    content: "\f1b0";
+}
+
+.veery-font-1-locked-5:before {
+    content: "\f1b1";
+}
+
+.veery-font-1-locked-6:before {
+    content: "\f1b2";
+}
+
+.veery-font-1-login:before {
+    content: "\f1b3";
+}
+
+.veery-font-1-magic-wand:before {
+    content: "\f1b4";
+}
+
+.veery-font-1-magnet:before {
+    content: "\f1b5";
+}
+
+.veery-font-1-magnet-1:before {
+    content: "\f1b6";
+}
+
+.veery-font-1-magnet-2:before {
+    content: "\f1b7";
+}
+
+.veery-font-1-map:before {
+    content: "\f1b8";
+}
+
+.veery-font-1-map-1:before {
+    content: "\f1b9";
+}
+
+.veery-font-1-map-2:before {
+    content: "\f1ba";
+}
+
+.veery-font-1-map-location:before {
+    content: "\f1bb";
+}
+
+.veery-font-1-megaphone:before {
+    content: "\f1bc";
+}
+
+.veery-font-1-megaphone-1:before {
+    content: "\f1bd";
+}
+
+.veery-font-1-menu:before {
+    content: "\f1be";
+}
+
+.veery-font-1-menu-1:before {
+    content: "\f1bf";
+}
+
+.veery-font-1-menu-2:before {
+    content: "\f1c0";
+}
+
+.veery-font-1-menu-3:before {
+    content: "\f1c1";
+}
+
+.veery-font-1-menu-4:before {
+    content: "\f1c2";
+}
+
+.veery-font-1-microphone:before {
+    content: "\f1c3";
+}
+
+.veery-font-1-microphone-1:before {
+    content: "\f1c4";
+}
+
+.veery-font-1-minus:before {
+    content: "\f1c5";
+}
+
+.veery-font-1-minus-1:before {
+    content: "\f1c6";
+}
+
+.veery-font-1-more:before {
+    content: "\f1c7";
+}
+
+.veery-font-1-more-1:before {
+    content: "\f1c8";
+}
+
+.veery-font-1-more-2:before {
+    content: "\f1c9";
+}
+
+.veery-font-1-multiply:before {
+    content: "\f1ca";
+}
+
+.veery-font-1-multiply-1:before {
+    content: "\f1cb";
+}
+
+.veery-font-1-music-player:before {
+    content: "\f1cc";
+}
+
+.veery-font-1-music-player-1:before {
+    content: "\f1cd";
+}
+
+.veery-font-1-music-player-2:before {
+    content: "\f1ce";
+}
+
+.veery-font-1-music-player-3:before {
+    content: "\f1cf";
+}
+
+.veery-font-1-mute:before {
+    content: "\f1d0";
+}
+
+.veery-font-1-muted:before {
+    content: "\f1d1";
+}
+
+.veery-font-1-navigation:before {
+    content: "\f1d2";
+}
+
+.veery-font-1-navigation-1:before {
+    content: "\f1d3";
+}
+
+.veery-font-1-network:before {
+    content: "\f1d4";
+}
+
+.veery-font-1-newspaper:before {
+    content: "\f1d5";
+}
+
+.veery-font-1-next:before {
+    content: "\f1d6";
+}
+
+.veery-font-1-note:before {
+    content: "\f1d7";
+}
+
+.veery-font-1-notebook:before {
+    content: "\f1d8";
+}
+
+.veery-font-1-notebook-1:before {
+    content: "\f1d9";
+}
+
+.veery-font-1-notebook-2:before {
+    content: "\f1da";
+}
+
+.veery-font-1-notebook-3:before {
+    content: "\f1db";
+}
+
+.veery-font-1-notebook-4:before {
+    content: "\f1dc";
+}
+
+.veery-font-1-notebook-5:before {
+    content: "\f1dd";
+}
+
+.veery-font-1-notepad:before {
+    content: "\f1de";
+}
+
+.veery-font-1-notepad-1:before {
+    content: "\f1df";
+}
+
+.veery-font-1-notepad-2:before {
+    content: "\f1e0";
+}
+
+.veery-font-1-notification:before {
+    content: "\f1e1";
+}
+
+.veery-font-1-paper-plane:before {
+    content: "\f1e2";
+}
+
+.veery-font-1-paper-plane-1:before {
+    content: "\f1e3";
+}
+
+.veery-font-1-pause:before {
+    content: "\f1e4";
+}
+
+.veery-font-1-pause-1:before {
+    content: "\f1e5";
+}
+
+.veery-font-1-percent:before {
+    content: "\f1e6";
+}
+
+.veery-font-1-percent-1:before {
+    content: "\f1e7";
+}
+
+.veery-font-1-perspective:before {
+    content: "\f1e8";
+}
+
+.veery-font-1-photo-camera:before {
+    content: "\f1e9";
+}
+
+.veery-font-1-photo-camera-1:before {
+    content: "\f1ea";
+}
+
+.veery-font-1-photos:before {
+    content: "\f1eb";
+}
+
+.veery-font-1-picture:before {
+    content: "\f1ec";
+}
+
+.veery-font-1-picture-1:before {
+    content: "\f1ed";
+}
+
+.veery-font-1-picture-2:before {
+    content: "\f1ee";
+}
+
+.veery-font-1-pin:before {
+    content: "\f1ef";
+}
+
+.veery-font-1-placeholder:before {
+    content: "\f1f0";
+}
+
+.veery-font-1-placeholder-1:before {
+    content: "\f1f1";
+}
+
+.veery-font-1-placeholder-2:before {
+    content: "\f1f2";
+}
+
+.veery-font-1-placeholder-3:before {
+    content: "\f1f3";
+}
+
+.veery-font-1-placeholders:before {
+    content: "\f1f4";
+}
+
+.veery-font-1-play-button:before {
+    content: "\f1f5";
+}
+
+.veery-font-1-play-button-1:before {
+    content: "\f1f6";
+}
+
+.veery-font-1-plus:before {
+    content: "\f1f7";
+}
+
+.veery-font-1-power:before {
+    content: "\f1f8";
+}
+
+.veery-font-1-previous:before {
+    content: "\f1f9";
+}
+
+.veery-font-1-price-tag:before {
+    content: "\f1fa";
+}
+
+.veery-font-1-print:before {
+    content: "\f1fb";
+}
+
+.veery-font-1-push-pin:before {
+    content: "\f1fc";
+}
+
+.veery-font-1-radar:before {
+    content: "\f1fd";
+}
+
+.veery-font-1-reading:before {
+    content: "\f1fe";
+}
+
+.veery-font-1-record:before {
+    content: "\f1ff";
+}
+
+.veery-font-1-repeat:before {
+    content: "\f200";
+}
+
+.veery-font-1-repeat-1:before {
+    content: "\f201";
+}
+
+.veery-font-1-restart:before {
+    content: "\f202";
+}
+
+.veery-font-1-resume:before {
+    content: "\f203";
+}
+
+.veery-font-1-rewind:before {
+    content: "\f204";
+}
+
+.veery-font-1-rewind-1:before {
+    content: "\f205";
+}
+
+.veery-font-1-route:before {
+    content: "\f206";
+}
+
+.veery-font-1-save:before {
+    content: "\f207";
+}
+
+.veery-font-1-search:before {
+    content: "\f208";
+}
+
+.veery-font-1-search-1:before {
+    content: "\f209";
+}
+
+.veery-font-1-send:before {
+    content: "\f20a";
+}
+
+.veery-font-1-server:before {
+    content: "\f20b";
+}
+
+.veery-font-1-server-1:before {
+    content: "\f20c";
+}
+
+.veery-font-1-server-2:before {
+    content: "\f20d";
+}
+
+.veery-font-1-server-3:before {
+    content: "\f20e";
+}
+
+.veery-font-1-settings:before {
+    content: "\f20f";
+}
+
+.veery-font-1-settings-1:before {
+    content: "\f210";
+}
+
+.veery-font-1-settings-2:before {
+    content: "\f211";
+}
+
+.veery-font-1-settings-3:before {
+    content: "\f212";
+}
+
+.veery-font-1-settings-4:before {
+    content: "\f213";
+}
+
+.veery-font-1-settings-5:before {
+    content: "\f214";
+}
+
+.veery-font-1-settings-6:before {
+    content: "\f215";
+}
+
+.veery-font-1-settings-7:before {
+    content: "\f216";
+}
+
+.veery-font-1-settings-8:before {
+    content: "\f217";
+}
+
+.veery-font-1-settings-9:before {
+    content: "\f218";
+}
+
+.veery-font-1-share:before {
+    content: "\f219";
+}
+
+.veery-font-1-share-1:before {
+    content: "\f21a";
+}
+
+.veery-font-1-share-2:before {
+    content: "\f21b";
+}
+
+.veery-font-1-shuffle:before {
+    content: "\f21c";
+}
+
+.veery-font-1-shuffle-1:before {
+    content: "\f21d";
+}
+
+.veery-font-1-shutdown:before {
+    content: "\f21e";
+}
+
+.veery-font-1-sign:before {
+    content: "\f21f";
+}
+
+.veery-font-1-sign-1:before {
+    content: "\f220";
+}
+
+.veery-font-1-skip:before {
+    content: "\f221";
+}
+
+.veery-font-1-smartphone:before {
+    content: "\f222";
+}
+
+.veery-font-1-smartphone-1:before {
+    content: "\f223";
+}
+
+.veery-font-1-smartphone-10:before {
+    content: "\f224";
+}
+
+.veery-font-1-smartphone-11:before {
+    content: "\f225";
+}
+
+.veery-font-1-smartphone-2:before {
+    content: "\f226";
+}
+
+.veery-font-1-smartphone-3:before {
+    content: "\f227";
+}
+
+.veery-font-1-smartphone-4:before {
+    content: "\f228";
+}
+
+.veery-font-1-smartphone-5:before {
+    content: "\f229";
+}
+
+.veery-font-1-smartphone-6:before {
+    content: "\f22a";
+}
+
+.veery-font-1-smartphone-7:before {
+    content: "\f22b";
+}
+
+.veery-font-1-smartphone-8:before {
+    content: "\f22c";
+}
+
+.veery-font-1-smartphone-9:before {
+    content: "\f22d";
+}
+
+.veery-font-1-speaker:before {
+    content: "\f22e";
+}
+
+.veery-font-1-speaker-1:before {
+    content: "\f22f";
+}
+
+.veery-font-1-speaker-2:before {
+    content: "\f230";
+}
+
+.veery-font-1-speaker-3:before {
+    content: "\f231";
+}
+
+.veery-font-1-speaker-4:before {
+    content: "\f232";
+}
+
+.veery-font-1-speaker-5:before {
+    content: "\f233";
+}
+
+.veery-font-1-speaker-6:before {
+    content: "\f234";
+}
+
+.veery-font-1-speaker-7:before {
+    content: "\f235";
+}
+
+.veery-font-1-speaker-8:before {
+    content: "\f236";
+}
+
+.veery-font-1-spotlight:before {
+    content: "\f237";
+}
+
+.veery-font-1-star:before {
+    content: "\f238";
+}
+
+.veery-font-1-star-1:before {
+    content: "\f239";
+}
+
+.veery-font-1-stop:before {
+    content: "\f23a";
+}
+
+.veery-font-1-stop-1:before {
+    content: "\f23b";
+}
+
+.veery-font-1-stopwatch:before {
+    content: "\f23c";
+}
+
+.veery-font-1-stopwatch-1:before {
+    content: "\f23d";
+}
+
+.veery-font-1-stopwatch-2:before {
+    content: "\f23e";
+}
+
+.veery-font-1-stopwatch-3:before {
+    content: "\f23f";
+}
+
+.veery-font-1-stopwatch-4:before {
+    content: "\f240";
+}
+
+.veery-font-1-street:before {
+    content: "\f241";
+}
+
+.veery-font-1-street-1:before {
+    content: "\f242";
+}
+
+.veery-font-1-substract:before {
+    content: "\f243";
+}
+
+.veery-font-1-substract-1:before {
+    content: "\f244";
+}
+
+.veery-font-1-success:before {
+    content: "\f245";
+}
+
+.veery-font-1-switch:before {
+    content: "\f246";
+}
+
+.veery-font-1-switch-1:before {
+    content: "\f247";
+}
+
+.veery-font-1-switch-2:before {
+    content: "\f248";
+}
+
+.veery-font-1-switch-3:before {
+    content: "\f249";
+}
+
+.veery-font-1-switch-4:before {
+    content: "\f24a";
+}
+
+.veery-font-1-switch-5:before {
+    content: "\f24b";
+}
+
+.veery-font-1-switch-6:before {
+    content: "\f24c";
+}
+
+.veery-font-1-switch-7:before {
+    content: "\f24d";
+}
+
+.veery-font-1-tabs:before {
+    content: "\f24e";
+}
+
+.veery-font-1-tabs-1:before {
+    content: "\f24f";
+}
+
+.veery-font-1-target:before {
+    content: "\f250";
+}
+
+.veery-font-1-television:before {
+    content: "\f251";
+}
+
+.veery-font-1-television-1:before {
+    content: "\f252";
+}
+
+.veery-font-1-time:before {
+    content: "\f253";
+}
+
+.veery-font-1-trash:before {
+    content: "\f254";
+}
+
+.veery-font-1-umbrella:before {
+    content: "\f255";
+}
+
+.veery-font-1-unlink:before {
+    content: "\f256";
+}
+
+.veery-font-1-unlocked:before {
+    content: "\f257";
+}
+
+.veery-font-1-unlocked-1:before {
+    content: "\f258";
+}
+
+.veery-font-1-unlocked-2:before {
+    content: "\f259";
+}
+
+.veery-font-1-upload:before {
+    content: "\f25a";
+}
+
+.veery-font-1-user:before {
+    content: "\f25b";
+}
+
+.veery-font-1-user-1:before {
+    content: "\f25c";
+}
+
+.veery-font-1-user-2:before {
+    content: "\f25d";
+}
+
+.veery-font-1-user-3:before {
+    content: "\f25e";
+}
+
+.veery-font-1-user-4:before {
+    content: "\f25f";
+}
+
+.veery-font-1-user-5:before {
+    content: "\f260";
+}
+
+.veery-font-1-user-6:before {
+    content: "\f261";
+}
+
+.veery-font-1-user-7:before {
+    content: "\f262";
+}
+
+.veery-font-1-users:before {
+    content: "\f263";
+}
+
+.veery-font-1-users-1:before {
+    content: "\f264";
+}
+
+.veery-font-1-video-camera:before {
+    content: "\f265";
+}
+
+.veery-font-1-video-camera-1:before {
+    content: "\f266";
+}
+
+.veery-font-1-video-player:before {
+    content: "\f267";
+}
+
+.veery-font-1-video-player-1:before {
+    content: "\f268";
+}
+
+.veery-font-1-video-player-2:before {
+    content: "\f269";
+}
+
+.veery-font-1-view:before {
+    content: "\f26a";
+}
+
+.veery-font-1-view-1:before {
+    content: "\f26b";
+}
+
+.veery-font-1-view-2:before {
+    content: "\f26c";
+}
+
+.veery-font-1-volume-control:before {
+    content: "\f26d";
+}
+
+.veery-font-1-volume-control-1:before {
+    content: "\f26e";
+}
+
+.veery-font-1-warning:before {
+    content: "\f26f";
+}
+
+.veery-font-1-wifi:before {
+    content: "\f270";
+}
+
+.veery-font-1-wifi-1:before {
+    content: "\f271";
+}
+
+.veery-font-1-windows:before {
+    content: "\f272";
+}
+
+.veery-font-1-windows-1:before {
+    content: "\f273";
+}
+
+.veery-font-1-windows-2:before {
+    content: "\f274";
+}
+
+.veery-font-1-windows-3:before {
+    content: "\f275";
+}
+
+.veery-font-1-windows-4:before {
+    content: "\f276";
+}
+
+.veery-font-1-wireless-internet:before {
+    content: "\f277";
+}
+
+.veery-font-1-worldwide:before {
+    content: "\f278";
+}
+
+.veery-font-1-worldwide-1:before {
+    content: "\f279";
+}
+
+.veery-font-1-zoom-in:before {
+    content: "\f27a";
+}
+
+.veery-font-1-zoom-out:before {
+    content: "\f27b";
+}
