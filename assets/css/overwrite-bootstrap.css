@@ -84,9 +84,22 @@ label {
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
 }
 
+.btn-default.btn-close {
+    color: #d2c242;
+    background-color: transparent;
+    border: 2px solid #d2c242;
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+}
+
 .btn-default:hover {
     color: #fff;
     background-color: #14d0a0;
     border-color: #14d0a0;
+}
+
+.btn-default.btn-close:hover {
+    color: #fff;
+    background-color: #8298ae;
+    border-color: #8298ae;
 }
 

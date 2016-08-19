@@ -1,0 +1,15 @@
+@media (min-width: 500px) and (max-width: 600px) {
+    .model-btn-wrapper {
+        text-align: left;
+    }
+
+    .model-header {
+        padding-bottom: 20px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 200px) {
+    .model-btn-wrapper {
+        text-align: left;
+    }
+}

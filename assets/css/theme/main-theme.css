@@ -82,4 +82,16 @@
     color: #d2c242;
 }
 
+.ticket-details.todo {
+    border-top: 4px solid #d2c242;
+}
+
+.ticket-details.in-progress {
+    border-top: 4px solid #8298ae;
+}
+
+.ticket-details.done {
+    border-top: 4px solid #14d0a0;
+}
+
 

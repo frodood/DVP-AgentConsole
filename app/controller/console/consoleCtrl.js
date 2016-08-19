@@ -18,5 +18,13 @@ agentApp.controller('consoleCtrl', function ($scope, $http) {
         isopen: false
     };
 
+    /*# console top menu */
+    $scope.consoleTopMenu = {
+        openTicket: function () {
+            $('#mainTicketWrapper').addClass('z-index-0 display-block fadeIn').
+            removeClass('display-none zoomOut');
+        }
+    }
+
 
 });
