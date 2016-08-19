@@ -2,10 +2,9 @@
 .navbar {
     border: 0px solid transparent !important;
     border-radius: 0px;
-    min-height: 65px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
+    min-height: 56px;
+    padding-top: 7px;
+    padding-bottom: 1px;
 }
 
 .navbar-brand {
@@ -69,8 +68,25 @@
     margin: 3px 10px 0px 10px;
 }
 
-label{
+label {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     color: #8298ae !important;
+}
+
+.navbar-form {
+    margin-top: 5px;
+}
+
+.btn-default {
+    color: #14d0a0;
+    background-color: transparent;
+    border: 2px solid #14d0a0;
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+}
+
+.btn-default:hover {
+    color: #fff;
+    background-color: #14d0a0;
+    border-color: #14d0a0;
 }
 

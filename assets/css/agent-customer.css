@@ -3,6 +3,7 @@
 @import url("../fonts/main-icon-1/veery-font-1.css");
 @import url("../fonts/main-icon-2/veery-font-2.css");
 @import url("../fonts/main-icon-3/veery-font-3.css");
+@import url("../fonts/veery-font/veery-phone-icon-1.css");
 
 body {
     background: #f7f5f5;
@@ -63,7 +64,7 @@ body {
 
 .main-search-txt {
     border: 1px solid #8298ae;
-    min-width: 150px;
+    min-width: 300px;
 }
 
 .console-drop-menu::before {
@@ -135,14 +136,14 @@ body {
     margin-top: 4px;
     background: #17373c;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    padding-top: 3px;
+    width: 35px;
+    height: 35px;
+    padding-top: 5px;
     text-align: center;
 }
 
 .console-menu-icon > i {
-    font-size: 25px;
+    font-size: 20px;
     color: #97cb04;
     cursor: pointer;
 }
@@ -161,7 +162,7 @@ body {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #f93f6a;
+    background: #36ba45;
     color: #ffffff;
     top: -4px;
     right: -4px;
@@ -170,7 +171,8 @@ body {
     padding-top: 5px;
 }
 
-.console-drop-menu.notification-menu {
+.console-drop-menu.notification-menu,
+.console-drop-menu.notification-menu-left {
     min-width: 300px;
     min-height: 355px;
     padding-bottom: 0;
@@ -195,6 +197,19 @@ body {
     margin: auto 0px;
     text-align: center;
     left: 260px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 22px solid white;
+}
+
+.console-drop-menu.notification-menu-left::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -10px;
+    margin: auto 0px;
+    text-align: center;
+    left: 10px;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-bottom: 22px solid white;
@@ -283,12 +298,218 @@ body {
 .console-phone-wrapper {
     position: fixed;
     width: 250px;
-    height: 350px;
+    height: 250px;
     background: #ffffff;
-    right: 0px;
-    top: 25%;
-    border-radius: 5px;
+    right: 10px;
+    top: 15%;
+    border-radius: 20px 7px;
+    overflow: hidden;
 }
+
+.income-call-wrapper {
+
+    width: 250px;
+    height: 250px;
+    position: fixed;
+    border-radius: 20px 7px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0d1c33+0,2b4d52+99 */
+    background: #0d1c33; /* Old browsers */
+    background: -moz-linear-gradient(top, #0d1c33 0%, #2b4d52 50%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #0d1c33 0%, #2b4d52 50%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #0d1c33 0%, #2b4d52 50%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0d1c33', endColorstr='#2b4d52', GradientType=0); /* IE6-9 */
+}
+
+.income-call-details {
+    text-align: center;
+    width: 250px;
+    height: 350px;
+}
+
+.income-call-details > .user-details {
+    color: #fff;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.income-call-details > .company-details {
+    text-align: left;
+    padding-top: 15px;
+    padding-left: 30px;
+    color: #ffffff;
+}
+
+.income-call-details > .user-details > h4 {
+    margin-bottom: 0px;
+    width: 100%;
+    font-size: 20px;
+    padding-left: 15px;
+}
+
+.income-call-details > .user-details > small {
+    color: #36ba45;
+    padding-left: 15px;
+}
+
+.anz-btn,
+.hangout-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.hangout-btn {
+    padding-top: 8px;
+}
+
+.anz-btn > i {
+    font-size: 30px;
+    color: #36ba45;
+}
+
+.hangout-btn > i {
+    font-size: 40px;
+    color: #d90000;
+}
+
+.incoming-action-wrapper {
+    margin-top: 50px;
+}
+
+.anz-btn {
+    background: rgba(54, 186, 69, 0.2);
+}
+
+.hangout-btn {
+    background: rgba(249, 63, 106, 0.2);
+}
+
+.income-call-details > .user-wrapper {
+    height: 100px;
+    width: 100px;
+    background: rgba(20, 208, 160, 0.2);
+    text-align: center;
+    position: absolute;
+    margin: 0 auto;
+    border-radius: 50%;
+    left: 81px;
+    top: 40px;
+    overflow: hidden;
+    padding-top: 13px;
+}
+
+.income-call-details > .user-wrapper > img {
+    border-radius: 50%;
+    border: 5px solid rgba(20, 208, 160, 1);
+}
+
+.call-operation-wrapper {
+    width: 295px;
+    height: 70px;
+    position: fixed;
+    bottom: 100px;
+    right: 50px;
+    background: #ffffff;
+    -webkit-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
+    padding: 16px;
+    border-radius: 45px;
+}
+
+.phone-button-wrapper > .phone-btn {
+    display: inline-block;
+    background: #f7f5f5;
+    border-radius: 63%;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    text-align: center;
+    padding-top: 7px;
+}
+
+.phone-button-wrapper > .phone-btn > i {
+    font-size: 20px;
+    padding: 5px;
+    color: #17373c;
+}
+
+/*view ticket*/
+.view-ticket-wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.99);
+}
+
+.ticket-wrap {
+    background: #f7f5f5;
+    height: 600px;
+    margin-top: 40px;
+    overflow: hidden;
+    padding: 10px 25px 10px 25px;
+}
+
+.model-header {
+    height: 60px;
+    border-bottom: 1px solid #36ba45;
+    margin-top: 5px;
+}
+
+.mode-left-icon {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: #f3f1f1;
+    border-radius: 50%;
+    padding-top: 7px;
+}
+
+.mode-left-icon > i {
+    color: #36ba45;
+    font-size: 25px;
+    padding-right: 20px;
+    padding-left: 13px;
+}
+
+.model-header-text {
+    display: inline-block;
+    font-size: 20px;
+    padding-left: 15px;
+    color: #0d1c33;
+}
+
+.model-btn-wrapper > .btn-warp {
+    display: inline-block;
+}
+
+.model-btn-wrapper {
+    padding-top: 11px;
+}
+
+.ticket-list-header {
+    color: #36ba45;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.ticket-details {
+    background: #ffffff;
+    height: 70px;
+    width: 100%;
+}
+.ticket-details.todo{
+    border-top: 4px solid #8298ae;
+}
+.ticket-details.in-progress{
+    border-top: 4px solid #d2c242;
+}
+.ticket-details.done{
+    border-top: 4px solid #14d0a0;
+}
+
 
 /* #MAIN css */
 ::-webkit-input-placeholder {
@@ -321,5 +542,13 @@ body {
 
 .p-left-15 {
     padding-left: 15px;
+}
+
+.m-left-25 {
+    margin-left: 25px;
+}
+
+.p-left-40 {
+    padding-left: 40px;
 }
 

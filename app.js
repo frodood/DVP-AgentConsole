@@ -13,5 +13,8 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
         $stateProvider.state("console", {
             url: "/console",
             templateUrl: "app/views/console-view.html"
+        }).state("console.ticket", {
+            url: "/ticket",
+            templateUrl: "app/views/ticket/ticket-inbox.html"
         })
     }]);

@@ -17,4 +17,6 @@ agentApp.controller('consoleCtrl', function ($scope, $http) {
     $scope.status = {
         isopen: false
     };
+
+
 });
