@@ -9,7 +9,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand console-navbar-brand" href="#">Agent Console
+           
+            <a class="navbar-brand console-navbar-brand" href="#">Agent
+                Console
                 <div class="version-beta">BETA</div>
             </a>
         </div>
@@ -21,6 +23,7 @@
                 <!-- notification -->
                 <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i
                         class="veery-font-1-alarm"> </i>
+
                     <div class="console-notification-header">
                         1
                     </div>
@@ -95,12 +98,14 @@
                 <li class="console-menu-icon m-left-10 m-right-10"
                     uib-dropdown uib-dropdown-toggle>
                     <i class="veery-font-1-notepad" ng-click="consoleTopMenu.openTicket()"></i>
-                <li class="console-menu-icon m-left-10 m-right-10"><i
-                        class="main-icon-2-telephone-3"></i>
+                <li class="console-menu-icon m-left-10 m-right-10">
+                    <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none" style="margin-top: 3px;"></i>
+                    <i id="isBtnReg" class="main-icon-2-telephone-3" ng-click="consoleTopMenu.Register()"></i>
                 </li>
 
                 <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle>
                     <i class="veery-font-3-mail-5"></i>
+
                     <div class="console-notification-header">
                         5
                     </div>
@@ -184,6 +189,7 @@
                                     <div class="notification-icon user-list  ">
                                         <img src="assets/img/avatar/oykun.jpg"
                                              ng-src="{{agent.img}}">
+
                                         <div class="user-state"
                                              ng-class="agent.status"></div>
                                     </div>
@@ -221,12 +227,13 @@
 
                 <div id="consoleProfileImg" class="console-profile-img" uib-dropdown-toggle>
                     <img src="assets/img/avatar/oykun.jpg">
+
                     <div class="user-state online"></div>
                 </div>
 
                 <li class="dropdown console-profile-header ">
                     <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                    >Hi,admin</a>
+                            >Hi,admin</a>
                     <a class="time">Good Morning</a>
 
                 </li>
@@ -247,12 +254,15 @@
 
 
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
 </nav>
 
+
 <!-- incoming call notification -->
-<div class="console-phone-wrapper " id="phoneWidget">
+<div id="incomingNotification" class="console-phone-wrapper display-none" id="phoneWidget">
     <div class="income-call-wrapper">
         <div class="income-call-details">
             <div class="company-details">
@@ -281,7 +291,7 @@
 </div>
 
 <!-- phone operation panel  -->
-<div class="call-operation-wrapper" id="callOperation">
+<div id="isOperationPhone" class="call-operation-wrapper display-none" id="callOperation">
 
     <div class="phone-button-wrapper">
         <div class="phone-btn">
