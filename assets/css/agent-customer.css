@@ -526,6 +526,10 @@ body {
     margin-bottom: 20px;
 }
 
+.active-menu-icon {
+    color: #ffffff !important;
+}
+
 .ticket-details {
     background: #ffffff;
     height: auto;
@@ -557,12 +561,14 @@ body {
     color: #8298ae !important;
 }
 
-:-moz-placeholder { /* Firefox 18- */
+:-moz-placeholder {
+    /* Firefox 18- */
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     color: #8298ae !important;
 }
 
-::-moz-placeholder { /* Firefox 19+ */
+::-moz-placeholder {
+    /* Firefox 19+ */
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     color: #8298ae !important;
 }
