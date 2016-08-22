@@ -8,7 +8,7 @@
 body {
     background: #f7f5f5;
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 /* #CONSOLE CSS */
@@ -466,6 +466,7 @@ body {
     position: fixed;
     display: none;
     background: rgba(255, 255, 255, 0);
+    z-index: 2000;
 }
 
 .ticket-wrap {
@@ -475,6 +476,9 @@ body {
     margin-top: 58px;
     overflow: hidden;
     padding: 10px 25px 20px 25px;
+    -webkit-box-shadow: -1px -1px 27px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px -1px 27px -6px rgba(0,0,0,0.75);
+    box-shadow: -1px -1px 27px -6px rgba(0,0,0,0.75);
 }
 
 .ticket-details-wrap {
@@ -553,6 +557,45 @@ body {
 
 .z-index-0 {
     z-index: 0 !important;
+}
+
+/*main console tab wrapper */
+.console-tab-wrapper {
+    padding: 80px 20px 10px 20px;
+}
+
+.tab-content {
+    background: #fff;
+    height: 100vh;
+    width: 100%;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/*profile wrapper */
+.profile-left-wrapper {
+
+}
+
+.profile-right-wrapper {
+
+}
+
+.profile-right-wrapper > .profile-wrap {
+    height: 300px;
+    width: 1000%;
+    background-color: #17373c;
+}
+
+.layout-header {
+    height: auto;
+    border-bottom: 1px solid #d2c242;;
+}
+
+.layout-header > .left-text {
+    color: #14d0a0;
+    font-size: 17px;
+    display: inline-block;
 }
 
 /* #MAIN css */
