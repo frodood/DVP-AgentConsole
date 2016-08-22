@@ -260,9 +260,8 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
                 if (description == 'Connected') {
                     /*UIStateChange.inIdleState();*/
                     $scope.PhoneOnline();
-                    $scope.showAlert("Soft Phone", "info", description);
                     $scope.isRegistor = true;
-
+                    $scope.showAlert("Soft Phone", "info", description);
                 }
                 else if (description == 'Forbidden') {
                     console.error(description);
@@ -282,9 +281,9 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
         uiOnConnectionEvent: function (b_connected, b_connecting) {
             try {
                 if (!b_connected && !b_connecting) {
-                    $scope.showAlert("Soft Phone", "error", "Fail To Register");
                     $scope.isRegistor = false;
                     $scope.PhoneOffline();
+                    $scope.showAlert("Soft Phone", "error", "Fail To Register");
                 }
 
                 /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
