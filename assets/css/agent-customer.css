@@ -323,9 +323,10 @@ body {
     height: 250px;
     background: #ffffff;
     right: 10px;
-    top: 15%;
+    top: 20%;
     border-radius: 20px 7px;
     overflow: hidden;
+    z-index: 2000;
 }
 
 .income-call-wrapper {
