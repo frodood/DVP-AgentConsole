@@ -378,4 +378,10 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
         {title: 'Dynamic Title 2', content: 'Dynamic content 2', viewType: '0', disabled: false},
         {title: 'Dynamic Title 2', content: 'Dynamic content 2', viewType: '0', disabled: false}
     ];
+
+    $scope.profileTabDetails = [
+        {title: 'Time Line', content: 'Dynamic content 1', viewType: 'engagement'},
+        {title: 'Ticket', content: 'Dynamic content 2', viewType: '0', disabled: false},
+        {title: 'Infomation', content: 'Dynamic content 2', viewType: '0', disabled: false}
+    ];
 });
