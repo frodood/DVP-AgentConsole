@@ -3,6 +3,7 @@
     background: #0d1c34;
     position: fixed;
     width: 100%;
+    z-index: 1000;
 }
 
 .console-navbar-brand {
@@ -93,5 +94,24 @@
 .ticket-details.done {
     border-top: 4px solid #14d0a0;
 }
+
+.facebook {
+    background: #3b5998 !important;
+}
+
+.twitter {
+    background: #00aced !important;
+}
+
+.timeline .timeline-icon a.test2 {
+    background: #45bf55;
+}
+
+.font-color-green{
+    color: #45bf55 !important;
+}.font-color-yellow{
+    color: #d2c242 !important;
+}
+
 
 

@@ -1,0 +1,144 @@
+<div>
+    <!-- left main wrappper -->
+    <div class="col-md-4 p-left-0 p-right-0">
+        <div class="profile-left-wrapper">
+            <div class="layout-header">
+                <div class="col-md-6 col-sm-4">
+                    <div class="left-text header-small">
+                        ID :44caa966-0961-4e2e-a2b9-0e364e23e99c
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-9 ">
+                    <div class="btn-wrapper">
+                        <div class="btn-warp inline-btn">
+                            <span class="btn  btn-default">new</span>
+                        </div>
+                        <div class="btn-warp inline-btn">
+                            <span class="btn  btn-default">search</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END LEFT WRAPPER-->
+    </div>
+    <!-- right main wrapper -->
+    <div class="col-md-8 p-left-0 p-right-0">
+        <div class="profile-right-wrapper"
+        >
+            <div class="profile-wrap">
+                <div class="layout-header">
+                    <div class="col-md-4 col-sm-3">
+                        <div class="left-text">
+                            Profile Detail
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-9 ">
+                        <div class="btn-wrapper">
+                            <div class="btn-warp inline-btn">
+                                <span class="btn  btn-default">new</span>
+                            </div>
+                            <div class="btn-warp inline-btn">
+                                <span class="btn  btn-default">search</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END LAYOUT HEADER -->
+
+                <!-- PROFILE DETAILS BODY -->
+                <div class="profile-body-wrapper">
+                    <div class="profile-img-wrapper">
+                        <div class="col-lg-3 ">
+                            <div class="profile-details-img">
+                                <img src="assets/img/avatar/profile_img150x150.jpg">
+                            </div>
+                            <div class="profile-status">
+                                Jesse
+                                <br/>
+                                <span>+94715986462</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="profile-details-info">
+                                <div class="col-sm-6 p-left-0">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h5 class="header-text-h5">Personal Infomation</h5>
+                                        </div>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li>
+                                            <small>First Name</small>
+                                            <h5>Jesse</h5>
+                                        </li>
+                                        <li>
+                                            <small>Last Name</small>
+                                            <h5>Pinkman</h5>
+                                        </li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li>
+                                            <small>Full Name</small>
+                                            <h5>Jesse Pinkman</h5>
+                                        </li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li>
+                                            <small>Email</small>
+                                            <h5>JessePinkman@breakingbad.com</h5>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h5 class="header-text-h5">Address</h5>
+                                        </div>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li>
+                                            <small>PO.Box No</small>
+                                            <h5>322 16th</h5>
+                                        </li>
+                                        <li>
+                                            <small>Street</small>
+                                            <h5>St SW,Albuquerque</h5>
+                                        </li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li>
+                                            <small>City</small>
+                                            <h5>Albuquerque</h5>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- END PROFILE DETAILS BODY -->
+
+
+            </div>
+
+            <div class="profile-details-tab">
+                <uib-tabset class="profile-tab-wrapper" active="active">
+                    <uib-tab class="profile-tab" index="$index + 1" ng-repeat="tab in profileTabDetails"
+                             heading="{{tab.title}}">
+                        <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
+                    </uib-tab>
+
+                </uib-tabset>
+            </div>
+
+        </div>
+        <!-- END RIGHT WRAPPER-->
+    </div>
+</div>
+<!-- END ROW -->

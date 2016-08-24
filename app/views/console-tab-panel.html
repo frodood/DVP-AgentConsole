@@ -1,0 +1,10 @@
+<uib-tabset active="active">
+    <uib-tab class="console-main-tab" index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}"
+             disable="tab.disabled">
+        <div ng-switch on="tab.viewType">
+            <div ng-switch-when="engagement">
+                <div ng-include="'app/views/profile/engagement-call.html'"></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

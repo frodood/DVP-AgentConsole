@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser,veeryNotification,authService) {
+agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -21,13 +21,13 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     /*# console top menu */
     $scope.consoleTopMenu = {
         openTicket: function () {
-            $('#mainTicketWrapper').addClass('z-index-0 display-block fadeIn').
-                removeClass('display-none zoomOut');
+            $('#mainTicketWrapper').addClass(' display-block fadeIn').
+            removeClass('display-none zoomOut');
         },
         Register: function () {
-            if($scope.isRegistor){
+            if ($scope.isRegistor) {
                 $scope.ShowHidePhone(!$scope.showPhone);
-            }else{
+            } else {
                 $scope.veeryPhone.Register('duodilani', 'DuoS123');
             }
         }
@@ -40,10 +40,10 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-                removeClass('display-block  zoomOut');
+            removeClass('display-block  zoomOut');
         }
     };
 
@@ -52,29 +52,29 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-                removeClass('display-none');
+            removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-                removeClass('display-block');
+            removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-            removeClass('display-block active-menu-icon ');
+        removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-            removeClass('display-none  ');
+        removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-            removeClass('display-none');
+        removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-            removeClass('display-block active-menu-icon');
+        removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -124,9 +124,6 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
                 return
             }
             sipCall('call-audio', callNumber);
-        },
-        answerCall : function () {
-            answerCall();
         },
         endCall: function () {
             sipHangUp();
@@ -375,13 +372,16 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     /*--------------------------Veery Phone---------------------------------------*/
 
 
-    /*--------------------------      Notification  ---------------------------------------*/
+    /*---------------main tab panel----------------------- */
+    $scope.tabs = [
+        {title: 'Dynamic Title 1', content: 'Dynamic content 1', viewType: 'engagement'},
+        {title: 'Dynamic Title 2', content: 'Dynamic content 2', viewType: '0', disabled: false},
+        {title: 'Dynamic Title 2', content: 'Dynamic content 2', viewType: '0', disabled: false}
+    ];
 
-    $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.GetToken(),baseUrls.notification);
-    };
-    $scope.veeryNotification();
-
-    /*--------------------------      Notification  ---------------------------------------*/
-
+    $scope.profileTabDetails = [
+        {title: 'Time Line', content: 'Dynamic content 1', viewType: 'engagement'},
+        {title: 'Ticket', content: 'Dynamic content 2', viewType: '0', disabled: false},
+        {title: 'Infomation', content: 'Dynamic content 2', viewType: '0', disabled: false}
+    ];
 });

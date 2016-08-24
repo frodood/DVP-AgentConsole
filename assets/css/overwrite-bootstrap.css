@@ -103,3 +103,33 @@ label {
     border-color: #8298ae;
 }
 
+.nav-tabs {
+    border-bottom: 0px solid #ddd;
+    padding: 0px 15px 0px 15px;
+}
+
+.console-main-tab >
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 0px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs > li.console-main-tab.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 0px solid #ddd;
+    border-bottom: 2px solid #36ba45;
+}
+
+.console-main-tab >
+.nav-tabs > li > a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent !important;
+    border-radius: 8px 8px 0 0;
+}
+
