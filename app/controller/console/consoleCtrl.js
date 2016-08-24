@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser) {
+agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser,veeryNotification,authService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -371,6 +371,14 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
 
     /*--------------------------Veery Phone---------------------------------------*/
 
+    /*--------------------------      Notification  ---------------------------------------*/
+
+    $scope.veeryNotification = function () {
+        veeryNotification.connectToServer(authService.GetToken(),baseUrls.notification);
+    };
+    $scope.veeryNotification();
+
+    /*--------------------------      Notification  ---------------------------------------*/
 
     /*---------------main tab panel----------------------- */
     $scope.tabs = [
