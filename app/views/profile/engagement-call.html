@@ -3,29 +3,129 @@
     <div class="col-md-4 p-left-0 p-right-0">
         <div class="profile-left-wrapper">
             <div class="layout-header">
-                <div class="col-md-6 col-sm-4">
-                    <div class="left-text header-small">
+                <div class="col-md-8 col-sm-8">
+                    <div class="left-text header-small pull-left">
                         ID :44caa966-0961-4e2e-a2b9-0e364e23e99c
+                        <i class="veery-font-3-copy copy"></i>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-9 ">
-                    <div class="btn-wrapper">
-                        <div class="btn-warp inline-btn">
-                            <span class="btn  btn-default">new</span>
+                <div class="col-md-4 col-sm-4 ">
+                    <div class="btn-left-icon pull-right p-top-6">
+                        <i class="veery-font-1-add-2"></i>
+                        new ticket
+                    </div>
+                </div>
+            </div>
+            <!-- END -->
+
+            <!-- ENGAGEMENT WRAPPER -->
+            <div ng-slimscroll
+                 opacity="0.1"
+                 distance="5px"
+                 height="650px"
+                 width="100%"
+                 ng-mouseover="scrollEnabled = true"
+                 ng-mouseleave="scrollEnabled = false"
+                 enabled="{{ scrollEnabled }}">
+                <div class="engagement-wrapper">
+                    <div class="header-round-icon">
+                        <div class="icon-left">
+                            <i class="veery-font-1-user"></i>
                         </div>
-                        <div class="btn-warp inline-btn">
-                            <span class="btn  btn-default">search</span>
+                        <div class="text-header bold">
+                            ENGAGEMENT
+                        </div>
+                    </div>
+                    <ul class="info-list-lg">
+                        <li>
+                            <small>Company</small>
+                            <h5>Duo software</h5>
+                        </li>
+                        <li>
+                            <small>Direction</small>
+                            <h5>Inbound</h5>
+                        </li>
+                        <li>
+                            <small>Channel From</small>
+                            <h5>18705056580</h5>
+                        </li>
+                        <li>
+                            <small>Channel To</small>
+                            <h5>94112375000</h5>
+                        </li>
+                        <li>
+                            <small>Channel</small>
+                            <h5>Call</h5>
+                        </li>
+                    </ul>
+                    <div class="new-note-wrapper">
+                        <label class="label-green">Note</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                        <div class="btn-warp inline-btn  p-top-6 pull-right">
+                            <span class="btn  btn-default btn-sm ">save</span>
+                        </div>
+                    </div>
+                    <div class="engagement-note-list">
+                        <div class="note-wrap">
+                            <div class="left-icon">
+                                <i class="veery-font-1-list"></i>
+                            </div>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </div>
+                        <div class="note-wrap">
+                            <div class="left-icon">
+                                <i class="veery-font-1-list"></i>
+                            </div>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </div>
+                        <div class="note-wrap">
+                            <div class="left-icon">
+                                <i class="veery-font-1-list"></i>
+                            </div>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </div>
+                        <div class="note-wrap">
+                            <div class="left-icon">
+                                <i class="veery-font-1-list"></i>
+                            </div>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </div>
+                    </div>
+                </div>
+                <div class="IVR-wrapper">
+                    <div class="header-round-icon">
+                        <div class="icon-left">
+                            <i class="veery-font-1-user"></i>
+                        </div>
+                        <div class="text-header bold">
+                            IVR DETAILS
+                        </div>
+                    </div>
+
+                    <div class="IVR-details-wrap">
+                        <div class="ivr-list">
+                            APPLICATIONFOUND";103;1; APP";"
+                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
+                        </div>
+                        <div class="ivr-list">
+                            APPLICATIONFOUND";103;1; APP";"
+                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
+                        </div>
+                        <div class="ivr-list">
+                            APPLICATIONFOUND";103;1; APP";"
+                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- END -->
         </div>
         <!-- END LEFT WRAPPER-->
     </div>
     <!-- right main wrapper -->
     <div class="col-md-8 p-left-0 p-right-0">
-        <div class="profile-right-wrapper"
-        >
+
+        <div class="profile-right-wrapper">
             <div class="profile-wrap">
                 <div class="layout-header">
                     <div class="col-md-4 col-sm-3">
@@ -47,6 +147,7 @@
                 <!-- END LAYOUT HEADER -->
 
                 <!-- PROFILE DETAILS BODY -->
+
                 <div class="profile-body-wrapper">
                     <div class="profile-img-wrapper">
                         <div class="col-lg-3 ">
@@ -131,14 +232,32 @@
                 <uib-tabset class="profile-tab-wrapper" active="active">
                     <uib-tab class="profile-tab" index="$index + 1" ng-repeat="tab in profileTabDetails"
                              heading="{{tab.title}}">
-                        <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
+                        <div ng-slimscroll
+                             opacity="0.1"
+                             distance="5px"
+                             height="600px"
+                             width="100%"
+                             ng-mouseover="scrollEnabled = true"
+                             ng-mouseleave="scrollEnabled = false"
+                             enabled="{{ scrollEnabled }}">
+
+                            <div ng-switch on="tab.viewType">
+                                <div ng-switch-when="timeline">
+                                    <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
+                                </div>
+                                <div ng-switch-when="ticket">
+                                    <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
+                                </div>
+                            </div>
+                        </div>
                     </uib-tab>
 
                 </uib-tabset>
             </div>
 
         </div>
-        <!-- END RIGHT WRAPPER-->
     </div>
+    <!-- END RIGHT WRAPPER-->
+
 </div>
 <!-- END ROW -->
