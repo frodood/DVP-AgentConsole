@@ -268,19 +268,19 @@
                 <small>Company : 5</small>
             </div>
             <div class="user-details">
-                <h4>+94777 100 100</h4>
+                <h4>{{callNumber}}</h4>
                 <small>Sinhala</small>
             </div>
             <div class="incoming-action-wrapper">
                 <div class="row">
                     <div class="col-md-6 p-left-40">
                         <div class="anz-btn">
-                            <i class="veery-phone-icon-1-call-answer"></i>
+                            <i class="veery-phone-icon-1-call-answer" ng-click="veeryPhone.answerCall();" ></i>
                         </div>
                     </div>
                     <div class="col-md-6 p-left-40">
                         <div class="hangout-btn">
-                            <i class="veery-phone-icon-1-end-call-button"></i>
+                            <i class="veery-phone-icon-1-end-call-button" ng-click="veeryPhone.endCall();"></i>
                         </div>
                     </div>
                 </div>
@@ -294,7 +294,7 @@
 
     <div class="phone-button-wrapper">
         <div class="phone-btn">
-            <i class="veery-phone-icon-1-call-answer"></i>
+            <i class="veery-phone-icon-1-call-answer"  ng-click="veeryPhone.makeAudioCall('94112375000');"></i>
         </div>
         <div class="phone-btn">
             <i class="veery-font-1-user"></i>
