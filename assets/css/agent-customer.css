@@ -8,7 +8,7 @@
 body {
     background: #f7f5f5;
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 /* #CONSOLE CSS */
@@ -566,7 +566,8 @@ body {
 
 .tab-content {
     background: #fff;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     width: 100%;
     border-radius: 2px;
     overflow: hidden;
@@ -574,7 +575,6 @@ body {
 
 /*profile wrapper */
 .profile-left-wrapper {
-
 }
 
 .profile-right-wrapper {
@@ -681,6 +681,28 @@ ul.info-list > li > h5 {
     margin-top: 2px;
 }
 
+/* info list BIG */
+ul.info-list-lg {
+    list-style: none;
+    padding-left: 0px;
+}
+
+ul.info-list-lg > li {
+    display: inline-block;
+    padding-right: 20px;
+    padding-right: 50px;
+}
+
+ul.info-list-lg > li > small {
+    color: #14d0a0;
+    font-size: 15px;
+}
+
+ul.info-list-lg > li > h5 {
+    color: #0d1c34;
+    margin-top: 2px;
+}
+
 .profile-details-tab {
     position: absolute;
     top: 90%;
@@ -695,7 +717,7 @@ ul.info-list > li > h5 {
 }
 
 .profile-tab-wrapper > ul {
-    padding-left: 33%;
+    padding-left: 300px;
 }
 
 .nav-tabs > li.profile-tab > a {
@@ -836,6 +858,12 @@ ul.info-list > li > h5 {
     right: auto;
 }
 
+.timelline-wrapper {
+    margin-bottom: 200px;
+    height: 100%;
+    width: 100%;
+}
+
 .timeline-badge.primary {
     background-color: #2e6da4 !important;
 }
@@ -878,16 +906,142 @@ ul.info-list > li > h5 {
     margin-bottom: 10px;
 }
 
-/*.timeline .timeline-icon a:focus, .timeline .timeline-icon a:hover {*/
-/*background: #00acac;*/
-/*}*/
+.copy {
+    cursor: pointer;
+}
+
+.btn-left-icon {
+    color: #14d0a0;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.btn-left-icon:hover {
+    color: #d2c242;
+}
+
+.btn-left-icon > i {
+    padding-right: 5px;
+}
+
+.header-round-icon {
+    padding-bottom: 20px;
+}
+
+.header-round-icon > .text-header {
+    display: inline-block;
+    color: #0d1c34;
+    padding-left: 10px;
+}
+
+.header-round-icon > .icon-left {
+    width: 40px;
+    height: 40px;
+    background: #17373c;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+}
+
+.header-round-icon > .icon-left > i {
+    color: #a1d700;
+    font-size: 25px;
+}
+
+/*engagement wrapper*/
+.engagement-wrapper {
+    padding: 25px 19px 5px 22px;
+}
+
+.IVR-wrapper {
+    padding: 25px 19px 5px 22px;
+}
+
+.IVR-details-wrap {
+    height: auto;
+}
+
+.IVR-details-wrap > .ivr-list {
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+    -webkit-box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
+    box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
+    font-size: 10px;
+    padding: 13px 10px 15px 10px;
+    margin-bottom: 5px;
+}
+
+.new-note-wrapper {
+    width: 100%;
+    padding-bottom: 45px;
+}
+
+.engagement-note-list {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+
+}
+
+.engagement-note-list > .note-wrap {
+    color: #8298ae;
+    font-size: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #d2c242;
+    display: block;
+    width: 100%;
+    padding-top: 13px;
+}
+
+.note-wrap > .left-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: #8298ae;
+    border-radius: 50%;
+    text-align: center;
+    float: left;
+    margin-right: 5px;
+    margin-top: -6px;
+}
+
+.note-wrap > .left-icon > i {
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.9;
+}
 
 /*left profile */
 
 .layout-header > div > .left-text.header-small {
     color: #8298ae;
     font-size: 10px;
-    padding-top: 5px;
+    padding-top: 12px;
+}
+
+/*profile ticker view */
+.profile-ticker-wrap {
+    min-height: 125px;
+    height: auto;
+    width: 100%;
+    background: #f7f5f5;
+    -webkit-box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
+    box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
+}
+
+.profile-ticker-wrap > .left-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-ticker-wrap > .left-avatar > img {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* #MAIN css */
@@ -1010,3 +1164,7 @@ ul.info-list > li > h5 {
 
 }
 
+
+.p-top-6 {
+    padding-top: 6px;
+}

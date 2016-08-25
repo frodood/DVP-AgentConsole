@@ -113,5 +113,14 @@
     color: #d2c242 !important;
 }
 
+ .label-green{
+     color: #45bf55 !important;
+     font-family: 'AvenirNextLTPro-Regular', sans-serif;
+ }
+
+ .new-ticker{
+     border-top: 5px solid #d2c242;
+ }
+
 
 
