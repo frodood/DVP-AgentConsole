@@ -322,6 +322,67 @@
         </div>
     </div>
 
+    <!--#KeyPad-->
+    <div id='divKeyPad'
+         ng-show="true"
+         class="span2 well div-keypad ">
+
+        <table style="width: 100%; height: 100%">
+            <tr>
+                <td><a class="dialpadbtn m-r-35"
+                       value="1"
+                       ng-click="eventHandler.sipSendDTMF('1');">1</a>
+                    <a class="dialpadbtn m-r-35"
+                       value="2"
+                       ng-click="eventHandler.sipSendDTMF('2');">2</a>
+                    <a class="dialpadbtn m-r-35"
+                       value="3"
+                       ng-click="eventHandler.sipSendDTMF('3');">3</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="dialpadbtn m-r-35"
+                       value="4"
+                       ng-click="eventHandler.sipSendDTMF('4');">4</a>
+                    <a class="dialpadbtn m-r-35"
+                       value="5"
+                       ng-click="eventHandler.sipSendDTMF('5');">5</a>
+                    <a class="dialpadbtn m-r-35" value="6"
+                       ng-click="eventHandler.sipSendDTMF('6');">6</a>
+                </td>
+            </tr>
+            <tr>
+                <td><a class="dialpadbtn m-r-35"
+                       value="7"
+                       ng-click="eventHandler.sipSendDTMF('7');">7</a>
+                    <a class="dialpadbtn m-r-35"
+                       value="8"
+                       ng-click="eventHandler.sipSendDTMF('8');">8</a>
+                    <a class="dialpadbtn m-r-35" href="javascript:void (0);"
+                       value="9"
+                       ng-click="eventHandler.sipSendDTMF('9');">9</a>
+                </td>
+            </tr>
+            <tr>
+                <td><a type="button" class="dialpadbtn m-r-35"
+                       value="*"
+                       ng-click="eventHandler.sipSendDTMF('*');">*</a>
+                    <a type="button" class="dialpadbtn m-r-35"
+                       value="0"
+                       ng-click="eventHandler.sipSendDTMF('0');">0</a>
+                    <a type="button" class="dialpadbtn m-r-35"
+                       value="#"
+                       ng-click="eventHandler.sipSendDTMF('#');">#</a>
+                </td>
+            </tr>
+            <tr>
+                <!--<td colspan=3><input type="button" style="width: 100%"-->
+                <!--class="btn btn-medium btn-danger" value="close"-->
+                <!--ng-click="closeKeyPad()"/></td>-->
+            </tr>
+        </table>
+    </div>
     <!-- view ticket -->
     <div ng-include="'app/views/ticket/ticket-inbox.html'"></div>
 

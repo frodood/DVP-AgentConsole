@@ -940,3 +940,73 @@ ul.info-list > li > h5 {
 .p-right-0 {
     padding-right: 0px !important;
 }
+
+/*temp style */
+.m-r-35 {
+    margin-right: 30px;
+}
+
+.m-l-25 {
+    margin-left: 25px;
+}
+
+#call span {
+    display: inline-block;
+    -webkit-animation: Rotate 2000ms linear 2000ms 5;
+    animation: Rotate 2000ms linear 2000ms 5;
+}
+
+/*click numberpad*/
+.dialpadbtn:hover {
+    text-decoration: none !important;
+}
+
+.dialpadbtn:active {
+    background: #49a3d3;
+    color: #fff;
+    font-weight: 500;
+    transition: background 0.1s;
+    text-decoration: none !important;
+}
+/*dial pad*/
+.well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border: 0px solid #e3e3e3;
+    border-radius: 0px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+}
+
+.div-keypad {
+    left: 0px;
+    width: 301px;
+    height: 280px;
+    /* background: rgba(40, 55, 71, 0.9); */
+    margin: 0 auto;
+    /* border-radius: 51px; */
+    position: absolute;
+    top: 100px;
+    z-index: 2000;
+    background: #17373c;
+}
+
+.dialpadbtn {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    color: #fff;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    line-height: 3;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    text-decoration: none !important;
+
+}
+
