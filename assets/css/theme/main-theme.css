@@ -107,20 +107,26 @@
     background: #45bf55;
 }
 
-.font-color-green{
+.font-color-green {
     color: #45bf55 !important;
-}.font-color-yellow{
+}
+
+.font-color-yellow {
     color: #d2c242 !important;
 }
 
- .label-green{
-     color: #45bf55 !important;
-     font-family: 'AvenirNextLTPro-Regular', sans-serif;
- }
+.label-green {
+    color: #45bf55 !important;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+}
 
- .new-ticker{
-     border-top: 5px solid #d2c242;
- }
+.new-ticker {
+    border-top: 5px solid #d2c242;
+}
+
+.ticket-channel.call {
+    background: #d2c242;
+}
 
 
 
