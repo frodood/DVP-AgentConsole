@@ -272,7 +272,7 @@
                     <small>Company : 5</small>
                 </div>
                 <div class="user-details">
-                    <h4>{{callNumber}}</h4>
+                    <h4>{{call.number}}</h4>
                     <small>Sinhala</small>
                 </div>
                 <div class="incoming-action-wrapper">
@@ -284,7 +284,7 @@
                         </div>
                         <div class="col-md-6 p-left-40">
                             <div class="hangout-btn">
-                                <i class="veery-phone-icon-1-end-call-button" ng-click="veeryPhone.endCall();"></i>
+                                <i class="veery-phone-icon-1-end-call-button" ng-click="veeryPhone.rejectCall();"></i>
                             </div>
                         </div>
                     </div>
@@ -298,7 +298,10 @@
 
         <div class="phone-button-wrapper">
             <div class="phone-btn">
-                <i class="veery-phone-icon-1-call-answer"  ng-click="veeryPhone.makeAudioCall('94112375000');"></i>
+                <i class="veery-phone-icon-1-call-answer"  ng-click="veeryPhone.makeAudioCall(call.number);"></i>
+            </div>
+            <div class="phone-btn">
+                <i class="veery-phone-icon-1-call-answer"  ng-click="veeryPhone.endCall();"></i>
             </div>
             <div class="phone-btn">
                 <i class="veery-font-1-user"></i>
@@ -322,58 +325,65 @@
         </div>
     </div>
 
+
     <!--#KeyPad-->
+
     <div id='divKeyPad'
          ng-show="true"
          class="span2 well div-keypad ">
 
         <table style="width: 100%; height: 100%">
             <tr>
+                <input required type="text" class="form-control" id="number"
+                       ng-model="call.number"
+                       placeholder="Enter the phone no to call">
+            </tr>
+            <tr>
                 <td><a class="dialpadbtn m-r-35"
                        value="1"
-                       ng-click="eventHandler.sipSendDTMF('1');">1</a>
+                       ng-click="veeryPhone.sipSendDTMF('1');">1</a>
                     <a class="dialpadbtn m-r-35"
                        value="2"
-                       ng-click="eventHandler.sipSendDTMF('2');">2</a>
+                       ng-click="veeryPhone.sipSendDTMF('2');">2</a>
                     <a class="dialpadbtn m-r-35"
                        value="3"
-                       ng-click="eventHandler.sipSendDTMF('3');">3</a>
+                       ng-click="veeryPhone.sipSendDTMF('3');">3</a>
                 </td>
             </tr>
             <tr>
                 <td>
                     <a class="dialpadbtn m-r-35"
                        value="4"
-                       ng-click="eventHandler.sipSendDTMF('4');">4</a>
+                       ng-click="veeryPhone.sipSendDTMF('4');">4</a>
                     <a class="dialpadbtn m-r-35"
                        value="5"
-                       ng-click="eventHandler.sipSendDTMF('5');">5</a>
+                       ng-click="veeryPhone.sipSendDTMF('5');">5</a>
                     <a class="dialpadbtn m-r-35" value="6"
-                       ng-click="eventHandler.sipSendDTMF('6');">6</a>
+                       ng-click="veeryPhone.sipSendDTMF('6');">6</a>
                 </td>
             </tr>
             <tr>
                 <td><a class="dialpadbtn m-r-35"
                        value="7"
-                       ng-click="eventHandler.sipSendDTMF('7');">7</a>
+                       ng-click="veeryPhone.sipSendDTMF('7');">7</a>
                     <a class="dialpadbtn m-r-35"
                        value="8"
-                       ng-click="eventHandler.sipSendDTMF('8');">8</a>
-                    <a class="dialpadbtn m-r-35" href="javascript:void (0);"
+                       ng-click="veeryPhone.sipSendDTMF('8');">8</a>
+                    <a class="dialpadbtn m-r-35"
                        value="9"
-                       ng-click="eventHandler.sipSendDTMF('9');">9</a>
+                       ng-click="veeryPhone.sipSendDTMF('9');">9</a>
                 </td>
             </tr>
             <tr>
                 <td><a type="button" class="dialpadbtn m-r-35"
                        value="*"
-                       ng-click="eventHandler.sipSendDTMF('*');">*</a>
+                       ng-click="veeryPhone.sipSendDTMF('*');">*</a>
                     <a type="button" class="dialpadbtn m-r-35"
                        value="0"
-                       ng-click="eventHandler.sipSendDTMF('0');">0</a>
+                       ng-click="veeryPhone.sipSendDTMF('0');">0</a>
                     <a type="button" class="dialpadbtn m-r-35"
                        value="#"
-                       ng-click="eventHandler.sipSendDTMF('#');">#</a>
+                       ng-click="veeryPhone.sipSendDTMF('#');">#</a>
                 </td>
             </tr>
             <tr>
@@ -394,6 +404,52 @@
 
 
 <div ui-view ></div>
+
+<!-- phone VIdeo/audio panel  -->
+<div>
+    <div >
+        <div id="divVideo" >
+            <div id="divVideoRemote" >
+                <video  id="video_remote"
+                        autoplay="autoplay"
+                        ></video>
+            </div>
+
+            <div id="divVideoLocalWrapper"
+                    >
+                <iframe ></iframe>
+                <div id="divVideoLocal"
+                        >
+                    <video   id="video_local"
+                             autoplay="autoplay"
+                             muted="true" ></video>
+                </div>
+            </div>
+            <div id="divScreencastLocalWrapper"
+                    >
+                <iframe ></iframe>
+                <div id="divScreencastLocal"
+                        >
+                </div>
+            </div>
+            <!--div id="div1" style="margin-left: 300px; border:0px solid #009; z-index: 1000">
+                <iframe class="previewvideo" style="border:0px solid #009; z-index: 1000"> </iframe>
+                <div id="div2" class="previewvideo" style='border:0px solid #009; z-index: 1000'>
+                  <input type="button" class="btn" style="" id="Button1" value="Button1" /> &nbsp;
+                  <input type="button" class="btn" style="" id="Button2" value="Button2" /> &nbsp;
+                </div>
+            </div-->
+        </div>
+    </div>
+
+    <div>
+        <!-- Audios -->
+        <audio id="audio_remote" autoplay="autoplay"></audio>
+        <audio id="ringtone" loop src="sounds/ringtone.wav"></audio>
+        <audio id="ringbacktone" loop src="sounds/ringbacktone.wav"></audio>
+        <audio id="dtmfTone" src="sounds/dtmf.wav"></audio>
+    </div>
+</div>
 
 
 
