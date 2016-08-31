@@ -465,7 +465,7 @@ body {
     height: 100%;
     position: fixed;
     display: none;
-    background: rgba(255, 255, 255, 0);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 2000;
 }
 
@@ -522,6 +522,10 @@ body {
 .model-btn-wrapper {
     padding-top: 11px;
     text-align: right;
+}
+
+.model-body {
+    padding: 30px 0px 10px 0px;
 }
 
 .ticket-list-header {
@@ -767,7 +771,7 @@ ul.info-list-lg > li > h5 {
     position: absolute;
     content: " ";
     width: 4px;
-    background-color: #17373c;
+    background-color: #f7f5f5;
     left: 50%;
     margin-left: -1.5px;
 }
@@ -1130,7 +1134,7 @@ ul.info-list-lg > li > h5 {
 /* add new ticket*/
 .fixed-model-opacity {
     position: fixed;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     top: 0;
     left: 0;
     width: 100%;
@@ -1140,8 +1144,21 @@ ul.info-list-lg > li > h5 {
 
 .model-main-wrapper {
     background: #fff;
-    height: 600px;
+    height: 580px;
     margin-top: 57px;
+    padding: 10px 25px 20px 25px;
+    position: relative;
+
+}
+
+.model-footer-wrapper {
+    background: #0d1c33;
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding-right: 27px;
 }
 
 /* #MAIN css */
@@ -1222,6 +1239,7 @@ ul.info-list-lg > li > h5 {
     transition: background 0.1s;
     text-decoration: none !important;
 }
+
 /*dial pad*/
 .well {
     min-height: 20px;
@@ -1245,6 +1263,7 @@ ul.info-list-lg > li > h5 {
     top: 100px;
     z-index: 2000;
     background: #17373c;
+    display: none;
 }
 
 .dialpadbtn {
@@ -1264,7 +1283,47 @@ ul.info-list-lg > li > h5 {
 
 }
 
-
 .p-top-6 {
     padding-top: 6px;
 }
+
+.m-top-10 {
+    margin-top: 10px;
+}
+
+/*auto complete drop down style*/
+.auto-complete-left-panel {
+    float: left;
+}
+
+.auto-complete-left-panel img {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.auto-complete-right-panel {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    float: left;
+    margin-left: 5px;
+    margin-top: 7px;
+}
+
+.auto-complete-right-panel span:first-child {
+    font-size: 16px;
+}
+
+.auto-complete-right-panel span:nth-child(2) {
+    font-size: 14px;
+    color: gray;
+}
+
+.auto-complete-right-panel span:last-child {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    display: block;
+    font-size: 13px;
+    text-transform: capitalize;
+    padding-left: 10px;
+}
+
+

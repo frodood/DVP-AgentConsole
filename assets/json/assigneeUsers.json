@@ -1,0 +1,38 @@
+[
+  {
+    "img": "assets/img/avatar/amarkdalen.jpg",
+    "profileName": "James michael",
+    "status": "online"
+  },
+  {
+    "img": "assets/img/avatar/bobbyjkane.jpg",
+    "profileName": "michael james",
+    "status": "online"
+  },
+  {
+    "img": "assets/img/avatar/coreyweb.jpg",
+    "profileName": "albert bruce",
+    "status": "offline"
+  },
+  {
+    "img": "assets/img/avatar/jaman_01.jpg",
+    "profileName": "christopher paul",
+    "status": "online"
+  },
+  {
+    "img": "assets/img/avatar/robertoortiz.jpg",
+    "profileName": "donald jason",
+    "status": "offline"
+  },
+  {
+    "img": "assets/img/avatar/Kevinthompson.jpg",
+    "profileName": "KENNETH RONALD",
+    "status": "offline"
+  },
+  {
+    "id": "A2356464",
+    "img": "assets/img/avatar/mko.jpg",
+    "profileName": "EDWARD BRIAN ",
+    "status": "online"
+  }
+]

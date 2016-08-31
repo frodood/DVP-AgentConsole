@@ -4,7 +4,9 @@
 
 
 var agentApp = angular.module('veeryAgentApp',
-    ['ui.bootstrap', 'ui.router', 'jkuri.slimscroll','veerySoftPhoneModule','base64','angular-jwt','veeryNotificationMod', 'btford.socket-io','LocalStorageModule','authServiceModule']);
+    ['ui.bootstrap', 'ui.router', 'jkuri.slimscroll','veerySoftPhoneModule','base64',
+        'angular-jwt','veeryNotificationMod', 'btford.socket-io','LocalStorageModule',
+        'authServiceModule','ngTagsInput']);
 
 var baseUrls = {
     'authUrl':'http://userservice.app.veery.cloud/oauth/token',
