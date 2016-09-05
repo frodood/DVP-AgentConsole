@@ -10,8 +10,9 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 ">
-                    <div class="btn-left-icon pull-right p-top-6" ng-click="clickAddNewTicket('#addNewTicket','display-block');">
-                        <i class="veery-font-1-add-2" ></i>
+                    <div class="btn-left-icon pull-right p-top-6"
+                         ng-click="clickAddNewTicket('#addNewTicket','display-block');">
+                        <i class="veery-font-1-add-2"></i>
                         new ticket
                     </div>
                 </div>
@@ -258,9 +259,8 @@
         </div>
     </div>
     <!-- END RIGHT WRAPPER-->
-
+    <!-- add new ticket -->
+    <div ng-include="'app/views/ticket/add-new-ticket.html'"></div>
 </div>
 <!-- END ROW -->
 
-<!-- add new ticket -->
-<div ng-include="'app/views/ticket/add-new-ticket.html'"></div>

@@ -1,8 +1,8 @@
-<div ng-controller="addNewTicketCtrl">
+<div class="position-relative" ng-controller="addNewTicketCtrl">
     <div id="addNewTicket" class="animated fixed-model-opacity display-none">
         <div class="container">
             <div class="col-lg-offset-2 col-lg-8 col-md-8 col-xs-8 ">
-                <div class="model-main-wrapper">
+                <div class="model-main-wrapper ">
                     <!-- MODEL HEADER -->
                     <div class="model-header">
                         <div class="col-md-6">
@@ -27,15 +27,7 @@
                     <!-- END MODEL HEADER -->
 
                     <!-- MODEL HEADER -->
-                    <div class="model-body"
-                         ng-slimscroll
-                         opacity="0.1"
-                         distance="5px"
-                         height="450px"
-                         width="100%"
-                         ng-mouseover="scrollEnabled = true"
-                         ng-mouseleave="scrollEnabled = false"
-                         enabled="{{ scrollEnabled }}">
+                    <div class="model-body">
                         <form>
                             <div class="form-group">
                                 <label for="ticketSubject">Subject</label>
@@ -43,26 +35,46 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="ticketSubject">Priority</label>
-                                <div class="form-inline">
-                                    <div class="bg-checkbox red font-white inline-btn">
-                                        <i class="main-icon-2-cancel"></i>
-                                        urgent
+
+                                <div class="row">
+                                    <div class="col-xs-7">
+                                        <label for="ticketSubject">Priority</label>
+                                        <div class="form-inline">
+                                            <div class="bg-checkbox red font-white inline-btn">
+                                                <i class="main-icon-2-cancel"></i>
+                                                urgent
+                                            </div>
+                                            <div class="bg-checkbox red font-white orange">
+                                                <i class="main-icon-2-cancel"></i>
+                                                high
+                                            </div>
+                                            <div class="bg-checkbox red font-white teal600">
+                                                <i class="main-icon-2-cancel"></i>
+                                                normal
+                                            </div>
+                                            <div class="bg-checkbox red font-white gray300">
+                                                <i class="main-icon-2-cancel"></i>
+                                                low
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="bg-checkbox red font-white orange">
-                                        <i class="main-icon-2-cancel"></i>
-                                        high
+                                    <div class="col-xs-5">
+                                        <div class="form-group">
+                                            <label for="ticketSubject">Type</label>
+                                            <select class="form-control">
+                                                <option>Select type</option>
+                                                <option>question</option>
+                                                <option>complain</option>
+                                                <option>incident</option>
+                                                <option>action</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="bg-checkbox red font-white teal600">
-                                        <i class="main-icon-2-cancel"></i>
-                                        normal
-                                    </div>
-                                    <div class="bg-checkbox red font-white gray300">
-                                        <i class="main-icon-2-cancel"></i>
-                                        low
-                                    </div>
+
                                 </div>
+
                             </div>
+
 
                             <div class="form-group">
                                 <label for="ticketSubject">Tags</label>
