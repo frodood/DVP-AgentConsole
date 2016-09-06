@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser,veeryNotification,authService) {
+agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -92,8 +92,8 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
          }*/
     };
 
-    $scope.call={};
-    $scope.call.number={};
+    $scope.call = {};
+    $scope.call.number = {};
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
@@ -120,7 +120,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     $scope.profile.server.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3YXJ1bmFAZHVvc29mdHdhcmUuY29tIiwianRpIjoiMTk2N2E5MjItNmIyOS00NDgxLWI2MWUtOTMwZjVmMDA3ZDM3Iiwic3ViIjoiZTBlNTNhOWUtZjNkZi00MTZjLWFmZWItYzI2ZDVhZWIwYWY2IiwiZXhwIjoxNDY1MzEyMTQ2LCJ0ZW5hbnQiOiIxIiwiY29tcGFueSI6IjMiLCJjbGllbnQiOiIxIiwic2NvcGUiOlt7InJlc291cmNlIjoiYXJkc3Jlc291cmNlIiwiYWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0seyJyZXNvdXJjZSI6InJlYWQifSx7InJlc291cmNlIjoid3JpdGUifSx7InJlc291cmNlIjoiZGVsZXRlIn0seyJyZXNvdXJjZSI6InJlc291cmNlIiwiYWN0aW9ucyI6WyJhcmRzcmVzb3VyY2UiLCJyZWFkIiwid3JpdGUiLCJkZWxldGUiLCJyZXNvdXJjZSJdfV0sImlhdCI6MTQ2NDcwNzM0Nn0.brIo8b6per6a1Djm4armChkS4L2O6T40HSrlj-scwcg";
 
     $scope.veeryPhone = {
-        sipSendDTMF:function (dtmf) {
+        sipSendDTMF: function (dtmf) {
             sipSendDTMF(dtmf);
         },
         makeAudioCall: function (callNumber) {
@@ -387,7 +387,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     /*--------------------------      Notification  ---------------------------------------*/
 
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.GetToken(),baseUrls.notification);
+        veeryNotification.connectToServer(authService.GetToken(), baseUrls.notification);
     };
     $scope.veeryNotification();
 
@@ -395,9 +395,9 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
 
     /*---------------main tab panel----------------------- */
     $scope.tabs = [
-        {title: 'Dynamic Title 1', content: 'Dynamic content 1', viewType: 'engagement'},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', viewType: '0', disabled: false},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', viewType: '0', disabled: false}
+        {title: 'A526420-Ticket view', content: 'Engagement1', viewType: 'ticketView'},
+        {title: 'A526455-Ticket view', content: 'A526455-Ticket view', viewType: 'engagement'},
+        {title: 'Engagement2', content: 'Engagement2', viewType: 'engagement'}
     ];
 
     $scope.profileTabDetails = [
