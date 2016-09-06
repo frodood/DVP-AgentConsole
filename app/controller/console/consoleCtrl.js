@@ -93,7 +93,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     };
 
     $scope.call={};
-    $scope.call.number={};
+    $scope.call.number="";
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
@@ -120,8 +120,9 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     $scope.profile.server.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3YXJ1bmFAZHVvc29mdHdhcmUuY29tIiwianRpIjoiMTk2N2E5MjItNmIyOS00NDgxLWI2MWUtOTMwZjVmMDA3ZDM3Iiwic3ViIjoiZTBlNTNhOWUtZjNkZi00MTZjLWFmZWItYzI2ZDVhZWIwYWY2IiwiZXhwIjoxNDY1MzEyMTQ2LCJ0ZW5hbnQiOiIxIiwiY29tcGFueSI6IjMiLCJjbGllbnQiOiIxIiwic2NvcGUiOlt7InJlc291cmNlIjoiYXJkc3Jlc291cmNlIiwiYWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0seyJyZXNvdXJjZSI6InJlYWQifSx7InJlc291cmNlIjoid3JpdGUifSx7InJlc291cmNlIjoiZGVsZXRlIn0seyJyZXNvdXJjZSI6InJlc291cmNlIiwiYWN0aW9ucyI6WyJhcmRzcmVzb3VyY2UiLCJyZWFkIiwid3JpdGUiLCJkZWxldGUiLCJyZXNvdXJjZSJdfV0sImlhdCI6MTQ2NDcwNzM0Nn0.brIo8b6per6a1Djm4armChkS4L2O6T40HSrlj-scwcg";
 
     $scope.veeryPhone = {
-        sipSendDTMF:function (dtmf) {
+        sipSendDTMF: function (dtmf) {
             sipSendDTMF(dtmf);
+            $scope.call.number = $scope.call.number +dtmf;
         },
         makeAudioCall: function (callNumber) {
             if (callNumber == "") {
