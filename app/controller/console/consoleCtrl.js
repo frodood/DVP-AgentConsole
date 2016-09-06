@@ -92,8 +92,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
          }*/
     };
 
-    $scope.call = {};
-    $scope.call.number = {};
+   
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
@@ -122,6 +121,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     $scope.veeryPhone = {
         sipSendDTMF: function (dtmf) {
             sipSendDTMF(dtmf);
+            $scope.call.number = $scope.call.number +dtmf;
         },
         makeAudioCall: function (callNumber) {
             if (callNumber == "") {

@@ -1,8 +1,8 @@
 /**
- * Created by Damith on 8/25/2016.
+ * Created by Rajinda on 9/5/2016.
  */
 
-agentApp.controller('engagementCtrl', function ($scope) {
+agentApp.controller('engagementCtrl', function ($scope,engagementService) {
 
 
         var modalEvent = function () {
@@ -19,6 +19,16 @@ agentApp.controller('engagementCtrl', function ($scope) {
 
         $scope.clickAddNewTicket = function (id, className) {
             modalEvent.ticketModel(id, className);
-        }
+        };
+
+
+        $scope.GetEngagementIdsByProfile = function (id) {
+            engagementService.GetEngagementIdsByProfile(id).then(function (response) {
+                $scope.engagementSessions = response;
+            }, function (error) {
+                $scope.showAlert("Load Engagement Sessions", "error", "Fail To Get Engagement Sessions.");
+            });
+        };
+        $scope.GetEngagementIdsByProfile(123);
     }
 );
