@@ -22,13 +22,30 @@ agentApp.controller('engagementCtrl', function ($scope,engagementService) {
         };
 
 
-        $scope.GetEngagementIdsByProfile = function (id) {
-            engagementService.GetEngagementIdsByProfile(id).then(function (response) {
-                $scope.engagementSessions = response;
-            }, function (error) {
-                $scope.showAlert("Load Engagement Sessions", "error", "Fail To Get Engagement Sessions.");
+        $scope.engagementsList = [];
+        $scope.GetEngagementIdsByProfile = function(profileId){
+            engagementService.GetEngagementIdsByProfile(profileId).then(function (response) {
+                if (response) {
+                    engagementService.GetEngagementSessions(profileId, response.engagements).then(function (reply) {
+                        $scope.engagementsList = reply;
+                    }, function (err) {
+                        $scope.showAlert("Get Engagement Sessions", "error", "Fail To Get Engagement Sessions Data.")
+                    });
+                }
+            }, function (err) {
+                $scope.showAlert("Get Engagement Profile", "error", "Fail To Get Engagement Data.")
             });
         };
-        $scope.GetEngagementIdsByProfile(123);
+        $scope.GetEngagementIdsByProfile("57814a3f0203db1413f4efdc");
+
+
+        $scope.showAlert = function (tittle, type, msg) {
+            new PNotify({
+                title: tittle,
+                text: msg,
+                type: type,
+                styling: 'bootstrap3'
+            });
+        };
     }
 );
