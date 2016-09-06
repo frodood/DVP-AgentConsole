@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser,veeryNotification,authService) {
+agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -92,8 +92,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
          }*/
     };
 
-    $scope.call={};
-    $scope.call.number="";
+   
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
@@ -388,7 +387,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     /*--------------------------      Notification  ---------------------------------------*/
 
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.GetToken(),baseUrls.notification);
+        veeryNotification.connectToServer(authService.GetToken(), baseUrls.notification);
     };
     $scope.veeryNotification();
 
@@ -396,9 +395,9 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
 
     /*---------------main tab panel----------------------- */
     $scope.tabs = [
-        {title: 'Dynamic Title 1', content: 'Dynamic content 1', viewType: 'engagement'},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', viewType: '0', disabled: false},
-        {title: 'Dynamic Title 2', content: 'Dynamic content 2', viewType: '0', disabled: false}
+        {title: 'A526420-Ticket view', content: 'Engagement1', viewType: 'ticketView'},
+        {title: 'A526455-Ticket view', content: 'A526455-Ticket view', viewType: 'engagement'},
+        {title: 'Engagement2', content: 'Engagement2', viewType: 'engagement'}
     ];
 
     $scope.profileTabDetails = [
