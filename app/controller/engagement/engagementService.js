@@ -39,10 +39,15 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
     };
 
     var getEngagementSessions = function (engagementId, ids) {
+        var q='?';
+        angular.forEach(ids,function(item){
+         q = q + 'session='+item+'&';
+        });
+
         return $http({
             method: 'get',
-            params: ids,
-            url: baseUrls.engagementUrl+"Engagement/"+engagementId+"/EngagementSessions",
+           // params: ids,
+            url: baseUrls.engagementUrl+"Engagement/"+engagementId+"/EngagementSessions"+q,
             headers: {
                 'authorization':authService.GetToken(),'companyinfo':'1:103'
             }
