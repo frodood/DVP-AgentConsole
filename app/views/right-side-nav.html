@@ -1,0 +1,49 @@
+<div id="mySidenav" class="sidenav">
+
+    <div class="nav-top-bar">
+        <div class="col-sm-8 pull-left">
+            SEND NOTIFICATION
+        </div>
+        <div class="col-sm-4 pull-right" onclick="">
+            close
+        </div>
+    </div>
+
+    <div class="nav-search-txt">
+        <input type="text" class="form-control"
+               placeholder="search user or group">
+    </div>
+
+    <div class="online-user-wrapper">
+        <div class="row notification-list" ng-repeat="agent in agentList">
+            <div class="col-lg-3">
+                <div class="notification-icon user-list  ">
+                    <img src="assets/img/avatar/oykun.jpg"
+                         ng-src="{{agent.img}}">
+                    <div class="user-state"
+                         ng-class="agent.status"></div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="notification-text ">
+                        {{agent.profileName}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="notification-time "
+                         ng-class="agent.status=='online'?'online-text':'offline-text'">
+                        {{agent.status}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="nav-bottom-tool">
+
+    </div>
+
+
+</div>
