@@ -8,7 +8,7 @@ angular.module('authServiceModule' ,[])
 
         this.GetToken = function(){
 
-
+return "Bearer AxMjVkOWU4MGI1YzdjNGY5ODQ2NmY5MjExNzk2ZWJmNDMiLCJleHAiOjE5MDIzODExMTgsInRlbmFudCI6LTEsImNvbXBhbnkiOi0xLCJzY29wZSI6W3sicmVzb3VyY2UiOiJhbGwiLCJhY3Rpb25zIjoiYWxsIn1dLCJpYXQiOjE0NzAzODExMTh9.Gmlu00Uj66Fzts-w6qEwNUz46XYGzE8wHUhAJOFtiRo";
             var data = localStorageService.get("@loginToken");
 
             if(data && data.access_token){

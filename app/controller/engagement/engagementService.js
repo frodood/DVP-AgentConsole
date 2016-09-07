@@ -10,7 +10,8 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
             method: 'get',
             url: baseUrls.engagementUrl+"EngagementByProfile/"+id,
             headers: {
-                'authorization': authService.GetToken()
+                'authorization': authService.GetToken(),
+                'companyinfo':'1:103'
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -26,7 +27,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
             method: 'get',
             url: baseUrls.engagementUrl+"Engagement/"+id,
             headers: {
-                'authorization':authService.GetToken()
+                'authorization':authService.GetToken(),'companyinfo':'1:103'
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -37,12 +38,13 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         });
     };
 
-    var getEngagementSessions = function (ids) {
+    var getEngagementSessions = function (engagementId, ids) {
         return $http({
             method: 'get',
-            url: baseUrls.engagementUrl+"Engagements/"+ids,
+            params: ids,
+            url: baseUrls.engagementUrl+"Engagement/"+engagementId+"/EngagementSessions",
             headers: {
-                'authorization':authService.GetToken()
+                'authorization':authService.GetToken(),'companyinfo':'1:103'
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
