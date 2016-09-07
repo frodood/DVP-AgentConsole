@@ -3,6 +3,7 @@
     background: #0d1c34;
     position: fixed;
     width: 100%;
+    right: 0;
     z-index: 1000;
 }
 
