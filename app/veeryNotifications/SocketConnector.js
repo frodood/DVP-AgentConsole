@@ -16,7 +16,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
         // by default the socket property is null and is not authenticated
         self.socket = socket;
         // initializer function to connect the socket for the first time after logging in to the app
-        self.initialize = function (authToken,notificationBaseUrl) {
+        self.initialize = function (authToken,notificationBaseUrl,onAgentFound) {
 
             try {
                 console.log('initializing socket');
@@ -90,15 +90,9 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 socket.on('agent_found', function (data) {
 
                     var values = data.Message.split("|");
-                    var displayMsg = "Company : " + data.Company + "<br> Company No : " + values[5] + "<br> Caller : " + values[3] + "<br> Skill : " + values[6];
-                    //document.getElementById("lblNotification").innerHTML = displayMsg;
-                   /* Notification.success({
-                        message: displayMsg,
-                        title: 'Call Information\'s',
-                        delay: 10000,
-                        closeOnClick: true
-                    });*/
-                    console.log(data);
+                    //var displayMsg = "Company : " + data.Company + "<br> Company No : " + values[5] + "<br> Caller : " + values[3] + "<br> Skill : " + values[6];
+                    if(onAgentFound)
+                        onAgentFound(data);
                 });
                 socket.on('agent_disconnected', function (data) {
                     // document.getElementById("lblNotification").innerHTML = data.Message;
@@ -116,7 +110,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
 
 notificationMod.factory('veeryNotification', function(notificationConnector, $q) {
     return {
-        connectToServer:function(authToken,notificationBaseUrl){
+        connectToServer:function(authToken,notificationBaseUrl,onAgentFound){
 
             var listenForAuthentication = function(){
                 console.log('listening for socket authentication');
@@ -130,7 +124,7 @@ notificationMod.factory('veeryNotification', function(notificationConnector, $q)
             };
 
             if(!notificationConnector.socket){
-                notificationConnector.initialize(authToken,notificationBaseUrl);
+                notificationConnector.initialize(authToken,notificationBaseUrl,onAgentFound);
                 return listenForAuthentication();
             }else{
                 if(notificationConnector.getAuthenticated()){
