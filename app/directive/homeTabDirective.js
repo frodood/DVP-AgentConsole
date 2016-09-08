@@ -2,7 +2,7 @@
  * Created by Damith on 9/5/2016.
  */
 
-agentApp.directive("engagementTemp", function (engagementService) {
+agentApp.directive("engagementTemp", function (engagementService,ivrService) {
     return {
         restrict: "EA",
         scope:{
@@ -38,6 +38,7 @@ agentApp.directive("engagementTemp", function (engagementService) {
             };
 
 
+            /* Load Past Engagements By Profile ID */
             scope.engagementsList = [];
             scope.GetEngagementIdsByProfile = function(profileId){
                 engagementService.GetEngagementIdsByProfile(profileId).then(function (response) {
@@ -54,6 +55,7 @@ agentApp.directive("engagementTemp", function (engagementService) {
             };
             scope.GetEngagementIdsByProfile("57814a3f0203db1413f4efdc");
 
+            /* Load Current Engagement Notes */
             scope.currentEngagement = {};
             scope.currentEngagement.notes = [];
             scope.GetEngagementSessionNote = function(){
@@ -65,6 +67,7 @@ agentApp.directive("engagementTemp", function (engagementService) {
             };
             scope.GetEngagementSessionNote();
 
+            /* Add New Note To Engagement  */
             scope.noteBody = "";
             scope.AppendNoteToEngagementSession = function(noteBody){
                 engagementService.AppendNoteToEngagementSession(scope.sessionId,{body:noteBody}).then(function (response) {
@@ -80,6 +83,18 @@ agentApp.directive("engagementTemp", function (engagementService) {
                     scope.showAlert("Engagement Session Note", "error", "Fail To Get Engagement Session Note.")
                 });
             };
+
+            /* Load IVR Details for Current Engagement */
+            scope.GetIvrDetailsByEngagementId = function(){
+                ivrService.GetIvrDetailsByEngagementId(scope.sessionId).then(function (response) {
+                    scope.ivrDetails = response;
+                }, function (err) {
+                    scope.showAlert("Engagement Session Note", "error", "Fail To Get Engagement Session Note.")
+                });
+            };
+            scope.GetIvrDetailsByEngagementId();
+
+
 
             scope.showAlert = function (tittle, type, msg) {
                 new PNotify({

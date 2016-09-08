@@ -13,7 +13,8 @@ var baseUrls = {
     'userServiceBaseUrl':'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'notification': 'notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/resource',
-    'engagementUrl':'http://localhost:3637/DVP/API/1.0.0.0/'
+    'engagementUrl':'http://localhost:3637/DVP/API/1.0.0.0/',
+    'ivrUrl':'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

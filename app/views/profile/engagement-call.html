@@ -91,17 +91,8 @@
                     </div>
 
                     <div class="IVR-details-wrap">
-                        <div class="ivr-list">
-                            APPLICATIONFOUND";103;1; APP";"
-                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
-                        </div>
-                        <div class="ivr-list">
-                            APPLICATIONFOUND";103;1; APP";"
-                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
-                        </div>
-                        <div class="ivr-list">
-                            APPLICATIONFOUND";103;1; APP";"
-                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
+                        <div class="ivr-list" ng-repeat="ivr in ivrDetails">
+                            {{ivr.EventName}};{{ivr.EventClass}};{{ivr.EventType}};{{ivr.EventCategory}};{{ivr.EventTime}}
                         </div>
                     </div>
                 </div>
