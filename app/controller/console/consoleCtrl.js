@@ -448,7 +448,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
     //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
 
     $scope.addTabTest =function(){
-        $scope.addTab('Engagement33333', 'Engagement', 'engagement',{
+        $scope.addTab('filter', 'Engagement', 'filter',{
             company: "123",
             direction: "333",
             channelFrom: "33",
