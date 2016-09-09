@@ -8,6 +8,8 @@ var agentApp = angular.module('veeryAgentApp',
         'angular-jwt','veeryNotificationMod', 'btford.socket-io','LocalStorageModule',
         'authServiceModule','ngTagsInput']);
 
+agentApp.constant('moment', moment);
+
 var baseUrls = {
     'authUrl':'http://userservice.app.veery.cloud/oauth/token',
     'userServiceBaseUrl':'http://localhost:3637/DVP/API/1.0.0.0/',
