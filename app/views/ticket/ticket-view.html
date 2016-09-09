@@ -1,0 +1,473 @@
+<div ng-controller="ticketViewCtrl">
+    <div class="ticket-view-wrapper">
+        <!-- MODEL HEADER -->
+        <div class="model-header">
+            <div class="col-md-6">
+                <div class="mode-left-icon  dark float-left">
+                    <i class="main-icon-2-telephone-3"></i>
+                </div>
+                <div class="model-header-text small bold ">
+                    AKDL235659
+                </div>
+                <br/>
+                <div class="model-header-text bold">
+                    Create console template with top menu
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 ">
+                <div class="model-btn-wrapper">
+                    <div class="btn-warp" uib-dropdown>
+                        <span class="btn btn-default" uib-dropdown-toggle>
+                            <i class="main-icon-2-more-1">
+
+                            </i>
+                        </span>
+
+                        <ul class="dropdown-menu console-drop-menu ticket-view-option " uib-dropdown-menu
+                            role="menu"
+                            aria-labelledby="btn-append-to-single-button">
+                            <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
+                            <div class="divider"></div>
+                            <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">Logout</a></li>
+                        </ul>
+
+
+                    </div>
+                    <div class="btn-warp ">
+                        <span class="btn btn-default">edit</span>
+                    </div>
+                    <div class="btn-warp ">
+                        <span class="btn btn-default">comment</span>
+                    </div>
+                    <div class="btn-warp ">
+                        <span class="btn btn-default">assign</span>
+                    </div>
+                    <div class="btn-warp ">
+                        <span class="btn btn-default btn-close" id="closeTicket">close</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- MODEL HEADER -->
+
+        <div class="ticker-details-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-8 col-sm-12">
+
+                        <!-- DETAILS -->
+                        <div class="details-wrap">
+                            <div class="details">
+                                <h5 class="bold">DETAILS</h5>
+                            </div>
+                            <ul class="info-list-lg">
+                                <li>
+                                    <small>Type</small>
+                                    <h5>Question</h5>
+                                </li>
+                                <li>
+                                    <small>Priority</small>
+                                    <h5>
+                                        <div class="bg-checkbox red font-white small-details inline-btn">
+                                            urgent
+                                        </div>
+                                    </h5>
+                                </li>
+                                <li>
+                                    <small>Status</small>
+                                    <h5 class="status-open">Open</h5>
+                                </li>
+                                <li>
+                                    <small>Company</small>
+                                    <h5>Duo Sofatware</h5>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="details-wrap">
+                            <div class="details">
+                                <h5 class="bold">DATES</h5>
+                            </div>
+                            <ul class="info-list-lg">
+                                <li>
+                                    <small>Created</small>
+                                    <h5>02/Aug/16 10:50 AM</h5>
+                                </li>
+                                <li>
+                                    <small>Updated</small>
+                                    <h5>2 hours ago</h5>
+                                </li>
+                                <li>
+                                    <small>Due To</small>
+                                    <h5>05/Aug/16 10:50 AM</h5>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="details-wrap">
+                            <div class="details">
+                                <h5 class="bold">TAGES</h5>
+                            </div>
+                            <div class="bg-checkbox teal600 font-white  inline-btn">
+                                AN56562333
+                            </div>
+                            <div class="bg-checkbox teal600 font-white  inline-btn">
+                                AERFT5656
+                            </div>
+                        </div>
+                        <!-- END DETAILS -->
+
+                        <!-- DESCRIPTION -->
+                        <div class="ticket-dec-wrapper">
+                            <div class="details">
+                                <h5 class="bold">DESCRIPTION</h5>
+                            </div>
+
+                            <small class="font-size-15">Lorem Ipsum is simply dummy text of the printing and typesetting
+                                industry. Lorem Ipsum has
+                                been the industry's standard dummy text ever since the 1500s,
+                            </small>
+                        </div>
+                        <!-- END DESC -->
+
+                        <!-- ATTACHMENT -->
+                        <div class="ticket-dec-wrapper">
+                            <div class="details">
+                                <h5 class="bold">ATTACHMENT</h5>
+                            </div>
+
+                            <div class="dropdown-area">
+                                <i class="main-icon-2-upload-1"></i>
+                                DROP FILES TO ATTACH OR BROWSE
+                            </div>
+
+                            <div class="ticket-upload-view">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="upload-area bold">
+                                            IMAGE 01
+                                        </div>
+                                        <small>image.png</small>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="upload-area bold">
+                                            IMAGE 01
+                                        </div>
+                                        <small>image.png</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END-->
+
+                        <!-- SUB TASK LIST -->
+                        <div class="ticker-subticket-wrapper">
+                            <div class="details">
+                                <h5 class="bold">SUB TICKET </h5>
+                            </div>
+                            <div class="sub-task" style="border-bottom: 0px solid">
+                                <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                    <div class="sub-description">
+                                        <small>A589461</small>
+                                        Lorem Ipsum is simply dummy text of the printing...
+                                    </div>
+                                    <div class="divider-gray"></div>
+
+                                </div>
+                                <div class="col-lg-5 col-sm-12 text-right  ">
+                                    <a class="inline-bt pull-left " href="javascript:void(0);">
+                                        <div class="pull-left commenter-img">
+                                            <img src="assets/img/avatar/jaman_01.jpg">
+                                            Aaron
+                                        </div>
+                                    </a>
+                                    <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                        open
+                                    </div>
+                                    <div class="bg-checkbox orange font-white small-details  inline-bt  ">
+                                        Question
+                                    </div>
+
+                                    <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                        <i class="main-icon-2-more-1 color-green500">
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sub-task" style="border-bottom: 0px solid">
+                                <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                    <div class="sub-description">
+                                        <small>A589461</small>
+                                        Lorem Ipsum is simply dummy text of the...
+                                    </div>
+                                    <div class="divider-gray"></div>
+
+                                </div>
+                                <div class="col-lg-5 col-sm-12 text-right  ">
+                                    <a class="inline-bt pull-left " href="javascript:void(0);">
+                                        <div class="pull-left commenter-img">
+                                            <img src="assets/img/avatar/michael-owens.jpg">
+                                            Abagnale
+                                        </div>
+                                    </a>
+                                    <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                        open
+                                    </div>
+                                    <div class="bg-checkbox teal600 font-white small-details  inline-bt  ">
+                                        complain
+                                    </div>
+
+                                    <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                        <i class="main-icon-2-more-1 color-green500">
+                                        </i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- END -->
+
+                        <!-- related ticket-->
+                        <div class="ticker-subticket-wrapper">
+                            <div class="details">
+                                <h5 class="bold">RELATED TICKET </h5>
+                            </div>
+
+                            <div class="sub-task" style="border-bottom: 0px solid">
+                                <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                    <div class="sub-description">
+                                        <small>A589461</small>
+                                        Lorem Ipsum is simply dummy text of...
+                                        industry.
+                                    </div>
+                                    <div class="divider-gray"></div>
+
+                                </div>
+                                <div class="col-lg-5 col-sm-12 text-right  ">
+                                    <a class="inline-bt pull-left " href="javascript:void(0);">
+                                        <div class="pull-left commenter-img">
+                                            <img src="assets/img/avatar/mikeluby.jpg">
+                                            Abourezk
+                                        </div>
+                                    </a>
+                                    <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                        open
+                                    </div>
+                                    <div class="bg-checkbox orange font-white small-details  inline-bt  ">
+                                        Question
+                                    </div>
+
+                                    <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                        <i class="main-icon-2-more-1 color-green500">
+                                        </i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- end -->
+
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                        <!-- PEOPLE -->
+                        <div class="people-wrap">
+                            <div class="details-wrap people">
+                                <div class="details">
+                                    <h5 class="bold">PEOPLE</h5>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="people-view">
+                                                <div class="people-view-img ">
+                                                    <img src="assets/img/avatar/bobbyjkane.jpg"
+                                                         ng-src="assets/img/avatar/bobbyjkane.jpg">
+                                                </div>
+                                                <div class="row people-view-details">
+                                                    <div class="notification-time text-uppercase bold">
+                                                        submitter
+                                                    </div>
+                                                    <div class="notification-text ">
+                                                        Abagnale, Frank
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="people-view">
+                                                <div class="people-view-img ">
+                                                    <img src="assets/img/avatar/amarkdalen.jpg"
+                                                         ng-src="assets/img/avatar/amarkdalen.jpg">
+                                                </div>
+                                                <div class="row people-view-details">
+                                                    <div class="notification-time text-uppercase bold color-cyan500">
+                                                        requester
+                                                    </div>
+                                                    <div class="notification-text">
+                                                        Aaron, Hank
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="people-view">
+                                                <div class="people-view-img ">
+                                                    <img src="assets/img/avatar/amarkdalen.jpg"
+                                                         ng-src="assets/img/avatar/robertoortiz.jpg">
+                                                </div>
+                                                <div class="row people-view-details">
+                                                    <div class="notification-time text-uppercase bold color-green500">
+                                                        ASSIGNEE
+                                                    </div>
+                                                    <div class="notification-text">
+                                                        Abourezk, James
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PEOPLE -->
+
+                        <!-- COLLABORATORS -->
+                        <div class="collaborators-wrapper">
+                            <div class="details">
+                                <h5 class="bold"> COLLABORATORS
+                                    <!--<div class="pull-right right-icon">-->
+                                    <!--<i class="main-icon-2-add"> </i>-->
+                                    <!--</div>-->
+                                </h5>
+                            </div>
+                            <div class="sub-task">
+                                <div class="pull-left  ">
+                                    <div class="pull-left commenter-img">
+                                        <img src="assets/img/avatar/mikeluby.jpg"/>
+                                        Aaron, Hank
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <div class="bg-checkbox gray300  font-white small-details inline-btn">
+                                        92h 11m / 0h
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sub-task">
+                                <div class="pull-left  ">
+                                    <div class="pull-left commenter-img">
+                                        <img src="assets/img/avatar/jaman_01.jpg"/>
+                                        Abourezk, James
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <div class="bg-checkbox gray300  font-white small-details inline-btn">
+                                        2h 11m / 0h
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END -->
+
+                        <!-- TIME TRACKING  -->
+                        <div class="collaborators-wrapper" style="margin-top: 35px;">
+                            <div class="details">
+                                <h5 class="bold"> TIME TRACKING
+                                </h5>
+
+                            </div>
+                            <div class="time-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Estimated
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <uib-progressbar value="22" type="warning">
+                                        </uib-progressbar>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        1W
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Remaining
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <uib-progressbar value="22" type="success">
+                                        </uib-progressbar>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        0
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Logged
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <uib-progressbar value="100" type="danger">
+                                        </uib-progressbar>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        2w 1d 4h 11m
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- END -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ACTIVITY -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ticket-main-wrap ticker-tab-wrapper">
+                    <div class="details">
+                        <h5 class="bold"> ACTIVITY
+                        </h5>
+                    </div>
+
+                    <div class="tab-wrap">
+                        <uib-tabset class="ticket-tab-panle" active="active">
+                            <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}"
+                                     disable="tab.disabled">
+                                <uib-tab-heading>
+                                    <i class="{{tab.icon}}"></i> {{tab.title}}
+                                </uib-tab-heading>
+
+                                <div ng-switch on="tab.type">
+                                    <div ng-switch-when="comments">
+                                        <div ng-include="'app/views/ticket/template/comments.html'"></div>
+                                    </div>
+                                    <div ng-switch-when="activity">
+                                        <div ng-include="'app/views/ticket/template/activity.html'"></div>
+                                    </div>
+
+                                </div>
+
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END ACTIVITY -->
+
+
+    </div>
+
+
+</div>

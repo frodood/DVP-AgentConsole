@@ -1,9 +1,9 @@
 <uib-tabset active="active">
-    <uib-tab class="console-main-tab" index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}"
-             disable="tab.disabled">
+    <uib-tab active="activeTabIndex" class="console-main-tab" ng-repeat="tab in tabs" heading="{{tab.title}}" disable="tab.disabled">
         <div ng-switch on="tab.viewType">
             <div ng-switch-when="engagement">
-                <div ng-include="'app/views/profile/engagement-call.html'"></div>
+                <engagement-temp session-id="{{tab.notificationData.sessionId}}" skill="{{tab.notificationData.skill}}" company="{{tab.notificationData.company}}" channel="{{tab.notificationData.channel}}" channel-from="{{tab.notificationData.channelFrom}}" channel-to="{{tab.notificationData.channelTo}}" direction="{{tab.notificationData.direction}}"></engagement-temp>
+
             </div>
             <div ng-switch-when="ticketView">
                 <div ng-include="'app/views/ticket/ticket-view.html'"></div>
@@ -11,3 +11,12 @@
         </div>
     </uib-tab>
 </uib-tabset>
+
+<!--<uib-tabset active="activeTabIndex">-->
+    <!--<uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}">Some content</uib-tab>-->
+<!--</uib-tabset>-->
+
+
+<!--<filecountbycategory category="fileCat" load-files="loadFilesByCat(fileCat)"-->
+                     <!--ng-repeat="fileCat in Catagories" style="cursor: pointer">-->
+<!--</filecountbycategory>-->

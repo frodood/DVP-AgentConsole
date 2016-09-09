@@ -1,48 +1,42 @@
 <div class="timelline-wrapper">
     <ul class="timeline">
-        <li>
-            <div class="timeline-badge facebook"><i class="fa fa-facebook"></i></div>
+        <li ng-repeat="eng in engagementsList" ng-class="{'timeline-inverted':eng.direction=='outbound' }">
+            <div class="timeline-badge twitter" ng-class="{'facebook':eng.direction=='outbound' }"><i class="fa fa-facebook"></i></div>
             <div class="timeline-panel">
                 <div class="timeline-heading">
 
                     <ul class="info-list">
                         <li>
                             <small>From</small>
-                            <h5 class="font-color-yellow">18705056580</h5>
+                            <h5 class="font-color-yellow">{{eng.channel_from}}</h5>
                         </li>
                         <li>
                             <small>To</small>
-                            <h5 class="font-color-yellow">94112375000</h5>
+                            <h5 class="font-color-yellow">{{eng.channel_to}}</h5>
                         </li>
                     </ul>
                 </div>
                 <div class="timeline-body bottom-line ">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the
-                        industry's standard dummy text ever since the 1500.</p>
+                    <p>direction : {{eng.direction}}</p>
                 </div>
                 <div class="timeline-body">
-                    <p><i class="fa fa-check-circle-o"></i> Lorem Ipsum is simply dummy text of the printing and
-                        typesetting
-                        industry.
-                    </p>
-                    <p><i class="fa fa-check-circle-o"></i> Lorem Ipsum is simply dummy text of the printing and
-                        typesetting
-                        industry.
+                    <p ng-repeat="note in eng.notes">
+                        <i class="fa fa-check-circle-o"></i>
+                        {{note.body}} -> {{note.author}}
                     </p>
                 </div>
 
                 <div class="timeline-heading">
                     <p>
-                        <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i> 11 hours ago via
-                            Twitter
+                        <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i> {{eng.created_at}} hours ago via
+                            {{eng.channel}}
                         </small>
                     </p>
                 </div>
             </div>
         </li>
 
-        <li>
+       <!-- <li>
             <div class="timeline-badge twitter"><i class="fa fa-twitter"></i></div>
             <div class="timeline-panel">
                 <div class="timeline-heading">
@@ -139,6 +133,6 @@
                         mais bolis eu num gostis.</p>
                 </div>
             </div>
-        </li>
+        </li>-->
     </ul>
 </div>

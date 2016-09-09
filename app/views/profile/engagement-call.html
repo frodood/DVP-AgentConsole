@@ -1,17 +1,17 @@
-<div ng-controller="engagementCtrl">
+<div>
     <!-- left main wrappper -->
     <div class="col-md-4 p-left-0 p-right-0">
         <div class="profile-left-wrapper">
             <div class="layout-header">
                 <div class="col-md-8 col-sm-8">
                     <div class="left-text header-small pull-left">
-                        ID :44caa966-0961-4e2e-a2b9-0e364e23e99c
+                        ID :{{sessionId}}
                         <i class="veery-font-3-copy copy"></i>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 ">
                     <div class="btn-left-icon pull-right p-top-6"
-                         ng-click="clickAddNewTicket('#addNewTicket','display-block');">
+                         ng-click="clickAddNewTicket();">
                         <i class="veery-font-1-add-2"></i>
                         new ticket
                     </div>
@@ -34,63 +34,50 @@
                             <i class="veery-font-1-user"></i>
                         </div>
                         <div class="text-header bold">
-                            ENGAGEMENT
+                            ENGAGEMENT {{test}}
                         </div>
                     </div>
                     <ul class="info-list-lg">
                         <li>
                             <small>Company</small>
-                            <h5>Duo software</h5>
+                            <h5>{{company}}</h5>
                         </li>
                         <li>
                             <small>Direction</small>
-                            <h5>Inbound</h5>
+                            <h5>{{direction}}</h5>
                         </li>
                         <li>
                             <small>Channel From</small>
-                            <h5>18705056580</h5>
+                            <h5>{{channelFrom}}</h5>
                         </li>
                         <li>
                             <small>Channel To</small>
-                            <h5>94112375000</h5>
+                            <h5>{{channelTo}}</h5>
                         </li>
                         <li>
                             <small>Channel</small>
-                            <h5>Call</h5>
+                            <h5>{{channel}}</h5>
+                        </li>
+                        <li>
+                            <small>Skill</small>
+                            <h5>{{skill}}</h5>
                         </li>
                     </ul>
                     <div class="new-note-wrapper">
                         <label class="label-green">Note</label>
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" rows="3" ng-model="noteBody"></textarea>
                         <div class="btn-warp inline-btn  p-top-6 pull-right">
-                            <span class="btn  btn-default btn-sm ">save</span>
+                            <span class="btn  btn-default btn-sm " ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
                         </div>
                     </div>
                     <div class="engagement-note-list">
-                        <div class="note-wrap">
+                        <div class="note-wrap" ng-repeat="engNote in currentEngagement.notes">
                             <div class="left-icon">
                                 <i class="veery-font-1-list"></i>
                             </div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            {{engNote.body}}11
                         </div>
-                        <div class="note-wrap">
-                            <div class="left-icon">
-                                <i class="veery-font-1-list"></i>
-                            </div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </div>
-                        <div class="note-wrap">
-                            <div class="left-icon">
-                                <i class="veery-font-1-list"></i>
-                            </div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </div>
-                        <div class="note-wrap">
-                            <div class="left-icon">
-                                <i class="veery-font-1-list"></i>
-                            </div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </div>
+
                     </div>
                 </div>
                 <div class="IVR-wrapper">
@@ -104,17 +91,8 @@
                     </div>
 
                     <div class="IVR-details-wrap">
-                        <div class="ivr-list">
-                            APPLICATIONFOUND";103;1; APP";"
-                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
-                        </div>
-                        <div class="ivr-list">
-                            APPLICATIONFOUND";103;1; APP";"
-                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
-                        </div>
-                        <div class="ivr-list">
-                            APPLICATIONFOUND";103;1; APP";"
-                            EVENT"; "SYSTEM";"2016-08-22 02:14:42.612-04"
+                        <div class="ivr-list" ng-repeat="ivr in ivrDetails">
+                            {{ivr.EventName}};{{ivr.EventClass}};{{ivr.EventType}};{{ivr.EventCategory}};{{ivr.EventTime}}
                         </div>
                     </div>
                 </div>
@@ -231,28 +209,12 @@
 
             <div class="profile-details-tab">
                 <uib-tabset class="profile-tab-wrapper" active="active">
-                    <uib-tab class="profile-tab" index="$index + 1" ng-repeat="tab in profileTabDetails"
-                             heading="{{tab.title}}">
-                        <div ng-slimscroll
-                             opacity="0.1"
-                             distance="5px"
-                             height="600px"
-                             width="100%"
-                             ng-mouseover="scrollEnabled = true"
-                             ng-mouseleave="scrollEnabled = false"
-                             enabled="{{ scrollEnabled }}">
-
-                            <div ng-switch on="tab.viewType">
-                                <div ng-switch-when="timeline">
-                                    <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
-                                </div>
-                                <div ng-switch-when="ticket">
-                                    <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <uib-tab class="profile-tab" heading="time-line">
+                        <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
                     </uib-tab>
-
+                    <uib-tab class="profile-tab" heading="ticket">
+                        <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
+                    </uib-tab>
                 </uib-tabset>
             </div>
 
@@ -260,7 +222,145 @@
     </div>
     <!-- END RIGHT WRAPPER-->
     <!-- add new ticket -->
-    <div ng-include="'app/views/ticket/add-new-ticket.html'"></div>
+    <div ng-show="showCreateTicket">
+        <div class="position-relative">
+            <div id="addNewTicket" class="animated fixed-model-opacity">
+                <div class="container">
+                    <div class="col-lg-offset-2 col-lg-8 col-md-8 col-xs-8 ">
+                        <div class="model-main-wrapper ">
+                            <!-- MODEL HEADER -->
+                            <div class="model-header">
+                                <div class="col-md-6">
+                                    <div class="mode-left-icon">
+                                        <i class="veery-font-1-notepad"></i>
+                                    </div>
+                                    <div class="model-header-text">
+                                        Add New Ticket
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 ">
+                                    <div class="model-btn-wrapper">
+                                        <div class="btn-warp ">
+                                <span class="btn btn-default btn-close"
+                                      ng-click="clickAddNewTicket('#addNewTicket','display-none')"
+                                      id="closeTicket">close</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODEL HEADER -->
+
+                            <!-- MODEL HEADER -->
+                            <div class="model-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="ticketSubject">Subject</label>
+                                        <input type="text" class="form-control" id="ticketSubject" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="row">
+                                            <div class="col-xs-7">
+                                                <label for="ticketSubject">Priority</label>
+                                                <div class="form-inline">
+                                                    <div class="bg-checkbox red font-white inline-btn">
+                                                        <i class="main-icon-2-cancel"></i>
+                                                        urgent
+                                                    </div>
+                                                    <div class="bg-checkbox red font-white orange">
+                                                        <i class="main-icon-2-cancel"></i>
+                                                        high
+                                                    </div>
+                                                    <div class="bg-checkbox red font-white teal600">
+                                                        <i class="main-icon-2-cancel"></i>
+                                                        normal
+                                                    </div>
+                                                    <div class="bg-checkbox red font-white gray300">
+                                                        <i class="main-icon-2-cancel"></i>
+                                                        low
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                <div class="form-group">
+                                                    <label for="ticketSubject">Type</label>
+                                                    <select class="form-control">
+                                                        <option>Select type</option>
+                                                        <option>question</option>
+                                                        <option>complain</option>
+                                                        <option>incident</option>
+                                                        <option>action</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="ticketSubject">Tags</label>
+                                        <tags-input ng-model="tags">
+                                            <auto-complete source="loadTags($query)"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ticketSubject">Description</label>
+                                        <textarea class="form-control" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ticketSubject">Assignee user</label>
+                                        <tags-input ng-model="users"
+                                                    display-property="profileName"
+                                                    placeholder="choose assignee user"
+                                                    replace-spaces-with-dashes="false">
+                                            <auto-complete source="loadUser($query)"
+                                                           min-length="0"
+                                                           load-on-focus="true"
+                                                           load-on-empty="true"
+                                                           max-results-to-show="32"
+                                                           template="my-custom-template">
+                                            </auto-complete>
+                                        </tags-input>
+                                        <script type="text/ng-template" id="my-custom-template">
+                                            <div class="auto-complete-left-panel">
+                                                <img ng-src="{{data.img}}"/>
+                                            </div>
+                                            <div class="auto-complete-right-panel">
+                                                <span ng-bind-html="$highlight($getDisplayText())"></span>
+                                            </div>
+                                        </script>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ticketSubject">Related Tickets</label>
+                                        <tags-input ng-model="related" placeholder="enter here.."
+                                        <auto-complete source="loadTags($query)"></auto-complete>
+                                        </tags-input>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <!-- END MODEL HEADER -->
+                            <div class="model-footer-wrapper">
+                                <div class="model-btn-wrapper">
+                                    <div class="btn-warp ">
+                                <span class="btn btn-default"
+                                      ng-click="clickAddNewTicket('#addNewTicket','display-none')"
+                                        >Save</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END ROW -->
 
