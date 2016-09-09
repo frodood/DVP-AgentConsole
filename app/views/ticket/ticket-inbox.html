@@ -16,10 +16,10 @@
                     <div class="col-md-6 col-sm-6 ">
                         <div class="model-btn-wrapper">
                             <div class="btn-warp">
-                                <span class="btn btn-default">my ticket</span>
+                                <span id ="mybtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted" ng-click="switchTickets('MY')">my ticket</span>
                             </div>
                             <div class="btn-warp">
-                                <span class="btn btn-default">group</span>
+                                <span id="grpbtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted" ng-click="switchTickets('GROUP')">group</span>
                             </div>
                             <div class="btn-warp ">
                                 <span class="btn btn-default btn-close"
@@ -32,7 +32,7 @@
 
                 <div class="ticket-list-wrapper">
                     <!-- #todolist -->
-                    <div class="col-md-4">
+                    <div class="col-md-4" id="todo-block">
                         <div class="ticket-list-header">
                             TODO ({{ticketList.toDo.length}})
                         </div>
@@ -43,8 +43,9 @@
                              width="100%"
                              ng-mouseover="chatWidgetscrollEnabled = true"
                              ng-mouseleave="chatWidgetscrollEnabled = false"
-                             enabled="{{ chatWidgetscrollEnabled }}">
-                            <div class="ticket-details todo" ng-repeat="todo in ticketList.toDo">
+                             enabled="{{ chatWidgetscrollEnabled }}"
+                                ng-onscroll="showIt()"id="scrltodo">
+                            <div class="ticket-details todo" id="todo-items" ng-repeat="todo in ticketList.toDo">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/oykun.jpg"
@@ -54,21 +55,32 @@
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="notification-text ">
-                                            {{todo.task}}
+                                            {{todo.subject}}<div class="notification-ref link" ng-click="gotoTicket(todo.id)">
+                                            {{todo.reference}}
                                         </div>
+                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="notification-time ">
-                                            {{todo.time}}
-                                        </div>
-                                        <div class="notification-time group ">
                                             {{todo.type}}
                                         </div>
-                                        <div class="notification-time link" ng-click="gotoTicket(todo.id)">
-                                            {{todo.id}}
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="notification-time " ng-show="todo.assignee_name">
+                                            {{todo.assignee_name}}
+                                        </div>
+                                        <div class="notification-time " ng-show="todo.assignee_group_name">
+                                             {{todo.assignee_group_name}}
+                                        </div>
+                                        <div class="notification-time group ">
+                                            {{todo.timeDelay}}
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -83,7 +95,8 @@
                              width="100%"
                              ng-mouseover="chatWidgetscrollEnabled = true"
                              ng-mouseleave="chatWidgetscrollEnabled = false"
-                             enabled="{{ chatWidgetscrollEnabled }}">
+                             enabled="{{ chatWidgetscrollEnabled }}"
+                             onscroll="showIt()">
                             <div class="ticket-details in-progress" ng-repeat="inprogress in ticketList.inProgress">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
@@ -94,19 +107,29 @@
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="notification-text ">
-                                            {{inprogress.task}}
+                                            {{inprogress.subject}}
+                                            <div class="notification-ref link" ng-click="gotoTicket(todo.id)">
+                                                {{inprogress.reference}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="notification-time ">
-                                            {{inprogress.time}}
-                                        </div>
-                                        <div class="notification-time group ">
                                             {{inprogress.type}}
                                         </div>
-                                        <div class="notification-time link" ng-click="gotoTicket(todo.id)">
-                                            {{inprogress.id}}
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="notification-time " ng-show="inprogress.assignee">
+                                            {{inprogress.assignee_name}}
                                         </div>
+
+                                        <div class="notification-time " ng-show="inprogress.assignee_group">
+                                            {{inprogress.assignee_group_name}}
+                                        </div>
+                                    <div class="notification-time group ">
+                                        {{inprogress.timeDelay}}
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -134,18 +157,27 @@
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="notification-text ">
-                                            {{done.task}}
+                                            {{done.status}}
+                                            <div class="notification-ref link" ng-click="gotoTicket(todo.id)">
+                                                {{done.reference}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="notification-time ">
-                                            {{done.time}}
-                                        </div>
-                                        <div class="notification-time group ">
                                             {{done.type}}
                                         </div>
-                                        <div class="notification-time link" ng-click="gotoTicket(todo.id)">
-                                            {{done.id}}
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="notification-time " ng-show="done.assignee">
+                                            {{done.assignee_name}}
+                                        </div>
+                                        <div class="notification-time " ng-show="done.assignee_group">
+                                            {{done.assignee_group_name}}
+                                        </div>
+                                        <div class="notification-time group ">
+                                            {{done.timeDelay}}
                                         </div>
                                     </div>
                                 </div>

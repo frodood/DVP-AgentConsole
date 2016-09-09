@@ -10,8 +10,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
             method: 'get',
             url: baseUrls.engagementUrl+"EngagementByProfile/"+id,
             headers: {
-                'authorization': authService.GetToken(),
-                'companyinfo':'1:103'
+                'authorization': authService.GetToken()
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -27,7 +26,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
             method: 'get',
             url: baseUrls.engagementUrl+"Engagement/"+id,
             headers: {
-                'authorization':authService.GetToken(),'companyinfo':'1:103'
+                'authorization':authService.GetToken()
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -49,7 +48,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
            // params: ids,
             url: baseUrls.engagementUrl+"Engagement/"+engagementId+"/EngagementSessions"+q,
             headers: {
-                'authorization':authService.GetToken(),'companyinfo':'1:103'
+                'authorization':authService.GetToken()
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -60,10 +59,48 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getEngagementSessionNote = function (engagementId) {
+
+        return $http({
+            method: 'get',
+           // params: ids,
+            url: baseUrls.engagementUrl+"EngagementSession/"+engagementId+"/Note",
+            headers: {
+                'authorization':authService.GetToken()
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
+    var appendNoteToEngagementSession = function (engagementId,note) {
+
+        return $http({
+            method: 'post',
+            data: note,
+            url: baseUrls.engagementUrl+"EngagementSession/"+engagementId+"/Note",
+            headers: {
+                'authorization':authService.GetToken()
+            }
+        }).then(function (response) {
+            if (response.data) {
+                return response.data.IsSuccess;
+            } else {
+                return false;
+            }
+        });
+    };
+
     return {
         GetEngagementIdsByProfile: getEngagementIdsByProfile,
         GetEngagementSession:getEngagementSession,
-        GetEngagementSessions:getEngagementSessions
+        GetEngagementSessions:getEngagementSessions,
+        GetEngagementSessionNote:getEngagementSessionNote,
+        AppendNoteToEngagementSession:appendNoteToEngagementSession
     }
 });
 

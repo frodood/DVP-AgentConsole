@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService) {
+agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -28,7 +28,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
             if ($scope.isRegistor) {
                 $scope.ShowHidePhone(!$scope.showPhone);
             } else {
-                $scope.veeryPhone.Register('duodilani', 'DuoS123');
+                $scope.veeryPhone.Register('duoarafath', 'DuoS123');
             }
         },
         openTicketViews: function () {
@@ -388,15 +388,33 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     /*--------------------------Veery Phone---------------------------------------*/
 
     /*--------------------------      Notification  ---------------------------------------*/
+    $scope.agentFound = function (data) {
+        var values = data.Message.split("|");
+        var notifyData  ={
+            company: data.Company,
+            direction: values[7],
+            channelFrom: values[3],
+            channelTo:values[5],
+            channel: 'Call',
+            skill : values[6],
+            sessionId :values[1]
+        };
+       $scope.addTab('Engagement' + values[3], 'Engagement', 'engagement',notifyData);
+    };
 
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.GetToken(), baseUrls.notification);
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification,$scope.agentFound);
     };
+
     $scope.veeryNotification();
+
+
+
 
     /*--------------------------      Notification  ---------------------------------------*/
 
     /*---------------main tab panel----------------------- */
+   
     $scope.tabs = [
         {title: 'A526420-Ticket view', content: 'Engagement1', viewType: 'ticketView'},
         {title: 'A526455-Ticket view', content: 'A526455-Ticket view', viewType: 'engagement'},
@@ -405,9 +423,38 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
         {title: 'Mail Inbox', content: 'Mail Inbox', viewType: 'mail-inbox'}
     ];
 
-    $scope.profileTabDetails = [
-        {title: 'Time Line', content: 'Dynamic content 1', viewType: 'timeline'},
-        {title: 'Ticket', content: 'Dynamic content 2', viewType: 'ticket', disabled: false},
-        {title: 'Infomation', content: 'Dynamic content 2', viewType: '0', disabled: false}
-    ];
+    $scope.activeTabIndex = 0;
+    $scope.tabs = [];
+
+    var data  ={
+        company: "weweqw",
+            direction: "ewq",
+            channelFrom: "eqweqw",
+            channelTo: "eqw",
+            channel: "weweqweqw"
+    };
+
+    $scope.addTab = function(title,content, viewType,notificationData) {
+        var newTab = { title: title, content:content, viewType:viewType ,notificationData:notificationData};
+        $scope.tabs.push(newTab);
+        $scope.activeTabIndex = ($scope.tabs.length - 1);
+        //$timeout(function(){
+        //    $scope.activeTabIndex = ($scope.tabs.length - 1);
+        //});
+
+    };
+    //$scope.addTab('A526420-Ticket view', 'Engagement1', 'ticketView',data);
+    //$scope.addTab('A526455-Ticket view', 'A526455-Ticket view', 'engagement',data);
+    //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
+
+    $scope.addTabTest =function(){
+        $scope.addTab('Engagement33333', 'Engagement', 'engagement',{
+            company: "123",
+            direction: "333",
+            channelFrom: "33",
+            channelTo: "33",
+            channel: "555"
+        });
+    };
+
 });

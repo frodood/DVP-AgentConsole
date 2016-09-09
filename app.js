@@ -8,12 +8,16 @@ var agentApp = angular.module('veeryAgentApp',
         'angular-jwt','veeryNotificationMod', 'btford.socket-io','LocalStorageModule',
         'authServiceModule','ngTagsInput']);
 
+agentApp.constant('moment', moment);
+
 var baseUrls = {
     'authUrl':'http://userservice.app.veery.cloud/oauth/token',
-    'userServiceBaseUrl':'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'userServiceBaseUrl':'http://localhost:3637/DVP/API/1.0.0.0/',
     'notification': 'notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/resource',
-    'engagementUrl':'http://engagementservice.app.veery.cloud/DVP/API/1.0.0.0/'
+    'engagementUrl':'http://localhost:3636/DVP/API/1.0.0.0/',
+    'ticketUrl':'http://localhost:3686/DVP/API/1.0.0.0/',
+    'ivrUrl':'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/'
 };
 
 agentApp.constant('baseUrls', baseUrls);
