@@ -131,12 +131,12 @@
                     <div class="profile-img-wrapper">
                         <div class="col-lg-3 ">
                             <div class="profile-details-img">
-                                <img src="assets/img/avatar/profile_img150x150.jpg">
+                                <img src="{{profileDetail.avatar}}">
                             </div>
                             <div class="profile-status">
-                                Jesse
+                                {{profileDetail.name}}
                                 <br/>
-                                <span>+94715986462</span>
+                                <span>{{channelFrom}}</span>
                             </div>
                         </div>
                         <div class="col-lg-9">
@@ -150,23 +150,23 @@
                                     <ul class="info-list">
                                         <li>
                                             <small>First Name</small>
-                                            <h5>Jesse</h5>
+                                            <h5>{{profileDetail.firstname}}</h5>
                                         </li>
                                         <li>
                                             <small>Last Name</small>
-                                            <h5>Pinkman</h5>
+                                            <h5>{{profileDetail.lastname}}</h5>
                                         </li>
                                     </ul>
                                     <ul class="info-list">
                                         <li>
                                             <small>Full Name</small>
-                                            <h5>Jesse Pinkman</h5>
+                                            <h5>{{profileDetail.firstname}} {{profileDetail.lastname}}</h5>
                                         </li>
                                     </ul>
                                     <ul class="info-list">
                                         <li>
                                             <small>Email</small>
-                                            <h5>JessePinkman@breakingbad.com</h5>
+                                            <h5>{{profileDetail.email}}</h5>
                                         </li>
                                     </ul>
                                 </div>
@@ -179,17 +179,17 @@
                                     <ul class="info-list">
                                         <li>
                                             <small>PO.Box No</small>
-                                            <h5>322 16th</h5>
+                                            <h5>{{profileDetail.address.zipcode}}</h5>
                                         </li>
                                         <li>
                                             <small>Street</small>
-                                            <h5>St SW,Albuquerque</h5>
+                                            <h5>{{profileDetail.address.street}}</h5>
                                         </li>
                                     </ul>
                                     <ul class="info-list">
                                         <li>
                                             <small>City</small>
-                                            <h5>Albuquerque</h5>
+                                            <h5>{{profileDetail.address.city}}</h5>
                                         </li>
                                     </ul>
 

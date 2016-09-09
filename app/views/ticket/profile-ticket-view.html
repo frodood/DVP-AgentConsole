@@ -1,39 +1,36 @@
 <div class="profile-ticket-wrapper">
 
-    <div class="profile-ticker-wrap new-ticker">
+    <div class="profile-ticker-wrap new-ticker" ng-repeat="ticket in ticketList">
         <div class="ticket-channel call">
             <i class="veery-font-3-mail-4"></i>
         </div>
         <div class="left-avatar">
-            <img class="object-fit_cover" src="assets/img/avatar/avater_ticket.jpg">
+            <img class="object-fit_cover" src="{{ticket.submitter.avatar}}">
         </div>
         <div class="right-ticket-details">
             <div class="row">
                 <div class="ticker-id bold">
-                    A25635123SDss
+                    {{ticket.reference}}
                 </div>
                 <div class="ticket-subj bold">
-                    Lorem Ipsum is simply dummy text of the printing
-                    <small class="high">HIGH</small>
+                    {{ticket.subject}}
+                    <small class="high">{{ticket.priority}}</small>
                 </div>
                 <div class="ticket-desc">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    i
-                    ndustry's standard dummy text ever since the 1500s
-                    ndustry's standard dummy text ever since the 1500s
+                    {{ticket.description}}
                 </div>
                 <ul class="info-list-lg">
                     <li>
                         <small>OWNER</small>
-                        <h5>owner</h5>
+                        <h5>{{ticket.submitter.name}}</h5>
                     </li>
                     <li>
                         <small>USER</small>
-                        <h5>user</h5>
+                        <h5>{{ticket.requester.name}}</h5>
                     </li>
                 </ul>
                 <div class="ticket-date">
-                    1 day ago
+                    {{ticket.created_at}}
                 </div>
             </div>
 

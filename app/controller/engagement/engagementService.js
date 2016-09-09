@@ -10,8 +10,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
             method: 'get',
             url: baseUrls.engagementUrl+"EngagementByProfile/"+id,
             headers: {
-                'authorization': authService.GetToken(),
-                'companyinfo':'1:103'
+                'authorization': authService.GetToken()
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -27,7 +26,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
             method: 'get',
             url: baseUrls.engagementUrl+"Engagement/"+id,
             headers: {
-                'authorization':authService.GetToken(),'companyinfo':'1:103'
+                'authorization':authService.GetToken()
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -49,7 +48,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
            // params: ids,
             url: baseUrls.engagementUrl+"Engagement/"+engagementId+"/EngagementSessions"+q,
             headers: {
-                'authorization':authService.GetToken(),'companyinfo':'1:103'
+                'authorization':authService.GetToken()
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -67,7 +66,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
            // params: ids,
             url: baseUrls.engagementUrl+"EngagementSession/"+engagementId+"/Note",
             headers: {
-                'authorization':authService.GetToken(),'companyinfo':'1:103'
+                'authorization':authService.GetToken()
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -85,7 +84,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
             data: note,
             url: baseUrls.engagementUrl+"EngagementSession/"+engagementId+"/Note",
             headers: {
-                'authorization':authService.GetToken(),'companyinfo':'1:103'
+                'authorization':authService.GetToken()
             }
         }).then(function (response) {
             if (response.data) {

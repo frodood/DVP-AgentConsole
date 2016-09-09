@@ -1,14 +1,15 @@
 /**
- * Created by Rajinda on 9/8/2016.
+ * Created by Rajinda on 9/9/2016.
  */
 
-agentApp.factory("ticketService", function ($http, baseUrls,authService) {
+
+agentApp.factory("userService", function ($http, baseUrls,authService) {
 
 
-    var getAllTicketsByRequester = function (requester,page) {
+    var getExternalUserProfileByContact = function (category,contact) {
         return $http({
-            method: 'get',
-            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/10/"+page,
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByContact/"+category+"/"+contact,
             headers: {
                 'authorization': authService.GetToken()
             }
@@ -23,7 +24,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
 
     return {
-        GetAllTicketsByRequester: getAllTicketsByRequester
+        GetExternalUserProfileByContact:getExternalUserProfileByContact
     }
 });
 

@@ -400,7 +400,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
     };
 
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkdW9kaWxhbmkiLCJqdGkiOiI0NjJiNjZhNi0yZTMxLTQ1NWEtOGEyMy02ZmM3ODU5NTUxYmQiLCJzdWIiOiJBY2Nlc3MgY2xpZW50IiwiZXhwIjoxNDczOTM1MTM0LCJ0ZW5hbnQiOjEsImNvbXBhbnkiOjEwMywiYXVkIjoibXlhcHAiLCJjb250ZXh0Ijp7InJlc291cmNlaWQiOiI1MCIsInZlZXJ5YWNjb3VudCI6eyJjb250YWN0IjoiOTUwMEBkdW8ubWVkaWExLnZlZXJ5LmNsb3VkIiwiZGlzcGxheSI6Ijk1MDAiLCJ2ZXJpZmllZCI6dHJ1ZSwidHlwZSI6InNpcCJ9fSwic2NvcGUiOlt7InJlc291cmNlIjoiYXJkc3Jlc291cmNlIiwiYWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiXX0seyJyZXNvdXJjZSI6Im5vdGlmaWNhdGlvbiIsImFjdGlvbnMiOlsicmVhZCIsIndyaXRlIl19LHsicmVzb3VyY2UiOiJteVVzZXJQcm9maWxlIiwiYWN0aW9ucyI6WyJyZWFkIl19XSwiaWF0IjoxNDczMzMwMzM0fQ.xoXet4lEO6Zo0eWtPMqeD1DeCOsy8GNt3zrD9MaIPJY", baseUrls.notification,$scope.agentFound);
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification,$scope.agentFound);
     };
 
     $scope.veeryNotification();
@@ -432,9 +432,9 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
         //});
 
     };
-    $scope.addTab('A526420-Ticket view', 'Engagement1', 'ticketView',data);
-    $scope.addTab('A526455-Ticket view', 'A526455-Ticket view', 'engagement',data);
-    $scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
+    //$scope.addTab('A526420-Ticket view', 'Engagement1', 'ticketView',data);
+    //$scope.addTab('A526455-Ticket view', 'A526455-Ticket view', 'engagement',data);
+    //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
 
     $scope.addTabTest =function(){
         $scope.addTab('Engagement33333', 'Engagement', 'engagement',{
