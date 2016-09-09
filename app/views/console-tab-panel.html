@@ -8,6 +8,12 @@
             <div ng-switch-when="ticketView">
                 <div ng-include="'app/views/ticket/ticket-view.html'"></div>
             </div>
+            <div ng-switch-when="filter">
+                <div ng-include="'app/views/ticket/filter/ticket-filter.html'"></div>
+            </div>
+            <div ng-switch-when="mail-inbox">
+                <div ng-include="'app/views/mail-inbox/inbox-view.html'"></div>
+            </div>
         </div>
     </uib-tab>
 </uib-tabset>

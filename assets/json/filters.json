@@ -1,0 +1,35 @@
+{
+  "d": [
+    {
+      "id": "1",
+      "name": "Your unsolved tickets",
+      "count": "0",
+      "class": "white-bg"
+    },
+    {
+      "id": "2",
+      "name": "Unassigned tickets",
+      "count": "5"
+    },
+    {
+      "id": "3",
+      "name": "All unsolved tickets",
+      "count": "3"
+    },
+    {
+      "id": "4",
+      "name": "Recently updated tickets",
+      "count": "5"
+    },
+    {
+      "id": "5",
+      "name": "Recently updated tickets",
+      "count": "0"
+    },
+    {
+      "id": "6",
+      "name": "Recently updated tickets",
+      "count": "0"
+    }
+  ]
+}

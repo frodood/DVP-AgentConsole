@@ -98,9 +98,14 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right" uib-dropdown>
+
+                        <li class="console-menu-icon m-left-10 m-right-10">
+                            <i class="veery-font-1-notepad" ng-click="consoleTopMenu.openTicketViews();">
+                            </i>
+
                         <li class="console-menu-icon m-left-10 m-right-10"
                             uib-dropdown uib-dropdown-toggle>
-                            <i class="veery-font-1-notepad" ng-click="consoleTopMenu.openTicket()"></i>
+                            <i class="veery-font-1-file-1" ng-click="consoleTopMenu.openTicket()"></i>
                         <li class="console-menu-icon m-left-10 m-right-10">
                             <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none"
                                style="margin-top: 3px;"></i>
@@ -403,14 +408,23 @@
         <div ng-include="'app/views/right-side-nav.html'"></div>
 
         <!-- tab panel -->
-        <div class=" console-tab-wrapper">
-            <div ng-include="'app/views/console-tab-panel.html'"></div>
+        <div class="console-tab-wrapper">
+            <div ng-include="'app/views/console-tab-panel.html'">
+
+            </div>
+
         </div>
     </div>
 
 
-    <div ui-view></div>
+    <div ui-view>
+    </div>
 </div>
+
+
+<!--
+  ### please don't remove this code
+ -->
 
 <!-- phone VIdeo/audio panel  -->
 <!--<div>-->

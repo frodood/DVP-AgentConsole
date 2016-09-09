@@ -30,6 +30,9 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
             } else {
                 $scope.veeryPhone.Register('duodilani', 'DuoS123');
             }
+        },
+        openTicketViews: function () {
+            divModel.model('#ticketFilterWrap', 'display-block');
         }
 
     };
@@ -92,7 +95,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
          }*/
     };
 
-   
+
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
@@ -121,7 +124,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     $scope.veeryPhone = {
         sipSendDTMF: function (dtmf) {
             sipSendDTMF(dtmf);
-            $scope.call.number = $scope.call.number +dtmf;
+            $scope.call.number = $scope.call.number + dtmf;
         },
         makeAudioCall: function (callNumber) {
             if (callNumber == "") {
@@ -397,7 +400,9 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, jwtHelper, 
     $scope.tabs = [
         {title: 'A526420-Ticket view', content: 'Engagement1', viewType: 'ticketView'},
         {title: 'A526455-Ticket view', content: 'A526455-Ticket view', viewType: 'engagement'},
-        {title: 'Engagement2', content: 'Engagement2', viewType: 'engagement'}
+        //{title: 'Engagement2', content: 'Engagement2', viewType: 'engagement'},
+        {title: 'Ticket Filter', content: 'Ticket Filter', viewType: 'filter'},
+        {title: 'Mail Inbox', content: 'Mail Inbox', viewType: 'mail-inbox'}
     ];
 
     $scope.profileTabDetails = [
