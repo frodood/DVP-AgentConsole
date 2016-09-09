@@ -17,19 +17,58 @@ agentApp.directive("engagementTemp", function (engagementService, ivrService, us
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
 
-            scope.showCreateTicket = false;
+            /*Add New Ticket*/
 
             var modalEvent = function () {
                 return {
                     ticketModel: function (id, className) {
                         if (className == 'display-block') {
-                            $(id).removeClass('display-none').addClass(className + ' fadeIn');
+                            $(id).removeClass('display-none').addClass(className);
                         } else if (className == 'display-none') {
                             $(id).removeClass('display-block').addClass(className);
                         }
                     }
                 }
             }();
+
+            scope.tags = [
+                {text: 'just'},
+                {text: 'some'},
+                {text: 'cool'},
+                {text: 'tags'}
+            ];
+            scope.related = [
+                {text: '8975622'}
+            ];
+            scope.loadTags = function (query) {
+                return $http.get('/tags?query=' + query);
+            };
+
+            scope.users = [];
+            //scope.loadUser = function ($query) {
+            //    return $http.get('assets/json/assigneeUsers.json', {cache: true}).then(function (response) {
+            //        var countries = response.data;
+            //        console.log(countries);
+            //        return countries.filter(function (country) {
+            //            return country.profileName.toLowerCase().indexOf($query.toLowerCase()) != -1;
+            //        });
+            //    });
+            //};
+
+            scope.loadUser = function ($query) {
+                userService.LoadUser($query).then(function (response) {
+                    return response;
+                }, function (err) {
+                    scope.showAlert("load User", "error", "Fail To Get User List.");
+                    return undefined;
+                });
+            };
+
+
+            /*Add New Ticket*/
+
+
+            scope.showCreateTicket = false;
 
             scope.clickAddNewTicket = function () {
                 scope.showCreateTicket = !scope.showCreateTicket;
