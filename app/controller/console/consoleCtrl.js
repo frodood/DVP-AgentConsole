@@ -464,7 +464,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
             channel: "555"
         });
     }
-    $scope.addMailInbox = function () {
+   var addMailInbox = function () {
         $scope.addTab('Mail Inbox', 'Mail Inbox', 'mail-inbox', {
             company: "123",
             direction: "333",
@@ -473,7 +473,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
             channel: "555"
         });
     };
-
+    addMailInbox();
 
 
     $rootScope.$on('newTicketTab', function (events,args) {
