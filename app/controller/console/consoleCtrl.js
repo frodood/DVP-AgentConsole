@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,userService,tagService) {
+agentApp.controller('consoleCtrl', function ($rootScope,$scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,userService,tagService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
