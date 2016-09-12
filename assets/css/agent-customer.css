@@ -1312,6 +1312,10 @@ div > div >
     padding: 0px;
 }
 
+.p-bottom-15 {
+    padding-bottom: 15px;
+}
+
 .m-bottom-0 {
     margin-bottom: 0px;
 }
@@ -1974,4 +1978,85 @@ div > div >
 
 .round:hover {
     color: #ffffff;
+}
+
+.login-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #17373c;
+}
+
+.login-wrap {
+    margin: 0 auto;
+}
+
+.login-header {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.login-header > img {
+    width: 200px;
+    height: auto;
+}
+
+.login-body {
+    margin: 0 auto;
+    background: #17373c;
+    width: 360px;
+    height: 320px;
+    -webkit-box-shadow: -3px 6px 40px -7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: -3px 6px 40px -7px rgba(0, 0, 0, 0.3);
+    box-shadow: -3px 6px 40px -7px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 60px 25px 10px 25px;
+    position: relative;
+}
+
+.login-text {
+    background: transparent;
+    height: 40px;
+}
+
+.login-text:focus {
+    border-color: #36ba45;
+}
+
+.login-body::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 261px;
+    margin: auto 0px;
+    text-align: center;
+    left: 17px;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 78px solid #17373c;
+}
+
+.forget-pwd {
+    color: #436469;
+    text-align: right;
+    padding-top: 25px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-btn {
+    text-align: center;
+    color: #d2c242;
+    margin-left: -225px;
+    margin-top: 25px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-btn:hover,
+.forget-pwd:hover {
+    color: #36ba45;
 }
