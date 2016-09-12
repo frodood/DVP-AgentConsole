@@ -22,9 +22,6 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav m-left-25" uib-dropdown>
-                        <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i
-                                class="veery-font-1-alarm" ng-click="addTabTest();"> </i>
-                        </li>
                         <!-- notification -->
                         <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i
                                 class="veery-font-1-alarm"> </i>
@@ -103,7 +100,7 @@
                     <ul class="nav navbar-nav navbar-right" uib-dropdown>
 
                         <li class="console-menu-icon m-left-10 m-right-10">
-                            <i class="veery-font-1-notepad">
+                            <i class="veery-font-1-notepad" ng-click="addFilterTab();">
                             </i>
 
                         <li class="console-menu-icon m-left-10 m-right-10"
@@ -246,7 +243,7 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                                    >Hi,admin</a>
+                            >Hi,admin</a>
                             <a class="time">Good Morning</a>
 
                         </li>
