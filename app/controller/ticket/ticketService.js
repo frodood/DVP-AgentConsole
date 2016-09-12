@@ -35,8 +35,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         {
             return response;
         });
-        };
-        var getOpenTickets= function (recordCount,pageCount) {
+    };
+    var getOpenTickets= function (recordCount,pageCount) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
@@ -49,7 +49,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
-   var  getClosedTickets= function (recordCount,pageCount) {
+    var  getClosedTickets= function (recordCount,pageCount) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
@@ -62,7 +62,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
-   var getMyNewTickets= function (recordCount,pageCount) {
+    var getMyNewTickets= function (recordCount,pageCount) {
         var authToken = authService.GetToken();
 
         return $http({
@@ -89,7 +89,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
-   var getMyClosedTickets= function (recordCount,pageCount) {
+    var getMyClosedTickets= function (recordCount,pageCount) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
@@ -145,11 +145,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     }
 
     return {
-        GetEngagementSessions:getEngagementSessions,
         GetAllTicketsByRequester: getAllTicketsByRequester,
-        GetEngagementIdsByProfile: getEngagementIdsByProfile,
-        GetEngagementSession:getEngagementSession,
-        GetEngagementSessions:getEngagementSessions,
         getNewTickets:getNewTickets,
         getOpenTickets:getOpenTickets,
         getClosedTickets:getClosedTickets,
@@ -157,8 +153,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getMyOpenTickets:getMyOpenTickets,
         getMyClosedTickets:getMyClosedTickets,
         getMyGroupTickets:getMyGroupTickets,
-        getMyGroupOpenTickets:getMyGroupTickets,
-        getMyGroupClosedTickets:getMyGroupTickets
+        getMyGroupOpenTickets:getMyGroupOpenTickets,
+        getMyGroupClosedTickets:getMyGroupClosedTickets
     }
 });
 
