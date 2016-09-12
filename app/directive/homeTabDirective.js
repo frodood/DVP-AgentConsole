@@ -2,7 +2,7 @@
  * Created by Damith on 9/5/2016.
  */
 
-agentApp.directive("engagementTemp", function (engagementService, ivrService, userService, ticketService) {
+agentApp.directive("engagementTemp", function ($filter, engagementService, ivrService, userService, ticketService, tagService) {
     return {
         restrict: "EA",
         scope: {
@@ -12,10 +12,14 @@ agentApp.directive("engagementTemp", function (engagementService, ivrService, us
             channelTo: "@",
             channel: "@",
             skill: "@",
-            sessionId: "@"
+            sessionId: "@",
+            availableTags: "=",
+            users: "="
         },
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
+
+
 
             /*Add New Ticket*/
 
@@ -31,47 +35,190 @@ agentApp.directive("engagementTemp", function (engagementService, ivrService, us
                 }
             }();
 
-            scope.tags = [
-                {text: 'just'},
-                {text: 'some'},
-                {text: 'cool'},
-                {text: 'tags'}
-            ];
-            scope.related = [
-                {text: '8975622'}
-            ];
-            scope.loadTags = function (query) {
-                return $http.get('/tags?query=' + query);
+            scope.related = [];
+
+            scope.loadTags = function () {
+                tagService.GetAllTags().then(function (response) {
+                    scope.availableTags = response;
+                }, function (err) {
+                    scope.showAlert("load Tags", "error", "Fail To Get Tag List.  ")
+                });
             };
 
-            scope.users = [];
-            //scope.loadUser = function ($query) {
-            //    return $http.get('assets/json/assigneeUsers.json', {cache: true}).then(function (response) {
-            //        var countries = response.data;
-            //        console.log(countries);
-            //        return countries.filter(function (country) {
-            //            return country.profileName.toLowerCase().indexOf($query.toLowerCase()) != -1;
-            //        });
-            //    });
-            //};
+            function createTagFilterFor(query) {
+                var lowercaseQuery = angular.lowercase(query);
+                return function filterFn(group) {
+                    return (group.name.toLowerCase().indexOf(lowercaseQuery) != -1);
+                };
+            }
 
-            scope.loadUser = function ($query) {
-                userService.LoadUser($query).then(function (response) {
-                    return response;
+            scope.queryTagSearch = function (query) {
+                if (query === "*" || query === "") {
+                    if (scope.availableTags) {
+                        return scope.availableTags;
+                    }
+                    else {
+                        return [];
+                    }
+
+                }
+                else {
+                    var results = query ? scope.availableTags.filter(createTagFilterFor(query)) : [];
+                    return results;
+                }
+
+            };
+
+            scope.onChipAddTag = function (chip) {
+                //attributeService.AddAttributeToGroup(scope.groupinfo.GroupId, chip.AttributeId, "Attribute Group").then(function (response) {
+                //    if (response) {
+                //        console.info("AddAttributeToGroup : " + response);
+                //        scope.showAlert("Info", "Info", "ok", "Attribute " + chip.Attribute + " Save successfully");
+                //
+                //    }
+                //    else {
+                //        scope.resetAfterAddFail(chip);
+                //        scope.showError("Error", "Fail To Save " + chip.Attribute);
+                //    }
+                //}, function (error) {
+                //    scope.resetAfterAddFail(chip);
+                //    scope.showError("Error", "Fail To Save " + chip.Attribute);
+                //});
+            };
+
+            scope.onChipDeleteTag = function (chip) {
+                //attributeService.DeleteOneAttribute(scope.groupinfo.GroupId, chip.AttributeId).then(function (response) {
+                //    if (response) {
+                //        console.info("AddAttributeToGroup : " + response);
+                //        scope.showAlert("Info", "Info", "ok", "Successfully Delete " + chip.Attribute);
+                //    }
+                //    else {
+                //        scope.resetAfterDeleteFail(chip);
+                //        scope.showError("Error", "Fail To Delete " + chip.Attribute);
+                //    }
+                //}, function (error) {
+                //    scope.showError("Error", "Fail To Delete " + chip.Attribute);
+                //    scope.resetAfterDeleteFail(chip);
+                //});
+
+            };
+
+
+            // input-tags users
+
+            scope.loadUsers = function () {
+                userService.LoadUser().then(function (response) {
+                    scope.users = response;
                 }, function (err) {
-                    scope.showAlert("load User", "error", "Fail To Get User List.");
-                    return undefined;
+                    scope.showAlert("load Users", "error", "Fail To Get User List.")
                 });
+            };
+
+
+            function createFilterFor(query) {
+                var lowercaseQuery = angular.lowercase(query);
+                return function filterFn(group) {
+                    return (group.username.toLowerCase().indexOf(lowercaseQuery) != -1);
+                };
+            }
+
+            scope.querySearch = function (query) {
+                if (query === "*" || query === "") {
+                    if (scope.users) {
+                        return scope.users;
+                    }
+                    else {
+                        return [];
+                    }
+
+                }
+                else {
+                    var results = query ? scope.users.filter(createFilterFor(query)) : [];
+                    return results;
+                }
+
+            };
+
+            scope.onChipAddUser = function (chip) {
+                //attributeService.AddAttributeToGroup(scope.groupinfo.GroupId, chip.AttributeId, "Attribute Group").then(function (response) {
+                //    if (response) {
+                //        console.info("AddAttributeToGroup : " + response);
+                //        scope.showAlert("Info", "Info", "ok", "Attribute " + chip.Attribute + " Save successfully");
+                //
+                //    }
+                //    else {
+                //        scope.resetAfterAddFail(chip);
+                //        scope.showError("Error", "Fail To Save " + chip.Attribute);
+                //    }
+                //}, function (error) {
+                //    scope.resetAfterAddFail(chip);
+                //    scope.showError("Error", "Fail To Save " + chip.Attribute);
+                //});
+            };
+
+            scope.onChipDeleteUser = function (chip) {
+                //attributeService.DeleteOneAttribute(scope.groupinfo.GroupId, chip.AttributeId).then(function (response) {
+                //    if (response) {
+                //        console.info("AddAttributeToGroup : " + response);
+                //        scope.showAlert("Info", "Info", "ok", "Successfully Delete " + chip.Attribute);
+                //    }
+                //    else {
+                //        scope.resetAfterDeleteFail(chip);
+                //        scope.showError("Error", "Fail To Delete " + chip.Attribute);
+                //    }
+                //}, function (error) {
+                //    scope.showError("Error", "Fail To Delete " + chip.Attribute);
+                //    scope.resetAfterDeleteFail(chip);
+                //});
+
             };
 
 
             /*Add New Ticket*/
 
+            scope.setPriority = function (priority) {
+                scope.ticket.priority = priority;
+            };
+
+            scope.saveTicket = function (ticket) {
+                ticket.channel = scope.channel;
+                if (ticket.selectedTags) {
+                    ticket.tags = ticket.selectedTags.map(function (obj) {
+                        return obj.name;
+                    });
+                }
+
+
+                ticketService.SaveTicket(ticket).then(function (response) {
+                    if (!response) {
+                        scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.")
+                    }
+                    scope.showCreateTicket = !response;
+                }, function (err) {
+                    scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
+                });
+
+
+            };
 
             scope.showCreateTicket = false;
 
+
             scope.clickAddNewTicket = function () {
+                scope.ticket = {};
+                scope.ticket.priority = 'normal';
                 scope.showCreateTicket = !scope.showCreateTicket;
+                if (scope.showCreateTicket) {
+                    if (scope.users.length > 0) {
+                        var id = ticketService.GetResourceIss();
+                        scope.ids = $filter('filter')(scope.users, {username: id});
+                        if (scope.ids) {
+                            if (scope.ids.length > 0) {
+                                scope.ticket.assignee = scope.ids[0]._id;
+                            }
+                        }
+                    }
+                }
             };
 
 
@@ -177,10 +324,10 @@ agentApp.directive("engagementTemp", function (engagementService, ivrService, us
             //scope.GetAllTicketsByRequester();
 
 
-            scope.GetProfileHistory = function(profileId){
+            scope.GetProfileHistory = function (profileId) {
                 console.info("GetProfileHistory........................");
                 scope.GetEngagementIdsByProfile(profileId);
-                scope.GetAllTicketsByRequester(profileId,1);
+                scope.GetAllTicketsByRequester(profileId, 1);
             };
 
             scope.showAlert = function (tittle, type, msg) {

@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService) {
+agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,userService,tagService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -448,7 +448,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
     //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
 
     $scope.addTabTest =function(){
-        $scope.addTab('filter', 'Engagement', 'filter',{
+        $scope.addTab('engagement', 'Engagement', 'engagement',{
             company: "123",
             direction: "333",
             channelFrom: "33",
@@ -457,4 +457,26 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
         });
     };
 
+
+    // load User List
+    $scope.users = [];
+    $scope.loadUsers = function () {
+        userService.LoadUser().then(function (response) {
+            $scope.users = response;
+        }, function (err) {
+            $scope.showAlert("load Users", "error", "Fail To Get User List.")
+        });
+    };
+    $scope.loadUsers();
+
+    // load tag List
+    $scope.tags = [];
+    $scope.loadTags = function () {
+        tagService.GetAllTags().then(function (response) {
+            $scope.tags = response;
+        }, function (err) {
+            $scope.showAlert("load Tags", "error", "Fail To Get Tag List.")
+        });
+    };
+    $scope.loadTags();
 });

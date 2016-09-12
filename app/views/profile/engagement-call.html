@@ -256,7 +256,7 @@
                                 <form>
                                     <div class="form-group">
                                         <label for="ticketSubject">Subject</label>
-                                        <input type="text" class="form-control" id="ticketSubject" placeholder="">
+                                        <input  ng-model="ticket.subject"  type="text" class="form-control" id="ticketSubject" placeholder="">
                                     </div>
 
                                     <div class="form-group">
@@ -265,19 +265,19 @@
                                             <div class="col-xs-7">
                                                 <label for="ticketSubject">Priority</label>
                                                 <div class="form-inline">
-                                                    <div class="bg-checkbox red font-white inline-btn">
-                                                        <i class="main-icon-2-cancel"></i>
+                                                    <div class="bg-checkbox red font-white inline-btn" ng-click="setPriority('urgent');">
+                                                        <i class="main-icon-2-cancel" ></i>
                                                         urgent
                                                     </div>
-                                                    <div class="bg-checkbox red font-white orange">
+                                                    <div class="bg-checkbox red font-white orange" ng-click="setPriority('high');">
                                                         <i class="main-icon-2-cancel"></i>
                                                         high
                                                     </div>
-                                                    <div class="bg-checkbox red font-white teal600">
+                                                    <div class="bg-checkbox red font-white teal600"  ng-click="setPriority('normal');">
                                                         <i class="main-icon-2-cancel"></i>
                                                         normal
                                                     </div>
-                                                    <div class="bg-checkbox red font-white gray300">
+                                                    <div class="bg-checkbox red font-white gray300" ng-click="setPriority('low');">
                                                         <i class="main-icon-2-cancel"></i>
                                                         low
                                                     </div>
@@ -286,8 +286,7 @@
                                             <div class="col-xs-5">
                                                 <div class="form-group">
                                                     <label for="ticketSubject">Type</label>
-                                                    <select class="form-control">
-                                                        <option>Select type</option>
+                                                    <select class="form-control" ng-model="ticket.type">
                                                         <option>question</option>
                                                         <option>complain</option>
                                                         <option>incident</option>
@@ -303,40 +302,58 @@
 
                                     <div class="form-group">
                                         <label for="ticketSubject">Tags</label>
-                                        <tags-input ng-model="tags">
-                                            <auto-complete source="loadTags($query)"></auto-complete>
+                                        <!--<tags-input ng-model="tags">-->
+                                            <!--<auto-complete source="loadTags($query)"></auto-complete>-->
+                                        <!--</tags-input>-->
+                                        <tags-input ng-model="ticket.selectedTags" placeholder="choose Tags" replace-spaces-with-dashes="false"
+                                                    display-property="name"
+                                                    add-from-autocomplete-only="true"
+                                                    on-tag-added="onChipAddTag($tag)"
+                                                    on-tag-removed="onChipDeleteTag($tag)"
+                                                    ng-disabled="" min-length="1">
+                                            <auto-complete source="queryTagSearch($query)"
+                                                           load-on-empty="true"
+                                                           load-on-focus="true"
+                                                           min-length="1"></auto-complete>
                                         </tags-input>
                                     </div>
                                     <div class="form-group">
                                         <label for="ticketSubject">Description</label>
-                                        <textarea class="form-control" rows="3"></textarea>
+                                        <textarea ng-model="ticket.description" class="form-control" rows="3"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="ticketSubject">Assignee user</label>
-                                        <tags-input ng-model="users"
-                                                    display-property="profileName"
-                                                    placeholder="choose assignee user"
-                                                    replace-spaces-with-dashes="false">
-                                            <auto-complete source="loadUser($query)"
-                                                           min-length="0"
-                                                           load-on-focus="true"
+                                        <!--<tags-input ng-model="ticket.assignUsers" placeholder="choose assignee user" replace-spaces-with-dashes="false"
+                                                    display-property="username"
+                                                    add-from-autocomplete-only="true"
+                                                    on-tag-added="onChipAddUser($tag)"
+                                                    on-tag-removed="onChipDeleteUser($tag)"
+                                                    ng-disabled="" min-length="1">
+                                            <auto-complete source="querySearch($query)"
                                                            load-on-empty="true"
-                                                           max-results-to-show="32"
-                                                           template="my-custom-template">
-                                            </auto-complete>
-                                        </tags-input>
-                                        <script type="text/ng-template" id="my-custom-template">
+                                                           load-on-focus="true"
+                                                           min-length="1"></auto-complete>
+                                        </tags-input>-->
+
+                                        <select class="form-control" ng-model="ticket.assignee"
+                                                ng-model-options="{trackBy: '$value'}">
+                                            <option ng-repeat="c in users" value='{{c._id}}'>
+                                                {{c.username}}
+                                            </option>
+                                        </select>
+
+                                        <!--<script type="text/ng-template" id="my-custom-template">
                                             <div class="auto-complete-left-panel">
                                                 <img ng-src="{{data.img}}"/>
                                             </div>
                                             <div class="auto-complete-right-panel">
                                                 <span ng-bind-html="$highlight($getDisplayText())"></span>
                                             </div>
-                                        </script>
+                                        </script>-->
                                     </div>
                                     <div class="form-group">
                                         <label for="ticketSubject">Related Tickets</label>
-                                        <tags-input ng-model="related" placeholder="enter here.."
+                                        <tags-input ng-model="ticket.related" placeholder="enter here..">
                                         <auto-complete source="loadTags($query)"></auto-complete>
                                         </tags-input>
                                     </div>
@@ -348,7 +365,7 @@
                                 <div class="model-btn-wrapper">
                                     <div class="btn-warp ">
                                 <span class="btn btn-default"
-                                      ng-click="clickAddNewTicket('#addNewTicket','display-none')"
+                                      ng-click="saveTicket(ticket);"
                                         >Save</span>
                                     </div>
                                 </div>

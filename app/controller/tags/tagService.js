@@ -1,14 +1,14 @@
 /**
- * Created by Rajinda on 9/8/2016.
+ * Created by Rajinda on 9/12/2016.
  */
 
-agentApp.factory("ivrService", function ($http, baseUrls,authService) {
+agentApp.factory("tagService", function ($http, baseUrls,authService) {
 
 
-    var getIvrDetailsByEngagementId = function (id) {
+    var getAllTags = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.ivrUrl+id,
+            url: baseUrls.ticketUrl+"Tags",
             headers: {
                 'authorization': authService.GetToken()
             }
@@ -22,7 +22,7 @@ agentApp.factory("ivrService", function ($http, baseUrls,authService) {
     };
 
     return {
-        GetIvrDetailsByEngagementId: getIvrDetailsByEngagementId
+        GetAllTags: getAllTags
     }
 });
 
