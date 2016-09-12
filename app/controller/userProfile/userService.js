@@ -22,7 +22,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
-    var loadUser = function () {
+    var loadUser = function ($query) {
 
         return $http.get('assets/json/assigneeUsers.json', {cache: true}).then(function (response) {
             var countries = response.data;
