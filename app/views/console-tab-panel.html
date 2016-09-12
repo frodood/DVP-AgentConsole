@@ -11,7 +11,8 @@
 
             </div>
             <div ng-switch-when="ticketView">
-                <div ng-include="'app/views/ticket/ticket-view.html'"></div>
+                <ticket-tab-view ticket-details="{{tab}}""></ticket-tab-view>
+                <!--<div ng-include="'app/views/ticket/ticket-view.html'"></div>-->
             </div>
             <div ng-switch-when="filter">
                 <div ng-include="'app/views/ticket/filter/ticket-filter.html'"></div>

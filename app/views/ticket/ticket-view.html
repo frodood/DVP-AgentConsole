@@ -1,4 +1,4 @@
-<div ng-controller="ticketViewCtrl">
+<div >
     <div class="ticket-view-wrapper">
         <!-- MODEL HEADER -->
         <div class="model-header">
@@ -7,11 +7,11 @@
                     <i class="main-icon-2-telephone-3"></i>
                 </div>
                 <div class="model-header-text small bold ">
-                    AKDL235659
+                    {{ticketID}}
                 </div>
                 <br/>
                 <div class="model-header-text bold">
-                    Create console template with top menu
+                    {{ticketSubject}}
                 </div>
             </div>
 
@@ -68,19 +68,19 @@
                             <ul class="info-list-lg">
                                 <li>
                                     <small>Type</small>
-                                    <h5>Question</h5>
+                                    <h5>{{ticket.type}}</h5>
                                 </li>
                                 <li>
                                     <small>Priority</small>
                                     <h5>
                                         <div class="bg-checkbox red font-white small-details inline-btn">
-                                            urgent
+                                            {{ticket.priority}}
                                         </div>
                                     </h5>
                                 </li>
                                 <li>
                                     <small>Status</small>
-                                    <h5 class="status-open">Open</h5>
+                                    <h5 class="status-open">{{ticket.status}}</h5>
                                 </li>
                                 <li>
                                     <small>Company</small>
