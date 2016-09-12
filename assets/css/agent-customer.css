@@ -74,7 +74,7 @@ body {
     top: -10px;
     margin: auto 0px;
     text-align: center;
-    left: 143px;
+    left: 122px;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-bottom: 22px solid white;
@@ -428,8 +428,8 @@ body {
 }
 
 .call-operation-wrapper {
-    width: 295px;
-    height: 70px;
+    width: 260px;
+    height: 50px;
     position: fixed;
     bottom: 100px;
     right: 50px;
@@ -437,7 +437,7 @@ body {
     -webkit-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
-    padding: 16px;
+    padding: 12px;
     border-radius: 45px;
     z-index: 2000;
 }
@@ -446,15 +446,15 @@ body {
     display: inline-block;
     background: #f7f5f5;
     border-radius: 63%;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     overflow: hidden;
     text-align: center;
-    padding-top: 7px;
+    padding-top: 5px;
 }
 
 .phone-button-wrapper > .phone-btn > i {
-    font-size: 20px;
+    font-size: 16px;
     padding: 5px;
     color: #17373c;
 }
@@ -1976,6 +1976,12 @@ div > div >
     cursor: pointer;
 }
 
+.round-img-80 {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
 .round:hover {
     color: #ffffff;
 }
@@ -2059,4 +2065,9 @@ div > div >
 .login-btn:hover,
 .forget-pwd:hover {
     color: #36ba45;
+}
+
+.disable-btn {
+    cursor: not-allowed;
+    background: #8298ae !important;
 }

@@ -89,23 +89,17 @@
             <div class="col-sm-10">
 
                 <div class="mail-right-header ">
+                    <div class="mail-option-header ">
+                        <div class="mail-btn-wrap">
+                            <div class="mail-header bold">
+                                INBOX (02)
+                            </div>
+                        </div>
 
-                    <div class="mail-option-header">
-                        <div class="mail-btn-wrap">
-                            <span class="btn btn-default btn-green100">convert to ticket</span>
-                        </div>
-                        <div class="mail-btn-wrap">
-                            <span class="btn btn-default btn-green500">create ticket</span>
-                        </div>
-                        <div class="mail-btn-wrap">
-                            <span class="btn btn-default btn-green700">engagement</span>
-                        </div>
 
                         <div class="pull-right">
-                            <div class="mail-btn-wrap ">
-                                <span class="btn">
-                                     <i class="fa fa-trash-o"></i>
-                                </span>
+                            <div class="mail-btn-wrap color-green500 bold ">
+                                <h5>1-10 of 150</h5>
                             </div>
                             <div class="mail-btn-wrap ">
                                 <span class="btn">
@@ -116,6 +110,16 @@
                                 <span class="btn">
                                      <i class="main-icon-2-next"></i>
                                 </span>
+                            </div>
+                            <div class="mail-btn-wrap" ng-show="isSelectedEmail">
+                                <div class="mail-btn-wrap" ng-click="closeMailDesc();">
+                                    <span class="btn btn-default btn-green500">back</span>
+                                </div>
+                            </div>
+                            <div class="mail-btn-wrap" ng-show="isSelectedEmail">
+                                <div class="mail-btn-wrap" ng-click="closeMailDesc();">
+                                    <span class="btn btn-default btn-green100">close</span>
+                                </div>
                             </div>
 
                         </div>
@@ -154,7 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mail-details">
+                    <div ng-click="clickMoreEmailDetails()" class="mail-details">
                         <div class="col-lg-12 col-sm-12">
                             <div class="col-sm-12 col-md-1">
                                 <div class="checkbox">
@@ -187,27 +191,28 @@
 
                     <!-- view email more template -->
                     <div id="emailDescView" class="email-desc-wrapper">
+
+
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-5">
-                                    <div class="user-img">
-                                        <img src="assets/img/avatar/oykun.jpg">
-                                        <div class="pull-right">
-                                            <h5 class="bold"> Jone k.p</h5>
-                                            <h5 class="bold"> Thu, Sep 1, 2016 at 6:33 PM</h5>
-
-                                        </div>
-
+                                    <div class="user-img pull-left">
+                                        <img class="round-img-80"
+                                             src="assets/img/avatar/oykun.jpg">
+                                    </div>
+                                    <div class="pull-left p-left-15">
+                                        <h5 class="bold">From : Jone k.p</h5>
+                                        <h5 class="bold">To : Jone k.p</h5>
+                                        <h5 class="bold">Date : Thu, Sep 1, 2016 at 6:33 PM</h5>
                                     </div>
                                 </div>
                                 <div class="col-lg-7">
-                                    <div class="pull-right">
-                                        <div class="mail-btn-wrap round " ng-click="closeMailDesc()">
-                                            <i class="fa fa-close"></i>
+                                    <div class="mail-option-header text-right">
+                                        <div class="mail-btn-wrap">
+                                            <span class="btn btn-default btn-green100">convert to ticket</span>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="row">
