@@ -390,52 +390,50 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
     /*--------------------------      Notification  ---------------------------------------*/
     $scope.agentFound = function (data) {
         var values = data.Message.split("|");
-        var notifyData  ={
+        var notifyData = {
             company: data.Company,
             direction: values[7],
             channelFrom: values[3],
-            channelTo:values[5],
+            channelTo: values[5],
             channel: 'Call',
-            skill : values[6],
-            sessionId :values[1]
+            skill: values[6],
+            sessionId: values[1]
         };
-       $scope.addTab('Engagement' + values[3], 'Engagement', 'engagement',notifyData);
+        $scope.addTab('Engagement' + values[3], 'Engagement', 'engagement', notifyData);
     };
 
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification,$scope.agentFound);
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound);
     };
 
     $scope.veeryNotification();
 
 
-
-
     /*--------------------------      Notification  ---------------------------------------*/
 
     /*---------------main tab panel----------------------- */
-   
+
     $scope.tabs = [
         {title: 'A526420-Ticket view', content: 'Engagement1', viewType: 'ticketView'},
         {title: 'A526455-Ticket view', content: 'A526455-Ticket view', viewType: 'engagement'},
         //{title: 'Engagement2', content: 'Engagement2', viewType: 'engagement'},
-        {title: 'Ticket Filter', content: 'Ticket Filter', viewType: 'filter'},
-        {title: 'Mail Inbox', content: 'Mail Inbox', viewType: 'mail-inbox'}
+        // {title: 'Ticket Filter', content: 'Ticket Filter', viewType: 'filter'},
+        //{title: 'Mail Inbox', content: 'Mail Inbox', viewType: 'mail-inbox'}
     ];
 
     $scope.activeTabIndex = 0;
     $scope.tabs = [];
 
-    var data  ={
+    var data = {
         company: "weweqw",
-            direction: "ewq",
-            channelFrom: "eqweqw",
-            channelTo: "eqw",
-            channel: "weweqweqw"
+        direction: "ewq",
+        channelFrom: "eqweqw",
+        channelTo: "eqw",
+        channel: "weweqweqw"
     };
 
-    $scope.addTab = function(title,content, viewType,notificationData) {
-        var newTab = { title: title, content:content, viewType:viewType ,notificationData:notificationData};
+    $scope.addTab = function (title, content, viewType, notificationData) {
+        var newTab = {title: title, content: content, viewType: viewType, notificationData: notificationData};
         $scope.tabs.push(newTab);
         $scope.activeTabIndex = ($scope.tabs.length - 1);
         //$timeout(function(){
@@ -479,4 +477,36 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
         });
     };
     $scope.loadTags();
+    $scope.addFilterTab = function () {
+        $scope.addTab('Ticket Filter', 'Filter', 'filter', {
+            company: "123",
+            direction: "333",
+            channelFrom: "33",
+            channelTo: "33",
+            channel: "555"
+        });
+    }
+   var addMailInbox = function () {
+        $scope.addTab('Mail Inbox', 'Mail Inbox', 'mail-inbox', {
+            company: "123",
+            direction: "333",
+            channelFrom: "33",
+            channelTo: "33",
+            channel: "555"
+        });
+    };
+    addMailInbox();
+
+
+    $rootScope.$on('newTicketTab', function (events,args) {
+        if( $scope.tabs.indexOf(args)==-1)
+        {
+            var tabTopic = "Ticket"+args.reference;
+            $scope.addTab(tabTopic, tabTopic, 'ticketView',args);
+        }
+
+
+    });
+
+
 });

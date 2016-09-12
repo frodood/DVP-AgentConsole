@@ -4,9 +4,9 @@
 
 
 var agentApp = angular.module('veeryAgentApp',
-    ['ui.bootstrap', 'ui.router', 'jkuri.slimscroll','veerySoftPhoneModule','base64',
-        'angular-jwt','veeryNotificationMod', 'btford.socket-io','LocalStorageModule',
-        'authServiceModule','ngTagsInput']);
+    ['ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
+        'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
+        'authServiceModule', 'ngTagsInput']);
 
 agentApp.constant('moment', moment);
 
@@ -25,12 +25,15 @@ agentApp.constant('baseUrls', baseUrls);
 agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
     function ($httpProvider, $stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/console');
+        $urlRouterProvider.otherwise('/login');
         $stateProvider.state("console", {
             url: "/console",
             templateUrl: "app/views/console-view.html"
         }).state("console.ticket", {
             url: "/ticket",
             templateUrl: "app/views/ticket/ticket-inbox.html"
+        }).state('login', {
+            url: "/login",
+            templateUrl: "app/auth/login.html"
         })
     }]);

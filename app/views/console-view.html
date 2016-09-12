@@ -22,9 +22,6 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav m-left-25" uib-dropdown>
-                        <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i
-                                class="veery-font-1-alarm" ng-click="addTabTest();"> </i>
-                        </li>
                         <!-- notification -->
                         <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i
                                 class="veery-font-1-alarm"> </i>
@@ -103,7 +100,7 @@
                     <ul class="nav navbar-nav navbar-right" uib-dropdown>
 
                         <li class="console-menu-icon m-left-10 m-right-10">
-                            <i class="veery-font-1-notepad">
+                            <i class="veery-font-1-notepad" ng-click="addFilterTab();">
                             </i>
 
                         <li class="console-menu-icon m-left-10 m-right-10"
@@ -116,7 +113,7 @@
                         </li>
 
                         <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle>
-                            <i class="veery-font-3-mail-5"></i>
+                            <i class="veery-font-3-mail-5" ng-click="addMailInbox();"></i>
 
                             <div class="console-notification-header">
                                 5
@@ -246,22 +243,25 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                                    >Hi,admin</a>
+                            >Hi,admin</a>
                             <a class="time">Good Morning</a>
 
                         </li>
                         <ul class="dropdown-menu console-drop-menu" uib-dropdown-menu role="menu"
                             aria-labelledby="btn-append-to-single-button">
-                            <li><a class="drop-header">Profile</a></li>
-                            <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
 
-                            <li><a class="drop-header">Filter</a></li>
+                            <li><a class="drop-header">Register</a></li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">Call</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">ticket</a></li>
+
+                            <li><a class="drop-header">Break</a></li>
                             <li class="divider"></li>
+                            <li class="menuitem" role="menuitem"><a href="#">available</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">official</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">meal</a></li>
+                            <li class="divider"></li>
+                            <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="#">Logout</a></li>
                         </ul>
 
@@ -305,7 +305,7 @@
         </div>
 
         <!-- phone operation panel  -->
-        <div id="isOperationPhone" class="call-operation-wrapper display-none" id="callOperation">
+        <div id="isOperationPhone" class="call-operation-wrapper " id="callOperation">
 
             <div class="phone-button-wrapper">
                 <div class="phone-btn">
