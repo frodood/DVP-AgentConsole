@@ -1,49 +1,79 @@
-<div id="mySidenav" class="sidenav">
+<div id="mySidenav" class="sidenav" ng-controller="notificationCenterCtrl">
 
-    <div class="nav-top-bar">
-        <div class="col-sm-8 pull-left">
-            SEND NOTIFICATION
-        </div>
-        <div class="col-sm-4 pull-right" onclick="">
-            close
-        </div>
-    </div>
 
-    <div class="nav-search-txt">
-        <input type="text" class="form-control"
-               placeholder="search user or group">
-    </div>
+    <!--<div class="nav-search-txt">-->
+    <!--<input type="text" class="form-control"-->
+    <!--placeholder="search user or group">-->
+    <!--</div>-->
 
     <div class="online-user-wrapper">
-        <div class="row notification-list" ng-repeat="agent in agentList">
-            <div class="col-lg-3">
-                <div class="notification-icon user-list  ">
-                    <img src="assets/img/avatar/oykun.jpg"
-                         ng-src="{{agent.img}}">
-                    <div class="user-state"
-                         ng-class="agent.status"></div>
-                </div>
+        <div ng-mouseover="chatOption = true"
+             ng-mouseleave="chatOption = false"
+             class="notification-user" ng-repeat="agent in agentList">
+            <div class="user-img">
+                <img src="assets/img/avatar/oykun.jpg"
+                     ng-src="{{agent.img}}">
+                {{agent.profileName}}
             </div>
-            <div class="col-lg-9">
-                <div class="row">
-                    <div class="notification-text ">
-                        {{agent.profileName}}
-                    </div>
+            <div class="notification-details">
+                <div class="chat-icon" ng-show="chatOption">
+                    <i class="main-icon-2-telephone-3"></i>
                 </div>
-                <div class="row">
-                    <div class="notification-time "
-                         ng-class="agent.status=='online'?'online-text':'offline-text'">
-                        {{agent.status}}
+                <div class="chat-icon" ng-show="chatOption">
+                    <i class="main-icon-2-transfer-8"></i>
+                </div>
+                <div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock()">
+                    <i class="main-icon-2-speech-bubble"></i>
+                </div>
+                <div class="user-state" style="margin-right: 5px;margin-left: 10px;"
+                     ng-class="agent.status=='online'?'online':'offline'"
+                ></div>
+            </div>
+        </div>
+
+        <div class="nav-bottom-tool">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control nav-search-text"
+                           placeholder="search user or group">
+                </div>
+                <div class="col-md-6">
+                    <div class="nav-bottom-icon">
+                        <i class="main-icon-2-cancel" ng-click="closeNav()"> </i>
                     </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div
+                id="sendMessage" class="message-wrapper display-none">
+            <div class="send-notification-wrapper">
+                <div class="wrap">
+                    <div class="people-view full-width">
+                        <div class="row people-view-details">
+                            <div class="notification-text inline-block">
+                                Abagnale, Frank
+                            </div>
+                            <div class="notification-text inline-block pull-right message-close"
+                                 ng-click="closeMessage();"
+                                 style="padding-right: 17px;">
+                                CLOSE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="txtMessage"
+                                  class="form-control" rows="3">
+                        </textarea>
+                    </div>
+                    <div class="btn-warp inline-btn pull-right">
+                        <span class="btn btn-default ">send</span>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-
-
-    <div class="nav-bottom-tool">
-
-    </div>
-
-
 </div>

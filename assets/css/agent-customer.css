@@ -278,20 +278,6 @@ body {
     display: inline-block;
 }
 
-.notification-ref {
-    text-align: left;
-    font-size: 12px;
-    display: inline-block;
-}
-.notification-ref.link {
-    text-align: right;
-    font-size: 12px;
-    cursor: pointer;
-    float: right;
-    color: #14d0a0;
-    font-family: 'AvenirNextLTPro-Bold', sans-serif;
-}
-
 .notification-time.link {
     text-align: right;
     font-size: 10px;
@@ -318,16 +304,16 @@ body {
 
 .send-notification-wrapper {
     background: rgba(255, 255, 255, 0.95);
-    width: 100%;
-    position: absolute;
-    height: 412px;
+    width: 315px;
+    height: 100%;
+    position: fixed;
     top: 0;
-    border-radius: 5px;
-    display: none;
+    border-radius: 0px;
 }
 
 .send-notification-wrapper > .wrap {
-    padding: 100px 20px 10px 20px;
+    padding: 100px 20px 10px 10px;
+    margin-top: 200px;
 }
 
 /*console phone wrapper */
@@ -724,6 +710,7 @@ ul.info-list-lg > li > h5 {
 .profile-details-tab {
     position: absolute;
     top: 90%;
+    width: 100%;
 }
 
 .profile-tab {
@@ -1041,25 +1028,27 @@ ul.info-list-lg > li > h5 {
 
 /*profile ticker view */
 .profile-ticker-wrap {
-    min-height: 130px;
+    min-height: 100px;
     height: auto;
     width: 100%;
-    background: #f7f5f5;
+    background: #fff;
     -webkit-box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
     box-shadow: -7px 3px 27px -14px rgba(0, 0, 0, 0.75);
-    padding: 10px 10px 10px 20px;
+    padding: 10px 10px 6px 0px;
     position: relative;
-    margin-top: 25px;
+    margin-top: 7px;
+    overflow: hidden;
 }
 
-.profile-ticker-wrap > .left-avatar {
-    width: 100px;
-    height: 100px;
+.profile-ticker-wrap > div > div .left-avatar {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     overflow: hidden;
     float: left;
     margin-right: 15px;
+    margin-top: 0px;
 }
 
 .profile-ticker-wrap > .right-ticket-details {
@@ -1104,10 +1093,10 @@ ul.info-list-lg > li > h5 {
     height: 50px;
     border-radius: 50%;
     position: absolute;
-    right: 5%;
-    top: -25px;
+    right: -14px;
+    top: 34px;
     text-align: center;
-    padding-top: 8px;
+    padding-top: 14px;
 }
 
 .ticket-desc {
@@ -1119,9 +1108,11 @@ ul.info-list-lg > li > h5 {
     color: #ffffff;
 }
 
-.profile-ticker-wrap > .left-avatar > img {
-    width: 100px;
-    height: 100px;
+.right-ticket-details >
+div > div >
+.left-avatar > img {
+    width: 80px;
+    height: 80px;
     object-position: 50% 50%;
 }
 
@@ -1309,8 +1300,20 @@ ul.info-list-lg > li > h5 {
     margin-top: 10px;
 }
 
+.p-top-10 {
+    padding-top: 10px;
+}
+
 .m-top-0 {
     margin-top: 0px;
+}
+
+.p-0 {
+    padding: 0px;
+}
+
+.m-bottom-0 {
+    margin-bottom: 0px;
 }
 
 /*auto complete drop down style*/
@@ -1353,7 +1356,8 @@ ul.info-list-lg > li > h5 {
 }
 
 /*ticket view style */
-.ticket-view-wrapper {
+.ticket-view-wrapper,
+.ticket-filter-wrap {
     padding: 10px 25px 20px 25px;
 }
 
@@ -1503,6 +1507,10 @@ ul.info-list-lg > li > h5 {
     color: #36ba45 !important;
 }
 
+.color-grey500 {
+    color: #8298ae !important;
+}
+
 .right-icon > i {
     font-size: 18px;
     color: #14d0a0;
@@ -1545,15 +1553,15 @@ ul.info-list-lg > li > h5 {
 /*side panel */
 /* The side navigation menu */
 .sidenav {
-    height: 100%;
+    height: 94%;
     width: 0;
     position: fixed;
-    top: 0;
+    bottom: 0;
     right: 0;
     background-color: #fff;
     overflow-x: hidden;
     transition: 0.5s;
-    z-index: 2000;
+    z-index: 100;
     -webkit-box-shadow: -4px 3px 40px -11px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: -4px 3px 40px -11px rgba(0, 0, 0, 0.75);
     box-shadow: -4px 3px 40px -11px rgba(0, 0, 0, 0.75);
@@ -1596,18 +1604,117 @@ ul.info-list-lg > li > h5 {
 }
 
 .nav-bottom-tool {
-    position: absolute;
     background: #f7f5f5;
-    bottom: 2px;
     width: 100%;
-    height: 30px;
+    /* height: 35px; */
+    z-index: 0;
+    display: block;
 }
 
 .online-user-wrapper {
     margin-top: 60px;
     position: absolute;
-    margin-top: 60px;
-    bottom: 40px;
+    bottom: 0px;
+    width: 100%;
+}
+
+.nav-search-text {
+    width: auto;
+    background: #f7f5f5;
+    border: 0px;
+}
+
+.nav-bottom-icon {
+    float: right;
+    display: inline-block;
+    padding-top: 7px;
+    padding-left: 7px;
+    margin-right: 7px;
+}
+
+.nav-bottom-icon > i {
+    color: #14d0a0;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.notification-user {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 45px;
+    cursor: pointer;
+    -moz-transition: padding-left .2s ease-in;
+    -o-transition: padding-left .2s ease-in;
+    -webkit-transition: padding-left .2s ease-in;
+    transition: padding-left .2s ease-in;
+}
+
+.notification-user:hover {
+    padding-left: 3px;
+}
+
+.chat-icon {
+    display: inline-block;
+    padding-right: 8px;
+    text-align: center;
+    color: #45bf55;
+}
+
+.chat-ico > i {
+    font-size: 15px;
+}
+
+.notification-user > .user-img {
+    float: left;
+    display: inline-block;
+}
+
+.notification-user >
+.notification-details {
+    float: right;
+    text-align: right;
+    display: inline-block;
+    padding-top: 14px
+}
+
+.notification-details >
+.user-state {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+}
+
+.notification-user > .user-img > img {
+    width: 45px;
+    height: 45px;
+    padding: 3px 5px 0px 0px;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.message-close {
+    color: #d2c242 !important;
+    cursor: pointer;
+}
+
+#sendMessage {
+    transition-property: top, left,
+    border-radius, background-color;
+    transition-duration: 2s, 1s, 0.5s, 0.5s;
+    transition-delay: 0s, 0.5s, 1s, 1.5s;
+}
+
+.message-close:hover {
+    color: #36ba45;
 }
 
 @media screen and (max-height: 450px) {
@@ -1618,4 +1725,82 @@ ul.info-list-lg > li > h5 {
     .sidenav a {
         font-size: 18px;
     }
+}
+
+.console-main-wrapper {
+    position: relative;
+}
+
+/*ticket filter view*/
+.ticket-filter-wrapper {
+    background: rgba(255, 255, 255, 1);
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+}
+
+.ticket-filter-left {
+    position: fixed;
+    left: 0;
+    background: #8298ae;
+    width: 25%;
+    height: 100%;
+}
+
+.ticket-filter-body {
+
+}
+
+.ticket-filter-view > .header {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: 20px;
+    height: auto;
+}
+
+.ticket-filter-body > .footer-btn {
+    bottom: 0;
+    margin-top: 10px;
+}
+
+.ticket-filter-body >
+.filter-view {
+    width: 100%;
+    min-height: 40px;
+    height: auto;
+    background: #F7F5F5;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    margin-bottom: 5px;
+}
+
+.filter-view:hover {
+}
+
+.refresh {
+    cursor: pointer;
+}
+
+.ticket-list-view {
+    width: 100%;
+    min-height: 35px;
+    border-bottom: 1px solid #f7f5f5;
+    -webkit-box-shadow: 4px 10px 11px -16px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 4px 10px 11px -16px rgba(0, 0, 0, 0.75);
+    box-shadow: 4px 10px 11px -16px rgba(0, 0, 0, 0.75);
+    padding: 1px 0px 0px 10px;
+    margin-top: 10px;
+}
+
+.white-bg {
+    background: #ffffff !important;
+}
+
+.border-top-3 {
+    border-top-width: 3px !important;
+}
+
+.ticket-details-list {
 }

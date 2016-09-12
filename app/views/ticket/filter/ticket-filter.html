@@ -1,0 +1,80 @@
+<div id="ticketFilterWrap" ng-controller="ticketFilterCtrl" class="ticket-filter-wrapper">
+    <div class="ticket-filter-wrap">
+
+        <!-- MODEL HEADER -->
+        <div class="model-header">
+            <div class="col-md-6">
+                <div class="mode-left-icon   float-left">
+                    <i class="veery-font-1-diamond"></i>
+                </div>
+                <div class="model-header-text bold p-top-10">
+                    Ticket Filters
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 ">
+                <div class="model-btn-wrapper">
+                    <div class="btn-warp ">
+                        <span class="btn btn-default btn-close" id="closeTicket">close</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- MODEL HEADER -->
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- create  new filter -->
+                <!--<div ng-include="'app/views/ticket/filter/ticket-filter.html'"></div>-->
+                <!-- end -->
+
+                <div class="ticket-filter-view">
+                    <div id="ticketFilterHeader" class="header">
+                        <div class=" bold pull-left">
+                            VIEWS -
+                            <small class="color-grey500">total {{views.length}}</small>
+                        </div>
+                        <div class="pull-right">
+                            <div class="refresh color-green500">
+                                refresh
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ticket-filter-body">
+                        <div class="filter-view" ng-class="view.class" id="{{view.id}}"
+                             ng-click="clickViewsDetails(view)"
+                             ng-repeat="view in views">
+                            <div class="pull-left color-green500">
+                                {{view.name}}
+                            </div>
+                            <div class="pull-right bold">
+                                {{view.count}}
+                            </div>
+                        </div>
+                        <div class="footer-btn">
+                            <div class="btn btn-default btn-block">
+                                CREATE VIEW
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="ticket-filter-view">
+                    <div class="header bold text-uppercase">
+                        Your unsolved tickets
+                    </div>
+                    <div class="profile-ticket-wrapper  ng-scope">
+                        <div ng-include="'app/views/ticket/filter/filter-ticket-view.html'"></div>
+                        <div ng-include="'app/views/ticket/filter/filter-ticket-view.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

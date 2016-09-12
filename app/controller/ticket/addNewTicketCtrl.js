@@ -17,10 +17,6 @@ agentApp.controller('addNewTicketCtrl', function ($scope, $http) {
             }
         }();
 
-        $scope.clickAddNewTicket = function (id, className) {
-            modalEvent.ticketModel(id, className);
-        }
-
         $scope.tags = [
             {text: 'just'},
             {text: 'some'},
@@ -44,5 +40,11 @@ agentApp.controller('addNewTicketCtrl', function ($scope, $http) {
                 });
             });
         };
+
+        $scope.clickAddNewTicket = function (id, className) {
+            modalEvent.ticketModel(id, className);
+        }
+
+
     }
 );

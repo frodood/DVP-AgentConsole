@@ -5,13 +5,12 @@
 agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
 
-    var getEngagementIdsByProfile = function (id) {
+    var getAllTicketsByRequester = function (requester,page) {
         return $http({
             method: 'get',
-            url: baseUrls.engagementUrl+"EngagementByProfile/"+id,
+            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/10/"+page,
             headers: {
-                'authorization': authService.GetToken(),
-                'companyinfo':'1:103'
+                'authorization': authService.GetToken()
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -22,43 +21,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
-    var getEngagementSession = function (id) {
-        return $http({
-            method: 'get',
-            url: baseUrls.engagementUrl+"Engagement/"+id,
-            headers: {
-                'authorization':authService.GetToken(),'companyinfo':'1:103'
-            }
-        }).then(function (response) {
-            if (response.data && response.data.IsSuccess) {
-                return response.data.Result;
-            } else {
-                return undefined;
-            }
-        });
-    };
-
-    var getEngagementSessions = function (engagementId, ids) {
-        var q='?';
-        angular.forEach(ids,function(item){
-            q = q + 'session='+item+'&';
-        });
-
-        return $http({
-            method: 'get',
-            // params: ids,
-            url: baseUrls.engagementUrl+"Engagement/"+engagementId+"/EngagementSessions"+q,
-            headers: {
-                'authorization':authService.GetToken(),'companyinfo':'1:103'
-            }
-        }).then(function (response) {
-            if (response.data && response.data.IsSuccess) {
-                return response.data.Result;
-            } else {
-                return undefined;
-            }
-        });
-    };
 
     var getNewTickets = function () {
         var authToken = authService.GetToken();
@@ -183,6 +145,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     }
 
     return {
+        GetEngagementSessions:getEngagementSessions,
+        GetAllTicketsByRequester: getAllTicketsByRequester,
         GetEngagementIdsByProfile: getEngagementIdsByProfile,
         GetEngagementSession:getEngagementSession,
         GetEngagementSessions:getEngagementSessions,
