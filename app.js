@@ -15,8 +15,9 @@ var baseUrls = {
     'userServiceBaseUrl':'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'notification': 'notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/resource',
-    'engagementUrl':'http://localhost:3637/DVP/API/1.0.0.0/',
-    'ivrUrl':'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/'
+    'engagementUrl':'http://engagementservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'ivrUrl':'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
+    'liteticket':'http://localhost:3636/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

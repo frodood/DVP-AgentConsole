@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService) {
+agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,$rootScope) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -445,5 +445,17 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
             channel: "555"
         });
     };
+
+
+    $rootScope.$on('newTicketTab', function (events,args) {
+        if( $scope.tabs.indexOf(args)==-1)
+        {
+            var tabTopic = "Ticket"+args.reference;
+            $scope.addTab(tabTopic, tabTopic, 'ticketView',args);
+        }
+
+
+    });
+
 
 });
