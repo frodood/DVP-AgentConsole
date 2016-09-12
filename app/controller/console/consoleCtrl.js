@@ -472,6 +472,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64, $timeout, j
             channelTo: "33",
             channel: "555"
         });
-    }
+    };
+
 
 });

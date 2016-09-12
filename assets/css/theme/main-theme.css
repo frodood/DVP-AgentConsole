@@ -104,6 +104,10 @@
     background: #00aced !important;
 }
 
+.notification {
+    background: #14d0a0 !important;
+}
+
 .timeline .timeline-icon a.test2 {
     background: #45bf55;
 }
@@ -124,6 +128,7 @@
 .new-ticker {
     border-top: 3px solid #d2c242;
 }
+
 .done-ticker {
     border-top: 3px solid #14d0a0;
 }
@@ -132,5 +137,28 @@
     background: #d2c242;
 }
 
+.btn-green100 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    background: #45bf55;
+    border-radius: 0px;
+    border-color: #45bf55;
+    color: #ffffff;
+}
+
+.btn-green500 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    background: #168039;
+    border-radius: 0px;
+    border-color: #168039;
+    color: #ffffff;
+}
+
+.btn-green700 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    background: #044d29;
+    border-radius: 0px;
+    border-color: #044d29;
+    color: #ffffff;
+}
 
 

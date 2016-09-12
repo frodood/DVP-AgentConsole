@@ -1,0 +1,236 @@
+<div ng-controller="mailInboxCtrl">
+    <div class="mail-inbox-wrapper">
+        <!-- MODEL HEADER -->
+        <div class="model-header">
+            <div class="col-md-6">
+                <div class="mode-left-icon   float-left">
+                    <i class="veery-font-3-mail-5"></i>
+                </div>
+                <div class="model-header-text bold p-top-10">
+                    Mail Inbox
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 ">
+                <div class="model-btn-wrapper">
+                    <div class="btn-warp ">
+                        <span class="btn btn-default btn-close" id="closeTicket">close</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--END HEADER -->
+
+        <div class="col-lg-12 p-0">
+            <!-- left wrapper -->
+            <div class="col-md-2" style="background: #f7f5f5;">
+                <!-- MAIL OPTION WRAPPER -->
+                <div class="main-option-wrapper">
+                    <div class="mail-option">
+                        <div class="header-left pull-left">
+                            Inbox
+                        </div>
+                        <div class="header-count pull-right">
+                            <div>
+                                2
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mail-option">
+                        <div class="header-left pull-left">
+                            Delete
+                        </div>
+                        <div class="header-count pull-right">
+                            <div>
+                                10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END -->
+
+                <!-- FILTER WRAPPER -->
+                <div class="filter-wrapper">
+                    <div class="mail-filter ">
+                        <h5 class="bold">FILTERS</h5>
+                    </div>
+                    <div class="filter-option">
+                        <div class="number-count pull-right">
+                            5
+                        </div>
+                        <div class="pull-left">
+                            facebook
+                        </div>
+                    </div>
+                    <div class="filter-option">
+                        <div class="number-count pull-right">
+                            5
+                        </div>
+                        <div class="pull-left">
+                            twitter
+                        </div>
+                    </div>
+                    <div class="filter-option">
+                        <div class="number-count pull-right">
+                            3
+                        </div>
+                        <div class="pull-left">
+                            notification
+                        </div>
+                    </div>
+                    <!-- END -->
+
+                </div>
+            </div>
+            <!-- end -->
+
+            <!-- right wrapper -->
+            <div class="col-sm-10">
+
+                <div class="mail-right-header ">
+
+                    <div class="mail-option-header">
+                        <div class="mail-btn-wrap">
+                            <span class="btn btn-default btn-green100">convert to ticket</span>
+                        </div>
+                        <div class="mail-btn-wrap">
+                            <span class="btn btn-default btn-green500">create ticket</span>
+                        </div>
+                        <div class="mail-btn-wrap">
+                            <span class="btn btn-default btn-green700">engagement</span>
+                        </div>
+
+                        <div class="pull-right">
+                            <div class="mail-btn-wrap ">
+                                <span class="btn">
+                                     <i class="fa fa-trash-o"></i>
+                                </span>
+                            </div>
+                            <div class="mail-btn-wrap ">
+                                <span class="btn">
+                                    <i class="main-icon-2-previous"></i>
+                                </span>
+                            </div>
+                            <div class="mail-btn-wrap ">
+                                <span class="btn">
+                                     <i class="main-icon-2-next"></i>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mail-details-wrapper">
+                    <div ng-click="clickMoreEmailDetails()" class="mail-details">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="col-sm-12 col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="blankCheckbox" value="option1"
+                                               aria-label="...">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-2 p-0">
+                                <div class="mail-icon">
+                                    <i class="fa fa-bell-o"></i>
+                                </div>
+                                <div class="main-text">
+                                    NOTIFICATION
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-8  p-0">
+                                <div class="mail-header text-left">
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry....
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-1  p-0">
+                                <div class="mail-header text-right">
+                                    Sep 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mail-details">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="col-sm-12 col-md-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="option1"
+                                               aria-label="...">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-2 p-0">
+                                <div class="mail-icon">
+                                    <i class="fa fa-facebook"></i>
+                                </div>
+                                <div class="main-text">
+                                    FACEBOOK
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-8  p-0">
+                                <div class="mail-header text-left">
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry....
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-1  p-0">
+                                <div class="mail-header text-right">
+                                    Sep 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- view email more template -->
+                    <div id="emailDescView" class="email-desc-wrapper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-5">
+                                    <div class="user-img">
+                                        <img src="assets/img/avatar/oykun.jpg">
+                                        <div class="pull-right">
+                                            <h5 class="bold"> Jone k.p</h5>
+                                            <h5 class="bold"> Thu, Sep 1, 2016 at 6:33 PM</h5>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="pull-right">
+                                        <div class="mail-btn-wrap round " ng-click="closeMailDesc()">
+                                            <i class="fa fa-close"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mail-description">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Lorem Ipsum has been the industry's standard dummy text ever since the
+                                        1500s, when an unknown printer took a galley of type and scrambled it to
+                                        make a type specimen book. It has survived not only five centuries, but also
+                                        the leap into electronic typesetting, remaining essentially unchanged. It
+                                        was popularised in the 1960s with the release of Letraset sheets containing
+                                        Lorem Ipsum passages,
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- end-->
+    </div>
+</div>
+</div>
