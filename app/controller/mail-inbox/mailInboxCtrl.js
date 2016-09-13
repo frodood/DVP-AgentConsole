@@ -30,7 +30,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
 
         try
         {
-            mailInboxService.getMessageCounters('576a4f18dd751f010089cec0')
+            mailInboxService.getMessageCounters()
                 .then(function (data)
                 {
                     if (data.IsSuccess)
