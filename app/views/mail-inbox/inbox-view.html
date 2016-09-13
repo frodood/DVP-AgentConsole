@@ -27,23 +27,23 @@
             <div class="col-md-2" style="background: #f7f5f5;">
                 <!-- MAIL OPTION WRAPPER -->
                 <div class="main-option-wrapper">
-                    <div class="mail-option">
+                    <div class="mail-option" ng-click="reloadInboxMessages()">
                         <div class="header-left pull-left">
                             Inbox
                         </div>
                         <div class="header-count pull-right">
                             <div>
-                                {{counters.Unread}}
+                                {{counters.UNREAD}}
                             </div>
                         </div>
                     </div>
-                    <div class="mail-option">
+                    <div class="mail-option" ng-click="reloadDeletedMessages()">
                         <div class="header-left pull-left">
                             Deleted
                         </div>
                         <div class="header-count pull-right">
                             <div>
-                                {{counters.Deleted}}
+                                {{counters.DELETED}}
                             </div>
                         </div>
                     </div>
@@ -55,25 +55,25 @@
                     <div class="mail-filter ">
                         <h5 class="bold">FILTERS</h5>
                     </div>
-                    <div class="filter-option">
+                    <div class="filter-option" ng-click="reloadFacebookMessages()">
                         <div class="number-count pull-right">
-                            {{counters.Facebook}}
+                            {{counters.FACEBOOK}}
                         </div>
                         <div class="pull-left">
                             facebook
                         </div>
                     </div>
-                    <div class="filter-option">
+                    <div class="filter-option" ng-click="reloadTwitterMessages()">
                         <div class="number-count pull-right">
-                            {{counters.Twitter}}
+                            {{counters.TWITTER}}
                         </div>
                         <div class="pull-left">
                             twitter
                         </div>
                     </div>
-                    <div class="filter-option">
+                    <div class="filter-option" ng-click="reloadNotificationMessages()">
                         <div class="number-count pull-right">
-                            {{counters.Notification}}
+                            {{counters.NOTIFICATION}}
                         </div>
                         <div class="pull-left">
                             notification
@@ -92,23 +92,23 @@
                     <div class="mail-option-header ">
                         <div class="mail-btn-wrap">
                             <div class="mail-header bold">
-                                INBOX ({{counters.All}})
+                                {{currentFilter}} ({{currentPageCount}})
                             </div>
                         </div>
 
 
                         <div class="pull-right">
                             <div class="mail-btn-wrap color-green500 bold ">
-                                <h5>1-10 of {{counters.All}}</h5>
+                                <h5>{{pageStartCount + 1}}-{{pageStartCount + 10}} of {{currentPageCount}}</h5>
                             </div>
                             <div class="mail-btn-wrap ">
                                 <span class="btn">
-                                    <i class="main-icon-2-previous"></i>
+                                    <i class="main-icon-2-previous" ng-click="getPreviousPage()"></i>
                                 </span>
                             </div>
                             <div class="mail-btn-wrap ">
                                 <span class="btn">
-                                     <i class="main-icon-2-next"></i>
+                                     <i class="main-icon-2-next" ng-click="getNextPage()"></i>
                                 </span>
                             </div>
                             <div class="mail-btn-wrap" ng-show="isSelectedEmail">

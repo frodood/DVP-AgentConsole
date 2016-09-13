@@ -6,16 +6,16 @@
 
     var mailInboxService = function($http, baseUrls, authService)
     {
-        var getAllInboxMessages = function(limitCount, sinceId, msgType)
+        var getAllInboxMessages = function(limitCount, skipCount, msgType)
         {
             var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/All?limit=' + limitCount;
 
-            if(sinceId)
+            if(skipCount)
             {
-                url = url + '&since=' + sinceId;
+                url = url + '&skip=' + skipCount;
             }
 
             if(msgType)
@@ -35,16 +35,16 @@
             })
         };
 
-        var getReadInboxMessages = function(limitCount, sinceId)
+        var getReadInboxMessages = function(limitCount, skipCount)
         {
             var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Read?limit=' + limitCount;
 
-            if(sinceId)
+            if(skipCount)
             {
-                url = url + '&since=' + sinceId;
+                url = url + '&skip=' + skipCount;
             }
 
             return $http({
@@ -59,16 +59,16 @@
             })
         };
 
-        var getUnReadInboxMessages = function(limitCount, sinceId)
+        var getUnReadInboxMessages = function(limitCount, skipCount)
         {
             var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Unread?limit=' + limitCount;
 
-            if(sinceId)
+            if(skipCount)
             {
-                url = url + '&since=' + sinceId;
+                url = url + '&skip=' + skipCount;
             }
 
             return $http({
@@ -83,16 +83,16 @@
             })
         };
 
-        var getDeletedInboxMessages = function(limitCount, sinceId)
+        var getDeletedInboxMessages = function(limitCount, skipCount)
         {
             var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Deleted?limit=' + limitCount;
 
-            if(sinceId)
+            if(skipCount)
             {
-                url = url + '&since=' + sinceId;
+                url = url + '&skip=' + skipCount;
             }
 
             return $http({
@@ -106,6 +106,8 @@
                 return resp.data;
             })
         };
+
+
 
         var deleteInboxMessage = function(messageId)
         {
