@@ -181,8 +181,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
-        GetResourceIss:getResourceIss
-        GetAllTicketsByRequester: getAllTicketsByRequester,
+        GetResourceIss:getResourceIss,
         getNewTickets:getNewTickets,
         getOpenTickets:getOpenTickets,
         getClosedTickets:getClosedTickets,
