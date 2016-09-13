@@ -759,6 +759,14 @@ ul.info-list-lg > li > h5 {
     margin-top: 10px;
 }
 
+/*engagement timelime scrolly*/
+.items-wrap {
+    /*position: absolute;*/
+    width: 100%;
+    height: 300px;
+    overflow: scroll;
+}
+
 /*time line*/
 .timeline {
     list-style: none;
@@ -2074,7 +2082,7 @@ div > div >
 .disable-btn {
     cursor: not-allowed;
     background: #8298ae !important;
-}}
+}
 
 .notification-ref {
     text-align: left;
@@ -2089,4 +2097,6 @@ div > div >
     color: #14d0a0;
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
 }
+
+
 
