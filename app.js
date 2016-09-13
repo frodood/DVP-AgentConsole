@@ -18,7 +18,7 @@ var baseUrls = {
     'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',
     'ticketUrl': 'http://192.168.5.186:3636/DVP/API/1.0.0.0/',
     'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
-    'mailInboxUrl': 'http://localhost:3636/DVP/API/1.0.0.0/Inbox/'
+    'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/'
 };
 
 agentApp.constant('baseUrls', baseUrls);
