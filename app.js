@@ -11,13 +11,13 @@ var agentApp = angular.module('veeryAgentApp',
 agentApp.constant('moment', moment);
 
 var baseUrls = {
-    'authUrl': 'http://userservice.app.veery.cloud/oauth/token',
-    'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'authUrl':'http://userservice.app.veery.cloud/oauth/token',
+    'userServiceBaseUrl':'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'notification': 'notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/resource',
-    'engagementUrl': 'http://engagementservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
-    'liteticket': 'http://localhost:3636/DVP/API/1.0.0.0/',
+    'engagementUrl':'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',
+    'ticketUrl':'http://localhost:3636/DVP/API/1.0.0.0/',
+    'ivrUrl':'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
     'mailInboxUrl': 'http://localhost:3636/DVP/API/1.0.0.0/Inbox/'
 };
 

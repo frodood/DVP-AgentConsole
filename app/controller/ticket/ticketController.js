@@ -71,44 +71,42 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickToDoList = function () {
         console.log("hit To DO");
         ticketService.getNewTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("All new tickets ",response.data.Result);
 
             if(response.data.Result)
             {
                 for(var i=0;i<response.data.Result.length;i++)
                 {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay  = moment(response.data.Result[i].created_at).fromNow();
+
+                    response.data.Result[i].timeDelay  = moment(response.data.Result[i].updated_at).fromNow();
                     if(response.data.Result[i].status.length > 20)
                     {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0,20)+"....";
                     }
 
-                    //response.data.Result[i].subject=response.data.Result[i].subject+" : "+i;
+
+                    /* if(response.data.Result[i].assignee)
+                     {
+
+                     var assigneeData = $filter('filter')( $scope.userList, {
+                     _id: response.data.Result[i].assignee
+
+                     });
+
+                     response.data.Result[i].assignee_name=assigneeData[0].name;
+                     }*/
+
+                    /*if(response.data.Result[i].assignee_group)
+                     {
+
+                     var assigneeGroupData = $filter('filter')( $scope.userGroupList, {
+                     _id: response.data.Result[i].assignee_group
+
+                     });
 
 
-                    if(response.data.Result[i].assignee)
-                    {
-
-                        var assigneeData = $filter('filter')( $scope.userList, {
-                            _id: response.data.Result[i].assignee
-
-                        });
-
-                        response.data.Result[i].assignee_name=assigneeData[0].name;
-                    }
-
-                    if(response.data.Result[i].assignee_group)
-                    {
-
-                        var assigneeGroupData = $filter('filter')( $scope.userGroupList, {
-                            _id: response.data.Result[i].assignee_group
-
-                        });
-
-
-                        response.data.Result[i].assignee_group_name=assigneeGroupData[0].name;
-                    }
+                     response.data.Result[i].assignee_group_name=assigneeGroupData[0].name;
+                     }*/
 
 
 
@@ -123,7 +121,15 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                console.log("Empty response for new tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loading New tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for new tickets");
+                }
+
             }
 
 
@@ -137,17 +143,16 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickProcessingTickets = function () {
         ticketService.getOpenTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("All open tickets ",response.data.Result);
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay = moment(response.data.Result[i].created_at).fromNow();
+                    response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
                     if (response.data.Result[i].status.length > 20) {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                     }
 
-                    if (response.data.Result[i].assignee) {
+                   /* if (response.data.Result[i].assignee) {
 
                         var assigneeData = $filter('filter')($scope.userList, {
                             _id: response.data.Result[i].assignee
@@ -166,7 +171,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
-                    }
+                    }*/
 
 
                     if (i == response.data.Result.length - 1) {
@@ -176,7 +181,16 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                console.log("Empty response for processing tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loading open tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for open tickets");
+                }
+
+
             }
 
 
@@ -189,18 +203,18 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickCompletedTickets = function () {
         ticketService.getClosedTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("All Completed tickets ",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay = moment(response.data.Result[i].created_at).fromNow();
+
+                    response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
                     if (response.data.Result[i].status.length > 20) {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                     }
                     //response.data.Result[i].subject=response.data.Result[i].subject+" : "+i;
-                    if (response.data.Result[i].assignee) {
+                    /*if (response.data.Result[i].assignee) {
 
                         var assigneeData = $filter('filter')($scope.userList, {
                             _id: response.data.Result[i].assignee
@@ -219,7 +233,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
-                    }
+                    }*/
 
                     if (i == response.data.Result.length - 1) {
 
@@ -229,7 +243,15 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                console.log("Empty response for closed tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loading closed tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for closed tickets");
+                }
+
             }
 
 
@@ -244,14 +266,13 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickMyToDoList = function () {
 
         ticketService.getMyNewTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("My new Tickets",response.data.Result);
 
             if(response.data.Result)
             {
                 for(var i=0;i<response.data.Result.length;i++)
                 {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay  = moment(response.data.Result[i].created_at).fromNow();
+                    response.data.Result[i].timeDelay  = moment(response.data.Result[i].updated_at).fromNow();
                     if(response.data.Result[i].status.length > 20)
                     {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0,20)+"....";
@@ -260,7 +281,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                     //response.data.Result[i].subject=response.data.Result[i].subject+" : "+i;
 
 
-                    if(response.data.Result[i].assignee)
+                    /*if(response.data.Result[i].assignee)
                     {
 
                         var assigneeData = $filter('filter')( $scope.userList, {
@@ -282,7 +303,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
                         response.data.Result[i].assignee_group_name=assigneeGroupData[0].name;
                     }
-
+*/
 
 
                     if(i==response.data.Result.length-1)
@@ -297,7 +318,15 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
             else
             {
-                console.log("Empty response for My new tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loading My new tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for My new tickets");
+                }
+
             }
 
 
@@ -310,21 +339,21 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickMyProcessingTickets = function () {
         ticketService.getMyOpenTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("My open tickets",response.data.Result);
 
             if(response.data.Result)
             {
                 for(var i=0;i<response.data.Result.length;i++)
                 {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay  = moment(response.data.Result[i].created_at).fromNow();
+
+                    response.data.Result[i].timeDelay  = moment(response.data.Result[i].updated_at).fromNow();
 
                     if(response.data.Result[i].status.length > 20)
                     {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0,20)+"....";
                     }
 
-                    if(response.data.Result[i].assignee)
+                    /*if(response.data.Result[i].assignee)
                     {
 
                         var assigneeData = $filter('filter')( $scope.userList, {
@@ -345,7 +374,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
                         response.data.Result[i].assignee_group_name=assigneeGroupData[0].name;
-                    }
+                    }*/
 
 
                     if(i==response.data.Result.length-1)
@@ -359,7 +388,15 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
             else
             {
-                console.log("Empty response for My processing tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loading  My open tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for My open tickets");
+                }
+
             }
 
 
@@ -372,18 +409,18 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickMyCompletedTickets = function () {
         ticketService.getMyClosedTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("My completed tickets",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay = moment(response.data.Result[i].created_at).fromNow();
+
+                    response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
                     if (response.data.Result[i].status.length > 20) {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                     }
                     //response.data.Result[i].subject=response.data.Result[i].subject+" : "+i;
-                    if (response.data.Result[i].assignee) {
+                    /*if (response.data.Result[i].assignee) {
 
                         var assigneeData = $filter('filter')($scope.userList, {
                             _id: response.data.Result[i].assignee
@@ -403,7 +440,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
                     }
-
+*/
                     if (i == response.data.Result.length - 1) {
                         $scope.ticketList.done = [];
                         $scope.ticketList.done = response.data.Result;
@@ -412,7 +449,15 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                console.log("Empty response for My Closed tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loading  My Closed tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for My Closed tickets");
+                }
+
             }
 
 
@@ -427,12 +472,12 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickGroupToDoList = function () {
 
         ticketService.getMyGroupTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("New Group Tickets ",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay = moment(response.data.Result[i].created_at).fromNow();
+
+                    response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
                     if (response.data.Result[i].status.length > 20) {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                     }
@@ -440,7 +485,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                     //response.data.Result[i].subject=response.data.Result[i].subject+" : "+i;
 
 
-                    if (response.data.Result[i].assignee) {
+                    /*if (response.data.Result[i].assignee) {
 
                         var assigneeData = $filter('filter')($scope.userList, {
                             _id: response.data.Result[i].assignee
@@ -459,7 +504,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
-                    }
+                    }*/
 
 
                     if (i == response.data.Result.length - 1) {
@@ -472,7 +517,16 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                console.log("Empty response for My Group new tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loading   My Group new tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for My Group new tickets");
+                }
+
+
             }
 
 
@@ -485,18 +539,18 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickGroupProcessingTickets = function () {
         ticketService.getMyGroupOpenTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("Group Open tickets",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay = moment(response.data.Result[i].created_at).fromNow();
+
+                    response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
                     if (response.data.Result[i].status.length > 20) {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                     }
 
-                    if (response.data.Result[i].assignee) {
+                   /* if (response.data.Result[i].assignee) {
 
                         var assigneeData = $filter('filter')($scope.userList, {
                             _id: response.data.Result[i].assignee
@@ -515,7 +569,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
-                    }
+                    }*/
 
 
                     if (i == response.data.Result.length - 1) {
@@ -527,7 +581,15 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                console.log("Empty response for My Group open tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loading My Group open tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for My Group open tickets");
+                }
+
             }
 
 
@@ -540,18 +602,18 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickGroupCompletedTickets = function () {
         ticketService.getMyGroupClosedTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("Group closed tickets",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
-                    // response.data.Result[i].timeDelay  = moment().startOf(response.data.Result[i].created_at).fromNow();
-                    response.data.Result[i].timeDelay = moment(response.data.Result[i].created_at).fromNow();
+
+                    response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
                     if (response.data.Result[i].status.length > 20) {
                         response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                     }
                     //response.data.Result[i].subject=response.data.Result[i].subject+" : "+i;
-                    if (response.data.Result[i].assignee) {
+                    /*if (response.data.Result[i].assignee) {
 
                         var assigneeData = $filter('filter')($scope.userList, {
                             _id: response.data.Result[i].assignee
@@ -570,7 +632,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
-                    }
+                    }*/
 
                     if (i == response.data.Result.length - 1) {
                         $scope.ticketList.done = [];
@@ -580,7 +642,15 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                console.log("Empty response for My Group closed tickets");
+                if(response.data.Exception.Message)
+                {
+                    console.log("Error in loadingMy Group closed tickets "+response.data.Exception.Message);
+                }
+                else
+                {
+                    console.log("Empty response for My Group closed tickets");
+                }
+
             }
 
 
@@ -639,8 +709,8 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
     $scope.gotoTicket = function (data) {
-         $rootScope.$emit('newTicketTab',data);
-            $scope.closeTicketInbox();
+        $rootScope.$emit('newTicketTab',data);
+        $scope.closeTicketInbox();
 
     }
 
