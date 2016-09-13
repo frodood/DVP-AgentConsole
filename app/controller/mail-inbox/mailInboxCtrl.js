@@ -16,7 +16,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
     };
 
 
-    $scope.Counters = {
+    $scope.counters = {
         Unread: 0,
         All: 0,
         Deleted: 0,
@@ -25,6 +25,9 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
         Notification: 0
 
     };
+
+    $scope.filteredMailDisplay = [];
+    $scope.moment = moment;
 
     var getCounters = function(){
 
@@ -37,7 +40,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
                     {
                         if(data.Result)
                         {
-                            $scope.Counters = data.Result;
+                            $scope.counters = data.Result;
                         }
                     }
                     else
@@ -64,8 +67,49 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
 
         }
 
-    }
+    };
+
+    var getAllInboxMessages = function(){
+
+        try
+        {
+            mailInboxService.getAllInboxMessages(10, null, null)
+                .then(function (data)
+                {
+                    if (data.IsSuccess)
+                    {
+                        if(data.Result)
+                        {
+                            $scope.filteredMailDisplay = data.Result;
+                        }
+                    }
+                    else
+                    {
+                        var errMsg = data.CustomMessage;
+
+                        if (data.Exception)
+                        {
+                            errMsg = data.Exception.Message;
+                        }
+                        console.log(errMsg);
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+
+                })
+
+        }
+        catch(ex)
+        {
+            console.log(ex);
+
+        }
+
+    };
 
     getCounters();
+    getAllInboxMessages();
 
 });
