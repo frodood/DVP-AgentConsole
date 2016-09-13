@@ -1,6 +1,6 @@
 
 
-agentApp.factory('ticketInboxService', function ($http, authService)
+agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
 {
     return {
 

@@ -1502,6 +1502,10 @@ div > div >
 
 .sub-description > small {
     color: #14d0a0;
+    cursor: pointer;
+}
+.sub-description > small.ref {
+    cursor: pointer;
 }
 
 .color-cyan500 {
@@ -2070,4 +2074,19 @@ div > div >
 .disable-btn {
     cursor: not-allowed;
     background: #8298ae !important;
+}}
+
+.notification-ref {
+    text-align: left;
+    font-size: 12px;
+    display: inline-block;
 }
+.notification-ref.link {
+    text-align: right;
+    font-size: 12px;
+    cursor: pointer;
+    float: right;
+    color: #14d0a0;
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+}
+

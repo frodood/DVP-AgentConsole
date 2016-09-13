@@ -162,11 +162,27 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+    var getTicket = function (ticketID) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.liteticket+"Ticket/"+ticketID,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
-        GetResourceIss:getResourceIss,
+        GetResourceIss:getResourceIss
+        GetAllTicketsByRequester: getAllTicketsByRequester,
         getNewTickets:getNewTickets,
         getOpenTickets:getOpenTickets,
         getClosedTickets:getClosedTickets,
@@ -175,7 +191,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getMyClosedTickets:getMyClosedTickets,
         getMyGroupTickets:getMyGroupTickets,
         getMyGroupOpenTickets:getMyGroupOpenTickets,
-        getMyGroupClosedTickets:getMyGroupClosedTickets
+        getMyGroupClosedTickets:getMyGroupClosedTickets,
+        getTicket:getTicket
     }
 });
 
