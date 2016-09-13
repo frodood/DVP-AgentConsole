@@ -140,17 +140,37 @@
             })
         };
 
+        var getMessageCounters = function(profileId)
+        {
+            var authToken = authService.GetToken();
+
+            var url = baseUrls.mailInboxUrl + profileId + '/Counts';
+
+            return $http({
+                method: 'GET',
+                url: url,
+                headers: {
+                    'authorization': authToken
+                }
+
+            }).then(function(resp)
+            {
+                return resp.data;
+            })
+        };
+
         return {
             getAllInboxMessages: getAllInboxMessages,
             getReadInboxMessages: getReadInboxMessages,
             getUnReadInboxMessages: getUnReadInboxMessages,
             getDeletedInboxMessages: getDeletedInboxMessages,
             deleteInboxMessage: deleteInboxMessage,
-            markMessageAsRead: markMessageAsRead
+            markMessageAsRead: markMessageAsRead,
+            getMessageCounters: getMessageCounters
         };
     };
 
-    var module = angular.module("agentApp");
+    var module = angular.module("veeryAgentApp");
     module.factory("mailInboxService", mailInboxService);
 
 }());
