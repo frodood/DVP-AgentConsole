@@ -9,7 +9,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
 
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"Tickets/50/1?status=new",
+                url: baseUrls.ticketUrl+"Tickets/50/1?status=new",
                 headers: {
                     'authorization':authToken
                 }
@@ -22,7 +22,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
             var authToken = authService.GetToken();
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"Tickets/50/1?status=open&status=progressings",
+                url: baseUrls.ticketUrl+"Tickets/50/1?status=open&status=progressings",
                 headers: {
                     'authorization':authToken
                 }
@@ -35,7 +35,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
             var authToken = authService.GetToken();
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"Tickets/50/1?status=parked&status=solved&status=closed",
+                url: baseUrls.ticketUrl+"Tickets/50/1?status=parked&status=solved&status=closed",
                 headers: {
                     'authorization':authToken
                 }
@@ -49,7 +49,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
 
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"MyTickets/50/1?status=new",
+                url: baseUrls.ticketUrl+"MyTickets/50/1?status=new",
                 headers: {
                     'authorization':authToken
                 }
@@ -62,7 +62,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
             var authToken = authService.GetToken();
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"MyTickets/50/1?status=open&status=progressings",
+                url: baseUrls.ticketUrl+"MyTickets/50/1?status=open&status=progressings",
                 headers: {
                     'authorization':authToken
                 }
@@ -75,7 +75,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
             var authToken = authService.GetToken();
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"MyTickets/50/1?status=parked&status=solved&status=closed",
+                url: baseUrls.ticketUrl+"MyTickets/50/1?status=parked&status=solved&status=closed",
                 headers: {
                     'authorization':authToken
                 }
@@ -90,7 +90,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
 
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"MyGroupTickets/50/1?status=new",
+                url: baseUrls.ticketUrl+"MyGroupTickets/50/1?status=new",
                 headers: {
                     'authorization':authToken
                 }
@@ -103,7 +103,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
             var authToken = authService.GetToken();
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"MyGroupTickets/50/1?status=open&status=progressings",
+                url: baseUrls.ticketUrl+"MyGroupTickets/50/1?status=open&status=progressings",
                 headers: {
                     'authorization':authToken
                 }
@@ -116,7 +116,7 @@ agentApp.factory('ticketInboxService', function ($http, authService,baseUrls)
             var authToken = authService.GetToken();
             return $http({
                 method: 'GET',
-                url: baseUrls.liteticket+"MyGroupTickets/50/1?status=parked&status=solved&status=closed",
+                url: baseUrls.ticketUrl+"MyGroupTickets/50/1?status=parked&status=solved&status=closed",
                 headers: {
                     'authorization':authToken
                 }
