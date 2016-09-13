@@ -71,7 +71,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickToDoList = function () {
         console.log("hit To DO");
         ticketService.getNewTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("All new tickets ",response.data.Result);
 
             if(response.data.Result)
             {
@@ -143,7 +143,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickProcessingTickets = function () {
         ticketService.getOpenTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("All open tickets ",response.data.Result);
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
                     response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
@@ -203,7 +203,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickCompletedTickets = function () {
         ticketService.getClosedTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("All Completed tickets ",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
@@ -266,7 +266,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickMyToDoList = function () {
 
         ticketService.getMyNewTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("My new Tickets",response.data.Result);
 
             if(response.data.Result)
             {
@@ -339,7 +339,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickMyProcessingTickets = function () {
         ticketService.getMyOpenTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("My open tickets",response.data.Result);
 
             if(response.data.Result)
             {
@@ -409,7 +409,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickMyCompletedTickets = function () {
         ticketService.getMyClosedTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("My completed tickets",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
@@ -472,7 +472,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickGroupToDoList = function () {
 
         ticketService.getMyGroupTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("New Group Tickets ",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
@@ -539,7 +539,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickGroupProcessingTickets = function () {
         ticketService.getMyGroupOpenTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("Group Open tickets",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
@@ -602,7 +602,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickGroupCompletedTickets = function () {
         ticketService.getMyGroupClosedTickets().then(function (response) {
-            console.log(response.data.Result);
+            console.log("Group closed tickets",response.data.Result);
 
             if(response.data.Result) {
                 for (var i = 0; i < response.data.Result.length; i++) {
