@@ -10,9 +10,6 @@ agentApp.directive('scrolly', function () {
             console.log('loading directive');
 
             element.bind('scroll', function () {
-                console.log('in scroll');
-                console.log(raw.scrollTop + raw.offsetHeight);
-                console.log(raw.scrollHeight);
                 if (raw.scrollTop + raw.offsetHeight > raw.scrollHeight) {
                     scope.$apply(attrs.scrolly);
                 }
@@ -254,12 +251,14 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
                     , end = begin + 10;
 
                 var ids = scope.sessionIds.slice(begin, end);
-
-                engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
-                    scope.engagementsList = scope.engagementsList.concat(reply);
-                }, function (err) {
-                    scope.showAlert("Get Engagement Sessions", "error", "Fail To Get Engagement Sessions Data.")
-                });
+                if(ids){
+                    scope.currentPage = scope.currentPage +1;
+                    engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
+                        scope.engagementsList = scope.engagementsList.concat(reply);
+                    }, function (err) {
+                        scope.showAlert("Get Engagement Sessions", "error", "Fail To Get Engagement Sessions Data.")
+                    });
+                }
             };
 
             scope.engagementsList = [];
