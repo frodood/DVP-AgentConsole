@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,$rootScope,$filter) {
+agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,userService,tagService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -445,8 +445,8 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
     //$scope.addTab('A526455-Ticket view', 'A526455-Ticket view', 'engagement',data);
     //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
 
-    $scope.addTabTest = function () {
-        $scope.addTab('filter', 'Engagement', 'filter', {
+    $scope.addTabTest =function(){
+        $scope.addTab('engagement', 'Engagement', 'engagement',{
             company: "123",
             direction: "333",
             channelFrom: "33",
@@ -455,6 +455,28 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
         });
     };
 
+
+    // load User List
+    $scope.users = [];
+    $scope.loadUsers = function () {
+        userService.LoadUser().then(function (response) {
+            $scope.users = response;
+        }, function (err) {
+            $scope.showAlert("load Users", "error", "Fail To Get User List.")
+        });
+    };
+    $scope.loadUsers();
+
+    // load tag List
+    $scope.tags = [];
+    $scope.loadTags = function () {
+        tagService.GetAllTags().then(function (response) {
+            $scope.tags = response;
+        }, function (err) {
+            $scope.showAlert("load Tags", "error", "Fail To Get Tag List.")
+        });
+    };
+    $scope.loadTags();
     $scope.addFilterTab = function () {
         $scope.addTab('Ticket Filter', 'Filter', 'filter', {
             company: "123",
@@ -464,7 +486,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
             channel: "555"
         });
     }
-    $scope.addMailInbox = function () {
+   var addMailInbox = function () {
         $scope.addTab('Mail Inbox', 'Mail Inbox', 'mail-inbox', {
             company: "123",
             direction: "333",
@@ -472,7 +494,8 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
             channelTo: "33",
             channel: "555"
         });
-    }
+    };
+    addMailInbox();
 
 
     $rootScope.$on('newTicketTab', function (events,args) {

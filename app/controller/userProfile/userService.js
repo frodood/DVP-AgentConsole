@@ -22,14 +22,20 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
-    var loadUser = function () {
+    var loadUser = function ($query) {
 
-        return $http.get('assets/json/assigneeUsers.json', {cache: true}).then(function (response) {
-            var countries = response.data;
-            console.log(countries);
-            return countries.filter(function (country) {
-                return country.profileName.toLowerCase().indexOf($query.toLowerCase()) != -1;
-            });
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"Users",
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
         });
     };
 

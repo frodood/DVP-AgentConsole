@@ -20,6 +20,27 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             }
         });
     };
+
+    var saveTicket = function (ticket) {
+        return $http({
+            method: 'Post',
+            url: baseUrls.ticketUrl+"Ticket",
+            headers: {
+                'authorization': authService.GetToken()
+            },
+            data:ticket
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
+    var getResourceIss = function () {
+        return authService.GetResourceIss();
+    };
     var getNewTickets = function () {
         var authToken = authService.GetToken();
 
@@ -158,6 +179,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
 
     return {
+        GetAllTicketsByRequester: getAllTicketsByRequester,
+        SaveTicket:saveTicket,
+        GetResourceIss:getResourceIss
         GetAllTicketsByRequester: getAllTicketsByRequester,
         getNewTickets:getNewTickets,
         getOpenTickets:getOpenTickets,

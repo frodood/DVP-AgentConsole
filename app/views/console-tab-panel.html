@@ -3,11 +3,7 @@
              disable="tab.disabled">
         <div ng-switch on="tab.viewType">
             <div ng-switch-when="engagement">
-                <engagement-temp session-id="{{tab.notificationData.sessionId}}" skill="{{tab.notificationData.skill}}"
-                                 company="{{tab.notificationData.company}}" channel="{{tab.notificationData.channel}}"
-                                 channel-from="{{tab.notificationData.channelFrom}}"
-                                 channel-to="{{tab.notificationData.channelTo}}"
-                                 direction="{{tab.notificationData.direction}}"></engagement-temp>
+                <engagement-temp available-tags="tags" users="users" session-id="{{tab.notificationData.sessionId}}" skill="{{tab.notificationData.skill}}" company="{{tab.notificationData.company}}" channel="{{tab.notificationData.channel}}" channel-from="{{tab.notificationData.channelFrom}}" channel-to="{{tab.notificationData.channelTo}}" direction="{{tab.notificationData.direction}}"></engagement-temp>
 
             </div>
             <div ng-switch-when="ticketView">
