@@ -96,15 +96,15 @@
                             <ul class="info-list-lg">
                                 <li>
                                     <small>Created</small>
-                                    <h5>02/Aug/16 10:50 AM</h5>
+                                    <h5>{{ticket.created_at}}</h5>
                                 </li>
                                 <li>
                                     <small>Updated</small>
-                                    <h5>2 hours ago</h5>
+                                    <h5>{{ticket.timeDelay}}</h5>
                                 </li>
                                 <li>
                                     <small>Due To</small>
-                                    <h5>05/Aug/16 10:50 AM</h5>
+                                    <h5>{{ticket.due_at}}</h5>
                                 </li>
                             </ul>
                         </div>
@@ -113,12 +113,13 @@
                             <div class="details">
                                 <h5 class="bold">TAGES</h5>
                             </div>
-                            <div class="bg-checkbox teal600 font-white  inline-btn">
-                                AN56562333
+                            <div ng-repeat="tag in ticket.tags">
+                                <div class="bg-checkbox teal600 font-white  inline-btn">
+                                    {{tag}}
+                                </div>
                             </div>
-                            <div class="bg-checkbox teal600 font-white  inline-btn">
-                                AERFT5656
-                            </div>
+
+
                         </div>
                         <!-- END DETAILS -->
 
@@ -128,9 +129,7 @@
                                 <h5 class="bold">DESCRIPTION</h5>
                             </div>
 
-                            <small class="font-size-15">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has
-                                been the industry's standard dummy text ever since the 1500s,
+                            <small class="font-size-15">{{ticket.description}}
                             </small>
                         </div>
                         <!-- END DESC -->
@@ -170,65 +169,42 @@
                             <div class="details">
                                 <h5 class="bold">SUB TICKET </h5>
                             </div>
-                            <div class="sub-task" style="border-bottom: 0px solid">
-                                <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
-                                    <div class="sub-description">
-                                        <small>A589461</small>
-                                        Lorem Ipsum is simply dummy text of the printing...
-                                    </div>
-                                    <div class="divider-gray"></div>
-
-                                </div>
-                                <div class="col-lg-5 col-sm-12 text-right  ">
-                                    <a class="inline-bt pull-left " href="javascript:void(0);">
-                                        <div class="pull-left commenter-img">
-                                            <img src="assets/img/avatar/jaman_01.jpg">
-                                            Aaron
-                                        </div>
-                                    </a>
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn ">
-                                        open
-                                    </div>
-                                    <div class="bg-checkbox orange font-white small-details  inline-bt  ">
-                                        Question
-                                    </div>
-
-                                    <div class="bg-checkbox  font-white  inline-bt link-btn  ">
-                                        <i class="main-icon-2-more-1 color-green500">
-                                        </i>
-                                    </div>
-                                </div>
+                            <div ng-show=subTickets.length==0>
+                                No sub-tickets assigned yet
                             </div>
-                            <div class="sub-task" style="border-bottom: 0px solid">
-                                <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
-                                    <div class="sub-description">
-                                        <small>A589461</small>
-                                        Lorem Ipsum is simply dummy text of the...
-                                    </div>
-                                    <div class="divider-gray"></div>
-
-                                </div>
-                                <div class="col-lg-5 col-sm-12 text-right  ">
-                                    <a class="inline-bt pull-left " href="javascript:void(0);">
-                                        <div class="pull-left commenter-img">
-                                            <img src="assets/img/avatar/michael-owens.jpg">
-                                            Abagnale
+                            <div ng-repeat="sub in subTickets">
+                                <div class="sub-task" style="border-bottom: 0px solid">
+                                    <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                        <div class="sub-description">
+                                            <small ref  ng-click="loadTicketView(sub)">{{sub.reference}}</small>
+                                            {{sub.description}}
                                         </div>
-                                    </a>
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn ">
-                                        open
-                                    </div>
-                                    <div class="bg-checkbox teal600 font-white small-details  inline-bt  ">
-                                        complain
-                                    </div>
+                                        <div class="divider-gray"></div>
 
-                                    <div class="bg-checkbox  font-white  inline-bt link-btn  ">
-                                        <i class="main-icon-2-more-1 color-green500">
-                                        </i>
+                                    </div>
+                                    <div class="col-lg-5 col-sm-12 text-right  ">
+                                        <a class="inline-bt pull-left " href="javascript:void(0);">
+                                            <div class="pull-left commenter-img">
+                                                <img src={{sub.assignee.avatar}}>
+                                                {{sub.assignee.name}}
+                                            </div>
+                                        </a>
+                                        <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                            {{sub.status}}
+                                        </div>
+                                        <div class="bg-checkbox orange font-white small-details  inline-bt  ">
+                                            {{sub.type}}
+                                        </div>
+
+                                        <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                            <i class="main-icon-2-more-1 color-green500">
+                                            </i>
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
+
                         </div>
                         <!-- END -->
 
@@ -238,37 +214,43 @@
                                 <h5 class="bold">RELATED TICKET </h5>
                             </div>
 
-                            <div class="sub-task" style="border-bottom: 0px solid">
-                                <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
-                                    <div class="sub-description">
-                                        <small>A589461</small>
-                                        Lorem Ipsum is simply dummy text of...
-                                        industry.
-                                    </div>
-                                    <div class="divider-gray"></div>
-
-                                </div>
-                                <div class="col-lg-5 col-sm-12 text-right  ">
-                                    <a class="inline-bt pull-left " href="javascript:void(0);">
-                                        <div class="pull-left commenter-img">
-                                            <img src="assets/img/avatar/mikeluby.jpg">
-                                            Abourezk
-                                        </div>
-                                    </a>
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn ">
-                                        open
-                                    </div>
-                                    <div class="bg-checkbox orange font-white small-details  inline-bt  ">
-                                        Question
-                                    </div>
-
-                                    <div class="bg-checkbox  font-white  inline-bt link-btn  ">
-                                        <i class="main-icon-2-more-1 color-green500">
-                                        </i>
-                                    </div>
-                                </div>
-
+                            <div ng-show=relTickets.length==0>
+                                No related tickets assigned yet
                             </div>
+
+                            <div ng-repeat="relticket in relTickets">
+                                <div class="sub-task" style="border-bottom: 0px solid">
+                                    <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                        <div class="sub-description">
+                                            <small ng-click="loadTicketView(relticket)">{{relticket.reference}}</small>
+                                            {{relticket.description}}
+                                        </div>
+                                        <div class="divider-gray"></div>
+
+                                    </div>
+                                    <div class="col-lg-5 col-sm-12 text-right  ">
+                                        <a class="inline-bt pull-left " href="javascript:void(0);">
+                                            <div class="pull-left commenter-img">
+                                                <img src={{relticket.assignee.avatar}}>
+                                                {{relticket.assignee.name}}
+                                            </div>
+                                        </a>
+                                        <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                            {{relticket.status}}
+                                        </div>
+                                        <div class="bg-checkbox orange font-white small-details  inline-bt  ">
+                                            {{relticket.type}}
+                                        </div>
+
+                                        <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                            <i class="main-icon-2-more-1 color-green500">
+                                            </i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
                         <!-- end -->
 
@@ -284,14 +266,14 @@
                                             <div class="people-view">
                                                 <div class="people-view-img ">
                                                     <img src="assets/img/avatar/bobbyjkane.jpg"
-                                                         ng-src="assets/img/avatar/bobbyjkane.jpg">
+                                                         ng-src={{ticket.submitter.avatar}}>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold">
                                                         submitter
                                                     </div>
                                                     <div class="notification-text ">
-                                                        Abagnale, Frank
+                                                        {{ticket.submitter.name}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -300,14 +282,14 @@
                                             <div class="people-view">
                                                 <div class="people-view-img ">
                                                     <img src="assets/img/avatar/amarkdalen.jpg"
-                                                         ng-src="assets/img/avatar/amarkdalen.jpg">
+                                                         ng-src={{ticket.requester.avatar}}>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold color-cyan500">
                                                         requester
                                                     </div>
                                                     <div class="notification-text">
-                                                        Aaron, Hank
+                                                        {{ticket.requester.name}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -316,17 +298,17 @@
 
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <div class="people-view">
+                                            <div class="people-view" ng-show=ticket.assignee.name>
                                                 <div class="people-view-img ">
                                                     <img src="assets/img/avatar/amarkdalen.jpg"
-                                                         ng-src="assets/img/avatar/robertoortiz.jpg">
+                                                         ng-src={{ticket.assignee.avatar}}>
                                                 </div>
-                                                <div class="row people-view-details">
+                                                <div class="row people-view-details" >
                                                     <div class="notification-time text-uppercase bold color-green500">
                                                         ASSIGNEE
                                                     </div>
                                                     <div class="notification-text">
-                                                        Abourezk, James
+                                                        {{ticket.assignee.name}}
                                                     </div>
                                                 </div>
                                             </div>

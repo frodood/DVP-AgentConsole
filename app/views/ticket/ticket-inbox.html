@@ -1,5 +1,4 @@
-<div id="mainTicketWrapper" class="animated view-ticket-wrapper "
-     ng-controller="ticketCtrl">
+<div id="mainTicketWrapper" class="animated view-ticket-wrapper " ng-controller="ticketCtrl">
     <div class="container">
         <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
             <div class="ticket-wrap">
@@ -44,13 +43,14 @@
                              ng-mouseover="chatWidgetscrollEnabled = true"
                              ng-mouseleave="chatWidgetscrollEnabled = false"
                              enabled="{{ chatWidgetscrollEnabled }}"
-                                ng-onscroll="showIt()"id="scrltodo">
+                                ng-onscroll=""id="scrltodo">
                             <div class="ticket-details todo" id="todo-items" ng-repeat="todo in ticketList.toDo">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/oykun.jpg"
-                                             ng-src="{{todo.img}}">
+                                             ng-src="{{todo.assignee.avatar}}">
                                     </div>
+
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="row">
@@ -69,11 +69,11 @@
 
                                     </div>
                                     <div class="row">
-                                        <div class="notification-time " ng-show="todo.assignee_name">
-                                            {{todo.assignee_name}}
+                                        <div class="notification-time " ng-if="todo.assignee.name">
+                                          {{todo.assignee.name}}
                                         </div>
-                                        <div class="notification-time " ng-show="todo.assignee_group_name">
-                                             {{todo.assignee_group_name}}
+                                        <div class="notification-time " ng-if="todo.assignee_group.name">
+                                             {{todo.assignee_group.name}}
                                         </div>
                                         <div class="notification-time group ">
                                             {{todo.timeDelay}}
@@ -101,14 +101,14 @@
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/oykun.jpg"
-                                             ng-src="{{inprogress.img}}">
+                                             ng-src="{{inprogress.assignee.avatar}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="notification-text ">
                                             {{inprogress.subject}}
-                                            <div class="notification-ref link" ng-click="gotoTicket(todo.id)">
+                                            <div class="notification-ref link" ng-click="gotoTicket(inprogress)">
                                                 {{inprogress.reference}}
                                             </div>
                                         </div>
@@ -120,12 +120,12 @@
 
                                     </div>
                                     <div class="row">
-                                        <div class="notification-time " ng-show="inprogress.assignee">
-                                            {{inprogress.assignee_name}}
+                                        <div class="notification-time " ng-show="inprogress.assignee.name">
+                                            assignee {{inprogress.assignee.name}}
                                         </div>
 
-                                        <div class="notification-time " ng-show="inprogress.assignee_group">
-                                            {{inprogress.assignee_group_name}}
+                                        <div class="notification-time " ng-show="inprogress.assignee_group.name">
+                                            group {{inprogress.assignee_group.name}}
                                         </div>
                                     <div class="notification-time group ">
                                         {{inprogress.timeDelay}}
@@ -151,14 +151,14 @@
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/oykun.jpg"
-                                             ng-src="{{done.img}}">
+                                             ng-src="{{done.assignee.avatar}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="notification-text ">
                                             {{done.status}}
-                                            <div class="notification-ref link" ng-click="gotoTicket(todo.id)">
+                                            <div class="notification-ref link" ng-click="gotoTicket(done)">
                                                 {{done.reference}}
                                             </div>
                                         </div>
@@ -170,11 +170,11 @@
 
                                     </div>
                                     <div class="row">
-                                        <div class="notification-time " ng-show="done.assignee">
-                                            {{done.assignee_name}}
+                                        <div class="notification-time " ng-show="done.assignee.name">
+                                            {{done.assignee.name}}
                                         </div>
-                                        <div class="notification-time " ng-show="done.assignee_group">
-                                            {{done.assignee_group_name}}
+                                        <div class="notification-time " ng-show="done.assignee_group.name">
+                                            {{done.assignee_group.name}}
                                         </div>
                                         <div class="notification-time group ">
                                             {{done.timeDelay}}

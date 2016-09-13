@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,$rootScope) {
+agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,$rootScope,$filter) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -22,7 +22,7 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-            removeClass('display-none zoomOut');
+                removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -43,10 +43,10 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-            removeClass('display-none zoomOut');
+                removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-            removeClass('display-block  zoomOut');
+                removeClass('display-block  zoomOut');
         }
     };
 
@@ -55,29 +55,29 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-            removeClass('display-none');
+                removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-            removeClass('display-block');
+                removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-        removeClass('display-block active-menu-icon ');
+            removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-        removeClass('display-none  ');
+            removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-        removeClass('display-none');
+            removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-        removeClass('display-block active-menu-icon');
+            removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -476,11 +476,45 @@ agentApp.controller('consoleCtrl', function ($scope, $http, $base64,$timeout, jw
 
 
     $rootScope.$on('newTicketTab', function (events,args) {
-        if( $scope.tabs.indexOf(args)==-1)
+
+        if($scope.tabs.length>0)
+        {
+            /*var assigneeData = $filter('filter')($scope.tabs, {
+            notificationData._id: args._id
+
+            });*/
+
+
+
+            var isOpened = $scope.tabs.filter(function (item) {
+                if(item.notificationData._id==args._id)
+                {
+                    return true
+                }
+                else
+                {
+                    return false
+                }
+
+            })
+
+            if(isOpened.length==0)
+            {
+                var tabTopic = "Ticket"+args.reference;
+                $scope.addTab(tabTopic, tabTopic, 'ticketView',args);
+            }
+        }
+        else
         {
             var tabTopic = "Ticket"+args.reference;
             $scope.addTab(tabTopic, tabTopic, 'ticketView',args);
         }
+
+
+
+
+
+
 
 
     });
