@@ -161,4 +161,12 @@
     color: #ffffff;
 }
 
+.btn-red600 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    background: #d90000;
+    border-radius: 0px;
+    border-color: #d90000;
+    color: #ffffff;
+}
+
 
