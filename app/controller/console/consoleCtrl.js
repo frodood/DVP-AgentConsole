@@ -500,12 +500,6 @@ agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $
 
         if($scope.tabs.length>0)
         {
-            /*var assigneeData = $filter('filter')($scope.tabs, {
-            notificationData._id: args._id
-
-            });*/
-
-
 
             var isOpened = $scope.tabs.filter(function (item) {
                 if(item.notificationData._id==args._id)
@@ -530,8 +524,6 @@ agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $
             var tabTopic = "Ticket"+args.reference;
             $scope.addTab(tabTopic, tabTopic, 'ticketView',args);
         }
-
-
 
 
 

@@ -31,7 +31,7 @@
 
                 <div class="ticket-list-wrapper">
                     <!-- #todolist -->
-                    <div class="col-md-4" id="todo-block">
+                    <div class="col-md-4 items-wrap" id="todo-block" scrolly="showMoreNewTickets()">
                         <div class="ticket-list-header">
                             TODO ({{ticketList.toDo.length}})
                         </div>
@@ -43,8 +43,8 @@
                              ng-mouseover="chatWidgetscrollEnabled = true"
                              ng-mouseleave="chatWidgetscrollEnabled = false"
                              enabled="{{ chatWidgetscrollEnabled }}"
-                                ng-onscroll=""id="scrltodo">
-                            <div class="ticket-details todo" id="todo-items" ng-repeat="todo in ticketList.toDo">
+                              id="scrltodo">
+                            <div class="ticket-details todo " id="todo-items" ng-repeat="todo in ticketList.toDo">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/oykun.jpg"
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 items-wrap" scrolly="showMoreOpenTickets()" >
                         <div class="ticket-list-header">
                             IN PROGRESS ({{ticketList.inProgress.length}})
                         </div>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 items-wrap" scrolly="showMoreCompletedTickets()">
                         <div class="ticket-list-header">
                             DONE ({{ticketList.done.length}})
                         </div>
