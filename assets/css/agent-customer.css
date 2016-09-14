@@ -8,7 +8,6 @@
 body {
     background: #f7f5f5;
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    overflow-x: hidden;
 }
 
 /* #CONSOLE CSS */
@@ -1436,7 +1435,12 @@ div > div >
 
 .ticket-dec-wrapper {
     margin-top: 25px;
-
+    position: relative;
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    height: auto;
 }
 
 .font-size-15 {
@@ -2100,5 +2104,10 @@ div > div >
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
 }
 
-
+.mainScrollerBar {
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 600px;
+}
 
