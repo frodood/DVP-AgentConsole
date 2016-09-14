@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $base64,$timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService,userService,tagService) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -22,7 +22,7 @@ agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -41,10 +41,10 @@ agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-                removeClass('display-block  zoomOut');
+            removeClass('display-block  zoomOut');
         }
     };
 
@@ -53,29 +53,29 @@ agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-                removeClass('display-none');
+            removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-                removeClass('display-block');
+            removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-            removeClass('display-block active-menu-icon ');
+        removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-            removeClass('display-none  ');
+        removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-            removeClass('display-none');
+        removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-            removeClass('display-block active-menu-icon');
+        removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -443,8 +443,8 @@ agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $
     //$scope.addTab('A526455-Ticket view', 'A526455-Ticket view', 'engagement',data);
     //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
 
-    $scope.addTabTest =function(){
-        $scope.addTab('engagement', 'Engagement', 'engagement',{
+    $scope.addTabTest = function () {
+        $scope.addTab('engagement', 'Engagement', 'engagement', {
             company: "123",
             direction: "333",
             channelFrom: "33",
@@ -484,7 +484,7 @@ agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $
             channel: "555"
         });
     }
-   var addMailInbox = function () {
+    var addMailInbox = function () {
         $scope.addTab('Mail Inbox', 'Mail Inbox', 'mail-inbox', {
             company: "123",
             direction: "333",
@@ -492,51 +492,36 @@ agentApp.controller('consoleCtrl', function ($filter,$rootScope,$scope, $http, $
             channelTo: "33",
             channel: "555"
         });
+
     };
     addMailInbox();
 
 
-    $rootScope.$on('newTicketTab', function (events,args) {
+    $rootScope.$on('newTicketTab', function (events, args) {
 
-        if($scope.tabs.length>0)
-        {
+        if ($scope.tabs.length > 0) {
             /*var assigneeData = $filter('filter')($scope.tabs, {
-            notificationData._id: args._id
-
-            });*/
-
-
-
+             notificationData._id: args._id
+             });*/
             var isOpened = $scope.tabs.filter(function (item) {
-                if(item.notificationData._id==args._id)
-                {
+                if (item.notificationData._id == args._id) {
                     return true
                 }
-                else
-                {
+                else {
                     return false
                 }
+            });
 
-            })
-
-            if(isOpened.length==0)
-            {
-                var tabTopic = "Ticket"+args.reference;
-                $scope.addTab(tabTopic, tabTopic, 'ticketView',args);
+            if (isOpened.length == 0) {
+                var tabTopic = "Ticket" + args.reference;
+                $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
             }
         }
-        else
-        {
-            var tabTopic = "Ticket"+args.reference;
-            $scope.addTab(tabTopic, tabTopic, 'ticketView',args);
+        else {
+            var tabTopic = "Ticket" + args.reference;
+            $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
         }
-
-
-
-
-
-
-
+        resizeDiv();
 
     });
 
