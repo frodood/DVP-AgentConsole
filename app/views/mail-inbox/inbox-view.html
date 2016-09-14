@@ -109,6 +109,14 @@
                             notification
                         </div>
                     </div>
+                    <div class="filter-option" ng-click="reloadSMSMessages()">
+                        <div class="number-count pull-right">
+                            {{counters.SMS}}
+                        </div>
+                        <div class="pull-left">
+                            sms
+                        </div>
+                    </div>
                     <!-- END -->
 
                 </div>
@@ -180,6 +188,7 @@
                                         <i ng-if="message.message_type === 'NOTIFICATION'" class="fa fa-bell-o"></i>
                                         <i ng-if="message.message_type === 'FACEBOOK'" class="fa fa-facebook"></i>
                                         <i ng-if="message.message_type === 'TWITTER'" class="fa fa-twitter"></i>
+                                        <i ng-if="message.message_type === 'SMS'" class="fa fa-envelope"></i>
                                     </div>
                                     <div class="main-text">
                                         <div ng-if="message.from">{{message.from.toUpperCase()}}</div><div ng-if="!message.from && message.engagement_session && message.engagement_session.channel_from">{{message.engagement_session.channel_from.toUpperCase()}}</div>
@@ -222,7 +231,7 @@
                                 <div class="col-lg-7">
                                     <div class="mail-option-header text-right">
                                         <div class="mail-btn-wrap">
-                                            <span class="btn btn-default btn-green100">convert to ticket</span>
+                                            <span class="btn btn-default btn-green100" ng-click="openTab()">convert to ticket</span>
                                         </div>
                                     </div>
                                 </div>

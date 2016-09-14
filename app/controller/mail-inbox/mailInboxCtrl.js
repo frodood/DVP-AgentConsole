@@ -1,7 +1,7 @@
 /**
  * Created by Damith on 9/12/2016.
  */
-agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
+agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService) {
 
 
     $scope.clickMoreEmailDetails = function (messageDetails) {
@@ -75,10 +75,23 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
                 {
                     getNotificationMessages();
                 }
+                else if($scope.currentFilter === 'SMS')
+                {
+                    getSMSMessages();
+                }
             }
 
         });
 
+
+    };
+
+    $scope.openTab = function()
+    {
+        if($scope.currentDisplayMessage && $scope.currentDisplayMessage.engagement_session)
+        {
+            $rootScope.$emit('INBOX_NewEngagementTab', $scope.currentDisplayMessage.engagement_session);
+        }
 
     };
 
@@ -126,6 +139,10 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
             {
                 getNotificationMessages();
             }
+            else if($scope.currentFilter === 'SMS')
+            {
+                getSMSMessages();
+            }
 
         });
 
@@ -140,7 +157,8 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
         READ: 0,
         FACEBOOK: 0,
         TWITTER: 0,
-        NOTIFICATION: 0
+        NOTIFICATION: 0,
+        SMS: 0
 
     };
 
@@ -325,6 +343,23 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
 
     };
 
+    $scope.reloadSMSMessages = function()
+    {
+        $scope.pageStartCount = 0;
+
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
+
+        getCounters(function()
+        {
+            getSMSMessages();
+        });
+
+
+    };
+
     $scope.deleteMultipleMessages = function()
     {
         //filter out marked messages
@@ -372,6 +407,10 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
                     {
                         getNotificationMessages();
                     }
+                    else if($scope.currentFilter === 'SMS')
+                    {
+                        getSMSMessages();
+                    }
                 });
             }
 
@@ -417,6 +456,10 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
                     else if($scope.currentFilter === 'NOTIFICATION')
                     {
                         getNotificationMessages();
+                    }
+                    else if($scope.currentFilter === 'SMS')
+                    {
+                        getSMSMessages();
                     }
                 });
             }
@@ -737,6 +780,50 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
             $scope.currentPageCount = $scope.counters.NOTIFICATION;
             $scope.filteredMailDisplay = [];
             mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, 'NOTIFICATION')
+                .then(function (data)
+                {
+                    if (data.IsSuccess)
+                    {
+                        if(data.Result)
+                        {
+                            $scope.filteredMailDisplay = data.Result;
+                        }
+                    }
+                    else
+                    {
+                        var errMsg = data.CustomMessage;
+
+                        if (data.Exception)
+                        {
+                            errMsg = data.Exception.Message;
+                        }
+                        console.log(errMsg);
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+
+                })
+
+        }
+        catch(ex)
+        {
+            console.log(ex);
+
+        }
+
+    };
+
+    var getSMSMessages = function()
+    {
+
+        try
+        {
+            $scope.currentFilter = 'SMS';
+            $scope.currentPageCount = $scope.counters.SMS;
+            $scope.filteredMailDisplay = [];
+            mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, 'SMS')
                 .then(function (data)
                 {
                     if (data.IsSuccess)
