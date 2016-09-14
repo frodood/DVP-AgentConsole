@@ -1,5 +1,9 @@
-<div >
+<div>
+    <div ng-include="'app/views/ticket/ticket-edit.html'"></div>
     <div class="ticket-view-wrapper">
+
+        <!-- edit ticker -->
+
         <!-- MODEL HEADER -->
         <div class="model-header">
             <div class="col-md-6">
@@ -7,11 +11,11 @@
                     <i class="main-icon-2-telephone-3"></i>
                 </div>
                 <div class="model-header-text small bold ">
-                    {{ticketID}}
+                    {{ticket.id}}
                 </div>
                 <br/>
                 <div class="model-header-text bold">
-                    {{ticketSubject}}
+                    {{ticket.subject}}
                 </div>
             </div>
 
@@ -38,7 +42,8 @@
 
                     </div>
                     <div class="btn-warp ">
-                        <span class="btn btn-default">edit</span>
+                        <span class="btn btn-default"
+                              ng-click="clickShowTickerEditMode();">edit</span>
                     </div>
                     <div class="btn-warp ">
                         <span class="btn btn-default">comment</span>
@@ -55,399 +60,393 @@
         </div>
         <!-- MODEL HEADER -->
 
-        <div class="ticker-details-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-8 col-sm-12">
+        <div class="mainScrollerBar">
+            <div class="ticker-details-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-8 col-sm-12">
 
-                        <!-- DETAILS -->
-                        <div class="details-wrap">
-                            <div class="details">
-                                <h5 class="bold">DETAILS</h5>
+                            <!-- DETAILS -->
+                            <div class="details-wrap">
+                                <div class="details">
+                                    <h5 class="bold">DETAILS</h5>
+                                </div>
+                                <ul class="info-list-lg">
+                                    <li>
+                                        <small>Type</small>
+                                        <h5>{{ticket.type}}</h5>
+                                    </li>
+                                    <li>
+                                        <small>Priority</small>
+                                        <h5>
+                                            <div class="bg-checkbox red font-white small-details inline-btn">
+                                                {{ticket.priority}}
+                                            </div>
+                                        </h5>
+                                    </li>
+                                    <li>
+                                        <small>Status</small>
+                                        <h5 class="status-open">{{ticket.status}}</h5>
+                                    </li>
+                                    <li>
+                                        <small>Company</small>
+                                        <h5>Duo Sofatware</h5>
+                                    </li>
+                                </ul>
                             </div>
-                            <ul class="info-list-lg">
-                                <li>
-                                    <small>Type</small>
-                                    <h5>{{ticket.type}}</h5>
-                                </li>
-                                <li>
-                                    <small>Priority</small>
-                                    <h5>
-                                        <div class="bg-checkbox red font-white small-details inline-btn">
-                                            {{ticket.priority}}
-                                        </div>
-                                    </h5>
-                                </li>
-                                <li>
-                                    <small>Status</small>
-                                    <h5 class="status-open">{{ticket.status}}</h5>
-                                </li>
-                                <li>
-                                    <small>Company</small>
-                                    <h5>Duo Sofatware</h5>
-                                </li>
-                            </ul>
-                        </div>
 
-                        <div class="details-wrap">
-                            <div class="details">
-                                <h5 class="bold">DATES</h5>
+                            <div class="details-wrap">
+                                <div class="details">
+                                    <h5 class="bold">DATES</h5>
+                                </div>
+                                <ul class="info-list-lg">
+                                    <li>
+                                        <small>Created</small>
+                                        <h5>{{ticket.created_at}}</h5>
+                                    </li>
+                                    <li>
+                                        <small>Updated</small>
+                                        <h5>{{ticket.timeDelay}}</h5>
+                                    </li>
+                                    <li>
+                                        <small>Due To</small>
+                                        <h5>{{ticket.due_at}}</h5>
+                                    </li>
+                                </ul>
                             </div>
-                            <ul class="info-list-lg">
-                                <li>
-                                    <small>Created</small>
-                                    <h5>{{ticket.created_at}}</h5>
-                                </li>
-                                <li>
-                                    <small>Updated</small>
-                                    <h5>{{ticket.timeDelay}}</h5>
-                                </li>
-                                <li>
-                                    <small>Due To</small>
-                                    <h5>{{ticket.due_at}}</h5>
-                                </li>
-                            </ul>
-                        </div>
 
-                        <div class="details-wrap">
-                            <div class="details">
-                                <h5 class="bold">TAGES</h5>
-                            </div>
-                            <div ng-repeat="tag in ticket.tags">
-                                <div class="bg-checkbox teal600 font-white  inline-btn">
+                            <div class="details-wrap">
+                                <div class="details">
+                                    <h5 class="bold">TAGES</h5>
+                                </div>
+                                <div ng-repeat="tag in ticket.tags" class="bg-checkbox teal600 font-white  inline-btn">
                                     {{tag}}
                                 </div>
                             </div>
+                            <!-- END DETAILS -->
 
-
-                        </div>
-                        <!-- END DETAILS -->
-
-                        <!-- DESCRIPTION -->
-                        <div class="ticket-dec-wrapper">
-                            <div class="details">
-                                <h5 class="bold">DESCRIPTION</h5>
-                            </div>
-
-                            <small class="font-size-15">{{ticket.description}}
-                            </small>
-                        </div>
-                        <!-- END DESC -->
-
-                        <!-- ATTACHMENT -->
-                        <div class="ticket-dec-wrapper">
-                            <div class="details">
-                                <h5 class="bold">ATTACHMENT</h5>
-                            </div>
-
-                            <div class="dropdown-area">
-                                <i class="main-icon-2-upload-1"></i>
-                                DROP FILES TO ATTACH OR BROWSE
-                            </div>
-
-                            <div class="ticket-upload-view">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="upload-area bold">
-                                            IMAGE 01
-                                        </div>
-                                        <small>image.png</small>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="upload-area bold">
-                                            IMAGE 01
-                                        </div>
-                                        <small>image.png</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END-->
-
-                        <!-- SUB TASK LIST -->
-                        <div class="ticker-subticket-wrapper">
-                            <div class="details">
-                                <h5 class="bold">SUB TICKET </h5>
-                            </div>
-                            <div ng-show=subTickets.length==0>
-                                No sub-tickets assigned yet
-                            </div>
-                            <div ng-repeat="sub in subTickets">
-                                <div class="sub-task" style="border-bottom: 0px solid">
-                                    <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
-                                        <div class="sub-description">
-                                            <small ref  ng-click="loadTicketView(sub)">{{sub.reference}}</small>
-                                            {{sub.description}}
-                                        </div>
-                                        <div class="divider-gray"></div>
-
-                                    </div>
-                                    <div class="col-lg-5 col-sm-12 text-right  ">
-                                        <a class="inline-bt pull-left " href="javascript:void(0);">
-                                            <div class="pull-left commenter-img">
-                                                <img src={{sub.assignee.avatar}}>
-                                                {{sub.assignee.name}}
-                                            </div>
-                                        </a>
-                                        <div class="bg-checkbox gray300  font-white small-details inline-btn ">
-                                            {{sub.status}}
-                                        </div>
-                                        <div class="bg-checkbox orange font-white small-details  inline-bt  ">
-                                            {{sub.type}}
-                                        </div>
-
-                                        <div class="bg-checkbox  font-white  inline-bt link-btn  ">
-                                            <i class="main-icon-2-more-1 color-green500">
-                                            </i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <!-- END -->
-
-                        <!-- related ticket-->
-                        <div class="ticker-subticket-wrapper">
-                            <div class="details">
-                                <h5 class="bold">RELATED TICKET </h5>
-                            </div>
-
-                            <div ng-show=relTickets.length==0>
-                                No related tickets assigned yet
-                            </div>
-
-                            <div ng-repeat="relticket in relTickets">
-                                <div class="sub-task" style="border-bottom: 0px solid">
-                                    <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
-                                        <div class="sub-description">
-                                            <small ng-click="loadTicketView(relticket)">{{relticket.reference}}</small>
-                                            {{relticket.description}}
-                                        </div>
-                                        <div class="divider-gray"></div>
-
-                                    </div>
-                                    <div class="col-lg-5 col-sm-12 text-right  ">
-                                        <a class="inline-bt pull-left " href="javascript:void(0);">
-                                            <div class="pull-left commenter-img">
-                                                <img src={{relticket.assignee.avatar}}>
-                                                {{relticket.assignee.name}}
-                                            </div>
-                                        </a>
-                                        <div class="bg-checkbox gray300  font-white small-details inline-btn ">
-                                            {{relticket.status}}
-                                        </div>
-                                        <div class="bg-checkbox orange font-white small-details  inline-bt  ">
-                                            {{relticket.type}}
-                                        </div>
-
-                                        <div class="bg-checkbox  font-white  inline-bt link-btn  ">
-                                            <i class="main-icon-2-more-1 color-green500">
-                                            </i>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- end -->
-
-                    </div>
-                    <div class="col-lg-4 col-sm-12">
-                        <!-- PEOPLE -->
-                        <div class="people-wrap">
-                            <div class="details-wrap people">
+                            <!-- DESCRIPTION -->
+                            <div class="ticket-dec-wrapper">
                                 <div class="details">
-                                    <h5 class="bold">PEOPLE</h5>
+                                    <h5 class="bold">DESCRIPTION</h5>
+                                </div>
+                                <p class="font-size-15">{{ticket.description}} </p>
+                            </div>
+                            <!-- END DESC -->
+
+                            <!-- ATTACHMENT -->
+                            <div class="ticket-dec-wrapper">
+                                <div class="details">
+                                    <h5 class="bold">ATTACHMENT</h5>
+                                </div>
+
+                                <div class="dropdown-area">
+                                    <i class="main-icon-2-upload-1"></i>
+                                    DROP FILES TO ATTACH OR BROWSE
+                                </div>
+
+                                <div class="ticket-upload-view">
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="people-view">
-                                                <div class="people-view-img ">
-                                                    <img src="assets/img/avatar/bobbyjkane.jpg"
-                                                         ng-src={{ticket.submitter.avatar}}>
+                                        <div class="col-sm-3">
+                                            <div class="upload-area bold">
+                                                IMAGE 01
+                                            </div>
+                                            <small>image.png</small>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="upload-area bold">
+                                                IMAGE 01
+                                            </div>
+                                            <small>image.png</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END-->
+
+                            <!-- SUB TASK LIST -->
+                            <div class="ticker-subticket-wrapper">
+                                <div class="details">
+                                    <h5 class="bold">SUB TICKET </h5>
+                                </div>
+                                <div ng-show=subTickets.length==0>
+                                    No sub-tickets assigned yet
+                                </div>
+                                <div ng-repeat="sub in subTickets">
+                                    <div class="sub-task" style="border-bottom: 0px solid">
+                                        <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                            <div class="sub-description">
+                                                <small ref ng-click="loadTicketView(sub)">{{sub.reference}}</small>
+                                                {{sub.description}}
+                                            </div>
+                                            <div class="divider-gray"></div>
+
+                                        </div>
+                                        <div class="col-lg-5 col-sm-12 text-right  ">
+                                            <a class="inline-bt pull-left " href="javascript:void(0);">
+                                                <div class="pull-left commenter-img">
+                                                    <img src={{sub.assignee.avatar}}>
+                                                    {{sub.assignee.name}}
                                                 </div>
-                                                <div class="row people-view-details">
-                                                    <div class="notification-time text-uppercase bold">
-                                                        submitter
+                                            </a>
+                                            <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                                {{sub.status}}
+                                            </div>
+                                            <div class="bg-checkbox orange font-white small-details  inline-bt  ">
+                                                {{sub.type}}
+                                            </div>
+
+                                            <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                                <i class="main-icon-2-more-1 color-green500">
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- END -->
+
+                            <!-- related ticket-->
+                            <div class="ticker-subticket-wrapper">
+                                <div class="details">
+                                    <h5 class="bold">RELATED TICKET </h5>
+                                </div>
+
+                                <div ng-show=relTickets.length==0>
+                                    No related tickets assigned yet
+                                </div>
+
+                                <div ng-repeat="relticket in relTickets">
+                                    <div class="sub-task" style="border-bottom: 0px solid">
+                                        <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                            <div class="sub-description">
+                                                <small ng-click="loadTicketView(relticket)">{{relticket.reference}}
+                                                </small>
+                                                {{relticket.description}}
+                                            </div>
+                                            <div class="divider-gray"></div>
+
+                                        </div>
+                                        <div class="col-lg-5 col-sm-12 text-right  ">
+                                            <a class="inline-bt pull-left " href="javascript:void(0);">
+                                                <div class="pull-left commenter-img">
+                                                    <img src={{relticket.assignee.avatar}}>
+                                                    {{relticket.assignee.name}}
+                                                </div>
+                                            </a>
+                                            <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                                {{relticket.status}}
+                                            </div>
+                                            <div class="bg-checkbox orange font-white small-details  inline-bt  ">
+                                                {{relticket.type}}
+                                            </div>
+
+                                            <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                                <i class="main-icon-2-more-1 color-green500">
+                                                </i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- end -->
+
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <!-- PEOPLE -->
+                            <div class="people-wrap">
+                                <div class="details-wrap people">
+                                    <div class="details">
+                                        <h5 class="bold">PEOPLE</h5>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="people-view">
+                                                    <div class="people-view-img ">
+                                                        <img src="assets/img/avatar/bobbyjkane.jpg"
+                                                             ng-src={{ticket.submitter.avatar}}>
                                                     </div>
-                                                    <div class="notification-text ">
-                                                        {{ticket.submitter.name}}
+                                                    <div class="row people-view-details">
+                                                        <div class="notification-time text-uppercase bold">
+                                                            submitter
+                                                        </div>
+                                                        <div class="notification-text ">
+                                                            {{ticket.submitter.name}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="people-view">
+                                                    <div class="people-view-img ">
+                                                        <img src="assets/img/avatar/amarkdalen.jpg"
+                                                             ng-src={{ticket.requester.avatar}}>
+                                                    </div>
+                                                    <div class="row people-view-details">
+                                                        <div class="notification-time text-uppercase bold color-cyan500">
+                                                            requester
+                                                        </div>
+                                                        <div class="notification-text">
+                                                            {{ticket.requester.name}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="people-view">
-                                                <div class="people-view-img ">
-                                                    <img src="assets/img/avatar/amarkdalen.jpg"
-                                                         ng-src={{ticket.requester.avatar}}>
-                                                </div>
-                                                <div class="row people-view-details">
-                                                    <div class="notification-time text-uppercase bold color-cyan500">
-                                                        requester
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="people-view" ng-show=ticket.assignee.name>
+                                                    <div class="people-view-img ">
+                                                        <img src="assets/img/avatar/amarkdalen.jpg"
+                                                             ng-src={{ticket.assignee.avatar}}>
                                                     </div>
-                                                    <div class="notification-text">
-                                                        {{ticket.requester.name}}
+                                                    <div class="row people-view-details">
+                                                        <div class="notification-time text-uppercase bold color-green500">
+                                                            ASSIGNEE
+                                                        </div>
+                                                        <div class="notification-text">
+                                                            {{ticket.assignee.name}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <!-- END PEOPLE -->
 
+                            <!-- COLLABORATORS -->
+                            <div class="collaborators-wrapper">
+                                <div class="details">
+                                    <h5 class="bold"> COLLABORATORS
+                                        <!--<div class="pull-right right-icon">-->
+                                        <!--<i class="main-icon-2-add"> </i>-->
+                                        <!--</div>-->
+                                    </h5>
+                                </div>
+                                <div class="sub-task">
+                                    <div class="pull-left  ">
+                                        <div class="pull-left commenter-img">
+                                            <img src="assets/img/avatar/mikeluby.jpg"/>
+                                            Aaron, Hank
+                                        </div>
+                                    </div>
+                                    <div class="pull-right">
+                                        <div class="bg-checkbox gray300  font-white small-details inline-btn">
+                                            92h 11m / 0h
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sub-task">
+                                    <div class="pull-left  ">
+                                        <div class="pull-left commenter-img">
+                                            <img src="assets/img/avatar/jaman_01.jpg"/>
+                                            Abourezk, James
+                                        </div>
+                                    </div>
+                                    <div class="pull-right">
+                                        <div class="bg-checkbox gray300  font-white small-details inline-btn">
+                                            2h 11m / 0h
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END -->
+
+                            <!-- TIME TRACKING  -->
+                            <div class="collaborators-wrapper" style="margin-top: 35px;">
+                                <div class="details">
+                                    <h5 class="bold"> TIME TRACKING
+                                    </h5>
+
+                                </div>
+                                <div class="time-wrapper">
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="people-view" ng-show=ticket.assignee.name>
-                                                <div class="people-view-img ">
-                                                    <img src="assets/img/avatar/amarkdalen.jpg"
-                                                         ng-src={{ticket.assignee.avatar}}>
-                                                </div>
-                                                <div class="row people-view-details" >
-                                                    <div class="notification-time text-uppercase bold color-green500">
-                                                        ASSIGNEE
-                                                    </div>
-                                                    <div class="notification-text">
-                                                        {{ticket.assignee.name}}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="col-sm-3">
+                                            Estimated
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <uib-progressbar value="22" type="warning">
+                                            </uib-progressbar>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            1W
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            Remaining
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <uib-progressbar value="22" type="success">
+                                            </uib-progressbar>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            0
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            Logged
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <uib-progressbar value="100" type="danger">
+                                            </uib-progressbar>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            2w 1d 4h 11m
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
+                            <!-- END -->
                         </div>
-                        <!-- END PEOPLE -->
-
-                        <!-- COLLABORATORS -->
-                        <div class="collaborators-wrapper">
-                            <div class="details">
-                                <h5 class="bold"> COLLABORATORS
-                                    <!--<div class="pull-right right-icon">-->
-                                    <!--<i class="main-icon-2-add"> </i>-->
-                                    <!--</div>-->
-                                </h5>
-                            </div>
-                            <div class="sub-task">
-                                <div class="pull-left  ">
-                                    <div class="pull-left commenter-img">
-                                        <img src="assets/img/avatar/mikeluby.jpg"/>
-                                        Aaron, Hank
-                                    </div>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn">
-                                        92h 11m / 0h
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sub-task">
-                                <div class="pull-left  ">
-                                    <div class="pull-left commenter-img">
-                                        <img src="assets/img/avatar/jaman_01.jpg"/>
-                                        Abourezk, James
-                                    </div>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn">
-                                        2h 11m / 0h
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END -->
-
-                        <!-- TIME TRACKING  -->
-                        <div class="collaborators-wrapper" style="margin-top: 35px;">
-                            <div class="details">
-                                <h5 class="bold"> TIME TRACKING
-                                </h5>
-
-                            </div>
-                            <div class="time-wrapper">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        Estimated
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <uib-progressbar value="22" type="warning">
-                                        </uib-progressbar>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        1W
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        Remaining
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <uib-progressbar value="22" type="success">
-                                        </uib-progressbar>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        0
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        Logged
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <uib-progressbar value="100" type="danger">
-                                        </uib-progressbar>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        2w 1d 4h 11m
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <!-- END -->
                     </div>
                 </div>
             </div>
-        </div>
+            <!-- ACTIVITY -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ticket-main-wrap ticker-tab-wrapper">
+                        <div class="details">
+                            <h5 class="bold"> ACTIVITY
+                            </h5>
+                        </div>
 
+                        <div class="tab-wrap">
+                            <uib-tabset class="ticket-tab-panle" active="active">
+                                <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}"
+                                         disable="tab.disabled">
+                                    <uib-tab-heading>
+                                        <i class="{{tab.icon}}"></i> {{tab.title}}
+                                    </uib-tab-heading>
 
-        <!-- ACTIVITY -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ticket-main-wrap ticker-tab-wrapper">
-                    <div class="details">
-                        <h5 class="bold"> ACTIVITY
-                        </h5>
-                    </div>
+                                    <div ng-switch on="tab.type">
+                                        <div ng-switch-when="comments">
+                                            <div ng-include="'app/views/ticket/template/comments.html'"></div>
+                                        </div>
+                                        <div ng-switch-when="activity">
+                                            <div ng-include="'app/views/ticket/template/activity.html'"></div>
+                                        </div>
 
-                    <div class="tab-wrap">
-                        <uib-tabset class="ticket-tab-panle" active="active">
-                            <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}"
-                                     disable="tab.disabled">
-                                <uib-tab-heading>
-                                    <i class="{{tab.icon}}"></i> {{tab.title}}
-                                </uib-tab-heading>
-
-                                <div ng-switch on="tab.type">
-                                    <div ng-switch-when="comments">
-                                        <div ng-include="'app/views/ticket/template/comments.html'"></div>
                                     </div>
-                                    <div ng-switch-when="activity">
-                                        <div ng-include="'app/views/ticket/template/activity.html'"></div>
-                                    </div>
 
-                                </div>
+                                </uib-tab>
+                            </uib-tabset>
+                        </div>
 
-                            </uib-tab>
-                        </uib-tabset>
                     </div>
-
                 </div>
             </div>
+            <!-- END ACTIVITY -->
         </div>
-        <!-- END ACTIVITY -->
-
 
     </div>
 

@@ -36,3 +36,20 @@ var divModel = function () {
     }
 }();
 
+
+var resizeDiv = function () {
+    vpw = $(window).width();
+    vph = $(window).height() - 225;
+    $('div.mainScrollerBar').attr("style", "height:" + vph + "px;");
+};
+
+$(document).ready(function () {
+    resizeDiv();
+});
+
+
+$(window).resize(function () {
+    resizeDiv();
+});
+
+

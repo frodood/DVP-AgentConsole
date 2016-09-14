@@ -205,3 +205,21 @@ label {
 .progress-bar-danger {
     background-color: #14d0a0;
 }
+
+.alert-danger {
+    color: #fff;
+    background-color: #cc1e2d;
+    border-color: #d9042b;
+}
+
+.alert-success {
+    color: #fff;
+    background-color: #136480;
+    border-color: #1a8bb2;
+}
+
+.alert-warning {
+    color: #fff;
+    background-color: #efc94c;
+    border-color: #f4cb89;
+}
