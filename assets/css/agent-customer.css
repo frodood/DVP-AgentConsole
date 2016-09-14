@@ -758,6 +758,14 @@ ul.info-list-lg > li > h5 {
     margin-top: 10px;
 }
 
+/*engagement timelime scrolly*/
+.items-wrap {
+    /*position: absolute;*/
+    width: 100%;
+    height: 300px;
+    overflow: scroll;
+}
+
 /*time line*/
 .timeline {
     list-style: none;

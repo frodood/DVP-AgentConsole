@@ -27,23 +27,23 @@
             <div class="col-md-2" style="background: #f7f5f5;">
                 <!-- MAIL OPTION WRAPPER -->
                 <div class="main-option-wrapper">
-                    <div class="mail-option">
+                    <div class="mail-option" ng-click="reloadInboxMessages()">
                         <div class="header-left pull-left">
                             Inbox
                         </div>
                         <div class="header-count pull-right">
                             <div>
-                                {{Counters.Unread}}
+                                {{counters.UNREAD}}
                             </div>
                         </div>
                     </div>
-                    <div class="mail-option">
+                    <div class="mail-option" ng-click="reloadDeletedMessages()">
                         <div class="header-left pull-left">
                             Deleted
                         </div>
                         <div class="header-count pull-right">
                             <div>
-                                {{Counters.Deleted}}
+                                {{counters.DELETED}}
                             </div>
                         </div>
                     </div>
@@ -55,25 +55,25 @@
                     <div class="mail-filter ">
                         <h5 class="bold">FILTERS</h5>
                     </div>
-                    <div class="filter-option">
+                    <div class="filter-option" ng-click="reloadFacebookMessages()">
                         <div class="number-count pull-right">
-                            {{Counters.Facebook}}
+                            {{counters.FACEBOOK}}
                         </div>
                         <div class="pull-left">
                             facebook
                         </div>
                     </div>
-                    <div class="filter-option">
+                    <div class="filter-option" ng-click="reloadTwitterMessages()">
                         <div class="number-count pull-right">
-                            {{Counters.Twitter}}
+                            {{counters.TWITTER}}
                         </div>
                         <div class="pull-left">
                             twitter
                         </div>
                     </div>
-                    <div class="filter-option">
+                    <div class="filter-option" ng-click="reloadNotificationMessages()">
                         <div class="number-count pull-right">
-                            {{Counters.Notification}}
+                            {{counters.NOTIFICATION}}
                         </div>
                         <div class="pull-left">
                             notification
@@ -92,23 +92,23 @@
                     <div class="mail-option-header ">
                         <div class="mail-btn-wrap">
                             <div class="mail-header bold">
-                                INBOX ({{Counters.All}})
+                                {{currentFilter}} ({{currentPageCount}})
                             </div>
                         </div>
 
 
                         <div class="pull-right">
                             <div class="mail-btn-wrap color-green500 bold ">
-                                <h5>1-10 of {{Counters.All}}</h5>
+                                <h5>{{pageStartCount + 1}}-{{pageStartCount + 10}} of {{currentPageCount}}</h5>
                             </div>
                             <div class="mail-btn-wrap ">
                                 <span class="btn">
-                                    <i class="main-icon-2-previous"></i>
+                                    <i class="main-icon-2-previous" ng-click="getPreviousPage()"></i>
                                 </span>
                             </div>
                             <div class="mail-btn-wrap ">
                                 <span class="btn">
-                                     <i class="main-icon-2-next"></i>
+                                     <i class="main-icon-2-next" ng-click="getNextPage()"></i>
                                 </span>
                             </div>
                             <div class="mail-btn-wrap" ng-show="isSelectedEmail">
@@ -128,7 +128,74 @@
                 </div>
 
                 <div class="mail-details-wrapper">
-                    <div ng-click="clickMoreEmailDetails()" class="mail-details">
+
+                    <div ng-repeat="message in filteredMailDisplay">
+                        <div ng-click="clickMoreEmailDetails()" class="mail-details" ng-class="{'bold': !message.has_read}">
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="col-sm-12 col-md-1">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="blankCheckbox" value="option1"
+                                                   aria-label="...">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-2 p-0">
+                                    <div class="mail-icon">
+                                        <i ng-if="message.message_type === 'NOTIFICATION'" class="fa fa-bell-o"></i>
+                                        <i ng-if="message.message_type === 'FACEBOOK'" class="fa fa-facebook"></i>
+                                        <i ng-if="message.message_type === 'TWITTER'" class="fa fa-twitter"></i>
+                                    </div>
+                                    <div class="main-text">
+                                        {{message.from.toUpperCase()}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-8  p-0">
+                                    <div class="mail-header text-left">
+                                        {{message.heading}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-1  p-0">
+                                    <div class="mail-header text-right">
+                                        {{moment(message.received_at).local().format("YYYY-MMM-DD")}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div ng-click="clickMoreEmailDetails()" class="mail-details">
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="col-sm-12 col-md-1">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="option1"
+                                                   aria-label="...">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-2 p-0">
+                                    <div class="mail-icon">
+                                        <i class="fa fa-facebook"></i>
+                                    </div>
+                                    <div class="main-text">
+                                        FACEBOOK
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-8  p-0">
+                                    <div class="mail-header text-left">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry....
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-1  p-0">
+                                    <div class="mail-header text-right">
+                                        Sep 2
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                    </div>
+
+                    <!--<div ng-click="clickMoreEmailDetails()" class="mail-details">
                         <div class="col-lg-12 col-sm-12">
                             <div class="col-sm-12 col-md-1">
                                 <div class="checkbox">
@@ -187,7 +254,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <!-- view email more template -->
                     <div id="emailDescView" class="email-desc-wrapper">

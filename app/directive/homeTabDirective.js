@@ -2,6 +2,22 @@
  * Created by Damith on 9/5/2016.
  */
 
+agentApp.directive('scrolly', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var raw = element[0];
+            console.log('loading directive');
+
+            element.bind('scroll', function () {
+                if (raw.scrollTop + raw.offsetHeight > raw.scrollHeight) {
+                    scope.$apply(attrs.scrolly);
+                }
+            });
+        }
+    };
+});
+
 agentApp.directive("engagementTemp", function ($filter, engagementService, ivrService, userService, ticketService, tagService) {
     return {
         restrict: "EA",
@@ -223,15 +239,36 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
 
 
             /* Load Past Engagements By Profile ID */
+
+            scope.showMore = function() {
+                console.log('show more triggered');
+                scope.loadNextEngagement();
+            };
+
+            scope.currentPage = 1;
+            scope.loadNextEngagement = function() {
+                var begin = ((scope.currentPage - 1) * 10)
+                    , end = begin + 10;
+
+                var ids = scope.sessionIds.slice(begin, end);
+                if(ids){
+                    scope.currentPage = scope.currentPage +1;
+                    engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
+                        scope.engagementsList = scope.engagementsList.concat(reply);
+                    }, function (err) {
+                        scope.showAlert("Get Engagement Sessions", "error", "Fail To Get Engagement Sessions Data.")
+                    });
+                }
+            };
+
             scope.engagementsList = [];
+            scope.sessionIds = [];
             scope.GetEngagementIdsByProfile = function (profileId) {
                 engagementService.GetEngagementIdsByProfile(profileId).then(function (response) {
                     if (response) {
-                        engagementService.GetEngagementSessions(profileId, response.engagements).then(function (reply) {
-                            scope.engagementsList = reply;
-                        }, function (err) {
-                            scope.showAlert("Get Engagement Sessions", "error", "Fail To Get Engagement Sessions Data.")
-                        });
+                        scope.sessionIds =response.engagements;
+                        scope.engagementId  = response._id;
+                        scope.loadNextEngagement();
                     }
                 }, function (err) {
                     scope.showAlert("Get Engagement Profile", "error", "Fail To Get Engagement Data.")
@@ -325,9 +362,9 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
 
 
             scope.GetProfileHistory = function (profileId) {
-                console.info("GetProfileHistory........................");
                 scope.GetEngagementIdsByProfile(profileId);
                 scope.GetAllTicketsByRequester(profileId, 1);
+                console.info("Profile History Loading........................");
             };
 
             scope.showAlert = function (tittle, type, msg) {
@@ -338,6 +375,8 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
                     styling: 'bootstrap3'
                 });
             };
+
+
         }
     }
 });

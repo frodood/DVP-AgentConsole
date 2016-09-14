@@ -36,8 +36,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
     };
-
-
     /*--------------------------Veery Phone---------------------------------------*/
 
     $scope.ShowIncomeingNotification = function (status) {
