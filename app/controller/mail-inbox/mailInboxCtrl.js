@@ -4,10 +4,33 @@
 agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
 
 
-    $scope.clickMoreEmailDetails = function () {
+    $scope.clickMoreEmailDetails = function (messageDetails) {
 
         $('#emailDescView').animate({right: "0"}, 300);
         $scope.isSelectedEmail = true;
+        $scope.currentDisplayMessage = messageDetails;
+
+        if(!messageDetails.has_read)
+        {
+            mailInboxService.markMessageAsRead(messageDetails._id)
+                .then(function (data)
+                {
+                    if(data.IsSuccess)
+                    {
+                        messageDetails.has_read = true;
+                    }
+
+                })
+                .catch(function(err)
+                {
+
+                });
+        }
+
+
+        //get profile pic
+
+
     };
 
     $scope.closeMailDesc = function () {
@@ -161,6 +184,12 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
     {
         $scope.pageStartCount = 0;
 
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
+
+
         getCounters(function()
         {
             getAllInboxMessages();
@@ -173,6 +202,11 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
     {
         $scope.pageStartCount = 0;
 
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
+
         getCounters(function()
         {
             getDeletedMessages();
@@ -183,6 +217,11 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
     $scope.reloadFacebookMessages = function()
     {
         $scope.pageStartCount = 0;
+
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
 
         getCounters(function()
         {
@@ -196,6 +235,11 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
     {
         $scope.pageStartCount = 0;
 
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
+
         getCounters(function()
         {
             getTwitterMessages();
@@ -207,6 +251,11 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
     $scope.reloadNotificationMessages = function()
     {
         $scope.pageStartCount = 0;
+
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
 
         getCounters(function()
         {

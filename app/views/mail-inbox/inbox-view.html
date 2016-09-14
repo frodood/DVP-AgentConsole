@@ -130,7 +130,7 @@
                 <div class="mail-details-wrapper">
 
                     <div ng-repeat="message in filteredMailDisplay">
-                        <div ng-click="clickMoreEmailDetails()" class="mail-details" ng-class="{'bold': !message.has_read}">
+                        <div ng-click="clickMoreEmailDetails(message)" class="mail-details" ng-class="{'bold': !message.has_read}">
                             <div class="col-lg-12 col-sm-12">
                                 <div class="col-sm-12 col-md-1">
                                     <div class="checkbox">
@@ -147,7 +147,7 @@
                                         <i ng-if="message.message_type === 'TWITTER'" class="fa fa-twitter"></i>
                                     </div>
                                     <div class="main-text">
-                                        {{message.from.toUpperCase()}}
+                                        <div ng-if="message.from">{{message.from.toUpperCase()}}</div><div ng-if="!message.from && message.engagement_session && message.engagement_session.channel_from">{{message.engagement_session.channel_from.toUpperCase()}}</div>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-8  p-0">
@@ -268,9 +268,10 @@
                                              src="assets/img/avatar/oykun.jpg">
                                     </div>
                                     <div class="pull-left p-left-15">
-                                        <h5 class="bold">From : Jone k.p</h5>
-                                        <h5 class="bold">To : Jone k.p</h5>
-                                        <h5 class="bold">Date : Thu, Sep 1, 2016 at 6:33 PM</h5>
+                                        <h5 class="bold"><div ng-if="currentDisplayMessage.from">From : {{currentDisplayMessage.from.toUpperCase()}}</div><div ng-if="!currentDisplayMessage.from && currentDisplayMessage.engagement_session && currentDisplayMessage.engagement_session.channel_from">From : {{currentDisplayMessage.engagement_session.channel_from.toUpperCase()}}</div></h5>
+                                        <h5 class="bold"><div ng-if="currentDisplayMessage.engagement_session && currentDisplayMessage.engagement_session.channel_to">To : {{currentDisplayMessage.engagement_session.channel_to.toUpperCase()}}</div></h5>
+                                        <h5 class="bold">Date : {{moment(currentDisplayMessage.received_at).local().format("LLLL")}}</h5>
+                                        <h5 class="bold">Topic : {{currentDisplayMessage.heading}}</h5>
                                     </div>
                                 </div>
                                 <div class="col-lg-7">
@@ -285,13 +286,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mail-description">
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                                        1500s, when an unknown printer took a galley of type and scrambled it to
-                                        make a type specimen book. It has survived not only five centuries, but also
-                                        the leap into electronic typesetting, remaining essentially unchanged. It
-                                        was popularised in the 1960s with the release of Letraset sheets containing
-                                        Lorem Ipsum passages,
+                                        {{currentDisplayMessage.message}}
                                     </div>
                                 </div>
                             </div>
@@ -304,5 +299,4 @@
 
         <!-- end-->
     </div>
-</div>
 </div>
