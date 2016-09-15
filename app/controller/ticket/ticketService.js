@@ -176,7 +176,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+    var updateTicket = function (ticketID,ticketObject) {
+        var authToken = authService.GetToken();
 
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID,
+            headers: {
+                'authorization':authToken
+            },
+            data:ticketObject
+        }).then(function(response)
+        {
+            return response;
+        });
+    }
     var createTicketView = function (ticketView) {
         var authToken = authService.GetToken();
 
@@ -251,6 +265,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getMyGroupTickets:getMyGroupTickets,
         getMyGroupOpenTickets:getMyGroupOpenTickets,
         getMyGroupClosedTickets:getMyGroupClosedTickets,
+        getTicket:getTicket,
+        updateTicket:updateTicket
+
         getTicket:getTicket,
         CreateTicketView:createTicketView,
         GetTicketView:getTicketView,
