@@ -44,11 +44,11 @@
                     </div>
 
                     <div class="ticket-filter-body">
-                        <div class="filter-view" ng-class="view.class" id="{{view.id}}"
+                        <div class="filter-view" ng-class="view.class" id="{{view._id}}"
                              ng-click="clickViewsDetails(view)"
                              ng-repeat="view in views">
                             <div class="pull-left color-green500">
-                                {{view.name}}
+                                {{view.title}}
                             </div>
                             <div class="pull-right bold">
                                 {{view.count}}
@@ -68,8 +68,62 @@
                         Your unsolved tickets
                     </div>
                     <div class="profile-ticket-wrapper  ng-scope">
-                        <div ng-include="'app/views/ticket/filter/filter-ticket-view.html'"></div>
-                        <div ng-include="'app/views/ticket/filter/filter-ticket-view.html'"></div>
+                        <div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
+                            <div class="profile-ticker-wrap new-ticker">
+                                <div class="ticket-channel call">
+                                    <i class="fa fa-facebook"></i>
+                                </div>
+
+                                <div class="right-ticket-details">
+                                    <div class="col-md-12 p-0">
+                                        <div class="col-md-2 p-0">
+                                            <div class="left-avatar">
+                                                <img class="object-fit_cover" src="assets/img/avatar/avater_ticket.jpg">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 ">
+                                            <div class="ticker-id bold">
+                                                A25635123SD -
+                                                <small class="color-cyan500 text-uppercase">1 day ago</small>
+                                            </div>
+                                            <div class="ticket-subj bold">
+                                                Lorem Ipsum is simply dummy text of the printing
+                                                <small class="high">HIGH</small>
+                                            </div>
+                                            <div class="ticket-desc">
+                                                <div class="pull-left">
+                                                    <div class="ticket-desc">
+                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                                <ul class="info-list-lg ticket-details-list pull-left">
+                                                    <li>
+                                                        <small>OWNER</small>
+                                                        <h5>submitter</h5>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="row">
+                                                <ul class="info-list-lg ticket-details-list pull-left">
+                                                    <li>
+                                                        <small>USER</small>
+                                                        <h5>user</h5>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
