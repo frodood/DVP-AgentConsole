@@ -103,7 +103,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             title: tittle,
             text: msg,
             type: type,
-            styling: 'bootstrap3'
+            styling: 'bootstrap3',
+            icon: false
         });
     };
 
@@ -287,7 +288,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
         },
-        onErrorCallback: function (e) {
+        onerrorCallback: function (e) {
             //document.getElementById("lblStatus").innerHTML = e;
             $scope.showAlert("Soft Phone", "error", e);
             console.error(e);
@@ -433,15 +434,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addTab = function (title, content, viewType, notificationData) {
         var newTab = {title: title, content: content, viewType: viewType, notificationData: notificationData};
         $scope.tabs.push(newTab);
-        $scope.activeTabIndex = ($scope.tabs.length - 1);
-        //$timeout(function(){
-        //    $scope.activeTabIndex = ($scope.tabs.length - 1);
-        //});
+        $timeout(function(){
+            $scope.activeTabIndex = ($scope.tabs.length - 1);
+        });
 
     };
-    //$scope.addTab('A526420-Ticket view', 'Engagement1', 'ticketView',data);
-    //$scope.addTab('A526455-Ticket view', 'A526455-Ticket view', 'engagement',data);
-    //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
+
 
     $scope.addTabTest = function () {
         $scope.addTab('engagement', 'Engagement', 'engagement', {
@@ -460,7 +458,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         userService.LoadUser().then(function (response) {
             $scope.users = response;
         }, function (err) {
-            $scope.showAlert("load Users", "error", "Fail To Get User List.")
+            $scope.showAlert("Load Users", "error", "Fail To Get User List.")
         });
     };
     $scope.loadUsers();
@@ -471,10 +469,25 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         tagService.GetAllTags().then(function (response) {
             $scope.tags = response;
         }, function (err) {
-            $scope.showAlert("load Tags", "error", "Fail To Get Tag List.")
+            $scope.showAlert("Load Tags", "error", "Fail To Get Tag List.")
         });
     };
     $scope.loadTags();
+
+    $scope.loadTagCategories = function () {
+        tagService.GetTagCategories().then(function (response) {
+            $scope.tagCategories = response;
+        }, function (err) {
+            $scope.showAlert("Load Tags", "error", "Fail To Get Tag List.")
+        });
+    };
+    $scope.loadTagCategories();
+
+    $scope.reloadTagAndCategories = function () {
+        $scope.loadTags();
+        $scope.loadTagCategories();
+    };
+
     $scope.addFilterTab = function () {
         $scope.addTab('Ticket Filter', 'Filter', 'filter', {
             company: "123",
@@ -483,7 +496,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelTo: "33",
             channel: "555"
         });
-    }
+    };
     var addMailInbox = function () {
         $scope.addTab('Mail Inbox', 'Mail Inbox', 'mail-inbox', {
             company: "123",
