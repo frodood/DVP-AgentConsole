@@ -21,12 +21,10 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope) {
 
             scope.ticket=JSON.parse(scope.ticketDetails).notificationData;
             scope.x="dbafdsfsbmfsd";
-            scope.editTicket={
-                subject:"yooooooooooooooooooooo"
-            }
+
 
             console.log("ticket ",scope.ticket);
-            console.log("EditTicket ",scope.editTicket.subject);
+
 
             if(scope.ticket.created_at)
             {
@@ -165,6 +163,35 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope) {
 
             scope.clickShowTickerEditMode = function () {
                 scope.editTicket = !scope.editTicket;
+                scope.editTicket=JSON.parse(scope.ticketDetails).notificationData;
+            };
+
+            scope.updateTicketDetails = function () {
+                ticketService.updateTicket(scope.ticket._id,scope.editTicket).then(function (response) {
+
+                    if(response.data.IsSuccess)
+                    {
+                        scope.ticket=scope.editTicket;
+                        scope.showAlert("Updated","success","Ticket updated successfully");
+                        scope.editTicket=false;
+
+
+                    }
+                    else
+                    {
+                        scope.showAlert("Error","error","Ticket updation failed");
+                        console.log("Error in updating ",response.data.Exception);
+                    }
+
+                }), function (error) {
+                    scope.showAlert("Error","success","Ticket updation failed");
+                    console.log("Error in updating ",error);
+                }
+            };
+
+            scope.closeTicket = function () {
+                $rootScope.$emit('closeTab', scope.ticket._id);
+
             }
         }
     }
