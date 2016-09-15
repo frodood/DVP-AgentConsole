@@ -77,9 +77,34 @@
 
                         <form class="navbar-form navbar-left console-main-search">
                             <div class="form-group">
-                                <input type="text" class="form-control bg-transparent border-radius-20 main-search-txt"
-                                       placeholder="Search...">
+                                <tags-input
+                                        class="main-search"
+                                        ng-model="users"
+                                        display-property="profileName"
+                                        placeholder="choose assignee user"
+                                        replace-spaces-with-dashes="false">
+                                    <auto-complete source="loadUser($query)"
+                                                   min-length="0"
+                                                   load-on-focus="true"
+                                                   load-on-empty="true"
+                                                   max-results-to-show="32"
+                                                   template="my-custom-template">
+                                    </auto-complete>
+                                </tags-input>
+                                <script type="text/ng-template" id="my-custom-template">
+                                    <div class="auto-complete-left-panel">
+                                        <img ng-src="{{data.img}}"/>
+                                    </div>
+                                    <div class="auto-complete-right-panel">
+                                        <span ng-bind-html="$highlight($getDisplayText())"></span>
+                                    </div>
+                                </script>
                             </div>
+                            <!--<div class="form-group">-->
+                            <!--<input type="text" class="form-control bg-transparent border-radius-20
+                             main-search-txt"-->
+                            <!--placeholder="Search...">-->
+                            <!--</div>-->
                         </form>
 
                         <!--<li id="addNewPage" class="console-menu-icon m-left-10" uib-dropdown-toggle><i-->
