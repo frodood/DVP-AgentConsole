@@ -1,7 +1,7 @@
 /**
  * Created by Damith on 9/12/2016.
  */
-agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
+agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService) {
 
 
     $scope.clickMoreEmailDetails = function (messageDetails) {
@@ -26,9 +26,6 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
 
                 });
         }
-
-
-        //get profile pic
 
 
     };
@@ -58,6 +55,14 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
                 {
                     getDeletedMessages();
                 }
+                else if($scope.currentFilter === 'UNREAD')
+                {
+                    getUnreadMessages();
+                }
+                else if($scope.currentFilter === 'READ')
+                {
+                    getReadMessages();
+                }
                 else if($scope.currentFilter === 'FACEBOOK')
                 {
                     getFacebookMessages();
@@ -70,10 +75,23 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
                 {
                     getNotificationMessages();
                 }
+                else if($scope.currentFilter === 'SMS')
+                {
+                    getSMSMessages();
+                }
             }
 
         });
 
+
+    };
+
+    $scope.openTab = function()
+    {
+        if($scope.currentDisplayMessage && $scope.currentDisplayMessage.engagement_session)
+        {
+            $rootScope.$emit('INBOX_NewEngagementTab', $scope.currentDisplayMessage.engagement_session);
+        }
 
     };
 
@@ -101,6 +119,14 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
             {
                 getDeletedMessages();
             }
+            else if($scope.currentFilter === 'UNREAD')
+            {
+                getUnreadMessages();
+            }
+            else if($scope.currentFilter === 'READ')
+            {
+                getReadMessages();
+            }
             else if($scope.currentFilter === 'FACEBOOK')
             {
                 getFacebookMessages();
@@ -112,6 +138,10 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
             else if($scope.currentFilter === 'NOTIFICATION')
             {
                 getNotificationMessages();
+            }
+            else if($scope.currentFilter === 'SMS')
+            {
+                getSMSMessages();
             }
 
         });
@@ -127,7 +157,8 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
         READ: 0,
         FACEBOOK: 0,
         TWITTER: 0,
-        NOTIFICATION: 0
+        NOTIFICATION: 0,
+        SMS: 0
 
     };
 
@@ -136,7 +167,21 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
     $scope.pageStartCount = 0;
 
     $scope.filteredMailDisplay = [];
+    $scope.markedMessages = [];
     $scope.moment = moment;
+
+    $scope.markMessage = function(message)
+    {
+        if(message.IsMarked)
+        {
+            message.IsMarked = false;
+        }
+        else
+        {
+            message.IsMarked = true;
+        }
+    };
+
 
     var getCounters = function(callback){
 
@@ -214,6 +259,39 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
 
     };
 
+    $scope.reloadUnreadMessages = function()
+    {
+        $scope.pageStartCount = 0;
+
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
+
+        getCounters(function()
+        {
+            getUnreadMessages();
+        });
+
+    };
+
+    $scope.reloadReadMessages = function()
+    {
+        $scope.pageStartCount = 0;
+
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
+
+        getCounters(function()
+        {
+            getReadMessages();
+        });
+
+    };
+
+
     $scope.reloadFacebookMessages = function()
     {
         $scope.pageStartCount = 0;
@@ -265,9 +343,169 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
 
     };
 
+    $scope.reloadSMSMessages = function()
+    {
+        $scope.pageStartCount = 0;
+
+        if($scope.isSelectedEmail)
+        {
+            $scope.closeMailDesc();
+        }
+
+        getCounters(function()
+        {
+            getSMSMessages();
+        });
 
 
+    };
 
+    $scope.deleteMultipleMessages = function()
+    {
+        //filter out marked messages
+        var msgIdArr = [];
+
+        $scope.filteredMailDisplay.forEach(function(msg)
+        {
+            if(msg.IsMarked)
+            {
+                msgIdArr.push(msg._id);
+            }
+        });
+
+        deleteInboxMessages(msgIdArr, function(err, result)
+        {
+            if(result)
+            {
+                getCounters(function()
+                {
+                    if($scope.currentFilter === 'INBOX')
+                    {
+                        getAllInboxMessages();
+                    }
+                    else if($scope.currentFilter === 'DELETED')
+                    {
+                        getDeletedMessages();
+                    }
+                    else if($scope.currentFilter === 'UNREAD')
+                    {
+                        getUnreadMessages();
+                    }
+                    else if($scope.currentFilter === 'READ')
+                    {
+                        getReadMessages();
+                    }
+                    else if($scope.currentFilter === 'FACEBOOK')
+                    {
+                        getFacebookMessages();
+                    }
+                    else if($scope.currentFilter === 'TWITTER')
+                    {
+                        getTwitterMessages();
+                    }
+                    else if($scope.currentFilter === 'NOTIFICATION')
+                    {
+                        getNotificationMessages();
+                    }
+                    else if($scope.currentFilter === 'SMS')
+                    {
+                        getSMSMessages();
+                    }
+                });
+            }
+
+        });
+
+
+    };
+
+    $scope.deleteInboxMessage = function(messageId)
+    {
+        var arr = [];
+        arr.push(messageId);
+        deleteInboxMessages(arr, function(err, result)
+        {
+            if(result)
+            {
+                getCounters(function()
+                {
+                    if($scope.currentFilter === 'INBOX')
+                    {
+                        getAllInboxMessages();
+                    }
+                    else if($scope.currentFilter === 'DELETED')
+                    {
+                        getDeletedMessages();
+                    }
+                    else if($scope.currentFilter === 'UNREAD')
+                    {
+                        getUnreadMessages();
+                    }
+                    else if($scope.currentFilter === 'READ')
+                    {
+                        getReadMessages();
+                    }
+                    else if($scope.currentFilter === 'FACEBOOK')
+                    {
+                        getFacebookMessages();
+                    }
+                    else if($scope.currentFilter === 'TWITTER')
+                    {
+                        getTwitterMessages();
+                    }
+                    else if($scope.currentFilter === 'NOTIFICATION')
+                    {
+                        getNotificationMessages();
+                    }
+                    else if($scope.currentFilter === 'SMS')
+                    {
+                        getSMSMessages();
+                    }
+                });
+            }
+
+        });
+
+
+    };
+
+    var deleteInboxMessages = function(messageIds, callback)
+    {
+        try
+        {
+            mailInboxService.deleteInboxMessages(messageIds)
+                .then(function (data)
+                {
+                    if (data.IsSuccess)
+                    {
+                        callback(null, data.Result);
+                    }
+                    else
+                    {
+                        var errMsg = data.CustomMessage;
+
+                        if (data.Exception)
+                        {
+                            errMsg = data.Exception.Message;
+                        }
+                        console.log(errMsg);
+
+                        callback(data.Exception, data.Result);
+                    }
+
+                },
+                function (err) {
+                    callback(err, false);
+                })
+
+        }
+        catch(ex)
+        {
+            console.log(ex);
+            callback(ex, false);
+
+        }
+    };
 
     var getAllInboxMessages = function()
     {
@@ -321,7 +559,95 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
             $scope.currentFilter = 'DELETED';
             $scope.currentPageCount = $scope.counters.DELETED;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getDeletedInboxMessages(10, $scope.pageStartCount, null)
+            mailInboxService.getDeletedInboxMessages(10, $scope.pageStartCount)
+                .then(function (data)
+                {
+                    if (data.IsSuccess)
+                    {
+                        if(data.Result)
+                        {
+                            $scope.filteredMailDisplay = data.Result;
+                        }
+                    }
+                    else
+                    {
+                        var errMsg = data.CustomMessage;
+
+                        if (data.Exception)
+                        {
+                            errMsg = data.Exception.Message;
+                        }
+                        console.log(errMsg);
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+
+                })
+
+        }
+        catch(ex)
+        {
+            console.log(ex);
+
+        }
+
+    };
+
+    var getUnreadMessages = function()
+    {
+
+        try
+        {
+            $scope.currentFilter = 'UNREAD';
+            $scope.currentPageCount = $scope.counters.UNREAD;
+            $scope.filteredMailDisplay = [];
+            mailInboxService.getUnReadInboxMessages(10, $scope.pageStartCount)
+                .then(function (data)
+                {
+                    if (data.IsSuccess)
+                    {
+                        if(data.Result)
+                        {
+                            $scope.filteredMailDisplay = data.Result;
+                        }
+                    }
+                    else
+                    {
+                        var errMsg = data.CustomMessage;
+
+                        if (data.Exception)
+                        {
+                            errMsg = data.Exception.Message;
+                        }
+                        console.log(errMsg);
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+
+                })
+
+        }
+        catch(ex)
+        {
+            console.log(ex);
+
+        }
+
+    };
+
+    var getReadMessages = function()
+    {
+
+        try
+        {
+            $scope.currentFilter = 'READ';
+            $scope.currentPageCount = $scope.counters.READ;
+            $scope.filteredMailDisplay = [];
+            mailInboxService.getReadInboxMessages(10, $scope.pageStartCount)
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -454,6 +780,50 @@ agentApp.controller('mailInboxCtrl', function ($scope, mailInboxService) {
             $scope.currentPageCount = $scope.counters.NOTIFICATION;
             $scope.filteredMailDisplay = [];
             mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, 'NOTIFICATION')
+                .then(function (data)
+                {
+                    if (data.IsSuccess)
+                    {
+                        if(data.Result)
+                        {
+                            $scope.filteredMailDisplay = data.Result;
+                        }
+                    }
+                    else
+                    {
+                        var errMsg = data.CustomMessage;
+
+                        if (data.Exception)
+                        {
+                            errMsg = data.Exception.Message;
+                        }
+                        console.log(errMsg);
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+
+                })
+
+        }
+        catch(ex)
+        {
+            console.log(ex);
+
+        }
+
+    };
+
+    var getSMSMessages = function()
+    {
+
+        try
+        {
+            $scope.currentFilter = 'SMS';
+            $scope.currentPageCount = $scope.counters.SMS;
+            $scope.filteredMailDisplay = [];
+            mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, 'SMS')
                 .then(function (data)
                 {
                     if (data.IsSuccess)
