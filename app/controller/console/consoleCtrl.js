@@ -22,7 +22,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-            removeClass('display-none zoomOut');
+                removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -41,10 +41,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-            removeClass('display-none zoomOut');
+                removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-            removeClass('display-block  zoomOut');
+                removeClass('display-block  zoomOut');
         }
     };
 
@@ -53,29 +53,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-            removeClass('display-none');
+                removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-            removeClass('display-block');
+                removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-        removeClass('display-block active-menu-icon ');
+            removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-        removeClass('display-none  ');
+            removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-        removeClass('display-none');
+            removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-        removeClass('display-block active-menu-icon');
+            removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -103,7 +103,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             title: tittle,
             text: msg,
             type: type,
-            styling: 'bootstrap3'
+            styling: 'bootstrap3',
+            icon: false
         });
     };
 
@@ -287,7 +288,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
         },
-        onErrorCallback: function (e) {
+        onerrorCallback: function (e) {
             //document.getElementById("lblStatus").innerHTML = e;
             $scope.showAlert("Soft Phone", "error", e);
             console.error(e);
@@ -433,15 +434,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addTab = function (title, content, viewType, notificationData) {
         var newTab = {title: title, content: content, viewType: viewType, notificationData: notificationData};
         $scope.tabs.push(newTab);
-        $scope.activeTabIndex = ($scope.tabs.length - 1);
-        //$timeout(function(){
-        //    $scope.activeTabIndex = ($scope.tabs.length - 1);
-        //});
+        $timeout(function(){
+            $scope.activeTabIndex = ($scope.tabs.length - 1);
+        });
 
     };
-    //$scope.addTab('A526420-Ticket view', 'Engagement1', 'ticketView',data);
-    //$scope.addTab('A526455-Ticket view', 'A526455-Ticket view', 'engagement',data);
-    //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
+
 
     $scope.addTabTest = function () {
         $scope.addTab('engagement', 'Engagement', 'engagement', {
@@ -460,7 +458,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         userService.LoadUser().then(function (response) {
             $scope.users = response;
         }, function (err) {
-            $scope.showAlert("load Users", "error", "Fail To Get User List.")
+            $scope.showAlert("Load Users", "error", "Fail To Get User List.")
         });
     };
     $scope.loadUsers();
@@ -471,10 +469,25 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         tagService.GetAllTags().then(function (response) {
             $scope.tags = response;
         }, function (err) {
-            $scope.showAlert("load Tags", "error", "Fail To Get Tag List.")
+            $scope.showAlert("Load Tags", "error", "Fail To Get Tag List.")
         });
     };
     $scope.loadTags();
+
+    $scope.loadTagCategories = function () {
+        tagService.GetTagCategories().then(function (response) {
+            $scope.tagCategories = response;
+        }, function (err) {
+            $scope.showAlert("Load Tags", "error", "Fail To Get Tag List.")
+        });
+    };
+    $scope.loadTagCategories();
+
+    $scope.reloadTagAndCategories = function () {
+        $scope.loadTags();
+        $scope.loadTagCategories();
+    };
+
     $scope.addFilterTab = function () {
         $scope.addTab('Ticket Filter', 'Filter', 'filter', {
             company: "123",
@@ -483,7 +496,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelTo: "33",
             channel: "555"
         });
-    }
+    };
     var addMailInbox = function () {
         $scope.addTab('Mail Inbox', 'Mail Inbox', 'mail-inbox', {
             company: "123",
@@ -539,6 +552,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $rootScope.$on('newTicketTab', function (events, args) {
 
+        var tabTopic = "Ticket - " + args.reference;
         if ($scope.tabs.length > 0) {
             /*var assigneeData = $filter('filter')($scope.tabs, {
              notificationData._id: args._id
@@ -553,15 +567,30 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
 
             if (isOpened.length == 0) {
-                var tabTopic = "Ticket" + args.reference;
+
                 $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
             }
         }
         else {
-            var tabTopic = "Ticket" + args.reference;
+
             $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
         }
         resizeDiv();
+
+    });
+
+    $rootScope.$on('closeTab', function (events, args) {
+
+
+        $scope.tabs.filter(function (item) {
+            if (item.notificationData._id == args) {
+
+                $scope.tabs.splice($scope.tabs.indexOf(item),1);
+
+            }
+
+        });
+
 
     });
 
@@ -613,6 +642,31 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.status.dateStart = moment().format('x');
     };
     //end time tracker function
+
+
+
+    //----------------------SearchBar-----------------------------------------------------
+
+    $scope.searchResult = [];
+
+    $scope.searchExternalUsers = function($query){
+        return userService.searchExternalUsers($query).then(function (response) {
+            if(response.IsSuccess)
+            {
+                return response.Result;
+            }
+            else
+            {
+                return [];
+            }
+        });
+    };
+
+    $scope.clearSearchResult = function(){
+        $scope.searchResult = [];
+    };
+
+    //----------------------------------------------------------------------------------------
 
 
 });

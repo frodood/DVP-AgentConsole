@@ -97,11 +97,12 @@
                             <div class="form-group">
                                 <tags-input
                                         class="main-search"
-                                        ng-model="users"
-                                        display-property="profileName"
+                                        ng-model="searchResult"
+                                        display-property="firstname"
                                         placeholder="Search.."
+                                        key-property="_id"
                                         replace-spaces-with-dashes="false">
-                                    <auto-complete source="loadUser($query)"
+                                    <auto-complete source="searchExternalUsers($query)"
                                                    min-length="0"
                                                    load-on-focus="true"
                                                    load-on-empty="true"
@@ -111,7 +112,7 @@
                                 </tags-input>
                                 <script type="text/ng-template" id="my-custom-template">
                                     <div class="auto-complete-left-panel">
-                                        <img ng-src="{{data.img}}"/>
+                                        <img ng-src="{{data.avatar}}"/>
                                     </div>
                                     <div class="auto-complete-right-panel">
                                         <span ng-bind-html="$highlight($getDisplayText())"></span>
