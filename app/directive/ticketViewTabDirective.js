@@ -192,6 +192,11 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope) {
             scope.closeTicket = function () {
                 $rootScope.$emit('closeTab', scope.ticket._id);
 
+            };
+
+            scope.addComment = function (comment) {
+
+
             }
         }
     }

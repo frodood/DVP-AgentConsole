@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, userBackendService) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -617,7 +617,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.searchResult = [];
 
     $scope.searchExternalUsers = function($query){
-        return userBackendService.searchExternalUsers($query).then(function (response) {
+        return userService.searchExternalUsers($query).then(function (response) {
             if(response.IsSuccess)
             {
                 return response.Result;
