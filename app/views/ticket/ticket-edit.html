@@ -1,6 +1,6 @@
 <div ng-show="editTicket">
     <div class="position-relative">
-        <div id="editTicket" class="animated fixed-model-opacity">
+        <div id="ticket" class="animated fixed-model-opacity">
             <div class="container">
                 <div class="col-lg-offset-2 col-lg-8 col-md-8 col-xs-8 ">
                     <div class="model-main-wrapper ">
@@ -31,7 +31,7 @@
                             <form>
                                 <div class="form-group">
                                     <label for="ticketSubject">Subject</label>
-                                    <input ng-model="ticket.subject" type="text" class="form-control"
+                                    <input ng-model="editTicket.subject" type="text" class="form-control"
                                            id="ticketSubject"
                                            placeholder="">
                                 </div>
@@ -40,7 +40,7 @@
                                         <div class="col-xs-5">
                                             <div class="form-group">
                                                 <label for="ticketSubject">Priority</label>
-                                                <select class="form-control" ng-model="ticket.type">
+                                                <select class="form-control" ng-model="editTicket.type">
                                                     <option>question</option>
                                                     <option>complain</option>
                                                     <option>incident</option>
@@ -70,11 +70,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="ticketSubject">Description</label>
-                                    <textarea ng-model="ticket.description" class="form-control" rows="3"></textarea>
+                                    <textarea ng-model="editTicket.subject" class="form-control" rows="3"></textarea>
                                 </div>
                             </form>
                         </div>
                         <!-- END MODEL BODY -->
+                        <!-- END MODEL HEADER -->
+                        <div class="model-footer-wrapper">
+                            <div class="model-btn-wrapper">
+                                <div class="btn-warp ">
+                                <span class="btn btn-default"
+                                >Save</span>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>

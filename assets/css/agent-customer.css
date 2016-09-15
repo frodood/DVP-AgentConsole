@@ -1967,6 +1967,15 @@ div > div >
     color: #0d1c34;
 }
 
+.mail-header > i {
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.mail-header > i:hover {
+    color: #d90000;
+}
+
 .email-desc-wrapper {
     min-height: 550px;
     width: 100%;
@@ -2109,5 +2118,28 @@ div > div >
     overflow: hidden;
     overflow-y: auto;
     height: 600px;
+}
+
+.comment-wrapper {
+    margin-top: 20px;
+}
+
+/*Main search bar */
+.main-search > div > div.tags {
+    border: 0px !important;
+    padding: 0px;
+}
+
+.main-search > div.host {
+    margin: 0px !important;
+}
+
+.main-search > div > div.tags > .input {
+    border: 1px solid #8298ae;
+    min-width: 415px;
+    background: transparent;
+    height: 34px;
+    padding: 6px 12px;
+    border-radius: 20px;
 }
 
