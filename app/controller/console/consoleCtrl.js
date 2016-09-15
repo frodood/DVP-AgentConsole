@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, userBackendService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -609,6 +609,31 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
         });
     };
+
+
+
+    //----------------------SearchBar-----------------------------------------------------
+
+    $scope.searchResult = [];
+
+    $scope.searchExternalUsers = function($query){
+        return userBackendService.searchExternalUsers($query).then(function (response) {
+            if(response.IsSuccess)
+            {
+                return response.Result;
+            }
+            else
+            {
+                return [];
+            }
+        });
+    };
+
+    $scope.clearSearchResult = function(){
+        $scope.searchResult = [];
+    };
+
+    //----------------------------------------------------------------------------------------
 
 
 });

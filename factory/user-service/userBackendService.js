@@ -31,6 +31,20 @@ agentApp.factory('userBackendService', function ($http, authService,baseUrls)
             {
                 return response;
             });
+        },
+        searchExternalUsers: function (searchText) {
+            var authToken = authService.GetToken();
+
+            return $http({
+                method: 'GET',
+                url: baseUrls.userServiceBaseUrl+"ExternalUser/Search/"+searchText,
+                headers: {
+                    'authorization':authToken
+                }
+            }).then(function(response)
+            {
+                return response.data;
+            });
         }
 
     }
