@@ -551,11 +551,11 @@ body {
 }
 
 .display-none {
-    display: none;
+    display: none !important;
 }
 
 .display-block {
-    display: block;
+    display: block !important;
 }
 
 .z-index-0 {
@@ -2170,12 +2170,9 @@ tags-input .tags .input {
     width: 206px;
     height: 32px;
     background: #0d1c34;
-    position: absolute;
-    top: 10px;
-    right: 50px;
     padding: 7px;
     overflow: hidden;
-    z-index: 1500;
+    margin-top: 5px;
 }
 
 .time-tracker-body > div {
@@ -2187,14 +2184,19 @@ tags-input .tags .input {
     color: #45bf55;
 }
 
+.time-tracker-body > div.pause {
+    color: #d2c242;
+}
+
 .time-tracker-body > div.stop {
     color: #d90000;
 }
 
 .time-tracker-body > div.play:hover,
+.time-tracker-body > div.pause:hover,
 .time-tracker-body > div.ticket-id:hover,
 .time-tracker-body > div.stop:hover {
-    color: #17373c;
+    color: #a1d700;
 }
 
 .time-tracker-body > div.ticket-id {
