@@ -43,7 +43,7 @@ agentApp.factory('userBackendService', function ($http, authService,baseUrls)
                 }
             }).then(function(response)
             {
-                return response;
+                return response.data;
             });
         }
 

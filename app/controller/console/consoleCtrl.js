@@ -587,30 +587,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.searchResult = [];
 
-    $scope.searchExternalUsers = function(searchText){
-        $scope.searchResult = [];
-        userBackendService.searchExternalUsers(searchText).then(function (response) {
+    $scope.searchExternalUsers = function($query){
+        return userBackendService.searchExternalUsers($query).then(function (response) {
             if(response.IsSuccess)
             {
-                $scope.searchResult = response.Result;
+                return response.Result;
             }
             else
             {
-                var errMsg = response.CustomMessage;
-
-                if(response.Exception)
-                {
-                    errMsg = response.Exception.Message;
-                }
-                $scope.showAlert('Error', 'error', errMsg);
+                return [];
             }
-        }, function(err){
-            var errMsg = "Error occurred while searching";
-            if(err.statusText)
-            {
-                errMsg = err.statusText;
-            }
-            $scope.showAlert('Error', 'error', errMsg);
         });
     };
 
