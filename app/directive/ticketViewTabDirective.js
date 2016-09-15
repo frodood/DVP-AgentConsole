@@ -118,6 +118,24 @@ agentApp.directive("ticketTabView", function (moment, ticketService, $rootScope)
             // add edit modal box
             scope.editTicket = false;
 
+            scope.tabs = [
+                {
+                    title: 'COMMENTS', content: 'Dynamic content 1', icon: 'main-icon-2-communication',
+                    type: 'comments'
+                },
+                {
+                    title: 'ACTIVITY', content: 'Dynamic content 2', icon: 'main-icon-2-star',
+                    type: 'activity'
+                }
+            ];
+
+            scope.goToComment = function () {
+                $('html,body').animate({
+                        scrollTop: $(".comment").offset().top
+                    },
+                    'slow');
+            };
+
             scope.clickShowTickerEditMode = function () {
                 scope.editTicket = !scope.editTicket;
             }
