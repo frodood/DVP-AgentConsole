@@ -2,7 +2,7 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, userBackendService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -565,6 +565,45 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         resizeDiv();
 
     });
+
+
+
+    //----------------------SearchBar-----------------------------------------------------
+
+    $scope.searchResult = [];
+
+    $scope.searchExternalUsers = function(searchText){
+        $scope.searchResult = [];
+        userBackendService.searchExternalUsers(searchText).then(function (response) {
+            if(response.IsSuccess)
+            {
+                $scope.searchResult = response.Result;
+            }
+            else
+            {
+                var errMsg = response.CustomMessage;
+
+                if(response.Exception)
+                {
+                    errMsg = response.Exception.Message;
+                }
+                $scope.showAlert('Error', 'error', errMsg);
+            }
+        }, function(err){
+            var errMsg = "Error occurred while searching";
+            if(err.statusText)
+            {
+                errMsg = err.statusText;
+            }
+            $scope.showAlert('Error', 'error', errMsg);
+        });
+    };
+
+    $scope.clearSearchResult = function(){
+        $scope.searchResult = [];
+    };
+
+    //----------------------------------------------------------------------------------------
 
 
 });
