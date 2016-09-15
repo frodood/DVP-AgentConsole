@@ -1,21 +1,6 @@
 /**
  * Created by Damith on 8/19/2016.
  */
-agentApp.directive('scrollyticket', function () {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var raw = element[0];
-            console.log('loading todo block');
-
-            element.bind('scroll', function () {
-                if (raw.scrollTop + raw.offsetHeight > raw.scrollHeight) {
-                    scope.$apply(attrs.scrolly);
-                }
-            });
-        }
-    };
-});
 
 agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,userBackendService,$rootScope) {
 
@@ -931,7 +916,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
         {
             if(!$scope.isCompletedTicketLoadComplete)
             {
-                $scope.OpenTicketPage=$scope.CompletedTicketPage+1;
+                $scope.CompletedTicketPage=$scope.CompletedTicketPage+1;
                 /*ticketService.getMyGroupTickets($scope.NewTicketPage).then(function (response) {
 
                  if(response.data.IsSuccess )
@@ -962,13 +947,36 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
         $rootScope.$emit('newTicketTab',data);
         $scope.closeTicketInbox();
 
-    }
+    };
+
+    $('#scrltodo').scroll(function () {
+        var raw=$('#scrltodo')[0];
+        if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight)
+        {
+            $scope.showMoreNewTickets();
+        }
+
+    });
+    $('#scrlopen').scroll(function () {
+        var raw=$('#scrlopen')[0];
+        $scope.showMoreOpenTickets();
+
+    });
+    $('#scroldone').scroll(function () {
+        var raw=$('#scroldone')[0];
+        $scope.showMoreCompletedTickets();
+
+    });
+
+
 
     $scope.closeTicketInbox = function () {
-        $('#mainTicketWrapper').addClass('display-none').
-            removeClass('display-block fadeIn');
+         $('#mainTicketWrapper').addClass('display-none').
+         removeClass('display-block fadeIn');
 
-    }
+    };
+
+
 
 
 });

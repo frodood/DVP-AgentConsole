@@ -1,3 +1,4 @@
+<div ng-include=" 'app/views/ticket/ticket-edit.html' "></div>
 <div >
     <div class="ticket-view-wrapper">
         <!-- MODEL HEADER -->
@@ -38,7 +39,7 @@
 
                     </div>
                     <div class="btn-warp ">
-                        <span class="btn btn-default">edit</span>
+                        <span class="btn btn-default" ng-click="editTicketMode()">edit</span>
                     </div>
                     <div class="btn-warp ">
                         <span class="btn btn-default">comment</span>
@@ -111,13 +112,13 @@
 
                         <div class="details-wrap">
                             <div class="details">
-                                <h5 class="bold">TAGES</h5>
+                                <h5 class="bold">TAGS</h5>
                             </div>
-                            <div ng-repeat="tag in ticket.tags">
-                                <div class="bg-checkbox teal600 font-white  inline-btn">
+
+                                <div ng-repeat="tag in ticket.tags" class="bg-checkbox teal600 font-white  inline-btn">
                                     {{tag}}
                                 </div>
-                            </div>
+
 
 
                         </div>
@@ -185,7 +186,7 @@
                                     <div class="col-lg-5 col-sm-12 text-right  ">
                                         <a class="inline-bt pull-left " href="javascript:void(0);">
                                             <div class="pull-left commenter-img">
-                                                <img src={{sub.assignee.avatar}}>
+                                                <img src="{{sub.assignee.avatar}}">
                                                 {{sub.assignee.name}}
                                             </div>
                                         </a>
@@ -231,7 +232,7 @@
                                     <div class="col-lg-5 col-sm-12 text-right  ">
                                         <a class="inline-bt pull-left " href="javascript:void(0);">
                                             <div class="pull-left commenter-img">
-                                                <img src={{relticket.assignee.avatar}}>
+                                                <img src="{{relticket.assignee.avatar}}">
                                                 {{relticket.assignee.name}}
                                             </div>
                                         </a>
@@ -265,8 +266,7 @@
                                         <div class="col-lg-6">
                                             <div class="people-view">
                                                 <div class="people-view-img ">
-                                                    <img src="assets/img/avatar/bobbyjkane.jpg"
-                                                         ng-src={{ticket.submitter.avatar}}>
+                                                    <img src="{{ticket.submitter.avatar}}">
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold">
@@ -281,8 +281,7 @@
                                         <div class="col-lg-6">
                                             <div class="people-view">
                                                 <div class="people-view-img ">
-                                                    <img src="assets/img/avatar/amarkdalen.jpg"
-                                                         ng-src={{ticket.requester.avatar}}>
+                                                    <img src="{{ticket.requester.avatar}}">
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold color-cyan500">
@@ -300,8 +299,7 @@
                                         <div class="col-lg-12">
                                             <div class="people-view" >
                                                 <div class="people-view-img ">
-                                                    <img src="assets/img/avatar/amarkdalen.jpg"
-                                                         ng-src={{ticket.assignee.avatar}}>
+                                                    <img src="{{ticket.assignee.avatar}}">
                                                 </div>
                                                 <div class="row people-view-details" >
                                                     <div class="notification-time text-uppercase bold color-green500">

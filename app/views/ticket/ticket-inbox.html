@@ -31,7 +31,7 @@
 
                 <div class="ticket-list-wrapper">
                     <!-- #todolist -->
-                    <div class="col-md-4 items-wrap" id="todo-block" scrolly="showMoreNewTickets()">
+                    <div class="col-md-4 " id="todo-block">
                         <div class="ticket-list-header">
                             TODO ({{ticketList.toDo.length}})
                         </div>
@@ -48,7 +48,7 @@
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/oykun.jpg"
-                                             ng-src="{{todo.assignee.avatar}}">
+                                             ng-src="">
                                     </div>
 
                                 </div>
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 items-wrap" scrolly="showMoreOpenTickets()" >
+                    <div class="col-md-4" >
                         <div class="ticket-list-header">
                             IN PROGRESS ({{ticketList.inProgress.length}})
                         </div>
@@ -95,13 +95,12 @@
                              width="100%"
                              ng-mouseover="chatWidgetscrollEnabled = true"
                              ng-mouseleave="chatWidgetscrollEnabled = false"
-                             enabled="{{ chatWidgetscrollEnabled }}"
-                             onscroll="showIt()">
+
+                             id="scrlopen">
                             <div class="ticket-details in-progress" ng-repeat="inprogress in ticketList.inProgress">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
-                                        <img src="assets/img/avatar/oykun.jpg"
-                                             ng-src="{{inprogress.assignee.avatar}}">
+                                        <img src="{{inprogress.assignee.avatar}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
@@ -135,7 +134,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 items-wrap" scrolly="showMoreCompletedTickets()">
+                    <div class="col-md-4 " >
                         <div class="ticket-list-header">
                             DONE ({{ticketList.done.length}})
                         </div>
@@ -146,7 +145,8 @@
                              width="100%"
                              ng-mouseover="scrollEnabled = true"
                              ng-mouseleave="scrollEnabled = false"
-                             enabled="{{ scrollEnabled }}">
+                             enabled="{{ scrollEnabled }}"
+                                id="scroldone">
                             <div class="ticket-details done" ng-repeat="done in ticketList.done">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
