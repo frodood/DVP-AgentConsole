@@ -2,7 +2,9 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
+                                             jwtHelper, resourceService, baseUrls, dataParser,
+                                             veeryNotification, authService, userService, tagService, $interval) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -22,7 +24,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -41,10 +43,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-                removeClass('display-block  zoomOut');
+            removeClass('display-block  zoomOut');
         }
     };
 
@@ -53,29 +55,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-                removeClass('display-none');
+            removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-                removeClass('display-block');
+            removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-            removeClass('display-block active-menu-icon ');
+        removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-            removeClass('display-none  ');
+        removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-            removeClass('display-none');
+        removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-            removeClass('display-block active-menu-icon');
+        removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -434,7 +436,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addTab = function (title, content, viewType, notificationData) {
         var newTab = {title: title, content: content, viewType: viewType, notificationData: notificationData};
         $scope.tabs.push(newTab);
-        $timeout(function(){
+        $timeout(function () {
             $scope.activeTabIndex = ($scope.tabs.length - 1);
         });
 
@@ -585,7 +587,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.tabs.filter(function (item) {
             if (item.notificationData._id == args) {
 
-                $scope.tabs.splice($scope.tabs.indexOf(item),1);
+                $scope.tabs.splice($scope.tabs.indexOf(item), 1);
 
             }
 
@@ -610,26 +612,56 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
+    //###time tracker option
+    var _intervalId;
+    $scope.status.active = false;
+    function init() {
+        $scope.counter = "00:00:00";
+    }
+
+    init();
+
+
+    $scope.stopTime = function () {
+        $interval.cancel(_intervalId);
+        $scope.counter = "00:00:00";
+        $scope.status.active = false;
+    };
+    $scope.pauseTime = function () {
+        $interval.pause(_intervalId);
+    };
+
+    function updateTime() {
+        var seconds = moment().diff(moment($scope.dateStart, 'x'), 'seconds');
+        var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
+        $scope.counter = elapsed;
+    }
+
+    $scope.startTracker = function () {
+        //$scope.status.active = true;
+        $scope.dateStart = moment().format('x');
+        _intervalId = $interval(updateTime, 1000);
+        $scope.status.active = true;
+    };
+    //end time tracker function
 
 
     //----------------------SearchBar-----------------------------------------------------
 
     $scope.searchResult = [];
 
-    $scope.searchExternalUsers = function($query){
+    $scope.searchExternalUsers = function ($query) {
         return userService.searchExternalUsers($query).then(function (response) {
-            if(response.IsSuccess)
-            {
+            if (response.IsSuccess) {
                 return response.Result;
             }
-            else
-            {
+            else {
                 return [];
             }
         });
     };
 
-    $scope.clearSearchResult = function(){
+    $scope.clearSearchResult = function () {
         $scope.searchResult = [];
     };
 
