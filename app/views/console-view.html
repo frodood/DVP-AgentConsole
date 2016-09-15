@@ -1,6 +1,24 @@
 <div id="main">
     <div ng-controller="consoleCtrl">
         <nav id="navBar" class="navbar navbar-default console-nav-bar">
+
+            <!-- time tracker -->
+            <div class="time-tracker-wrapper" init()>
+                <div class="time-tracker-body">
+                    <div class="time-counter inline-block">{{ counter }}</div>
+                    <div class="play cursor-pointer" ng-click="startTracker()">
+                        <i class="veery-font-1-play-button"></i>
+                    </div>
+                    <div class="stop cursor-pointer">
+                        <i class="veery-font-1-stop"></i>
+                    </div>
+                    <div class="ticket-id cursor-pointer">
+                        #85953..
+                    </div>
+                </div>
+            </div>
+            <!-- end tracker -->
+
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">

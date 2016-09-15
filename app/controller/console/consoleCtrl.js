@@ -581,5 +581,38 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
+    //###time tracker option
+    var _intervalId;
+    $scope.status = null;
+    function init() {
+        $scope.counter = "00:00:00";
+
+        //$scope.status.$watch(function () {
+        //    if ($scope.status.active) {
+        //        _intervalId = $interval(updateTime, 1000);
+        //    } else {
+        //        stopTime();
+        //    }
+        //});
+    }
+
+    init();
+    function updateTime() {
+        var seconds = moment().diff(moment($scope.status.dateStart, 'x'), 'seconds');
+        var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
+        $scope.counter = elapsed;
+    }
+
+    function stopTime() {
+        //$interval.cancel(_intervalId);
+        //$scope.counter = "00:00:00";
+    }
+
+    $scope.startTracker = function () {
+        $scope.status.active = true;
+        $scope.status.dateStart = moment().format('x');
+    };
+    //end time tracker function
+
 
 });
