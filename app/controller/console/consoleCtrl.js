@@ -497,8 +497,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     addMailInbox();
 
 
-    $rootScope.$on('INBOX_NewEngagementTab', function(events, args)
-    {
+    $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -512,29 +511,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         /*if ($scope.tabs.length > 0) {
-            /!*var assigneeData = $filter('filter')($scope.tabs, {
-             notificationData._id: args._id
-             });*!/
-            var isOpened = $scope.tabs.filter(function (item) {
-                if (item.notificationData._id == args._id) {
-                    return true
-                }
-                else {
-                    return false
-                }
-            });
+         /!*var assigneeData = $filter('filter')($scope.tabs, {
+         notificationData._id: args._id
+         });*!/
+         var isOpened = $scope.tabs.filter(function (item) {
+         if (item.notificationData._id == args._id) {
+         return true
+         }
+         else {
+         return false
+         }
+         });
 
-            if (isOpened.length == 0) {
-                var tabTopic = "Ticket" + args.reference;
-                $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
-            }
-        }
-        else {
-            var tabTopic = "Ticket" + args.reference;
-            $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
-        }
-        resizeDiv();
-*/
+         if (isOpened.length == 0) {
+         var tabTopic = "Ticket" + args.reference;
+         $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
+         }
+         }
+         else {
+         var tabTopic = "Ticket" + args.reference;
+         $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
+         }
+         resizeDiv();
+         */
     });
 
 
@@ -565,6 +564,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         resizeDiv();
 
     });
+
+    //nav bar main search box
+    $scope.loadTags = function (query) {
+        return $http.get('/tags?query=' + query);
+    };
+
+    $scope.users = [];
+    $scope.loadUser = function ($query) {
+        return $http.get('assets/json/assigneeUsers.json', {cache: true}).then(function (response) {
+            var countries = response.data;
+            console.log(countries);
+            return countries.filter(function (country) {
+                return country.profileName.toLowerCase().indexOf($query.toLowerCase()) != -1;
+            });
+        });
+    };
 
 
 
