@@ -7,7 +7,6 @@ agentApp.directive('scrolly', function () {
         restrict: 'A',
         link: function (scope, element, attrs) {
             var raw = element[0];
-            console.log('loading directive');
 
             element.bind('scroll', function () {
                 if (raw.scrollTop + raw.offsetHeight > raw.scrollHeight) {
@@ -18,7 +17,7 @@ agentApp.directive('scrolly', function () {
     };
 });
 
-agentApp.directive("engagementTemp", function ($filter, engagementService, ivrService, userService, ticketService, tagService) {
+agentApp.directive("engagementTab", function ($filter, engagementService, ivrService, userService, ticketService, tagService) {
     return {
         restrict: "EA",
         scope: {
@@ -29,12 +28,36 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
             channel: "@",
             skill: "@",
             sessionId: "@",
-            availableTags: "=",
-            users: "="
+            tagList: "=",
+            tagCategoryList: "=",
+            users: "=",
+            loadTags: '&'
         },
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
 
+            /*Initialize default scope*/
+
+            scope.availableTags = scope.tagCategoryList;
+            scope.profileDetail = {};
+            scope.profileDetail.avatar = "assets/img/avatar/default-user.png";
+            scope.profileDetails = [];
+            scope.profileDetail.address = {
+                zipcode: "",
+                number: "",
+                street: "",
+                city: "",
+                province: "",
+                country: ""
+            };
+
+
+            scope.ticket = {};
+            scope.ticket.priority = 'normal';
+            scope.ticket.submitter = {};
+            scope.ticket.submitter.avatar = "assets/img/avatar/default-user.png";
+
+            /* End Initialize default scope*/
 
 
             /*Add New Ticket*/
@@ -53,13 +76,6 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
 
             scope.related = [];
 
-            scope.loadTags = function () {
-                tagService.GetAllTags().then(function (response) {
-                    scope.availableTags = response;
-                }, function (err) {
-                    scope.showAlert("load Tags", "error", "Fail To Get Tag List.  ")
-                });
-            };
 
             function createTagFilterFor(query) {
                 var lowercaseQuery = angular.lowercase(query);
@@ -85,24 +101,82 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
 
             };
 
+            scope.tagSelectRoot = 'root';
             scope.onChipAddTag = function (chip) {
-                //attributeService.AddAttributeToGroup(scope.groupinfo.GroupId, chip.AttributeId, "Attribute Group").then(function (response) {
-                //    if (response) {
-                //        console.info("AddAttributeToGroup : " + response);
-                //        scope.showAlert("Info", "Info", "ok", "Attribute " + chip.Attribute + " Save successfully");
-                //
-                //    }
-                //    else {
-                //        scope.resetAfterAddFail(chip);
-                //        scope.showError("Error", "Fail To Save " + chip.Attribute);
-                //    }
-                //}, function (error) {
-                //    scope.resetAfterAddFail(chip);
-                //    scope.showError("Error", "Fail To Save " + chip.Attribute);
-                //});
+                if (!chip.tags||(chip.tags.length === 0) ) {
+                    setToDefault();
+                    return;
+                }
+                if (scope.tagSelectRoot === 'root') {
+                    scope.tagSelectRoot = 'sub';
+                    scope.availableTags = chip.tags;
+                }
+                else if (scope.tagSelectRoot === 'sub') {
+
+                    var tempTags = [];
+                    angular.forEach(chip.tags, function (item) {
+                        var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+                        tempTags = tempTags.concat(tags);
+                    });
+                    scope.availableTags = tempTags;
+                    scope.tagSelectRoot = 'child';
+
+                }
+                else {
+                    if (chip.tags) {
+                        if (chip.tags.length > 0) {
+                            scope.availableTags = chip.tags;
+                            return;
+                        }
+                    }
+                    setToDefault();
+                }
+
+            };
+
+            scope.loadPostTags = function(query) {
+                return scope.postTags;
+            };
+
+           var removeDuplicate = function(arr){
+                var newArr = [];
+                angular.forEach(arr, function(value, key) {
+                    var exists = false;
+                    angular.forEach(newArr, function(val2, key) {
+                        if(angular.equals(value.name, val2.name)){ exists = true };
+                    });
+                    if(exists == false && value.name != "") { newArr.push(value); }
+                });
+                return newArr;
+            };
+
+            scope.newAddTags =[];
+            scope.ticket = {};
+            scope.ticket.selectedTags = [];
+            scope.newAddTags = [];
+            scope.postTags = [];
+            var setToDefault = function () {
+                var ticTag = undefined;
+                angular.forEach(scope.newAddTags, function (item) {
+                    if (ticTag) {
+                        ticTag = ticTag + "." + item.name;
+                    } else {
+                        ticTag = item.name;
+                    }
+
+                });
+                if(ticTag){
+                    scope.postTags.push({name:ticTag});
+                    scope.postTags = removeDuplicate(scope.postTags);
+                }
+
+                scope.newAddTags = [];
+                scope.availableTags = scope.tagCategoryList;
+                scope.tagSelectRoot = 'root';
             };
 
             scope.onChipDeleteTag = function (chip) {
+                setToDefault();
                 //attributeService.DeleteOneAttribute(scope.groupinfo.GroupId, chip.AttributeId).then(function (response) {
                 //    if (response) {
                 //        console.info("AddAttributeToGroup : " + response);
@@ -198,12 +272,11 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
 
             scope.saveTicket = function (ticket) {
                 ticket.channel = scope.channel;
-                if (ticket.selectedTags) {
-                    ticket.tags = ticket.selectedTags.map(function (obj) {
+                if (scope.postTags) {
+                    ticket.tags = scope.postTags.map(function (obj) {
                         return obj.name;
                     });
                 }
-
 
                 ticketService.SaveTicket(ticket).then(function (response) {
                     if (!response) {
@@ -221,8 +294,10 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
 
 
             scope.clickAddNewTicket = function () {
-                scope.ticket = {};
-                scope.ticket.priority = 'normal';
+                /* scope.ticket = {};
+                 scope.ticket.priority = 'normal';
+                 scope.ticket.submitter = {};
+                 scope.ticket.submitter.avatar ="assets/img/avatar/bobbyjkane.jpg";*/
                 scope.showCreateTicket = !scope.showCreateTicket;
                 if (scope.showCreateTicket) {
                     if (scope.users.length > 0) {
@@ -240,19 +315,19 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
 
             /* Load Past Engagements By Profile ID */
 
-            scope.showMore = function() {
+            scope.showMore = function () {
                 console.log('show more triggered');
                 scope.loadNextEngagement();
             };
 
             scope.currentPage = 1;
-            scope.loadNextEngagement = function() {
+            scope.loadNextEngagement = function () {
                 var begin = ((scope.currentPage - 1) * 10)
                     , end = begin + 10;
 
                 var ids = scope.sessionIds.slice(begin, end);
-                if(ids){
-                    scope.currentPage = scope.currentPage +1;
+                if (ids) {
+                    scope.currentPage = scope.currentPage + 1;
                     engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
                         scope.engagementsList = scope.engagementsList.concat(reply);
                     }, function (err) {
@@ -266,8 +341,8 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
             scope.GetEngagementIdsByProfile = function (profileId) {
                 engagementService.GetEngagementIdsByProfile(profileId).then(function (response) {
                     if (response) {
-                        scope.sessionIds =response.engagements;
-                        scope.engagementId  = response._id;
+                        scope.sessionIds = response.engagements;
+                        scope.engagementId = response._id;
                         scope.loadNextEngagement();
                     }
                 }, function (err) {
@@ -316,16 +391,6 @@ agentApp.directive("engagementTemp", function ($filter, engagementService, ivrSe
             scope.GetIvrDetailsByEngagementId();
 
             /* Load Profile Details for Current Engagement */
-            scope.profileDetails = [];
-            scope.profileDetail = {};
-            scope.profileDetail.address = {
-                zipcode: "",
-                number: "",
-                street: "",
-                city: "",
-                province: "",
-                country: ""
-            };
 
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";

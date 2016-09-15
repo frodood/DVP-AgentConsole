@@ -191,7 +191,66 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     }
+    var createTicketView = function (ticketView) {
+        var authToken = authService.GetToken();
 
+        return $http({
+            method: 'POST',
+            url: baseUrls.ticketUrl+"TicketView",
+            headers: {
+                'authorization':authToken
+            },
+            data:ticketView
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
+    var getTicketView = function (id) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketView/"+id,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
+    var getTicketViews = function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketViews",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data.Result;
+        });
+    };
+
+    var getTicketsByView = function (id) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketView/"+id+"/Tickets",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data.Result;
+        });
+    };
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
@@ -209,6 +268,11 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getTicket:getTicket,
         updateTicket:updateTicket
 
+        getTicket:getTicket,
+        CreateTicketView:createTicketView,
+        GetTicketView:getTicketView,
+        GetTicketViews:getTicketViews,
+        GetTicketsByView:getTicketsByView
     }
 });
 
