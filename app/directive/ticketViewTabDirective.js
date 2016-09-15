@@ -149,6 +149,10 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope) {
                 {
                     title: 'ACTIVITY', content: 'Dynamic content 2', icon: 'main-icon-2-star',
                     type: 'activity'
+                },
+                {
+                    title: 'OTHER', content: 'Dynamic content 2', icon: 'main-icon-2-star',
+                    type: 'other'
                 }
             ];
 
