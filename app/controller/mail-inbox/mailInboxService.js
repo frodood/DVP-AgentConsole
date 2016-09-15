@@ -107,20 +107,21 @@
             })
         };
 
-
-
-        var deleteInboxMessage = function(messageId)
+        var deleteInboxMessages = function(messageIds)
         {
             var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
-            var url = baseUrls.mailInboxUrl + profileId + '/Message/' + messageId;
+            var url = baseUrls.mailInboxUrl + profileId + '/RemoveMessages';
 
             return $http({
-                method: 'DELETE',
+                method: 'POST',
                 url: url,
                 headers: {
                     'authorization': authToken
+                },
+                data: {
+                    messageIds: messageIds
                 }
             }).then(function(resp)
             {
@@ -173,7 +174,7 @@
             getReadInboxMessages: getReadInboxMessages,
             getUnReadInboxMessages: getUnReadInboxMessages,
             getDeletedInboxMessages: getDeletedInboxMessages,
-            deleteInboxMessage: deleteInboxMessage,
+            deleteInboxMessages: deleteInboxMessages,
             markMessageAsRead: markMessageAsRead,
             getMessageCounters: getMessageCounters
         };

@@ -1966,6 +1966,13 @@ div > div >
     padding-top: 15px;
     color: #0d1c34;
 }
+.mail-header > i{
+    padding-left: 10px;
+    cursor: pointer;
+}
+.mail-header > i:hover{
+   color: #d90000;
+}
 
 .email-desc-wrapper {
     min-height: 550px;

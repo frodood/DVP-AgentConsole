@@ -31,12 +31,42 @@
                         <div class="header-left pull-left">
                             Inbox
                         </div>
+
+
+                        <div class="header-count pull-right">
+                            <div>
+                                {{counters.INBOX}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mail-option" ng-click="reloadReadMessages()">
+                        <div class="header-left pull-left">
+                            Read
+                        </div>
+
+
+                        <div class="header-count pull-right">
+                            <div>
+                                {{counters.READ}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mail-option" ng-click="reloadUnreadMessages()">
+                        <div class="header-left pull-left">
+                            Unread
+                        </div>
+
+
                         <div class="header-count pull-right">
                             <div>
                                 {{counters.UNREAD}}
                             </div>
                         </div>
                     </div>
+
+
                     <div class="mail-option" ng-click="reloadDeletedMessages()">
                         <div class="header-left pull-left">
                             Deleted
@@ -77,6 +107,14 @@
                         </div>
                         <div class="pull-left">
                             notification
+                        </div>
+                    </div>
+                    <div class="filter-option" ng-click="reloadSMSMessages()">
+                        <div class="number-count pull-right">
+                            {{counters.SMS}}
+                        </div>
+                        <div class="pull-left">
+                            sms
                         </div>
                     </div>
                     <!-- END -->
@@ -121,6 +159,11 @@
                                     <span class="btn btn-default btn-green100">close</span>
                                 </div>
                             </div>
+                            <div class="mail-btn-wrap" >
+                                <div class="mail-btn-wrap" >
+                                    <span ng-if="!isSelectedEmail && currentFilter !== 'DELETED'" class="btn btn-default btn-red600" ng-click="deleteMultipleMessages()">delete</span>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -130,131 +173,42 @@
                 <div class="mail-details-wrapper">
 
                     <div ng-repeat="message in filteredMailDisplay">
-                        <div ng-click="clickMoreEmailDetails()" class="mail-details" ng-class="{'bold': !message.has_read}">
+                        <div  class="mail-details" ng-class="{'bold': !message.has_read}">
                             <div class="col-lg-12 col-sm-12">
                                 <div class="col-sm-12 col-md-1">
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" id="blankCheckbox" value="option1"
-                                                   aria-label="...">
+                                                   aria-label="..." ng-click="markMessage(message)">
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-2 p-0">
+                                <div class="col-sm-12 col-md-2 p-0" ng-click="clickMoreEmailDetails(message)">
                                     <div class="mail-icon">
                                         <i ng-if="message.message_type === 'NOTIFICATION'" class="fa fa-bell-o"></i>
                                         <i ng-if="message.message_type === 'FACEBOOK'" class="fa fa-facebook"></i>
                                         <i ng-if="message.message_type === 'TWITTER'" class="fa fa-twitter"></i>
+                                        <i ng-if="message.message_type === 'SMS'" class="fa fa-envelope"></i>
                                     </div>
                                     <div class="main-text">
-                                        {{message.from.toUpperCase()}}
+                                        <div ng-if="message.from">{{message.from.toUpperCase()}}</div><div ng-if="!message.from && message.engagement_session && message.engagement_session.channel_from">{{message.engagement_session.channel_from.toUpperCase()}}</div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-8  p-0">
+                                <div class="col-sm-12 col-md-6  p-0" ng-click="clickMoreEmailDetails(message)">
                                     <div class="mail-header text-left">
                                         {{message.heading}}
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-1  p-0">
+                                <div class="col-sm-12 col-md-3  p-0 text-right">
                                     <div class="mail-header text-right">
                                         {{moment(message.received_at).local().format("YYYY-MMM-DD")}}
+                                        <i class="fa fa-trash-o" ng-if="currentFilter !== 'DELETED'" ng-click="deleteInboxMessage(message._id)"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--<div ng-click="clickMoreEmailDetails()" class="mail-details">
-                            <div class="col-lg-12 col-sm-12">
-                                <div class="col-sm-12 col-md-1">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="option1"
-                                                   aria-label="...">
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-2 p-0">
-                                    <div class="mail-icon">
-                                        <i class="fa fa-facebook"></i>
-                                    </div>
-                                    <div class="main-text">
-                                        FACEBOOK
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-8  p-0">
-                                    <div class="mail-header text-left">
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry....
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-1  p-0">
-                                    <div class="mail-header text-right">
-                                        Sep 2
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
 
                     </div>
-
-                    <!--<div ng-click="clickMoreEmailDetails()" class="mail-details">
-                        <div class="col-lg-12 col-sm-12">
-                            <div class="col-sm-12 col-md-1">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="blankCheckbox" value="option1"
-                                               aria-label="...">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-2 p-0">
-                                <div class="mail-icon">
-                                    <i class="fa fa-bell-o"></i>
-                                </div>
-                                <div class="main-text">
-                                    NOTIFICATION
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-8  p-0">
-                                <div class="mail-header text-left">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry....
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-1  p-0">
-                                <div class="mail-header text-right">
-                                    Sep 2
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-click="clickMoreEmailDetails()" class="mail-details">
-                        <div class="col-lg-12 col-sm-12">
-                            <div class="col-sm-12 col-md-1">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="option1"
-                                               aria-label="...">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-2 p-0">
-                                <div class="mail-icon">
-                                    <i class="fa fa-facebook"></i>
-                                </div>
-                                <div class="main-text">
-                                    FACEBOOK
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-8  p-0">
-                                <div class="mail-header text-left">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry....
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-1  p-0">
-                                <div class="mail-header text-right">
-                                    Sep 2
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
 
                     <!-- view email more template -->
                     <div id="emailDescView" class="email-desc-wrapper">
@@ -268,15 +222,16 @@
                                              src="assets/img/avatar/oykun.jpg">
                                     </div>
                                     <div class="pull-left p-left-15">
-                                        <h5 class="bold">From : Jone k.p</h5>
-                                        <h5 class="bold">To : Jone k.p</h5>
-                                        <h5 class="bold">Date : Thu, Sep 1, 2016 at 6:33 PM</h5>
+                                        <h5 class="bold"><div ng-if="currentDisplayMessage.from">From : {{currentDisplayMessage.from.toUpperCase()}}</div><div ng-if="!currentDisplayMessage.from && currentDisplayMessage.engagement_session && currentDisplayMessage.engagement_session.channel_from">From : {{currentDisplayMessage.engagement_session.channel_from.toUpperCase()}}</div></h5>
+                                        <h5 class="bold"><div ng-if="currentDisplayMessage.engagement_session && currentDisplayMessage.engagement_session.channel_to">To : {{currentDisplayMessage.engagement_session.channel_to.toUpperCase()}}</div></h5>
+                                        <h5 class="bold">Date : {{moment(currentDisplayMessage.received_at).local().format("LLLL")}}</h5>
+                                        <h5 class="bold">Topic : {{currentDisplayMessage.heading}}</h5>
                                     </div>
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="mail-option-header text-right">
                                         <div class="mail-btn-wrap">
-                                            <span class="btn btn-default btn-green100">convert to ticket</span>
+                                            <span class="btn btn-default btn-green100" ng-click="openTab()">convert to ticket</span>
                                         </div>
                                     </div>
                                 </div>
@@ -285,13 +240,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mail-description">
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                                        1500s, when an unknown printer took a galley of type and scrambled it to
-                                        make a type specimen book. It has survived not only five centuries, but also
-                                        the leap into electronic typesetting, remaining essentially unchanged. It
-                                        was popularised in the 1960s with the release of Letraset sheets containing
-                                        Lorem Ipsum passages,
+                                        {{currentDisplayMessage.message}}
                                     </div>
                                 </div>
                             </div>
@@ -304,5 +253,4 @@
 
         <!-- end-->
     </div>
-</div>
 </div>
