@@ -315,19 +315,11 @@ agentApp.directive("engagementTab", function ($filter, engagementService, ivrSer
 
             /* Load Past Engagements By Profile ID */
 
+
             scope.showMore = function () {
                 console.log('show more triggered');
                 scope.loadNextEngagement();
             };
-
-            $('#scrltodo').scroll(function () {
-                var raw=$('#scrltodo')[0];
-                if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight)
-                {console.log('show more triggered.............................');
-                    scope.loadNextEngagement();
-                }
-
-            });
 
             scope.currentPage = 1;
             scope.loadNextEngagement = function () {
