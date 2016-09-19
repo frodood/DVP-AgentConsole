@@ -56,7 +56,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
 
                 socket.on('clientdetails', function (data) {
                     //Notification.info({message: data, delay: 500, closeOnClick: true});
-                    console.log(data);
+                    //console.log(data);
                 });
 
                 socket.on('disconnect', function (reason) {
@@ -72,20 +72,20 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 socket.on('broadcast', function (data) {
                     //document.getElementById("lblNotification").innerHTML = data;
                     //Notification.info({message: data, delay: 500, closeOnClick: true});
-                    console.log(data);
+                    //console.log(data);
                 });
 
                 socket.on('publish', function (data) {
                     //document.getElementById("lblNotification").innerHTML = data;
                     //Notification.info({message: data, delay: 500, closeOnClick: true});
-                    console.log(data);
+                    //console.log(data);
                 });
 
                 socket.on('agent_connected', function (data) {
                     //document.getElementById("lblNotification").innerHTML = data.Message;
 
                     //Notification.primary({message: data.Message, delay: 5000, closeOnClick: true});
-                    console.log(data);
+
                 });
                 socket.on('agent_found', function (data) {
 
@@ -97,7 +97,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 socket.on('agent_disconnected', function (data) {
                     // document.getElementById("lblNotification").innerHTML = data.Message;
                     //Notification.primary({message: data.Message, delay: 5000, closeOnClick: true});
-                    console.log(data);
+
                 });
             } catch (ex) {
                 console.log("Error In socket.io");

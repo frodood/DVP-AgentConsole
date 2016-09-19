@@ -1,10 +1,9 @@
-<uib-tabset active="active">
-    <uib-tab active="activeTabIndex" class="console-main-tab" ng-repeat="tab in tabs" heading="{{tab.title}}"
+<uib-tabset active="activeTabIndex">
+    <uib-tab class="console-main-tab" ng-repeat="tab in tabs" heading="{{tab.title}}"
              disable="tab.disabled">
         <div ng-switch on="tab.viewType">
             <div ng-switch-when="engagement">
-                <engagement-temp available-tags="tags" users="users" session-id="{{tab.notificationData.sessionId}}" skill="{{tab.notificationData.skill}}" company="{{tab.notificationData.company}}" channel="{{tab.notificationData.channel}}" channel-from="{{tab.notificationData.channelFrom}}" channel-to="{{tab.notificationData.channelTo}}" direction="{{tab.notificationData.direction}}"></engagement-temp>
-
+                <engagement-tab load-tags="reloadTagAndCategories()" tag-category-list="tagCategories" tag-list="tags" users="users" session-id="{{tab.notificationData.sessionId}}" skill="{{tab.notificationData.skill}}" company="{{tab.notificationData.company}}" channel="{{tab.notificationData.channel}}" channel-from="{{tab.notificationData.channelFrom}}" channel-to="{{tab.notificationData.channelTo}}" direction="{{tab.notificationData.direction}}"></engagement-tab>
             </div>
             <div ng-switch-when="ticketView">
                 <ticket-tab-view ticket-details="{{tab}}""></ticket-tab-view>

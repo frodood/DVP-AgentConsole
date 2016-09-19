@@ -167,7 +167,52 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Details",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+    var updateTicket = function (ticketID,ticketObject) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
             url: baseUrls.ticketUrl+"Ticket/"+ticketID,
+            headers: {
+                'authorization':authToken
+            },
+            data:ticketObject
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+    var createTicketView = function (ticketView) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'POST',
+            url: baseUrls.ticketUrl+"TicketView",
+            headers: {
+                'authorization':authToken
+            },
+            data:ticketView
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
+    var getTicketView = function (id) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketView/"+id,
             headers: {
                 'authorization':authToken
             }
@@ -177,6 +222,53 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getTicketViews = function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketViews",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data.Result;
+        });
+    };
+
+    var getTicketsByView = function (id) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketView/"+id+"/Tickets",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data.Result;
+        });
+    };
+
+    var AddNewCommentToTicket = function (ticketId,commentObject) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Comment",
+            headers: {
+                'authorization':authToken
+            },
+            data:commentObject
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
@@ -191,7 +283,13 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getMyGroupTickets:getMyGroupTickets,
         getMyGroupOpenTickets:getMyGroupOpenTickets,
         getMyGroupClosedTickets:getMyGroupClosedTickets,
-        getTicket:getTicket
+        getTicket:getTicket,
+        updateTicket:updateTicket,
+        CreateTicketView:createTicketView,
+        GetTicketView:getTicketView,
+        GetTicketViews:getTicketViews,
+        GetTicketsByView:getTicketsByView,
+        AddNewCommentToTicket:AddNewCommentToTicket
     }
 });
 

@@ -1,6 +1,8 @@
 <div id="main">
     <div ng-controller="consoleCtrl">
         <nav id="navBar" class="navbar navbar-default console-nav-bar">
+
+
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -79,11 +81,12 @@
                             <div class="form-group">
                                 <tags-input
                                         class="main-search"
-                                        ng-model="users"
-                                        display-property="profileName"
-                                        placeholder="choose assignee user"
+                                        ng-model="searchResult"
+                                        display-property="firstname"
+                                        placeholder="Search.."
+                                        key-property="_id"
                                         replace-spaces-with-dashes="false">
-                                    <auto-complete source="loadUser($query)"
+                                    <auto-complete source="searchExternalUsers($query)"
                                                    min-length="0"
                                                    load-on-focus="true"
                                                    load-on-empty="true"
@@ -93,7 +96,7 @@
                                 </tags-input>
                                 <script type="text/ng-template" id="my-custom-template">
                                     <div class="auto-complete-left-panel">
-                                        <img ng-src="{{data.img}}"/>
+                                        <img ng-src="{{data.avatar}}"/>
                                     </div>
                                     <div class="auto-complete-right-panel">
                                         <span ng-bind-html="$highlight($getDisplayText())"></span>
@@ -101,8 +104,8 @@
                                 </script>
                             </div>
                             <!--<div class="form-group">-->
-                            <!--<input type="text" class="form-control bg-transparent border-radius-20
-                             main-search-txt"-->
+                            <!--<input type="text" class="form-control bg-transparent border-radius-20-->
+                            <!--main-search-txt"-->
                             <!--placeholder="Search...">-->
                             <!--</div>-->
                         </form>
@@ -123,6 +126,36 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right" uib-dropdown>
+
+                        <li>
+                            <!-- #Time tracker -->
+                            <div class="time-tracker-wrapper">
+                                <div class="time-tracker-body">
+                                    <div class="time-counter inline-block">{{ counter }}</div>
+                                    <div id="play" class="play cursor-pointer"
+                                         ng-if="!status.active"
+                                         ng-click="startTracker()">
+                                        <i class="veery-font-1-play-button"></i>
+                                    </div>
+                                    <div id="pause" class="pause cursor-pointer"
+                                         ng-if="status.active"
+                                         ng-click="pauseTime()">
+                                        <i class="veery-font-1-pause"></i>
+                                    </div>
+                                    <div id="stop" class="stop cursor-pointer"
+                                         ng-if="status.active"
+                                         ng-click="stopTime()">
+                                        <i class="veery-font-1-stop"></i>
+                                    </div>
+
+                                    <!--<div id="ticketId" class="ticket-id cursor-pointer display-none">-->
+                                    <!--#85953..-->
+                                    <!--</div>-->
+
+                                </div>
+                            </div>
+                            <!-- end tracker -->
+                        </li>
 
                         <li class="console-menu-icon m-left-10 m-right-10">
                             <i class="veery-font-1-notepad" ng-click="addFilterTab();">

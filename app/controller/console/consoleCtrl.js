@@ -2,7 +2,9 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
+                                             jwtHelper, resourceService, baseUrls, dataParser,
+                                             veeryNotification, authService, userService, tagService, $interval) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -103,7 +105,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             title: tittle,
             text: msg,
             type: type,
-            styling: 'bootstrap3'
+            styling: 'bootstrap3',
+            icon: false
         });
     };
 
@@ -287,7 +290,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
         },
-        onErrorCallback: function (e) {
+        onerrorCallback: function (e) {
             //document.getElementById("lblStatus").innerHTML = e;
             $scope.showAlert("Soft Phone", "error", e);
             console.error(e);
@@ -433,15 +436,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addTab = function (title, content, viewType, notificationData) {
         var newTab = {title: title, content: content, viewType: viewType, notificationData: notificationData};
         $scope.tabs.push(newTab);
-        $scope.activeTabIndex = ($scope.tabs.length - 1);
-        //$timeout(function(){
-        //    $scope.activeTabIndex = ($scope.tabs.length - 1);
-        //});
+        $timeout(function () {
+            $scope.activeTabIndex = ($scope.tabs.length - 1);
+        });
 
     };
-    //$scope.addTab('A526420-Ticket view', 'Engagement1', 'ticketView',data);
-    //$scope.addTab('A526455-Ticket view', 'A526455-Ticket view', 'engagement',data);
-    //$scope.addTab('Engagement2', 'Engagement2', 'engagement',data);
+
 
     $scope.addTabTest = function () {
         $scope.addTab('engagement', 'Engagement', 'engagement', {
@@ -460,7 +460,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         userService.LoadUser().then(function (response) {
             $scope.users = response;
         }, function (err) {
-            $scope.showAlert("load Users", "error", "Fail To Get User List.")
+            $scope.showAlert("Load Users", "error", "Fail To Get User List.")
         });
     };
     $scope.loadUsers();
@@ -471,10 +471,25 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         tagService.GetAllTags().then(function (response) {
             $scope.tags = response;
         }, function (err) {
-            $scope.showAlert("load Tags", "error", "Fail To Get Tag List.")
+            $scope.showAlert("Load Tags", "error", "Fail To Get Tag List.")
         });
     };
     $scope.loadTags();
+
+    $scope.loadTagCategories = function () {
+        tagService.GetTagCategories().then(function (response) {
+            $scope.tagCategories = response;
+        }, function (err) {
+            $scope.showAlert("Load Tags", "error", "Fail To Get Tag List.")
+        });
+    };
+    $scope.loadTagCategories();
+
+    $scope.reloadTagAndCategories = function () {
+        $scope.loadTags();
+        $scope.loadTagCategories();
+    };
+
     $scope.addFilterTab = function () {
         $scope.addTab('Ticket Filter', 'Filter', 'filter', {
             company: "123",
@@ -483,7 +498,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelTo: "33",
             channel: "555"
         });
-    }
+    };
     var addMailInbox = function () {
         $scope.addTab('Mail Inbox', 'Mail Inbox', 'mail-inbox', {
             company: "123",
@@ -539,6 +554,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $rootScope.$on('newTicketTab', function (events, args) {
 
+        var tabTopic = "Ticket - " + args.reference;
         if ($scope.tabs.length > 0) {
             /*var assigneeData = $filter('filter')($scope.tabs, {
              notificationData._id: args._id
@@ -553,15 +569,30 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
 
             if (isOpened.length == 0) {
-                var tabTopic = "Ticket" + args.reference;
+
                 $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
             }
         }
         else {
-            var tabTopic = "Ticket" + args.reference;
+
             $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
         }
         resizeDiv();
+
+    });
+
+    $rootScope.$on('closeTab', function (events, args) {
+
+
+        $scope.tabs.filter(function (item) {
+            if (item.notificationData._id == args) {
+
+                $scope.tabs.splice($scope.tabs.indexOf(item), 1);
+
+            }
+
+        });
+
 
     });
 
@@ -580,6 +611,61 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
         });
     };
+
+    //###time tracker option
+    var _intervalId;
+    $scope.status.active = false;
+    function init() {
+        $scope.counter = "00:00:00";
+    }
+
+    init();
+
+
+    $scope.stopTime = function () {
+        $interval.cancel(_intervalId);
+        $scope.counter = "00:00:00";
+        $scope.status.active = false;
+    };
+    $scope.pauseTime = function () {
+        $interval.pause(_intervalId);
+    };
+
+    function updateTime() {
+        var seconds = moment().diff(moment($scope.dateStart, 'x'), 'seconds');
+        var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
+        $scope.counter = elapsed;
+    }
+
+    $scope.startTracker = function () {
+        //$scope.status.active = true;
+        $scope.dateStart = moment().format('x');
+        _intervalId = $interval(updateTime, 1000);
+        $scope.status.active = true;
+    };
+    //end time tracker function
+
+
+    //----------------------SearchBar-----------------------------------------------------
+
+    $scope.searchResult = [];
+
+    $scope.searchExternalUsers = function ($query) {
+        return userService.searchExternalUsers($query).then(function (response) {
+            if (response.IsSuccess) {
+                return response.Result;
+            }
+            else {
+                return [];
+            }
+        });
+    };
+
+    $scope.clearSearchResult = function () {
+        $scope.searchResult = [];
+    };
+
+    //----------------------------------------------------------------------------------------
 
 
 });
