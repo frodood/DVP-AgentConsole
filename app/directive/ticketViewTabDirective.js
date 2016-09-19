@@ -2,7 +2,7 @@
  * Created by Pawan on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService) {
+agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService,myProfileDataParser) {
     return {
         restrict: "EA",
         scope:{
@@ -18,6 +18,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
         link: function (scope, element, attributes) {
             scope.subTickets=[];
             scope.relTickets=[];
+            scope.userList=myProfileDataParser.userList;
 
             scope.ticketID=JSON.parse(scope.ticketDetails).notificationData._id;
 
@@ -88,9 +89,9 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 scope.showCreateTicket = !scope.showCreateTicket;
             };
 
-            scope.editTicket=false;
+            scope.editTicketSt=false;
             scope.editTicketMode = function () {
-                scope.editTicket=!scope.editTicket;
+                scope.editTicketSt=!scope.editTicketSt;
             }
 
 
@@ -111,7 +112,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             //update code damith
             // add edit modal box
-            scope.editTicket = false;
+            scope.editTicketSt = false;
 
             scope.tabs = [
                 {
@@ -136,7 +137,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             };
 
             scope.clickShowTickerEditMode = function () {
-                scope.editTicket = !scope.editTicket;
+                scope.editTicketSt = !scope.editTicketSt;
                 scope.editTicket=JSON.parse(scope.ticketDetails).notificationData;
             };
 
@@ -147,7 +148,20 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                     {
                         scope.ticket=scope.editTicket;
                         scope.showAlert("Updated","success","Ticket updated successfully");
-                        scope.editTicket=false;
+                        if(scope.ticket.due_at)
+                        {
+                            scope.ticket.due_at=moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
+                        }
+                        else
+                        {
+                            scope.ticket.due_at="Not specified";
+                        }
+
+                        if(scope.ticket.created_at)
+                        {
+                            scope.ticket.created_at=moment(scope.ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss");
+                        }
+                        scope.editTicketSt=false;
 
 
                     }
@@ -168,31 +182,86 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             };
 
-            scope.addComment = function (comment) {
+            scope.addComment = function (message,mode) {
+
+                var channel="";
+                var eng_session="";
+                var reply_session="";
+                var reply_chnl_from="";
+                var reply_chnl_to="";
+
+                if(scope.ticket.engagement_session)
+                {
+                    channel=scope.ticket.engagement_session.channel;
+                    reply_session=scope.ticket.engagement_session._id;
+                    reply_chnl_from=scope.ticket.engagement_session.channel_to;
+                    reply_chnl_to=scope.ticket.engagement_session.channel_from;
+                }
+
+
 
                 var commentObj =
                 {
-                    body:comment,
-                    body_type:"text",
-                    type:"web",
-                    public: true,
-                    channel_from:authService.GetResourceIss()
+                    "body":  message,
+                    "body_type": "text",
+                    "type": "comment",
+                    "public": mode,
+                    "channel":  channel,
+                    "engagement_session": eng_session,
+                    "reply_session":reply_session
+
 
                 }
+
+                if(mode=="public")
+                {
+                    commentObj["channel_from"]=reply_chnl_from;
+                    commentObj["channel_to"]=reply_chnl_to;
+                }
+
+
                 ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
                     if(response.data.IsSuccess)
                     {
-
+                        response.data.Result.author=myProfileDataParser.myProfile;
+                        scope.ticket.comments.push(response.data.Result);
+                        console.log("New comment added ",response);
+                        scope.showAlert("New Comment","success","completed");
                     }
                     else
                     {
-
+                        console.log("Error new comment ",response);
+                        scope.showAlert("New Comment","error","failed");
                     }
 
-                }), then(function (error) {
+                }), function (error) {
+                    console.log("Error new comment ",error);
+                    scope.showAlert("New Comment","error","failed");
+                };
 
-                });
+            };
 
+            scope.isEditAssignee = false;
+            scope.editAssignee = function () {
+                scope.isEditAssignee = !scope.isEditAssignee;
+            };
+
+
+            scope.changeAssignee = function (newAssignee) {
+
+                ticketService.AssignUserToTicket(scope.ticket._id,newAssignee._id).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+                        scope.showAlert("Assign","Ticket assignee changed successfully","success");
+                        scope.loadTicketSummary(scope.ticket._id);
+                    }
+                    else
+                    {
+                        scope.showAlert("Assign","Ticket assignee changed failed","error");
+                    }
+                }), function (error) {
+                    scope.showAlert("Assign","Ticket assignee changed failed","error");
+                }
             }
         }
     }

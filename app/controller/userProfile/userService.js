@@ -81,13 +81,29 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getMyProfileDetails= function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"Myprofile",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
 
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
         LoadUser:loadUser,
         getUserList:getUserList,
         getUserGroupList:getUserGroupList,
-        searchExternalUsers:searchExternalUsers
+        searchExternalUsers:searchExternalUsers,
+        getMyProfileDetails:getMyProfileDetails
 
     }
 });

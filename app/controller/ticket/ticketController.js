@@ -2,7 +2,7 @@
  * Created by Damith on 8/19/2016.
  */
 
-agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService) {
+agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,myProfileDataParser) {
 
     $scope.ticketList = {
         toDo: [],
@@ -57,6 +57,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
         userService.getUserList().then(function (response) {
             $scope.userList=response.data.Result;
             console.log("USERS ",$scope.userList);
+            myProfileDataParser.userList=$scope.userList;
 
             pickAllGroups();
 
@@ -979,7 +980,29 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     };
 
+    /*var getMyProfile = function () {
 
+
+        userService.getMyProfileDetails().then(function (response) {
+
+            if(response.data.IsSuccess)
+            {
+                myProfileDataParser.myProfile=response.data.Result;
+            }
+            else
+            {
+                myProfileDataParser.myProfile={};
+            }
+        }), function (error) {
+            myProfileDataParser.myProfile={};
+        }
+
+
+
+    };
+
+    getMyProfile();
+*/
 
 
 

@@ -101,7 +101,8 @@
                                 </li>
                                 <li>
                                     <small>Updated</small>
-                                    <h5>{{ticket.timeDelay}}</h5>
+                                    <!--<h5>{{ticket.timeDelay}}</h5>-->
+                                    <h5><time-ago from-time='{{ ticket.updated_at }}'></time-ago></h5>
                                 </li>
                                 <li>
                                     <small>Due To</small>
@@ -182,7 +183,7 @@
                                     <div class="col-lg-5 col-sm-12 text-right  ">
                                         <a class="inline-bt pull-left " href="javascript:void(0);">
                                             <div class="pull-left commenter-img">
-                                                <img src="/assets/img/defaultProfile.png" ng-src={{sub.assignee.avatar}}>
+                                                <img src="assets/img/defaultProfile.png" ng-src={{sub.assignee.avatar}}>
                                                 {{sub.assignee.name}}
                                             </div>
                                         </a>
@@ -228,7 +229,7 @@
                                     <div class="col-lg-5 col-sm-12 text-right  ">
                                         <a class="inline-bt pull-left " href="javascript:void(0);">
                                             <div class="pull-left commenter-img">
-                                                <img src="/assets/img/defaultProfile.png" ng-src={{relticket.assignee.avatar}}>
+                                                <img src="assets/img/defaultProfile.png" ng-src={{relticket.assignee.avatar}}>
                                                 {{relticket.assignee.name}}
                                             </div>
                                         </a>
@@ -262,7 +263,7 @@
                                         <div class="col-lg-6">
                                             <div class="people-view">
                                                 <div class="people-view-img ">
-                                                    <img src="/assets/img/defaultProfile.png" ng-src={{ticket.submitter.avatar}}>
+                                                    <img src="assets/img/defaultProfile.png" ng-src={{ticket.submitter.avatar}}>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold">
@@ -277,7 +278,7 @@
                                         <div class="col-lg-6">
                                             <div class="people-view">
                                                 <div class="people-view-img ">
-                                                    <img src="/assets/img/defaultProfile.png" ng-src={{ticket.requester.avatar}}>
+                                                    <img src="assets/img/defaultProfile.png" ng-src={{ticket.requester.avatar}}>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold color-cyan500">
@@ -297,10 +298,10 @@
                                                  ng-show="isEditAssignee">
                                                 <div class="col-lg-7">
                                                     <div class="form-group">
-                                                        <tags-input
+                                                        <!--<tags-input
                                                                 ng-model="users"
                                                                 display-property="profileName"
-                                                                placeholder="Search Assignee"
+                                                                placeholder="Search users to assign"
                                                                 replace-spaces-with-dashes="false">
                                                             <auto-complete source="loadUser($query)"
                                                                            min-length="0"
@@ -318,12 +319,18 @@
                                                             <div class="auto-complete-right-panel">
                                                                 <span ng-bind-html="$highlight($getDisplayText())"></span>
                                                             </div>
-                                                        </script>
+                                                        </script>-->
+                                                        <select class="" placeholder=""
+                                                                ng-model="messageMode">
+
+                                                            <option ng-repeat="user in userList" ng-model="newAssignee">{{user.name}}</option>
+
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5">
                                                     <div class="edit-btn-wrapper text-left p-top-10">
-                                                        <div class="bg-checkbox btn-green500 font-white  inline-btn cursor-pointer">
+                                                        <div class="bg-checkbox btn-green500 font-white  inline-btn cursor-pointer" ng-click="">
                                                             save
                                                         </div>
 
@@ -339,7 +346,7 @@
                                                  ng-mouseleave="isEnableEdit=false"
                                                  ng-mouseover="isEnableEdit=true">
                                                 <div class="people-view-img ">
-                                                    <img src="/assets/img/defaultProfile.png" ng-src={{ticket.assignee.avatar}}>
+                                                    <img src="assets/img/defaultProfile.png" ng-src={{ticket.assignee.avatar}}>
                                                     <i ng-show="isEnableEdit"
                                                        ng-click="editAssignee()"
                                                        class="fa fa-pencil"></i>
@@ -374,7 +381,7 @@
                             <div class="sub-task">
                                 <div class="pull-left  ">
                                     <div class="pull-left commenter-img">
-                                        <img src="/assets/img/defaultProfile.png" ng-src="assets/img/avatar/mikeluby.jpg"/>
+                                        <img src="assets/img/defaultProfile.png" ng-src="assets/img/avatar/mikeluby.jpg"/>
                                         Aaron, Hank
                                     </div>
                                 </div>
@@ -387,7 +394,7 @@
                             <div class="sub-task">
                                 <div class="pull-left  ">
                                     <div class="pull-left commenter-img">
-                                        <img src="/assets/img/defaultProfile.png" ng-src="assets/img/avatar/jaman_01.jpg"/>
+                                        <img src="assets/img/defaultProfile.png" ng-src="assets/img/avatar/jaman_01.jpg"/>
                                         Abourezk, James
                                     </div>
                                 </div>
