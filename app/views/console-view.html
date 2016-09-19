@@ -81,13 +81,13 @@
                                         class="main-search"
                                         ng-model="searchResult"
                                         display-property="firstname"
-                                        placeholder="Search.."
+                                        placeholder="Search by keyword, ticker# or profile#"
                                         key-property="_id"
                                         replace-spaces-with-dashes="false">
                                     <auto-complete source="searchExternalUsers($query)"
                                                    min-length="0"
-                                                   load-on-focus="true"
-                                                   load-on-empty="true"
+                                                   load-on-focus="false"
+                                                   load-on-empty="false"
                                                    max-results-to-show="32"
                                                    template="my-custom-template">
                                     </auto-complete>

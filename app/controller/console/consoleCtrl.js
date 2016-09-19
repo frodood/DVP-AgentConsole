@@ -601,16 +601,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.searchResult = [];
 
     $scope.searchExternalUsers = function($query){
-        return userBackendService.searchExternalUsers($query).then(function (response) {
-            if(response.IsSuccess)
-            {
-                return response.Result;
-            }
-            else
-            {
-                return [];
-            }
-        });
+            return userBackendService.searchExternalUsers($query).then(function (response) {
+                if (response.IsSuccess) {
+                    return response.Result;
+                }
+                else {
+                    return [];
+                }
+            });
     };
 
     $scope.clearSearchResult = function(){
