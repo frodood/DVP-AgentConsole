@@ -37,6 +37,7 @@
     "angular-local-storage": "^0.2.7",
     "angular-pnotify": "^0.1.2",
     "moment": "^2.14.1",
+    "angular-schema-form": "^0.8.13",
     "angular-timeago": "^0.4.3"
   },
   "resolutions": {
