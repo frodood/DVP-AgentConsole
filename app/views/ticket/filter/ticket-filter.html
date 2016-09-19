@@ -68,6 +68,28 @@
                         Your unsolved tickets
                     </div>
                     <div class="profile-ticket-wrapper  ng-scope">
+                        <div ng-show="isProgress" >
+                            <div class="row ">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="data-state-wrap">
+                                        Loading ......
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="isNoData" >
+                            <div class="row ">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="data-state-wrap">
+                                        No Data
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
                             <div class="profile-ticker-wrap new-ticker">
                                 <div class="ticket-channel call">
@@ -78,22 +100,23 @@
                                     <div class="col-md-12 p-0">
                                         <div class="col-md-2 p-0">
                                             <div class="left-avatar">
-                                                <img class="object-fit_cover" src="assets/img/avatar/avater_ticket.jpg">
+                                                <img class="object-fit_cover" src="assets/img/avatar/default-user.png" ng-src="{{ticket.requester.avatar}}">
                                             </div>
                                         </div>
                                         <div class="col-md-8 ">
                                             <div class="ticker-id bold">
-                                                A25635123SD -
-                                                <small class="color-cyan500 text-uppercase">1 day ago</small>
+                                                {{ticket.reference}} -
+                                                <small class="color-cyan500 text-uppercase"><time-ago from-time='{{ ticket.created_at }}' format='MM/dd/yyyy'></time-ago></small>
+
                                             </div>
                                             <div class="ticket-subj bold">
-                                                Lorem Ipsum is simply dummy text of the printing
-                                                <small class="high">HIGH</small>
+                                                {{ticket.type}}
+                                                <small class="high">{{ticket.priority}}</small>
                                             </div>
                                             <div class="ticket-desc">
                                                 <div class="pull-left">
                                                     <div class="ticket-desc">
-                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+                                                        {{ticket.description}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,7 +126,7 @@
                                                 <ul class="info-list-lg ticket-details-list pull-left">
                                                     <li>
                                                         <small>OWNER</small>
-                                                        <h5>submitter</h5>
+                                                        <h5>{{ticket.submitter.name}}</h5>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -112,7 +135,7 @@
                                                 <ul class="info-list-lg ticket-details-list pull-left">
                                                     <li>
                                                         <small>USER</small>
-                                                        <h5>user</h5>
+                                                        <h5>{{ticket.requester.name}}</h5>
                                                     </li>
                                                 </ul>
                                             </div>

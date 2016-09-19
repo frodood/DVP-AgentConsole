@@ -2,7 +2,7 @@
  * Created by Damith on 8/19/2016.
  */
 
-agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,userBackendService,$rootScope) {
+agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService) {
 
     $scope.ticketList = {
         toDo: [],
@@ -39,7 +39,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 // ................. All users and user groups ..............................
     var pickAllGroups= function () {
-        userBackendService.getUserGroupList().then(function (response) {
+        userService.getUserGroupList().then(function (response) {
             $scope.userGroupList=response.data.Result;
             console.log("USER Groups ",$scope.userGroupList);
             $scope.ticketList.loadCompleted =true;
@@ -54,7 +54,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     };
 
     var pickAllUsers = function () {
-        userBackendService.getUserList().then(function (response) {
+        userService.getUserList().then(function (response) {
             $scope.userList=response.data.Result;
             console.log("USERS ",$scope.userList);
 
@@ -262,6 +262,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                 {
                     for (var i = 0; i < response.data.Result.length; i++) {
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+
+                        response.data.Result[i].submitter.avatar="/assets/img/defaultProfile.png";
+
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                         }
@@ -975,6 +978,8 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
          removeClass('display-block fadeIn');
 
     };
+
+
 
 
 

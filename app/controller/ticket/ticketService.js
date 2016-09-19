@@ -167,7 +167,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketID,
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Details",
             headers: {
                 'authorization':authToken
             }
@@ -176,7 +176,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+    var updateTicket = function (ticketID,ticketObject) {
+        var authToken = authService.GetToken();
 
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID,
+            headers: {
+                'authorization':authToken
+            },
+            data:ticketObject
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
     var createTicketView = function (ticketView) {
         var authToken = authService.GetToken();
 
@@ -238,6 +252,24 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var AddNewCommentToTicket = function (ticketId,commentObject) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Comment",
+            headers: {
+                'authorization':authToken
+            },
+            data:commentObject
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -252,10 +284,12 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getMyGroupOpenTickets:getMyGroupOpenTickets,
         getMyGroupClosedTickets:getMyGroupClosedTickets,
         getTicket:getTicket,
+        updateTicket:updateTicket,
         CreateTicketView:createTicketView,
         GetTicketView:getTicketView,
         GetTicketViews:getTicketViews,
-        GetTicketsByView:getTicketsByView
+        GetTicketsByView:getTicketsByView,
+        AddNewCommentToTicket:AddNewCommentToTicket
     }
 });
 

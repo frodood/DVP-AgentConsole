@@ -2,7 +2,9 @@
  * Created by Damith on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, userBackendService) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
+                                             jwtHelper, resourceService, baseUrls, dataParser,
+                                             veeryNotification, authService, userService, tagService, $interval) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -434,7 +436,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addTab = function (title, content, viewType, notificationData) {
         var newTab = {title: title, content: content, viewType: viewType, notificationData: notificationData};
         $scope.tabs.push(newTab);
-        $timeout(function(){
+        $timeout(function () {
             $scope.activeTabIndex = ($scope.tabs.length - 1);
         });
 
@@ -552,6 +554,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $rootScope.$on('newTicketTab', function (events, args) {
 
+        var tabTopic = "Ticket - " + args.reference;
         if ($scope.tabs.length > 0) {
             /*var assigneeData = $filter('filter')($scope.tabs, {
              notificationData._id: args._id
@@ -566,15 +569,30 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
 
             if (isOpened.length == 0) {
-                var tabTopic = "Ticket" + args.reference;
+
                 $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
             }
         }
         else {
-            var tabTopic = "Ticket" + args.reference;
+
             $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
         }
         resizeDiv();
+
+    });
+
+    $rootScope.$on('closeTab', function (events, args) {
+
+
+        $scope.tabs.filter(function (item) {
+            if (item.notificationData._id == args) {
+
+                $scope.tabs.splice($scope.tabs.indexOf(item), 1);
+
+            }
+
+        });
+
 
     });
 
@@ -594,24 +612,56 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
+    //###time tracker option
+    var _intervalId;
+    $scope.status.active = false;
+    function init() {
+        $scope.counter = "00:00:00";
+    }
+
+    init();
+
+
+    $scope.stopTime = function () {
+        $interval.cancel(_intervalId);
+        $scope.counter = "00:00:00";
+        $scope.status.active = false;
+    };
+    $scope.pauseTime = function () {
+        $interval.pause(_intervalId);
+    };
+
+    function updateTime() {
+        var seconds = moment().diff(moment($scope.dateStart, 'x'), 'seconds');
+        var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
+        $scope.counter = elapsed;
+    }
+
+    $scope.startTracker = function () {
+        //$scope.status.active = true;
+        $scope.dateStart = moment().format('x');
+        _intervalId = $interval(updateTime, 1000);
+        $scope.status.active = true;
+    };
+    //end time tracker function
 
 
     //----------------------SearchBar-----------------------------------------------------
 
     $scope.searchResult = [];
 
-    $scope.searchExternalUsers = function($query){
-            return userBackendService.searchExternalUsers($query).then(function (response) {
-                if (response.IsSuccess) {
-                    return response.Result;
-                }
-                else {
-                    return [];
-                }
-            });
+    $scope.searchExternalUsers = function ($query) {
+        return userService.searchExternalUsers($query).then(function (response) {
+            if (response.IsSuccess) {
+                return response.Result;
+            }
+            else {
+                return [];
+            }
+        });
     };
 
-    $scope.clearSearchResult = function(){
+    $scope.clearSearchResult = function () {
         $scope.searchResult = [];
     };
 

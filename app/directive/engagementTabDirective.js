@@ -315,6 +315,7 @@ agentApp.directive("engagementTab", function ($filter, engagementService, ivrSer
 
             /* Load Past Engagements By Profile ID */
 
+
             scope.showMore = function () {
                 console.log('show more triggered');
                 scope.loadNextEngagement();

@@ -38,11 +38,57 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
             }
         });
     };
+    var getUserList= function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"Users",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+    var getUserGroupList= function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"UserGroups",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+    var searchExternalUsers= function (searchText) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/Search/"+searchText,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
 
 
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
-        LoadUser:loadUser
+        LoadUser:loadUser,
+        getUserList:getUserList,
+        getUserGroupList:getUserGroupList,
+        searchExternalUsers:searchExternalUsers
+
     }
 });
 
