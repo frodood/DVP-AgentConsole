@@ -2,10 +2,10 @@
  * Created by Pawan on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService) {
+agentApp.directive("ticketTabView", function (moment, ticketService, $rootScope, authService) {
     return {
         restrict: "EA",
-        scope:{
+        scope: {
             ticketDetails: "@",
             direction: "@",
             channelFrom: "@",
@@ -22,10 +22,10 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             scope.schema = {
                 type: "object",
                 properties: {
-                    name: { type: "string", minLength: 2, title: "Name", description: "Name or alias" },
+                    name: {type: "string", minLength: 2, title: "Name", description: "Name or alias"},
                     title: {
                         type: "string",
-                        enum: ['dr','jr','sir','mrs','mr','NaN','dj']
+                        enum: ['dr', 'jr', 'sir', 'mrs', 'mr', 'NaN', 'dj']
                     }
                 }
             };
@@ -46,58 +46,46 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             //ticket dynamic forms//
 
 
+            scope.subTickets = [];
+            scope.relTickets = [];
 
-
-            scope.subTickets=[];
-            scope.relTickets=[];
-
-            scope.ticketID=JSON.parse(scope.ticketDetails).notificationData._id;
-
+            scope.ticketID = JSON.parse(scope.ticketDetails).notificationData._id;
 
 
             scope.loadTicketSummary = function (ticketID) {
 
                 ticketService.getTicket(ticketID).then(function (response) {
 
-                    if(response.data.IsSuccess)
-                    {
-                        scope.ticket=response.data.Result;
-                        if(scope.ticket.created_at)
-                        {
-                            scope.ticket.created_at=moment(scope.ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss");
+                    if (response.data.IsSuccess) {
+                        scope.ticket = response.data.Result;
+                        if (scope.ticket.created_at) {
+                            scope.ticket.created_at = moment(scope.ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss");
                         }
-                        if(scope.ticket.due_at)
-                        {
-                            scope.ticket.due_at=moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
+                        if (scope.ticket.due_at) {
+                            scope.ticket.due_at = moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
                         }
-                        else
-                        {
-                            scope.ticket.due_at="Not specified";
+                        else {
+                            scope.ticket.due_at = "Not specified";
                         }
 
-                        scope.ticket.updated_at=moment(scope.ticket.updated_at).local().format("YYYY-MM-DD HH:mm:ss");
+                        scope.ticket.updated_at = moment(scope.ticket.updated_at).local().format("YYYY-MM-DD HH:mm:ss");
 
-                        scope.relTickets= scope.ticket.related_tickets;
-                        scope.subTickets=scope.ticket.sub_tickets;
+                        scope.relTickets = scope.ticket.related_tickets;
+                        scope.subTickets = scope.ticket.sub_tickets;
 
-                        console.log("ticket ",scope.ticket);
+                        console.log("ticket ", scope.ticket);
                     }
-                    else
-                    {
+                    else {
                         console.log("Error in picking ticket");
                     }
 
-                }), function (error)
-                {
-                    console.log("Error in picking ticket ",error);
+                }), function (error) {
+                    console.log("Error in picking ticket ", error);
                 }
             }
 
 
             scope.loadTicketSummary(scope.ticketID);
-
-
-
 
 
             scope.showCreateTicket = false;
@@ -120,15 +108,14 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 scope.showCreateTicket = !scope.showCreateTicket;
             };
 
-            scope.editTicket=false;
+            scope.editTicket = false;
             scope.editTicketMode = function () {
-                scope.editTicket=!scope.editTicket;
+                scope.editTicket = !scope.editTicket;
             }
 
 
-
             scope.loadTicketView = function (ticket) {
-                $rootScope.$emit('newTicketTab',ticket);
+                $rootScope.$emit('newTicketTab', ticket);
             }
 
 
@@ -169,29 +156,27 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             scope.clickShowTickerEditMode = function () {
                 scope.editTicket = !scope.editTicket;
-                scope.editTicket=JSON.parse(scope.ticketDetails).notificationData;
+                scope.editTicket = JSON.parse(scope.ticketDetails).notificationData;
             };
 
             scope.updateTicketDetails = function () {
-                ticketService.updateTicket(scope.ticket._id,scope.editTicket).then(function (response) {
+                ticketService.updateTicket(scope.ticket._id, scope.editTicket).then(function (response) {
 
-                    if(response.data.IsSuccess)
-                    {
-                        scope.ticket=scope.editTicket;
-                        scope.showAlert("Updated","success","Ticket updated successfully");
-                        scope.editTicket=false;
+                    if (response.data.IsSuccess) {
+                        scope.ticket = scope.editTicket;
+                        scope.showAlert("Updated", "success", "Ticket updated successfully");
+                        scope.editTicket = false;
 
 
                     }
-                    else
-                    {
-                        scope.showAlert("Error","error","Ticket updation failed");
-                        console.log("Error in updating ",response.data.Exception);
+                    else {
+                        scope.showAlert("Error", "error", "Ticket updation failed");
+                        console.log("Error in updating ", response.data.Exception);
                     }
 
                 }), function (error) {
-                    scope.showAlert("Error","success","Ticket updation failed");
-                    console.log("Error in updating ",error);
+                    scope.showAlert("Error", "success", "Ticket updation failed");
+                    console.log("Error in updating ", error);
                 }
             };
 
@@ -204,20 +189,18 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
                 var commentObj =
                 {
-                    body:comment,
-                    body_type:"text",
-                    type:"web",
+                    body: comment,
+                    body_type: "text",
+                    type: "web",
                     public: true,
-                    channel_from:authService.GetResourceIss()
+                    channel_from: authService.GetResourceIss()
 
                 }
                 ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
-                    if(response.data.IsSuccess)
-                    {
+                    if (response.data.IsSuccess) {
 
                     }
-                    else
-                    {
+                    else {
 
                     }
 
@@ -226,6 +209,12 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 });
 
             }
+
+            //edit assignee
+            scope.isEditAssignee = false;
+            scope.editAssignee = function () {
+                scope.isEditAssignee = !scope.isEditAssignee;
+            };
         }
     }
 });
