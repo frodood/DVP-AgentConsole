@@ -47,7 +47,7 @@
                             <div class="ticket-details todo " id="todo-items" ng-repeat="todo in ticketList.toDo">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
-                                        <img src="assets/img/avatar/oykun.jpg"
+                                        <img src="/assets/img/defaultProfile.png" ng-src="assets/img/avatar/oykun.jpg"
                                              ng-src="">
                                     </div>
 
@@ -100,7 +100,7 @@
                             <div class="ticket-details in-progress" ng-repeat="inprogress in ticketList.inProgress">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
-                                        <img src="{{inprogress.assignee.avatar}}">
+                                        <img src="/assets/img/defaultProfile.png" ng-src="{{inprogress.assignee.avatar}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
@@ -150,7 +150,7 @@
                             <div class="ticket-details done" ng-repeat="done in ticketList.done">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
-                                        <img src="assets/img/avatar/oykun.jpg"
+                                        <img  src="/assets/img/defaultProfile.png" ng-src="assets/img/avatar/oykun.jpg"
                                              ng-src="{{done.assignee.avatar}}">
                                     </div>
                                 </div>

@@ -167,7 +167,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketID,
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Details",
             headers: {
                 'authorization':authToken
             }
