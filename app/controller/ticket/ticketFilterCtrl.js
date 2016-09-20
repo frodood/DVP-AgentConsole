@@ -2,7 +2,7 @@
  * Created by Damith on 9/9/2016.
  */
 
-agentApp.controller('ticketFilterCtrl', function ($scope, $http, ticketService) {
+agentApp.controller('ticketFilterCtrl', function ($scope, $http,$rootScope, ticketService) {
 
     /*getJSONData($http, 'filters', function (data) {
         $scope.views = data;
@@ -46,5 +46,11 @@ agentApp.controller('ticketFilterCtrl', function ($scope, $http, ticketService) 
             $scope.showAlert("load Tickets", "error", "Fail To Load Tickets List.")
         });
 
+    };
+
+    // open tab for specific ticket
+    $scope.viewSpecificTicket = function (data) {
+        $rootScope.$emit('newTicketTab',data);
     }
+
 });

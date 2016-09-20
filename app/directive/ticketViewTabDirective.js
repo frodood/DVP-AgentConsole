@@ -19,6 +19,9 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             //ticket dynamic forms//
 
+            scope.newAssignee={};
+            scope.isOverDue=false;
+
             scope.schema = {
                 type: "object",
                 properties: {
@@ -60,7 +63,10 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
                         if (scope.ticket.created_at) {
+
                             scope.ticket.created_at = moment(scope.ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss");
+                            scope.nowDate =moment().local().format("YYYY-MM-DD HH:mm:ss");
+                            alert(moment(scope.ticket.created_at).diff(moment(scope.nowDate)));
                         }
                         if (scope.ticket.due_at) {
                             scope.ticket.due_at = moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
@@ -167,9 +173,13 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                     {
                         scope.ticket=scope.editTicket;
                         scope.showAlert("Updated","success","Ticket updated successfully");
+
+
                         if(scope.ticket.due_at)
                         {
                             scope.ticket.due_at=moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
+
+
                         }
                         else
                         {
@@ -257,34 +267,68 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             };
 
-            scope.isEditAssignee = false;
-            scope.editAssignee = function () {
-                scope.isEditAssignee = !scope.isEditAssignee;
-            };
-
-
-            scope.changeAssignee = function (newAssignee) {
-
-                ticketService.AssignUserToTicket(scope.ticket._id,newAssignee._id).then(function (response) {
-                    if(response.data.IsSuccess)
-                    {
-                        scope.showAlert("Assign","Ticket assignee changed successfully","success");
-                        scope.loadTicketSummary(scope.ticket._id);
-                    }
-                    else
-                    {
-                        scope.showAlert("Assign","Ticket assignee changed failed","error");
-                    }
-                }), function (error) {
-                    scope.showAlert("Assign","Ticket assignee changed failed","error");
-                }
-            }
 
             //edit assignee
             scope.isEditAssignee = false;
             scope.editAssignee = function () {
                 scope.isEditAssignee = !scope.isEditAssignee;
             };
+
+            scope.changeAssignee = function () {
+
+                var assigneeObj={};
+                if(typeof(scope.newAssignee)=='string')
+                {
+                    assigneeObj=JSON.parse(scope.newAssignee);
+                }
+                else
+                {
+                    assigneeObj=scope.newAssignee;
+                }
+
+
+                if(assigneeObj)
+                {
+                    ticketService.AssignUserToTicket(scope.ticket._id,assigneeObj._id).then(function (response) {
+                        if(response.data.IsSuccess)
+                        {
+                            scope.showAlert("Ticket assigning","success","Ticket assignee changed successfully");
+                            if(assigneeObj.avatar)
+                            {
+                                scope.ticket.assignee.avatar=assigneeObj.avatar;
+                            }
+                            else
+                            {
+                                scope.ticket.assignee.avatar="assets/img/avatar/defaultProfile.png"
+                            }
+
+                            scope.ticket.assignee._id=assigneeObj._id;
+                            scope.ticket.assignee.name=assigneeObj.name;
+                            scope.isEditAssignee = false;
+                        }
+                        else
+                        {
+                            scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
+                        }
+                    }), function (error) {
+                        scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
+                    }
+                }
+                else
+                {
+                    scope.showAlert("Ticket assigning","error","Invalid assignee details provided");
+                }
+
+
+
+            };
+
+            scope.assignToMe = function () {
+                scope.newAssignee=myProfileDataParser.myProfile;
+                scope.changeAssignee();
+            }
+
+
         }
     }
 });
