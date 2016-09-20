@@ -222,6 +222,25 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getTicketCountByView = function (id) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketView/"+id+"/TicketCount",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return "*";
+            }
+        });
+    };
+
     var getTicketViews = function () {
         var authToken = authService.GetToken();
 
@@ -394,6 +413,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         updateTicket:updateTicket,
         CreateTicketView:createTicketView,
         GetTicketView:getTicketView,
+        GetTicketCountByView:getTicketCountByView,
         GetTicketViews:getTicketViews,
         GetTicketsByView:getTicketsByView,
         AddNewCommentToTicket:AddNewCommentToTicket,
