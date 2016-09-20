@@ -1,3 +1,105 @@
+<!-- left main wrappper -->
+<div class="col-sm-12 col-lg-4 col-md-4 p-left-0 p-right-0">
+    <div class="profile-left-wrapper">
+        <div class="layout-header">
+            <div class="col-md-8 col-sm-8">
+                <div class="left-text header-small pull-left">
+                    ID :{{sessionId}}
+                    <i class="veery-font-3-copy copy"></i>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 ">
+                <div class="btn-left-icon pull-right p-top-6"
+                     ng-click="clickAddNewTicket();">
+                    <i class="veery-font-1-add-2"></i>
+                    new ticket
+                </div>
+            </div>
+        </div>
+        <!-- END -->
+
+        <!-- ENGAGEMENT WRAPPER -->
+        <div>
+            <div class="engagement-wrapper">
+                <div class="header-round-icon">
+                    <div class="icon-left">
+                        <i class="veery-font-1-user"></i>
+                    </div>
+                    <div class="text-header bold">
+                        ENGAGEMENT
+                    </div>
+                </div>
+                <ul class="info-list-lg">
+                    <li>
+                        <small>Company</small>
+                        <h5>{{company}}</h5>
+                    </li>
+                    <li>
+                        <small>Direction</small>
+                        <h5>{{direction}}</h5>
+                    </li>
+                    <li>
+                        <small>Channel From</small>
+                        <h5>{{channelFrom}}</h5>
+                    </li>
+                    <li>
+                        <small>Channel To</small>
+                        <h5>{{channelTo}}</h5>
+                    </li>
+                    <li>
+                        <small>Channel</small>
+                        <h5>{{channel}}</h5>
+                    </li>
+                    <li>
+                        <small>Skill</small>
+                        <h5>{{skill}}</h5>
+                    </li>
+                </ul>
+
+
+                <div class="note-ivr-wrapper">
+                    <uib-tabset active="activePill" type="pills">
+                        <uib-tab index="0" heading="NOTE">
+                            <div class="new-note-wrapper">
+                                <textarea class="form-control" rows="3" ng-model="noteBody"></textarea>
+                                <div class="btn-warp inline-btn  p-top-6 pull-right">
+                              <span class="btn  btn-default btn-sm "
+                                    ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
+                                </div>
+                            </div>
+                            <div class="engagement-note-list">
+                                <div class="note-wrap" ng-repeat="engNote in currentEngagement.notes">
+                                    <div class="left-icon">
+                                        <i class="veery-font-1-list"></i>
+                                    </div>
+                                    {{engNote.body}}
+                                </div>
+
+                            </div>
+                        </uib-tab>
+
+                        <uib-tab index="1" heading="IVR">
+                            <div class="IVR-wrapper">
+                                <div class="IVR-details-wrap">
+                                    <div class="ivr-list" ng-repeat="ivr in ivrDetails">
+                                        {{ivr.EventName}};{{ivr.EventClass}};{{ivr.EventType}};{{ivr.EventCategory}};{{ivr.EventTime}}
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- END -->
+    </div>
+    <!-- END LEFT WRAPPER-->
+</div>
+
+
 <div class="col-sm-12 col-md-8 col-lg-8 p-0">
     <div class="col-lg-12 col-md-12 col-sm-12 p-0">
         <!-- PROFILE HEADER -->
@@ -188,7 +290,7 @@
                                     <div class="icon-left">
                                         <i class="fa fa-facebook"></i>
                                     </div>
-                                    <div class="prn2-contact text-header ">
+                                    <div class="prn2-contact text-header">
                                         facebook
                                         <br/>
                                         <small>@Jesse</small>
@@ -220,6 +322,16 @@
                                     </div>
                                     <div class="prn2-contact text-header ">
                                         email
+                                        <br/>
+                                        <small>@Jesse</small>
+                                    </div>
+                                </div>
+                                <div class="prn2 header-round-icon">
+                                    <div class="icon-left">
+                                        <i class="fa fa-skype"></i>
+                                    </div>
+                                    <div class="prn2-contact text-header ">
+                                        skype
                                         <br/>
                                         <small>@Jesse</small>
                                     </div>
@@ -273,7 +385,7 @@
                 <div class="col-md-7 ">
                     <div class="prn2-recent-information ">
                         <div class="row">
-                            <div class="col-lg-12" style="padding-left: 0px;">
+                            <div class="col-lg-12" >
                                 <div class="header-round-icon">
                                     <div class="icon-left">
                                         <i class="veery-font-1-user"></i>
@@ -313,9 +425,30 @@
                             </ul>
                         </div>
                     </div>
+
+                    <!-- PROFILE OTHER -->
+                    <div class="col-lg-12 col-md-12">
+                        <div class="prn2-other-wrapper">
+                            <div class="row">
+                                <div class="col-lg-12">
+
+                                    <div class="header-round-icon">
+                                        <div class="icon-left">
+                                            <i class="veery-font-1-user"></i>
+                                        </div>
+                                        <div class="text-header bold">
+                                            OTHER
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <div class="animated display-none" id="viewTimeLine">
