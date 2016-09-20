@@ -270,6 +270,78 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var createTimer = function (ticketId) {
+        var reqData = {ticket: ticketId};
+        return $http({
+            method: 'Post',
+            url: baseUrls.ticketUrl+"Timer",
+            headers: {
+                'authorization': authService.GetToken()
+            },
+            data:reqData
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
+    var startTimer = function () {
+        var reqBody = {note: ""};
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"MyTimer/start",
+            headers: {
+                'authorization': authService.GetToken()
+            },
+            data: reqBody
+        }).then(function (response) {
+            if(response) {
+                return response.data.IsSuccess;
+            }else{
+                return undefined;
+            }
+        });
+    };
+
+    var pauseTimer = function () {
+        var reqBody = {note: ""};
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"MyTimer/pause",
+            headers: {
+                'authorization': authService.GetToken()
+            },
+            data:reqBody
+        }).then(function (response) {
+            if(response) {
+                return response.data.IsSuccess;
+            }else{
+                return undefined;
+            }
+        });
+    };
+
+    var stopTimer = function () {
+        var reqBody = {note: ""};
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"MyTimer/stop",
+            headers: {
+                'authorization': authService.GetToken()
+            },
+            data:reqBody
+        }).then(function (response) {
+            if(response) {
+                return response.data.IsSuccess;
+            }else{
+                return undefined;
+            }
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -289,7 +361,11 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetTicketView:getTicketView,
         GetTicketViews:getTicketViews,
         GetTicketsByView:getTicketsByView,
-        AddNewCommentToTicket:AddNewCommentToTicket
+        AddNewCommentToTicket:AddNewCommentToTicket,
+        createTimer: createTimer,
+        startTimer: startTimer,
+        pauseTimer: pauseTimer,
+        stopTimer: stopTimer
     }
 });
 

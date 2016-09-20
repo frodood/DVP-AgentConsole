@@ -1,6 +1,6 @@
 <uib-tabset active="activeTabIndex">
     <uib-tab class="console-main-tab" ng-repeat="tab in tabs" heading="{{tab.title}}"
-             disable="tab.disabled">
+             disable="tab.disabled" select="tabSelected(tab)">
         <div ng-switch on="tab.viewType">
             <div ng-switch-when="engagement">
                 <engagement-tab load-tags="reloadTagAndCategories()" tag-category-list="tagCategories" tag-list="tags" users="users" session-id="{{tab.notificationData.sessionId}}" skill="{{tab.notificationData.skill}}" company="{{tab.notificationData.company}}" channel="{{tab.notificationData.channel}}" channel-from="{{tab.notificationData.channelFrom}}" channel-to="{{tab.notificationData.channelTo}}" direction="{{tab.notificationData.direction}}"></engagement-tab>
