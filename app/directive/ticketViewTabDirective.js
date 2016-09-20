@@ -17,33 +17,335 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
         templateUrl: 'app/views/ticket/ticket-view.html',
         link: function (scope, element, attributes) {
 
-            //ticket dynamic forms//
+            scope.oldFormModel = null;
 
-            scope.schema = {
-                type: "object",
-                properties: {
-                    name: {type: "string", minLength: 2, title: "Name", description: "Name or alias"},
-                    title: {
-                        type: "string",
-                        enum: ['dr', 'jr', 'sir', 'mrs', 'mr', 'NaN', 'dj']
-                    }
-                }
-            };
-
-            scope.form = [
-                "*",
+            var buildFormSchema = function(schema, form, fields)
+            {
+                fields.forEach(function (fieldItem)
                 {
-                    type: "submit",
-                    title: "Save"
-                }
-            ];
+                    if(fieldItem.field)
+                    {
+                        var isActive = true;
+                        if(fieldItem.active === false)
+                        {
+                            isActive = false;
+                        }
 
-            scope.model = {
-                name: 'ffdfdfd',
-                title: 'sir'
+                        //field type parser
+
+                        if(fieldItem.type === 'text')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "text"
+                            })
+                        }
+                        else if(fieldItem.type === 'radio')
+                        {
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            var formObj = {
+                                "key": fieldItem.field,
+                                "type": "radios-inline",
+                                "titleMap": []
+                            };
+
+
+                            if(fieldItem.values && fieldItem.values.length > 0)
+                            {
+
+                                schema.properties[fieldItem.field].enum = [];
+
+                                fieldItem.values.forEach(function(enumVal)
+                                {
+                                    schema.properties[fieldItem.field].enum.push(enumVal.name);
+                                    formObj.titleMap.push(
+                                        {
+                                            "value": enumVal.name,
+                                            "name": enumVal.name
+                                        }
+                                    )
+                                })
+
+                            }
+
+                            form.push(formObj);
+                        }
+                        else if(fieldItem.type === 'date')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive,
+                                format: 'date'
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field
+                            })
+                        }
+                        else if(fieldItem.type === 'number')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'number',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "number"
+                            })
+                        }
+                        else if(fieldItem.type === 'email')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                pattern: "^\\S+@\\S+$",
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "text"
+                            })
+                        }
+                        else if(fieldItem.type === 'select')
+                        {
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            var formObj = {
+                                "key": fieldItem.field,
+                                "type": "select",
+                                "titleMap": []
+                            };
+
+                            if(fieldItem.values && fieldItem.values.length > 0)
+                            {
+
+                                schema.properties[fieldItem.field].enum = [];
+
+                                fieldItem.values.forEach(function(enumVal)
+                                {
+                                    schema.properties[fieldItem.field].enum.push(enumVal.name);
+                                    formObj.titleMap.push(
+                                        {
+                                            "value": enumVal.name,
+                                            "name": enumVal.name
+                                        });
+                                })
+
+                            }
+                            form.push(formObj);
+                        }
+
+                        //end field type parser
+
+                    }
+
+
+                });
+
+                return schema;
             };
 
-            //ticket dynamic forms//
+             scope.onSubmit = function(form)
+             {
+                scope.$broadcast('schemaFormValidate');
+                if (form.$valid)
+                {
+                    var arr = [];
+
+                    for (var key in scope.model)
+                    {
+                        if (scope.model.hasOwnProperty(key))
+                        {
+                            arr.push({
+                                field: key,
+                                value: scope.model[key]
+                            });
+
+                        }
+                    }
+
+                    //save arr
+
+
+                }
+             };
+
+
+            var convertToSchemaForm = function(formSubmission, callback)
+            {
+
+                //get forms profile
+
+
+                if (formSubmission && formSubmission.form && formSubmission.form.fields && formSubmission.form.fields.length > 0)
+                {
+                    var schema = {
+                        type: "object",
+                        properties: {}
+                    };
+
+                    var form = [];
+
+                    var model = {};
+                    scope.buildModel = true;
+
+                    ticketService.getFormsForCompany().then(function (response)
+                    {
+                        if(response && response.Result && response.Result.ticket_form)
+                        {
+                            //compare two forms
+                            if(response.Result.ticket_form._id !== formSubmission.form._id)
+                            {
+                                buildFormSchema(schema, form, response.Result.ticket_form.fields);
+
+                                scope.buildModel = false;
+
+                            }
+                            else
+                            {
+                                buildFormSchema(schema, form, formSubmission.form.fields);
+                            }
+                        }
+                        else
+                        {
+                            buildFormSchema(schema, form, formSubmission.form.fields);
+                        }
+
+                        form.push({
+                            type: "submit",
+                            title: "Save"
+                        });
+
+                        if(formSubmission.fields && formSubmission.fields.length > 0)
+                        {
+                            formSubmission.fields.forEach(function (fieldValueItem)
+                            {
+                                if(fieldValueItem.field)
+                                {
+                                    model[fieldValueItem.field] = fieldValueItem.value;
+                                }
+
+                            });
+                        }
+
+                        var schemaResponse = {};
+
+                        if(!scope.buildModel)
+                        {
+                            scope.oldFormModel = model;
+                            schemaResponse = {
+                                schema: schema,
+                                form: form,
+                                model: {}
+                            }
+                        }
+                        else
+                        {
+                            schemaResponse = {
+                                schema: schema,
+                                form: form,
+                                model: model
+                            }
+
+                        }
+
+                        callback(schemaResponse);
+
+                    }).catch(function(err)
+                    {
+                        buildFormSchema(schema, form, formSubmission.form.fields);
+
+                        form.push({
+                            type: "submit",
+                            title: "Save"
+                        });
+
+                        if(formSubmission.fields && formSubmission.fields.length > 0)
+                        {
+                            formSubmission.fields.forEach(function (fieldValueItem)
+                            {
+                                if(fieldValueItem.field)
+                                {
+                                    model[fieldValueItem.field] = fieldValueItem.value;
+                                }
+
+                            });
+                        }
+
+                        var schemaResponse = {};
+
+                        if(!scope.buildModel)
+                        {
+                            scope.oldFormModel = model;
+                            schemaResponse = {
+                                schema: schema,
+                                form: form,
+                                model: {}
+                            }
+                        }
+                        else
+                        {
+                            schemaResponse = {
+                                schema: schema,
+                                form: form,
+                                model: model
+                            }
+
+                        }
+
+                        callback(schemaResponse);
+
+                    });
+
+
+
+
+                }
+                else
+                {
+                    callback(null);
+                }
+
+            };
 
 
             scope.subTickets = [];
@@ -59,6 +361,23 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
+
+                        if(response.data.Result && response.data.Result.form_submission)
+                        {
+                            convertToSchemaForm(response.data.Result.form_submission, function(schemaDetails)
+                            {
+                                if(schemaDetails)
+                                {
+                                    scope.schema = schemaDetails.schema;
+                                    scope.form = schemaDetails.form;
+                                    scope.model = schemaDetails.model;
+                                }
+
+                            });
+
+
+                        }
+
                         if (scope.ticket.created_at) {
                             scope.ticket.created_at = moment(scope.ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss");
                         }

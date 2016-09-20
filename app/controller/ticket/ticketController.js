@@ -955,7 +955,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     $('#scrltodo').scroll(function () {
         var raw=$('#scrltodo')[0];
-        if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight)
+        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight)*0.9)
         {
             $scope.showMoreNewTickets();
         }
@@ -963,12 +963,20 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     });
     $('#scrlopen').scroll(function () {
         var raw=$('#scrlopen')[0];
-        $scope.showMoreOpenTickets();
+        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight)*0.9)
+        {
+            $scope.showMoreOpenTickets();
+        }
+
 
     });
     $('#scroldone').scroll(function () {
         var raw=$('#scroldone')[0];
-        $scope.showMoreCompletedTickets();
+        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight)*0.9)
+        {
+            $scope.showMoreCompletedTickets();
+        }
+
 
     });
 
