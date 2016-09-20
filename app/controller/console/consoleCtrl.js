@@ -509,7 +509,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
 
     };
-    addMailInbox();
+
+    var addTestProfileView = function () {
+        $scope.addTab('userProfile', 'userProfile', 'userProfile', {
+            company: "123",
+            direction: "333",
+            channelFrom: "33",
+            channelTo: "33",
+            channel: "555"
+        });
+    };
+    addTestProfileView();
 
 
     $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
