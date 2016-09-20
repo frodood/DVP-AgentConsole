@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 9/5/2016.
+ * Created by verry team on 9/5/2016.
  */
 
 agentApp.directive('scrolly', function () {
@@ -442,7 +442,23 @@ agentApp.directive("engagementTab", function ($filter, engagementService, ivrSer
                 });
             };
 
+            var tabList = ['#viewProfile', '#viewTimeLine', '#viewTicketView'];
+            var btnList = ['#timeLine', '#ticket', '#profile'];
 
+            var profileDisable = function () {
+                tabList.forEach(function (tab) {
+                    $(tab).removeClass('display-block ').addClass('display-none');
+                });
+                btnList.forEach(function (tab) {
+                    $(tab).removeClass('active');
+                });
+            };
+
+            scope.showProfileView = function (viewName,currentBtn) {
+                profileDisable();
+                $(viewName).removeClass('display-none').addClass('display-block ');
+                $(currentBtn).addClass('active');
+            };
         }
     }
 });

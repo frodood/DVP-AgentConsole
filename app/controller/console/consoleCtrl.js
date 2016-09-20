@@ -121,7 +121,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.profile.server.outboundProxy = "";
     $scope.profile.server.enableRtcwebBreaker = false;
     $scope.profile.server.password = null;
-    $scope.profile.server.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3YXJ1bmFAZHVvc29mdHdhcmUuY29tIiwianRpIjoiMTk2N2E5MjItNmIyOS00NDgxLWI2MWUtOTMwZjVmMDA3ZDM3Iiwic3ViIjoiZTBlNTNhOWUtZjNkZi00MTZjLWFmZWItYzI2ZDVhZWIwYWY2IiwiZXhwIjoxNDY1MzEyMTQ2LCJ0ZW5hbnQiOiIxIiwiY29tcGFueSI6IjMiLCJjbGllbnQiOiIxIiwic2NvcGUiOlt7InJlc291cmNlIjoiYXJkc3Jlc291cmNlIiwiYWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0seyJyZXNvdXJjZSI6InJlYWQifSx7InJlc291cmNlIjoid3JpdGUifSx7InJlc291cmNlIjoiZGVsZXRlIn0seyJyZXNvdXJjZSI6InJlc291cmNlIiwiYWN0aW9ucyI6WyJhcmRzcmVzb3VyY2UiLCJyZWFkIiwid3JpdGUiLCJkZWxldGUiLCJyZXNvdXJjZSJdfV0sImlhdCI6MTQ2NDcwNzM0Nn0.brIo8b6per6a1Djm4armChkS4L2O6T40HSrlj-scwcg";
+    $scope.profile.server.token = authService.TokenWithoutBearer();
+
+    $scope.call = {};
+    $scope.call.number = {};
 
     $scope.veeryPhone = {
         sipSendDTMF: function (dtmf) {
@@ -415,13 +418,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /*---------------main tab panel----------------------- */
 
-    $scope.tabs = [
-        {title: 'A526420-Ticket view', content: 'Engagement1', viewType: 'ticketView'},
-        {title: 'A526455-Ticket view', content: 'A526455-Ticket view', viewType: 'engagement'},
-        //{title: 'Engagement2', content: 'Engagement2', viewType: 'engagement'},
-        // {title: 'Ticket Filter', content: 'Ticket Filter', viewType: 'filter'},
-        //{title: 'Mail Inbox', content: 'Mail Inbox', viewType: 'mail-inbox'}
-    ];
 
     $scope.activeTabIndex = 0;
     $scope.tabs = [];
