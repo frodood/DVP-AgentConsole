@@ -5,7 +5,7 @@
     'use strict';
     agentApp.factory('loginService', Service);
 
-    function Service($http, localStorageService, jwtHelper) {
+    function Service($http, localStorageService, jwtHelper,baseUrls) {
         var service = {};
         service.mynavigations = mynavigations;
         service.Login = Login;
@@ -64,7 +64,7 @@
         //logoff
         function Logoff(callback) {
             var decodeToken = getTokenDecode();
-            $http.delete("http://userservice.app.veery.cloud/oauth/token/revoke/" + decodeToken.jti, {
+            $http.delete(baseUrls.oauthLogOutUrl + decodeToken.jti, {
                 headers: {
                     Authorization: 'Bearer ' + getToken()
                 }
@@ -83,7 +83,7 @@
         //http://userservice.app.veery.cloud
         //http://192.168.5.103:3636
         function Login(parm, callback) {
-            $http.post("http://userservice.app.veery.cloud/oauth/token", {
+            $http.post(baseUrls.oauthLoginUrl, {
                 grant_type: "password",
                 username: parm.userName,
                 password: parm.password,

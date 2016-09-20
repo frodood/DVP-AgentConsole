@@ -4,8 +4,7 @@
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
                                              jwtHelper, resourceService, baseUrls, dataParser,
-                                             veeryNotification, authService, userService, tagService,
-                                             $interval, myProfileDataParser, loginService, $state) {
+                                             veeryNotification, authService, userService, tagService, ticketService, $interval, myProfileDataParser, loginService, $state) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -431,12 +430,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.addTab = function (title, content, viewType, notificationData) {
-        var newTab = {title: title, content: content, viewType: viewType, notificationData: notificationData};
+        var newTab = {disabled:  false, active: true, title: title, content: content, viewType: viewType, notificationData: notificationData};
         $scope.tabs.push(newTab);
         $timeout(function () {
             $scope.activeTabIndex = ($scope.tabs.length - 1);
         });
 
+    };
+
+
+    $scope.tabSelected = function(selectedTab) {
+        $scope.activeTab = selectedTab;
     };
 
 
@@ -620,36 +624,122 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     //###time tracker option
-    var _intervalId;
-    $scope.status.active = false;
-    function init() {
-        $scope.counter = "00:00:00";
-    }
+    //var _intervalId;
+    //$scope.status.active = false;
+    //function init() {
+    //    $scope.counter = "00:00:00";
+    //}
+    //
+    //init();
 
-    init();
-
+    $scope.activeTicketTab = {};
+    $scope.ttimer = {};
+    $scope.ttimer.active = false;
+    $scope.ttimer.pause = false;
+    $scope.ttimer.startTime = {};
+    $scope.ttimer.ticketRef = "Start";
 
     $scope.stopTime = function () {
-        $interval.cancel(_intervalId);
-        $scope.counter = "00:00:00";
-        $scope.status.active = false;
-    };
-    $scope.pauseTime = function () {
-        $interval.pause(_intervalId);
+        ticketService.stopTimer().then(function (response) {
+            if (response) {
+
+                document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
+                $scope.status.active = false;
+                $scope.ttimer.active = false;
+                $scope.ttimer.ticketRef = "Start";
+
+            }
+            else {
+                $scope.showError("Error", "Error", "ok", "Timer failed to stop timer ");
+            }
+        }, function (error) {
+            console.log(error);
+            $scope.showError("Error", "Error", "ok", "Timer failed to stop timer ");
+        });
     };
 
-    function updateTime() {
-        var seconds = moment().diff(moment($scope.dateStart, 'x'), 'seconds');
-        var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
-        $scope.counter = elapsed;
-    }
+    $scope.pauseTime = function () {
+        ticketService.pauseTimer().then(function (response) {
+            if (response) {
+
+                $scope.ttimer.pause = true;
+                document.getElementById('clock-timer').getElementsByTagName('timer')[0].clear();
+
+            }
+            else {
+                $scope.showError("Error", "Error", "ok", "Timer failed to pause timer ");
+            }
+        }, function (error) {
+            console.log(error);
+            $scope.showError("Error", "Error", "ok", "Timer failed to pause timer ");
+        });
+        //$interval.pauseTime(_intervalId);
+    };
+
+    //function updateTime() {
+    //    var seconds = moment().diff(moment($scope.dateStart, 'x'), 'seconds');
+    //    var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
+    //    $scope.counter = elapsed;
+    //}
 
     $scope.startTracker = function () {
-        //$scope.status.active = true;
-        $scope.dateStart = moment().format('x');
-        _intervalId = $interval(updateTime, 1000);
-        $scope.status.active = true;
+        if($scope.ttimer.pause){
+            ticketService.startTimer().then(function (response) {
+                if (response) {
+
+                    document.getElementById('clock-timer').getElementsByTagName('timer')[0].resume();
+                    $scope.ttimer.pause = false;
+                    $scope.status.active = true;
+
+                }
+                else {
+                    $scope.showError("Error", "Error", "ok", "Timer failed to resume timer ");
+                }
+            }, function (error) {
+                console.log(error);
+                $scope.showError("Error", "Error", "ok", "Timer failed to resume timer ");
+            });
+        }else {
+
+            if($scope.activeTab && $scope.activeTab.viewType === "ticketView") {
+                ticketService.createTimer($scope.activeTab.notificationData._id).then(function (response) {
+                    if (response) {
+                        var timeNow = moment.utc();
+                        if(response.last_event === "pause" || response.last_event === "start"){
+                            var lastTimeStamp = moment.utc(response.last_event_date);
+                            var timeDiff = timeNow.diff(lastTimeStamp, 'seconds');
+
+                            if(timeDiff >0) {
+                                var startTime = timeNow.subtract(timeDiff, 'seconds');
+                                $scope.ttimer.startTime = parseInt(startTime.format('x'));
+                            }else{
+                                $scope.ttimer.startTime = parseInt(timeNow.format('x'));
+                            }
+                        }else{
+                            $scope.ttimer.startTime = parseInt(timeNow.format('x'));
+
+                        }
+
+                        $scope.status.active = true;
+                        $scope.ttimer.active = true;
+
+                        $scope.ttimer.ticketId = $scope.activeTab.notificationData._id;
+                        $scope.ttimer.ticketRef = $scope.activeTab.content;
+
+                        document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
+                    }
+                    else {
+                        $scope.showError("Error", "Error", "ok", "Timer failed to start ");
+                    }
+                }, function (error) {
+                    console.log(error);
+                    $scope.showError("Error", "Error", "ok", "Timer failed to start ");
+                });
+            }
+        }
+
     };
+
     //end time tracker function
 
 
