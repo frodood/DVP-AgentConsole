@@ -2026,7 +2026,9 @@ div > div >
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(23, 55, 60, 1);
+    background-color: rgba(23, 55, 60, 1);
+    background: url(../img/bg/login_bg.jpg);
+    background-position: top -585px right;
     z-index: 0;
 }
 

@@ -18,7 +18,9 @@ var baseUrls = {
     'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',
     'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/',
     'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
-    'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/'
+    'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
+    'oauthLogOutUrl': 'http://userservice.app.veery.cloud/oauth/token/revoke/',
+    'oauthLoginUrl': 'http://userservice.app.veery.cloud/oauth/token',
 };
 
 agentApp.constant('baseUrls', baseUrls);
