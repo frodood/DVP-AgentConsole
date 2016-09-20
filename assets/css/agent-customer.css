@@ -988,6 +988,7 @@ ul.info-list-lg > li > h5 {
 .new-note-wrapper {
     width: 100%;
     padding-bottom: 45px;
+    padding-top: 20px;
 }
 
 .engagement-note-list {
@@ -2025,8 +2026,22 @@ div > div >
     height: 100%;
     top: 0;
     left: 0;
-    background: #17373c;
+    background-color: rgba(23, 55, 60, 1);
+    background: url(../img/bg/login_bg.jpg);
+    background-position: top -585px right;
+    z-index: 0;
 }
+
+/*.login-wrapper::after {*/
+/*content: "";*/
+/*background: url(../img/bg/january.jpg);*/
+/*top: 0;*/
+/*left: 0;*/
+/*bottom: 0;*/
+/*right: 0;*/
+/*position: absolute;*/
+/*z-index: -1;*/
+/*}*/
 
 .login-wrap {
     margin: 0 auto;
@@ -2093,6 +2108,15 @@ div > div >
     margin-top: 25px;
     font-size: 16px;
     cursor: pointer;
+}
+
+.loading-btn {
+    text-align: center;
+    color: #d2c242;
+    margin-left: -225px;
+    margin-top: 25px;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .login-btn:hover,
@@ -2207,3 +2231,189 @@ tags-input .tags .input {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     color: #14d0a0;
 }
+
+/*new profile update prefix pfn2- */
+.prn2-main-wrapper {
+    height: auto;
+}
+
+.prn2-header-wrapper {
+    min-height: 56px;
+    height: auto;
+    overflow: hidden;
+    border-bottom: 1px solid #d2c242;
+    padding: 9px 10px 10px 10px;
+
+}
+
+.prn2-header-wrapper > div > .left-text {
+    color: #14d0a0;
+    font-size: 19px;
+    padding-top: 5px;
+}
+
+.prn2-header-wrapper > div > .btn-wrapper {
+    color: #14d0a0;
+    text-align: right;
+    right: 0;
+}
+
+.tab-btn {
+    background: #1a3d42;
+    color: #8298ae;
+    text-transform: capitalize;
+}
+
+.tab-btn > i {
+    font-size: 16px;
+}
+
+.tab-btn:hover {
+    color: #4f9300;
+}
+
+.tab-btn.active {
+    color: #4f9300;
+    -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, .0);
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, .0);
+}
+
+.prn2-image-wrapper {
+    width: 100%;
+    min-height: 230px;
+    height: auto;
+    padding: 0px;
+    overflow: hidden;
+    display: block;
+    border-radius: 0px 0px 0px 9px;
+}
+
+.prn2-image-wrapper > div > .profile-details-img {
+    margin: 0px;
+    padding-bottom: 15px;
+}
+
+.prn2-image-wrapper > div > .profile-details-img > img {
+    border-radius: 0px 0px 15px 0px;
+}
+
+.text-uppercase.header-text-h5 {
+    font-size: 13px;
+}
+
+.prn2.profile-status {
+    font-size: 15px;
+    padding-left: 8px;
+}
+
+.prn2-engagement-summary {
+    width: 100%;
+    min-height: 230px;
+    height: auto;
+    overflow: hidden;
+    display: block;
+    padding: 14px 10px 10px 25px;
+}
+
+.prn2.time-wrapper {
+    padding-top: 15px;
+    padding-right: 20px;
+}
+
+.prn2 > .progress {
+    height: 10px;
+    background-color: #17373c;
+}
+
+.prn2-body-wrapper {
+
+}
+
+.prn2-recent-activity {
+    width: 100%;
+    min-height: 60px;
+    height: auto;
+    padding: 5px 0px 16px 15px;
+    background: #f7f5f5;
+    margin-bottom: 20px;
+}
+
+.recent-activity-wrap {
+    min-height: 50px;
+    border-right: 2px solid #45bf55;
+}
+
+.border-0 {
+    border: 0px;
+}
+
+.prn2-contact {
+    padding-top: 5px;
+}
+
+.prn2-layout-header2 {
+    padding: 8px 10px 31px 10px;
+}
+
+.prn2-contact-body {
+    padding: 20px 10px 10px 18px;
+}
+
+.prn2.header-round-icon > .icon-left {
+    width: 40px;
+    height: 40px;
+    background: #f7f5f5;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+}
+
+.prn2-contact.text-header {
+}
+
+.prn2 > .icon-left > i {
+    color: #36ba45;
+}
+
+.prn2 > .icon-left {
+    color: #36ba45;
+    padding-top: 8px;
+}
+
+.prn2.header-round-icon {
+    padding-bottom: 10px;
+}
+
+.prn2-recent-information {
+    padding-left: 25px;
+    min-height: 195px;
+}
+
+.prn2-time-line-wrap {
+    margin-top: 65px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+/*multiple profile*/
+.prn2-multiple-wrapper {
+    margin-top: 25px;
+
+}
+
+.profile-multiple-wrap {
+    min-height: 250px;
+    border-radius: 10px;
+    height: auto;
+    overflow: hidden;
+    background: #ffffff;
+    -webkit-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53)
+}
+
+.prn2-other-wrapper {
+    margin-top: 20px;
+}
+
+

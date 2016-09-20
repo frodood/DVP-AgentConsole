@@ -1,0 +1,474 @@
+<!-- left main wrappper -->
+<div class="col-sm-12 col-lg-4 col-md-4 p-left-0 p-right-0">
+    <div class="profile-left-wrapper">
+        <div class="layout-header">
+            <div class="col-md-8 col-sm-8">
+                <div class="left-text header-small pull-left">
+                    ID :{{sessionId}}
+                    <i class="veery-font-3-copy copy"></i>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 ">
+                <div class="btn-left-icon pull-right p-top-6"
+                     ng-click="clickAddNewTicket();">
+                    <i class="veery-font-1-add-2"></i>
+                    new ticket
+                </div>
+            </div>
+        </div>
+        <!-- END -->
+
+        <!-- ENGAGEMENT WRAPPER -->
+        <div>
+            <div class="engagement-wrapper">
+                <div class="header-round-icon">
+                    <div class="icon-left">
+                        <i class="veery-font-1-user"></i>
+                    </div>
+                    <div class="text-header bold">
+                        ENGAGEMENT
+                    </div>
+                </div>
+                <ul class="info-list-lg">
+                    <li>
+                        <small>Company</small>
+                        <h5>{{company}}</h5>
+                    </li>
+                    <li>
+                        <small>Direction</small>
+                        <h5>{{direction}}</h5>
+                    </li>
+                    <li>
+                        <small>Channel From</small>
+                        <h5>{{channelFrom}}</h5>
+                    </li>
+                    <li>
+                        <small>Channel To</small>
+                        <h5>{{channelTo}}</h5>
+                    </li>
+                    <li>
+                        <small>Channel</small>
+                        <h5>{{channel}}</h5>
+                    </li>
+                    <li>
+                        <small>Skill</small>
+                        <h5>{{skill}}</h5>
+                    </li>
+                </ul>
+
+
+                <div class="note-ivr-wrapper">
+                    <uib-tabset active="activePill" type="pills">
+                        <uib-tab index="0" heading="NOTE">
+                            <div class="new-note-wrapper">
+                                <textarea class="form-control" rows="3" ng-model="noteBody"></textarea>
+                                <div class="btn-warp inline-btn  p-top-6 pull-right">
+                              <span class="btn  btn-default btn-sm "
+                                    ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
+                                </div>
+                            </div>
+                            <div class="engagement-note-list">
+                                <div class="note-wrap" ng-repeat="engNote in currentEngagement.notes">
+                                    <div class="left-icon">
+                                        <i class="veery-font-1-list"></i>
+                                    </div>
+                                    {{engNote.body}}
+                                </div>
+
+                            </div>
+                        </uib-tab>
+
+                        <uib-tab index="1" heading="IVR">
+                            <div class="IVR-wrapper">
+                                <div class="IVR-details-wrap">
+                                    <div class="ivr-list" ng-repeat="ivr in ivrDetails">
+                                        {{ivr.EventName}};{{ivr.EventClass}};{{ivr.EventType}};{{ivr.EventCategory}};{{ivr.EventTime}}
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- END -->
+    </div>
+    <!-- END LEFT WRAPPER-->
+</div>
+
+
+<div class="col-sm-12 col-md-8 col-lg-8 p-0">
+    <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+        <!-- PROFILE HEADER -->
+        <div class="prn2-header-wrapper bg-color-Teal900">
+            <div class="col-md-4 col-sm-12">
+                <div class=" left-text">
+                    Profile Detail
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <div class="model-btn-wrapper p-0 text-center">
+                    <div class="btn-warp">
+                        <span id="timeLine"
+                              ng-click="showProfileView('#viewTimeLine','#timeLine')"
+                              class="btn tab-btn">
+                            <i class="veery-font-3-clock-2"></i>
+                            time line
+                        </span>
+                    </div>
+                    <div class="btn-warp">
+                        <span id="ticket"
+                              ng-click="showProfileView('#viewTicketView','#ticket')"
+                              class="btn tab-btn">
+                             <i class="veery-font-1-flag"></i>
+                            ticket</span>
+                    </div>
+                    <div class="btn-warp ">
+                        <span id="profile"
+                              ng-click="showProfileView('#viewProfile','#profile')"
+                              class="btn tab-btn active">
+                              <i class="veery-font-1-user"></i>
+                            profile</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-12 ">
+                <div class="btn-wrapper">
+                    <div class="btn-warp inline-btn">
+                        <span class="btn  btn-default">new</span>
+                    </div>
+                    <div class="btn-warp inline-btn">
+                        <span class="btn  btn-default">search</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="animated " id="viewProfile">
+        <!-- PROFILE HEADER2 -->
+        <div class=" col-sm-12 col-lg-12 col-md-12 p-0">
+            <!-- left profile details -->
+            <div class="col-md-6 p-0">
+                <div class="prn2-image-wrapper bg-color-Teal900">
+                    <div class="col-md-5 p-0">
+                        <div class="profile-details-img pull-left">
+                            <img src="assets/img/avatar/profile_img150x150.jpg"
+                                 ng-src="assets/img/avatar/profile_img150x150.jpg">
+                        </div>
+                        <div class="prn2 profile-status bold ">
+                            Mr.Jesse
+                            <br/>
+                            <span>18705056530</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7" style="padding-top: 15px;">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5 class="text-uppercase header-text-h5">Personal Information</h5>
+                            </div>
+                        </div>
+                        <ul class="info-list">
+                            <li>
+                                <small>First Name</small>
+                                <h5>Jesse</h5>
+                            </li>
+                            <li>
+                                <small>Last Name</small>
+                                <h5>Pinkman</h5>
+                            </li>
+                            <li>
+                                <small>Address</small>
+                                <h5>3145/A ,St SW, Albuquerque</h5>
+                            </li>
+                            <li>
+                                <div class="details-wrap">
+                                    <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn">
+                                        test1
+                                    </div>
+                                    <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn">
+                                        test1
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- engagement summary-->
+            <div class="col-md-6 p-0">
+                <div class="prn2-engagement-summary bg-color-Teal800">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5 class="text-uppercase header-text-h5 ">Engagement</h5>
+                        </div>
+                    </div>
+                    <div class="prn2 time-wrapper">
+                        <div class="row">
+                            <div class="col-sm-3 font-white">
+                                Call
+                            </div>
+                            <div class="col-sm-6 prn2">
+                                <uib-progressbar value="22" type="warning">
+                                </uib-progressbar>
+                            </div>
+                            <div class="col-sm-3 font-white text-right">
+                                5
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 font-white">
+                                Sms
+                            </div>
+                            <div class="col-sm-6 prn2">
+                                <uib-progressbar value="22" type="success">
+                                </uib-progressbar>
+                            </div>
+                            <div class="col-sm-3 font-white text-right">
+                                5
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 font-white">
+                                FB
+                            </div>
+                            <div class="col-sm-6 prn2">
+                                <uib-progressbar value="100" type="danger">
+                                </uib-progressbar>
+                            </div>
+                            <div class="col-sm-3 font-white text-right">
+                                10
+                            </div>
+                        </div>
+                        <div class="row" style="padding-bottom: 5px;">
+                            <div class="col-sm-6 font-CyanA200">
+                                Total Ticket
+                            </div>
+                            <div class="col-sm-6 font-CyanA200 text-right">
+                                5
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 font-CyanA200">
+                                Pending Ticket
+                            </div>
+                            <div class="col-sm-6 font-CyanA200 text-right">
+                                10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- right profile details -->
+        </div>
+        <!--PROFILE BODY -->
+        <div class=" col-lg-12 col-md-12 col-sm-12 p-0">
+            <div class="prn2-body-wrapper">
+                <div class="col-md-3">
+                    <div class="prn2-contact">
+                        <div class="row">
+                            <div class="layout-header prn2-layout-header2">
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="text-header bold">
+                                        CONTACT
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4 ">
+                                    <div class="btn-left-icon pull-right ">
+                                        <i class="veery-font-1-add-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="prn2-contact-body">
+                                <div class="prn2 header-round-icon">
+                                    <div class="icon-left">
+                                        <i class="fa fa-facebook"></i>
+                                    </div>
+                                    <div class="prn2-contact text-header">
+                                        facebook
+                                        <br/>
+                                        <small>@Jesse</small>
+                                    </div>
+                                </div>
+                                <div class="prn2 header-round-icon">
+                                    <div class="icon-left">
+                                        <i class="fa fa-twitter"></i>
+                                    </div>
+                                    <div class="prn2-contact text-header ">
+                                        twitter
+                                        <br/>
+                                        <small>@Jesse</small>
+                                    </div>
+                                </div>
+                                <div class="prn2 header-round-icon">
+                                    <div class="icon-left">
+                                        <i class="fa fa-linkedin"></i>
+                                    </div>
+                                    <div class="prn2-contact text-header ">
+                                        linkedin
+                                        <br/>
+                                        <small>@Jesse</small>
+                                    </div>
+                                </div>
+                                <div class="prn2 header-round-icon">
+                                    <div class="icon-left">
+                                        <i class="fa fa-envelope-o"></i>
+                                    </div>
+                                    <div class="prn2-contact text-header ">
+                                        email
+                                        <br/>
+                                        <small>@Jesse</small>
+                                    </div>
+                                </div>
+                                <div class="prn2 header-round-icon">
+                                    <div class="icon-left">
+                                        <i class="fa fa-skype"></i>
+                                    </div>
+                                    <div class="prn2-contact text-header ">
+                                        skype
+                                        <br/>
+                                        <small>@Jesse</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9 " style="padding-right: 0px;">
+                    <div class="prn2-recent-activity ">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent Activity</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="recent-activity-wrap ">
+                                    <div class="col-lg-9 p-0 font-color-blue900">
+                                        <small class="font-color-blue900">A895D</small>
+                                        <br>
+                                        Lorem Ipsum is simply dummy text..
+                                    </div>
+                                    <div class="col-lg-3 p-0">
+                                        <small class="font-color-yellow">OPEN</small>
+                                        <br>
+                                        <small class="font-color-green">3 days ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="recent-activity-wrap border-0 ">
+                                    <div class="col-lg-9 p-0 font-color-blue900">
+                                        <small class="font-color-blue900">A895D</small>
+                                        <br>
+                                        Lorem Ipsum is simply dummy text..
+                                    </div>
+                                    <div class="col-lg-3 p-0">
+                                        <small class="font-color-yellow">CLOSE</small>
+                                        <br>
+                                        <small class="font-color-green">3 days ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MORE INFORMATION -->
+                <div class="col-md-7 ">
+                    <div class="prn2-recent-information ">
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <div class="header-round-icon">
+                                    <div class="icon-left">
+                                        <i class="veery-font-1-user"></i>
+                                    </div>
+                                    <div class="text-header bold">
+                                        INFORMATION
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <ul class="info-list-lg">
+                                <li>
+                                    <small>Gender</small>
+                                    <h5>Male</h5>
+                                </li>
+                                <li>
+                                    <small>Local</small>
+                                    <h5>SINHALA</h5>
+                                </li>
+                                <li>
+                                    <small>Birthday</small>
+                                    <h5>05-12-1982</h5>
+                                </li>
+                                <li>
+                                    <small>Email</small>
+                                    <h5>jesse@duosoftware.com</h5>
+                                </li>
+                                <li>
+                                    <small>Company</small>
+                                    <h5>DuoSoftware</h5>
+                                </li>
+                                <li>
+                                    <small>Created</small>
+                                    <h5>05-05-2009</h5>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PROFILE OTHER -->
+                    <div class="col-lg-12 col-md-12">
+                        <div class="prn2-other-wrapper">
+                            <div class="row">
+                                <div class="col-lg-12">
+
+                                    <div class="header-round-icon">
+                                        <div class="icon-left">
+                                            <i class="veery-font-1-user"></i>
+                                        </div>
+                                        <div class="text-header bold">
+                                            OTHER
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="animated display-none" id="viewTimeLine">
+        <div ng-include="'app/views/time-line/profile-time-line2.html'"></div>
+    </div>
+
+    <div class="animated display-none" id="viewTicketView">
+        <div ng-include="'app/views/ticket/filter/filter-ticket-view.html'"></div>
+    </div>
+
+
+    <!-- MULTIPLE PROFILE -->
+    <div class=" display-none col-lg-12">
+        <div class="prn2-multiple-wrapper">
+            <div class="col-md-3">
+                <div class="profile-multiple-wrap">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

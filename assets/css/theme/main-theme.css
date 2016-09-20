@@ -120,6 +120,14 @@
     color: #d2c242 !important;
 }
 
+.font-color-blue900 {
+    color: #0d1c33 !important;
+}
+
+.font-color-gray500 {
+    color: #8298ae !important;
+}
+
 .label-green {
     color: #45bf55 !important;
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
@@ -135,6 +143,10 @@
 
 .ticket-channel.call {
     background: #d2c242;
+}
+
+.font-CyanA200 {
+    color: #14d0a0;
 }
 
 .btn-green100 {
@@ -169,6 +181,10 @@
     color: #ffffff;
 }
 
+.font-white {
+    color: #ffffff !important;
+}
+
 .bg-green500 {
     background: #168039 !important;
 }
@@ -176,5 +192,39 @@
 .btn-green700 {
     background: #044d29 !important;;
 }
+
+.bg-color-Teal900 {
+    background: #17373c !important;
+}
+
+.bg-color-Teal600 {
+    background: #2b4d52 !important;
+}
+
+.bg-color-Teal700 {
+    background: #2b4d52 !important;
+}
+
+.bg-color-Teal800 {
+    background: #1a3d42 !important;
+}
+
+.prn2 > .progress > .progress-bar-warning {
+    background: #45bf55;
+}
+
+.prn2 > .progress > .progress-bar-success {
+    background: #168039;
+}
+
+.prn2 > .progress > .progress-bar-danger {
+    background: #4f9300;
+}
+
+/*validation */
+.validation-on {
+    color: #d90000;
+}
+
 
 

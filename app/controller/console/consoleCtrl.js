@@ -4,7 +4,7 @@
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
                                              jwtHelper, resourceService, baseUrls, dataParser,
-                                             veeryNotification, authService, userService, tagService, ticketService) {
+                                             veeryNotification, authService, userService, tagService, ticketService, $interval, myProfileDataParser, loginService, $state) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -514,7 +514,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
 
     };
-    addMailInbox();
+
+    var addTestProfileView = function () {
+        $scope.addTab('userProfile', 'userProfile', 'userProfile', {
+            company: "123",
+            direction: "333",
+            channelFrom: "33",
+            channelTo: "33",
+            channel: "555"
+        });
+    };
+    // addTestProfileView();
 
 
     $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
@@ -757,6 +767,61 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     //----------------------------------------------------------------------------------------
+
+
+    $scope.getMyProfile = function () {
+
+
+        userService.getMyProfileDetails().then(function (response) {
+
+            if (response.data.IsSuccess) {
+
+                myProfileDataParser.myProfile = response.data.Result;
+            }
+            else {
+
+                myProfileDataParser.myProfile = {};
+            }
+        }), function (error) {
+
+
+            myProfileDataParser.myProfile = {};
+        }
+
+
+    };
+    $scope.getMyProfile();
+
+    $scope.loginName = authService.GetResourceIss();
+
+    //Time base create message
+    var myDate = new Date();
+    /* hour is before noon */
+    if (myDate.getHours() < 12) {
+        $scope.timeBaseMsg = "Good Morning";
+    }
+    else  /* Hour is from noon to 5pm (actually to 5:59 pm) */
+    if (myDate.getHours() >= 12 && myDate.getHours() <= 17) {
+        $scope.timeBaseMsg = "Good Afternoon";
+    }
+    else  /* the hour is after 5pm, so it is between 6pm and midnight */
+    if (myDate.getHours() > 17 && myDate.getHours() <= 24) {
+        $scope.timeBaseMsg = "Good Evening";
+    }
+    else  /* the hour is not between 0 and 24, so something is wrong */
+    {
+        document.write("I'm not sure what time it is!");
+        $scope.timeBaseMsg = "-";
+    }
+
+    //logOut
+    $scope.logOut = function () {
+        loginService.Logoff(function (data) {
+            if (data) {
+                $state.go('login');
+            }
+        });
+    }
 
 
 });

@@ -38,7 +38,11 @@
     "angular-pnotify": "^0.1.2",
     "moment": "^2.14.1",
     "angular-schema-form": "^0.8.13",
-    "angular-timeago": "^0.4.3"
+    "angular-timeago": "^0.4.3",
+    "perfect-scrollbar": "^0.6.12",
+    "ng-scrollbars": "^0.0.10",
+    "angular-schema-form-datepicker": "^1.4.1",
+    "pickadate": "^3.5.6"
   },
   "resolutions": {
     "moment": "^2.14.1",

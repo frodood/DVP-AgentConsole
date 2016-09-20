@@ -269,6 +269,41 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
 
     };
+    var AssignUserToTicket = function (ticketId,userId) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/AssignUser/"+userId,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
+
+
+    var getFormsForCompany = function () {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"FormProfile",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
 
     var createTimer = function (ticketId) {
         var reqData = {ticket: ticketId};
@@ -365,7 +400,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         createTimer: createTimer,
         startTimer: startTimer,
         pauseTimer: pauseTimer,
-        stopTimer: stopTimer
+        stopTimer: stopTimer,
+        getFormsForCompany: getFormsForCompany,
+        AssignUserToTicket:AssignUserToTicket
     }
 });
 
