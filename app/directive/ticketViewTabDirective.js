@@ -63,7 +63,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
                             var formObj = {
                                 "key": fieldItem.field,
-                                "type": "radios",
+                                "type": "radios-inline",
                                 "titleMap": []
                             };
 
@@ -87,6 +87,39 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                             }
 
                             form.push(formObj);
+                        }
+                        else if(fieldItem.type === 'date')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive,
+                                format: 'date'
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field
+                            })
+                        }
+                        else if(fieldItem.type === 'number')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'number',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "number"
+                            })
                         }
                         else if(fieldItem.type === 'email')
                         {
