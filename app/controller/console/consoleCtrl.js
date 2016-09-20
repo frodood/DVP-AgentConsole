@@ -4,7 +4,7 @@
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
                                              jwtHelper, resourceService, baseUrls, dataParser,
-                                             veeryNotification, authService, userService, tagService, $interval) {
+                                             veeryNotification, authService, userService, tagService, $interval,myProfileDataParser) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -24,7 +24,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-            removeClass('display-none zoomOut');
+                removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -43,10 +43,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-            removeClass('display-none zoomOut');
+                removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-            removeClass('display-block  zoomOut');
+                removeClass('display-block  zoomOut');
         }
     };
 
@@ -55,29 +55,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-            removeClass('display-none');
+                removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-            removeClass('display-block');
+                removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-        removeClass('display-block active-menu-icon ');
+            removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-        removeClass('display-none  ');
+            removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-        removeClass('display-none');
+            removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-        removeClass('display-block active-menu-icon');
+            removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -509,7 +509,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
 
     };
-    addMailInbox();
+
+    var addTestProfileView = function () {
+        $scope.addTab('userProfile', 'userProfile', 'userProfile', {
+            company: "123",
+            direction: "333",
+            channelFrom: "33",
+            channelTo: "33",
+            channel: "555"
+        });
+    };
+    addTestProfileView();
 
 
     $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
@@ -666,6 +676,34 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     //----------------------------------------------------------------------------------------
+
+
+    $scope.getMyProfile = function () {
+
+
+        userService.getMyProfileDetails().then(function (response) {
+
+            if(response.data.IsSuccess)
+            {
+
+                myProfileDataParser.myProfile=response.data.Result;
+            }
+            else
+            {
+
+                myProfileDataParser.myProfile={};
+            }
+        }), function (error) {
+
+
+            myProfileDataParser.myProfile={};
+        }
+
+
+
+    };
+
+    $scope.getMyProfile();
 
 
 });
