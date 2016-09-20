@@ -270,6 +270,23 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var getFormsForCompany = function () {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"FormProfile",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -289,7 +306,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetTicketView:getTicketView,
         GetTicketViews:getTicketViews,
         GetTicketsByView:getTicketsByView,
-        AddNewCommentToTicket:AddNewCommentToTicket
+        AddNewCommentToTicket:AddNewCommentToTicket,
+        getFormsForCompany: getFormsForCompany
     }
 });
 

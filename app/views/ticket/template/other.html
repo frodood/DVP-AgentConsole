@@ -1,4 +1,9 @@
 <div>
-    <h1> other data..</h1>
+    <h1>Custom Ticket Form</h1>
+    <div ng-if="!buildModel">
+        <label>Ticket form has been modified, please fill data to new form</label>
+        <div>{{oldFormModel}}</div>
+    </div>
+
     <form sf-schema="schema" sf-form="form" sf-model="model"></form>
 </div>
