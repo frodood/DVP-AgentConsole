@@ -4,7 +4,8 @@
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
                                              jwtHelper, resourceService, baseUrls, dataParser,
-                                             veeryNotification, authService, userService, tagService, $interval,myProfileDataParser) {
+                                             veeryNotification, authService, userService, tagService,
+                                             $interval, myProfileDataParser, loginService, $state) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -24,7 +25,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -43,10 +44,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-                removeClass('display-block  zoomOut');
+            removeClass('display-block  zoomOut');
         }
     };
 
@@ -55,29 +56,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-                removeClass('display-none');
+            removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-                removeClass('display-block');
+            removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-            removeClass('display-block active-menu-icon ');
+        removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-            removeClass('display-none  ');
+        removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-            removeClass('display-none');
+        removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-            removeClass('display-block active-menu-icon');
+        removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -519,7 +520,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channel: "555"
         });
     };
-    addTestProfileView();
+    // addTestProfileView();
 
 
     $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
@@ -683,27 +684,54 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         userService.getMyProfileDetails().then(function (response) {
 
-            if(response.data.IsSuccess)
-            {
+            if (response.data.IsSuccess) {
 
-                myProfileDataParser.myProfile=response.data.Result;
+                myProfileDataParser.myProfile = response.data.Result;
             }
-            else
-            {
+            else {
 
-                myProfileDataParser.myProfile={};
+                myProfileDataParser.myProfile = {};
             }
         }), function (error) {
 
 
-            myProfileDataParser.myProfile={};
+            myProfileDataParser.myProfile = {};
         }
 
 
-
     };
-
     $scope.getMyProfile();
+
+    $scope.loginName = authService.GetResourceIss();
+
+    //Time base create message
+    var myDate = new Date();
+    /* hour is before noon */
+    if (myDate.getHours() < 12) {
+        $scope.timeBaseMsg = "Good Morning";
+    }
+    else  /* Hour is from noon to 5pm (actually to 5:59 pm) */
+    if (myDate.getHours() >= 12 && myDate.getHours() <= 17) {
+        $scope.timeBaseMsg = "Good Afternoon";
+    }
+    else  /* the hour is after 5pm, so it is between 6pm and midnight */
+    if (myDate.getHours() > 17 && myDate.getHours() <= 24) {
+        $scope.timeBaseMsg = "Good Evening";
+    }
+    else  /* the hour is not between 0 and 24, so something is wrong */
+    {
+        document.write("I'm not sure what time it is!");
+        $scope.timeBaseMsg = "-";
+    }
+
+    //logOut
+    $scope.logOut = function () {
+        loginService.Logoff(function (data) {
+            if (data) {
+                $state.go('login');
+            }
+        });
+    }
 
 
 });

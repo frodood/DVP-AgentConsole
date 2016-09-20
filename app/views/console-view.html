@@ -301,8 +301,8 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                            >Hi,admin</a>
-                            <a class="time">Good Morning</a>
+                            >Hi,{{loginName}}</a>
+                            <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
                         <ul class="dropdown-menu console-drop-menu" uib-dropdown-menu role="menu"
@@ -320,7 +320,9 @@
                             <li class="menuitem" role="menuitem"><a href="#">meal</a></li>
                             <li class="divider"></li>
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Logout</a></li>
+                            <li class="menuitem" role="menuitem"><a href="javascript:void(0)"
+                                                                    ng-click="logOut();"
+                            >Logout</a></li>
                         </ul>
 
 

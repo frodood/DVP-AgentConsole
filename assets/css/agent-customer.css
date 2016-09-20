@@ -2026,8 +2026,20 @@ div > div >
     height: 100%;
     top: 0;
     left: 0;
-    background: #17373c;
+    background: rgba(23, 55, 60, 1);
+    z-index: 0;
 }
+
+/*.login-wrapper::after {*/
+/*content: "";*/
+/*background: url(../img/bg/january.jpg);*/
+/*top: 0;*/
+/*left: 0;*/
+/*bottom: 0;*/
+/*right: 0;*/
+/*position: absolute;*/
+/*z-index: -1;*/
+/*}*/
 
 .login-wrap {
     margin: 0 auto;
@@ -2094,6 +2106,15 @@ div > div >
     margin-top: 25px;
     font-size: 16px;
     cursor: pointer;
+}
+
+.loading-btn {
+    text-align: center;
+    color: #d2c242;
+    margin-left: -225px;
+    margin-top: 25px;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .login-btn:hover,
@@ -2392,3 +2413,5 @@ tags-input .tags .input {
 .prn2-other-wrapper {
     margin-top: 20px;
 }
+
+
