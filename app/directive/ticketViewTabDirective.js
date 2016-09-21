@@ -50,6 +50,48 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                                 "type": "text"
                             })
                         }
+                        else if(fieldItem.type === 'textarea')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "textarea"
+                            })
+                        }
+                        else if(fieldItem.type === 'url')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "text"
+                            })
+                        }
+                        else if(fieldItem.type === 'header')
+                        {
+                            var h2Tag = '<h2>' + fieldItem.title + '</h2>'
+                            form.push({
+                                "type": "help",
+                                "helpvalue": h2Tag
+                            });
+                        }
                         else if(fieldItem.type === 'radio')
                         {
                             schema.properties[fieldItem.field] = {
@@ -120,6 +162,69 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                                 "key": fieldItem.field,
                                 "type": "number"
                             })
+                        }
+                        else if(fieldItem.type === 'phone')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                pattern: "^[0-9*#+]+$",
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "text"
+                            })
+                        }
+                        else if(fieldItem.type === 'boolean' || fieldItem.type === 'checkbox')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'boolean',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "checkbox"
+                            })
+                        }
+                        else if(fieldItem.type === 'checkboxes')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'array',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive,
+                                items: {
+                                    type: "string",
+                                    enum:[]
+                                }
+
+                            };
+
+                            if(fieldItem.values && fieldItem.values.length > 0)
+                            {
+
+                                fieldItem.values.forEach(function(enumVal)
+                                {
+                                    schema.properties[fieldItem.field].items.enum.push(enumVal.name);
+                                })
+
+                            }
+
+                            form.push(fieldItem.field);
                         }
                         else if(fieldItem.type === 'email')
                         {
