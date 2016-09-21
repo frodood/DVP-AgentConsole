@@ -19,6 +19,17 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             scope.oldFormModel = null;
 
+            scope.newAssignee={};
+            scope.isOverDue=false;
+            scope.newComment="";
+
+            scope.schema = {
+                type: "object",
+                properties: {
+                    name: {type: "string", minLength: 2, title: "Name", description: "Name or alias"},
+                    title: {
+                        type: "string",
+                        enum: ['dr', 'jr', 'sir', 'mrs', 'mr', 'NaN', 'dj']
             var buildFormSchema = function(schema, form, fields)
             {
                 fields.forEach(function (fieldItem)
@@ -49,6 +60,48 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                                 "key": fieldItem.field,
                                 "type": "text"
                             })
+                        }
+                        else if(fieldItem.type === 'textarea')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "textarea"
+                            })
+                        }
+                        else if(fieldItem.type === 'url')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "text"
+                            })
+                        }
+                        else if(fieldItem.type === 'header')
+                        {
+                            var h2Tag = '<h2>' + fieldItem.title + '</h2>'
+                            form.push({
+                                "type": "help",
+                                "helpvalue": h2Tag
+                            });
                         }
                         else if(fieldItem.type === 'radio')
                         {
@@ -120,6 +173,69 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                                 "key": fieldItem.field,
                                 "type": "number"
                             })
+                        }
+                        else if(fieldItem.type === 'phone')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'string',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                pattern: "^[0-9*#+]+$",
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "text"
+                            })
+                        }
+                        else if(fieldItem.type === 'boolean' || fieldItem.type === 'checkbox')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'boolean',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive
+
+                            };
+
+                            form.push({
+                                "key": fieldItem.field,
+                                "type": "checkbox"
+                            })
+                        }
+                        else if(fieldItem.type === 'checkboxes')
+                        {
+
+                            schema.properties[fieldItem.field] = {
+                                type: 'array',
+                                title: fieldItem.title,
+                                description: fieldItem.description,
+                                required: fieldItem.require ? true : false,
+                                readonly: !isActive,
+                                items: {
+                                    type: "string",
+                                    enum:[]
+                                }
+
+                            };
+
+                            if(fieldItem.values && fieldItem.values.length > 0)
+                            {
+
+                                fieldItem.values.forEach(function(enumVal)
+                                {
+                                    schema.properties[fieldItem.field].items.enum.push(enumVal.name);
+                                })
+
+                            }
+
+                            form.push(fieldItem.field);
                         }
                         else if(fieldItem.type === 'email')
                         {
@@ -379,10 +495,17 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         }
 
                         if (scope.ticket.created_at) {
+
                             scope.ticket.created_at = moment(scope.ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss");
+
                         }
                         if (scope.ticket.due_at) {
                             scope.ticket.due_at = moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
+                            scope.nowDate =moment().local().format("YYYY-MM-DD HH:mm:ss");
+                            if((moment(scope.ticket.due_at).diff(moment(scope.nowDate)))<0)
+                            {
+                                scope.isOverDue=true;
+                            };
                         }
                         else {
                             scope.ticket.due_at = "Not specified";
@@ -484,11 +607,16 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
                     if(response.data.IsSuccess)
                     {
-                        scope.ticket=scope.editTicket;
+                        scope.ticket.description=scope.editTicket.description;
+                        scope.ticket.subject=scope.editTicket.subject;
                         scope.showAlert("Updated","success","Ticket updated successfully");
+
+
                         if(scope.ticket.due_at)
                         {
                             scope.ticket.due_at=moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
+
+
                         }
                         else
                         {
@@ -563,6 +691,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         scope.ticket.comments.push(response.data.Result);
                         console.log("New comment added ",response);
                         scope.showAlert("New Comment","success","completed");
+                        scope.newComment="";
                     }
                     else {
                         console.log("Error new comment ",response);
@@ -576,34 +705,72 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             };
 
-            scope.isEditAssignee = false;
-            scope.editAssignee = function () {
-                scope.isEditAssignee = !scope.isEditAssignee;
-            };
-
-
-            scope.changeAssignee = function (newAssignee) {
-
-                ticketService.AssignUserToTicket(scope.ticket._id,newAssignee._id).then(function (response) {
-                    if(response.data.IsSuccess)
-                    {
-                        scope.showAlert("Assign","Ticket assignee changed successfully","success");
-                        scope.loadTicketSummary(scope.ticket._id);
-                    }
-                    else
-                    {
-                        scope.showAlert("Assign","Ticket assignee changed failed","error");
-                    }
-                }), function (error) {
-                    scope.showAlert("Assign","Ticket assignee changed failed","error");
-                }
-            }
 
             //edit assignee
             scope.isEditAssignee = false;
             scope.editAssignee = function () {
                 scope.isEditAssignee = !scope.isEditAssignee;
             };
+
+            scope.changeAssignee = function () {
+
+                var assigneeObj={};
+                if(typeof(scope.newAssignee)=='string')
+                {
+                    assigneeObj=JSON.parse(scope.newAssignee);
+                }
+                else
+                {
+                    assigneeObj=scope.newAssignee;
+                }
+
+
+                if(assigneeObj)
+                {
+                    ticketService.AssignUserToTicket(scope.ticket._id,assigneeObj._id).then(function (response) {
+                        if(response.data.IsSuccess)
+                        {
+                            scope.showAlert("Ticket assigning","success","Ticket assignee changed successfully");
+                            scope.ticket.assignee=assigneeObj;
+
+                            scope.isEditAssignee = false;
+                        }
+                        else
+                        {
+                            scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
+                        }
+                    }), function (error) {
+                        scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
+                    }
+                }
+                else
+                {
+                    scope.showAlert("Ticket assigning","error","Invalid assignee details provided");
+                }
+
+
+
+            };
+
+            scope.assignToMe = function () {
+                scope.newAssignee=myProfileDataParser.myProfile;
+                scope.changeAssignee();
+            };
+
+            scope.loadTickectNextLevel = function () {
+                ticketService.getTicketNextLevel(scope.ticket.type,scope.ticket.status).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+
+                    }
+                }), function (error) {
+
+                }
+            }
+
+
+
+
         }
     }
 });

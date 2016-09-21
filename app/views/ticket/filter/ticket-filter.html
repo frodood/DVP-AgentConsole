@@ -36,8 +36,8 @@
                             VIEWS -
                             <small class="color-grey500">total {{views.length}}</small>
                         </div>
-                        <div class="pull-right">
-                            <div class="refresh color-green500">
+                        <div class="pull-right" >
+                            <div class="refresh color-green500" ng-click="loadTicketViews()">
                                 refresh
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-8 ">
-                                            <div class="ticker-id bold">
+                                            <div class="ticker-id bold" ng-click="viewSpecificTicket(ticket)">
                                                 {{ticket.reference}} -
                                                 <small class="color-cyan500 text-uppercase"><time-ago from-time='{{ ticket.created_at }}' format='MM/dd/yyyy'></time-ago></small>
 

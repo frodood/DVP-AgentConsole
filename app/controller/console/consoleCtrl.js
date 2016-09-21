@@ -820,4 +820,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     }
 
 
+    $scope.reserveTicketTab = function (key,obj) {
+
+        reservedTicket.key=key;//phone number
+        reservedTicket.session_obj=obj;
+
+    };
+
+
 });

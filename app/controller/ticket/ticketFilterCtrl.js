@@ -2,7 +2,7 @@
  * Created by Damith on 9/9/2016.
  */
 
-agentApp.controller('ticketFilterCtrl', function ($scope, $http, ticketService) {
+agentApp.controller('ticketFilterCtrl', function ($scope, $http,$rootScope, ticketService) {
 
     /*getJSONData($http, 'filters', function (data) {
         $scope.views = data;
@@ -18,12 +18,22 @@ agentApp.controller('ticketFilterCtrl', function ($scope, $http, ticketService) 
         });
     };
 
+    var getTicketViewCount = function (item) {
+item.count = 0;
+        ticketService.GetTicketCountByView(item._id).then(function (response) {
+            item.count = response;
+            //$filter('filter')($scope.views, {_id: item._id},true)[0].count=response;
+        }, function (err) {
+            $scope.showAlert("Get View Count", "error", "Fail To Count.")
+        });
+    };
+
     $scope.loadTicketViews = function () {
-
         ticketService.GetTicketViews().then(function (response) {
-
             $scope.views = response;
-
+            angular.forEach($scope.views,function(item){
+                getTicketViewCount(item);
+            });
         }, function (err) {
 
             $scope.showAlert("load Views", "error", "Fail To Load View List.")
@@ -46,5 +56,11 @@ agentApp.controller('ticketFilterCtrl', function ($scope, $http, ticketService) 
             $scope.showAlert("load Tickets", "error", "Fail To Load Tickets List.")
         });
 
+    };
+
+    // open tab for specific ticket
+    $scope.viewSpecificTicket = function (data) {
+        $rootScope.$emit('newTicketTab',data);
     }
+
 });
