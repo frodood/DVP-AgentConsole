@@ -1,5 +1,5 @@
-<div class="timelline-wrapper">
-    <ul class="timeline items-wrap" scrolly="showMore()">
+<div class="timelline-wrapper prn2-time-line-wrap">
+    <ul class="timeline " scrolly="showMore()">
         <li ng-repeat="eng in engagementsList" ng-class="{'timeline-inverted':eng.direction=='outbound' }">
             <div class="timeline-badge twitter" ng-class="{'facebook':eng.direction=='outbound' }"><i class="fa fa-facebook"></i></div>
             <div class="timeline-panel">
@@ -36,103 +36,104 @@
             </div>
         </li>
 
-       <!-- <li>
-            <div class="timeline-badge twitter"><i class="fa fa-twitter"></i></div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <p class="inline-btn">
-                        <small class="text-muted ">
-                            From : 18705056580
-                        </small>
-                    </p>
-                    <p class="inline-btn">
-                        <small class="text-muted ">
-                            To : 94112375000
-                        </small>
-                    </p>
-                    <p class="inline-btn">
-                        <small class="text-muted  ">
-                            <i class="fa fa-clock-o "></i>
-                        </small>
-                    </p>
-                </div>
-                <div class="timeline-body bottom-line">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the
-                        industry's standard dummy text ever since the 1500.</p>
-                </div>
-                <div class="timeline-body">
-                    <p>NOTE : Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
-                </div>
 
-                <div class="timeline-heading">
-                    <p>
-                        <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i> 11 hours ago via
-                            Twitter
-                        </small>
-                    </p>
-                </div>
-            </div>
-        </li>
+        <!-- <li>
+             <div class="timeline-badge twitter"><i class="fa fa-twitter"></i></div>
+             <div class="timeline-panel">
+                 <div class="timeline-heading">
+                     <p class="inline-btn">
+                         <small class="text-muted ">
+                             From : 18705056580
+                         </small>
+                     </p>
+                     <p class="inline-btn">
+                         <small class="text-muted ">
+                             To : 94112375000
+                         </small>
+                     </p>
+                     <p class="inline-btn">
+                         <small class="text-muted  ">
+                             <i class="fa fa-clock-o "></i>
+                         </small>
+                     </p>
+                 </div>
+                 <div class="timeline-body bottom-line">
+                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                         the
+                         industry's standard dummy text ever since the 1500.</p>
+                 </div>
+                 <div class="timeline-body">
+                     <p>NOTE : Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                     </p>
+                 </div>
 
-        <li>
-            <div class="timeline-badge twitter"><i class="fa fa-twitter"></i></div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <p class="inline-btn">
-                        <small class="text-muted ">
-                            From : 18705056580
-                        </small>
-                    </p>
-                    <p class="inline-btn">
-                        <small class="text-muted ">
-                            To : 94112375000
-                        </small>
-                    </p>
-                    <p class="inline-btn">
-                        <small class="text-muted  ">
-                            <i class="fa fa-clock-o "></i>
-                        </small>
-                    </p>
-                </div>
-                <div class="timeline-body bottom-line">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the
-                        industry's standard dummy text ever since the 1500.</p>
-                </div>
-                <div class="timeline-body">
-                    <p>NOTE : Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
-                </div>
+                 <div class="timeline-heading">
+                     <p>
+                         <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i> 11 hours ago via
+                             Twitter
+                         </small>
+                     </p>
+                 </div>
+             </div>
+         </li>
 
-                <div class="timeline-heading">
-                    <p>
-                        <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i> 11 hours ago via
-                            Twitter
-                        </small>
-                    </p>
-                </div>
-            </div>
-        </li>
+         <li>
+             <div class="timeline-badge twitter"><i class="fa fa-twitter"></i></div>
+             <div class="timeline-panel">
+                 <div class="timeline-heading">
+                     <p class="inline-btn">
+                         <small class="text-muted ">
+                             From : 18705056580
+                         </small>
+                     </p>
+                     <p class="inline-btn">
+                         <small class="text-muted ">
+                             To : 94112375000
+                         </small>
+                     </p>
+                     <p class="inline-btn">
+                         <small class="text-muted  ">
+                             <i class="fa fa-clock-o "></i>
+                         </small>
+                     </p>
+                 </div>
+                 <div class="timeline-body bottom-line">
+                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                         the
+                         industry's standard dummy text ever since the 1500.</p>
+                 </div>
+                 <div class="timeline-body">
+                     <p>NOTE : Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                     </p>
+                 </div>
 
-        <li class="timeline-inverted">
-            <div class="timeline-badge success"><i class="fa fa-mail-reply"></i></div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                </div>
-                <div class="timeline-body">
-                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis
-                        porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros
-                        vermeio, in
-                        elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in
-                        monti
-                        palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de
-                        bolis,
-                        mais bolis eu num gostis.</p>
-                </div>
-            </div>
-        </li>-->
+                 <div class="timeline-heading">
+                     <p>
+                         <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i> 11 hours ago via
+                             Twitter
+                         </small>
+                     </p>
+                 </div>
+             </div>
+         </li>
+
+         <li class="timeline-inverted">
+             <div class="timeline-badge success"><i class="fa fa-mail-reply"></i></div>
+             <div class="timeline-panel">
+                 <div class="timeline-heading">
+                     <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                 </div>
+                 <div class="timeline-body">
+                     <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis
+                         porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros
+                         vermeio, in
+                         elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in
+                         monti
+                         palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de
+                         bolis,
+                         mais bolis eu num gostis.</p>
+                 </div>
+             </div>
+         </li>-->
     </ul>
 </div>
