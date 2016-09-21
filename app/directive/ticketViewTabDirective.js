@@ -91,7 +91,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         }
                         else if(fieldItem.type === 'header')
                         {
-                            var h2Tag = '<h2>' + fieldItem.title + '</h2>'
+                            var h2Tag = '<h2>' + fieldItem.title + '</h2>';
                             form.push({
                                 "type": "help",
                                 "helpvalue": h2Tag
@@ -314,6 +314,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                     }
 
                     //save arr
+                    //ticketService.updateFormSubmissionData()
 
 
                 }

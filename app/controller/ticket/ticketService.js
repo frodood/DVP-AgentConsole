@@ -337,6 +337,24 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var updateFormSubmissionData = function (refId, updateValues) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"FormSubmission/" + refId,
+            headers: {
+                'authorization':authToken
+            },
+            data: updateValues
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
     var createTimer = function (ticketId) {
         var reqData = {ticket: ticketId};
         return $http({
@@ -437,7 +455,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         pauseTimer: pauseTimer,
         stopTimer: stopTimer,
         getFormsForCompany: getFormsForCompany,
-        AssignUserToTicket:AssignUserToTicket
+        AssignUserToTicket:AssignUserToTicket,
+        updateFormSubmissionData: updateFormSubmissionData
     }
 });
 
