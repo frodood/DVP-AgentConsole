@@ -179,7 +179,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $http.post(url, data, config)
                 .success(function (data, status, headers, config) {
                     $scope.PostDataResponse = data;
-                    console.log(data);
 
                     if (data) {
                         var decodeData = jwtHelper.decodeToken(data.access_token);
@@ -253,10 +252,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onSipEventSession: function (e) {
             try {
                 console.info("onSipEventSession : " + e);
-                $scope.$apply(function () {
-                    $scope.callStatus = e;
-                });
 
+                $scope.callStatus = e;
                 //document.getElementById("lblSipStatus").innerHTML = e;
                 //Notification.info({message: e, delay: 500, closeOnClick: true});
                 if (e == 'Session Progress') {
@@ -274,9 +271,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         notificationEvent: function (description) {
             try {
-                $scope.$apply(function () {
-                    $scope.phoneStatus = description;
-                });
+
+                $scope.phoneStatus = description;
                 if (description == 'Connected') {
                     /*UIStateChange.inIdleState();*/
                     $scope.PhoneOnline();

@@ -355,6 +355,23 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getExternalUserRecentTickets = function (id) {
+        return $http({
+            method: 'get',
+            url: baseUrls.ticketUrl+"ExternalUserRecentTickets/"+id,
+            headers: {
+                'authorization':authService.GetToken()
+            }
+        }).then(function(response)
+        {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
     var getFormsForCompany = function () {
 
         var authToken = authService.GetToken();
@@ -490,9 +507,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         pauseTimer: pauseTimer,
         stopTimer: stopTimer,
         getFormsForCompany: getFormsForCompany,
-        AssignUserToTicket:AssignUserToTicket,
         updateFormSubmissionData: updateFormSubmissionData,
-        updateTicketStatus:updateTicketStatus
+        updateTicketStatus:updateTicketStatus,
+        GetExternalUserRecentTickets:getExternalUserRecentTickets
     }
 });
 

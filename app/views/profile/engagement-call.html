@@ -359,36 +359,21 @@
                             <div class="prn2-recent-activity ">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent
-                                            Activity</h5>
+                                        <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent Activity</h5>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" ng-repeat="recentTicket in recentTicketList.tickets">
                                         <div class="recent-activity-wrap ">
                                             <div class="col-lg-9 p-0 font-color-blue900">
-                                                <small class="font-color-blue900">A895D</small>
+                                                <small class="ticker-id bold" ng-click="gotoTicket(recentTicket)">{{recentTicket.reference}}</small>
                                                 <br>
-                                                Lorem Ipsum is simply dummy text..
+                                                {{recentTicket.description}}
                                             </div>
                                             <div class="col-lg-3 p-0">
-                                                <small class="font-color-yellow">OPEN</small>
+                                                <small class="font-color-yellow">{{recentTicket.status}}</small>
                                                 <br>
-                                                <small class="font-color-green">3 days ago</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="recent-activity-wrap border-0 ">
-                                            <div class="col-lg-9 p-0 font-color-blue900">
-                                                <small class="font-color-blue900">A895D</small>
-                                                <br>
-                                                Lorem Ipsum is simply dummy text..
-                                            </div>
-                                            <div class="col-lg-3 p-0">
-                                                <small class="font-color-yellow">CLOSE</small>
-                                                <br>
-                                                <small class="font-color-green">3 days ago</small>
+                                                <small class="font-color-green"><time-ago from-time='{{ recentTicket.created_at }}' format='MM/dd/yyyy'></time-ago></small>
                                             </div>
                                         </div>
                                     </div>
