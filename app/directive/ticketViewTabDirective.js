@@ -23,6 +23,16 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             scope.isOverDue=false;
             scope.newComment="";
 
+            scope.showAlert = function (tittle, type, msg) {
+                new PNotify({
+                    title: tittle,
+                    text: msg,
+                    type: type,
+                    styling: 'bootstrap3',
+                    icon: false
+                });
+            };
+
 
             var buildFormSchema = function(schema, form, fields)
             {
@@ -148,7 +158,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                             };
 
                             form.push({
-                                "key": fieldItem.field
+                                "key": fieldItem.field,
+                                "minDate": "2014-06-20"
                             })
                         }
                         else if(fieldItem.type === 'number')
@@ -314,7 +325,22 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                     }
 
                     //save arr
-                    //ticketService.updateFormSubmissionData()
+                    if(scope.currentSubmission)
+                    {
+                        var obj = {
+                            fields: arr
+                        };
+                        ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function(response)
+                        {
+                            scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+
+                        }).catch(function(err)
+                        {
+                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+
+                        })
+                    }
+
 
 
                 }
@@ -475,6 +501,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
                         if(response.data.Result && response.data.Result.form_submission)
                         {
+                            scope.currentSubmission = response.data.Result.form_submission;
                             convertToSchemaForm(response.data.Result.form_submission, function(schemaDetails)
                             {
                                 if(schemaDetails)

@@ -347,7 +347,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             headers: {
                 'authorization':authToken
             },
-            data: updateValues
+            data: JSON.stringify(updateValues)
         }).then(function(response)
         {
             return response;
