@@ -23,13 +23,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             scope.isOverDue=false;
             scope.newComment="";
 
-            scope.schema = {
-                type: "object",
-                properties: {
-                    name: {type: "string", minLength: 2, title: "Name", description: "Name or alias"},
-                    title: {
-                        type: "string",
-                        enum: ['dr', 'jr', 'sir', 'mrs', 'mr', 'NaN', 'dj']
+
             var buildFormSchema = function(schema, form, fields)
             {
                 fields.forEach(function (fieldItem)
@@ -97,7 +91,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         }
                         else if(fieldItem.type === 'header')
                         {
-                            var h2Tag = '<h2>' + fieldItem.title + '</h2>'
+                            var h2Tag = '<h2>' + fieldItem.title + '</h2>';
                             form.push({
                                 "type": "help",
                                 "helpvalue": h2Tag
