@@ -17,7 +17,7 @@ agentApp.directive('scrolly', function () {
     };
 });
 
-agentApp.directive("engagementTab", function ($filter, engagementService, ivrService, userService, ticketService, tagService) {
+agentApp.directive("engagementTab", function ($filter,$rootScope, engagementService, ivrService, userService, ticketService, tagService) {
     return {
         restrict: "EA",
         scope: {
@@ -458,6 +458,10 @@ agentApp.directive("engagementTab", function ($filter, engagementService, ivrSer
                 profileDisable();
                 $(viewName).removeClass('display-none').addClass('display-block ');
                 $(currentBtn).addClass('active');
+            };
+
+            scope.gotoTicket = function (data) {
+                $rootScope.$emit('newTicketTab',data);
             };
         }
     }
