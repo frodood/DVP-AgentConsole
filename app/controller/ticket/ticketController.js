@@ -948,7 +948,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
     $scope.gotoTicket = function (data) {
-        $rootScope.$emit('newTicketTab',data);
+
+        data.tabType='ticketView';
+        $rootScope.$emit('openNewTab',data);
         $scope.closeTicketInbox();
 
     };

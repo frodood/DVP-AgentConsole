@@ -753,6 +753,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response.data.IsSuccess) {
 
                 myProfileDataParser.myProfile = response.data.Result;
+                $scope.loginAvatar=myProfileDataParser.myProfile.avatar;
             }
             else {
 
@@ -769,6 +770,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.getMyProfile();
 
     $scope.loginName = authService.GetResourceIss();
+
 
     //Time base create message
     var myDate = new Date();

@@ -41,6 +41,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getResourceIss = function () {
         return authService.GetResourceIss();
     };
+
+    // .........................  get all tickets with status .................................
+
     var getNewTickets = function (page) {
         var authToken = authService.GetToken();
 
@@ -55,6 +58,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
     var getOpenTickets= function (page) {
         var authToken = authService.GetToken();
         return $http({
@@ -68,7 +72,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
-    var  getClosedTickets= function (page) {
+
+    var getClosedTickets= function (page) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
@@ -81,6 +86,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
+    // .........................  get My tickets with status .................................
+
     var getMyNewTickets= function (page) {
         var authToken = authService.GetToken();
 
@@ -95,6 +103,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
     var getMyOpenTickets= function (page) {
         var authToken = authService.GetToken();
         return $http({
@@ -108,6 +117,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
     var getMyClosedTickets= function (page) {
         var authToken = authService.GetToken();
         return $http({
@@ -121,6 +131,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
+    // .........................  get My group tickets with status .................................
 
     var getMyGroupTickets= function (page) {
         var authToken = authService.GetToken();
@@ -136,6 +148,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
     var getMyGroupOpenTickets= function (page) {
         var authToken = authService.GetToken();
         return $http({
@@ -149,6 +162,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
     var getMyGroupClosedTickets= function (page) {
         var authToken = authService.GetToken();
         return $http({
@@ -162,6 +176,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
+
     var getTicket = function (ticketID) {
         var authToken = authService.GetToken();
 
@@ -176,6 +192,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
     var updateTicket = function (ticketID,ticketObject) {
         var authToken = authService.GetToken();
 
@@ -191,6 +208,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
     var createTicketView = function (ticketView) {
         var authToken = authService.GetToken();
 
@@ -288,6 +306,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
 
     };
+
     var AssignUserToTicket = function (ticketId,userId) {
 
         var authToken = authService.GetToken();
@@ -304,6 +323,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
 
     };
+
     var getTicketNextLevel= function (ticketType,currentStatus) {
         var authToken = authService.GetToken();
 
@@ -319,6 +339,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var updateTicketStatus = function (ticketID,newStatus) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Status",
+            headers: {
+                'authorization':authToken
+            },
+            data:newStatus
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
 
     var getFormsForCompany = function () {
 
@@ -456,7 +491,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         stopTimer: stopTimer,
         getFormsForCompany: getFormsForCompany,
         AssignUserToTicket:AssignUserToTicket,
-        updateFormSubmissionData: updateFormSubmissionData
+        updateFormSubmissionData: updateFormSubmissionData,
+        updateTicketStatus:updateTicketStatus
     }
 });
 
