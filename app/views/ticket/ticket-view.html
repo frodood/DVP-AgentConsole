@@ -106,8 +106,12 @@
                                 </li>
                                 <li>
                                     <small>Due To</small>
+                                        <div class="bg-checkbox red font-white small-details inline-btn"ng-show="isOverDue">
+                                            Overdue
+                                        </div>
                                     <h5>{{ticket.due_at}}</h5>
                                 </li>
+
                             </ul>
                         </div>
 

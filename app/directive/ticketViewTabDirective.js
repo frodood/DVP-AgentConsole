@@ -21,6 +21,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             scope.newAssignee={};
             scope.isOverDue=false;
+            scope.newComment="";
 
             scope.schema = {
                 type: "object",
@@ -65,11 +66,15 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         if (scope.ticket.created_at) {
 
                             scope.ticket.created_at = moment(scope.ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss");
-                            scope.nowDate =moment().local().format("YYYY-MM-DD HH:mm:ss");
-                            alert(moment(scope.ticket.created_at).diff(moment(scope.nowDate)));
+
                         }
                         if (scope.ticket.due_at) {
                             scope.ticket.due_at = moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
+                            scope.nowDate =moment().local().format("YYYY-MM-DD HH:mm:ss");
+                            if((moment(scope.ticket.due_at).diff(moment(scope.nowDate)))<0)
+                            {
+                                scope.isOverDue=true;
+                            };
                         }
                         else {
                             scope.ticket.due_at = "Not specified";
@@ -171,7 +176,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
                     if(response.data.IsSuccess)
                     {
-                        scope.ticket=scope.editTicket;
+                        scope.ticket.description=scope.editTicket.description;
+                        scope.ticket.subject=scope.editTicket.subject;
                         scope.showAlert("Updated","success","Ticket updated successfully");
 
 
@@ -254,6 +260,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         scope.ticket.comments.push(response.data.Result);
                         console.log("New comment added ",response);
                         scope.showAlert("New Comment","success","completed");
+                        scope.newComment="";
                     }
                     else {
                         console.log("Error new comment ",response);
@@ -293,17 +300,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         if(response.data.IsSuccess)
                         {
                             scope.showAlert("Ticket assigning","success","Ticket assignee changed successfully");
-                            if(assigneeObj.avatar)
-                            {
-                                scope.ticket.assignee.avatar=assigneeObj.avatar;
-                            }
-                            else
-                            {
-                                scope.ticket.assignee.avatar="assets/img/avatar/defaultProfile.png"
-                            }
+                            scope.ticket.assignee=assigneeObj;
 
-                            scope.ticket.assignee._id=assigneeObj._id;
-                            scope.ticket.assignee.name=assigneeObj.name;
                             scope.isEditAssignee = false;
                         }
                         else
@@ -326,7 +324,20 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             scope.assignToMe = function () {
                 scope.newAssignee=myProfileDataParser.myProfile;
                 scope.changeAssignee();
+            };
+
+            scope.loadTickectNextLevel = function () {
+                ticketService.getTicketNextLevel(scope.ticket.type,scope.ticket.status).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+
+                    }
+                }), function (error) {
+
+                }
             }
+
+
 
 
         }

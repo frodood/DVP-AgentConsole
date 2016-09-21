@@ -285,7 +285,20 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
 
     };
+    var getTicketNextLevel= function (ticketType,currentStatus) {
+        var authToken = authService.GetToken();
 
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"/TicketStatusFlow/NextAvailableStatus/"+ticketType+"/"+currentStatus,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
 
 
     return {
@@ -308,7 +321,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetTicketViews:getTicketViews,
         GetTicketsByView:getTicketsByView,
         AddNewCommentToTicket:AddNewCommentToTicket,
-        AssignUserToTicket:AssignUserToTicket
+        AssignUserToTicket:AssignUserToTicket,
+        getTicketNextLevel:getTicketNextLevel
     }
 });
 

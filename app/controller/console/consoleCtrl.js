@@ -4,7 +4,7 @@
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
                                              jwtHelper, resourceService, baseUrls, dataParser,
-                                             veeryNotification, authService, userService, tagService, $interval,myProfileDataParser) {
+                                             veeryNotification, authService, userService, tagService, $interval,myProfileDataParser,reservedTicket) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -704,6 +704,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.getMyProfile();
+
+
+    $scope.reserveTicketTab = function (key,obj) {
+
+        reservedTicket.key=key;//phone number
+        reservedTicket.session_obj=obj;
+
+    };
 
 
 });
