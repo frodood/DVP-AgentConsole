@@ -22,6 +22,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             scope.newAssignee={};
             scope.isOverDue=false;
             scope.newComment="";
+            scope.ticketNextLevels=[];
 
 
             var buildFormSchema = function(schema, form, fields)
@@ -294,8 +295,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 return schema;
             };
 
-             scope.onSubmit = function(form)
-             {
+            scope.onSubmit = function(form)
+            {
                 scope.$broadcast('schemaFormValidate');
                 if (form.$valid)
                 {
@@ -318,7 +319,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
 
                 }
-             };
+            };
 
 
             var convertToSchemaForm = function(formSubmission, callback)
@@ -464,7 +465,24 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             scope.ticketID = JSON.parse(scope.ticketDetails).notificationData._id;
 
+
+
             scope.userList=myProfileDataParser.userList;
+
+            scope.loadTicketNextLevel = function () {
+                ticketService.getTicketNextLevel(scope.ticket.type,scope.ticket.status).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+                        scope.ticketNextLevels=response.data.Result;
+                    }
+                    else
+                    {
+                        console.log("failed to load next levels of ticket ",response.data.Exception);
+                    }
+                }), function (error) {
+                    console.log("failed to load next levels of ticket ",error);
+                }
+            };
 
             scope.loadTicketSummary = function (ticketID) {
 
@@ -512,6 +530,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         scope.subTickets = scope.ticket.sub_tickets;
 
                         console.log("ticket ", scope.ticket);
+                        scope.loadTicketNextLevel();
                     }
                     else {
                         console.log("Error in picking ticket");
@@ -720,7 +739,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 }
 
 
-                if(assigneeObj)
+                if(assigneeObj && scope.ticket)
                 {
                     ticketService.AssignUserToTicket(scope.ticket._id,assigneeObj._id).then(function (response) {
                         if(response.data.IsSuccess)
@@ -752,16 +771,32 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 scope.changeAssignee();
             };
 
-            scope.loadTickectNextLevel = function () {
-                ticketService.getTicketNextLevel(scope.ticket.type,scope.ticket.status).then(function (response) {
+            scope.changeTicketStatus = function (newStatus) {
+
+                var bodyObj =
+                {
+                    status:newStatus
+                };
+
+                ticketService.updateTicketStatus(scope.ticket._id,bodyObj).then(function (response) {
                     if(response.data.IsSuccess)
                     {
-
+                        scope.ticket.status=newStatus;
+                        scope.loadTicketNextLevel();
                     }
-                }), function (error) {
+                    else
+                    {
+                        console.log("Failed to change status of ticket "+scope.ticket._id);
+                    }
 
+                }), function (error) {
+                    console.log("Failed to change status of ticket "+scope.ticket._id,error);
                 }
             }
+
+
+
+
 
 
 
