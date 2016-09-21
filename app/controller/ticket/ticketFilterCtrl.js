@@ -60,7 +60,8 @@ item.count = 0;
 
     // open tab for specific ticket
     $scope.viewSpecificTicket = function (data) {
-        $rootScope.$emit('newTicketTab',data);
+        data.tabType='ticketView';
+        $rootScope.$emit('openNewTab',data);
     }
 
 });

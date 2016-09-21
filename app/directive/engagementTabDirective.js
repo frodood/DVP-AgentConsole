@@ -461,7 +461,8 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
             };
 
             scope.gotoTicket = function (data) {
-                $rootScope.$emit('newTicketTab',data);
+                data.tabType='engagement';
+                $rootScope.$emit('openNewTab',data);
             };
         }
     }
