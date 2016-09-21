@@ -161,12 +161,12 @@
                             <div class="col-md-5 p-0">
                                 <div class="profile-details-img pull-left">
                                     <img src="assets/img/avatar/profile_img150x150.jpg"
-                                         ng-src="assets/img/avatar/profile_img150x150.jpg">
+                                         ng-src="{{profileDetail.avatar}}">
                                 </div>
                                 <div class="prn2 profile-status bold ">
-                                    Mr.Jesse
+                                    {{profileDetail.name}}
                                     <br/>
-                                    <span>18705056530</span>
+                                    <span>{{channelFrom}}</span>
                                 </div>
                             </div>
 
@@ -179,15 +179,15 @@
                                 <ul class="info-list">
                                     <li>
                                         <small>First Name</small>
-                                        <h5>Jesse</h5>
+                                        <h5>{{profileDetail.firstname}}</h5>
                                     </li>
                                     <li>
                                         <small>Last Name</small>
-                                        <h5>Pinkman</h5>
+                                        <h5>{{profileDetail.lastname}}</h5>
                                     </li>
                                     <li>
                                         <small>Address</small>
-                                        <h5>3145/A ,St SW, Albuquerque</h5>
+                                        <h5>{{profileDetail.address.zipcode}} ,{{profileDetail.address.street}}, {{profileDetail.address.city}}</h5>
                                     </li>
                                     <li>
                                         <div class="details-wrap">
@@ -327,7 +327,7 @@
                                             <div class="prn2-contact text-header ">
                                                 email
                                                 <br/>
-                                                <small>@Jesse</small>
+                                                <small>{{profileDetail.email}}</small>
                                             </div>
                                         </div>
                                         <div class="prn2 header-round-icon">
@@ -417,11 +417,11 @@
                                         </li>
                                         <li>
                                             <small>Email</small>
-                                            <h5>jesse@duosoftware.com</h5>
+                                            <h5>{{profileDetail.email}}</h5>
                                         </li>
                                         <li>
                                             <small>Company</small>
-                                            <h5>DuoSoftware</h5>
+                                            <h5>{{company}}</h5>
                                         </li>
                                         <li>
                                             <small>Created</small>
@@ -458,12 +458,12 @@
         </uib-tab>
         <uib-tab heading="Time line" classes="btn tab-btn">
             <div class="animated">
-                <div ng-include="'app/views/time-line/profile-time-line2.html'"></div>
+                <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
             </div>
         </uib-tab>
         <uib-tab heading="Ticket" classes="btn tab-btn">
             <div class="animated">
-                <div ng-include="'app/views/ticket/filter/filter-ticket-view.html'"></div>
+                <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
             </div>
         </uib-tab>
     </uib-tabset>
