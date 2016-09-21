@@ -45,7 +45,7 @@
                         <span class="btn btn-default" ng-click="goToComment()">comment</span>
                     </div>
                     <div class="btn-warp ">
-                        <span class="btn btn-default">assign</span>
+                        <span class="btn btn-default" ng-click="assignToMe()">assign</span>
                     </div>
                     <div class="btn-warp ">
                         <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">close</span>
@@ -106,8 +106,12 @@
                                 </li>
                                 <li>
                                     <small>Due To</small>
+                                        <div class="bg-checkbox red font-white small-details inline-btn"ng-show="isOverDue">
+                                            Overdue
+                                        </div>
                                     <h5>{{ticket.due_at}}</h5>
                                 </li>
+
                             </ul>
                         </div>
 
@@ -183,7 +187,7 @@
                                     <div class="col-lg-5 col-sm-12 text-right  ">
                                         <a class="inline-bt pull-left " href="javascript:void(0);">
                                             <div class="pull-left commenter-img">
-                                                <img src="assets/img/defaultProfile.png" ng-src={{sub.assignee.avatar}}>
+                                                <img src="assets/img/avatar/defaultProfile.png" ng-src={{sub.assignee.avatar}}>
                                                 {{sub.assignee.name}}
                                             </div>
                                         </a>
@@ -229,7 +233,7 @@
                                     <div class="col-lg-5 col-sm-12 text-right  ">
                                         <a class="inline-bt pull-left " href="javascript:void(0);">
                                             <div class="pull-left commenter-img">
-                                                <img src="assets/img/defaultProfile.png" ng-src={{relticket.assignee.avatar}}>
+                                                <img src="assets/img/avatar/defaultProfile.png" ng-src={{relticket.assignee.avatar}}>
                                                 {{relticket.assignee.name}}
                                             </div>
                                         </a>
@@ -263,7 +267,7 @@
                                         <div class="col-lg-6">
                                             <div class="people-view">
                                                 <div class="people-view-img ">
-                                                    <img src="assets/img/defaultProfile.png" ng-src={{ticket.submitter.avatar}}>
+                                                    <img src="assets/img/avatar/defaultProfile.png" ng-src={{ticket.submitter.avatar}}>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold">
@@ -278,7 +282,7 @@
                                         <div class="col-lg-6">
                                             <div class="people-view">
                                                 <div class="people-view-img ">
-                                                    <img src="assets/img/defaultProfile.png" ng-src={{ticket.requester.avatar}}>
+                                                    <img src="assets/img/avatar/defaultProfile.png" ng-src={{ticket.requester.avatar}}>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold color-cyan500">
@@ -321,16 +325,16 @@
                                                             </div>
                                                         </script>-->
                                                         <select class="" placeholder=""
-                                                                ng-model="messageMode">
+                                                                ng-model="newAssignee" ng-model-options="{trackBy: '$value'}">
 
-                                                            <option ng-repeat="user in userList" ng-model="newAssignee">{{user.name}}</option>
+                                                            <option ng-repeat="user in userList" value="{{user}}">{{user.name}}</option>
 
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5">
                                                     <div class="edit-btn-wrapper text-left p-top-10">
-                                                        <div class="bg-checkbox btn-green500 font-white  inline-btn cursor-pointer" ng-click="">
+                                                        <div class="bg-checkbox btn-green500 font-white  inline-btn cursor-pointer" ng-click="changeAssignee()">
                                                             save
                                                         </div>
 
@@ -346,7 +350,7 @@
                                                  ng-mouseleave="isEnableEdit=false"
                                                  ng-mouseover="isEnableEdit=true">
                                                 <div class="people-view-img ">
-                                                    <img src="assets/img/defaultProfile.png" ng-src={{ticket.assignee.avatar}}>
+                                                    <img src="assets/img/avatar/defaultProfile.png" ng-src={{ticket.assignee.avatar}}>
                                                     <i ng-show="isEnableEdit"
                                                        ng-click="editAssignee()"
                                                        class="fa fa-pencil"></i>
@@ -381,7 +385,7 @@
                             <div class="sub-task">
                                 <div class="pull-left  ">
                                     <div class="pull-left commenter-img">
-                                        <img src="assets/img/defaultProfile.png" ng-src="assets/img/avatar/mikeluby.jpg"/>
+                                        <img src="assets/img/avatar/defaultProfile.png" ng-src="assets/img/avatar/mikeluby.jpg"/>
                                         Aaron, Hank
                                     </div>
                                 </div>
@@ -394,7 +398,7 @@
                             <div class="sub-task">
                                 <div class="pull-left  ">
                                     <div class="pull-left commenter-img">
-                                        <img src="assets/img/defaultProfile.png" ng-src="assets/img/avatar/jaman_01.jpg"/>
+                                        <img src="assets/img/avatar/defaultProfile.png" ng-src="assets/img/avatar/jaman_01.jpg"/>
                                         Abourezk, James
                                     </div>
                                 </div>

@@ -4,8 +4,9 @@
             <div class="row">
                 <div class="pull-left commenter-img">
                     <img src="{{comment.author.avatar}}"/>
-                    <small class="bold color-green500">{{comment.author.name}}</small>
-
+                    <small class="bold color-green500">{{comment.author.name}}</small><small class="sub-note" ng-show="comment.public=='public'"> replied</small>
+                    <small class="sub-note" ng-show="comment.public=='private'"> noted</small>
+                    <small class="sub-note" ng-show="comment.public=='internal'"> commented</small>
 
                 </div>
                 <div class="pull-right">
@@ -59,7 +60,7 @@
                     <option>internal</option>
                 </select>
                 <div class="btn-warp inline-btn  p-top-6 ">
-                    <span class="btn  btn-default btn-block " ng-click="addComment(this.newComment,this.messageMode)">add</span>
+                    <span class="btn  btn-default btn-block " ng-click="addComment(newComment,this.messageMode)">add</span>
                 </div>
                 <div class="btn-warp inline-btn  p-top-6 ">
                     <span class="btn  btn-default btn-close btn-block ">cancel</span>

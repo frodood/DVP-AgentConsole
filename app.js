@@ -6,7 +6,7 @@
 var agentApp = angular.module('veeryAgentApp',
     ['ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'ngSanitize']);
+        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize']);
 
 agentApp.constant('moment', moment);
 

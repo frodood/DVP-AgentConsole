@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 9/5/2016.
+ * Created by verry team on 9/5/2016.
  */
 
 agentApp.directive('scrolly', function () {

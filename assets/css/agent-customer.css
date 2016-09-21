@@ -2191,12 +2191,12 @@ tags-input .tags .input {
 }
 
 .time-tracker-wrapper {
-    width: 206px;
-    height: 32px;
+    width: 210px;
+    height: auto;
     background: #0d1c34;
     padding: 7px;
     overflow: hidden;
-    margin-top: 5px;
+    margin-top: -3px;
 }
 
 .time-tracker-body > div {
@@ -2416,4 +2416,7 @@ tags-input .tags .input {
     margin-top: 20px;
 }
 
-
+.sub-note
+{
+    color:darkgrey;
+}
