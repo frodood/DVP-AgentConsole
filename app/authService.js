@@ -45,8 +45,7 @@ return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkdW9hcmFmYXRoIiwi
         };
 
         this.GetProfileId = function(){
-
-            //var decodeData = jwtHelper.decodeToken(this.TokenWithoutBearer());
+           // var decodeData = jwtHelper.decodeToken(this.TokenWithoutBearer());
             return '576a4f18dd751f010089cec0';
         };
 

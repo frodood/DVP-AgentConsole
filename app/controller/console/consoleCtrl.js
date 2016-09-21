@@ -4,7 +4,7 @@
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
                                              jwtHelper, resourceService, baseUrls, dataParser,
-                                             veeryNotification, authService, userService, tagService, $interval,myProfileDataParser,reservedTicket) {
+                                             veeryNotification, authService, userService, tagService, ticketService, $interval, myProfileDataParser, loginService, $state) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -24,7 +24,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -43,10 +43,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-                removeClass('display-block  zoomOut');
+            removeClass('display-block  zoomOut');
         }
     };
 
@@ -55,29 +55,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-                removeClass('display-none');
+            removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-                removeClass('display-block');
+            removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-            removeClass('display-block active-menu-icon ');
+        removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-            removeClass('display-none  ');
+        removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-            removeClass('display-none');
+        removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-            removeClass('display-block active-menu-icon');
+        removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -120,7 +120,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.profile.server.outboundProxy = "";
     $scope.profile.server.enableRtcwebBreaker = false;
     $scope.profile.server.password = null;
-    $scope.profile.server.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3YXJ1bmFAZHVvc29mdHdhcmUuY29tIiwianRpIjoiMTk2N2E5MjItNmIyOS00NDgxLWI2MWUtOTMwZjVmMDA3ZDM3Iiwic3ViIjoiZTBlNTNhOWUtZjNkZi00MTZjLWFmZWItYzI2ZDVhZWIwYWY2IiwiZXhwIjoxNDY1MzEyMTQ2LCJ0ZW5hbnQiOiIxIiwiY29tcGFueSI6IjMiLCJjbGllbnQiOiIxIiwic2NvcGUiOlt7InJlc291cmNlIjoiYXJkc3Jlc291cmNlIiwiYWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0seyJyZXNvdXJjZSI6InJlYWQifSx7InJlc291cmNlIjoid3JpdGUifSx7InJlc291cmNlIjoiZGVsZXRlIn0seyJyZXNvdXJjZSI6InJlc291cmNlIiwiYWN0aW9ucyI6WyJhcmRzcmVzb3VyY2UiLCJyZWFkIiwid3JpdGUiLCJkZWxldGUiLCJyZXNvdXJjZSJdfV0sImlhdCI6MTQ2NDcwNzM0Nn0.brIo8b6per6a1Djm4armChkS4L2O6T40HSrlj-scwcg";
+    $scope.profile.server.token = authService.TokenWithoutBearer();
+
+    $scope.call = {};
+    $scope.call.number = {};
 
     $scope.veeryPhone = {
         sipSendDTMF: function (dtmf) {
@@ -414,13 +417,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /*---------------main tab panel----------------------- */
 
-    $scope.tabs = [
-        {title: 'A526420-Ticket view', content: 'Engagement1', viewType: 'ticketView'},
-        {title: 'A526455-Ticket view', content: 'A526455-Ticket view', viewType: 'engagement'},
-        //{title: 'Engagement2', content: 'Engagement2', viewType: 'engagement'},
-        // {title: 'Ticket Filter', content: 'Ticket Filter', viewType: 'filter'},
-        //{title: 'Mail Inbox', content: 'Mail Inbox', viewType: 'mail-inbox'}
-    ];
 
     $scope.activeTabIndex = 0;
     $scope.tabs = [];
@@ -434,12 +430,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.addTab = function (title, content, viewType, notificationData) {
-        var newTab = {title: title, content: content, viewType: viewType, notificationData: notificationData};
+        var newTab = {disabled:  false, active: true, title: title, content: content, viewType: viewType, notificationData: notificationData};
         $scope.tabs.push(newTab);
         $timeout(function () {
             $scope.activeTabIndex = ($scope.tabs.length - 1);
         });
 
+    };
+
+
+    $scope.tabSelected = function(selectedTab) {
+        $scope.activeTab = selectedTab;
     };
 
 
@@ -519,7 +520,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channel: "555"
         });
     };
-    addTestProfileView();
+    // addTestProfileView();
 
 
     $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
@@ -623,36 +624,122 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     //###time tracker option
-    var _intervalId;
-    $scope.status.active = false;
-    function init() {
-        $scope.counter = "00:00:00";
-    }
+    //var _intervalId;
+    //$scope.status.active = false;
+    //function init() {
+    //    $scope.counter = "00:00:00";
+    //}
+    //
+    //init();
 
-    init();
-
+    $scope.activeTicketTab = {};
+    $scope.ttimer = {};
+    $scope.ttimer.active = false;
+    $scope.ttimer.pause = false;
+    $scope.ttimer.startTime = {};
+    $scope.ttimer.ticketRef = "Start";
 
     $scope.stopTime = function () {
-        $interval.cancel(_intervalId);
-        $scope.counter = "00:00:00";
-        $scope.status.active = false;
-    };
-    $scope.pauseTime = function () {
-        $interval.pause(_intervalId);
+        ticketService.stopTimer().then(function (response) {
+            if (response) {
+
+                document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
+                $scope.status.active = false;
+                $scope.ttimer.active = false;
+                $scope.ttimer.ticketRef = "Start";
+
+            }
+            else {
+                $scope.showError("Error", "Error", "ok", "Timer failed to stop timer ");
+            }
+        }, function (error) {
+            console.log(error);
+            $scope.showError("Error", "Error", "ok", "Timer failed to stop timer ");
+        });
     };
 
-    function updateTime() {
-        var seconds = moment().diff(moment($scope.dateStart, 'x'), 'seconds');
-        var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
-        $scope.counter = elapsed;
-    }
+    $scope.pauseTime = function () {
+        ticketService.pauseTimer().then(function (response) {
+            if (response) {
+
+                $scope.ttimer.pause = true;
+                document.getElementById('clock-timer').getElementsByTagName('timer')[0].clear();
+
+            }
+            else {
+                $scope.showError("Error", "Error", "ok", "Timer failed to pause timer ");
+            }
+        }, function (error) {
+            console.log(error);
+            $scope.showError("Error", "Error", "ok", "Timer failed to pause timer ");
+        });
+        //$interval.pauseTime(_intervalId);
+    };
+
+    //function updateTime() {
+    //    var seconds = moment().diff(moment($scope.dateStart, 'x'), 'seconds');
+    //    var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
+    //    $scope.counter = elapsed;
+    //}
 
     $scope.startTracker = function () {
-        //$scope.status.active = true;
-        $scope.dateStart = moment().format('x');
-        _intervalId = $interval(updateTime, 1000);
-        $scope.status.active = true;
+        if($scope.ttimer.pause){
+            ticketService.startTimer().then(function (response) {
+                if (response) {
+
+                    document.getElementById('clock-timer').getElementsByTagName('timer')[0].resume();
+                    $scope.ttimer.pause = false;
+                    $scope.status.active = true;
+
+                }
+                else {
+                    $scope.showError("Error", "Error", "ok", "Timer failed to resume timer ");
+                }
+            }, function (error) {
+                console.log(error);
+                $scope.showError("Error", "Error", "ok", "Timer failed to resume timer ");
+            });
+        }else {
+
+            if($scope.activeTab && $scope.activeTab.viewType === "ticketView") {
+                ticketService.createTimer($scope.activeTab.notificationData._id).then(function (response) {
+                    if (response) {
+                        var timeNow = moment.utc();
+                        if(response.last_event === "pause" || response.last_event === "start"){
+                            var lastTimeStamp = moment.utc(response.last_event_date);
+                            var timeDiff = timeNow.diff(lastTimeStamp, 'seconds');
+
+                            if(timeDiff >0) {
+                                var startTime = timeNow.subtract(timeDiff, 'seconds');
+                                $scope.ttimer.startTime = parseInt(startTime.format('x'));
+                            }else{
+                                $scope.ttimer.startTime = parseInt(timeNow.format('x'));
+                            }
+                        }else{
+                            $scope.ttimer.startTime = parseInt(timeNow.format('x'));
+
+                        }
+
+                        $scope.status.active = true;
+                        $scope.ttimer.active = true;
+
+                        $scope.ttimer.ticketId = $scope.activeTab.notificationData._id;
+                        $scope.ttimer.ticketRef = $scope.activeTab.content;
+
+                        document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
+                    }
+                    else {
+                        $scope.showError("Error", "Error", "ok", "Timer failed to start ");
+                    }
+                }, function (error) {
+                    console.log(error);
+                    $scope.showError("Error", "Error", "ok", "Timer failed to start ");
+                });
+            }
+        }
+
     };
+
     //end time tracker function
 
 
@@ -683,27 +770,54 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         userService.getMyProfileDetails().then(function (response) {
 
-            if(response.data.IsSuccess)
-            {
+            if (response.data.IsSuccess) {
 
-                myProfileDataParser.myProfile=response.data.Result;
+                myProfileDataParser.myProfile = response.data.Result;
             }
-            else
-            {
+            else {
 
-                myProfileDataParser.myProfile={};
+                myProfileDataParser.myProfile = {};
             }
         }), function (error) {
 
 
-            myProfileDataParser.myProfile={};
+            myProfileDataParser.myProfile = {};
         }
 
 
-
     };
-
     $scope.getMyProfile();
+
+    $scope.loginName = authService.GetResourceIss();
+
+    //Time base create message
+    var myDate = new Date();
+    /* hour is before noon */
+    if (myDate.getHours() < 12) {
+        $scope.timeBaseMsg = "Good Morning";
+    }
+    else  /* Hour is from noon to 5pm (actually to 5:59 pm) */
+    if (myDate.getHours() >= 12 && myDate.getHours() <= 17) {
+        $scope.timeBaseMsg = "Good Afternoon";
+    }
+    else  /* the hour is after 5pm, so it is between 6pm and midnight */
+    if (myDate.getHours() > 17 && myDate.getHours() <= 24) {
+        $scope.timeBaseMsg = "Good Evening";
+    }
+    else  /* the hour is not between 0 and 24, so something is wrong */
+    {
+        document.write("I'm not sure what time it is!");
+        $scope.timeBaseMsg = "-";
+    }
+
+    //logOut
+    $scope.logOut = function () {
+        loginService.Logoff(function (data) {
+            if (data) {
+                $state.go('login');
+            }
+        });
+    }
 
 
     $scope.reserveTicketTab = function (key,obj) {

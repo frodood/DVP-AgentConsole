@@ -129,31 +129,41 @@
 
                         <li>
                             <!-- #Time tracker -->
-                            <div class="time-tracker-wrapper">
-                                <div class="time-tracker-body">
-                                    <div class="time-counter inline-block">{{ counter }}</div>
-                                    <div id="play" class="play cursor-pointer"
-                                         ng-if="!status.active"
-                                         ng-click="startTracker()">
-                                        <i class="veery-font-1-play-button"></i>
-                                    </div>
-                                    <div id="pause" class="pause cursor-pointer"
-                                         ng-if="status.active"
-                                         ng-click="pauseTime()">
-                                        <i class="veery-font-1-pause"></i>
-                                    </div>
-                                    <div id="stop" class="stop cursor-pointer"
-                                         ng-if="status.active"
-                                         ng-click="stopTime()">
-                                        <i class="veery-font-1-stop"></i>
-                                    </div>
+                            <section id="clock-timer">
+                                <div class="time-tracker-wrapper">
+                                    <div class="time-tracker-body">
+                                        <div class="time-counter inline-block">
+                                            <span>{{ttimer.ticketRef}}</span>
+                                            <br/>
+                                            <timer autostart="false" interval="1000"
+                                                   ng-show="ttimer.active"
+                                                   start-time="ttimer.startTime">{{hhours}}:
+                                                {{mminutes}}: {{sseconds}}.
+                                            </timer>
+                                        </div>
+                                        <div id="play" class="play cursor-pointer"
+                                             ng-if="!status.active || ttimer.pause"
+                                             ng-click="startTracker()">
+                                            <i class="veery-font-1-play-button"></i>
+                                        </div>
+                                        <div id="pause" class="pause cursor-pointer"
+                                             ng-if="status.active && !ttimer.pause"
+                                             ng-click="pauseTime()">
+                                            <i class="veery-font-1-pause"></i>
+                                        </div>
+                                        <div id="stop" class="stop cursor-pointer"
+                                             ng-if="status.active"
+                                             ng-click="stopTime()">
+                                            <i class="veery-font-1-stop"></i>
+                                        </div>
 
-                                    <!--<div id="ticketId" class="ticket-id cursor-pointer display-none">-->
-                                    <!--#85953..-->
-                                    <!--</div>-->
+                                        <!--<div id="ticketId" class="ticket-id cursor-pointer display-none">-->
+                                        <!--#85953..-->
+                                        <!--</div>-->
 
+                                    </div>
                                 </div>
-                            </div>
+                            </section>
                             <!-- end tracker -->
                         </li>
 
@@ -301,8 +311,8 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                            >Hi,admin</a>
-                            <a class="time">Good Morning</a>
+                            >Hi,{{loginName}}</a>
+                            <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
                         <ul class="dropdown-menu console-drop-menu" uib-dropdown-menu role="menu"
@@ -315,12 +325,14 @@
 
                             <li><a class="drop-header">Break</a></li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a href="#">available</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">official</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">meal</a></li>
+                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);">available</a></li>
+                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);">official</a></li>
+                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);">meal</a></li>
                             <li class="divider"></li>
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Logout</a></li>
+                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
+                                                                    ng-click="logOut();"
+                            >Logout</a></li>
                         </ul>
 
 
