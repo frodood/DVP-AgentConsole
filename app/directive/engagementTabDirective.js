@@ -370,8 +370,8 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                 engagementService.AppendNoteToEngagementSession(scope.sessionId, {body: noteBody}).then(function (response) {
                     if (response) {
                         scope.currentEngagement.notes.push({body: noteBody});
-                        scope.showAlert("Note", "susses", "Successfully add Note.")
-
+                        scope.showAlert("Note", "success", "Note Add Successfully.");
+                        scope.noteBody = "";
                     }
                     else {
                         scope.showAlert("Note", "error", "Fail To Add Note.")
@@ -438,7 +438,10 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     title: tittle,
                     text: msg,
                     type: type,
-                    styling: 'bootstrap3'
+                    styling: 'bootstrap3',
+                    desktop: {
+                    desktop: true
+                }
                 });
             };
 
@@ -461,7 +464,8 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
             };
 
             scope.gotoTicket = function (data) {
-                $rootScope.$emit('newTicketTab',data);
+                data.tabType = "ticketView";
+                $rootScope.$emit('openNewTab',data);
             };
         }
     }

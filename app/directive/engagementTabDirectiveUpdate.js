@@ -457,7 +457,7 @@ agentApp.directive("engagementTabUpdate", function ($filter, engagementService, 
                     btnList.forEach(function (tab) {
                         $(tab).removeClass('active');
                     });
-                }
+                };
 
                 scope.showProfileView = function (viewName,currentBtn) {
                     profileDisable();

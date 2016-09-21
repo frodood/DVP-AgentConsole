@@ -297,7 +297,7 @@
                                             <div class="prn2-contact text-header">
                                                 facebook
                                                 <br/>
-                                                <small>@Jesse</small>
+                                                <small>{{ profileDetail.facebook}}</small>
                                             </div>
                                         </div>
                                         <div class="prn2 header-round-icon">
@@ -307,7 +307,7 @@
                                             <div class="prn2-contact text-header ">
                                                 twitter
                                                 <br/>
-                                                <small>@Jesse</small>
+                                                <small>{{ profileDetail.twitter}}</small>
                                             </div>
                                         </div>
                                         <div class="prn2 header-round-icon">
@@ -317,7 +317,7 @@
                                             <div class="prn2-contact text-header ">
                                                 linkedin
                                                 <br/>
-                                                <small>@Jesse</small>
+                                                <small>{{ profileDetail.linkedin}}</small>
                                             </div>
                                         </div>
                                         <div class="prn2 header-round-icon">
@@ -337,7 +337,17 @@
                                             <div class="prn2-contact text-header ">
                                                 skype
                                                 <br/>
-                                                <small>@Jesse</small>
+                                                <small>{{profileDetail.skype}}</small>
+                                            </div>
+                                        </div>
+                                        <div class="prn2 header-round-icon">
+                                            <div class="icon-left">
+                                                <i class="fa fa-skype"></i>
+                                            </div>
+                                            <div class="prn2-contact text-header ">
+                                                google+
+                                                <br/>
+                                                <small>{{profileDetail.googleplus}}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -405,15 +415,15 @@
                                     <ul class="info-list-lg">
                                         <li>
                                             <small>Gender</small>
-                                            <h5>Male</h5>
+                                            <h5>{{profileDetail.gender}}</h5>
                                         </li>
                                         <li>
                                             <small>Local</small>
-                                            <h5>SINHALA</h5>
+                                            <h5>{{profileDetail.locale}}</h5>
                                         </li>
                                         <li>
                                             <small>Birthday</small>
-                                            <h5>05-12-1982</h5>
+                                            <h5>{{profileDetail.birthday| date:'MM-dd-yyyy'}}</h5>
                                         </li>
                                         <li>
                                             <small>Email</small>
@@ -425,7 +435,12 @@
                                         </li>
                                         <li>
                                             <small>Created</small>
-                                            <h5>05-05-2009</h5>
+                                            <h5>{{profileDetail.created_at| date:'MM-dd-yyyy @ h:mma'}}</h5>
+                                        </li>
+
+                                        <li ng-repeat="c in profileDetail.contacts">
+                                            <small>{{c.type}}</small>
+                                            <h5>{{c.contact}}</h5>
                                         </li>
                                     </ul>
                                 </div>
@@ -657,5 +672,5 @@
         </div>
     </div>
 </div>
-</div>
+
 

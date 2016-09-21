@@ -351,9 +351,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         uiCallTerminated: function (msg) {
             try {
 
-                /* UIStateChange.disableTimer();
-                 UIStateChange.inIdleState();*/
                 console.log("uiCallTerminated");
+                $scope.ShowIncomeingNotification(false);
                 if (window.btnBFCP) window.btnBFCP.disabled = true;
 
 
