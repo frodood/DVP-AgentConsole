@@ -11,9 +11,9 @@
                 </div>
                 <div class="pull-right">
                     <small><time-ago from-time='{{ comment.created_at }}'></time-ago></small>
-                    <div class="row " ng-show="comment.engagement_session">
+                    <div class="row " ng-show="comment.engagement_session && comment.public=='public'">
                         <small class="pull-right">Delivered</small>
-                    </div><div class="row " ng-show="!comment.engagement_session">
+                    </div><div class="row " ng-show="!comment.engagement_session && comment.public=='public'">
                     <small class="pull-right">Not delivered</small>
                 </div>
                 </div>
