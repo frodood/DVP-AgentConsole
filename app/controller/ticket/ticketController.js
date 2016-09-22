@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/19/2016.
+ * Created by Veery Team on 8/19/2016.
  */
 
 agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,myProfileDataParser) {
@@ -948,7 +948,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
     $scope.gotoTicket = function (data) {
-        $rootScope.$emit('newTicketTab',data);
+
+        data.tabType='ticketView';
+        $rootScope.$emit('openNewTab',data);
         $scope.closeTicketInbox();
 
     };

@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/16/2016.
+ * Created by Veery Team on 8/16/2016.
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
@@ -24,7 +24,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-            removeClass('display-none zoomOut');
+                removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -43,10 +43,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-            removeClass('display-none zoomOut');
+                removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-            removeClass('display-block  zoomOut');
+                removeClass('display-block  zoomOut');
         }
     };
 
@@ -55,29 +55,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-            removeClass('display-none');
+                removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-            removeClass('display-block');
+                removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-        removeClass('display-block active-menu-icon ');
+            removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-        removeClass('display-none  ');
+            removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-        removeClass('display-none');
+            removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-        removeClass('display-block active-menu-icon');
+            removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -179,7 +179,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $http.post(url, data, config)
                 .success(function (data, status, headers, config) {
                     $scope.PostDataResponse = data;
-                    console.log(data);
 
                     if (data) {
                         var decodeData = jwtHelper.decodeToken(data.access_token);
@@ -253,10 +252,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onSipEventSession: function (e) {
             try {
                 console.info("onSipEventSession : " + e);
-                $scope.$apply(function () {
-                    $scope.callStatus = e;
-                });
 
+                $scope.callStatus = e;
                 //document.getElementById("lblSipStatus").innerHTML = e;
                 //Notification.info({message: e, delay: 500, closeOnClick: true});
                 if (e == 'Session Progress') {
@@ -274,9 +271,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         notificationEvent: function (description) {
             try {
-                $scope.$apply(function () {
-                    $scope.phoneStatus = description;
-                });
+
+                $scope.phoneStatus = description;
                 if (description == 'Connected') {
                     /*UIStateChange.inIdleState();*/
                     $scope.PhoneOnline();
@@ -351,9 +347,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         uiCallTerminated: function (msg) {
             try {
 
-                /* UIStateChange.disableTimer();
-                 UIStateChange.inIdleState();*/
                 console.log("uiCallTerminated");
+                $scope.ShowIncomeingNotification(false);
                 if (window.btnBFCP) window.btnBFCP.disabled = true;
 
 
@@ -403,7 +398,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             skill: values[6],
             sessionId: values[1]
         };
-        $scope.addTab('Engagement' + values[3], 'Engagement', 'engagement', notifyData);
+        $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData);
     };
 
     $scope.veeryNotification = function () {
@@ -430,7 +425,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.addTab = function (title, content, viewType, notificationData) {
-        var newTab = {disabled:  false, active: true, title: title, content: content, viewType: viewType, notificationData: notificationData};
+        var newTab = {
+            disabled: false,
+            active: true,
+            title: title,
+            content: content,
+            viewType: viewType,
+            notificationData: notificationData
+        };
         $scope.tabs.push(newTab);
         $timeout(function () {
             $scope.activeTabIndex = ($scope.tabs.length - 1);
@@ -438,20 +440,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
-
-    $scope.tabSelected = function(selectedTab) {
+    $scope.tabSelected = function (selectedTab) {
         $scope.activeTab = selectedTab;
-    };
-
-
-    $scope.addTabTest = function () {
-        $scope.addTab('engagement', 'Engagement', 'engagement', {
-            company: "123",
-            direction: "333",
-            channelFrom: "33",
-            channelTo: "33",
-            channel: "555"
-        });
     };
 
 
@@ -500,28 +490,78 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channel: "555"
         });
     };
-    var addMailInbox = function () {
-        $scope.addTab('Mail Inbox', 'Mail Inbox', 'mail-inbox', {
-            company: "123",
-            direction: "333",
-            channelFrom: "33",
-            channelTo: "33",
-            channel: "555"
-        });
 
+    var openNewTicketTab =function (ticket){
+        var tabTopic = "Ticket - " + ticket.reference;
+        var selectedTabs = $scope.tabs.filter(function (item) {
+            return item.notificationData._id == ticket._id;
+        });
+        if (selectedTabs.length == 0) {
+
+            $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
+        }
+        resizeDiv();
     };
 
-    var addTestProfileView = function () {
-        $scope.addTab('userProfile', 'userProfile', 'userProfile', {
-            company: "123",
-            direction: "333",
-            channelFrom: "33",
-            channelTo: "33",
-            channel: "555"
-        });
+    var openNewEngagementTab = function(args){
+        var notifyData = {
+            company: args.company,
+            direction: args.direction,
+            channelFrom: args.channel_from,
+            channelTo: args.channel_to,
+            channel: args.channel,
+            skill: '',
+            sessionId: args.engagement_id
+        };
+        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData);
     };
-    // addTestProfileView();
 
+    $rootScope.$on('openNewTab', function (events, args) {
+
+        switch (args.tabType) {
+            case 'ticketView':
+                openNewTicketTab(args);
+                break;
+            case 'engagement':
+                openNewEngagementTab(args);
+                break;
+            default:
+
+        }
+    });
+
+    $rootScope.$on('closeTab', function (events, args) {
+        $scope.tabs.filter(function (item) {
+            if (item.notificationData._id == args) {
+
+                $scope.tabs.splice($scope.tabs.indexOf(item), 1);
+
+            }
+
+        });
+    });
+
+    /*use Common Method to open New Tab*/
+    /*$scope.ticketTabCreater = function (ticket) {
+
+        var tabTopic = "Ticket - " + ticket.reference;
+        if ($scope.tabs.length > 0) {
+
+            var isOpened = $scope.tabs.filter(function (item) {
+                return item.notificationData._id == ticket._id;
+            });
+
+            if (isOpened.length == 0) {
+
+                $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
+            }
+        }
+        else {
+
+            $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
+        }
+        resizeDiv();
+    };
 
     $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
         var notifyData = {
@@ -534,78 +574,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: args.engagement_id
         };
         $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData);
-
-
-        /*if ($scope.tabs.length > 0) {
-         /!*var assigneeData = $filter('filter')($scope.tabs, {
-         notificationData._id: args._id
-         });*!/
-         var isOpened = $scope.tabs.filter(function (item) {
-         if (item.notificationData._id == args._id) {
-         return true
-         }
-         else {
-         return false
-         }
-         });
-
-         if (isOpened.length == 0) {
-         var tabTopic = "Ticket" + args.reference;
-         $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
-         }
-         }
-         else {
-         var tabTopic = "Ticket" + args.reference;
-         $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
-         }
-         resizeDiv();
-         */
     });
-
 
     $rootScope.$on('newTicketTab', function (events, args) {
 
-        var tabTopic = "Ticket - " + args.reference;
-        if ($scope.tabs.length > 0) {
-            /*var assigneeData = $filter('filter')($scope.tabs, {
-             notificationData._id: args._id
-             });*/
-            var isOpened = $scope.tabs.filter(function (item) {
-                if (item.notificationData._id == args._id) {
-                    return true
-                }
-                else {
-                    return false
-                }
-            });
+        $scope.ticketTabCreater(args);
 
-            if (isOpened.length == 0) {
+    });*/
 
-                $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
-            }
-        }
-        else {
-
-            $scope.addTab(tabTopic, tabTopic, 'ticketView', args);
-        }
-        resizeDiv();
-
-    });
-
-    $rootScope.$on('closeTab', function (events, args) {
-
-
-        $scope.tabs.filter(function (item) {
-            if (item.notificationData._id == args) {
-
-                $scope.tabs.splice($scope.tabs.indexOf(item), 1);
-
-            }
-
-        });
-
-
-    });
 
     //nav bar main search box
     $scope.loadTags = function (query) {
@@ -683,7 +659,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //}
 
     $scope.startTracker = function () {
-        if($scope.ttimer.pause){
+        if ($scope.ttimer.pause) {
             ticketService.startTimer().then(function (response) {
                 if (response) {
 
@@ -699,23 +675,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 console.log(error);
                 $scope.showError("Error", "Error", "ok", "Timer failed to resume timer ");
             });
-        }else {
+        } else {
 
-            if($scope.activeTab && $scope.activeTab.viewType === "ticketView") {
+            if ($scope.activeTab && $scope.activeTab.viewType === "ticketView") {
                 ticketService.createTimer($scope.activeTab.notificationData._id).then(function (response) {
                     if (response) {
                         var timeNow = moment.utc();
-                        if(response.last_event === "pause" || response.last_event === "start"){
+                        if (response.last_event === "pause" || response.last_event === "start") {
                             var lastTimeStamp = moment.utc(response.last_event_date);
                             var timeDiff = timeNow.diff(lastTimeStamp, 'seconds');
 
-                            if(timeDiff >0) {
+                            if (timeDiff > 0) {
                                 var startTime = timeNow.subtract(timeDiff, 'seconds');
                                 $scope.ttimer.startTime = parseInt(startTime.format('x'));
-                            }else{
+                            } else {
                                 $scope.ttimer.startTime = parseInt(timeNow.format('x'));
                             }
-                        }else{
+                        } else {
                             $scope.ttimer.startTime = parseInt(timeNow.format('x'));
 
                         }
@@ -773,6 +749,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response.data.IsSuccess) {
 
                 myProfileDataParser.myProfile = response.data.Result;
+                $scope.loginAvatar=myProfileDataParser.myProfile.avatar;
             }
             else {
 
@@ -789,6 +766,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.getMyProfile();
 
     $scope.loginName = authService.GetResourceIss();
+
 
     //Time base create message
     var myDate = new Date();
@@ -820,10 +798,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     }
 
 
-    $scope.reserveTicketTab = function (key,obj) {
+    $scope.reserveTicketTab = function (key, obj) {
 
-        reservedTicket.key=key;//phone number
-        reservedTicket.session_obj=obj;
+        reservedTicket.key = key;//phone number
+        reservedTicket.session_obj = obj;
 
     };
 

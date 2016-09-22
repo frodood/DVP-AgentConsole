@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/15/2016.
+ * Created by Veery Team on 8/15/2016.
  */
 
 
@@ -66,4 +66,4 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
         }
     });
 
-})
+});
