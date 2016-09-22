@@ -3,8 +3,7 @@
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
-                                             jwtHelper, resourceService, baseUrls, dataParser,
-                                             veeryNotification, authService, userService, tagService, ticketService, $interval, myProfileDataParser, loginService, $state,uuid4) {
+                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -534,6 +533,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
          resizeDiv();*/
     };
 
+
+    $scope.addMailInbox =function (){
+        $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null);
+        resizeDiv();
+    };
+
+
     var openNewEngagementTab = function(args,index){
         var notifyData = {
             company: args.company,
@@ -559,6 +565,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'engagement':
                 openNewEngagementTab(args,args.index);
                 break;
+            case 'inbox':
+                openEngagementTabForMailReply(args.data);
+                break;
             default:
 
         }
@@ -574,6 +583,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         });
     });
+
+
+    var openEngagementTabForMailReply = function(args)
+    {
+        var notifyData = {
+            company: args.company,
+            direction: args.direction,
+            channelFrom: args.channel_from,
+            channelTo: args.channel_to,
+            channel: args.channel,
+            skill: '',
+            sessionId: args.engagement_id
+        };
+        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData);
+    };
 
     /*use Common Method to open New Tab*/
     /*$scope.ticketTabCreater = function (ticket) {
@@ -597,18 +621,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
      resizeDiv();
      };
 
-     $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
-     var notifyData = {
-     company: args.company,
-     direction: args.direction,
-     channelFrom: args.channel_from,
-     channelTo: args.channel_to,
-     channel: args.channel,
-     skill: '',
-     sessionId: args.engagement_id
-     };
-     $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData);
-     });
 
      $rootScope.$on('newTicketTab', function (events, args) {
 
@@ -641,7 +653,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //}
     //
     //init();
-
+    $scope.unreadMailCount = 0;
     $scope.activeTicketTab = {};
     $scope.ttimer = {};
     $scope.ttimer.active = false;
@@ -775,6 +787,48 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //----------------------------------------------------------------------------------------
 
 
+    var getUnreadMailCounters = function(profileId){
+
+        try
+        {
+            mailInboxService.getMessageCounters(profileId)
+                .then(function (data)
+                {
+                    if (data.IsSuccess)
+                    {
+                        if(data.Result && data.Result.UNREAD)
+                        {
+                            $scope.unreadMailCount = data.Result.UNREAD;
+                        }
+                    }
+                    else
+                    {
+                        var errMsg = data.CustomMessage;
+
+                        if (data.Exception)
+                        {
+                            errMsg = data.Exception.Message;
+                        }
+                        console.log(errMsg);
+                    }
+
+
+                },
+                function (err) {
+                    console.log(err);
+
+                })
+
+        }
+        catch(ex)
+        {
+            console.log(ex);
+
+        }
+
+    };
+
+
     $scope.getMyProfile = function () {
 
 
@@ -784,6 +838,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 myProfileDataParser.myProfile = response.data.Result;
                 $scope.loginAvatar=myProfileDataParser.myProfile.avatar;
+                getUnreadMailCounters(myProfileDataParser.myProfile._id);
             }
             else {
 

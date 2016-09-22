@@ -6,9 +6,9 @@
 
     var mailInboxService = function($http, baseUrls, authService)
     {
-        var getAllInboxMessages = function(limitCount, skipCount, msgType)
+
+        var getAllInboxMessages = function(profileId, limitCount, skipCount, msgType)
         {
-            var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/All?limit=' + limitCount;
@@ -35,9 +35,8 @@
             })
         };
 
-        var getReadInboxMessages = function(limitCount, skipCount)
+        var getReadInboxMessages = function(profileId, limitCount, skipCount)
         {
-            var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Read?limit=' + limitCount;
@@ -59,9 +58,8 @@
             })
         };
 
-        var getUnReadInboxMessages = function(limitCount, skipCount)
+        var getUnReadInboxMessages = function(profileId, limitCount, skipCount)
         {
-            var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Unread?limit=' + limitCount;
@@ -83,9 +81,8 @@
             })
         };
 
-        var getDeletedInboxMessages = function(limitCount, skipCount)
+        var getDeletedInboxMessages = function(profileId, limitCount, skipCount)
         {
-            var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Deleted?limit=' + limitCount;
@@ -107,9 +104,8 @@
             })
         };
 
-        var deleteInboxMessages = function(messageIds)
+        var deleteInboxMessages = function(profileId, messageIds)
         {
-            var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/RemoveMessages';
@@ -129,9 +125,8 @@
             })
         };
 
-        var markMessageAsRead = function(messageId)
+        var markMessageAsRead = function(profileId, messageId)
         {
-            var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Message/' + messageId + '/Read';
@@ -149,9 +144,8 @@
             })
         };
 
-        var getMessageCounters = function()
+        var getMessageCounters = function(profileId)
         {
-            var profileId = authService.GetProfileId();
             var authToken = authService.GetToken();
 
             var url = baseUrls.mailInboxUrl + profileId + '/Counts';
