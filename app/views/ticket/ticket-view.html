@@ -1,5 +1,7 @@
 <div>
     <div ng-include="'app/views/ticket/ticket-edit.html'"></div>
+    <div ng-include="'app/views/ticket/template/new_sub_ticket.html'"></div>
+
     <div class="ticket-view-wrapper">
         <!-- MODEL HEADER -->
         <div class="model-header">
@@ -46,12 +48,14 @@
                         <span class="btn btn-default" ng-click="goToComment()">comment</span>
                     </div>
                     <div class="btn-warp ">
-                        <span class="btn btn-default" ng-click="assignToMe()">assign</span>
+                        <span class="btn btn-default" ng-click="assignToMe()">pick</span>
                     </div>
                     <div class="btn-warp ">
                         <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">close</span>
                     </div>
-
+                    <div class="btn-warp " ng-show="ticket.channel==='Call'">
+                        <span class="btn btn-default btn-close" id="call" ng-click="callCustomer({callNumber: 123})">Call</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,8 +106,8 @@
                                 </li>
                                 <li>
                                     <small>Updated</small>
-                                    <!--<h5>{{ticket.timeDelay}}</h5>-->
-                                    <h5><time-ago from-time='{{ ticket.updated_at }}'></time-ago></h5>
+                                    <h5>{{ticket.updated_at}}</h5>
+                                    <!--<h5><time-ago from-time='{{ ticket.updated_at }}'></time-ago></h5>-->
                                 </li>
                                 <li>
                                     <small>Due To</small>
@@ -170,7 +174,7 @@
                         <!-- SUB TASK LIST -->
                         <div class="ticker-subticket-wrapper">
                             <div class="details">
-                                <h5 class="bold">SUB TICKET </h5>
+                                <h5 class="bold">SUB TICKET </h5><h2 ng-click="clickAddNewTicket()">+</h2>
                             </div>
                             <div ng-show=subTickets.length==0>
                                 No sub-tickets assigned yet
@@ -201,6 +205,7 @@
 
                                         <div class="bg-checkbox  font-white  inline-bt link-btn  ">
                                             <i class="main-icon-2-more-1 color-green500">
+
                                             </i>
                                         </div>
                                     </div>

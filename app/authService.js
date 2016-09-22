@@ -7,7 +7,7 @@ angular.module('authServiceModule' ,[])
 
 
         this.GetToken = function(){
-            var data = localStorageService.get("@loginToken");
+            var data = localStorageService.get("@agentConsoleLoginToken");
 
             if(data && data.access_token){
 
@@ -22,7 +22,7 @@ angular.module('authServiceModule' ,[])
         };
 
         this.TokenWithoutBearer = function(){
-            var data = localStorageService.get("@loginToken");
+            var data = localStorageService.get("@agentConsoleLoginToken");
 
             if(data && data.access_token){
 
