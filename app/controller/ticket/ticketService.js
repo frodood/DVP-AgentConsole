@@ -136,6 +136,23 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             return response;
         });
     };
+
+    var mapFormSubmissionToTicket= function (formSubId, ticketId) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+'Ticket/' + ticketId + '/FormSubmission',
+            headers: {
+                'authorization':authToken
+            },
+            data: JSON.stringify({form_submission: formSubId})
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
     var getMyGroupOpenTickets= function (page) {
         var authToken = authService.GetToken();
         return $http({
@@ -332,7 +349,24 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             }
         }).then(function(response)
         {
-            return response;
+            return response.data;
+        });
+
+    };
+
+    var getFormSubmissionByRef = function (ref) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"FormSubmission/" + ref,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
         });
 
     };
@@ -350,7 +384,25 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             data: JSON.stringify(updateValues)
         }).then(function(response)
         {
-            return response;
+            return response.data;
+        });
+
+    };
+
+    var createFormSubmissionData = function (saveValues) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'POST',
+            url: baseUrls.ticketUrl+"FormSubmission",
+            headers: {
+                'authorization':authToken
+            },
+            data: JSON.stringify(saveValues)
+        }).then(function(response)
+        {
+            return response.data;
         });
 
     };
@@ -456,7 +508,10 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         stopTimer: stopTimer,
         getFormsForCompany: getFormsForCompany,
         AssignUserToTicket:AssignUserToTicket,
-        updateFormSubmissionData: updateFormSubmissionData
+        updateFormSubmissionData: updateFormSubmissionData,
+        createFormSubmissionData: createFormSubmissionData,
+        mapFormSubmissionToTicket: mapFormSubmissionToTicket,
+        getFormSubmissionByRef: getFormSubmissionByRef
     }
 });
 
