@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 9/8/2016.
+ * Created by Veery Team on 9/8/2016.
  */
 
 agentApp.controller('notificationCenterCtrl', function ($scope, $http) {

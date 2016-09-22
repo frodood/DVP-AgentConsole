@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/15/2016.
+ * Created by Veery Team on 8/15/2016.
  */
 
 
@@ -21,6 +21,7 @@ var baseUrls = {
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'oauthLogOutUrl': 'http://userservice.app.veery.cloud/oauth/token/revoke/',
     'oauthLoginUrl': 'http://userservice.app.veery.cloud/oauth/token',
+    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING'
 };
 
 agentApp.constant('baseUrls', baseUrls);
@@ -66,4 +67,4 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
         }
     });
 
-})
+});
