@@ -129,6 +129,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sipSendDTMF(dtmf);
             $scope.call.number = $scope.call.number + dtmf;
         },
+        makeCall:function(callNumber,tabReference){
+            $scope.veeryPhone.makeAudioCall(callNumber);
+
+          //  var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
+
+            $scope.tabReference=tabReference;
+        },
         makeAudioCall: function (callNumber) {
             if (callNumber == "") {
                 return
@@ -397,7 +404,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             skill: values[6],
             sessionId: values[1]
         };
-        $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData);
+
+        var index = notifyData.sessionId;
+        if(notifyData.direction.toLowerCase() ==='outbound'){
+            $scope.tabs.filter(function (item) {
+                var substring = "-Call"+notifyData.channelFrom;
+                if (item.tabReference.indexOf(substring) !== -1) {
+                    index = item.tabReference;
+                }
+            });
+        }
+
+        $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData,index);
     };
 
     $scope.veeryNotification = function () {
@@ -413,15 +431,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.activeTabIndex = 0;
+    $scope.tabReference = "";
     $scope.tabs = [];
-
-    var data = {
-        company: "weweqw",
-        direction: "ewq",
-        channelFrom: "eqweqw",
-        channelTo: "eqw",
-        channel: "weweqweqw"
-    };
 
     $scope.addTab = function (title, content, viewType, notificationData,index) {
 
@@ -456,9 +467,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.tabSelected(index);
         }
 
-
-
-
     };
 
     $scope.tabSelected = function (tabIndex) {
@@ -470,13 +478,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 $scope.activeTabIndex = $scope.tabs.indexOf(item);
                 document.getElementById ("tab_view").active = $scope.tabs.indexOf(item);
-
-
             }
-
         });
-
-
     };
 
 
@@ -560,9 +563,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $rootScope.$on('openNewTab', function (events, args) {
-
-
-
 
         switch (args.tabType) {
             case 'ticketView':

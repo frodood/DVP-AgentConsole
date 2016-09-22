@@ -17,7 +17,7 @@
                 </engagement-tab>
             </div>
             <div ng-switch-when="ticketView ">
-                <ticket-tab-view ticket-details="{{tab}}" call-customer="veeryPhone.makeAudioCall(callNumber)"></ticket-tab-view>
+                <ticket-tab-view  ticket-details="tab" call-customer="veeryPhone.makeCall(callNumber)"></ticket-tab-view>
                 <!--<div ng-include="'app/views/ticket/ticket-view.html'"></div>-->
             </div>
             <div ng-switch-when="filter">
@@ -26,7 +26,7 @@
             <div ng-switch-when="mail-inbox">
                 <div ng-include="'app/views/mail-inbox/inbox-view.html'"></div>
             </div>
-            <div ng-switch-when="userProfile">
+            <!--<div ng-switch-when="userProfile">
                 <engagement-tab-update load-tags="reloadTagAndCategories()"
                                        tag-category-list="tagCategories"
                                        tag-list="tags" users="users"
@@ -38,7 +38,7 @@
                                        channel-to="{{tab.notificationData.channelTo}}"
                                        direction="{{tab.notificationData.direction}}">
                 </engagement-tab-update>
-            </div>
+            </div>-->
         </div>
     </uib-tab>
 </uib-tabset>

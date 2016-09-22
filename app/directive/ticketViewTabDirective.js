@@ -6,17 +6,13 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
     return {
         restrict: "EA",
         scope: {
-            ticketDetails: "@",
-            direction: "@",
-            channelFrom: "@",
-            channelTo: "@",
-            channel: "@",
-            skill: "@",
-            sessionId: "@",
+            ticketDetails: "=",
             callCustomer:"&"
         },
         templateUrl: 'app/views/ticket/ticket-view.html',
         link: function (scope, element, attributes) {
+
+            scope.tabReference = scope.tabReference+"-"+"18705056550";
 
             scope.oldFormModel = null;
             scope.currentSubmission = null;
@@ -26,6 +22,13 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
             scope.isOverDue=false;
             scope.newComment="";
             scope.ticketNextLevels=[];
+
+            scope.callToCustomer = function (no) {
+                var newId = scope.ticketDetails.tabReference;
+                scope.ticketDetails.tabReference = newId+"-Call"+no;
+                scope.callCustomer({callNumber: no});
+            };
+
 
             scope.showAlert = function (tittle, type, msg) {
                 new PNotify({
@@ -643,7 +646,7 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
             scope.subTickets = [];
             scope.relTickets = [];
 
-            scope.ticketID = JSON.parse(scope.ticketDetails).notificationData._id;
+            scope.ticketID = scope.ticketDetails.notificationData._id;
 
             scope.userList=myProfileDataParser.userList;
 
