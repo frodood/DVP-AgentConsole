@@ -1,5 +1,5 @@
 /**
- * Created by Rajinda on 9/8/2016.
+ * Created by Veery Team on 9/8/2016.
  */
 
 agentApp.factory("ticketService", function ($http, baseUrls,authService) {
@@ -149,6 +149,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var mapFormSubmissionToTicket= function (formSubId, ticketId) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+'Ticket/' + ticketId + '/FormSubmission',
+            headers: {
+                'authorization':authToken
+            },
+            data: JSON.stringify({form_submission: formSubId})
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
     var getMyGroupOpenTickets= function (page) {
         var authToken = authService.GetToken();
         return $http({
@@ -384,7 +399,24 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             }
         }).then(function(response)
         {
-            return response;
+            return response.data;
+        });
+
+    };
+
+    var getFormSubmissionByRef = function (ref) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"FormSubmission/" + ref,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
         });
 
     };
@@ -399,10 +431,28 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             headers: {
                 'authorization':authToken
             },
-            data: updateValues
+            data: JSON.stringify(updateValues)
         }).then(function(response)
         {
-            return response;
+            return response.data;
+        });
+
+    };
+
+    var createFormSubmissionData = function (saveValues) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'POST',
+            url: baseUrls.ticketUrl+"FormSubmission",
+            headers: {
+                'authorization':authToken
+            },
+            data: JSON.stringify(saveValues)
+        }).then(function(response)
+        {
+            return response.data;
         });
 
     };
@@ -507,9 +557,13 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         pauseTimer: pauseTimer,
         stopTimer: stopTimer,
         getFormsForCompany: getFormsForCompany,
-        updateFormSubmissionData: updateFormSubmissionData,
+        AssignUserToTicket:AssignUserToTicket,
         updateTicketStatus:updateTicketStatus,
-        GetExternalUserRecentTickets:getExternalUserRecentTickets
+        updateFormSubmissionData: updateFormSubmissionData,
+        GetExternalUserRecentTickets:getExternalUserRecentTickets,
+        createFormSubmissionData: createFormSubmissionData,
+        mapFormSubmissionToTicket: mapFormSubmissionToTicket,
+        getFormSubmissionByRef: getFormSubmissionByRef
     }
 });
 

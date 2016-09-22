@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/16/2016.
+ * Created by Veery Team on 8/16/2016.
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,

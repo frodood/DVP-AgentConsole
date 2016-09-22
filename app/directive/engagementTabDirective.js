@@ -278,6 +278,11 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                         return obj.name;
                     });
                 }
+                if (ticket.related) {
+                    ticket.related_tickets =ticket.related.map(function (obj) {
+                        return obj._id;
+                    });
+                }
 
                 ticketService.SaveTicket(ticket).then(function (response) {
                     if (!response) {
@@ -477,6 +482,29 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     scope.showAlert("Ticket", "error", "Fail To Get Recent Tickets.")
                 });
             };
+
+            scope.queryTicketList = function (query) {
+                if (query === "*" || query === "") {
+                    if (scope.ticketList) {
+                        return scope.ticketList;
+                    }
+                    else {
+                        return [];
+                    }
+
+                }
+                else {
+                    var results = query ? scope.ticketList.filter(function (query) {
+                        var lowercaseQuery = angular.lowercase(query);
+                        return function filterFn(group) {
+                            return (group.ticketList.toLowerCase().indexOf(lowercaseQuery) != -1);
+                        };
+                    }) : [];
+                    return results;
+                }
+
+            };
+
         }
     }
 });

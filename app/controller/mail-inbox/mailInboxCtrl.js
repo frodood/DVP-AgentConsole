@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 9/12/2016.
+ * Created by Veery Team on 9/12/2016.
  */
 agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService) {
 
