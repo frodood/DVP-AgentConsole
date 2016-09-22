@@ -1,5 +1,5 @@
 
-<uib-tabset active="activeTabIndex">
+<uib-tabset active="activeTabIndex" id="tab_view">
     <uib-tab class="console-main-tab" ng-repeat="tab in tabs" heading="{{tab.title}} "
              disable="tab.disabled" select="tabSelected(tab)">
         <div ng-switch on="tab.viewType">
