@@ -8,20 +8,20 @@ function getJSONData(http, file, callback) {
     })
 }
 
-/* Set the width of the side navigation to 250px */
-function openNav() {
-    document.getElementById("mySidenav").style.width = "300px";
-    document.getElementById("main").style.marginRight = "285px";
-    // document.getElementById("navBar").style.marginRight = "300px";
-}
-
-
-/* Set the width of the side navigation to 0 */
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginRight = "0";
-    //  document.getElementById("navBar").style.marginRight = "0";
-}
+///* Set the width of the side navigation to 250px */
+//function openNav() {
+//    document.getElementById("mySidenav").style.width = "300px";
+//    document.getElementById("main").style.marginRight = "285px";
+//    // document.getElementById("navBar").style.marginRight = "300px";
+//}
+//
+//
+///* Set the width of the side navigation to 0 */
+//function closeNav() {
+//    document.getElementById("mySidenav").style.width = "0";
+//    document.getElementById("main").style.marginRight = "0";
+//    //  document.getElementById("navBar").style.marginRight = "0";
+//}
 
 /// div none and block
 var divModel = function () {
