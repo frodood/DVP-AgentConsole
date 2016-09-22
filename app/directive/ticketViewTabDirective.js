@@ -2,7 +2,7 @@
  * Created by Pawan on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService,myProfileDataParser) {
+agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService,myProfileDataParser,userService) {
     return {
         restrict: "EA",
         scope: {
@@ -795,9 +795,41 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 }
             }
 
+// ..............................  new sub ticket .....................
 
+            scope.newSubTicket={};
+            scope.newSubTicket.reference="xxxxx";
+            scope.newSubTicket.channel="scdvfsvf";
+            scope.newSubTicket.status="open";
 
+            scope.setPriority = function (priority) {
+                scope.newSubTicket.priority = priority;
+            };
+            scope.loadUsers = function () {
+                userService.LoadUser().then(function (response) {
+                    scope.users = response;
+                }, function (err) {
+                    scope.showAlert("load Users", "error", "Fail To Get User List.")
+                });
+            };
+            scope.loadUsers();
+            scope.saveTicket = function (subTicket) {
 
+                ticketService.AddSubTicket(scope.ticket._id,subTicket).then(function (response) {
+
+                    if(response.data.IsSuccess)
+                    {
+                        alert("sub ticket added");
+                    }
+                    else
+                    {
+                        alert("sub ticket Error");
+                    }
+
+                }), function (error) {
+                    alert("sub ticket Error");
+                }
+            }
 
 
 
