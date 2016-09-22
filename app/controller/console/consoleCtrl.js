@@ -425,6 +425,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.addTab = function (title, content, viewType, notificationData,index) {
+
+
         var newTab = {
             disabled: false,
             active: true,
@@ -432,14 +434,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             content: content,
             viewType: viewType,
             notificationData: notificationData,
-            tabReference:index
+            tabReference:index?index:uuid4.generate()
         };
+
+
 
         if($scope.tabs.indexOf(newTab)==-1)
         {
             $scope.tabs.push(newTab);
             $timeout(function () {
-                $scope.activeTabIndex = ($scope.tabs.length - 1);
+                $scope.tabSelected(newTab.tabReference);
             });
         }
         else
@@ -460,6 +464,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.activeTab=item;
 
                 $scope.activeTabIndex = $scope.tabs.indexOf(item);
+                document.getElementById ("tab_view").active = $scope.tabs.indexOf(item);
+
+
             }
 
         });
@@ -543,23 +550,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $rootScope.$on('openNewTab', function (events, args) {
 
 
-        var index="";
 
-        if(args.index)
-        {
-            index=args.index;
-        }
-        else
-        {
-            index=uuid4.generate();
-        }
 
         switch (args.tabType) {
             case 'ticketView':
-                openNewTicketTab(args,index);
+                openNewTicketTab(args,args.index);
                 break;
             case 'engagement':
-                openNewEngagementTab(args,index);
+                openNewEngagementTab(args,args.index);
                 break;
             default:
 
