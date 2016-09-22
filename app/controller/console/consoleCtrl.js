@@ -12,9 +12,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.notifications = data;
     });
 
-    getJSONData($http, 'userList', function (data) {
+    /*getJSONData($http, 'userList', function (data) {
         $scope.agentList = data;
-    });
+    });*/
 
     $scope.status = {
         isopen: false
@@ -804,6 +804,132 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         reservedTicket.session_obj = obj;
 
     };
+
+
+    //-------------------------------OnlineAgent-----------------------------------------------------
+
+    var getAllRealTimeTimer = {};
+
+    $scope.showMessageBlock = function () {
+        divModel.model('#sendMessage', 'display-block');
+    };
+    $scope.closeMessage = function () {
+        divModel.model('#sendMessage', 'display-none');
+    };
+
+    /* Set the width of the side navigation to 250px */
+    $scope.openNav = function() {
+
+        getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
+        document.getElementById("mySidenav").style.width = "300px";
+        document.getElementById("main").style.marginRight = "285px";
+        // document.getElementById("navBar").style.marginRight = "300px";
+    };
+
+
+    /* Set the width of the side navigation to 0 */
+    $scope.closeNav = function() {
+        if (getAllRealTimeTimer) {
+            $timeout.cancel(getAllRealTimeTimer);
+        }
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginRight = "0";
+        //  document.getElementById("navBar").style.marginRight = "0";
+    };
+
+
+    var FilterByID = function(array,field, value) {
+        if(array) {
+            for (var i = array.length - 1; i >= 0; i--) {
+                if (array[i].hasOwnProperty(field)) {
+                    if (array[i][field] == value) {
+                        return array[i];
+                    }
+                }
+            }
+            return null;
+        }else{
+            return null;
+        }
+    };
+
+    var loadOnlineAgents = function(){
+        resourceService.getOnlineAgentList().then(function(response){
+            if(response.IsSuccess)
+            {
+                var onlineAgentList = [];
+                var offlineAgentList = [];
+                $scope.agentList = [];
+                var onlineAgents = response.Result;
+
+                if($scope.users) {
+                    for (var i = 0; i < $scope.users.length; i++) {
+                        var user = $scope.users[i];
+
+                        if(user.resourceid){
+                            var resource = FilterByID(onlineAgents,"ResourceId", user.resourceid);
+                            if(resource) {
+                                user.status = resource.Status.State;
+                                if(user.status === "NotAvailable"){
+                                    offlineAgentList.push(user);
+                                }else{
+                                    onlineAgentList.push(user);
+                                }
+                            }else{
+                                user.status = "NotAvailable";
+                                offlineAgentList.push(user);
+                            }
+                        }else{
+                            user.status = "NotAvailable";
+                            offlineAgentList.push(user);
+                        }
+                    }
+
+                    onlineAgentList.sort(function(a, b){
+                        if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        return 0;
+                    });
+                    offlineAgentList.sort(function(a, b){
+                        if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        return 0;
+                    });
+
+                    $scope.agentList = onlineAgentList.concat(offlineAgentList);
+                }
+            }
+            else
+            {
+                var errMsg = response.CustomMessage;
+
+                if(response.Exception)
+                {
+                    errMsg = response.Exception.Message;
+                }
+                $scope.showAlert('Error', 'error', errMsg);
+            }
+        }, function(err){
+            var errMsg = "Error occurred while loading online agents";
+            if(err.statusText)
+            {
+                errMsg = err.statusText;
+            }
+            $scope.showAlert('Error', 'error', errMsg);
+        });
+    };
+
+    var getAllRealTime = function () {
+        loadOnlineAgents();
+        getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
+    };
+
+
+    $scope.$on("$destroy", function () {
+        if (getAllRealTimeTimer) {
+            $timeout.cancel(getAllRealTimeTimer);
+        }
+    });
 
 
 });
