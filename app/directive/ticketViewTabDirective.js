@@ -771,6 +771,7 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
 
             scope.loadTicketView = function (data) {
                 data.tabType='ticketView';
+                data.index=data.reference;
                 $rootScope.$emit('openNewTab',data);
             }
 

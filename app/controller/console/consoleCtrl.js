@@ -425,6 +425,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.addTab = function (title, content, viewType, notificationData,index) {
 
+        var isOpened=false;
 
         var newTab = {
             disabled: false,
@@ -436,9 +437,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             tabReference:index?index:uuid4.generate()
         };
 
+        $scope.tabs.filter(function (item) {
+            if (item.tabReference == index) {
+                isOpened=true;
+            }
+        });
 
 
-        if($scope.tabs.indexOf(newTab)==-1)
+        if(!isOpened)
         {
             $scope.tabs.push(newTab);
             $timeout(function () {
@@ -447,7 +453,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
         else
         {
-            $scope.tabSelected(newTab.tabReference);
+            $scope.tabSelected(index);
         }
 
 
