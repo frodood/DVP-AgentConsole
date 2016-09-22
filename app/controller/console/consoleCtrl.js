@@ -289,7 +289,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
         },
-        onerrorCallback: function (e) {
+        onErrorEvent: function (e) {
             //document.getElementById("lblStatus").innerHTML = e;
             $scope.showAlert("Soft Phone", "error", e);
             console.error(e);
@@ -376,7 +376,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     var userEvent = {
         onSipEventSession: $scope.veeryPhone.onSipEventSession,
         notificationEvent: $scope.veeryPhone.notificationEvent,
-        onErrorCallback: $scope.veeryPhone.onErrorCallback,
+        onErrorCallback: $scope.veeryPhone.onErrorEvent,
         uiOnConnectionEvent: $scope.veeryPhone.uiOnConnectionEvent,
         uiVideoDisplayShowHide: $scope.veeryPhone.uiVideoDisplayShowHide,
         uiVideoDisplayEvent: $scope.veeryPhone.uiVideoDisplayEvent,

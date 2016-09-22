@@ -51,7 +51,9 @@
                     <div class="btn-warp ">
                         <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">close</span>
                     </div>
-
+                    <div class="btn-warp " ng-show="ticket.channel==='Call'">
+                        <span class="btn btn-default btn-close" id="call" ng-click="callCustomer({callNumber: 123})">Call</span>
+                    </div>
                 </div>
             </div>
         </div>

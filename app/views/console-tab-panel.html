@@ -17,8 +17,7 @@
                 </engagement-tab>
             </div>
             <div ng-switch-when="ticketView ">
-                <ticket-tab-view ticket-details="{{tab}}"
-                "></ticket-tab-view>
+                <ticket-tab-view ticket-details="{{tab}}" call-customer="veeryPhone.makeAudioCall(callNumber)"></ticket-tab-view>
                 <!--<div ng-include="'app/views/ticket/ticket-view.html'"></div>-->
             </div>
             <div ng-switch-when="filter">

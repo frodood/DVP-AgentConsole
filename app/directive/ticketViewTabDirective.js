@@ -12,7 +12,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             channelTo: "@",
             channel: "@",
             skill: "@",
-            sessionId: "@"
+            sessionId: "@",
+            callCustomer:"&"
         },
         templateUrl: 'app/views/ticket/ticket-view.html',
         link: function (scope, element, attributes) {
@@ -841,6 +842,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 $rootScope.$emit('closeTab', scope.ticket._id);
 
             };
+
+
 
             scope.addComment = function (message,mode) {
 
