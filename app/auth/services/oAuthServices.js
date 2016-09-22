@@ -23,7 +23,7 @@
 
         //get token
         function getToken(appname) {
-            var data = localStorageService.get("@loginToken");
+            var data = localStorageService.get("@agentConsoleLoginToken");
             if (data && data.access_token) {
                 if (!jwtHelper.isTokenExpired(data.access_token)) {
                     return data.access_token;
@@ -34,7 +34,7 @@
 
         //check is owner
         function isOwner(appname) {
-            var data = localStorageService.get("@loginToken");
+            var data = localStorageService.get("@agentConsoleLoginToken");
             if (data && data.access_token) {
                 if (!jwtHelper.isTokenExpired(data.access_token)) {
                     return data.user_meta.role;
@@ -45,7 +45,7 @@
 
         //get token decode
         function getTokenDecode() {
-            var data = localStorageService.get("@loginToken");
+            var data = localStorageService.get("@agentConsoleLoginToken");
             if (data && data.access_token) {
                 if (!jwtHelper.isTokenExpired(data.access_token)) {
                     return jwtHelper.decodeToken(data.access_token);
@@ -70,7 +70,7 @@
                 }
             }).
             success(function (data, status, headers, config) {
-                clearCookie('@loginToken');
+                clearCookie('@agentConsoleLoginToken');
                 callback(true);
             }).
             error(function (data, status, headers, config) {
@@ -95,8 +95,8 @@
             }).
             success(function (data, status, headers, config) {
                 localStorageService.remove("@navigations");
-                clearCookie('@loginToken');
-                setCookie('@loginToken', data);
+                clearCookie('@agentConsoleLoginToken');
+                setCookie('@agentConsoleLoginToken', data);
                 callback(true);
             }).
             error(function (data, status, headers, config) {
