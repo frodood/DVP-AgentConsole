@@ -50,7 +50,12 @@ item.count = 0;
         ticketService.GetTicketsByView(data._id).then(function (response) {
             $scope.isProgress = false;
             $scope.ticketList = response;
-            $scope.isNoData = !response;
+            if(!response || response.length===0){
+                $scope.isNoData = true;
+            }
+            else{
+                $scope.isNoData = false;
+            }
         }, function (err) {
             $scope.isProgress = false;
             $scope.showAlert("load Tickets", "error", "Fail To Load Tickets List.")

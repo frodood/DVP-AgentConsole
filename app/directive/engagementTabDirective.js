@@ -278,6 +278,11 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                         return obj.name;
                     });
                 }
+                if (ticket.related) {
+                    ticket.related_tickets =ticket.related.map(function (obj) {
+                        return obj._id;
+                    });
+                }
 
                 ticketService.SaveTicket(ticket).then(function (response) {
                     if (!response) {
