@@ -1,7 +1,8 @@
 /**
  * Created by Veery Team on 9/12/2016.
  */
-agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService) {
+agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService, myProfileDataParser) {
+
 
 
     $scope.clickMoreEmailDetails = function (messageDetails) {
@@ -12,7 +13,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
 
         if(!messageDetails.has_read)
         {
-            mailInboxService.markMessageAsRead(messageDetails._id)
+            mailInboxService.markMessageAsRead(myProfileDataParser.myProfile._id, messageDetails._id)
                 .then(function (data)
                 {
                     if(data.IsSuccess)
@@ -90,7 +91,11 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
     {
         if($scope.currentDisplayMessage && $scope.currentDisplayMessage.engagement_session)
         {
-            $rootScope.$emit('INBOX_NewEngagementTab', $scope.currentDisplayMessage.engagement_session);
+            var tabObj = {
+                tabType: 'inbox',
+                data: $scope.currentDisplayMessage.engagement_session
+            };
+            $rootScope.$emit('openNewTab', tabObj);
         }
 
     };
@@ -187,7 +192,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
 
         try
         {
-            mailInboxService.getMessageCounters()
+            mailInboxService.getMessageCounters(myProfileDataParser.myProfile._id)
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -473,7 +478,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
     {
         try
         {
-            mailInboxService.deleteInboxMessages(messageIds)
+            mailInboxService.deleteInboxMessages(myProfileDataParser.myProfile._id, messageIds)
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -515,7 +520,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
             $scope.currentFilter = 'INBOX';
             $scope.currentPageCount = $scope.counters.INBOX;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, null)
+            mailInboxService.getAllInboxMessages(myProfileDataParser.myProfile._id, 10, $scope.pageStartCount, null)
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -559,7 +564,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
             $scope.currentFilter = 'DELETED';
             $scope.currentPageCount = $scope.counters.DELETED;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getDeletedInboxMessages(10, $scope.pageStartCount)
+            mailInboxService.getDeletedInboxMessages(myProfileDataParser.myProfile._id, 10, $scope.pageStartCount)
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -603,7 +608,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
             $scope.currentFilter = 'UNREAD';
             $scope.currentPageCount = $scope.counters.UNREAD;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getUnReadInboxMessages(10, $scope.pageStartCount)
+            mailInboxService.getUnReadInboxMessages(myProfileDataParser.myProfile._id, 10, $scope.pageStartCount)
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -647,7 +652,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
             $scope.currentFilter = 'READ';
             $scope.currentPageCount = $scope.counters.READ;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getReadInboxMessages(10, $scope.pageStartCount)
+            mailInboxService.getReadInboxMessages(myProfileDataParser.myProfile._id, 10, $scope.pageStartCount)
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -691,7 +696,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
             $scope.currentFilter = 'FACEBOOK';
             $scope.currentPageCount = $scope.counters.FACEBOOK;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, 'FACEBOOK')
+            mailInboxService.getAllInboxMessages(myProfileDataParser.myProfile._id, 10, $scope.pageStartCount, 'FACEBOOK')
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -735,7 +740,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
             $scope.currentFilter = 'TWITTER';
             $scope.currentPageCount = $scope.counters.TWITTER;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, 'TWITTER')
+            mailInboxService.getAllInboxMessages(myProfileDataParser.myProfile._id, 10, $scope.pageStartCount, 'TWITTER')
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -779,7 +784,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
             $scope.currentFilter = 'NOTIFICATION';
             $scope.currentPageCount = $scope.counters.NOTIFICATION;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, 'NOTIFICATION')
+            mailInboxService.getAllInboxMessages(myProfileDataParser.myProfile._id, 10, $scope.pageStartCount, 'NOTIFICATION')
                 .then(function (data)
                 {
                     if (data.IsSuccess)
@@ -823,7 +828,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
             $scope.currentFilter = 'SMS';
             $scope.currentPageCount = $scope.counters.SMS;
             $scope.filteredMailDisplay = [];
-            mailInboxService.getAllInboxMessages(10, $scope.pageStartCount, 'SMS')
+            mailInboxService.getAllInboxMessages(myProfileDataParser.myProfile._id, 10, $scope.pageStartCount, 'SMS')
                 .then(function (data)
                 {
                     if (data.IsSuccess)

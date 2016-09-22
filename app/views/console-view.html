@@ -184,9 +184,9 @@
                             <i class="veery-font-3-mail-5" ng-click="addMailInbox();"></i>
 
                             <div class="console-notification-header">
-                                5
+                                {{unreadMailCount}}
                             </div>
-                            <ul class="dropdown-menu console-drop-menu notification-menu" uib-dropdown-menu role="menu"
+                            <!--<ul class="dropdown-menu console-drop-menu notification-menu" uib-dropdown-menu role="menu"
                                 aria-labelledby="btn-append-to-single-button">
                                 <li class="notification-header">
                                     <a class="drop-header">Inbox </a>
@@ -228,7 +228,7 @@
                                     </div>
 
                                 </div>
-                            </ul>
+                            </ul>-->
                         </li>
 
                         <!-- send notification -->
@@ -304,7 +304,7 @@
 
 
                         <div id="consoleProfileImg" class="console-profile-img" uib-dropdown-toggle>
-                            <img src="assets/img/avatar/oykun.jpg">
+                            <img src="assets/img/avatar/defaultProfile.png" ng-src="{{loginAvatar}}">
 
                             <div class="user-state online"></div>
                         </div>

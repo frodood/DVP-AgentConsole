@@ -370,6 +370,23 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var AddSubTicket = function (ticketID,subTicket) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'POST',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/SubTicket",
+            headers: {
+                'authorization':authToken
+            },
+            data:subTicket
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
+
     var getExternalUserRecentTickets = function (id) {
         return $http({
             method: 'get',
@@ -560,6 +577,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         AssignUserToTicket:AssignUserToTicket,
         updateTicketStatus:updateTicketStatus,
         updateFormSubmissionData: updateFormSubmissionData,
+        updateTicketStatus:updateTicketStatus,
+        AddSubTicket:AddSubTicket,
         GetExternalUserRecentTickets:getExternalUserRecentTickets,
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,

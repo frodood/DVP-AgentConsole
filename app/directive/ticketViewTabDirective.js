@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService,myProfileDataParser) {
+agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$rootScope,authService,myProfileDataParser,userService) {
     return {
         restrict: "EA",
         scope: {
@@ -12,7 +12,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             channelTo: "@",
             channel: "@",
             skill: "@",
-            sessionId: "@"
+            sessionId: "@",
+            callCustomer:"&"
         },
         templateUrl: 'app/views/ticket/ticket-view.html',
         link: function (scope, element, attributes) {
@@ -644,8 +645,6 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             scope.ticketID = JSON.parse(scope.ticketDetails).notificationData._id;
 
-
-
             scope.userList=myProfileDataParser.userList;
 
             scope.loadTicketNextLevel = function () {
@@ -663,13 +662,33 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 }
             };
 
+            scope.contactList = [];
+            var setContactList = function(ticket){
+                try{
+                    if(ticket.requester){
+                        if(ticket.requester.contacts){
+                            var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
+                            scope.contactList = nos.map(function (obj) {
+                                    return obj.contact;
+                                });
+                        }
+                        if(ticket.requester.phone)
+                            scope.contactList.push(ticket.requester.phone);
+                        if(ticket.requester.landnumber)
+                            scope.contactList.push(ticket.requester.landnumber);
+                    }
+                }
+                catch(ex){
+                    console.log("Failed to Set Contact No ",ex);
+                }
+            };
             scope.loadTicketSummary = function (ticketID) {
 
                 ticketService.getTicket(ticketID).then(function (response) {
 
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
-
+                        setContactList(response.data.Result);
                         if(response.data.Result)
                         {
                             scope.currentSubmission = response.data.Result.form_submission;
@@ -721,7 +740,6 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 }
             }
 
-
             scope.loadTicketSummary(scope.ticketID);
 
 
@@ -753,6 +771,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             scope.loadTicketView = function (data) {
                 data.tabType='ticketView';
+                data.index=data.reference;
                 $rootScope.$emit('openNewTab',data);
             }
 
@@ -841,6 +860,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 $rootScope.$emit('closeTab', scope.ticket._id);
 
             };
+
+
 
             scope.addComment = function (message,mode) {
 
@@ -934,7 +955,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         {
                             scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
                         }
-                    }), function (error) {
+                    }) , function (error) {
                         scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
                     }
                 }
@@ -970,14 +991,46 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         console.log("Failed to change status of ticket "+scope.ticket._id);
                     }
 
-                }), function (error) {
+                }) , function (error) {
                     console.log("Failed to change status of ticket "+scope.ticket._id,error);
                 }
+            };
+
+// ..............................  new sub ticket .....................
+
+            scope.newSubTicket={};
+            scope.newSubTicket.reference="xxxxx";
+            scope.newSubTicket.channel="scdvfsvf";
+            scope.newSubTicket.status="open";
+
+            scope.setPriority = function (priority) {
+                scope.newSubTicket.priority = priority;
+            };
+            scope.loadUsers = function () {
+                userService.LoadUser().then(function (response) {
+                    scope.users = response;
+                }, function (err) {
+                    scope.showAlert("load Users", "error", "Fail To Get User List.")
+                });
+            };
+            scope.loadUsers();
+            scope.saveTicket = function (subTicket) {
+
+                ticketService.AddSubTicket(scope.ticket._id,subTicket).then(function (response) {
+
+                    if(response.data.IsSuccess)
+                    {
+                        alert("sub ticket added");
+                    }
+                    else
+                    {
+                        alert("sub ticket Error");
+                    }
+
+                }), function (error) {
+                    alert("sub ticket Error");
+                }
             }
-
-
-
-
 
 
 

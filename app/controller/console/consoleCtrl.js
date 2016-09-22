@@ -3,8 +3,7 @@
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
-                                             jwtHelper, resourceService, baseUrls, dataParser,
-                                             veeryNotification, authService, userService, tagService, ticketService, $interval, myProfileDataParser, loginService, $state) {
+                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -289,7 +288,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
         },
-        onerrorCallback: function (e) {
+        onErrorEvent: function (e) {
             //document.getElementById("lblStatus").innerHTML = e;
             $scope.showAlert("Soft Phone", "error", e);
             console.error(e);
@@ -376,7 +375,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     var userEvent = {
         onSipEventSession: $scope.veeryPhone.onSipEventSession,
         notificationEvent: $scope.veeryPhone.notificationEvent,
-        onErrorCallback: $scope.veeryPhone.onErrorCallback,
+        onErrorCallback: $scope.veeryPhone.onErrorEvent,
         uiOnConnectionEvent: $scope.veeryPhone.uiOnConnectionEvent,
         uiVideoDisplayShowHide: $scope.veeryPhone.uiVideoDisplayShowHide,
         uiVideoDisplayEvent: $scope.veeryPhone.uiVideoDisplayEvent,
@@ -424,24 +423,60 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         channel: "weweqweqw"
     };
 
-    $scope.addTab = function (title, content, viewType, notificationData) {
+    $scope.addTab = function (title, content, viewType, notificationData,index) {
+
+        var isOpened=false;
+
         var newTab = {
             disabled: false,
             active: true,
             title: title,
             content: content,
             viewType: viewType,
-            notificationData: notificationData
+            notificationData: notificationData,
+            tabReference:index?index:uuid4.generate()
         };
-        $scope.tabs.push(newTab);
-        $timeout(function () {
-            $scope.activeTabIndex = ($scope.tabs.length - 1);
+
+        $scope.tabs.filter(function (item) {
+            if (item.tabReference == index) {
+                isOpened=true;
+            }
         });
+
+
+        if(!isOpened)
+        {
+            $scope.tabs.push(newTab);
+            $timeout(function () {
+                $scope.tabSelected(newTab.tabReference);
+            });
+        }
+        else
+        {
+            $scope.tabSelected(index);
+        }
+
+
+
 
     };
 
-    $scope.tabSelected = function (selectedTab) {
-        $scope.activeTab = selectedTab;
+    $scope.tabSelected = function (tabIndex) {
+
+        $scope.tabs.filter(function (item) {
+            if (item.tabReference == tabIndex) {
+
+                $scope.activeTab=item;
+
+                $scope.activeTabIndex = $scope.tabs.indexOf(item);
+                document.getElementById ("tab_view").active = $scope.tabs.indexOf(item);
+
+
+            }
+
+        });
+
+
     };
 
 
@@ -491,19 +526,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
-    var openNewTicketTab =function (ticket){
+    var openNewTicketTab =function (ticket,index){
         var tabTopic = "Ticket - " + ticket.reference;
-        var selectedTabs = $scope.tabs.filter(function (item) {
-            return item.notificationData._id == ticket._id;
-        });
-        if (selectedTabs.length == 0) {
+        $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket,index);
+        /*var selectedTabs = $scope.tabs.filter(function (item) {
+         return item.notificationData._id == ticket._id;
+         });
+         if (selectedTabs.length == 0) {
 
-            $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
-        }
+         $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
+         }
+         resizeDiv();*/
+    };
+
+
+    $scope.addMailInbox =function (){
+        $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null);
         resizeDiv();
     };
 
-    var openNewEngagementTab = function(args){
+
+    var openNewEngagementTab = function(args,index){
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -513,17 +556,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             skill: '',
             sessionId: args.engagement_id
         };
-        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData);
+        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData,index);
     };
 
     $rootScope.$on('openNewTab', function (events, args) {
 
+
+
+
         switch (args.tabType) {
             case 'ticketView':
-                openNewTicketTab(args);
+                openNewTicketTab(args,args.index);
                 break;
             case 'engagement':
-                openNewEngagementTab(args);
+                openNewEngagementTab(args,args.index);
+                break;
+            case 'inbox':
+                openEngagementTabForMailReply(args.data);
                 break;
             default:
 
@@ -541,29 +590,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     });
 
-    /*use Common Method to open New Tab*/
-    /*$scope.ticketTabCreater = function (ticket) {
 
-        var tabTopic = "Ticket - " + ticket.reference;
-        if ($scope.tabs.length > 0) {
-
-            var isOpened = $scope.tabs.filter(function (item) {
-                return item.notificationData._id == ticket._id;
-            });
-
-            if (isOpened.length == 0) {
-
-                $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
-            }
-        }
-        else {
-
-            $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
-        }
-        resizeDiv();
-    };
-
-    $rootScope.$on('INBOX_NewEngagementTab', function (events, args) {
+    var openEngagementTabForMailReply = function(args)
+    {
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -574,13 +603,36 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: args.engagement_id
         };
         $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData);
-    });
+    };
 
-    $rootScope.$on('newTicketTab', function (events, args) {
+    /*use Common Method to open New Tab*/
+    /*$scope.ticketTabCreater = function (ticket) {
 
-        $scope.ticketTabCreater(args);
+     var tabTopic = "Ticket - " + ticket.reference;
+     if ($scope.tabs.length > 0) {
 
-    });*/
+     var isOpened = $scope.tabs.filter(function (item) {
+     return item.notificationData._id == ticket._id;
+     });
+
+     if (isOpened.length == 0) {
+
+     $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
+     }
+     }
+     else {
+
+     $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket);
+     }
+     resizeDiv();
+     };
+
+
+     $rootScope.$on('newTicketTab', function (events, args) {
+
+     $scope.ticketTabCreater(args);
+
+     });*/
 
 
     //nav bar main search box
@@ -607,7 +659,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //}
     //
     //init();
-
+    $scope.unreadMailCount = 0;
     $scope.activeTicketTab = {};
     $scope.ttimer = {};
     $scope.ttimer.active = false;
@@ -741,6 +793,48 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //----------------------------------------------------------------------------------------
 
 
+    var getUnreadMailCounters = function(profileId){
+
+        try
+        {
+            mailInboxService.getMessageCounters(profileId)
+                .then(function (data)
+                {
+                    if (data.IsSuccess)
+                    {
+                        if(data.Result && data.Result.UNREAD)
+                        {
+                            $scope.unreadMailCount = data.Result.UNREAD;
+                        }
+                    }
+                    else
+                    {
+                        var errMsg = data.CustomMessage;
+
+                        if (data.Exception)
+                        {
+                            errMsg = data.Exception.Message;
+                        }
+                        console.log(errMsg);
+                    }
+
+
+                },
+                function (err) {
+                    console.log(err);
+
+                })
+
+        }
+        catch(ex)
+        {
+            console.log(ex);
+
+        }
+
+    };
+
+
     $scope.getMyProfile = function () {
 
 
@@ -750,6 +844,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 myProfileDataParser.myProfile = response.data.Result;
                 $scope.loginAvatar=myProfileDataParser.myProfile.avatar;
+                getUnreadMailCounters(myProfileDataParser.myProfile._id);
             }
             else {
 
