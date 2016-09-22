@@ -272,6 +272,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
             scope.saveTicket = function (ticket) {
                 ticket.channel = scope.channel;
+                ticket.requester = scope.profileDetail._id;
                 if (scope.postTags) {
                     ticket.tags = scope.postTags.map(function (obj) {
                         return obj.name;
@@ -370,8 +371,8 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                 engagementService.AppendNoteToEngagementSession(scope.sessionId, {body: noteBody}).then(function (response) {
                     if (response) {
                         scope.currentEngagement.notes.push({body: noteBody});
-                        scope.showAlert("Note", "susses", "Successfully add Note.")
-
+                        scope.showAlert("Note", "success", "Note Add Successfully.");
+                        scope.noteBody = "";
                     }
                     else {
                         scope.showAlert("Note", "error", "Fail To Add Note.")
@@ -404,6 +405,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                         if (scope.profileDetails.length == 1) {
                             scope.profileDetail = scope.profileDetails[0];
                             scope.GetProfileHistory(scope.profileDetail._id);
+                            getExternalUserRecentTickets(scope.profileDetail._id);
                         }
                         else {
                             // show multiple profile selection view
@@ -438,7 +440,10 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     title: tittle,
                     text: msg,
                     type: type,
-                    styling: 'bootstrap3'
+                    styling: 'bootstrap3',
+                    desktop: {
+                    desktop: true
+                }
                 });
             };
 
@@ -461,8 +466,16 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
             };
 
             scope.gotoTicket = function (data) {
-                data.tabType='engagement';
+                data.tabType = "ticketView";
                 $rootScope.$emit('openNewTab',data);
+            };
+
+            var getExternalUserRecentTickets = function(id){
+                ticketService.GetExternalUserRecentTickets(id).then(function (response) {
+                    scope.recentTicketList = response;
+                }, function (err) {
+                    scope.showAlert("Ticket", "error", "Fail To Get Recent Tickets.")
+                });
             };
         }
     }
