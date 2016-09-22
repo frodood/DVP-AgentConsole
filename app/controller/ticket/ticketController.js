@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/19/2016.
+ * Created by Veery Team on 8/19/2016.
  */
 
 agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,myProfileDataParser) {

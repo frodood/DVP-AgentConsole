@@ -1,5 +1,5 @@
 /**
- * Created by Rajinda on 9/8/2016.
+ * Created by Veery Team on 9/8/2016.
  */
 
 agentApp.factory("ticketService", function ($http, baseUrls,authService) {

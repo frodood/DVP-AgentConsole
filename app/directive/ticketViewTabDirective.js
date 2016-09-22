@@ -1,5 +1,5 @@
 /**
- * Created by Pawan on 9/9/2016.
+ * Created by Veery Team on 9/9/2016.
  */
 
 agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService,myProfileDataParser) {

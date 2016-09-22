@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 9/5/2016.
+ * Created by Veery Team on 9/5/2016.
  */
 agentApp.controller('ticketViewCtrl', function ($scope) {
     $scope.tabs = [

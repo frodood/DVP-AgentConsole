@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 9/9/2016.
+ * Created by Veery Team on 9/9/2016.
  */
 
 agentApp.controller('ticketFilterCtrl', function ($scope, $http,$rootScope, ticketService) {

@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 6/1/2016.
+ * Created by Veery Team on 6/1/2016.
  */
 
 agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,

@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/15/2016.
+ * Created by Veery Team on 8/15/2016.
  */
 
 
@@ -16,7 +16,7 @@ var baseUrls = {
     'notification': 'http://notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/resource',
     'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',
-    'ticketUrl': 'http://192.168.0.86:3636/DVP/API/1.0.0.0/',
+    'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/',
     'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'oauthLogOutUrl': 'http://userservice.app.veery.cloud/oauth/token/revoke/',
@@ -66,4 +66,4 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
         }
     });
 
-})
+});

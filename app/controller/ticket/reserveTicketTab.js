@@ -1,5 +1,5 @@
 /**
- * Created by Pawan on 9/20/2016.
+ * Created by Veery Team on 9/20/2016.
  */
 agentApp.factory("reservedTicket", function () {
 

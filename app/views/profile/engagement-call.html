@@ -635,6 +635,16 @@
                                     <tags-input ng-model="ticket.related_tickets" placeholder="enter here..">
                                         <auto-complete source="loadTags($query)"></auto-complete>
                                     </tags-input>
+
+                                    <tags-input ng-model="ticket.related_tickets" placeholder="choose Ticket" replace-spaces-with-dashes="false"
+                                                display-property="reference"
+                                                add-from-autocomplete-only="true"
+                                                ng-disabled="" min-length="1">
+                                        <auto-complete source="queryTicketList($query)"
+                                                       load-on-empty="true"
+                                                       load-on-focus="true"
+                                                       min-length="1"></auto-complete>
+                                    </tags-input>
                                 </div>
 
                             </form>

@@ -1,5 +1,5 @@
 /**
- * Created by Rajinda on 12/31/2015.
+ * Created by Veery Team on 12/31/2015.
  */
 
 var resourceModule = angular.module("veerySoftPhoneModule", []);

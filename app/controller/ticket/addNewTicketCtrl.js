@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/25/2016.
+ * Created by Veery Team on 8/25/2016.
  */
 
 agentApp.controller('addNewTicketCtrl', function ($scope, $http) {
