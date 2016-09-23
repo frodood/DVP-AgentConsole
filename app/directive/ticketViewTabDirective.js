@@ -163,7 +163,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
                             form.push({
                                 "key": fieldItem.field,
-                                "minDate": "2014-06-20"
+                                "minDate": "1900-01-01"
                             })
                         }
                         else if(fieldItem.type === 'number')
@@ -365,7 +365,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                                     {
                                         if(responseUpdate.Result)
                                         {
-                                            ticketService.mapFormSubmissionToTicket(responseUpdate._id, scope.ticket._id).then(function(responseMap)
+                                            ticketService.mapFormSubmissionToTicket(responseUpdate.Result._id, scope.ticket._id).then(function(responseMap)
                                             {
                                                 //tag submission to ticket
 
