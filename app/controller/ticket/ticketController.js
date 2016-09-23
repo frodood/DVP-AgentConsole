@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 8/19/2016.
+ * Created by Veery Team on 8/19/2016.
  */
 
 agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,myProfileDataParser) {
@@ -129,9 +129,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loading New tickets "+response.data.Exception.Message);
+                    console.log("Error in loading New tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -177,9 +177,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loading open tickets "+response.data.Exception.Message);
+                    console.log("Error in loading open tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -228,9 +228,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loading closed tickets "+response.data.Exception.Message);
+                    console.log("Error in loading closed tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -282,9 +282,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loading My new tickets "+response.data.Exception.Message);
+                    console.log("Error in loading My new tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -355,9 +355,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loading  My open tickets "+response.data.Exception.Message);
+                    console.log("Error in loading  My open tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -422,9 +422,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loading  My Closed tickets "+response.data.Exception.Message);
+                    console.log("Error in loading  My Closed tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -472,9 +472,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loading   My Group new tickets "+response.data.Exception.Message);
+                    console.log("Error in loading   My Group new tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -542,9 +542,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loading My Group open tickets "+response.data.Exception.Message);
+                    console.log("Error in loading My Group open tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -609,9 +609,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             }
             else
             {
-                if(response.data.Exception.Message)
+                if(response.data.Exception)
                 {
-                    console.log("Error in loadingMy Group closed tickets "+response.data.Exception.Message);
+                    console.log("Error in loadingMy Group closed tickets "+response.data.Exception);
                 }
                 else
                 {
@@ -948,7 +948,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
     $scope.gotoTicket = function (data) {
-        $rootScope.$emit('newTicketTab',data);
+
+        data.tabType='ticketView';
+        data.index=data.reference;
+        $rootScope.$emit('openNewTab',data);
         $scope.closeTicketInbox();
 
     };

@@ -1,5 +1,5 @@
 /**
- * Created by Damith on 9/9/2016.
+ * Created by Veery Team on 9/9/2016.
  */
 
 agentApp.controller('ticketFilterCtrl', function ($scope, $http,$rootScope, ticketService) {
@@ -50,7 +50,12 @@ item.count = 0;
         ticketService.GetTicketsByView(data._id).then(function (response) {
             $scope.isProgress = false;
             $scope.ticketList = response;
-            $scope.isNoData = !response;
+            if(!response || response.length===0){
+                $scope.isNoData = true;
+            }
+            else{
+                $scope.isNoData = false;
+            }
         }, function (err) {
             $scope.isProgress = false;
             $scope.showAlert("load Tickets", "error", "Fail To Load Tickets List.")
@@ -60,7 +65,8 @@ item.count = 0;
 
     // open tab for specific ticket
     $scope.viewSpecificTicket = function (data) {
-        $rootScope.$emit('newTicketTab',data);
+        data.tabType='ticketView';
+        $rootScope.$emit('openNewTab',data);
     }
 
 });

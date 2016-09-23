@@ -1,5 +1,7 @@
 <div>
     <div ng-include="'app/views/ticket/ticket-edit.html'"></div>
+    <div ng-include="'app/views/ticket/template/new_sub_ticket.html'"></div>
+
     <div class="ticket-view-wrapper">
         <!-- MODEL HEADER -->
         <div class="model-header">
@@ -28,8 +30,9 @@
                         <ul class="dropdown-menu console-drop-menu ticket-view-option " uib-dropdown-menu
                             role="menu"
                             aria-labelledby="btn-append-to-single-button">
-                            <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
+                            <li class="menuitem" role="menuitem"><a >Available status</a></li>
+                            <div class="divider"></div>
+                            <li class="menuitem" role="menuitem" ng-repeat="nextLevel in ticketNextLevels"><a ng-click="changeTicketStatus(nextLevel)">{{nextLevel}}</a></li>
                             <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
                             <div class="divider"></div>
                             <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
@@ -45,10 +48,19 @@
                         <span class="btn btn-default" ng-click="goToComment()">comment</span>
                     </div>
                     <div class="btn-warp ">
-                        <span class="btn btn-default" ng-click="assignToMe()">assign</span>
+                        <span class="btn btn-default" ng-click="assignToMe()">pick</span>
                     </div>
                     <div class="btn-warp ">
                         <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">close</span>
+                    </div>
+
+                    <div ng-show="ticket.channel==='Call'" class="btn-group" uib-dropdown is-open="status.isopen">
+                        <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                            Call <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-repeat="no in contactList" ><a href="javascript:void(0);" ng-click="callToCustomer(no)">{{no}}</a></li>
+                        </ul>
                     </div>
 
                 </div>
@@ -101,8 +113,8 @@
                                 </li>
                                 <li>
                                     <small>Updated</small>
-                                    <!--<h5>{{ticket.timeDelay}}</h5>-->
-                                    <h5><time-ago from-time='{{ ticket.updated_at }}'></time-ago></h5>
+                                    <h5>{{ticket.updated_at}}</h5>
+                                    <!--<h5><time-ago from-time='{{ ticket.updated_at }}'></time-ago></h5>-->
                                 </li>
                                 <li>
                                     <small>Due To</small>
@@ -169,7 +181,7 @@
                         <!-- SUB TASK LIST -->
                         <div class="ticker-subticket-wrapper">
                             <div class="details">
-                                <h5 class="bold">SUB TICKET </h5>
+                                <h5 class="bold">SUB TICKET </h5><h2 ng-click="clickAddNewTicket()">+</h2>
                             </div>
                             <div ng-show=subTickets.length==0>
                                 No sub-tickets assigned yet
@@ -200,6 +212,7 @@
 
                                         <div class="bg-checkbox  font-white  inline-bt link-btn  ">
                                             <i class="main-icon-2-more-1 color-green500">
+
                                             </i>
                                         </div>
                                     </div>

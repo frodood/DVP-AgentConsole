@@ -1,5 +1,5 @@
 /**
- * Created by Rajinda on 9/9/2016.
+ * Created by Veery Team on 9/9/2016.
  */
 
 
@@ -96,6 +96,22 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
+    var mapFormSubmissionToProfile= function (formSubId, profileId) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.userServiceBaseUrl+'ExternalUser/' + profileId + '/FormSubmission',
+            headers: {
+                'authorization':authToken
+            },
+            data: JSON.stringify({form_submission: formSubId})
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
 
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
@@ -103,7 +119,8 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         getUserList:getUserList,
         getUserGroupList:getUserGroupList,
         searchExternalUsers:searchExternalUsers,
-        getMyProfileDetails:getMyProfileDetails
+        getMyProfileDetails:getMyProfileDetails,
+        mapFormSubmissionToProfile:mapFormSubmissionToProfile
 
     }
 });

@@ -1,5 +1,5 @@
 /**
- * Created by Rajinda on 4/26/2016.
+ * Created by Veery Team on 4/26/2016.
  */
 
 /* global io */

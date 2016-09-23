@@ -1,35 +1,46 @@
 /**
- * Created by Pawan on 9/9/2016.
+ * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService,myProfileDataParser) {
+agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$rootScope,authService,myProfileDataParser,userService) {
     return {
         restrict: "EA",
         scope: {
-            ticketDetails: "@",
-            direction: "@",
-            channelFrom: "@",
-            channelTo: "@",
-            channel: "@",
-            skill: "@",
-            sessionId: "@"
+            ticketDetails: "=",
+            callCustomer:"&"
         },
         templateUrl: 'app/views/ticket/ticket-view.html',
         link: function (scope, element, attributes) {
 
+            scope.tabReference = scope.tabReference+"-"+"18705056550";
+
             scope.oldFormModel = null;
+            scope.currentSubmission = null;
+            scope.currentForm = null;
 
             scope.newAssignee={};
             scope.isOverDue=false;
             scope.newComment="";
+            scope.ticketNextLevels=[];
 
-            scope.schema = {
-                type: "object",
-                properties: {
-                    name: {type: "string", minLength: 2, title: "Name", description: "Name or alias"},
-                    title: {
-                        type: "string",
-                        enum: ['dr', 'jr', 'sir', 'mrs', 'mr', 'NaN', 'dj']
+            scope.callToCustomer = function (no) {
+                var newId = scope.ticketDetails.tabReference;
+                scope.ticketDetails.tabReference = newId+"-Call"+no;
+                scope.callCustomer({callNumber: no});
+            };
+
+
+            scope.showAlert = function (tittle, type, msg) {
+                new PNotify({
+                    title: tittle,
+                    text: msg,
+                    type: type,
+                    styling: 'bootstrap3',
+                    icon: false
+                });
+            };
+
+
                     }}}
 
 
@@ -100,7 +111,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         }
                         else if(fieldItem.type === 'header')
                         {
-                            var h2Tag = '<h2>' + fieldItem.title + '</h2>'
+                            var h2Tag = '<h2>' + fieldItem.title + '</h2>';
                             form.push({
                                 "type": "help",
                                 "helpvalue": h2Tag
@@ -157,7 +168,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                             };
 
                             form.push({
-                                "key": fieldItem.field
+                                "key": fieldItem.field,
+                                "minDate": "1900-01-01"
                             })
                         }
                         else if(fieldItem.type === 'number')
@@ -303,8 +315,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 return schema;
             };
 
-             scope.onSubmit = function(form)
-             {
+            scope.onSubmit = function(form)
+            {
                 scope.$broadcast('schemaFormValidate');
                 if (form.$valid)
                 {
@@ -323,17 +335,125 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                     }
 
                     //save arr
+                    if(scope.currentSubmission)
+                    {
+                        var obj = {
+                            fields: arr
+                        };
+                        ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function(response)
+                        {
+                            scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+
+                        }).catch(function(err)
+                        {
+                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+
+                        })
+                    }
+                    else
+                    {
+                        //create new submission
+                        if(scope.ticket)
+                        {
+                            var obj = {
+                                fields: arr,
+                                reference: scope.ticket._id,
+                                form: scope.currentForm.name
+                            };
+
+                            ticketService.getFormSubmissionByRef(scope.ticket._id).then(function(responseFS)
+                            {
+                                //tag submission to ticket
+
+                                if(responseFS.Result)
+                                {
+                                    ticketService.updateFormSubmissionData(scope.ticket._id, obj).then(function(responseUpdate)
+                                    {
+                                        if(responseUpdate.Result)
+                                        {
+                                            ticketService.mapFormSubmissionToTicket(responseUpdate.Result._id, scope.ticket._id).then(function(responseMap)
+                                            {
+                                                //tag submission to ticket
+
+                                                scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+
+                                            }).catch(function(err)
+                                            {
+                                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+
+                                            });
+                                        }
+                                        else
+                                        {
+                                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                        }
+
+
+                                    }).catch(function(err)
+                                    {
+                                        scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+
+                                    })
+                                }
+                                else
+                                {
+                                    ticketService.createFormSubmissionData(obj).then(function(response)
+                                    {
+                                        //tag submission to ticket
+                                        if(response && response.Result)
+                                        {
+                                            ticketService.mapFormSubmissionToTicket(response.Result._id, scope.ticket._id).then(function(responseMap)
+                                            {
+                                                //tag submission to ticket
+
+                                                scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+
+                                            }).catch(function(err)
+                                            {
+                                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+
+                                            });
+                                        }
+                                        else
+                                        {
+                                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                        }
+
+
+
+                                    }).catch(function(err)
+                                    {
+                                        scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+
+                                    })
+                                }
+
+                            }).catch(function(err)
+                            {
+                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+
+                            });
+
+
+
+                        }
+                        else
+                        {
+                            scope.showAlert('Operation Failed', 'error', 'Ticket not found');
+                        }
+
+                    }
+
 
 
                 }
-             };
+            };
 
 
             var convertToSchemaForm = function(formSubmission, callback)
             {
 
                 //get forms profile
-
 
                 if (formSubmission && formSubmission.form && formSubmission.form.fields && formSubmission.form.fields.length > 0)
                 {
@@ -354,6 +474,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                             //compare two forms
                             if(response.Result.ticket_form._id !== formSubmission.form._id)
                             {
+                                scope.currentForm = response.Result.ticket_form;
                                 buildFormSchema(schema, form, response.Result.ticket_form.fields);
 
                                 scope.buildModel = false;
@@ -361,11 +482,13 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                             }
                             else
                             {
-                                buildFormSchema(schema, form, formSubmission.form.fields);
+                                scope.currentForm = response.Result.ticket_form;
+                                buildFormSchema(schema, form, response.Result.ticket_form.fields);
                             }
                         }
                         else
                         {
+                            scope.currentForm = formSubmission.form;
                             buildFormSchema(schema, form, formSubmission.form.fields);
                         }
 
@@ -411,6 +534,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
                     }).catch(function(err)
                     {
+                        scope.currentForm = formSubmission.form;
                         buildFormSchema(schema, form, formSubmission.form.fields);
 
                         form.push({
@@ -461,7 +585,62 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 }
                 else
                 {
-                    callback(null);
+                    if(!formSubmission)
+                    {
+                        //create form submission
+
+                        var schema = {
+                            type: "object",
+                            properties: {}
+                        };
+
+                        var form = [];
+
+                        scope.buildModel = true;
+
+                        ticketService.getFormsForCompany().then(function (response)
+                        {
+                            if(response && response.Result && response.Result.ticket_form)
+                            {
+                                //compare two forms
+                                buildFormSchema(schema, form, response.Result.ticket_form.fields);
+                                scope.currentForm = response.Result.ticket_form;
+
+                                form.push({
+                                    type: "submit",
+                                    title: "Save"
+                                });
+
+
+                                var schemaResponse = {};
+
+                                schemaResponse = {
+                                    schema: schema,
+                                    form: form,
+                                    model: {}
+                                };
+
+                                callback(schemaResponse);
+                            }
+                            else
+                            {
+                                callback(null);
+                            }
+
+
+
+                        }).catch(function(err)
+                        {
+                            callback(null);
+
+                        });
+
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+
                 }
 
             };
@@ -470,19 +649,55 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             scope.subTickets = [];
             scope.relTickets = [];
 
-            scope.ticketID = JSON.parse(scope.ticketDetails).notificationData._id;
+            scope.ticketID = scope.ticketDetails.notificationData._id;
 
             scope.userList=myProfileDataParser.userList;
 
+            scope.loadTicketNextLevel = function () {
+                ticketService.getTicketNextLevel(scope.ticket.type,scope.ticket.status).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+                        scope.ticketNextLevels=response.data.Result;
+                    }
+                    else
+                    {
+                        console.log("failed to load next levels of ticket ",response.data.Exception);
+                    }
+                }), function (error) {
+                    console.log("failed to load next levels of ticket ",error);
+                }
+            };
+
+            scope.contactList = [];
+            var setContactList = function(ticket){
+                try{
+                    if(ticket.requester){
+                        if(ticket.requester.contacts){
+                            var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
+                            scope.contactList = nos.map(function (obj) {
+                                    return obj.contact;
+                                });
+                        }
+                        if(ticket.requester.phone)
+                            scope.contactList.push(ticket.requester.phone);
+                        if(ticket.requester.landnumber)
+                            scope.contactList.push(ticket.requester.landnumber);
+                    }
+                }
+                catch(ex){
+                    console.log("Failed to Set Contact No ",ex);
+                }
+            };
             scope.loadTicketSummary = function (ticketID) {
 
                 ticketService.getTicket(ticketID).then(function (response) {
 
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
-
-                        if(response.data.Result && response.data.Result.form_submission)
+                        setContactList(response.data.Result);
+                        if(response.data.Result)
                         {
+                            scope.currentSubmission = response.data.Result.form_submission;
                             convertToSchemaForm(response.data.Result.form_submission, function(schemaDetails)
                             {
                                 if(schemaDetails)
@@ -520,6 +735,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         scope.subTickets = scope.ticket.sub_tickets;
 
                         console.log("ticket ", scope.ticket);
+                        scope.loadTicketNextLevel();
                     }
                     else {
                         console.log("Error in picking ticket");
@@ -529,7 +745,6 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                     console.log("Error in picking ticket ", error);
                 }
             }
-
 
             scope.loadTicketSummary(scope.ticketID);
 
@@ -560,8 +775,10 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             }
 
 
-            scope.loadTicketView = function (ticket) {
-                $rootScope.$emit('newTicketTab', ticket);
+            scope.loadTicketView = function (data) {
+                data.tabType='ticketView';
+                data.index=data.reference;
+                $rootScope.$emit('openNewTab',data);
             }
 
 
@@ -650,6 +867,8 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             };
 
+
+
             scope.addComment = function (message,mode) {
 
                 var channel="";
@@ -728,7 +947,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 }
 
 
-                if(assigneeObj)
+                if(assigneeObj && scope.ticket)
                 {
                     ticketService.AssignUserToTicket(scope.ticket._id,assigneeObj._id).then(function (response) {
                         if(response.data.IsSuccess)
@@ -742,7 +961,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         {
                             scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
                         }
-                    }), function (error) {
+                    }) , function (error) {
                         scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
                     }
                 }
@@ -760,14 +979,62 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 scope.changeAssignee();
             };
 
-            scope.loadTickectNextLevel = function () {
-                ticketService.getTicketNextLevel(scope.ticket.type,scope.ticket.status).then(function (response) {
+            scope.changeTicketStatus = function (newStatus) {
+
+                var bodyObj =
+                {
+                    status:newStatus
+                };
+
+                ticketService.updateTicketStatus(scope.ticket._id,bodyObj).then(function (response) {
                     if(response.data.IsSuccess)
                     {
-
+                        scope.ticket.status=newStatus;
+                        scope.loadTicketNextLevel();
                     }
-                }), function (error) {
+                    else
+                    {
+                        console.log("Failed to change status of ticket "+scope.ticket._id);
+                    }
 
+                }) , function (error) {
+                    console.log("Failed to change status of ticket "+scope.ticket._id,error);
+                }
+            };
+
+// ..............................  new sub ticket .....................
+
+            scope.newSubTicket={};
+            scope.newSubTicket.reference="xxxxx";
+            scope.newSubTicket.channel="scdvfsvf";
+            scope.newSubTicket.status="open";
+
+            scope.setPriority = function (priority) {
+                scope.newSubTicket.priority = priority;
+            };
+            scope.loadUsers = function () {
+                userService.LoadUser().then(function (response) {
+                    scope.users = response;
+                }, function (err) {
+                    scope.showAlert("load Users", "error", "Fail To Get User List.")
+                });
+            };
+            scope.loadUsers();
+            scope.saveTicket = function (subTicket) {
+
+                ticketService.AddSubTicket(scope.ticket._id,subTicket).then(function (response) {
+
+                    if(response.data.IsSuccess)
+                    {
+                        alert("sub ticket added");
+                    }
+                    else
+                    {
+                        alert("sub ticket Error");
+                    }
+
+                }), function (error) {
+                    alert("sub ticket Error");
                 }
             }
 

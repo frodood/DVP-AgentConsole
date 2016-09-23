@@ -1,13 +1,12 @@
 /**
- * Created by Damith on 8/15/2016.
+ * Created by Veery Team on 8/15/2016.
  */
 
 
 var agentApp = angular.module('veeryAgentApp',
     ['ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago',
-        'timer', 'ngSanitize', 'angular-flot']);
+        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize','uuid']);
 
 agentApp.constant('moment', moment);
 
@@ -22,6 +21,7 @@ var baseUrls = {
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'oauthLogOutUrl': 'http://userservice.app.veery.cloud/oauth/token/revoke/',
     'oauthLoginUrl': 'http://userservice.app.veery.cloud/oauth/token',
+    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING'
 };
 
 agentApp.constant('baseUrls', baseUrls);
@@ -67,4 +67,4 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
         }
     });
 
-})
+});
