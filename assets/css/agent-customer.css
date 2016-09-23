@@ -2435,3 +2435,214 @@ tags-input .tags .input {
     border-radius: 5px;
 }
 
+/* agent dashboard */
+
+.agent-dashboard-wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(13, 28, 51, 0.8);
+    z-index: 2000;
+    top: 0;
+
+}
+
+.dashboard-wrapper {
+    width: 100%;
+    height: 950px;
+    border-radius: 0px;
+    background: url(../img/bg/bg-dashboard.jpg) no-repeat;
+    background-position: top -123px;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#dashboard-opacity {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 28, 51, 0.97);
+}
+
+.dark-dashboard-header {
+    padding-top: 25px;
+}
+
+.dark-dashboard-header > .avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+}
+
+.dark-dashboard-header > .header {
+    display: inline-block;
+    color: #15a9fa;
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+.dark-dashboard-header > .avatar > img {
+    width: 40px;
+    height: 40px;
+}
+
+.dark-ticker-wrapper {
+    padding-top: 20px;
+}
+
+.dark-header {
+    color: #1b76ff;
+}
+
+.dark-ticker-wrap {
+    width: 100%;
+    min-height: 130px;
+    height: auto;
+    background: rgba(6, 54, 80, 0.1);
+    text-align: center;
+    border: 1px solid #15315a;
+    margin-top: 10px;
+}
+
+.dark-ticker-wrap > h1 {
+    color: #0eeaff;
+    font-size: 40px;
+}
+
+.dark-ticker-wrap > div.title {
+    color: #15a9fa;
+    font-size: 18px;
+}
+
+.dark-chart-wrapper > .ticker-chart {
+    width: 100%;
+    min-height: 200px;
+    height: auto;
+}
+
+.dark-call-status-wrap {
+    width: 100%;
+    min-height: 125px;
+    height: auto;
+    background: rgba(14, 234, 255, 0.05);
+    border: 1px solid #07555d;
+    overflow: hidden;
+    position: relative;
+    padding: 25px 10px 0px 5px;
+}
+
+.dark-call-status-wrap > .dark-footer {
+    width: 100%;
+    min-height: 50px;
+    height: auto;
+    position: absolute;
+    background: rgba(28, 63, 255, 0.1);
+    left: 0;
+    bottom: 0;
+}
+
+.dark-call-status-wrap > .header {
+    color: #0eeaff;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.dark-footer-wrap {
+    text-align: center;
+}
+
+.dark-footer-wrap > h5 {
+    color: #2d1dff;
+    margin-bottom: 3px;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.dark-footer-wrap > .title {
+    color: #15a9fa;
+    font-size: 7px;
+}
+
+.dark-pro-chart-wrap {
+    width: 100%;
+    min-height: 250px;
+    height: auto;
+}
+
+.dark-product-wrapper {
+    background: rgba(21, 169, 250, 0.03);
+    width: 100%;
+    min-height: 70px;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.dark-product-ticker-wrap {
+    padding-top: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.dark-product-ticker-wrap > h1 {
+    margin: 0px;
+    font-size: 24px;
+}
+
+.dark-product-ticker-wrap > h1.Staffed,
+.dark-product-ticker-wrap > div.title.Staffed {
+    color: #15a9fa;
+}
+
+.dark-product-ticker-wrap > h1.onCall,
+.dark-product-ticker-wrap > div.title.onCall {
+    color: #0eeaff;
+}
+
+.dark-status {
+    font-size: 20px;
+    padding-top: 20px;
+    color: #00ff1c;
+}
+
+.dark-recent-wrapper {
+    margin-top: 30px;
+}
+
+.recent-activity {
+    width: 100%;
+    min-height: 65px;
+    height: auto;
+    background: rgba(21, 169, 250, 0.03);
+    margin-bottom: 5px;
+}
+
+.recent-activity-left {
+    padding-top: 15px;
+    color: #0eeaff;
+    font-size: 12px;
+}
+
+.recent-activity-right {
+    padding-top: 13px;
+}
+
+.recent-activity-right > .count,
+.recent-activity-right > .title {
+    color: #15a9fa;
+    text-align: right;
+}
+
+.recent-activity-right > .count {
+    font-size: 14px;
+}
+
+.recent-activity-right > .title {
+    font-size: 12px;
+}

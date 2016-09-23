@@ -903,6 +903,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $state.go('login');
             }
         });
+    };
+
+    $scope.goAgentDashboard = function () {
+        $scope.isViewDashBoard = !$scope.isViewDashBoard;
     }
 
 

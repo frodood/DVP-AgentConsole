@@ -1,0 +1,34 @@
+{
+  "d": [
+    {
+      "status_header": "PASSENGER INQUIRY",
+      "current_count": "10",
+      "max_count": "2"
+    },
+    {
+      "status_header": "corporate",
+      "current_count": "5",
+      "max_count": "5"
+    },
+    {
+      "status_header": "sinhala",
+      "current_count": "10",
+      "max_count": "0"
+    },
+    {
+      "status_header": "TAMIL",
+      "current_count": "15",
+      "max_count": "0"
+    },
+    {
+      "status_header": "sinhala",
+      "current_count": "10",
+      "max_count": "5"
+    },
+    {
+      "status_header": "english",
+      "current_count": "20",
+      "max_count": "5"
+    }
+  ]
+}
