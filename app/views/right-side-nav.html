@@ -1,4 +1,4 @@
-<div id="mySidenav" class="sidenav" ng-controller="notificationCenterCtrl">
+<div id="mySidenav" class="sidenav">
 
 
     <!--<div class="nav-search-txt">-->
@@ -7,27 +7,36 @@
     <!--</div>-->
 
     <div class="online-user-wrapper">
-        <div ng-mouseover="chatOption = true"
-             ng-mouseleave="chatOption = false"
-             class="notification-user" ng-repeat="agent in agentList">
-            <div class="user-img">
-                <img src="assets/img/avatar/oykun.jpg"
-                     ng-src="{{agent.img}}">
-                {{agent.profileName}}
-            </div>
-            <div class="notification-details">
-                <div class="chat-icon" ng-show="chatOption">
-                    <i class="main-icon-2-telephone-3"></i>
+        <div ng-slimscroll
+             opacity="0.1"
+             distance="5px"
+             height="550px"
+             width="100%"
+             ng-mouseover="chatWidgetscrollEnabled = true"
+             ng-mouseleave="chatWidgetscrollEnabled = false"
+             enabled="{{ chatWidgetscrollEnabled }}">
+            <div ng-mouseover="chatOption = true"
+                 ng-mouseleave="chatOption = false"
+                 class="notification-user" ng-repeat="agent in agentList">
+                <div class="user-img">
+                    <img src="assets/img/avatar/oykun.jpg"
+                         ng-src="{{agent.avatar}}">
+                    {{agent.name}}
                 </div>
-                <div class="chat-icon" ng-show="chatOption">
-                    <i class="main-icon-2-transfer-8"></i>
+                <div class="notification-details">
+                    <div class="chat-icon" ng-show="chatOption">
+                        <i class="main-icon-2-telephone-3"></i>
+                    </div>
+                    <div class="chat-icon" ng-show="chatOption">
+                        <i class="main-icon-2-transfer-8"></i>
+                    </div>
+                    <div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock()">
+                        <i class="main-icon-2-speech-bubble"></i>
+                    </div>
+                    <div class="user-state" style="margin-right: 5px;margin-left: 10px;"
+                         ng-class="agent.status=='NotAvailable'?'offline':'online'"
+                            ></div>
                 </div>
-                <div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock()">
-                    <i class="main-icon-2-speech-bubble"></i>
-                </div>
-                <div class="user-state" style="margin-right: 5px;margin-left: 10px;"
-                     ng-class="agent.status=='online'?'online':'offline'"
-                ></div>
             </div>
         </div>
 

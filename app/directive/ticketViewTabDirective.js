@@ -2,21 +2,17 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,authService,myProfileDataParser,userService) {
+agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$rootScope,authService,myProfileDataParser,userService) {
     return {
         restrict: "EA",
         scope: {
-            ticketDetails: "@",
-            direction: "@",
-            channelFrom: "@",
-            channelTo: "@",
-            channel: "@",
-            skill: "@",
-            sessionId: "@",
+            ticketDetails: "=",
             callCustomer:"&"
         },
         templateUrl: 'app/views/ticket/ticket-view.html',
         link: function (scope, element, attributes) {
+
+            scope.tabReference = scope.tabReference+"-"+"18705056550";
 
             scope.oldFormModel = null;
             scope.currentSubmission = null;
@@ -26,6 +22,13 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             scope.isOverDue=false;
             scope.newComment="";
             scope.ticketNextLevels=[];
+
+            scope.callToCustomer = function (no) {
+                var newId = scope.ticketDetails.tabReference;
+                scope.ticketDetails.tabReference = newId+"-Call"+no;
+                scope.callCustomer({callNumber: no});
+            };
+
 
             scope.showAlert = function (tittle, type, msg) {
                 new PNotify({
@@ -643,9 +646,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
             scope.subTickets = [];
             scope.relTickets = [];
 
-            scope.ticketID = JSON.parse(scope.ticketDetails).notificationData._id;
-
-
+            scope.ticketID = scope.ticketDetails.notificationData._id;
 
             scope.userList=myProfileDataParser.userList;
 
@@ -664,13 +665,33 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 }
             };
 
+            scope.contactList = [];
+            var setContactList = function(ticket){
+                try{
+                    if(ticket.requester){
+                        if(ticket.requester.contacts){
+                            var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
+                            scope.contactList = nos.map(function (obj) {
+                                    return obj.contact;
+                                });
+                        }
+                        if(ticket.requester.phone)
+                            scope.contactList.push(ticket.requester.phone);
+                        if(ticket.requester.landnumber)
+                            scope.contactList.push(ticket.requester.landnumber);
+                    }
+                }
+                catch(ex){
+                    console.log("Failed to Set Contact No ",ex);
+                }
+            };
             scope.loadTicketSummary = function (ticketID) {
 
                 ticketService.getTicket(ticketID).then(function (response) {
 
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
-
+                        setContactList(response.data.Result);
                         if(response.data.Result)
                         {
                             scope.currentSubmission = response.data.Result.form_submission;
@@ -722,7 +743,6 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                 }
             }
 
-
             scope.loadTicketSummary(scope.ticketID);
 
 
@@ -754,6 +774,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
 
             scope.loadTicketView = function (data) {
                 data.tabType='ticketView';
+                data.index=data.reference;
                 $rootScope.$emit('openNewTab',data);
             }
 
@@ -937,7 +958,7 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         {
                             scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
                         }
-                    }), function (error) {
+                    }) , function (error) {
                         scope.showAlert("Ticket assigning","error","Ticket assignee changing failed");
                     }
                 }
@@ -973,10 +994,10 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                         console.log("Failed to change status of ticket "+scope.ticket._id);
                     }
 
-                }), function (error) {
+                }) , function (error) {
                     console.log("Failed to change status of ticket "+scope.ticket._id,error);
                 }
-            }
+            };
 
 // ..............................  new sub ticket .....................
 
