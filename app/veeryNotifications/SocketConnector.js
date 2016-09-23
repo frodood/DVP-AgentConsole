@@ -109,6 +109,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
     });
 
 notificationMod.factory('veeryNotification', function(notificationConnector, $q) {
+
     return {
         connectToServer:function(authToken,notificationBaseUrl,onAgentFound){
 
@@ -135,4 +136,49 @@ notificationMod.factory('veeryNotification', function(notificationConnector, $q)
             }
         }
     };
+});
+
+agentApp.factory("notificationService", function ($http, baseUrls,authService) {
+
+    var sendNotification= function (notificationData, eventName, eventUuid) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'POST',
+            url: baseUrls.notification+"/DVP/API/1.0.0.0/NotificationService/Notification/initiate",
+            headers: {
+                'authorization':authToken,
+                'Content-Type': 'application/json',
+                'eventname': eventName,
+                'eventuuid': eventUuid
+            },
+            data: notificationData
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
+    var broadcastNotification= function (notificationData) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'POST',
+            url: baseUrls.notification+"/DVP/API/1.0.0.0/NotificationService/Notification/Broadcast",
+            headers: {
+                'authorization':authToken
+            },
+            data: notificationData
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
+
+    return {
+        sendNotification:sendNotification,
+        broadcastNotification: broadcastNotification
+
+    }
 });
