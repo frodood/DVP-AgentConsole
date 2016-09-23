@@ -30,6 +30,9 @@ agentApp.directive("ticketTabView", function (moment,ticketService,$rootScope,au
                     title: {
                         type: "string",
                         enum: ['dr', 'jr', 'sir', 'mrs', 'mr', 'NaN', 'dj']
+                    }}}
+
+
             var buildFormSchema = function(schema, form, fields)
             {
                 fields.forEach(function (fieldItem)

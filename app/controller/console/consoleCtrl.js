@@ -430,7 +430,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.addTab = function (title, content, viewType, notificationData) {
-        var newTab = {disabled:  false, active: true, title: title, content: content, viewType: viewType, notificationData: notificationData};
+        var newTab = {
+            disabled: false,
+            active: true,
+            title: title,
+            content: content,
+            viewType: viewType,
+            notificationData: notificationData
+        };
         $scope.tabs.push(newTab);
         $timeout(function () {
             $scope.activeTabIndex = ($scope.tabs.length - 1);
@@ -439,7 +446,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $scope.tabSelected = function(selectedTab) {
+    $scope.tabSelected = function (selectedTab) {
         $scope.activeTab = selectedTab;
     };
 
@@ -683,7 +690,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //}
 
     $scope.startTracker = function () {
-        if($scope.ttimer.pause){
+        if ($scope.ttimer.pause) {
             ticketService.startTimer().then(function (response) {
                 if (response) {
 
@@ -699,23 +706,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 console.log(error);
                 $scope.showError("Error", "Error", "ok", "Timer failed to resume timer ");
             });
-        }else {
+        } else {
 
-            if($scope.activeTab && $scope.activeTab.viewType === "ticketView") {
+            if ($scope.activeTab && $scope.activeTab.viewType === "ticketView") {
                 ticketService.createTimer($scope.activeTab.notificationData._id).then(function (response) {
                     if (response) {
                         var timeNow = moment.utc();
-                        if(response.last_event === "pause" || response.last_event === "start"){
+                        if (response.last_event === "pause" || response.last_event === "start") {
                             var lastTimeStamp = moment.utc(response.last_event_date);
                             var timeDiff = timeNow.diff(lastTimeStamp, 'seconds');
 
-                            if(timeDiff >0) {
+                            if (timeDiff > 0) {
                                 var startTime = timeNow.subtract(timeDiff, 'seconds');
                                 $scope.ttimer.startTime = parseInt(startTime.format('x'));
-                            }else{
+                            } else {
                                 $scope.ttimer.startTime = parseInt(timeNow.format('x'));
                             }
-                        }else{
+                        } else {
                             $scope.ttimer.startTime = parseInt(timeNow.format('x'));
 
                         }
@@ -817,13 +824,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $state.go('login');
             }
         });
+    };
+
+    $scope.goAgentDashboard = function () {
+        $scope.isViewDashBoard = !$scope.isViewDashBoard;
     }
 
 
-    $scope.reserveTicketTab = function (key,obj) {
+    $scope.reserveTicketTab = function (key, obj) {
 
-        reservedTicket.key=key;//phone number
-        reservedTicket.session_obj=obj;
+        reservedTicket.key = key;//phone number
+        reservedTicket.session_obj = obj;
 
     };
 

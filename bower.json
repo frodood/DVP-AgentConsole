@@ -42,7 +42,9 @@
     "perfect-scrollbar": "^0.6.12",
     "ng-scrollbars": "^0.0.10",
     "angular-schema-form-datepicker": "^1.4.1",
-    "pickadate": "^3.5.6"
+    "pickadate": "^3.5.6",
+    "angular-flot": "^0.0.16",
+    "angular-echarts": "^0.3.5"
   },
   "resolutions": {
     "moment": "^2.14.1",

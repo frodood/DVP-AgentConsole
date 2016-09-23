@@ -329,6 +329,8 @@
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);">official</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);">meal</a></li>
                             <li class="divider"></li>
+                            <li class="menuitem" role="menuitem"><a ng-click="goAgentDashboard();"
+                                                                    href="javascript:void(0)">Dashboard</a></li>
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
@@ -487,6 +489,9 @@
 
         <!-- agent setting -->
         <div ng-include="'app/views/agent/agentSettings.html'"></div>
+
+        <!-- agent dashboard -->
+        <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
     </div>
 
 
