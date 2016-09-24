@@ -459,7 +459,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         {
             $scope.tabs.push(newTab);
             $timeout(function () {
-                $scope.tabSelected(newTab.tabReference);
+                //$scope.tabSelected(newTab.tabReference);
+                $scope.activeTabIndex = $scope.tabs.length-1;
+                document.getElementById ("tab_view").active = $scope.tabs.length-1;
             });
         }
         else
@@ -468,18 +470,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
     };
-
+    $scope.isForceFocused=false;
+    $scope.currTab=0;
     $scope.tabSelected = function (tabIndex) {
 
-        $scope.tabs.filter(function (item) {
-            if (item.tabReference == tabIndex) {
 
-                $scope.activeTab=item;
+            $scope.tabs.filter(function (item) {
+                if (item.tabReference == tabIndex) {
 
-                $scope.activeTabIndex = $scope.tabs.indexOf(item);
-                document.getElementById ("tab_view").active = $scope.tabs.indexOf(item);
-            }
-        });
+                    currTab=$scope.tabs.indexOf(item);
+                    $scope.activeTab=item;
+
+                    $scope.activeTabIndex = currTab;
+                    document.getElementById ("tab_view").active = currTab;
+                }
+            });
+
+
+
     };
 
 
@@ -584,6 +592,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (item.notificationData._id == args) {
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
+
 
             }
 

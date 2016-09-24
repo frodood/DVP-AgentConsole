@@ -2,16 +2,20 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$rootScope,authService,myProfileDataParser,userService) {
+agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$rootScope,authService,myProfileDataParser,userService,uuid4) {
     return {
         restrict: "EA",
         scope: {
             ticketDetails: "=",
-            callCustomer:"&"
+            callCustomer:"&",
+            tagList: "=",
+            tagCategoryList: "=",
+            loadTags: '&'
         },
         templateUrl: 'app/views/ticket/ticket-view.html',
         link: function (scope, element, attributes) {
 
+            scope.availableTags = scope.tagCategoryList;
             scope.tabReference = scope.tabReference+"-"+"18705056550";
 
             scope.oldFormModel = null;
@@ -672,8 +676,8 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
                         if(ticket.requester.contacts){
                             var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
                             scope.contactList = nos.map(function (obj) {
-                                    return obj.contact;
-                                });
+                                return obj.contact;
+                            });
                         }
                         if(ticket.requester.phone)
                             scope.contactList.push(ticket.requester.phone);
@@ -746,7 +750,7 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
             scope.loadTicketSummary(scope.ticketID);
 
 
-            scope.showCreateTicket = false;
+             scope.showSubCreateTicket = false;
             scope.test = Math.floor((Math.random() * 6) + 1);
             console.log(scope.test);
 
@@ -763,7 +767,7 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
             }();
 
             scope.clickAddNewTicket = function () {
-                scope.showCreateTicket = !scope.showCreateTicket;
+                 scope.showSubCreateTicket = ! scope.showSubCreateTicket;
             };
 
             scope.editTicketSt=false;
@@ -1002,28 +1006,43 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
 // ..............................  new sub ticket .....................
 
             scope.newSubTicket={};
-            scope.newSubTicket.reference="xxxxx";
-            scope.newSubTicket.channel="scdvfsvf";
-            scope.newSubTicket.status="open";
+            scope.newSubTicket.reference=uuid4.generate();
+
+
+
+
+
 
             scope.setPriority = function (priority) {
                 scope.newSubTicket.priority = priority;
             };
-            scope.loadUsers = function () {
-                userService.LoadUser().then(function (response) {
-                    scope.users = response;
-                }, function (err) {
-                    scope.showAlert("load Users", "error", "Fail To Get User List.")
-                });
-            };
-            scope.loadUsers();
+
             scope.saveTicket = function (subTicket) {
+                if(scope.ticket.requester)
+                {
+                    scope.newSubTicket.requester=scope.ticket.requester._id;
+                }
+                if(scope.ticket.channel)
+                {
+                    scope.newSubTicket.channel=scope.ticket.channel;
+                }
+                if(scope.ticket.custom_fields)
+                {
+                    scope.newSubTicket.custom_fields=scope.ticket.custom_fields;
+                }
+                if (scope.postTags) {
+                    scope.newSubTicket.tags = scope.postTags.map(function (obj) {
+                        return obj.name;
+                    });
+                }
 
                 ticketService.AddSubTicket(scope.ticket._id,subTicket).then(function (response) {
 
                     if(response.data.IsSuccess)
                     {
                         alert("sub ticket added");
+                        scope.subTickets.push(response.data.Result);
+                        scope.showCreateTicket=false;
                     }
                     else
                     {
@@ -1033,7 +1052,124 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
                 }), function (error) {
                     alert("sub ticket Error");
                 }
+            };
+
+
+            // tag selection
+
+            function createTagFilterFor(query) {
+                var lowercaseQuery = angular.lowercase(query);
+                return function filterFn(group) {
+                    return (group.name.toLowerCase().indexOf(lowercaseQuery) != -1);
+                };
             }
+
+            scope.queryTagSearch = function (query) {
+                if (query === "*" || query === "") {
+                    if (scope.availableTags) {
+                        return scope.availableTags;
+                    }
+                    else {
+                        return [];
+                    }
+
+                }
+                else {
+                    var results = query ? scope.availableTags.filter(createTagFilterFor(query)) : [];
+                    return results;
+                }
+
+            };
+
+            scope.tagSelectRoot = 'root';
+            scope.onChipAddTag = function (chip) {
+                if (!chip.tags||(chip.tags.length === 0) ) {
+                    setToDefault();
+                    return;
+                }
+                if (scope.tagSelectRoot === 'root') {
+                    scope.tagSelectRoot = 'sub';
+                    scope.availableTags = chip.tags;
+                }
+                else if (scope.tagSelectRoot === 'sub') {
+
+                    var tempTags = [];
+                    angular.forEach(chip.tags, function (item) {
+                        var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+                        tempTags = tempTags.concat(tags);
+                    });
+                    scope.availableTags = tempTags;
+                    scope.tagSelectRoot = 'child';
+
+                }
+                else {
+                    if (chip.tags) {
+                        if (chip.tags.length > 0) {
+                            scope.availableTags = chip.tags;
+                            return;
+                        }
+                    }
+                    setToDefault();
+                }
+
+            };
+
+            scope.loadPostTags = function(query) {
+                return scope.postTags;
+            };
+
+            var removeDuplicate = function(arr){
+                var newArr = [];
+                angular.forEach(arr, function(value, key) {
+                    var exists = false;
+                    angular.forEach(newArr, function(val2, key) {
+                        if(angular.equals(value.name, val2.name)){ exists = true };
+                    });
+                    if(exists == false && value.name != "") { newArr.push(value); }
+                });
+                return newArr;
+            };
+
+            scope.newAddTags =[];
+            scope.postTags = [];
+
+            var setToDefault = function () {
+                var ticTag = undefined;
+                angular.forEach(scope.newAddTags, function (item) {
+                    if (ticTag) {
+                        ticTag = ticTag + "." + item.name;
+                    } else {
+                        ticTag = item.name;
+                    }
+
+                });
+                if(ticTag){
+                    scope.postTags.push({name:ticTag});
+                    scope.postTags = removeDuplicate(scope.postTags);
+                }
+
+                scope.newAddTags = [];
+                scope.availableTags = scope.tagCategoryList;
+                scope.tagSelectRoot = 'root';
+            };
+
+            scope.onChipDeleteTag = function (chip) {
+                setToDefault();
+                //attributeService.DeleteOneAttribute(scope.groupinfo.GroupId, chip.AttributeId).then(function (response) {
+                //    if (response) {
+                //        console.info("AddAttributeToGroup : " + response);
+                //        scope.showAlert("Info", "Info", "ok", "Successfully Delete " + chip.Attribute);
+                //    }
+                //    else {
+                //        scope.resetAfterDeleteFail(chip);
+                //        scope.showError("Error", "Fail To Delete " + chip.Attribute);
+                //    }
+                //}, function (error) {
+                //    scope.showError("Error", "Fail To Delete " + chip.Attribute);
+                //    scope.resetAfterDeleteFail(chip);
+                //});
+
+            };
 
 
 
