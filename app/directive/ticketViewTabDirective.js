@@ -41,7 +41,7 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
             };
 
 
-                    }}}
+
 
 
             var buildFormSchema = function(schema, form, fields)
