@@ -971,11 +971,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var clients = [];
                     for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
                         var gUser = $scope.naviSelectedUser.users[i];
-                        if (gUser && gUser.username) {
+                        if (gUser && gUser.username && gUser.username != $scope.loginName) {
                             clients.push(gUser.username);
                         }
                     }
-                    $scope.notificationMsg.Clients = clients;
+                    $scope.notificationMsg.clients = clients;
 
                     notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
                         $scope.notificationMsg = {};
