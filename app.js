@@ -13,7 +13,7 @@ agentApp.constant('moment', moment);
 var baseUrls = {
     'authUrl': 'http://userservice.app.veery.cloud/oauth/token',
     'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'notification': 'http://notificationservice.app.veery.cloud',
+    'notification': 'http://192.168.0.67:8089',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/resource',
     'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',
     'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/',
