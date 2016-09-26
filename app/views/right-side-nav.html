@@ -30,7 +30,7 @@
                     <div class="chat-icon" ng-show="chatOption">
                         <i class="main-icon-2-transfer-8"></i>
                     </div>
-                    <div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock()">
+                    <div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock(agent)">
                         <i class="main-icon-2-speech-bubble"></i>
                     </div>
                     <div class="user-state" style="margin-right: 5px;margin-left: 10px;"
@@ -61,9 +61,13 @@
             <div class="send-notification-wrapper">
                 <div class="wrap">
                     <div class="people-view full-width">
+                        <!--<div class="user-img">
+                            <img src="assets/img/avatar/oykun.jpg"
+                                 ng-src="{{naviSelectedUser.avatar}}">
+                        </div>-->
                         <div class="row people-view-details">
                             <div class="notification-text inline-block">
-                                Abagnale, Frank
+                                {{naviSelectedUser.name}}
                             </div>
                             <div class="notification-text inline-block pull-right message-close"
                                  ng-click="closeMessage();"
@@ -74,11 +78,11 @@
                     </div>
                     <div class="form-group">
                         <textarea id="txtMessage"
-                                  class="form-control" rows="3">
+                                  class="form-control" rows="3" ng-model="notificationMsg.Message">
                         </textarea>
                     </div>
                     <div class="btn-warp inline-btn pull-right">
-                        <span class="btn btn-default ">send</span>
+                        <span class="btn btn-default " ng-click="sendNotification()">send</span>
                     </div>
 
                 </div>

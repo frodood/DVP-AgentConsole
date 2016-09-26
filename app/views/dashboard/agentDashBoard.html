@@ -1,3 +1,4 @@
+
 <div class="agent-dashboard-wrapper" ng-controller="agentDashboardCtrl" ng-if="isViewDashBoard">
     <div class="container">
         <div class="col-md-offset-1 col-md-10 col-sm-10 col-xs-10 col-lg-10">
@@ -20,7 +21,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="dark-pro-chart-wrap">
-
+                                        <flot dataset="pieDataset" options="pieOptions" height="480px"></flot>
                                     </div>
                                     <div class="dark-product-wrapper">
                                         <div class="col-lg-4">
@@ -42,32 +43,35 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                         </div>
                         <div class="col-lg-5">
-                            <div class="dark-ticker-wrapper">
-                                <div class="col-lg-12">
-                                    <h5 class="dark-header">TICKET</h5>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="dark-ticker-wrap">
-                                        <h1>10</h1>
-                                        <div class="title">open</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="dark-ticker-wrap">
-                                        <h1>5</h1>
-                                        <div class="title">resolve</div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="dark-chart-wrapper">
-                                <div class="ticker-chart">
+                                <div class="dark-ticker-wrapper">
+                                    <div class="col-lg-12">
+                                        <h5 class="dark-header">TICKET</h5>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dark-ticker-wrap">
+                                            <h1>10</h1>
+                                            <div class="title">open</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dark-ticker-wrap">
+                                            <h1>5</h1>
+                                            <div class="title">resolve</div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="dark-chart-wrapper">
+                                    <div class="col-lg-12">
+                                        <flot dataset="myData" options="myChartOptions" height="250px"></flot>
+                                    </div>
+                                </div>
+
                         </div>
                     </div>
 

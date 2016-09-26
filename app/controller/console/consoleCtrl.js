@@ -3,7 +3,7 @@
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
-                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4) {
+                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -459,7 +459,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         {
             $scope.tabs.push(newTab);
             $timeout(function () {
-                $scope.tabSelected(newTab.tabReference);
+                //$scope.tabSelected(newTab.tabReference);
+                $scope.activeTabIndex = $scope.tabs.length-1;
+                document.getElementById ("tab_view").active = $scope.tabs.length-1;
             });
         }
         else
@@ -468,18 +470,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
     };
-
+    $scope.isForceFocused=false;
+    $scope.currTab=0;
     $scope.tabSelected = function (tabIndex) {
 
-        $scope.tabs.filter(function (item) {
-            if (item.tabReference == tabIndex) {
 
-                $scope.activeTab=item;
+            $scope.tabs.filter(function (item) {
+                if (item.tabReference == tabIndex) {
 
-                $scope.activeTabIndex = $scope.tabs.indexOf(item);
-                document.getElementById ("tab_view").active = $scope.tabs.indexOf(item);
-            }
-        });
+                    currTab=$scope.tabs.indexOf(item);
+                    $scope.activeTab=item;
+
+                    $scope.activeTabIndex = currTab;
+                    document.getElementById ("tab_view").active = currTab;
+                }
+            });
+
+
+
     };
 
 
@@ -493,6 +501,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.loadUsers();
+
+    //load userGroup list
+    $scope.userGroups = [];
+    $scope.loadUserGroups = function () {
+        userService.getUserGroupList().then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                $scope.userGroups = response.data.Result;
+            }
+        }, function (err) {
+            $scope.showAlert("Load User Groups", "error", "Fail To Get User Groups.")
+        });
+    };
+    $scope.loadUserGroups();
 
     // load tag List
     $scope.tags = [];
@@ -584,6 +605,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (item.notificationData._id == args) {
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
+
 
             }
 
@@ -905,11 +927,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    //-------------------------------OnlineAgent-----------------------------------------------------
+    //-------------------------------OnlineAgent/ Notification-----------------------------------------------------
 
+    $scope.naviSelectedUser = {};
+    $scope.notificationMsg = {};
     var getAllRealTimeTimer = {};
 
-    $scope.showMessageBlock = function () {
+    $scope.showMessageBlock = function (selectedUser) {
+        $scope.naviSelectedUser = selectedUser;
         divModel.model('#sendMessage', 'display-block');
     };
     $scope.closeMessage = function () {
@@ -936,6 +961,56 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         //  document.getElementById("navBar").style.marginRight = "0";
     };
 
+    $scope.sendNotification = function(){
+        if($scope.naviSelectedUser){
+
+            $scope.notificationMsg.From = $scope.loginName;
+            $scope.notificationMsg.Direction = "STATELESS";
+            if($scope.naviSelectedUser.listType === "Group"){
+                if($scope.naviSelectedUser.users) {
+                    var clients = [];
+                    for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
+                        var gUser = $scope.naviSelectedUser.users[i];
+                        if (gUser && gUser.username) {
+                            clients.push(gUser.username);
+                        }
+                    }
+                    $scope.notificationMsg.Clients = clients;
+
+                    notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
+                        $scope.notificationMsg = {};
+                        console.log("send notification success :: "+ JSON.stringify(clients));
+                    }, function (err) {
+                        var errMsg = "Send Notification Failed";
+                        if (err.statusText) {
+                            errMsg = err.statusText;
+                        }
+                        $scope.showAlert('Error', 'error', errMsg);
+                    });
+                }else{
+                    $scope.showAlert('Error', 'error', "Send Notification Failed");
+                }
+
+            }else {
+
+                $scope.notificationMsg.To = $scope.naviSelectedUser.username;
+
+                notificationService.sendNotification($scope.notificationMsg, "message", "").then(function (response) {
+                    console.log("send notification success :: "+ $scope.notificationMsg.To);
+                    $scope.notificationMsg = {};
+                }, function (err) {
+                    var errMsg = "Send Notification Failed";
+                    if (err.statusText) {
+                        errMsg = err.statusText;
+                    }
+                    $scope.showAlert('Error', 'error', errMsg);
+                });
+            }
+
+        }else{
+            $scope.showAlert('Error', 'error', "Send Notification Failed");
+        }
+    };
 
     var FilterByID = function(array,field, value) {
         if(array) {
@@ -964,6 +1039,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if($scope.users) {
                     for (var i = 0; i < $scope.users.length; i++) {
                         var user = $scope.users[i];
+                        user.listType = "User";
 
                         if(user.resourceid){
                             var resource = FilterByID(onlineAgents,"ResourceId", user.resourceid);
@@ -996,6 +1072,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     });
 
                     $scope.agentList = onlineAgentList.concat(offlineAgentList);
+                }
+
+                if($scope.userGroups){
+                    var userGroupList = [];
+
+                    for(var j = 0; j < $scope.userGroups.length; j++){
+                        var userGroup = $scope.userGroups[j];
+
+                        userGroup.status = "Available";
+                        userGroup.listType = "Group";
+                        userGroupList.push(userGroup);
+                    }
+
+                    userGroupList.sort(function(a, b){
+                        if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        return 0;
+                    });
+
+                    $scope.agentList = userGroupList.concat($scope.agentList)
                 }
             }
             else

@@ -116,37 +116,6 @@
                                     <label for="ticketSubject">Description</label>
                                     <textarea ng-model="newSubTicket.description" class="form-control" rows="3"></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="ticketSubject">Assignee user</label>
-                                    <!--<tags-input ng-model="ticket.assignUsers" placeholder="choose assignee user" replace-spaces-with-dashes="false"
-                                                display-property="username"
-                                                add-from-autocomplete-only="true"
-                                                on-tag-added="onChipAddUser($tag)"
-                                                on-tag-removed="onChipDeleteUser($tag)"
-                                                ng-disabled="" min-length="1">
-                                        <auto-complete source="querySearch($query)"
-                                                       load-on-empty="true"
-                                                       load-on-focus="true"
-                                                       min-length="1"></auto-complete>
-                                    </tags-input>-->
-
-                                    <select class="form-control" ng-model="newSubTicket.assignee"
-                                            ng-model-options="{trackBy: '$value'}">
-                                        <option ng-repeat="c in users" value='{{c._id}}'>
-                                            {{c.username}}
-                                        </option>
-                                    </select>
-
-                                    <!--<script type="text/ng-template" id="my-custom-template">
-                                        <div class="auto-complete-left-panel">
-                                            <img ng-src="{{data.img}}"/>
-                                        </div>
-                                        <div class="auto-complete-right-panel">
-                                            <span ng-bind-html="$highlight($getDisplayText())"></span>
-                                        </div>
-                                    </script>-->
-                                </div>
-
 
                             </form>
                         </div>
