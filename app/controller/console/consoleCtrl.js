@@ -12,8 +12,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
     /*getJSONData($http, 'userList', function (data) {
-        $scope.agentList = data;
-    });*/
+     $scope.agentList = data;
+     });*/
 
     $scope.status = {
         isopen: false
@@ -23,7 +23,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -42,10 +42,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-                removeClass('display-block  zoomOut');
+            removeClass('display-block  zoomOut');
         }
     };
 
@@ -54,29 +54,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-                removeClass('display-none');
+            removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-                removeClass('display-block');
+            removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-            removeClass('display-block active-menu-icon ');
+        removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-            removeClass('display-none  ');
+        removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-            removeClass('display-none');
+        removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-            removeClass('display-block active-menu-icon');
+        removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -129,12 +129,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sipSendDTMF(dtmf);
             $scope.call.number = $scope.call.number + dtmf;
         },
-        makeCall:function(callNumber,tabReference){
+        makeCall: function (callNumber, tabReference) {
             $scope.veeryPhone.makeAudioCall(callNumber);
 
-          //  var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
+            //  var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
 
-            $scope.tabReference=tabReference;
+            $scope.tabReference = tabReference;
         },
         makeAudioCall: function (callNumber) {
             if (callNumber == "") {
@@ -406,16 +406,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         };
 
         var index = notifyData.sessionId;
-        if(notifyData.direction.toLowerCase() ==='outbound'){
+        if (notifyData.direction.toLowerCase() === 'outbound') {
             $scope.tabs.filter(function (item) {
-                var substring = "-Call"+notifyData.channelFrom;
+                var substring = "-Call" + notifyData.channelFrom;
                 if (item.tabReference.indexOf(substring) !== -1) {
                     index = item.tabReference;
                 }
             });
         }
 
-        $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData,index);
+        $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
     };
 
     $scope.veeryNotification = function () {
@@ -434,9 +434,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.tabReference = "";
     $scope.tabs = [];
 
-    $scope.addTab = function (title, content, viewType, notificationData,index) {
+    $scope.addTab = function (title, content, viewType, notificationData, index) {
 
-        var isOpened=false;
+        var isOpened = false;
 
         var newTab = {
             disabled: false,
@@ -445,47 +445,44 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             content: content,
             viewType: viewType,
             notificationData: notificationData,
-            tabReference:index?index:uuid4.generate()
+            tabReference: index ? index : uuid4.generate()
         };
 
         $scope.tabs.filter(function (item) {
             if (item.tabReference == index) {
-                isOpened=true;
+                isOpened = true;
             }
         });
 
 
-        if(!isOpened)
-        {
+        if (!isOpened) {
             $scope.tabs.push(newTab);
             $timeout(function () {
                 //$scope.tabSelected(newTab.tabReference);
-                $scope.activeTabIndex = $scope.tabs.length-1;
-                document.getElementById ("tab_view").active = $scope.tabs.length-1;
+                $scope.activeTabIndex = $scope.tabs.length - 1;
+                document.getElementById("tab_view").active = $scope.tabs.length - 1;
             });
         }
-        else
-        {
+        else {
             $scope.tabSelected(index);
         }
 
     };
-    $scope.isForceFocused=false;
-    $scope.currTab=0;
+    $scope.isForceFocused = false;
+    $scope.currTab = 0;
     $scope.tabSelected = function (tabIndex) {
 
 
-            $scope.tabs.filter(function (item) {
-                if (item.tabReference == tabIndex) {
+        $scope.tabs.filter(function (item) {
+            if (item.tabReference == tabIndex) {
 
-                    currTab=$scope.tabs.indexOf(item);
-                    $scope.activeTab=item;
+                currTab = $scope.tabs.indexOf(item);
+                $scope.activeTab = item;
 
-                    $scope.activeTabIndex = currTab;
-                    document.getElementById ("tab_view").active = currTab;
-                }
-            });
-
+                $scope.activeTabIndex = currTab;
+                document.getElementById("tab_view").active = currTab;
+            }
+        });
 
 
     };
@@ -550,9 +547,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
-    var openNewTicketTab =function (ticket,index){
+    var openNewTicketTab = function (ticket, index) {
         var tabTopic = "Ticket - " + ticket.reference;
-        $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket,index);
+        $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket, index);
         /*var selectedTabs = $scope.tabs.filter(function (item) {
          return item.notificationData._id == ticket._id;
          });
@@ -564,13 +561,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $scope.addMailInbox =function (){
+    $scope.addMailInbox = function () {
         $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null);
         resizeDiv();
     };
 
 
-    var openNewEngagementTab = function(args,index){
+    var openNewEngagementTab = function (args, index) {
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -580,17 +577,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             skill: '',
             sessionId: args.engagement_id
         };
-        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData,index);
+        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, index);
     };
 
     $rootScope.$on('openNewTab', function (events, args) {
 
         switch (args.tabType) {
             case 'ticketView':
-                openNewTicketTab(args,args.index);
+                openNewTicketTab(args, args.index);
                 break;
             case 'engagement':
-                openNewEngagementTab(args,args.index);
+                openNewEngagementTab(args, args.index);
                 break;
             case 'inbox':
                 openEngagementTabForMailReply(args.data);
@@ -613,8 +610,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
 
-    var openEngagementTabForMailReply = function(args)
-    {
+    var openEngagementTabForMailReply = function (args) {
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -815,41 +811,34 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //----------------------------------------------------------------------------------------
 
 
-    var getUnreadMailCounters = function(profileId){
+    var getUnreadMailCounters = function (profileId) {
 
-        try
-        {
+        try {
             mailInboxService.getMessageCounters(profileId)
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result && data.Result.UNREAD)
-                        {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    console.log(err);
+                    },
+                    function (err) {
+                        console.log(err);
 
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             console.log(ex);
 
         }
@@ -865,7 +854,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response.data.IsSuccess) {
 
                 myProfileDataParser.myProfile = response.data.Result;
-                $scope.loginAvatar=myProfileDataParser.myProfile.avatar;
+                $scope.loginAvatar = myProfileDataParser.myProfile.avatar;
                 getUnreadMailCounters(myProfileDataParser.myProfile._id);
             }
             else {
@@ -942,7 +931,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     /* Set the width of the side navigation to 250px */
-    $scope.openNav = function() {
+    $scope.openNav = function () {
 
         getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
         document.getElementById("mySidenav").style.width = "300px";
@@ -952,7 +941,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     /* Set the width of the side navigation to 0 */
-    $scope.closeNav = function() {
+    $scope.closeNav = function () {
         if (getAllRealTimeTimer) {
             $timeout.cancel(getAllRealTimeTimer);
         }
@@ -961,13 +950,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         //  document.getElementById("navBar").style.marginRight = "0";
     };
 
-    $scope.sendNotification = function(){
-        if($scope.naviSelectedUser){
+    $scope.sendNotification = function () {
+        if ($scope.naviSelectedUser) {
 
             $scope.notificationMsg.From = $scope.loginName;
             $scope.notificationMsg.Direction = "STATELESS";
-            if($scope.naviSelectedUser.listType === "Group"){
-                if($scope.naviSelectedUser.users) {
+            if ($scope.naviSelectedUser.listType === "Group") {
+                if ($scope.naviSelectedUser.users) {
                     var clients = [];
                     for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
                         var gUser = $scope.naviSelectedUser.users[i];
@@ -979,7 +968,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                     notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
                         $scope.notificationMsg = {};
-                        console.log("send notification success :: "+ JSON.stringify(clients));
+                        console.log("send notification success :: " + JSON.stringify(clients));
                     }, function (err) {
                         var errMsg = "Send Notification Failed";
                         if (err.statusText) {
@@ -987,16 +976,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         }
                         $scope.showAlert('Error', 'error', errMsg);
                     });
-                }else{
+                } else {
                     $scope.showAlert('Error', 'error', "Send Notification Failed");
                 }
 
-            }else {
+            } else {
 
                 $scope.notificationMsg.To = $scope.naviSelectedUser.username;
 
                 notificationService.sendNotification($scope.notificationMsg, "message", "").then(function (response) {
-                    console.log("send notification success :: "+ $scope.notificationMsg.To);
+                    console.log("send notification success :: " + $scope.notificationMsg.To);
                     $scope.notificationMsg = {};
                 }, function (err) {
                     var errMsg = "Send Notification Failed";
@@ -1007,13 +996,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 });
             }
 
-        }else{
+        } else {
             $scope.showAlert('Error', 'error', "Send Notification Failed");
         }
     };
 
-    var FilterByID = function(array,field, value) {
-        if(array) {
+    var FilterByID = function (array, field, value) {
+        if (array) {
             for (var i = array.length - 1; i >= 0; i--) {
                 if (array[i].hasOwnProperty(field)) {
                     if (array[i][field] == value) {
@@ -1022,62 +1011,61 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             }
             return null;
-        }else{
+        } else {
             return null;
         }
     };
 
-    var loadOnlineAgents = function(){
-        resourceService.getOnlineAgentList().then(function(response){
-            if(response.IsSuccess)
-            {
+    var loadOnlineAgents = function () {
+        resourceService.getOnlineAgentList().then(function (response) {
+            if (response.IsSuccess) {
                 var onlineAgentList = [];
                 var offlineAgentList = [];
                 $scope.agentList = [];
                 var onlineAgents = response.Result;
 
-                if($scope.users) {
+                if ($scope.users) {
                     for (var i = 0; i < $scope.users.length; i++) {
                         var user = $scope.users[i];
                         user.listType = "User";
 
-                        if(user.resourceid){
-                            var resource = FilterByID(onlineAgents,"ResourceId", user.resourceid);
-                            if(resource) {
+                        if (user.resourceid) {
+                            var resource = FilterByID(onlineAgents, "ResourceId", user.resourceid);
+                            if (resource) {
                                 user.status = resource.Status.State;
-                                if(user.status === "NotAvailable"){
+                                if (user.status === "NotAvailable") {
                                     offlineAgentList.push(user);
-                                }else{
+                                } else {
                                     onlineAgentList.push(user);
                                 }
-                            }else{
+                            } else {
                                 user.status = "NotAvailable";
                                 offlineAgentList.push(user);
                             }
-                        }else{
+                        } else {
                             user.status = "NotAvailable";
                             offlineAgentList.push(user);
                         }
                     }
 
-                    onlineAgentList.sort(function(a, b){
-                        if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                    onlineAgentList.sort(function (a, b) {
+                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
-                    offlineAgentList.sort(function(a, b){
-                        if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                    offlineAgentList.sort(function (a, b) {
+                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
 
                     $scope.agentList = onlineAgentList.concat(offlineAgentList);
                 }
 
-                if($scope.userGroups){
+                if ($scope.userGroups) {
                     var userGroupList = [];
 
-                    for(var j = 0; j < $scope.userGroups.length; j++){
+                    for (var j = 0; j < $scope.userGroups.length; j++) {
                         var userGroup = $scope.userGroups[j];
 
                         userGroup.status = "Available";
@@ -1085,29 +1073,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         userGroupList.push(userGroup);
                     }
 
-                    userGroupList.sort(function(a, b){
-                        if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                    userGroupList.sort(function (a, b) {
+                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
 
                     $scope.agentList = userGroupList.concat($scope.agentList)
                 }
             }
-            else
-            {
+            else {
                 var errMsg = response.CustomMessage;
 
-                if(response.Exception)
-                {
+                if (response.Exception) {
                     errMsg = response.Exception.Message;
                 }
                 $scope.showAlert('Error', 'error', errMsg);
             }
-        }, function(err){
+        }, function (err) {
             var errMsg = "Error occurred while loading online agents";
-            if(err.statusText)
-            {
+            if (err.statusText) {
                 errMsg = err.statusText;
             }
             $scope.showAlert('Error', 'error', errMsg);
@@ -1126,5 +1111,95 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     });
 
+    /* update code damith
+     ARDS break option */
+    var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
+    $scope.breakOption = {
+        changeBreakOption: function (requestOption) {
+            dataParser.userProfile = $scope.profile;
+            breakList.forEach(function (option) {
+                $(option).removeClass('font-color-green bold');
+            });
+            resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
+                if (res) {
+                    $('#userStatus').addClass('offline').removeClass('online');
+                    $scope.showAlert(requestOption, "success", 'update resource state success');
+                    $('#' + requestOption).addClass('font-color-green bold');
+                }
+            }, function (error) {
+                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+            });
+        },
+        endBreakOption: function () {
+            dataParser.userProfile = $scope.profile;
+            breakList.forEach(function (option) {
+                $(option).removeClass('font-color-green bold');
+            });
+            resourceService.EndBreakRequest(authService.GetResourceId()).then(function (data) {
+                if (data) {
+                    $scope.showAlert("Available", "success", "Update resource state success.");
+                }
+                $('#userStatus').addClass('online').removeClass('offline');
+                $('#Available').addClass('font-color-green bold');
+            });
+        }
+    }//end
 
-});
+    //change agent Register status
+    $scope.changeRegisterStatus = {
+        changeStatus: function (type) {
+            dataParser.userProfile = $scope.profile;
+            //get veery format
+            resourceService.GetContactVeeryFormat().then(function (res) {
+                if (res.IsSuccess) {
+                    resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result.ContactName).
+                    then(function (data) {
+                        console.log(data);
+                    })
+                } else {
+                    console.log(data);
+                }
+            }, function (error) {
+                $scope.showAlert("Change Register", "error", "Fail To Register..!");
+            });
+            //
+        }
+    }//end
+
+    var getCurrentState = (function () {
+        return {
+            breakState: function () {
+                resourceService.GetResourceState(authService.GetResourceId()).then(function (data) {
+                    if (data && data.IsSuccess) {
+                        if (data.Result.State == "Available") {
+                            $('#userStatus').addClass('online').removeClass('offline');
+                            $('#Available').addClass('font-color-green bold');
+                        } else {
+                            $('#userStatus').addClass('offline').removeClass('online');
+                            switch (data.Result.Reason) {
+                                case 'OfficialBreak' :
+                                    $('#OfficialBreak').addClass('font-color-green bold');
+                                    break;
+                                case 'MealBreak' :
+                                    $('#MealBreak').addClass('font-color-green bold');
+                                    break;
+                            }
+                        }
+                    }
+                }, function (error) {
+                    $scope.showAlert("Agent State", "error", "Fail To load get current state..");
+                });
+            },
+            getResourceState: function () {
+                resourceService.GetResource(authService.GetResourceId()).then(function (data) {
+                    console.log(data);
+                }, function (error) {
+                    $scope.showAlert("Agent State", "error", "Fail To load get current state..");
+                });
+            }
+        }
+    })();
+    getCurrentState.breakState();
+    getCurrentState.getResourceState();
+})
+;

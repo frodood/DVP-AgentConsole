@@ -1721,6 +1721,8 @@ div > div >
     width: 45px;
     height: 45px;
     padding: 3px 5px 0px 0px;
+    border-radius: 50%;
+    margin-left: 5px;
 }
 
 .inline-block {
@@ -2507,7 +2509,7 @@ tags-input .tags .input {
     background: rgba(6, 54, 80, 0.1);
     text-align: center;
     border: 1px solid #15315a;
-    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 .dark-ticker-wrap > h1 {
@@ -2645,4 +2647,9 @@ tags-input .tags .input {
 
 .recent-activity-right > .title {
     font-size: 12px;
+}
+
+.agent-ticket-chart-wrapper {
+    padding-left: 0;
+    padding-right: 8px;
 }

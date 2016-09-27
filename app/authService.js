@@ -2,31 +2,29 @@
  * Created by Rajinda on 4/27/2016.
  */
 
-angular.module('authServiceModule' ,[])
+angular.module('authServiceModule', [])
     .service('authService', function (localStorageService, jwtHelper) {
 
 
-        this.GetToken = function(){
+        this.GetToken = function () {
             var data = localStorageService.get("@agentConsoleLoginToken");
 
-            if(data && data.access_token){
+            if (data && data.access_token) {
 
-                if(!jwtHelper.isTokenExpired(data.access_token)){
+                if (!jwtHelper.isTokenExpired(data.access_token)) {
                     return "bearer " + data.access_token;
 
                 }
             }
-
             return undefined;
-
         };
 
-        this.TokenWithoutBearer = function(){
+        this.TokenWithoutBearer = function () {
             var data = localStorageService.get("@agentConsoleLoginToken");
 
-            if(data && data.access_token){
+            if (data && data.access_token) {
 
-                if(!jwtHelper.isTokenExpired(data.access_token)){
+                if (!jwtHelper.isTokenExpired(data.access_token)) {
                     return data.access_token;
 
                 }
@@ -34,17 +32,20 @@ angular.module('authServiceModule' ,[])
             return undefined;
         };
 
-        this.GetResourceIss = function(){
-
+        this.GetResourceIss = function () {
             var decodeData = jwtHelper.decodeToken(this.TokenWithoutBearer());
             return decodeData.iss;
         };
 
-        this.GetProfileId = function(){
+        this.GetProfileId = function () {
             // var decodeData = jwtHelper.decodeToken(this.TokenWithoutBearer());
             return '576a4f18dd751f010089cec0';
         };
 
+        this.GetResourceId = function () {
+            var decodeData = jwtHelper.decodeToken(this.TokenWithoutBearer());
+            return decodeData.context.resourceid;
+        };
 
 
         /* this.UserService= this.GetToken();

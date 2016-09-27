@@ -31,7 +31,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
     };
 //{"ResourceId":resourceId,"HandlingTypes":["CALL"]}
-    var registerWithArds = function (resourceId,contact) {
+    var registerWithArds = function (resourceId, contact) {
 
         return $http({
             method: 'post',
@@ -83,7 +83,6 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     };
 
     var getOnlineAgentList = function () {
-
         return $http({
             method: 'get',
             url: baseUrls.ardsMonitoringServiceUrl + "/resources",
@@ -96,18 +95,64 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
     };
 
+    var changeRegisterStatus = function (resourceId, type, contactName) {
+        return $http({
+            method: 'put',
+            url: baseUrls.ardsliteserviceUrl + "/share",
+            headers: {
+                'authorization': authService.GetToken()
+            },
+            data: {
+                "ResourceId": resourceId,
+                "HandlingTypes": [{
+                    "Type": type,
+                    "Contact": contactName
+                }]
+            }
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+    var getResourceState = function (resourceId) {
+        return $http({
+            method: 'get',
+            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state",
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+    var getResource = function (resourceId) {
+        return $http({
+            method: 'get',
+            url: baseUrls.ardsliteserviceUrl + "/" + resourceId,
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
     return {
         BreakRequest: breakRequest,
         EndBreakRequest: endBreakRequest,
         RegisterWithArds: registerWithArds,
         UnregisterWithArds: unregisterWithArds,
         GetContactVeeryFormat: getContactVeeryFormat,
-        getOnlineAgentList: getOnlineAgentList
+        getOnlineAgentList: getOnlineAgentList,
+        ChangeRegisterStatus: changeRegisterStatus,
+        GetResourceState: getResourceState,
+        GetResource: getResource
     }
 
 });
 
-resourceModule.factory('dataParser', function(){
+resourceModule.factory('dataParser', function () {
     var userProfile = {};
 
     return userProfile;
