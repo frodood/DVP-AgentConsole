@@ -87,7 +87,7 @@
                 grant_type: "password",
                 username: parm.userName,
                 password: parm.password,
-                scope: "all_all profile_veeryaccount"
+                scope: "all_all profile_veeryaccount write_ardsresource write_notification read_myUserProfile profile_veeryaccount resourceid"
             }, {
                 headers: {
                     Authorization: 'Basic ' + parm.clientID

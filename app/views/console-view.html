@@ -305,13 +305,12 @@
 
                         <div id="consoleProfileImg" class="console-profile-img" uib-dropdown-toggle>
                             <img src="assets/img/avatar/default-user.png" ng-src="{{loginAvatar}}">
-
-                            <div class="user-state online"></div>
+                            <div id="userStatus" class="user-state online"></div>
                         </div>
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                                    >Hi,{{loginName}}</a>
+                            >Hi,{{loginName}}</a>
                             <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
@@ -320,21 +319,37 @@
 
                             <li><a class="drop-header">Register</a></li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Call</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">ticket</a></li>
+                            <li class="menuitem" role="menuitem"><a
+                                    ng-click="changeRegisterStatus.changeStatus('CALL');"
+                                    href="javascript:void(0);">Call</a></li>
+                            <li class="menuitem" role="menuitem"><a
+                                    ng-click="changeRegisterStatus.changeStatus('TICKET');"
+                                    href="javascript:void(0);">ticket</a></li>
 
                             <li><a class="drop-header">Break</a></li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);">available</a></li>
-                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);">official</a></li>
-                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);">meal</a></li>
+                            <li class="menuitem" role="menuitem"><a id="Available"
+                                                                    class=""
+                                                                    ng-click="breakOption.endBreakOption();"
+                                                                    href="javascript:void(0);">
+                                available</a></li>
+                            <li class="menuitem" role="menuitem"><a id="OfficialBreak"
+                                                                    class=""
+                                                                    ng-click="breakOption.changeBreakOption('OfficialBreak');"
+                                                                    href="javascript:void(0);"> official</a>
+                            </li>
+                            <li class="menuitem" role="menuitem"><a id="MealBreak"
+                                                                    class=""
+                                                                    ng-click="breakOption.changeBreakOption('MealBreak');"
+                                                                    href="javascript:void(0);"> meal</a>
+                            </li>
                             <li class="divider"></li>
                             <li class="menuitem" role="menuitem"><a ng-click="goAgentDashboard();"
                                                                     href="javascript:void(0)">Dashboard</a></li>
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
-                                    >Logout</a></li>
+                            >Logout</a></li>
                         </ul>
 
 
@@ -511,24 +526,24 @@
             <div id="divVideoRemote">
                 <video id="video_remote"
                        autoplay="autoplay"
-                        ></video>
+                ></video>
             </div>
 
             <div id="divVideoLocalWrapper"
-                    >
+            >
                 <iframe></iframe>
                 <div id="divVideoLocal"
-                        >
+                >
                     <video id="video_local"
                            autoplay="autoplay"
                            muted="true"></video>
                 </div>
             </div>
             <div id="divScreencastLocalWrapper"
-                    >
+            >
                 <iframe></iframe>
                 <div id="divScreencastLocal"
-                        >
+                >
                 </div>
             </div>
             <!--div id="div1" style="margin-left: 300px; border:0px solid #009; z-index: 1000">
