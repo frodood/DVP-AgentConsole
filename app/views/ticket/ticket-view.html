@@ -452,7 +452,7 @@
                                                         <select class="" placeholder=""
                                                                 ng-model="newAssignee" ng-model-options="{trackBy: '$value'}">
 
-                                                            <option ng-repeat="user in userList" value="{{user}}">{{user.name}}</option>
+                                                            <option ng-repeat="assignee in assigneeList" value="{{assignee}}">{{assignee.name}}</option>
 
                                                         </select>
                                                     </div>
@@ -481,11 +481,17 @@
                                                        class="fa fa-pencil"></i>
                                                 </div>
                                                 <div class="row people-view-details">
-                                                    <div class="notification-time text-uppercase bold color-green500">
+                                                    <div class="notification-time text-uppercase bold color-green500" ng-show="ticket.assignee.name">
                                                         ASSIGNEE
                                                     </div>
-                                                    <div class="notification-text">
+                                                    <div class="notification-text" ng-show="ticket.assignee">
                                                         {{ticket.assignee.name}}
+                                                    </div>
+                                                    <div class="notification-time text-uppercase bold color-green500" ng-if="!ticket.assignee.name" ng-show="ticket.assignee_group.name">
+                                                        ASSIGNEE GROUP
+                                                    </div>
+                                                    <div class="notification-text" ng-if="!ticket.assignee.name" ng-show="ticket.assignee_group">
+                                                        {{ticket.assignee_group.name}}
                                                     </div>
 
                                                 </div>

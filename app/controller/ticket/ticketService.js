@@ -339,6 +339,23 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var AssignUserGroupToTicket = function (ticketId,groupId) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/AssignGroup/"+groupId,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
     var getTicketNextLevel= function (ticketType,currentStatus) {
         var authToken = authService.GetToken();
 
@@ -568,6 +585,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetTicketsByView:getTicketsByView,
         AddNewCommentToTicket:AddNewCommentToTicket,
         AssignUserToTicket:AssignUserToTicket,
+        AssignUserGroupToTicket: AssignUserGroupToTicket,
         getTicketNextLevel:getTicketNextLevel,
         createTimer: createTimer,
         startTimer: startTimer,
