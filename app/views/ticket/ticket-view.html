@@ -1,658 +1,641 @@
-<div class="animated fadeIn">
-<div ng-include="'app/views/ticket/ticket-edit.html'"></div>
-<div ng-include="'app/views/ticket/template/new_sub_ticket.html'"></div>
+<div>
+    <div ng-include="'app/views/ticket/ticket-edit.html'"></div>
+    <div ng-include="'app/views/ticket/template/new_sub_ticket.html'"></div>
 
-<div class="ticket-view-wrapper">
-    <!-- MODEL HEADER -->
-    <div class="model-header">
-        <div class="col-md-6">
-            <div class="mode-left-icon  dark float-left">
-                <i class="main-icon-2-telephone-3"></i>
+    <div class="ticket-view-wrapper">
+        <!-- MODEL HEADER -->
+        <div class="model-header">
+            <div class="col-md-6">
+                <div class="mode-left-icon  dark float-left">
+                    <i class="main-icon-2-telephone-3"></i>
+                </div>
+                <div class="model-header-text small bold ">
+                    {{ticketID}}
+                </div>
+                <br/>
+                <div class="model-header-text bold">
+                    {{ticketSubject}}
+                </div>
             </div>
-            <div class="model-header-text small bold ">
-                {{ticketID}}
-            </div>
-            <br/>
-            <div class="model-header-text bold">
-                {{ticketSubject}}
-            </div>
-        </div>
 
-        <div class="col-md-6 col-sm-6 ">
-            <div class="model-btn-wrapper">
-                <div class="btn-warp" uib-dropdown>
+            <div class="col-md-6 col-sm-6 ">
+                <div class="model-btn-wrapper">
+                    <div class="btn-warp" uib-dropdown>
                         <span class="btn btn-default" uib-dropdown-toggle>
                             <i class="main-icon-2-more-1">
 
                             </i>
                         </span>
 
-                    <ul class="dropdown-menu console-drop-menu ticket-view-option " uib-dropdown-menu
-                        role="menu"
-                        aria-labelledby="btn-append-to-single-button">
-                        <li class="menuitem" role="menuitem"><a>Available status</a></li>
-                        <div class="divider"></div>
-                        <li class="menuitem" role="menuitem" ng-repeat="nextLevel in ticketNextLevels"><a
-                                ng-click="changeTicketStatus(nextLevel)">{{nextLevel}}</a></li>
-                        <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
-                        <div class="divider"></div>
-                        <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
-                        <li class="menuitem" role="menuitem"><a href="#">Logout</a></li>
-                    </ul>
+                        <ul class="dropdown-menu console-drop-menu ticket-view-option " uib-dropdown-menu
+                            role="menu"
+                            aria-labelledby="btn-append-to-single-button">
+                            <li class="menuitem" role="menuitem"><a >Available status</a></li>
+                            <div class="divider"></div>
+                            <li class="menuitem" role="menuitem" ng-repeat="nextLevel in ticketNextLevels"><a ng-click="changeTicketStatus(nextLevel)">{{nextLevel}}</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">Another action</a></li>
+                            <div class="divider"></div>
+                            <li class="menuitem" role="menuitem"><a href="#">Something else here</a></li>
+                            <li class="menuitem" role="menuitem"><a href="#">Logout</a></li>
+                        </ul>
 
 
-                </div>
-                <div class="btn-warp ">
-                    <span class="btn btn-default" ng-click="clickShowTickerEditMode();">edit</span>
-                </div>
-                <div class="btn-warp ">
-                    <span class="btn btn-default" ng-click="goToComment()">comment</span>
-                </div>
-                <div class="btn-warp ">
-                    <span class="btn btn-default" ng-click="assignToMe()">pick</span>
-                </div>
-                <div class="btn-warp ">
-                    <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">close</span>
-                </div>
+                    </div>
+                    <div class="btn-warp ">
+                        <span class="btn btn-default" ng-click="clickShowTickerEditMode();">edit</span>
+                    </div>
+                    <div class="btn-warp ">
+                        <span class="btn btn-default" ng-click="goToComment()">comment</span>
+                    </div>
+                    <div class="btn-warp ">
+                        <span class="btn btn-default" ng-click="assignToMe()">pick</span>
+                    </div>
+                    <div class="btn-warp ">
+                        <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">close</span>
+                    </div>
 
-                <div ng-show="ticket.channel==='Call'" class="btn-group" uib-dropdown is-open="status.isopen">
-                    <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle
-                            ng-disabled="disabled">
-                        Call <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                        <li role="menuitem" ng-repeat="no in contactList"><a href="javascript:void(0);"
-                                                                             ng-click="callToCustomer(no)">{{no}}</a>
-                        </li>
-                    </ul>
-                </div>
+                    <div ng-show="ticket.channel==='Call'" class="btn-group" uib-dropdown is-open="status.isopen">
+                        <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                            Call <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-repeat="no in contactList" ><a href="javascript:void(0);" ng-click="callToCustomer(no)">{{no}}</a></li>
+                        </ul>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
-    <!-- MODEL HEADER -->
+        <!-- MODEL HEADER -->
 
-    <div class="ticker-details-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="col-lg-8 col-sm-12">
+        <div class="ticker-details-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-8 col-sm-12">
 
-                    <!-- DETAILS -->
-                    <div class="details-wrap">
-                        <div class="details">
-                            <h5 class="bold">DETAILS</h5>
-                        </div>
-                        <ul class="info-list-lg">
-                            <li>
-                                <small>Type</small>
-                                <h5>{{ticket.type}}</h5>
-                            </li>
-                            <li>
-                                <small>Priority</small>
-                                <h5>
-                                    <div class="bg-checkbox red font-white small-details inline-btn">
-                                        {{ticket.priority}}
-                                    </div>
-                                </h5>
-                            </li>
-                            <li>
-                                <small>Status</small>
-                                <h5 class="status-open">{{ticket.status}}</h5>
-                            </li>
-                            <li>
-                                <small>Company</small>
-                                <h5>Duo Sofatware</h5>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="details-wrap">
-                        <div class="details">
-                            <h5 class="bold">DATES</h5>
-                        </div>
-                        <ul class="info-list-lg">
-                            <li>
-                                <small>Created</small>
-                                <h5>{{ticket.created_at}}</h5>
-                            </li>
-                            <li>
-                                <small>Updated</small>
-                                <h5>{{ticket.updated_at}}</h5>
-                                <!--<h5><time-ago from-time='{{ ticket.updated_at }}'></time-ago></h5>-->
-                            </li>
-                            <li>
-                                <small>Due To</small>
-                                <div class="bg-checkbox red font-white small-details inline-btn" ng-show="isOverDue">
-                                    Overdue
-                                </div>
-                                <h5>{{ticket.due_at}}</h5>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <div class="details-wrap">
-                        <div class="details">
-                            <h5 class="bold">TAGES</h5>
-                        </div>
-                        <div ng-repeat="tag in ticket.tags" class="bg-checkbox teal600 font-white  inline-btn">
-                            {{tag}}
-                        </div>
-                    </div>
-                    <!-- END DETAILS -->
-
-                    <!-- DESCRIPTION -->
-                    <div class="ticket-dec-wrapper">
-                        <div class="details">
-                            <h5 class="bold">DESCRIPTION</h5>
-                        </div>
-
-                        <small class="font-size-15">{{ticket.description}}
-                        </small>
-                    </div>
-                    <!-- END DESC -->
-
-                    <!-- ATTACHMENT -->
-                    <div class="ticket-dec-wrapper">
-                        <div class="details">
-                            <h5 class="bold">ATTACHMENT</h5>
-                        </div>
-
-                        <!--<div ngf-drop ngf-select ng-model="newfile" class="drop-box dropdown-area"
-                             ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true">Drop pdfs or images here or click to upload<i class="main-icon-2-upload-1"></i>
-                            Files:
-                            <ul>
-                                <li ng-repeat="f in files" style="font:smaller">{{f[0].name}} {{f.$error}} {{f.$errorParam}}</li>
+                        <!-- DETAILS -->
+                        <div class="details-wrap">
+                            <div class="details">
+                                <h5 class="bold">DETAILS</h5>
+                            </div>
+                            <ul class="info-list-lg">
+                                <li>
+                                    <small>Type</small>
+                                    <h5>{{ticket.type}}</h5>
+                                </li>
+                                <li>
+                                    <small>Priority</small>
+                                    <h5>
+                                        <div class="bg-checkbox red font-white small-details inline-btn">
+                                            {{ticket.priority}}
+                                        </div>
+                                    </h5>
+                                </li>
+                                <li>
+                                    <small>Status</small>
+                                    <h5 class="status-open">{{ticket.status}}</h5>
+                                </li>
+                                <li>
+                                    <small>Company</small>
+                                    <h5>Duo Sofatware</h5>
+                                </li>
                             </ul>
                         </div>
-                        <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+
+                        <div class="details-wrap">
+                            <div class="details">
+                                <h5 class="bold">DATES</h5>
+                            </div>
+                            <ul class="info-list-lg">
+                                <li>
+                                    <small>Created</small>
+                                    <h5>{{ticket.created_at}}</h5>
+                                </li>
+                                <li>
+                                    <small>Updated</small>
+                                    <h5>{{ticket.updated_at}}</h5>
+                                    <!--<h5><time-ago from-time='{{ ticket.updated_at }}'></time-ago></h5>-->
+                                </li>
+                                <li>
+                                    <small>Due To</small>
+                                        <div class="bg-checkbox red font-white small-details inline-btn"ng-show="isOverDue">
+                                            Overdue
+                                        </div>
+                                    <h5>{{ticket.due_at}}</h5>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="details-wrap">
+                            <div class="details">
+                                <h5 class="bold">TAGES</h5>
+                            </div>
+                            <div ng-repeat="tag in ticket.tags" class="bg-checkbox teal600 font-white  inline-btn">
+                                {{tag}}
+                            </div>
+                        </div>
+                        <!-- END DETAILS -->
+
+                        <!-- DESCRIPTION -->
+                        <div class="ticket-dec-wrapper">
+                            <div class="details">
+                                <h5 class="bold">DESCRIPTION</h5>
+                            </div>
+
+                            <small class="font-size-15">{{ticket.description}}
+                            </small>
+                        </div>
+                        <!-- END DESC -->
+
+                        <!-- ATTACHMENT -->
+                        <div class="ticket-dec-wrapper">
+                            <div class="details">
+                                <h5 class="bold">ATTACHMENT</h5>
+                            </div>
+
+                            <!--<div ngf-drop ngf-select ng-model="newfile" class="drop-box dropdown-area"
+                                 ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true">Drop pdfs or images here or click to upload<i class="main-icon-2-upload-1"></i>
+                                Files:
+                                <ul>
+                                    <li ng-repeat="f in files" style="font:smaller">{{f[0].name}} {{f.$error}} {{f.$errorParam}}</li>
+                                </ul>
+                            </div>
+                            <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
 
 
-                        <button ng-click="uploadAttchments()">Upload all</button>-->
+                            <button ng-click="uploadAttchments()">Upload all</button>-->
 
-                        <div class="x_panel">
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            <div class="x_panel">
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
 
-                                <div ng-show="uploader.isHTML5">
-                                    <div nv-file-drop="" uploader="uploader">
-                                        <div nv-file-over="" uploader="uploader" over-class="another-file-over-class"
-                                             class="well my-drop-zone">
-                                            drop zone
+                                    <div ng-show="uploader.isHTML5">
+                                        <div nv-file-drop="" uploader="uploader" >
+                                            <div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">
+                                                drop zone
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="col-md-12 col-sm-12 col-xs-12" ng-show="uploader.isHTML5">
-                                        <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="uploader.isHTML5">
+                                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
 
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th width="50%">Name</th>
-                                                <th ng-show="uploader.isHTML5">Size</th>
-                                                <th ng-show="uploader.isHTML5">Progress</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr ng-repeat="item in uploader.queue">
-                                                <td><strong>{{ item.file.name }}</strong></td>
-                                                <td ng-show="uploader.isHTML5" nowrap>{{
-                                                    item.file.size/1024/1024|number:2 }}
-                                                    MB
-                                                </td>
-                                                <td ng-show="uploader.isHTML5">
-                                                    <div class="progress" style="margin-bottom: 0;">
-                                                        <div class="progress-bar" role="progressbar"
-                                                             ng-style="{ 'width': item.progress + '%' }"></div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <span ng-show="item.isSuccess"><i
-                                                            class="glyphicon glyphicon-ok"></i></span>
-                                                    <span ng-show="item.isCancel"><i
-                                                            class="glyphicon glyphicon-ban-circle"></i></span>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th width="50%">Name</th>
+                                                    <th ng-show="uploader.isHTML5">Size</th>
+                                                    <th ng-show="uploader.isHTML5">Progress</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="item in uploader.queue">
+                                                    <td><strong>{{ item.file.name }}</strong></td>
+                                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }}
+                                                        MB
+                                                    </td>
+                                                    <td ng-show="uploader.isHTML5">
+                                                        <div class="progress" style="margin-bottom: 0;">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                 ng-style="{ 'width': item.progress + '%' }"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                                             <span ng-show="item.isError"><i
                                                     class="glyphicon glyphicon-remove"></i></span>
-                                                </td>
-                                                <td nowrap>
-                                                    <button type="button" class="btn btn-success btn-xs"
-                                                            ng-click="item.upload()"
-                                                            ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                                        <span class="glyphicon glyphicon-upload"></span> Upload
-                                                    </button>
-                                                    <button type="button" class="btn btn-warning btn-xs"
-                                                            ng-click="item.cancel()"
-                                                            ng-disabled="!item.isUploading">
-                                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger btn-xs"
-                                                            ng-click="item.remove()">
-                                                        <span class="glyphicon glyphicon-trash"></span> Remove
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button" class="btn btn-success btn-xs"
+                                                                ng-click="item.upload()"
+                                                                ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                            <span class="glyphicon glyphicon-upload"></span> Upload
+                                                        </button>
+                                                        <button type="button" class="btn btn-warning btn-xs"
+                                                                ng-click="item.cancel()"
+                                                                ng-disabled="!item.isUploading">
+                                                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-xs"
+                                                                ng-click="item.remove()">
+                                                            <span class="glyphicon glyphicon-trash"></span> Remove
+                                                        </button>
+                                                    </td>
+                                                </tr>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <label class="col-md-12 col-sm-12 col-xs-12">Queue progress</label>
-
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="progress right" style="">
-                                            <div class="progress-bar" role="progressbar"
-                                                 ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div layout-gt-sm="row">
 
-                                        <button type="button" class="btn btn-success btn-s"
-                                                ng-click="uploader.uploadAll()"
-                                                ng-disabled="!uploader.getNotUploadedItems().length">
-                                            <span class="glyphicon glyphicon-upload"></span> Upload all
-                                        </button>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <label class="col-md-12 col-sm-12 col-xs-12">Queue progress</label>
 
-                                        <button type="button" class="btn btn-warning btn-s"
-                                                ng-click="uploader.cancelAll()"
-                                                ng-disabled="!uploader.isUploading">
-                                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                                        </button>
-
-                                        <button type="button" class="btn btn-danger btn-s"
-                                                ng-click="uploader.clearQueue()"
-                                                ng-disabled="!uploader.queue.length">
-                                            <span class="glyphicon glyphicon-trash"></span> Remove all
-                                        </button>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="progress right" style="">
+                                                <div class="progress-bar" role="progressbar"
+                                                     ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
+                                    <div class="form-group">
+                                        <div layout-gt-sm="row">
+
+                                            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()"
+                                                    ng-disabled="!uploader.getNotUploadedItems().length">
+                                                <span class="glyphicon glyphicon-upload"></span> Upload all
+                                            </button>
+
+                                            <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()"
+                                                    ng-disabled="!uploader.isUploading">
+                                                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                                            </button>
+
+                                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()"
+                                                    ng-disabled="!uploader.queue.length">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove all
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
 
 
-                        <div class="ticket-upload-view">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div class="upload-area bold">
-                                        IMAGE 01
+                            <div class="ticket-upload-view">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="upload-area bold">
+                                            IMAGE 01
+                                        </div>
+                                        <small>image.png</small>
                                     </div>
-                                    <small>image.png</small>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="upload-area bold">
-                                        IMAGE 01
+                                    <div class="col-sm-3">
+                                        <div class="upload-area bold">
+                                            IMAGE 01
+                                        </div>
+                                        <small>image.png</small>
                                     </div>
-                                    <small>image.png</small>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- END-->
+                        <!-- END-->
 
-                    <!-- SUB TASK LIST -->
-                    <div class="ticker-subticket-wrapper">
-                        <div class="details">
-                            <h5 class="bold">SUB TICKET </h5>
-                            <h2 ng-click="clickAddNewTicket()">+</h2>
-                        </div>
-                        <div ng-show=subTickets.length==0>
-                            No sub-tickets assigned yet
-                        </div>
-                        <div ng-repeat="sub in subTickets">
-                            <div class="sub-task" style="border-bottom: 0px solid">
-                                <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
-                                    <div class="sub-description">
-                                        <small ref ng-click="loadTicketView(sub)">{{sub.reference}}</small>
-                                        {{sub.description}}
-                                    </div>
-                                    <div class="divider-gray"></div>
-
-                                </div>
-                                <div class="col-lg-5 col-sm-12 text-right  ">
-                                    <a class="inline-bt pull-left " href="javascript:void(0);">
-                                        <div class="pull-left commenter-img">
-                                            <img src="assets/img/avatar/defaultProfile.png"
-                                                 ng-src={{sub.assignee.avatar}}>
-                                            {{sub.assignee.name}}
-                                        </div>
-                                    </a>
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn ">
-                                        {{sub.status}}
-                                    </div>
-                                    <div class="bg-checkbox orange font-white small-details  inline-bt  ">
-                                        {{sub.type}}
-                                    </div>
-
-                                    <div class="bg-checkbox  font-white  inline-bt link-btn  ">
-                                        <i class="main-icon-2-more-1 color-green500">
-
-                                        </i>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- END -->
-
-                    <!-- related ticket-->
-                    <div class="ticker-subticket-wrapper">
-                        <div class="details">
-                            <h5 class="bold">RELATED TICKET </h5>
-                        </div>
-
-                        <div ng-show=relTickets.length==0>
-                            No related tickets assigned yet
-                        </div>
-
-                        <div ng-repeat="relticket in relTickets">
-                            <div class="sub-task" style="border-bottom: 0px solid">
-                                <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
-                                    <div class="sub-description">
-                                        <small ng-click="loadTicketView(relticket)">{{relticket.reference}}</small>
-                                        {{relticket.description}}
-                                    </div>
-                                    <div class="divider-gray"></div>
-
-                                </div>
-                                <div class="col-lg-5 col-sm-12 text-right  ">
-                                    <a class="inline-bt pull-left " href="javascript:void(0);">
-                                        <div class="pull-left commenter-img">
-                                            <img src="assets/img/avatar/defaultProfile.png"
-                                                 ng-src={{relticket.assignee.avatar}}>
-                                            {{relticket.assignee.name}}
-                                        </div>
-                                    </a>
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn ">
-                                        {{relticket.status}}
-                                    </div>
-                                    <div class="bg-checkbox orange font-white small-details  inline-bt  ">
-                                        {{relticket.type}}
-                                    </div>
-
-                                    <div class="bg-checkbox  font-white  inline-bt link-btn  ">
-                                        <i class="main-icon-2-more-1 color-green500">
-                                        </i>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- end -->
-
-                </div>
-                <div class="col-lg-4 col-sm-12">
-                    <!-- PEOPLE -->
-                    <div class="people-wrap">
-                        <div class="details-wrap people">
+                        <!-- SUB TASK LIST -->
+                        <div class="ticker-subticket-wrapper">
                             <div class="details">
-                                <h5 class="bold">PEOPLE</h5>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="people-view">
-                                            <div class="people-view-img ">
-                                                <img src="assets/img/avatar/defaultProfile.png"
-                                                     ng-src={{ticket.submitter.avatar}}>
-                                            </div>
-                                            <div class="row people-view-details">
-                                                <div class="notification-time text-uppercase bold">
-                                                    submitter
-                                                </div>
-                                                <div class="notification-text ">
-                                                    {{ticket.submitter.name}}
-                                                </div>
-                                            </div>
+                                <h5 class="bold">SUB TICKET </h5><h2 ng-click="clickAddNewTicket()">+</h2>
+                            </div>
+                            <div ng-show=subTickets.length==0>
+                                No sub-tickets assigned yet
+                            </div>
+                            <div ng-repeat="sub in subTickets">
+                                <div class="sub-task" style="border-bottom: 0px solid">
+                                    <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                        <div class="sub-description">
+                                            <small ref ng-click="loadTicketView(sub)">{{sub.reference}}</small>
+                                            {{sub.description}}
                                         </div>
+                                        <div class="divider-gray"></div>
+
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="people-view">
-                                            <div class="people-view-img ">
-                                                <img src="assets/img/avatar/defaultProfile.png"
-                                                     ng-src={{ticket.requester.avatar}}>
+                                    <div class="col-lg-5 col-sm-12 text-right  ">
+                                        <a class="inline-bt pull-left " href="javascript:void(0);">
+                                            <div class="pull-left commenter-img">
+                                                <img src="assets/img/avatar/defaultProfile.png" ng-src={{sub.assignee.avatar}}>
+                                                {{sub.assignee.name}}
                                             </div>
-                                            <div class="row people-view-details">
-                                                <div class="notification-time text-uppercase bold color-cyan500">
-                                                    requester
-                                                </div>
-                                                <div class="notification-text">
-                                                    {{ticket.requester.name}}
-                                                </div>
-                                            </div>
+                                        </a>
+                                        <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                            {{sub.status}}
+                                        </div>
+                                        <div class="bg-checkbox orange font-white small-details  inline-bt  ">
+                                            {{sub.type}}
+                                        </div>
+
+                                        <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                            <i class="main-icon-2-more-1 color-green500">
+
+                                            </i>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="edit-assignee-wrapper animated fadeIn"
-                                             ng-show="isEditAssignee">
-                                            <div class="col-lg-7">
-                                                <div class="form-group">
-                                                    <!--<tags-input
-                                                            ng-model="users"
-                                                            display-property="profileName"
-                                                            placeholder="Search users to assign"
-                                                            replace-spaces-with-dashes="false">
-                                                        <auto-complete source="loadUser($query)"
-                                                                       min-length="0"
-                                                                       load-on-focus="true"
-                                                                       load-on-empty="true"
-                                                                       max-results-to-show="32"
-                                                                       template="my-custom-template">
-                                                        </auto-complete>
-                                                    </tags-input>
-                                                    <script type="text/ng-template"
-                                                            id="my-custom-template">
-                                                        <div class="auto-complete-left-panel">
-                                                            <img ng-src="{{data.img}}"/>
-                                                        </div>
-                                                        <div class="auto-complete-right-panel">
-                                                            <span ng-bind-html="$highlight($getDisplayText())"></span>
-                                                        </div>
-                                                    </script>-->
-                                                    <select class="" placeholder=""
-                                                            ng-model="newAssignee"
-                                                            ng-model-options="{trackBy: '$value'}">
+                            </div>
 
-                                                        <option ng-repeat="user in userList" value="{{user}}">
-                                                            {{user.name}}
-                                                        </option>
+                        </div>
+                        <!-- END -->
 
-                                                    </select>
+                        <!-- related ticket-->
+                        <div class="ticker-subticket-wrapper">
+                            <div class="details">
+                                <h5 class="bold">RELATED TICKET </h5>
+                            </div>
+
+                            <div ng-show=relTickets.length==0>
+                                No related tickets assigned yet
+                            </div>
+
+                            <div ng-repeat="relticket in relTickets">
+                                <div class="sub-task" style="border-bottom: 0px solid">
+                                    <div class="col-lg-7 col-sm-12 pull-left p-left-0 ">
+                                        <div class="sub-description">
+                                            <small ng-click="loadTicketView(relticket)">{{relticket.reference}}</small>
+                                            {{relticket.description}}
+                                        </div>
+                                        <div class="divider-gray"></div>
+
+                                    </div>
+                                    <div class="col-lg-5 col-sm-12 text-right  ">
+                                        <a class="inline-bt pull-left " href="javascript:void(0);">
+                                            <div class="pull-left commenter-img">
+                                                <img src="assets/img/avatar/defaultProfile.png" ng-src={{relticket.assignee.avatar}}>
+                                                {{relticket.assignee.name}}
+                                            </div>
+                                        </a>
+                                        <div class="bg-checkbox gray300  font-white small-details inline-btn ">
+                                            {{relticket.status}}
+                                        </div>
+                                        <div class="bg-checkbox orange font-white small-details  inline-bt  ">
+                                            {{relticket.type}}
+                                        </div>
+
+                                        <div class="bg-checkbox  font-white  inline-bt link-btn  ">
+                                            <i class="main-icon-2-more-1 color-green500">
+                                            </i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- end -->
+
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                        <!-- PEOPLE -->
+                        <div class="people-wrap">
+                            <div class="details-wrap people">
+                                <div class="details">
+                                    <h5 class="bold">PEOPLE</h5>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="people-view">
+                                                <div class="people-view-img ">
+                                                    <img src="assets/img/avatar/defaultProfile.png" ng-src={{ticket.submitter.avatar}}>
+                                                </div>
+                                                <div class="row people-view-details">
+                                                    <div class="notification-time text-uppercase bold">
+                                                        submitter
+                                                    </div>
+                                                    <div class="notification-text ">
+                                                        {{ticket.submitter.name}}
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-5">
-                                                <div class="edit-btn-wrapper text-left p-top-10">
-                                                    <div class="bg-checkbox btn-green500 font-white  inline-btn cursor-pointer"
-                                                         ng-click="changeAssignee()">
-                                                        save
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="people-view">
+                                                <div class="people-view-img ">
+                                                    <img src="assets/img/avatar/defaultProfile.png" ng-src={{ticket.requester.avatar}}>
+                                                </div>
+                                                <div class="row people-view-details">
+                                                    <div class="notification-time text-uppercase bold color-cyan500">
+                                                        requester
+                                                    </div>
+                                                    <div class="notification-text">
+                                                        {{ticket.requester.name}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="edit-assignee-wrapper animated fadeIn"
+                                                 ng-show="isEditAssignee">
+                                                <div class="col-lg-7">
+                                                    <div class="form-group">
+                                                        <!--<tags-input
+                                                                ng-model="users"
+                                                                display-property="profileName"
+                                                                placeholder="Search users to assign"
+                                                                replace-spaces-with-dashes="false">
+                                                            <auto-complete source="loadUser($query)"
+                                                                           min-length="0"
+                                                                           load-on-focus="true"
+                                                                           load-on-empty="true"
+                                                                           max-results-to-show="32"
+                                                                           template="my-custom-template">
+                                                            </auto-complete>
+                                                        </tags-input>
+                                                        <script type="text/ng-template"
+                                                                id="my-custom-template">
+                                                            <div class="auto-complete-left-panel">
+                                                                <img ng-src="{{data.img}}"/>
+                                                            </div>
+                                                            <div class="auto-complete-right-panel">
+                                                                <span ng-bind-html="$highlight($getDisplayText())"></span>
+                                                            </div>
+                                                        </script>-->
+                                                        <select class="" placeholder=""
+                                                                ng-model="newAssignee" ng-model-options="{trackBy: '$value'}">
+
+                                                            <option ng-repeat="assignee in assigneeList" value="{{assignee}}">{{assignee.name}}</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <div class="edit-btn-wrapper text-left p-top-10">
+                                                        <div class="bg-checkbox btn-green500 font-white  inline-btn cursor-pointer" ng-click="changeAssignee()">
+                                                            save
+                                                        </div>
+
+                                                        <div ng-click="editAssignee()"
+                                                             class="bg-checkbox btn-green700 font-white  inline-btn cursor-pointer">
+                                                            close
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="people-view cursor-pointer"
+                                                 ng-show="!isEditAssignee"
+                                                 ng-mouseleave="isEnableEdit=false"
+                                                 ng-mouseover="isEnableEdit=true">
+                                                <div class="people-view-img ">
+                                                    <img src="assets/img/avatar/defaultProfile.png" ng-src={{ticket.assignee.avatar}}>
+                                                    <i ng-show="isEnableEdit"
+                                                       ng-click="editAssignee()"
+                                                       class="fa fa-pencil"></i>
+                                                </div>
+                                                <div class="row people-view-details">
+                                                    <div class="notification-time text-uppercase bold color-green500" ng-show="ticket.assignee.name">
+                                                        ASSIGNEE
+                                                    </div>
+                                                    <div class="notification-text" ng-show="ticket.assignee">
+                                                        {{ticket.assignee.name}}
+                                                    </div>
+                                                    <div class="notification-time text-uppercase bold color-green500" ng-if="!ticket.assignee.name" ng-show="ticket.assignee_group.name">
+                                                        ASSIGNEE GROUP
+                                                    </div>
+                                                    <div class="notification-text" ng-if="!ticket.assignee.name" ng-show="ticket.assignee_group">
+                                                        {{ticket.assignee_group.name}}
                                                     </div>
 
-                                                    <div ng-click="editAssignee()"
-                                                         class="bg-checkbox btn-green700 font-white  inline-btn cursor-pointer">
-                                                        close
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="people-view cursor-pointer"
-                                             ng-show="!isEditAssignee"
-                                             ng-mouseleave="isEnableEdit=false"
-                                             ng-mouseover="isEnableEdit=true">
-                                            <div class="people-view-img ">
-                                                <img src="assets/img/avatar/defaultProfile.png"
-                                                     ng-src={{ticket.assignee.avatar}}>
-                                                <i ng-show="isEnableEdit"
-                                                   ng-click="editAssignee()"
-                                                   class="fa fa-pencil"></i>
-                                            </div>
-                                            <div class="row people-view-details">
-                                                <div class="notification-time text-uppercase bold color-green500">
-                                                    ASSIGNEE
-                                                </div>
-                                                <div class="notification-text">
-                                                    {{ticket.assignee.name}}
                                                 </div>
 
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- END PEOPLE -->
+
+                        <!-- COLLABORATORS -->
+                        <div class="collaborators-wrapper">
+                            <div class="details">
+                                <h5 class="bold"> COLLABORATORS
+                                    <!--<div class="pull-right right-icon">-->
+                                    <!--<i class="main-icon-2-add"> </i>-->
+                                    <!--</div>-->
+                                </h5>
+                            </div>
+                            <div class="sub-task">
+                                <div class="pull-left  ">
+                                    <div class="pull-left commenter-img">
+                                        <img src="assets/img/avatar/defaultProfile.png" ng-src="assets/img/avatar/mikeluby.jpg"/>
+                                        Aaron, Hank
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <div class="bg-checkbox gray300  font-white small-details inline-btn">
+                                        92h 11m / 0h
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sub-task">
+                                <div class="pull-left  ">
+                                    <div class="pull-left commenter-img">
+                                        <img src="assets/img/avatar/defaultProfile.png" ng-src="assets/img/avatar/jaman_01.jpg"/>
+                                        Abourezk, James
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <div class="bg-checkbox gray300  font-white small-details inline-btn">
+                                        2h 11m / 0h
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END -->
+
+                        <!-- TIME TRACKING  -->
+                        <div class="collaborators-wrapper" style="margin-top: 35px;">
+                            <div class="details">
+                                <h5 class="bold"> TIME TRACKING
+                                </h5>
+
+                            </div>
+                            <div class=" time-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Estimated
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <uib-progressbar value="22" type="warning">
+                                        </uib-progressbar>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        1W
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Remaining
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <uib-progressbar value="22" type="success">
+                                        </uib-progressbar>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        0
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Logged
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <uib-progressbar value="100" type="danger">
+                                        </uib-progressbar>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        2w 1d 4h 11m
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- END -->
                     </div>
-                    <!-- END PEOPLE -->
-
-                    <!-- COLLABORATORS -->
-                    <div class="collaborators-wrapper">
-                        <div class="details">
-                            <h5 class="bold"> COLLABORATORS
-                                <!--<div class="pull-right right-icon">-->
-                                <!--<i class="main-icon-2-add"> </i>-->
-                                <!--</div>-->
-                            </h5>
-                        </div>
-                        <div class="sub-task">
-                            <div class="pull-left  ">
-                                <div class="pull-left commenter-img">
-                                    <img src="assets/img/avatar/defaultProfile.png"
-                                         ng-src="assets/img/avatar/mikeluby.jpg"/>
-                                    Aaron, Hank
-                                </div>
-                            </div>
-                            <div class="pull-right">
-                                <div class="bg-checkbox gray300  font-white small-details inline-btn">
-                                    92h 11m / 0h
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-task">
-                            <div class="pull-left  ">
-                                <div class="pull-left commenter-img">
-                                    <img src="assets/img/avatar/defaultProfile.png"
-                                         ng-src="assets/img/avatar/jaman_01.jpg"/>
-                                    Abourezk, James
-                                </div>
-                            </div>
-                            <div class="pull-right">
-                                <div class="bg-checkbox gray300  font-white small-details inline-btn">
-                                    2h 11m / 0h
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END -->
-
-                    <!-- TIME TRACKING  -->
-                    <div class="collaborators-wrapper" style="margin-top: 35px;">
-                        <div class="details">
-                            <h5 class="bold"> TIME TRACKING
-                            </h5>
-
-                        </div>
-                        <div class=" time-wrapper">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    Estimated
-                                </div>
-                                <div class="col-sm-6">
-                                    <uib-progressbar value="22" type="warning">
-                                    </uib-progressbar>
-                                </div>
-                                <div class="col-sm-3">
-                                    1W
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    Remaining
-                                </div>
-                                <div class="col-sm-6">
-                                    <uib-progressbar value="22" type="success">
-                                    </uib-progressbar>
-                                </div>
-                                <div class="col-sm-3">
-                                    0
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    Logged
-                                </div>
-                                <div class="col-sm-6">
-                                    <uib-progressbar value="100" type="danger">
-                                    </uib-progressbar>
-                                </div>
-                                <div class="col-sm-3">
-                                    2w 1d 4h 11m
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <!-- END -->
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- ACTIVITY -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ticket-main-wrap ticker-tab-wrapper">
-                <div class="details">
-                    <h5 class="bold"> ACTIVITY
-                    </h5>
+        <!-- ACTIVITY -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ticket-main-wrap ticker-tab-wrapper">
+                    <div class="details">
+                        <h5 class="bold"> ACTIVITY
+                        </h5>
+                    </div>
+
+                    <div class="tab-wrap">
+                        <uib-tabset class="ticket-tab-panle" active="active">
+                            <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}"
+                                     disable="tab.disabled">
+                                <uib-tab-heading>
+                                    <i class="{{tab.icon}}"></i> {{tab.title}}
+                                </uib-tab-heading>
+
+                                <div ng-switch on="tab.type">
+                                    <div ng-switch-when="comments">
+                                        <div ng-include="'app/views/ticket/template/comments.html'"></div>
+                                    </div>
+                                    <div ng-switch-when="activity">
+                                        <div ng-include="'app/views/ticket/template/activity.html'"></div>
+                                    </div>
+                                    <div ng-switch-when="other">
+                                        <div ng-include="'app/views/ticket/template/other.html'"></div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+
                 </div>
-
-                <div class="tab-wrap">
-                    <uib-tabset class="ticket-tab-panle" active="active">
-                        <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}"
-                                 disable="tab.disabled">
-                            <uib-tab-heading>
-                                <i class="{{tab.icon}}"></i> {{tab.title}}
-                            </uib-tab-heading>
-
-                            <div ng-switch on="tab.type">
-                                <div ng-switch-when="comments">
-                                    <div ng-include="'app/views/ticket/template/comments.html'"></div>
-                                </div>
-                                <div ng-switch-when="activity">
-                                    <div ng-include="'app/views/ticket/template/activity.html'"></div>
-                                </div>
-                                <div ng-switch-when="other">
-                                    <div ng-include="'app/views/ticket/template/other.html'"></div>
-                                </div>
-                            </div>
-                        </uib-tab>
-                    </uib-tabset>
-                </div>
-
             </div>
         </div>
+        <!-- END ACTIVITY -->
+
+
     </div>
-    <!-- END ACTIVITY -->
-
-
-</div>
 
 
 </div>
