@@ -1,6 +1,12 @@
+<uib-tabset  active="activeTabIndex" id="tab_view" scrollable>
+    <uib-tab class="console-main-tab" ng-repeat="tab in tabs" select="tabSelected(tab.tabReference)">
+        <uib-tab-heading>
+            <div class="pull-left">{{tab.title}}</div>
+            <div class="pull-right">
+                <button data-ng-click='closeTab(tab.title)' class='btn btn-default'><span class='glyphicon glyphicon-wrench'></span></button>
+            </div>
+        </uib-tab-heading>
 
-<uib-tabset active="activeTabIndex" id="tab_view">
-    <uib-tab class="console-main-tab" ng-repeat="tab in tabs" heading="{{tab.title}} "select="tabSelected(tab.tabReference)">
         <div ng-switch on="tab.viewType">
             <div ng-switch-when="engagement">
                 <engagement-tab load-tags="reloadTagAndCategories()"

@@ -462,6 +462,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 //$scope.tabSelected(newTab.tabReference);
                 $scope.activeTabIndex = $scope.tabs.length-1;
                 document.getElementById ("tab_view").active = $scope.tabs.length-1;
+                $scope.$broadcast("checkTabs");
             });
         }
         else
@@ -470,6 +471,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
     };
+
+    $scope.closeTab = function(title){
+
+        $scope.tabs.filter(function (item) {
+            if (item.title == title) {
+
+                $scope.tabs.splice($scope.tabs.indexOf(item), 1);
+
+
+            }
+
+        });
+
+    }
+
     $scope.isForceFocused=false;
     $scope.currTab=0;
     $scope.tabSelected = function (tabIndex) {
@@ -611,6 +627,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         });
     });
+
+
+
+
+
 
 
     var openEngagementTabForMailReply = function(args)
