@@ -740,7 +740,17 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                 else {
                     if (chip.tags) {
                         if (chip.tags.length > 0) {
-                            scope.availableTags = chip.tags;
+                            if(angular.isObject(chip.tags[0])){
+                                var tempTags = [];
+                                angular.forEach(chip.tags[0].tags, function (item) {
+                                    var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+                                    tempTags = tempTags.concat(tags);
+                                });
+                                scope.availableTags = tempTags;
+                            }
+                            else{
+                                scope.availableTags = chip.tags;
+                            }
                             return;
                         }
                     }
