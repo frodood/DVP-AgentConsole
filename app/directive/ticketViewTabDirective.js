@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$rootScope,authService,myProfileDataParser,userService,uuid4) {
+agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$rootScope,authService,myProfileDataParser,userService,uuid4,Upload) {
     return {
         restrict: "EA",
         scope: {
@@ -1173,6 +1173,52 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
                 //});
 
             };
+
+
+
+            // file upload .........
+
+            scope.files=[];
+
+            scope.$watch('newfile', function () {
+                if (scope.newfile != null) {
+                    console.log("new file ",scope.newfile);
+                    scope.files.push(scope.newfile);
+                    console.log(scope.files);
+                }
+            });
+
+            scope.uploadAttchments = function () {
+                var files=scope.files;
+                if (files && files.length) {
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        if (!file.$error) {
+                            Upload.upload({
+                                url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+                                data: {
+                                    username: scope.username,
+                                    file: file
+                                }
+                            }).then(function (resp) {
+                                $timeout(function() {
+                                    scope.log = 'file: ' +
+                                        resp.config.data.file.name +
+                                        ', Response: ' + JSON.stringify(resp.data) +
+                                        '\n' + scope.log;
+                                });
+                            }, null, function (evt) {
+                                var progressPercentage = parseInt(100.0 *
+                                    evt.loaded / evt.total);
+                                scope.log = 'progress: ' + progressPercentage +
+                                    '% ' + evt.config.data.file.name + '\n' +
+                                    scope.log;
+                            });
+                        }
+                    }
+                }
+            };
+
 
 
 
