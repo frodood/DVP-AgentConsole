@@ -434,6 +434,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.tabReference = "";
     $scope.tabs = [];
 
+    $scope.scrlTabsApi = {};
+
+    $scope.reCalcScroll = function () {
+        if ($scope.scrlTabsApi.doRecalculate) {
+            $scope.scrlTabsApi.doRecalculate();
+        }
+    };
+
     $scope.addTab = function (title, content, viewType, notificationData, index) {
 
         var isOpened = false;
@@ -462,6 +470,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.activeTabIndex = $scope.tabs.length - 1;
                 document.getElementById("tab_view").active = $scope.tabs.length - 1;
                 $scope.$broadcast("checkTabs");
+                $scope.reCalcScroll();
             });
         }
         else {
@@ -472,13 +481,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isForceFocused = false;
     $scope.currTab = 0;
 
-    $scope.closeTab = function(title){
+    $scope.closeTab = function (title) {
 
         $scope.tabs.filter(function (item) {
             if (item.title == title) {
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
-
+                $scope.reCalcScroll();
 
             }
 
@@ -486,8 +495,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     }
 
-    $scope.isForceFocused=false;
-    $scope.currTab=0;
+    $scope.isForceFocused = false;
+    $scope.currTab = 0;
     $scope.tabSelected = function (tabIndex) {
 
 
@@ -628,13 +637,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
 
-
-
-
-
-
-    var openEngagementTabForMailReply = function(args)
-    {
+    var openEngagementTabForMailReply = function (args) {
         var notifyData = {
             company: args.company,
             direction: args.direction,
