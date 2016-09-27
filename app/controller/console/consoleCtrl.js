@@ -155,21 +155,55 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.ShowIncomeingNotification(false);
         },
         registerWithArds: function (userProfile) {
-            resourceService.RegisterWithArds(userProfile.id, userProfile.veeryFormat).then(function (response) {
+            preInit(userEvent, userProfile);
+            /*resourceService.RegisterWithArds(userProfile.id, userProfile.veeryFormat).then(function (response) {
                 $scope.registerdWithArds = response;
                 $scope.userName = userProfile.userName;
-
-
                 preInit(userEvent, userProfile);// initialize Soft phone
 
             }, function (error) {
                 $scope.showAlert("Soft Phone", "error", "Fail To Register With Resource Server.");
-            });
+            });*/
         },
         Register: function (userName, password) {
             $scope.PhoneOffline();
             $scope.phoneStatus = "Registering With Servers";
-            var url = baseUrls.authUrl;
+
+
+            var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
+
+            var values = decodeData.context.veeryaccount.contact.split("@");
+            $scope.profile.id = decodeData.context.resourceid;
+            $scope.profile.displayName = values[0];
+            $scope.profile.authorizationName = values[0];
+            $scope.profile.publicIdentity = "sip:" + decodeData.context.veeryaccount.contact;//sip:bob@159.203.160.47
+            $scope.profile.password = password;
+            $scope.profile.server.token = authService.GetToken();
+            $scope.profile.server.domain = values[1];
+            $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
+            $scope.profile.server.outboundProxy = "";
+            $scope.profile.server.enableRtcwebBreaker = false;
+            dataParser.userProfile = $scope.profile;
+            if (!decodeData.context.resourceid) {
+                $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
+                return;
+            }
+            resourceService.GetContactVeeryFormat().then(function (response) {
+                if (response.IsSuccess) {
+                    if ($scope.profile.server.password)
+                        $scope.profile.password = $scope.profile.server.password;
+                    $scope.profile.veeryFormat = response.Result;
+                    dataParser.userProfile = $scope.profile;
+                    $scope.veeryPhone.registerWithArds($scope.profile);
+                }
+                else {
+                    $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
+                }
+            }, function (error) {
+                $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
+            });
+
+            /*var url = baseUrls.authUrl;
             var encoded = $base64.encode("ae849240-2c6d-11e6-b274-a9eec7dab26b:6145813102144258048");
             var config = {
                 headers: {
@@ -205,7 +239,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
                             return;
                         }
-                        resourceService.GetContactVeeryFormat(userName).then(function (response) {
+                        resourceService.GetContactVeeryFormat().then(function (response) {
                             if (response.IsSuccess) {
                                 if ($scope.profile.server.password)
                                     $scope.profile.password = $scope.profile.server.password;
@@ -222,7 +256,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
                     }
-                });
+                });*/
         },
         unregisterWithArds: function () {
             resourceService.UnregisterWithArds(dataParser.userProfile.id).then(function (response) {
