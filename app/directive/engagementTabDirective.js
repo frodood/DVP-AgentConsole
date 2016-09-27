@@ -17,7 +17,7 @@ agentApp.directive('scrolly', function () {
     };
 });
 
-agentApp.directive("engagementTab", function ($filter,$rootScope, engagementService, ivrService, userService, ticketService, tagService) {
+agentApp.directive("engagementTab", function ($filter, $rootScope, engagementService, ivrService, userService, ticketService, tagService) {
     return {
         restrict: "EA",
         scope: {
@@ -55,6 +55,14 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                 country: ""
             };
 
+            scope.ticket = {};
+            scope.ticket.priority = 'normal';
+            scope.ticket.submitter = {};
+            scope.ticket.submitter.avatar = "assets/img/avatar/default-user.png";
+
+            /* End Initialize default scope*/
+
+            /*form submit*/
             scope.showAlert = function (tittle, type, msg) {
                 new PNotify({
                     title: tittle,
@@ -65,22 +73,17 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                 });
             };
 
-            var buildFormSchema = function(schema, form, fields)
-            {
-                fields.forEach(function (fieldItem)
-                {
-                    if(fieldItem.field)
-                    {
+            var buildFormSchema = function (schema, form, fields) {
+                fields.forEach(function (fieldItem) {
+                    if (fieldItem.field) {
                         var isActive = true;
-                        if(fieldItem.active === false)
-                        {
+                        if (fieldItem.active === false) {
                             isActive = false;
                         }
 
                         //field type parser
 
-                        if(fieldItem.type === 'text')
-                        {
+                        if (fieldItem.type === 'text') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'string',
@@ -96,8 +99,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "type": "text"
                             })
                         }
-                        else if(fieldItem.type === 'textarea')
-                        {
+                        else if (fieldItem.type === 'textarea') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'string',
@@ -113,8 +115,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "type": "textarea"
                             })
                         }
-                        else if(fieldItem.type === 'url')
-                        {
+                        else if (fieldItem.type === 'url') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'string',
@@ -130,16 +131,14 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "type": "text"
                             })
                         }
-                        else if(fieldItem.type === 'header')
-                        {
+                        else if (fieldItem.type === 'header') {
                             var h2Tag = '<h2>' + fieldItem.title + '</h2>';
                             form.push({
                                 "type": "help",
                                 "helpvalue": h2Tag
                             });
                         }
-                        else if(fieldItem.type === 'radio')
-                        {
+                        else if (fieldItem.type === 'radio') {
                             schema.properties[fieldItem.field] = {
                                 type: 'string',
                                 title: fieldItem.title,
@@ -156,13 +155,11 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                             };
 
 
-                            if(fieldItem.values && fieldItem.values.length > 0)
-                            {
+                            if (fieldItem.values && fieldItem.values.length > 0) {
 
                                 schema.properties[fieldItem.field].enum = [];
 
-                                fieldItem.values.forEach(function(enumVal)
-                                {
+                                fieldItem.values.forEach(function (enumVal) {
                                     schema.properties[fieldItem.field].enum.push(enumVal.name);
                                     formObj.titleMap.push(
                                         {
@@ -176,8 +173,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
                             form.push(formObj);
                         }
-                        else if(fieldItem.type === 'date')
-                        {
+                        else if (fieldItem.type === 'date') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'string',
@@ -193,8 +189,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "minDate": "1900-01-01"
                             })
                         }
-                        else if(fieldItem.type === 'number')
-                        {
+                        else if (fieldItem.type === 'number') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'number',
@@ -210,8 +205,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "type": "number"
                             })
                         }
-                        else if(fieldItem.type === 'phone')
-                        {
+                        else if (fieldItem.type === 'phone') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'string',
@@ -228,8 +222,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "type": "text"
                             })
                         }
-                        else if(fieldItem.type === 'boolean' || fieldItem.type === 'checkbox')
-                        {
+                        else if (fieldItem.type === 'boolean' || fieldItem.type === 'checkbox') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'boolean',
@@ -245,8 +238,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "type": "checkbox"
                             })
                         }
-                        else if(fieldItem.type === 'checkboxes')
-                        {
+                        else if (fieldItem.type === 'checkboxes') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'array',
@@ -256,16 +248,14 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 readonly: !isActive,
                                 items: {
                                     type: "string",
-                                    enum:[]
+                                    enum: []
                                 }
 
                             };
 
-                            if(fieldItem.values && fieldItem.values.length > 0)
-                            {
+                            if (fieldItem.values && fieldItem.values.length > 0) {
 
-                                fieldItem.values.forEach(function(enumVal)
-                                {
+                                fieldItem.values.forEach(function (enumVal) {
                                     schema.properties[fieldItem.field].items.enum.push(enumVal.name);
                                 })
 
@@ -273,8 +263,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
                             form.push(fieldItem.field);
                         }
-                        else if(fieldItem.type === 'email')
-                        {
+                        else if (fieldItem.type === 'email') {
 
                             schema.properties[fieldItem.field] = {
                                 type: 'string',
@@ -291,8 +280,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "type": "text"
                             })
                         }
-                        else if(fieldItem.type === 'select')
-                        {
+                        else if (fieldItem.type === 'select') {
                             schema.properties[fieldItem.field] = {
                                 type: 'string',
                                 title: fieldItem.title,
@@ -307,13 +295,11 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 "titleMap": []
                             };
 
-                            if(fieldItem.values && fieldItem.values.length > 0)
-                            {
+                            if (fieldItem.values && fieldItem.values.length > 0) {
 
                                 schema.properties[fieldItem.field].enum = [];
 
-                                fieldItem.values.forEach(function(enumVal)
-                                {
+                                fieldItem.values.forEach(function (enumVal) {
                                     schema.properties[fieldItem.field].enum.push(enumVal.name);
                                     formObj.titleMap.push(
                                         {
@@ -336,17 +322,13 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                 return schema;
             };
 
-            scope.onSubmit = function(form)
-            {
+            scope.onSubmit = function (form) {
                 scope.$broadcast('schemaFormValidate');
-                if (form.$valid)
-                {
+                if (form.$valid) {
                     var arr = [];
 
-                    for (var key in scope.model)
-                    {
-                        if (scope.model.hasOwnProperty(key))
-                        {
+                    for (var key in scope.model) {
+                        if (scope.model.hasOwnProperty(key)) {
                             arr.push({
                                 field: key,
                                 value: scope.model[key]
@@ -356,128 +338,101 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     }
 
                     //save arr
-                    if(scope.currentSubmission)
-                    {
+                    if (scope.currentSubmission) {
                         var obj = {
                             fields: arr
                         };
-                        ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function(response)
-                        {
+                        ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function (response) {
                             scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
 
-                        }).catch(function(err)
-                        {
+                        }).catch(function (err) {
                             scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
 
                         })
                     }
-                    else
-                    {
+                    else {
                         //create new submission
-                        if(scope.profileDetail)
-                        {
+                        if (scope.profileDetail) {
                             var obj = {
                                 fields: arr,
                                 reference: scope.profileDetail._id,
                                 form: scope.currentForm.name
                             };
 
-                            ticketService.getFormSubmissionByRef(scope.profileDetail._id).then(function(responseFS)
-                            {
+                            ticketService.getFormSubmissionByRef(scope.profileDetail._id).then(function (responseFS) {
                                 //tag submission to ticket
 
-                                if(responseFS.Result)
-                                {
-                                    ticketService.updateFormSubmissionData(scope.profileDetail._id, obj).then(function(responseUpdate)
-                                    {
-                                        if(responseUpdate.Result)
-                                        {
-                                            userService.mapFormSubmissionToProfile(responseUpdate.Result._id, scope.profileDetail._id).then(function(responseMap)
-                                            {
+                                if (responseFS.Result) {
+                                    ticketService.updateFormSubmissionData(scope.profileDetail._id, obj).then(function (responseUpdate) {
+                                        if (responseUpdate.Result) {
+                                            userService.mapFormSubmissionToProfile(responseUpdate.Result._id, scope.profileDetail._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
                                                 scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
 
-                                            }).catch(function(err)
-                                            {
+                                            }).catch(function (err) {
                                                 scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
 
                                             });
                                         }
-                                        else
-                                        {
+                                        else {
                                             scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
                                         }
 
 
-                                    }).catch(function(err)
-                                    {
+                                    }).catch(function (err) {
                                         scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
 
                                     })
                                 }
-                                else
-                                {
+                                else {
                                     ///////// CHECK FROM HERE //////////
-                                    ticketService.createFormSubmissionData(obj).then(function(response)
-                                    {
+                                    ticketService.createFormSubmissionData(obj).then(function (response) {
                                         //tag submission to ticket
-                                        if(response && response.Result)
-                                        {
-                                            userService.mapFormSubmissionToProfile(response.Result._id, scope.profileDetail._id).then(function(responseMap)
-                                            {
+                                        if (response && response.Result) {
+                                            userService.mapFormSubmissionToProfile(response.Result._id, scope.profileDetail._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
                                                 scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
 
-                                            }).catch(function(err)
-                                            {
+                                            }).catch(function (err) {
                                                 scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
 
                                             });
                                         }
-                                        else
-                                        {
+                                        else {
                                             scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
                                         }
 
 
-
-                                    }).catch(function(err)
-                                    {
+                                    }).catch(function (err) {
                                         scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
 
                                     })
                                 }
 
-                            }).catch(function(err)
-                            {
+                            }).catch(function (err) {
                                 scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
 
                             });
 
 
-
                         }
-                        else
-                        {
+                        else {
                             scope.showAlert('Operation Failed', 'error', 'Ticket not found');
                         }
 
                     }
 
 
-
                 }
             };
 
-            var convertToSchemaForm = function(formSubmission, callback)
-            {
+            var convertToSchemaForm = function (formSubmission, callback) {
 
                 //get forms profile
 
-                if (formSubmission && formSubmission.form && formSubmission.form.fields && formSubmission.form.fields.length > 0)
-                {
+                if (formSubmission && formSubmission.form && formSubmission.form.fields && formSubmission.form.fields.length > 0) {
                     var schema = {
                         type: "object",
                         properties: {}
@@ -488,27 +443,22 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     var model = {};
                     scope.buildModel = true;
 
-                    ticketService.getFormsForCompany().then(function (response)
-                    {
-                        if(response && response.Result && response.Result.profile_form)
-                        {
+                    ticketService.getFormsForCompany().then(function (response) {
+                        if (response && response.Result && response.Result.profile_form) {
                             //compare two forms
-                            if(response.Result.profile_form._id !== formSubmission.form._id)
-                            {
+                            if (response.Result.profile_form._id !== formSubmission.form._id) {
                                 scope.currentForm = response.Result.profile_form;
                                 buildFormSchema(schema, form, response.Result.profile_form.fields);
 
                                 scope.buildModel = false;
 
                             }
-                            else
-                            {
+                            else {
                                 scope.currentForm = response.Result.profile_form;
                                 buildFormSchema(schema, form, response.Result.profile_form.fields);
                             }
                         }
-                        else
-                        {
+                        else {
                             scope.currentForm = formSubmission.form;
                             buildFormSchema(schema, form, formSubmission.form.fields);
                         }
@@ -518,12 +468,9 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                             title: "Save"
                         });
 
-                        if(formSubmission.fields && formSubmission.fields.length > 0)
-                        {
-                            formSubmission.fields.forEach(function (fieldValueItem)
-                            {
-                                if(fieldValueItem.field)
-                                {
+                        if (formSubmission.fields && formSubmission.fields.length > 0) {
+                            formSubmission.fields.forEach(function (fieldValueItem) {
+                                if (fieldValueItem.field) {
                                     model[fieldValueItem.field] = fieldValueItem.value;
                                 }
 
@@ -532,8 +479,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
                         var schemaResponse = {};
 
-                        if(!scope.buildModel)
-                        {
+                        if (!scope.buildModel) {
                             scope.oldFormModel = model;
                             schemaResponse = {
                                 schema: schema,
@@ -541,8 +487,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 model: {}
                             }
                         }
-                        else
-                        {
+                        else {
                             schemaResponse = {
                                 schema: schema,
                                 form: form,
@@ -553,8 +498,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
                         callback(schemaResponse);
 
-                    }).catch(function(err)
-                    {
+                    }).catch(function (err) {
                         scope.currentForm = formSubmission.form;
                         buildFormSchema(schema, form, formSubmission.form.fields);
 
@@ -563,12 +507,9 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                             title: "Save"
                         });
 
-                        if(formSubmission.fields && formSubmission.fields.length > 0)
-                        {
-                            formSubmission.fields.forEach(function (fieldValueItem)
-                            {
-                                if(fieldValueItem.field)
-                                {
+                        if (formSubmission.fields && formSubmission.fields.length > 0) {
+                            formSubmission.fields.forEach(function (fieldValueItem) {
+                                if (fieldValueItem.field) {
                                     model[fieldValueItem.field] = fieldValueItem.value;
                                 }
 
@@ -577,8 +518,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
                         var schemaResponse = {};
 
-                        if(!scope.buildModel)
-                        {
+                        if (!scope.buildModel) {
                             scope.oldFormModel = model;
                             schemaResponse = {
                                 schema: schema,
@@ -586,8 +526,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 model: {}
                             }
                         }
-                        else
-                        {
+                        else {
                             schemaResponse = {
                                 schema: schema,
                                 form: form,
@@ -601,13 +540,9 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     });
 
 
-
-
                 }
-                else
-                {
-                    if(!formSubmission)
-                    {
+                else {
+                    if (!formSubmission) {
                         //create form submission
 
                         var schema = {
@@ -619,10 +554,8 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
                         scope.buildModel = true;
 
-                        ticketService.getFormsForCompany().then(function (response)
-                        {
-                            if(response && response.Result && response.Result.profile_form)
-                            {
+                        ticketService.getFormsForCompany().then(function (response) {
+                            if (response && response.Result && response.Result.profile_form) {
                                 //compare two forms
                                 buildFormSchema(schema, form, response.Result.profile_form.fields);
                                 scope.currentForm = response.Result.profile_form;
@@ -643,22 +576,18 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
                                 callback(schemaResponse);
                             }
-                            else
-                            {
+                            else {
                                 callback(null);
                             }
 
 
-
-                        }).catch(function(err)
-                        {
+                        }).catch(function (err) {
                             callback(null);
 
                         });
 
                     }
-                    else
-                    {
+                    else {
                         callback(null);
                     }
 
@@ -666,14 +595,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
             };
 
-
-            scope.ticket = {};
-            scope.ticket.priority = 'normal';
-            scope.ticket.submitter = {};
-            scope.ticket.submitter.avatar = "assets/img/avatar/default-user.png";
-
-            /* End Initialize default scope*/
-
+            /*form submit end*/
 
             /*Add New Ticket*/
 
@@ -718,7 +640,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
             scope.tagSelectRoot = 'root';
             scope.onChipAddTag = function (chip) {
-                if (!chip.tags||(chip.tags.length === 0) ) {
+                if (!chip.tags || (chip.tags.length === 0)) {
                     setToDefault();
                     return;
                 }
@@ -740,7 +662,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                 else {
                     if (chip.tags) {
                         if (chip.tags.length > 0) {
-                            if(angular.isObject(chip.tags[0])){
+                            if (angular.isObject(chip.tags[0])) {
                                 var tempTags = [];
                                 angular.forEach(chip.tags[0].tags, function (item) {
                                     var tags = $filter('filter')(scope.tagList, {_id: item}, true);
@@ -748,7 +670,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                                 });
                                 scope.availableTags = tempTags;
                             }
-                            else{
+                            else {
                                 scope.availableTags = chip.tags;
                             }
                             return;
@@ -759,23 +681,28 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
             };
 
-            scope.loadPostTags = function(query) {
+            scope.loadPostTags = function (query) {
                 return scope.postTags;
             };
 
-           var removeDuplicate = function(arr){
+            var removeDuplicate = function (arr) {
                 var newArr = [];
-                angular.forEach(arr, function(value, key) {
+                angular.forEach(arr, function (value, key) {
                     var exists = false;
-                    angular.forEach(newArr, function(val2, key) {
-                        if(angular.equals(value.name, val2.name)){ exists = true };
+                    angular.forEach(newArr, function (val2, key) {
+                        if (angular.equals(value.name, val2.name)) {
+                            exists = true
+                        }
+                        ;
                     });
-                    if(exists == false && value.name != "") { newArr.push(value); }
+                    if (exists == false && value.name != "") {
+                        newArr.push(value);
+                    }
                 });
                 return newArr;
             };
 
-            scope.newAddTags =[];
+            scope.newAddTags = [];
             scope.ticket = {};
             scope.ticket.selectedTags = [];
             scope.newAddTags = [];
@@ -790,8 +717,8 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     }
 
                 });
-                if(ticTag){
-                    scope.postTags.push({name:ticTag});
+                if (ticTag) {
+                    scope.postTags.push({name: ticTag});
                     scope.postTags = removeDuplicate(scope.postTags);
                 }
 
@@ -904,7 +831,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     });
                 }
                 if (ticket.related) {
-                    ticket.related_tickets =ticket.related.map(function (obj) {
+                    ticket.related_tickets = ticket.related.map(function (obj) {
                         return obj._id;
                     });
                 }
@@ -1036,17 +963,14 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                             scope.profileDetail = scope.profileDetails[0];
 
                             scope.currentSubmission = scope.profileDetails[0].form_submission;
-                            convertToSchemaForm(scope.profileDetails[0].form_submission, function(schemaDetails)
-                            {
-                                if(schemaDetails)
-                                {
+                            convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
+                                if (schemaDetails) {
                                     scope.schema = schemaDetails.schema;
                                     scope.form = schemaDetails.form;
                                     scope.model = schemaDetails.model;
                                 }
 
                             });
-
 
 
                             scope.GetProfileHistory(scope.profileDetail._id);
@@ -1087,8 +1011,8 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                     type: type,
                     styling: 'bootstrap3',
                     desktop: {
-                    desktop: true
-                }
+                        desktop: true
+                    }
                 });
             };
 
@@ -1104,7 +1028,7 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
                 });
             };
 
-            scope.showProfileView = function (viewName,currentBtn) {
+            scope.showProfileView = function (viewName, currentBtn) {
                 profileDisable();
                 $(viewName).removeClass('display-none').addClass('display-block ');
                 $(currentBtn).addClass('active');
@@ -1112,10 +1036,10 @@ agentApp.directive("engagementTab", function ($filter,$rootScope, engagementServ
 
             scope.gotoTicket = function (data) {
                 data.tabType = "ticketView";
-                $rootScope.$emit('openNewTab',data);
+                $rootScope.$emit('openNewTab', data);
             };
 
-            var getExternalUserRecentTickets = function(id){
+            var getExternalUserRecentTickets = function (id) {
                 ticketService.GetExternalUserRecentTickets(id).then(function (response) {
                     scope.recentTicketList = response;
                 }, function (err) {
