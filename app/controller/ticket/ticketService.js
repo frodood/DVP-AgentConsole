@@ -582,6 +582,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var searchTicket= function (searchText) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketSearch/"+searchText+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -618,7 +633,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
-        PickTicket:pickTicket
+        PickTicket:pickTicket,
+        searchTicket: searchTicket
     }
 });
 
