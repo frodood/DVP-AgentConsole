@@ -673,6 +673,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             else {
                                 scope.availableTags = chip.tags;
                             }
+                            if(scope.availableTags.length===0){
+                                setToDefault();
+                            }
                             return;
                         }
                     }
@@ -1036,6 +1039,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             scope.gotoTicket = function (data) {
                 data.tabType = "ticketView";
+                data.activeSession = {
+                   "sessionId": scope.sessionId,
+                    "direction": scope.direction,
+                    "channelFrom": scope.channelFrom,
+                    "channelTo": scope.channelTo,
+                    "channel": scope.channel,
+                    "skill": scope.skill,
+                    "authorExternal":scope.profileDetail._id
+                };
                 $rootScope.$emit('openNewTab', data);
             };
 
