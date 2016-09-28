@@ -155,74 +155,108 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.ShowIncomeingNotification(false);
         },
         registerWithArds: function (userProfile) {
-            resourceService.RegisterWithArds(userProfile.id, userProfile.veeryFormat).then(function (response) {
-                $scope.registerdWithArds = response;
-                $scope.userName = userProfile.userName;
+            preInit(userEvent, userProfile);
+            /*resourceService.RegisterWithArds(userProfile.id, userProfile.veeryFormat).then(function (response) {
+             $scope.registerdWithArds = response;
+             $scope.userName = userProfile.userName;
+             preInit(userEvent, userProfile);// initialize Soft phone
 
-
-                preInit(userEvent, userProfile);// initialize Soft phone
-
-            }, function (error) {
-                $scope.showAlert("Soft Phone", "error", "Fail To Register With Resource Server.");
-            });
+             }, function (error) {
+             $scope.showAlert("Soft Phone", "error", "Fail To Register With Resource Server.");
+             });*/
         },
         Register: function (userName, password) {
             $scope.PhoneOffline();
             $scope.phoneStatus = "Registering With Servers";
-            var url = baseUrls.authUrl;
-            var encoded = $base64.encode("ae849240-2c6d-11e6-b274-a9eec7dab26b:6145813102144258048");
-            var config = {
-                headers: {
-                    'Authorization': 'Basic ' + encoded
+
+
+            var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
+
+            var values = decodeData.context.veeryaccount.contact.split("@");
+            $scope.profile.id = decodeData.context.resourceid;
+            $scope.profile.displayName = values[0];
+            $scope.profile.authorizationName = values[0];
+            $scope.profile.publicIdentity = "sip:" + decodeData.context.veeryaccount.contact;//sip:bob@159.203.160.47
+            $scope.profile.password = password;
+            $scope.profile.server.token = authService.GetToken();
+            $scope.profile.server.domain = values[1];
+            $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
+            $scope.profile.server.outboundProxy = "";
+            $scope.profile.server.enableRtcwebBreaker = false;
+            dataParser.userProfile = $scope.profile;
+            if (!decodeData.context.resourceid) {
+                $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
+                return;
+            }
+            resourceService.GetContactVeeryFormat().then(function (response) {
+                if (response.IsSuccess) {
+                    if ($scope.profile.server.password)
+                        $scope.profile.password = $scope.profile.server.password;
+                    $scope.profile.veeryFormat = response.Result;
+                    dataParser.userProfile = $scope.profile;
+                    $scope.veeryPhone.registerWithArds($scope.profile);
                 }
-            };
-            var data = {
-                "grant_type": "password",
-                "username": userName,
-                "password": password,
-                "scope": "write_ardsresource write_notification read_myUserProfile profile_veeryaccount resourceid"
-            };
-            $http.post(url, data, config)
-                .success(function (data, status, headers, config) {
-                    $scope.PostDataResponse = data;
+                else {
+                    $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
+                }
+            }, function (error) {
+                $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
+            });
 
-                    if (data) {
-                        var decodeData = jwtHelper.decodeToken(data.access_token);
+            /*var url = baseUrls.authUrl;
+             var encoded = $base64.encode("ae849240-2c6d-11e6-b274-a9eec7dab26b:6145813102144258048");
+             var config = {
+             headers: {
+             'Authorization': 'Basic ' + encoded
+             }
+             };
+             var data = {
+             "grant_type": "password",
+             "username": userName,
+             "password": password,
+             "scope": "write_ardsresource write_notification read_myUserProfile profile_veeryaccount resourceid"
+             };
+             $http.post(url, data, config)
+             .success(function (data, status, headers, config) {
+             $scope.PostDataResponse = data;
 
-                        var values = decodeData.context.veeryaccount.contact.split("@");
-                        $scope.profile.id = decodeData.context.resourceid;
-                        $scope.profile.displayName = values[0];
-                        $scope.profile.authorizationName = values[0];
-                        $scope.profile.publicIdentity = "sip:" + decodeData.context.veeryaccount.contact;//sip:bob@159.203.160.47
-                        $scope.profile.password = password;
-                        $scope.profile.server.token = data.access_token;
-                        $scope.profile.server.domain = values[1];
-                        $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
-                        $scope.profile.server.outboundProxy = "";
-                        $scope.profile.server.enableRtcwebBreaker = false;
-                        dataParser.userProfile = $scope.profile;
-                        if (!decodeData.context.resourceid) {
-                            $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
-                            return;
-                        }
-                        resourceService.GetContactVeeryFormat(userName).then(function (response) {
-                            if (response.IsSuccess) {
-                                if ($scope.profile.server.password)
-                                    $scope.profile.password = $scope.profile.server.password;
-                                $scope.profile.veeryFormat = response.Result;
-                                dataParser.userProfile = $scope.profile;
-                                $scope.veeryPhone.registerWithArds($scope.profile);
-                            }
-                            else {
-                                $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
-                            }
-                        }, function (error) {
-                            $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
-                        });
+             if (data) {
+             var decodeData = jwtHelper.decodeToken(data.access_token);
+
+             var values = decodeData.context.veeryaccount.contact.split("@");
+             $scope.profile.id = decodeData.context.resourceid;
+             $scope.profile.displayName = values[0];
+             $scope.profile.authorizationName = values[0];
+             $scope.profile.publicIdentity = "sip:" + decodeData.context.veeryaccount.contact;//sip:bob@159.203.160.47
+             $scope.profile.password = password;
+             $scope.profile.server.token = data.access_token;
+             $scope.profile.server.domain = values[1];
+             $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
+             $scope.profile.server.outboundProxy = "";
+             $scope.profile.server.enableRtcwebBreaker = false;
+             dataParser.userProfile = $scope.profile;
+             if (!decodeData.context.resourceid) {
+             $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
+             return;
+             }
+             resourceService.GetContactVeeryFormat().then(function (response) {
+             if (response.IsSuccess) {
+             if ($scope.profile.server.password)
+             $scope.profile.password = $scope.profile.server.password;
+             $scope.profile.veeryFormat = response.Result;
+             dataParser.userProfile = $scope.profile;
+             $scope.veeryPhone.registerWithArds($scope.profile);
+             }
+             else {
+             $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
+             }
+             }, function (error) {
+             $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
+             });
 
 
-                    }
-                });
+             }
+             });*/
         },
         unregisterWithArds: function () {
             resourceService.UnregisterWithArds(dataParser.userProfile.id).then(function (response) {
@@ -434,6 +468,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.tabReference = "";
     $scope.tabs = [];
 
+    $scope.scrlTabsApi = {};
+
+    $scope.reCalcScroll = function () {
+        if ($scope.scrlTabsApi.doRecalculate) {
+            $scope.scrlTabsApi.doRecalculate();
+        }
+    };
+
     $scope.addTab = function (title, content, viewType, notificationData, index) {
 
         var isOpened = false;
@@ -462,6 +504,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.activeTabIndex = $scope.tabs.length - 1;
                 document.getElementById("tab_view").active = $scope.tabs.length - 1;
                 $scope.$broadcast("checkTabs");
+                $scope.reCalcScroll();
             });
         }
         else {
@@ -472,13 +515,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isForceFocused = false;
     $scope.currTab = 0;
 
-    $scope.closeTab = function(title){
+    $scope.closeTab = function (title) {
 
         $scope.tabs.filter(function (item) {
             if (item.title == title) {
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
-
+                $scope.reCalcScroll();
 
             }
 
@@ -486,8 +529,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     }
 
-    $scope.isForceFocused=false;
-    $scope.currTab=0;
+    $scope.isForceFocused = false;
+    $scope.currTab = 0;
     $scope.tabSelected = function (tabIndex) {
 
 
@@ -628,13 +671,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
 
-
-
-
-
-
-    var openEngagementTabForMailReply = function(args)
-    {
+    var openEngagementTabForMailReply = function (args) {
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -1227,5 +1264,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     })();
     getCurrentState.breakState();
     getCurrentState.getResourceState();
-})
-;
+
+    //Main serch bar option
+
+    $scope.states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+        "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
+        "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
+        "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+        "New York", "North Dakota", "North Carolina", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+        "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas",
+        "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
+        "#ticket"];
+
+
+});

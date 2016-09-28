@@ -4,6 +4,8 @@
 @import url("../fonts/main-icon-2/veery-font-2.css");
 @import url("../fonts/main-icon-3/veery-font-3.css");
 @import url("../fonts/veery-font/veery-phone-icon-1.css");
+@import url("../fonts/main-icon-4/main-icon-4.css");
+@import url("../fonts/themify/themify-icons.css");
 
 body {
     background: #f7f5f5;
@@ -2176,6 +2178,16 @@ div > div >
     border-radius: 20px;
 }
 
+.main-search-input {
+    border: 1px solid #8298ae;
+    min-width: 310px;
+    background: transparent;
+    height: 34px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: #ffffff;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -2652,4 +2664,129 @@ tags-input .tags .input {
 .agent-ticket-chart-wrapper {
     padding-left: 0;
     padding-right: 8px;
+}
+
+.btn-tab-close {
+    border-radius: 50%;
+    background: transparent;
+    padding: 0px 2px 0px 8px;
+    margin-top: -4px;
+    font-size: 9px;
+}
+
+/*overwrite tab panel*/
+.ui-tabs-scrollable > .spacer > div:first-child > .nav-tabs > li > a {
+    height: 35px !important;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: transparent !important;
+}
+
+.nav-tabs > li > a:hover {
+    border-color: transparent !important;
+}
+
+.scrollable-tab-overwrite {
+
+}
+
+.ui-tabs-scrollable > .nav-button.left-nav-button:before {
+    font-family: 'themify';
+    content: '\e65e';
+    color: #0d1c34;
+}
+
+.ui-tabs-scrollable > .nav-button.right-nav-button:before {
+    font-family: 'themify';
+    content: '\e65d';
+    color: #0d1c34;
+}
+
+.ui-tabs-scrollable > .dropdown > .dropdown-toggle:before {
+    font-family: 'main-icon-2';
+    content: '\f137';
+}
+
+.scrollable-tab-overwrite > ul {
+    padding: 0px !important;
+}
+
+.ui-tabs-scrollable > .nav-button.left-nav-button {
+    left: 0px;
+    border-top-left-radius: 4px;
+    width: 35px;
+}
+
+.ui-tabs-scrollable.show-drop-down > .nav-button.right-nav-button {
+    right: 92px;
+    border-radius: 0;
+    width: 35px;
+}
+
+.ui-tabs-scrollable > .nav-button {
+    position: absolute;
+    width: 25px;
+    height: 42px;
+    line-height: 42px;
+    top: 0;
+    color: #428bca;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    padding: 0;
+    background-color: rgb(230, 230, 230);
+    z-index: 10;
+    outline: 0 !important;
+}
+
+.ui-tabs-scrollable > .dropdown {
+    right: 0px;
+}
+
+.ui-tabs-scrollable > .nav-button:hover {
+    background-color: #8298ae;
+}
+
+.ui-tabs-scrollable > .spacer:not(.hidden-buttons) > div:first-child > .tab-content {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.ui-tabs-scrollable.show-drop-down > .nav-button.right-nav-button {
+    right: 27px;
+    border-radius: 0;
+    width: 35px;
+}
+
+.ui-tabs-scrollable > .dropdown > .dropdown-toggle {
+    width: 27px;
+    color: #36ba45;
+    text-align: center;
+    border: 0px solid #ddd;
+    border-left-width: 0;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+    z-index: 10;
+    border-radius: 0 4px 0 0;
+}
+
+.ui-tabs-scrollable.show-drop-down > .spacer:not(.hidden-buttons) {
+    margin-right: 0;
+}
+
+.ui-tabs-scrollable > .spacer:not(.hidden-buttons) {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    filter: alpha(opacity=1);
+    opacity: 0.9;
+}
+
+.btn-tab-close:hover {
+    color: #d90000;
 }

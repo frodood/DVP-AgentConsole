@@ -1,4 +1,4 @@
-<div>
+<div class="animated fadeIn">
     <div ng-include="'app/views/ticket/ticket-edit.html'"></div>
     <div ng-include="'app/views/ticket/template/new_sub_ticket.html'"></div>
 
@@ -48,7 +48,7 @@
                         <span class="btn btn-default" ng-click="goToComment()">comment</span>
                     </div>
                     <div class="btn-warp ">
-                        <span class="btn btn-default" ng-click="assignToMe()">pick</span>
+                        <span class="btn btn-default" ng-click="assignToMe(ticket._id)">pick</span>
                     </div>
                     <div class="btn-warp ">
                         <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">close</span>
