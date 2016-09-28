@@ -996,9 +996,18 @@ agentApp.directive("ticketTabView", function ($filter,moment,ticketService,$root
 
             };
 
-            scope.assignToMe = function () {
-                scope.newAssignee=myProfileDataParser.myProfile;
-                scope.changeAssignee();
+            scope.assignToMe = function (id) {
+                ticketService.PickTicket(id).then(function (response) {
+                    if (response) {
+                        scope.showAlert("Ticket assigning", "success", "Successfully assign.");
+                        scope.ticket.assignee = myProfileDataParser.myProfile;
+                    }
+                    else {
+                        scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                    }
+                } , function (error) {
+                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                });
             };
 
             scope.changeTicketStatus = function (newStatus) {

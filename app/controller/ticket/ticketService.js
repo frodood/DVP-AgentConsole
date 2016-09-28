@@ -322,6 +322,25 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var pickTicket = function (ticketId) {
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/pick",
+            headers: {
+                'authorization':authService.GetToken()
+            }
+        }).then(function(response)
+        {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+
+    };
+
     var AssignUserToTicket = function (ticketId,userId) {
 
         var authToken = authService.GetToken();
@@ -584,7 +603,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetTicketViews:getTicketViews,
         GetTicketsByView:getTicketsByView,
         AddNewCommentToTicket:AddNewCommentToTicket,
-        AssignUserToTicket:AssignUserToTicket,
         AssignUserGroupToTicket: AssignUserGroupToTicket,
         getTicketNextLevel:getTicketNextLevel,
         createTimer: createTimer,
@@ -595,12 +613,12 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         AssignUserToTicket:AssignUserToTicket,
         updateTicketStatus:updateTicketStatus,
         updateFormSubmissionData: updateFormSubmissionData,
-        updateTicketStatus:updateTicketStatus,
         AddSubTicket:AddSubTicket,
         GetExternalUserRecentTickets:getExternalUserRecentTickets,
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
-        getFormSubmissionByRef: getFormSubmissionByRef
+        getFormSubmissionByRef: getFormSubmissionByRef,
+        PickTicket:pickTicket
     }
 });
 
