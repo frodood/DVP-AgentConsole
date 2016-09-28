@@ -710,13 +710,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ttimer.ticketRef = "Start";
 
     $scope.stopTime = function () {
-        ticketService.stopTimer().then(function (response) {
+        ticketService.stopTimer($scope.ttimer.trackerId).then(function (response) {
             if (response) {
 
                 document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
                 $scope.status.active = false;
                 $scope.ttimer.active = false;
                 $scope.ttimer.ticketRef = "Start";
+                $scope.ttimer.trackerId = undefined;
 
             }
             else {
@@ -729,7 +730,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.pauseTime = function () {
-        ticketService.pauseTimer().then(function (response) {
+        ticketService.pauseTimer($scope.ttimer.trackerId).then(function (response) {
             if (response) {
 
                 $scope.ttimer.pause = true;
@@ -795,6 +796,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.ttimer.ticketId = $scope.activeTab.notificationData._id;
                         $scope.ttimer.ticketRef = $scope.activeTab.content;
+                        $scope.ttimer.trackerId = response._id;
 
                         document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
                     }

@@ -527,11 +527,11 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
-    var pauseTimer = function () {
+    var pauseTimer = function (trackerId) {
         var reqBody = {note: ""};
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"MyTimer/pause",
+            url: baseUrls.ticketUrl+"MyTimer/"+trackerId+"/pause",
             headers: {
                 'authorization': authService.GetToken()
             },
@@ -545,11 +545,11 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
-    var stopTimer = function () {
+    var stopTimer = function (trackerId) {
         var reqBody = {note: ""};
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"MyTimer/stop",
+            url: baseUrls.ticketUrl+"MyTimer/"+trackerId+"/stop",
             headers: {
                 'authorization': authService.GetToken()
             },
