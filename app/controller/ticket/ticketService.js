@@ -224,6 +224,24 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var updateTicketByReference = function (cusReference,postData) {
+        return $http({
+            method: 'put',
+            url: baseUrls.ticketUrl+"TicketByReference/"+cusReference+"/Comment",
+            headers: {
+                'authorization':authService.GetToken()
+            },
+            data:postData
+        }).then(function(response)
+        {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
     var createTicketView = function (ticketView) {
         var authToken = authService.GetToken();
 
@@ -597,6 +615,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getMyGroupClosedTickets:getMyGroupClosedTickets,
         getTicket:getTicket,
         updateTicket:updateTicket,
+        UpdateTicketByReference:updateTicketByReference,
         CreateTicketView:createTicketView,
         GetTicketView:getTicketView,
         GetTicketCountByView:getTicketCountByView,
@@ -618,7 +637,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
-        PickTicket:pickTicket
+        PickTicket:pickTicket,
+
     }
 });
 
