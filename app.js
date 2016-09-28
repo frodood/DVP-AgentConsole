@@ -10,10 +10,10 @@ var agentApp = angular.module('veeryAgentApp',
         'com.2fdevs.videogular',
         'com.2fdevs.videogular.plugins.controls',
         'com.2fdevs.videogular.plugins.overlayplay',
-        'com.2fdevs.videogular.plugins.poster'
+        'com.2fdevs.videogular.plugins.poster',
+        'ui.tab.scroll','ngAnimate','mgcrea.ngStrap'
     ]);
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize', 'uuid',
-        'angular-flot', 'ngFileUpload', 'ui.tab.scroll','ngAnimate', 'mgcrea.ngStrap','com.2fdevs.videogular']);
+        
 
 agentApp.constant('moment', moment);
 
