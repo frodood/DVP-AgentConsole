@@ -791,13 +791,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ttimer.ticketRef = "Start";
 
     $scope.stopTime = function () {
-        ticketService.stopTimer().then(function (response) {
+        ticketService.stopTimer($scope.ttimer.trackerId).then(function (response) {
             if (response) {
 
                 document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
                 $scope.status.active = false;
                 $scope.ttimer.active = false;
                 $scope.ttimer.ticketRef = "Start";
+                $scope.ttimer.trackerId = undefined;
 
             }
             else {
@@ -810,7 +811,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.pauseTime = function () {
-        ticketService.pauseTimer().then(function (response) {
+        ticketService.pauseTimer($scope.ttimer.trackerId).then(function (response) {
             if (response) {
 
                 $scope.ttimer.pause = true;
@@ -876,6 +877,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.ttimer.ticketId = $scope.activeTab.notificationData._id;
                         $scope.ttimer.ticketRef = $scope.activeTab.content;
+                        $scope.ttimer.trackerId = response._id;
 
                         document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
                     }
@@ -895,6 +897,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     //----------------------SearchBar-----------------------------------------------------
+    //Main serch bar option
+
+    $scope.states = ["#ticket:", "#ticket:channel:", "#ticket:groupId:", "#ticket:tid:", "#ticket:priority:",
+        "#ticket:reference:", "#ticket:requester:", "#ticket:status:", "#profile:", "#profile:id:"];
 
     $scope.searchResult = [];
 
@@ -1307,16 +1313,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     getCurrentState.breakState();
     getCurrentState.getResourceState();
 
-    //Main serch bar option
-
-    $scope.states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
-        "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
-        "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
-        "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
-        "New York", "North Dakota", "North Carolina", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
-        "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas",
-        "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
-        "#ticket"];
 
 
 });
