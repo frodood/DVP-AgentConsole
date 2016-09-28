@@ -653,8 +653,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
         PickTicket:pickTicket,
-
-        PickTicket:pickTicket,
         searchTicket: searchTicket
     }
 });
