@@ -2178,6 +2178,16 @@ div > div >
     border-radius: 20px;
 }
 
+.main-search-input {
+    border: 1px solid #8298ae;
+    min-width: 310px;
+    background: transparent;
+    height: 34px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: #ffffff;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
