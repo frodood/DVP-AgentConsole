@@ -2653,3 +2653,47 @@ tags-input .tags .input {
     padding-left: 0;
     padding-right: 8px;
 }
+
+.attachment-img > img {
+    width: 100px;
+    height: 100px;
+}
+.model-player-wrapper {
+    height: 20px;
+    width: 300px;
+    margin-top: 20px;
+    padding: 10px 25px 20px 25px;
+    position: relative;
+    border-radius: 45px;
+
+}
+
+.position-center {
+    position: center;
+}
+.player-operation-wrapper {
+    width: 260px;
+    height: 50px;
+    position: fixed;
+    bottom: 160px;
+    right: 50px;
+    background: #ffffff;
+    -webkit-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
+    padding: 12px;
+    border-radius: 45px;
+    z-index: 1500;
+}
+
+.player-button-wrapper > .phone-btn {
+    display: inline-block;
+    background: #f7f5f5;
+    border-radius: 63%;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    text-align: center;
+    padding-top: 5px;
+}
+

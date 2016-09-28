@@ -991,6 +991,8 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     };
 
+
+
     /*var getMyProfile = function () {
 
 
@@ -1016,6 +1018,58 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 */
 
 
+
+
+});
+
+app.controller('ModalInstanceCtrl', function ($scope, $sce, $uibModalInstance, baseUrls, file) {
+
+    $scope.selectedFile = file;
+
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.selectedFile.Filename);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+    //var uri_enc = encodeURIComponent(uri);
+    /*{{internalUrl}}File/Download/{{tenant}}/{{company}}/{{file.UniqueId}}/{{file.Filename}}*/
+    /*baseUrls.fileServiceInternalUrl + "File/Download/" + file.TenantId + "/" + file.CompanyId + "/" + file.UniqueId + "/" + file.Filename*/
+    $scope.config = {
+        preload: "auto",
+        sources: [
+            {
+                src: $sce.trustAsResourceUrl(file.url),
+                type: file.type
+            }
+        ],
+        tracks: [
+            {
+                src: "http://www.videogular.com/assets/subs/pale-blue-dot.vtt",
+                kind: "subtitles",
+                srclang: "en",
+                label: "English",
+                default: ""
+            }
+        ],
+        theme: {
+            url: "bower_components/videogular-themes-default/videogular.css"
+        },
+        "analytics": {
+            "category": "Videogular",
+            "label": "Main",
+            "events": {
+                "ready": true,
+                "play": true,
+                "pause": true,
+                "stop": true,
+                "complete": true,
+                "progress": 10
+            }
+        }
+    };
 
 
 });

@@ -6,7 +6,12 @@
 var agentApp = angular.module('veeryAgentApp',
     ['ngRoute','ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize','uuid','angular-flot','ngFileUpload']);
+        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize','uuid','angular-flot','angularFileUpload','download','fileServiceModule',
+        'com.2fdevs.videogular',
+        'com.2fdevs.videogular.plugins.controls',
+        'com.2fdevs.videogular.plugins.overlayplay',
+        'com.2fdevs.videogular.plugins.poster'
+    ]);
 
 agentApp.constant('moment', moment);
 
@@ -21,7 +26,9 @@ var baseUrls = {
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'oauthLogOutUrl': 'http://userservice.app.veery.cloud/oauth/token/revoke/',
     'oauthLoginUrl': 'http://userservice.app.veery.cloud/oauth/token',
-    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING'
+    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
+    'fileServiceUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/FileService/',
+    'internalFileServiceUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/InternalFileService/'
 };
 
 agentApp.constant('baseUrls', baseUrls);
