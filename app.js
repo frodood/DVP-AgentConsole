@@ -7,7 +7,7 @@ var agentApp = angular.module('veeryAgentApp',
     ['ngRoute', 'ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize', 'uuid',
-        'angular-flot', 'ngFileUpload', 'ui.tab.scroll','ngAnimate', 'mgcrea.ngStrap']);
+        'angular-flot', 'ngFileUpload', 'ui.tab.scroll','ngAnimate', 'mgcrea.ngStrap','com.2fdevs.videogular']);
 
 agentApp.constant('moment', moment);
 
@@ -22,7 +22,8 @@ var baseUrls = {
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'oauthLogOutUrl': 'http://userservice.app.veery.cloud/oauth/token/revoke/',
     'oauthLoginUrl': 'http://userservice.app.veery.cloud/oauth/token',
-    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING'
+    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
+    'fileService':'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

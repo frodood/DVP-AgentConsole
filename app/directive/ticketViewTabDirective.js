@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter, moment, ticketService, $rootScope, authService, myProfileDataParser, userService, uuid4, Upload) {
+agentApp.directive("ticketTabView", function ($filter,$sce, moment, ticketService, $rootScope, authService, myProfileDataParser, userService, uuid4, Upload,baseUrls) {
     return {
         restrict: "EA",
         scope: {
@@ -1168,6 +1168,63 @@ agentApp.directive("ticketTabView", function ($filter, moment, ticketService, $r
             };
 
 
+            scope.isPlay = false;
+            scope.config = {
+                preload: "auto",
+                tracks: [
+                    {
+                        src: "http://www.videogular.com/assets/subs/pale-blue-dot.vtt",
+                        kind: "subtitles",
+                        srclang: "en",
+                        label: "English",
+                        default: ""
+                    }
+                ],
+                theme: {
+                    url: "bower_components/videogular-themes-default/videogular.css"
+                },
+                "analytics": {
+                    "category": "Videogular",
+                    "label": "Main",
+                    "events": {
+                        "ready": true,
+                        "play": true,
+                        "pause": true,
+                        "stop": true,
+                        "complete": true,
+                        "progress": 10
+                    }
+                }
+            };
+
+            var videogularAPI = null;
+            scope.onPlayerReady = function(API)
+            {
+                videogularAPI = API;
+
+            };
+            scope.playFile = function(id){
+
+                if(videogularAPI&&id)
+                {
+                    var info = authService.GetCompanyInfo();
+                    /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
+                    var fileToPlay = baseUrls.fileService +'InternalFileService/File/DownloadLatest/' + info.tenant + '/' + info.company + '/' + id + '.mp3';
+
+                    var arr = [
+                        {
+                            src: $sce.trustAsResourceUrl(fileToPlay),
+                            type: 'audio/mp3'
+                        }
+                    ];
+
+                    scope.config.sources = arr;
+                    videogularAPI.play();
+                    scope.isPlay = true;
+                }
+
+
+            };
         }
     }
 });

@@ -6,15 +6,15 @@
         <!-- MODEL HEADER -->
         <div class="model-header">
             <div class="col-md-6">
-                <div class="mode-left-icon  dark float-left">
-                    <i class="main-icon-2-telephone-3"></i>
+                <div class="mode-left-icon  dark float-left" >
+                    <i class="main-icon-2-telephone-3" ng-click="playFile(ticket.engagement_session._id)"></i>
                 </div>
                 <div class="model-header-text small bold ">
                     {{ticketID}}
                 </div>
                 <br/>
                 <div class="model-header-text bold">
-                    {{ticketSubject}}
+                    {{ticket.subject}}
                 </div>
             </div>
 
@@ -66,6 +66,7 @@
                     <div ng-show="ticketDetails.notificationData.activeSession" class="btn-group" uib-dropdown is-open="status.isopen">
                         <span class="btn btn-default" ng-click="updateTicketByReference();">Map</span>
                     </div>
+
 
                 </div>
             </div>
