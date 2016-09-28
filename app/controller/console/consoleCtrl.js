@@ -3,12 +3,12 @@
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
-                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService) {
+                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService, filterFilter) {
 
     $scope.notifications = [];
     $scope.agentList = [];
     getJSONData($http, 'notification', function (data) {
-        $scope.notifications = data;
+        // $scope.notifications = data;
     });
 
     /*getJSONData($http, 'userList', function (data) {
@@ -452,13 +452,57 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
     };
 
+
+    $scope.unredNotifications = 0;
+
+    $scope.OnMessage = function (data) {
+        var objMessage = {
+            "id": data.TopicKey,
+            "header": data.Message,
+            "type": "menu",
+            "icon": "main-icon-2-speech-bubble",
+            "time": new Date(),
+            "read": false
+        };
+        if (data.TopicKey) {
+            var audio = new Audio('assets/sounds/notification-1.mp3');
+            audio.play();
+            $scope.notifications.unshift(objMessage);
+            $('#notificationAlarm').addClass('animated swing');
+            $scope.unredNotifications = $scope.getCountOfUnredNotifications()
+            setTimeout(function () {
+                $('#notificationAlarm').removeClass('animated swing');
+            }, 500);
+        }
+    };
+
+    $scope.readNotification = function (id) {
+
+        var index = -1;
+        for (var i = 0, len = $scope.notifications.length; i < len; i++) {
+            if ($scope.notifications[i].id === id) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0)
+            $scope.notifications.splice(index, 1);
+        $scope.unredNotifications = $scope.getCountOfUnredNotifications();
+    }
+
+
+    $scope.getCountOfUnredNotifications = function () {
+        return filterFilter($scope.notifications, {read: false}).length;
+    }
+
+
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound);
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound, $scope.OnMessage);
+
+
     };
 
     $scope.veeryNotification();
-
-
     /*--------------------------      Notification  ---------------------------------------*/
 
     /*---------------main tab panel----------------------- */
@@ -853,6 +897,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     //----------------------SearchBar-----------------------------------------------------
+    //Main serch bar option
+
+    $scope.states = ["#ticket:", "#ticket:channel:", "#ticket:groupId:", "#ticket:tid:", "#ticket:priority:",
+        "#ticket:reference:", "#ticket:requester:", "#ticket:status:", "#profile:", "#profile:id:"];
 
     $scope.searchResult = [];
 
@@ -1265,16 +1313,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     getCurrentState.breakState();
     getCurrentState.getResourceState();
 
-    //Main serch bar option
-
-    $scope.states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
-        "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
-        "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
-        "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
-        "New York", "North Dakota", "North Carolina", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
-        "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas",
-        "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
-        "#ticket"];
 
 
 });

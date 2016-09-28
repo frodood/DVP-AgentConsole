@@ -25,18 +25,20 @@
 
                     <ul class="nav navbar-nav m-left-25" uib-dropdown>
                         <!-- notification -->
-                        <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i
-                                class="veery-font-1-alarm"> </i>
+                        <li class="console-menu-icon m-left-10 m-right-10" id="notificationAlarm" uib-dropdown
+                            uib-dropdown-toggle>
+                            <i class="animated   veery-font-1-alarm"> </i>
 
                             <div class="console-notification-header">
-                                1
+                                {{unredNotifications}}
                             </div>
                             <ul class="dropdown-menu console-drop-menu notification-menu-left " uib-dropdown-menu
                                 role="menu"
                                 aria-labelledby="btn-append-to-single-button">
                                 <li class="notification-header">
-                                    <a class="drop-header">Notification center</a>
-                                    <span class="drop-sub-header">new (1)</span>
+                                    <a class="drop-header">Notification
+                                        center</a>
+                                    <span class="drop-sub-header">new ({{unredNotifications}})</span>
                                 </li>
                                 <li class="divider"></li>
                                 <div class="console-notofication-wrapper"
@@ -48,14 +50,16 @@
                                      ng-mouseover="chatWidgetscrollEnabled = true"
                                      ng-mouseleave="chatWidgetscrollEnabled = false"
                                      enabled="{{ chatWidgetscrollEnabled }}">
-                                    <div class="notification-status">
-                                        No new notification
+                                    <div class="notification-status" ng-show="unredNotifications==0">
+                                        <i class="animated   veery-font-1-alarm"> </i>
+                                        </br>
+                                        no new notification
                                     </div>
-                                    <div class="row notification-list" ng-repeat="notifi in notifications">
+                                    <div class="row notification-list" ng-repeat="notifi in notifications"
+                                         ng-click="readNotification(notifi.id)">
                                         <div class="col-lg-3">
                                             <div class="notification-icon  ">
                                                 <i class=" {{notifi.icon}}"></i>
-
                                             </div>
                                         </div>
                                         <div class="col-lg-9">
@@ -66,7 +70,8 @@
                                             </div>
                                             <div class="row">
                                                 <div class="notification-time">
-                                                    {{notifi.time}}
+                                                    <time-ago from-time='{{notifi.time}}'
+                                                              format='MM/dd/yyyy'></time-ago>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,8 +85,9 @@
                         <form class="form-inline navbar-form navbar-left ">
                             <div class="form-group">
                                 <input type="text" class="main-search-input" ng-model="selectedState"
-                                       data-min-length="0" data-html="1" data-auto-select="true"
-                                       bs-options="state for state in states" placeholder="Search by keyword, #ticker or #profile"
+                                       data-min-length="0" data-html="2" data-auto-select="true"
+                                       bs-options="state for state in states"
+                                       placeholder="Search by keyword, #ticker or #profile"
                                        bs-typeahead>
                             </div>
 

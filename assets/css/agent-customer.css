@@ -226,7 +226,14 @@ body {
 
 .console-notofication-wrapper > .notification-status {
     text-align: center;
-    display: none;
+    margin-top: 40px;
+    font-size: 16px;
+    color: #36ba45;
+}
+
+.console-notofication-wrapper > .notification-status > i {
+    font-size: 50px;
+    color: #36ba45;
 }
 
 .notification-list {
