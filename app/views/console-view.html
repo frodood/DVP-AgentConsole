@@ -77,52 +77,15 @@
                             </ul>
                         </li>
 
-                        <form class="navbar-form navbar-left console-main-search">
+                        <form class="form-inline navbar-form navbar-left ">
                             <div class="form-group">
-                                <tags-input
-                                        class="main-search"
-                                        ng-model="searchResult"
-                                        display-property="firstname"
-                                        placeholder="Search by keyword, ticker# or profile#"
-                                        key-property="_id"
-                                        replace-spaces-with-dashes="false">
-                                    <auto-complete source="searchExternalUsers($query)"
-                                                   min-length="0"
-                                                   load-on-focus="false"
-                                                   load-on-empty="false"
-                                                   max-results-to-show="32"
-                                                   template="my-custom-template">
-                                    </auto-complete>
-                                </tags-input>
-                                <script type="text/ng-template" id="my-custom-template">
-                                    <div class="auto-complete-left-panel">
-                                        <img ng-src="{{data.avatar}}"/>
-                                    </div>
-                                    <div class="auto-complete-right-panel">
-                                        <span ng-bind-html="$highlight($getDisplayText())"></span>
-                                    </div>
-                                </script>
+                                <input type="text" class="main-search-input" ng-model="selectedState"
+                                       data-min-length="0" data-html="1" data-auto-select="true"
+                                       bs-options="state for state in states" placeholder="Search by keyword, #ticker or #profile"
+                                       bs-typeahead>
                             </div>
-                            <!--<div class="form-group">-->
-                            <!--<input type="text" class="form-control bg-transparent border-radius-20-->
-                            <!--main-search-txt"-->
-                            <!--placeholder="Search...">-->
-                            <!--</div>-->
-                        </form>
 
-                        <!--<li id="addNewPage" class="console-menu-icon m-left-10" uib-dropdown-toggle><i-->
-                        <!--class="veery-font-1-add"></i></li>-->
-                        <!--<ul class="dropdown-menu console-drop-menu add-new-page" uib-dropdown-menu role="menu"-->
-                        <!--aria-labelledby="btn-append-to-single-button">-->
-                        <!--<li><a class="drop-header">Add new page</a></li>-->
-                        <!--<li class="divider"></li>-->
-                        <!--<li class="menuitem menuitem-with-icon" role="menuitem">-->
-                        <!--<a href="#">Create new profile-->
-                        <!--<i class="veery-font-1-user"></i></a>-->
-                        <!--</li>-->
-                        <!--<li class="menuitem menuitem-with-icon" role="menuitem"><a href="#">Create new ticket-->
-                        <!--<i class="veery-font-1-add-2"></i></a></a></li>-->
-                        <!--</ul>-->
+                        </form>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right" uib-dropdown>

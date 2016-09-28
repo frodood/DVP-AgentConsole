@@ -232,3 +232,7 @@ label {
     background-color: #efc94c;
     border-color: #f4cb89;
 }
+
+input:focus, textarea:focus, keygen:focus, select:focus {
+    outline: 0 !important;
+}
