@@ -47,15 +47,11 @@ angular.module('authServiceModule', [])
             return decodeData.context.resourceid;
         };
 
-        this.GetCompanyTenant = function () {
+        this.GetCompanyInfo = function () {
             var decodeData = jwtHelper.decodeToken(this.TokenWithoutBearer());
-            var obj = {
-                company:decodeData.company,
-                tenant:decodeData.tenant
-            }
-
-            return obj;
+            return {"tenant":decodeData.tenant,"company":decodeData.company};
         };
+
 
 
         /* this.UserService= this.GetToken();

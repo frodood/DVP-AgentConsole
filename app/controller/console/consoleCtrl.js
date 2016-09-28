@@ -3,12 +3,12 @@
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
-                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService) {
+                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService, filterFilter) {
 
     $scope.notifications = [];
     $scope.agentList = [];
     getJSONData($http, 'notification', function (data) {
-        $scope.notifications = data;
+        // $scope.notifications = data;
     });
 
     /*getJSONData($http, 'userList', function (data) {
@@ -155,74 +155,108 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.ShowIncomeingNotification(false);
         },
         registerWithArds: function (userProfile) {
-            resourceService.RegisterWithArds(userProfile.id, userProfile.veeryFormat).then(function (response) {
-                $scope.registerdWithArds = response;
-                $scope.userName = userProfile.userName;
+            preInit(userEvent, userProfile);
+            /*resourceService.RegisterWithArds(userProfile.id, userProfile.veeryFormat).then(function (response) {
+             $scope.registerdWithArds = response;
+             $scope.userName = userProfile.userName;
+             preInit(userEvent, userProfile);// initialize Soft phone
 
-
-                preInit(userEvent, userProfile);// initialize Soft phone
-
-            }, function (error) {
-                $scope.showAlert("Soft Phone", "error", "Fail To Register With Resource Server.");
-            });
+             }, function (error) {
+             $scope.showAlert("Soft Phone", "error", "Fail To Register With Resource Server.");
+             });*/
         },
         Register: function (userName, password) {
             $scope.PhoneOffline();
             $scope.phoneStatus = "Registering With Servers";
-            var url = baseUrls.authUrl;
-            var encoded = $base64.encode("ae849240-2c6d-11e6-b274-a9eec7dab26b:6145813102144258048");
-            var config = {
-                headers: {
-                    'Authorization': 'Basic ' + encoded
+
+
+            var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
+
+            var values = decodeData.context.veeryaccount.contact.split("@");
+            $scope.profile.id = decodeData.context.resourceid;
+            $scope.profile.displayName = values[0];
+            $scope.profile.authorizationName = values[0];
+            $scope.profile.publicIdentity = "sip:" + decodeData.context.veeryaccount.contact;//sip:bob@159.203.160.47
+            $scope.profile.password = password;
+            $scope.profile.server.token = authService.GetToken();
+            $scope.profile.server.domain = values[1];
+            $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
+            $scope.profile.server.outboundProxy = "";
+            $scope.profile.server.enableRtcwebBreaker = false;
+            dataParser.userProfile = $scope.profile;
+            if (!decodeData.context.resourceid) {
+                $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
+                return;
+            }
+            resourceService.GetContactVeeryFormat().then(function (response) {
+                if (response.IsSuccess) {
+                    if ($scope.profile.server.password)
+                        $scope.profile.password = $scope.profile.server.password;
+                    $scope.profile.veeryFormat = response.Result;
+                    dataParser.userProfile = $scope.profile;
+                    $scope.veeryPhone.registerWithArds($scope.profile);
                 }
-            };
-            var data = {
-                "grant_type": "password",
-                "username": userName,
-                "password": password,
-                "scope": "write_ardsresource write_notification read_myUserProfile profile_veeryaccount resourceid"
-            };
-            $http.post(url, data, config)
-                .success(function (data, status, headers, config) {
-                    $scope.PostDataResponse = data;
+                else {
+                    $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
+                }
+            }, function (error) {
+                $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
+            });
 
-                    if (data) {
-                        var decodeData = jwtHelper.decodeToken(data.access_token);
+            /*var url = baseUrls.authUrl;
+             var encoded = $base64.encode("ae849240-2c6d-11e6-b274-a9eec7dab26b:6145813102144258048");
+             var config = {
+             headers: {
+             'Authorization': 'Basic ' + encoded
+             }
+             };
+             var data = {
+             "grant_type": "password",
+             "username": userName,
+             "password": password,
+             "scope": "write_ardsresource write_notification read_myUserProfile profile_veeryaccount resourceid"
+             };
+             $http.post(url, data, config)
+             .success(function (data, status, headers, config) {
+             $scope.PostDataResponse = data;
 
-                        var values = decodeData.context.veeryaccount.contact.split("@");
-                        $scope.profile.id = decodeData.context.resourceid;
-                        $scope.profile.displayName = values[0];
-                        $scope.profile.authorizationName = values[0];
-                        $scope.profile.publicIdentity = "sip:" + decodeData.context.veeryaccount.contact;//sip:bob@159.203.160.47
-                        $scope.profile.password = password;
-                        $scope.profile.server.token = data.access_token;
-                        $scope.profile.server.domain = values[1];
-                        $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
-                        $scope.profile.server.outboundProxy = "";
-                        $scope.profile.server.enableRtcwebBreaker = false;
-                        dataParser.userProfile = $scope.profile;
-                        if (!decodeData.context.resourceid) {
-                            $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
-                            return;
-                        }
-                        resourceService.GetContactVeeryFormat(userName).then(function (response) {
-                            if (response.IsSuccess) {
-                                if ($scope.profile.server.password)
-                                    $scope.profile.password = $scope.profile.server.password;
-                                $scope.profile.veeryFormat = response.Result;
-                                dataParser.userProfile = $scope.profile;
-                                $scope.veeryPhone.registerWithArds($scope.profile);
-                            }
-                            else {
-                                $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
-                            }
-                        }, function (error) {
-                            $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
-                        });
+             if (data) {
+             var decodeData = jwtHelper.decodeToken(data.access_token);
+
+             var values = decodeData.context.veeryaccount.contact.split("@");
+             $scope.profile.id = decodeData.context.resourceid;
+             $scope.profile.displayName = values[0];
+             $scope.profile.authorizationName = values[0];
+             $scope.profile.publicIdentity = "sip:" + decodeData.context.veeryaccount.contact;//sip:bob@159.203.160.47
+             $scope.profile.password = password;
+             $scope.profile.server.token = data.access_token;
+             $scope.profile.server.domain = values[1];
+             $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
+             $scope.profile.server.outboundProxy = "";
+             $scope.profile.server.enableRtcwebBreaker = false;
+             dataParser.userProfile = $scope.profile;
+             if (!decodeData.context.resourceid) {
+             $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
+             return;
+             }
+             resourceService.GetContactVeeryFormat().then(function (response) {
+             if (response.IsSuccess) {
+             if ($scope.profile.server.password)
+             $scope.profile.password = $scope.profile.server.password;
+             $scope.profile.veeryFormat = response.Result;
+             dataParser.userProfile = $scope.profile;
+             $scope.veeryPhone.registerWithArds($scope.profile);
+             }
+             else {
+             $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
+             }
+             }, function (error) {
+             $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
+             });
 
 
-                    }
-                });
+             }
+             });*/
         },
         unregisterWithArds: function () {
             resourceService.UnregisterWithArds(dataParser.userProfile.id).then(function (response) {
@@ -418,13 +452,57 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
     };
 
+
+    $scope.unredNotifications = 0;
+
+    $scope.OnMessage = function (data) {
+        var objMessage = {
+            "id": data.TopicKey,
+            "header": data.Message,
+            "type": "menu",
+            "icon": "main-icon-2-speech-bubble",
+            "time": new Date(),
+            "read": false
+        };
+        if (data.TopicKey) {
+            var audio = new Audio('assets/sounds/notification-1.mp3');
+            audio.play();
+            $scope.notifications.unshift(objMessage);
+            $('#notificationAlarm').addClass('animated swing');
+            $scope.unredNotifications = $scope.getCountOfUnredNotifications()
+            setTimeout(function () {
+                $('#notificationAlarm').removeClass('animated swing');
+            }, 500);
+        }
+    };
+
+    $scope.readNotification = function (id) {
+
+        var index = -1;
+        for (var i = 0, len = $scope.notifications.length; i < len; i++) {
+            if ($scope.notifications[i].id === id) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0)
+            $scope.notifications.splice(index, 1);
+        $scope.unredNotifications = $scope.getCountOfUnredNotifications();
+    }
+
+
+    $scope.getCountOfUnredNotifications = function () {
+        return filterFilter($scope.notifications, {read: false}).length;
+    }
+
+
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound);
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound, $scope.OnMessage);
+
+
     };
 
     $scope.veeryNotification();
-
-
     /*--------------------------      Notification  ---------------------------------------*/
 
     /*---------------main tab panel----------------------- */
@@ -433,6 +511,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.activeTabIndex = 0;
     $scope.tabReference = "";
     $scope.tabs = [];
+
+    $scope.scrlTabsApi = {};
+
+    $scope.reCalcScroll = function () {
+        if ($scope.scrlTabsApi.doRecalculate) {
+            $scope.scrlTabsApi.doRecalculate();
+        }
+    };
 
     $scope.addTab = function (title, content, viewType, notificationData, index) {
 
@@ -462,6 +548,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.activeTabIndex = $scope.tabs.length - 1;
                 document.getElementById("tab_view").active = $scope.tabs.length - 1;
                 $scope.$broadcast("checkTabs");
+                $scope.reCalcScroll();
             });
         }
         else {
@@ -472,13 +559,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isForceFocused = false;
     $scope.currTab = 0;
 
-    $scope.closeTab = function(title){
+    $scope.closeTab = function (title) {
 
         $scope.tabs.filter(function (item) {
             if (item.title == title) {
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
-
+                $scope.reCalcScroll();
 
             }
 
@@ -486,8 +573,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     }
 
-    $scope.isForceFocused=false;
-    $scope.currTab=0;
+    $scope.isForceFocused = false;
+    $scope.currTab = 0;
     $scope.tabSelected = function (tabIndex) {
 
 
@@ -628,13 +715,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
 
-
-
-
-
-
-    var openEngagementTabForMailReply = function(args)
-    {
+    var openEngagementTabForMailReply = function (args) {
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -710,13 +791,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ttimer.ticketRef = "Start";
 
     $scope.stopTime = function () {
-        ticketService.stopTimer().then(function (response) {
+        ticketService.stopTimer($scope.ttimer.trackerId).then(function (response) {
             if (response) {
 
                 document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
                 $scope.status.active = false;
                 $scope.ttimer.active = false;
                 $scope.ttimer.ticketRef = "Start";
+                $scope.ttimer.trackerId = undefined;
 
             }
             else {
@@ -729,7 +811,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.pauseTime = function () {
-        ticketService.pauseTimer().then(function (response) {
+        ticketService.pauseTimer($scope.ttimer.trackerId).then(function (response) {
             if (response) {
 
                 $scope.ttimer.pause = true;
@@ -795,6 +877,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.ttimer.ticketId = $scope.activeTab.notificationData._id;
                         $scope.ttimer.ticketRef = $scope.activeTab.content;
+                        $scope.ttimer.trackerId = response._id;
 
                         document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
                     }
@@ -814,6 +897,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     //----------------------SearchBar-----------------------------------------------------
+    //Main serch bar option
+
+    $scope.states = ["#ticket:", "#ticket:channel:", "#ticket:groupId:", "#ticket:tid:", "#ticket:priority:",
+        "#ticket:reference:", "#ticket:requester:", "#ticket:status:", "#profile:", "#profile:id:"];
 
     $scope.searchResult = [];
 
@@ -1225,5 +1312,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     })();
     getCurrentState.breakState();
     getCurrentState.getResourceState();
-})
-;
+
+
+
+});

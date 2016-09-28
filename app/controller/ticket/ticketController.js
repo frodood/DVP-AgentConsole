@@ -38,6 +38,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
 // ................. All users and user groups ..............................
+    $scope.assigneeList = [];
     var pickAllGroups= function () {
         userService.getUserGroupList().then(function (response) {
             $scope.userGroupList=response.data.Result;
@@ -47,6 +48,21 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             pickProcessingTickets(1);
             pickCompletedTickets(1);
 
+            if ($scope.userGroupList) {
+                for (var j = 0; j < $scope.userGroupList.length; j++) {
+                    var userGroup = $scope.userGroupList[j];
+                    userGroup.listType = "Group";
+                }
+
+                $scope.userGroupList.sort(function (a, b) {
+                    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                    if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                    return 0;
+                });
+
+                $scope.assigneeList = $scope.userGroupList.concat($scope.assigneeList);
+                myProfileDataParser.assigneeList = $scope.assigneeList;
+            }
 
         }), function (error) {
             console.log(error);
@@ -54,10 +70,27 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     };
 
     var pickAllUsers = function () {
+        $scope.assigneeList = [];
         userService.getUserList().then(function (response) {
             $scope.userList=response.data.Result;
             console.log("USERS ",$scope.userList);
             myProfileDataParser.userList=$scope.userList;
+
+            if($scope.users) {
+                for (var i = 0; i < $scope.users.length; i++) {
+                    var user = $scope.users[i];
+                    user.listType = "User";
+                }
+
+                $scope.users.sort(function (a, b) {
+                    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                    if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                    return 0;
+                });
+
+                $scope.assigneeList = $scope.users;
+                myProfileDataParser.assigneeList = $scope.assigneeList;
+            }
 
             pickAllGroups();
 

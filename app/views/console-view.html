@@ -25,18 +25,20 @@
 
                     <ul class="nav navbar-nav m-left-25" uib-dropdown>
                         <!-- notification -->
-                        <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle><i
-                                class="veery-font-1-alarm"> </i>
+                        <li class="console-menu-icon m-left-10 m-right-10" id="notificationAlarm" uib-dropdown
+                            uib-dropdown-toggle>
+                            <i class="animated   veery-font-1-alarm"> </i>
 
                             <div class="console-notification-header">
-                                1
+                                {{unredNotifications}}
                             </div>
                             <ul class="dropdown-menu console-drop-menu notification-menu-left " uib-dropdown-menu
                                 role="menu"
                                 aria-labelledby="btn-append-to-single-button">
                                 <li class="notification-header">
-                                    <a class="drop-header">Notification center</a>
-                                    <span class="drop-sub-header">new (1)</span>
+                                    <a class="drop-header">Notification
+                                        center</a>
+                                    <span class="drop-sub-header">new ({{unredNotifications}})</span>
                                 </li>
                                 <li class="divider"></li>
                                 <div class="console-notofication-wrapper"
@@ -48,14 +50,16 @@
                                      ng-mouseover="chatWidgetscrollEnabled = true"
                                      ng-mouseleave="chatWidgetscrollEnabled = false"
                                      enabled="{{ chatWidgetscrollEnabled }}">
-                                    <div class="notification-status">
-                                        No new notification
+                                    <div class="notification-status" ng-show="unredNotifications==0">
+                                        <i class="animated   veery-font-1-alarm"> </i>
+                                        </br>
+                                        no new notification
                                     </div>
-                                    <div class="row notification-list" ng-repeat="notifi in notifications">
+                                    <div class="row notification-list" ng-repeat="notifi in notifications"
+                                         ng-click="readNotification(notifi.id)">
                                         <div class="col-lg-3">
                                             <div class="notification-icon  ">
                                                 <i class=" {{notifi.icon}}"></i>
-
                                             </div>
                                         </div>
                                         <div class="col-lg-9">
@@ -66,7 +70,8 @@
                                             </div>
                                             <div class="row">
                                                 <div class="notification-time">
-                                                    {{notifi.time}}
+                                                    <time-ago from-time='{{notifi.time}}'
+                                                              format='MM/dd/yyyy'></time-ago>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,52 +82,16 @@
                             </ul>
                         </li>
 
-                        <form class="navbar-form navbar-left console-main-search">
+                        <form class="form-inline navbar-form navbar-left ">
                             <div class="form-group">
-                                <tags-input
-                                        class="main-search"
-                                        ng-model="searchResult"
-                                        display-property="firstname"
-                                        placeholder="Search by keyword, ticker# or profile#"
-                                        key-property="_id"
-                                        replace-spaces-with-dashes="false">
-                                    <auto-complete source="searchExternalUsers($query)"
-                                                   min-length="0"
-                                                   load-on-focus="false"
-                                                   load-on-empty="false"
-                                                   max-results-to-show="32"
-                                                   template="my-custom-template">
-                                    </auto-complete>
-                                </tags-input>
-                                <script type="text/ng-template" id="my-custom-template">
-                                    <div class="auto-complete-left-panel">
-                                        <img ng-src="{{data.avatar}}"/>
-                                    </div>
-                                    <div class="auto-complete-right-panel">
-                                        <span ng-bind-html="$highlight($getDisplayText())"></span>
-                                    </div>
-                                </script>
+                                <input type="text" class="main-search-input" ng-model="selectedState"
+                                       data-min-length="0" data-html="2" data-auto-select="true"
+                                       bs-options="state for state in states"
+                                       placeholder="Search by keyword, #ticker or #profile"
+                                       bs-typeahead>
                             </div>
-                            <!--<div class="form-group">-->
-                            <!--<input type="text" class="form-control bg-transparent border-radius-20-->
-                            <!--main-search-txt"-->
-                            <!--placeholder="Search...">-->
-                            <!--</div>-->
-                        </form>
 
-                        <!--<li id="addNewPage" class="console-menu-icon m-left-10" uib-dropdown-toggle><i-->
-                        <!--class="veery-font-1-add"></i></li>-->
-                        <!--<ul class="dropdown-menu console-drop-menu add-new-page" uib-dropdown-menu role="menu"-->
-                        <!--aria-labelledby="btn-append-to-single-button">-->
-                        <!--<li><a class="drop-header">Add new page</a></li>-->
-                        <!--<li class="divider"></li>-->
-                        <!--<li class="menuitem menuitem-with-icon" role="menuitem">-->
-                        <!--<a href="#">Create new profile-->
-                        <!--<i class="veery-font-1-user"></i></a>-->
-                        <!--</li>-->
-                        <!--<li class="menuitem menuitem-with-icon" role="menuitem"><a href="#">Create new ticket-->
-                        <!--<i class="veery-font-1-add-2"></i></a></a></li>-->
-                        <!--</ul>-->
+                        </form>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right" uib-dropdown>
@@ -499,19 +468,77 @@
 
         <!-- tab panel -->
         <div class="console-tab-wrapper">
-            <div ng-include="'app/views/console-tab-panel.html'"></div>
+            <!--div ng-include="'app/views/console-tab-panel.html'"></div-->
+            <scrollable-tabset api="scrlTabsApi" tooltip-left-placement="top">
+                <uib-tabset class="scrollable-tab-overwrite" active="activeTabIndex" id="tab_view">
+                    <uib-tab class="console-main-tab" ng-repeat="tab in tabs" select="tabSelected(tab.tabReference)">
+                        <uib-tab-heading>
+                            <div class="pull-left">{{tab.title}}
+                                <button data-ng-click='closeTab(tab.title)' class='btn btn-tab-close'>
+                                    <span class='ti-close'></span></button>
+                            </div>
+
+                        </uib-tab-heading>
+
+                        <div ng-switch on="tab.viewType">
+                            <div ng-switch-when="engagement">
+                                <engagement-tab load-tags="reloadTagAndCategories()"
+                                                tag-category-list="tagCategories"
+                                                tag-list="tags" users="users"
+                                                session-id="{{tab.notificationData.sessionId}}"
+                                                skill="{{tab.notificationData.skill}}"
+                                                company="{{tab.notificationData.company}}"
+                                                channel="{{tab.notificationData.channel}}"
+                                                channel-from="{{tab.notificationData.channelFrom}}"
+                                                channel-to="{{tab.notificationData.channelTo}}"
+                                                direction="{{tab.notificationData.direction}}">
+
+                                </engagement-tab>
+                            </div>
+                            <div ng-switch-when="ticketView ">
+                                <ticket-tab-view ticket-details="tab" call-customer="veeryPhone.makeCall(callNumber)"
+                                                 load-tags="reloadTagAndCategories()"
+                                                 tag-category-list="tagCategories"
+                                                 tag-list="tags"></ticket-tab-view>
+                                <!--<div ng-include="'app/views/ticket/ticket-view.html'"></div>-->
+                            </div>
+                            <div ng-switch-when="filter">
+                                <div ng-include="'app/views/ticket/filter/ticket-filter.html'"></div>
+                            </div>
+                            <div ng-switch-when="mail-inbox">
+                                <div ng-include="'app/views/mail-inbox/inbox-view.html'"></div>
+                            </div>
+                            <!--<div ng-switch-when="userProfile">
+                                <engagement-tab-update load-tags="reloadTagAndCategories()"
+                                                       tag-category-list="tagCategories"
+                                                       tag-list="tags" users="users"
+                                                       session-id="{{tab.notificationData.sessionId}}"
+                                                       skill="{{tab.notificationData.skill}}"
+                                                       company="{{tab.notificationData.company}}"
+                                                       channel="{{tab.notificationData.channel}}"
+                                                       channel-from="{{tab.notificationData.channelFrom}}"
+                                                       channel-to="{{tab.notificationData.channelTo}}"
+                                                       direction="{{tab.notificationData.direction}}">
+                                </engagement-tab-update>
+                            </div>-->
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
+            </scrollable-tabset>
         </div>
 
-        <!-- agent setting -->
-        <div ng-include="'app/views/agent/agentSettings.html'"></div>
-
-        <!-- agent dashboard -->
-        <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
     </div>
 
+    <!-- agent setting -->
+    <div ng-include="'app/views/agent/agentSettings.html'"></div>
 
-    <div ui-view>
-    </div>
+    <!-- agent dashboard -->
+    <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
+</div>
+
+
+<div ui-view>
+</div>
 </div>
 
 

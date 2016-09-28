@@ -10,7 +10,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
             method: 'put',
             url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state/NotAvailable/reason/" + reason,
             headers: {
-                'authorization': "Bearer " + dataParser.userProfile.server.token
+                'authorization': authService.GetToken()
             }
         }).then(function (response) {
             return response.data.IsSuccess;
@@ -23,7 +23,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
             method: 'put',
             url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state/Available/reason/EndBreak",
             headers: {
-                'authorization': "Bearer " + dataParser.userProfile.server.token
+                'authorization': authService.GetToken()
             }
         }).then(function (response) {
             return response.data.IsSuccess;
@@ -37,7 +37,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
             method: 'post',
             url: baseUrls.ardsliteserviceUrl,
             headers: {
-                'authorization': "Bearer " + dataParser.userProfile.server.token
+                'authorization':authService.GetToken()
             },
             data: {
                 "ResourceId": resourceId,
@@ -59,7 +59,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
             method: 'delete',
             url: baseUrls.ardsliteserviceUrl + "/" + resourceId,
             headers: {
-                'authorization': "Bearer " + dataParser.userProfile.server.token
+                'authorization': authService.GetToken()
             },
             data: {"ResourceId": resourceId, "HandlingTypes": ["CALL"]}
         }).then(function (response) {
@@ -68,13 +68,13 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
     };
 
-    var getContactVeeryFormat = function (userName) {
+    var getContactVeeryFormat = function () {
 
         return $http({
             method: 'get',
             url: baseUrls.userServiceBaseUrl + "Myprofile/veeryformat/veeryaccount",
             headers: {
-                'authorization': "Bearer " + dataParser.userProfile.server.token
+                'authorization': authService.GetToken()
             }
         }).then(function (response) {
             return response.data;
