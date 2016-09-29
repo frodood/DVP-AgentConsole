@@ -543,7 +543,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                 }
                 else {
-                    if (!formSubmission) {
+                    //if (!formSubmission) {
                         //create form submission
 
                         var schema = {
@@ -587,10 +587,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                         });
 
-                    }
+                    /*}
                     else {
                         callback(null);
-                    }
+                    }*/
 
                 }
 

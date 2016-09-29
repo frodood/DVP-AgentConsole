@@ -89,6 +89,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     // .........................  get My tickets with status .................................
 
+    var getMyRecentTickets= function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"RecentTickets",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data.Result;
+        });
+    };
+
     var getMyNewTickets= function (page) {
         var authToken = authService.GetToken();
 
@@ -798,6 +813,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getNewTickets:getNewTickets,
         getOpenTickets:getOpenTickets,
         getClosedTickets:getClosedTickets,
+        GetMyRecentTickets:getMyRecentTickets,
         getMyNewTickets:getMyNewTickets,
         getMyOpenTickets:getMyOpenTickets,
         getMyClosedTickets:getMyClosedTickets,
@@ -827,7 +843,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetExternalUserRecentTickets:getExternalUserRecentTickets,
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
-        getFormSubmissionByRef: getFormSubmissionByRef,
         PickTicket:pickTicket,
         searchTicket: searchTicket,
         searchTicketByField: searchTicketByField,
@@ -837,13 +852,11 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         searchTicketByStatus: searchTicketByStatus,
         searchTicketByRequester: searchTicketByRequester,
         AddNewAttachmentToTicket: AddNewAttachmentToTicket,
-        searchTicket: searchTicket,
         RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
-        PickTicket:pickTicket,
-        searchTicket: searchTicket,
         PickLoggedTime:PickLoggedTime,
         PickUserLoggedTime:PickUserLoggedTime
+
     }
 });
 
