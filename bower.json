@@ -46,9 +46,11 @@
     "angular-flot": "^0.0.16",
     "angular-uuid": "^0.1.0",
     "angular-echarts": "^0.3.5",
-    "ng-file-upload": "^12.2.11",
     "angular-strap": "^2.3.9",
-    "angular-ui-tab-scroll": "^2.2.7"
+    "videogular": "^1.4.4",
+    "angular-ui-tab-scroll": "^2.2.7",
+    "angular-file-upload": "^2.3.4",
+    "angular-download": "^0.0.2"
   },
   "resolutions": {
     "moment": "^2.14.1",

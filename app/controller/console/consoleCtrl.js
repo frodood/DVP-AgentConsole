@@ -2,13 +2,12 @@
  * Created by Veery Team on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
-                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService, engagementService) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService, filterFilter, engagementService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
     getJSONData($http, 'notification', function (data) {
-        $scope.notifications = data;
+        // $scope.notifications = data;
     });
 
     /*getJSONData($http, 'userList', function (data) {
@@ -452,13 +451,57 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
     };
 
+
+    $scope.unredNotifications = 0;
+
+    $scope.OnMessage = function (data) {
+        var objMessage = {
+            "id": data.TopicKey,
+            "header": data.Message,
+            "type": "menu",
+            "icon": "main-icon-2-speech-bubble",
+            "time": new Date(),
+            "read": false
+        };
+        if (data.TopicKey) {
+            var audio = new Audio('assets/sounds/notification-1.mp3');
+            audio.play();
+            $scope.notifications.unshift(objMessage);
+            $('#notificationAlarm').addClass('animated swing');
+            $scope.unredNotifications = $scope.getCountOfUnredNotifications()
+            setTimeout(function () {
+                $('#notificationAlarm').removeClass('animated swing');
+            }, 500);
+        }
+    };
+
+    $scope.readNotification = function (id) {
+
+        var index = -1;
+        for (var i = 0, len = $scope.notifications.length; i < len; i++) {
+            if ($scope.notifications[i].id === id) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0)
+            $scope.notifications.splice(index, 1);
+        $scope.unredNotifications = $scope.getCountOfUnredNotifications();
+    }
+
+
+    $scope.getCountOfUnredNotifications = function () {
+        return filterFilter($scope.notifications, {read: false}).length;
+    }
+
+
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound);
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound, $scope.OnMessage);
+
+
     };
 
     $scope.veeryNotification();
-
-
     /*--------------------------      Notification  ---------------------------------------*/
 
     /*---------------main tab panel----------------------- */
@@ -682,9 +725,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.addMailInbox = function () {
-        $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null);
+        $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null, 'mailinbox_agentconsole');
         resizeDiv();
     };
+
+    //add dashboard inside tab
+
+    $scope.addDashBoard = function () {
+        $scope.addTab('dashboard', 'dashboard', 'dashboard', null);
+    };
+    $scope.addDashBoard();
 
 
     var openNewEngagementTab = function (args, index) {
@@ -711,7 +761,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 openNewEngagementTab(args, args.index);
                 break;
             case 'inbox':
-                openEngagementTabForMailReply(args.data);
+                openEngagementTabForMailReply(args.data, args.index);
                 break;
             case 'userProfile':
                 openNewUserProfileTab(args, args.index);
@@ -734,7 +784,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
 
-    var openEngagementTabForMailReply = function (args) {
+    var openEngagementTabForMailReply = function (args, index) {
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -745,7 +795,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: args.engagement_id,
             userProfile: undefined
         };
-        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData);
+        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData, index);
     };
 
     /*use Common Method to open New Tab*/
@@ -946,7 +996,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.commonSearch = function(event){
-        if(event.keyCode === 13) {
+        if(event.keyCode === 32) {
 
             var searchItems = $scope.searchText.split(":");
             if (searchItems && searchItems.length > 1) {
@@ -954,7 +1004,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 var queryPath = searchItems.join(":");
 
                 switch (queryPath) {
-                    case "#ticket:tid" || "#ticket:reference":
+                    case "#ticket:tid":
+                        var queryFiledTid = searchItems.pop();
+                        ticketService.searchTicketByField(queryFiledTid, queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    case "#ticket:reference":
                         var queryFiled = searchItems.pop();
                         ticketService.searchTicketByField(queryFiled, queryText).then(function (response) {
                             if (response.IsSuccess) {
@@ -1170,7 +1234,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.goAgentDashboard = function () {
         $scope.isViewDashBoard = !$scope.isViewDashBoard;
-    }
+    };
 
 
     $scope.reserveTicketTab = function (key, obj) {
@@ -1466,7 +1530,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     })();
     getCurrentState.breakState();
     getCurrentState.getResourceState();
-
 
 
 });

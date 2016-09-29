@@ -829,6 +829,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.saveTicket = function (ticket) {
                 ticket.channel = scope.channel;
                 ticket.requester = scope.profileDetail._id;
+                ticket.engagement_session = scope.sessionId;
                 if (scope.postTags) {
                     ticket.tags = scope.postTags.map(function (obj) {
                         return obj.name;

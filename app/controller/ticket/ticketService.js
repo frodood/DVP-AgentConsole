@@ -705,6 +705,41 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var AddNewAttachmentToTicket = function (ticketId,attachmentObject) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Attachment",
+            headers: {
+                'authorization':authToken
+            },
+            data:attachmentObject
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
+    var RemoveAttachmentFromTicket = function (ticketId,attachmentID) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'DELETE',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Attachment/"+attachmentID,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -749,7 +784,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         searchTicketByGroupId: searchTicketByGroupId,
         searchTicketByPriority: searchTicketByPriority,
         searchTicketByStatus: searchTicketByStatus,
-        searchTicketByRequester: searchTicketByRequester
+        searchTicketByRequester: searchTicketByRequester,
+        AddNewAttachmentToTicket: AddNewAttachmentToTicket,
+        RemoveAttachmentFromTicket: RemoveAttachmentFromTicket
     }
 });
 

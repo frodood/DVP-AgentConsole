@@ -16,7 +16,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
         // by default the socket property is null and is not authenticated
         self.socket = socket;
         // initializer function to connect the socket for the first time after logging in to the app
-        self.initialize = function (authToken,notificationBaseUrl,onAgentFound) {
+        self.initialize = function (authToken,notificationBaseUrl,onAgentFound, onMessage) {
 
             try {
                 console.log('initializing socket');
@@ -64,9 +64,11 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                     console.log(reason);
                 });
 
-                socket.on('message', function (reason) {
+                socket.on('message', function (data) {
                     //Notification.info({message: reason, delay: 500, closeOnClick: true});
-                    console.log(reason);
+                    console.log(data);
+                    if(onMessage)
+                        onMessage(data);
                 });
 
                 socket.on('broadcast', function (data) {
@@ -111,7 +113,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
 notificationMod.factory('veeryNotification', function(notificationConnector, $q) {
 
     return {
-        connectToServer:function(authToken,notificationBaseUrl,onAgentFound){
+        connectToServer:function(authToken,notificationBaseUrl,onAgentFound, onMessage){
 
             var listenForAuthentication = function(){
                 console.log('listening for socket authentication');
@@ -125,7 +127,7 @@ notificationMod.factory('veeryNotification', function(notificationConnector, $q)
             };
 
             if(!notificationConnector.socket){
-                notificationConnector.initialize(authToken,notificationBaseUrl,onAgentFound);
+                notificationConnector.initialize(authToken,notificationBaseUrl,onAgentFound,onMessage);
                 return listenForAuthentication();
             }else{
                 if(notificationConnector.getAuthenticated()){
