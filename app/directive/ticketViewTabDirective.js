@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$rootScope,authService,myProfileDataParser,userService,uuid4,FileUploader,baseUrls,fileService) {
+agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, myProfileDataParser, userService, uuid4, FileUploader, baseUrls, fileService) {
     return {
         restrict: "EA",
         scope: {
@@ -16,7 +16,7 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
         link: function (scope, element, attributes) {
 
             scope.uploadedAttchments = [];
-            scope.userCompanyData =authService.GetCompanyInfo();
+            scope.userCompanyData = authService.GetCompanyInfo();
 
             scope.availableTags = scope.tagCategoryList;
             scope.tabReference = scope.tabReference + "-" + "18705056550";
@@ -651,9 +651,8 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
                         }
 
 
-                        if(scope.ticket.attachments)
-                        {
-                            scope.uploadedAttchments=scope.ticket.attachments;
+                        if (scope.ticket.attachments) {
+                            scope.uploadedAttchments = scope.ticket.attachments;
                         }
 
                         scope.ticket.updated_at = moment(scope.ticket.updated_at).local().format("YYYY-MM-DD HH:mm:ss");
@@ -693,7 +692,7 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
             }();
 
             scope.clickAddNewTicket = function () {
-                scope.showSubCreateTicket = ! scope.showSubCreateTicket;
+                scope.showSubCreateTicket = !scope.showSubCreateTicket;
             };
 
             scope.editTicketMode = function () {
@@ -787,7 +786,7 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
 
             };
 
-            scope.updateTicketByReference = function(){
+            scope.updateTicketByReference = function () {
                 var notifyData = scope.ticketDetails.notificationData.activeSession;
                 if (notifyData) {
                     var ticketRefData = {
@@ -995,19 +994,19 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
                 ticketService.AddSubTicket(scope.ticket._id, subTicket).then(function (response) {
 
                     if (response.data.IsSuccess) {
-                        scope.showAlert("Sub ticket saving","success","Sub ticket saved successfully");
+                        scope.showAlert("Sub ticket saving", "success", "Sub ticket saved successfully");
                         scope.subTickets.push(response.data.Result);
-                        scope.showSubCreateTicket=false;
+                        scope.showSubCreateTicket = false;
                         console.log("Sub ticket added successfully");
                     }
                     else {
-                        scope.showAlert("Sub ticket saving","error","Sub ticket saving failed");
+                        scope.showAlert("Sub ticket saving", "error", "Sub ticket saving failed");
                         console.log("Sub ticket adding failed");
                     }
 
                 }), function (error) {
-                    scope.showAlert("Sub ticket saving","error","Sub ticket saving failed");
-                    console.log("Sub ticket adding failed",error);
+                    scope.showAlert("Sub ticket saving", "error", "Sub ticket saving failed");
+                    console.log("Sub ticket adding failed", error);
                 }
             };
 
@@ -1199,32 +1198,28 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
             };
             uploader.onCompleteItem = function (fileItem, response, status, headers) {
                 console.info('onCompleteItem', fileItem, response, status, headers);
-                if(response.IsSuccess)
-                {
+                if (response.IsSuccess) {
                     var attchmentData =
                     {
-                        file:fileItem._file.name,
-                        url:baseUrls.fileService+"/InternalFileService/File/Download/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/"+response.Result+"/SampleAttachment",
-                        type:fileItem._file.type,
-                        size:fileItem._file.size
+                        file: fileItem._file.name,
+                        url: baseUrls.fileService + "/InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
+                        type: fileItem._file.type,
+                        size: fileItem._file.size
                     }
 
 
-                    ticketService.AddNewAttachmentToTicket(scope.ticket._id,attchmentData).then(function (response) {
+                    ticketService.AddNewAttachmentToTicket(scope.ticket._id, attchmentData).then(function (response) {
 
-                        if(response.data.IsSuccess)
-                        {
+                        if (response.data.IsSuccess) {
                             scope.uploadedAttchments.push(response.data.Result);
                         }
-                        else
-                        {
+                        else {
                             console.log("Invalid attachment");
                         }
 
                     }).catch(function (error) {
-                        console.log("Invalid attachment error",error);
+                        console.log("Invalid attachment error", error);
                     });
-
 
 
                 }
@@ -1238,31 +1233,28 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
 
 
 
-
-
             scope.deleteAttachment = function (attchmntID) {
 
-                ticketService.RemoveAttachmentFromTicket(scope.ticket._id,attchmntID).then(function (response) {
-                    if(response.data.IsSuccess)
-                    {
-                        var attachmentItem = $filter('filter')( scope.uploadedAttchments, {
+                ticketService.RemoveAttachmentFromTicket(scope.ticket._id, attchmntID).then(function (response) {
+                    if (response.data.IsSuccess) {
+                        var attachmentItem = $filter('filter')(scope.uploadedAttchments, {
                             _id: attchmntID
 
                         });
 
-                        scope.uploadedAttchments.splice($filter('filter')( scope.uploadedAttchments, {
+                        scope.uploadedAttchments.splice($filter('filter')(scope.uploadedAttchments, {
                             _id: attchmntID
 
-                        }),1);
+                        }), 1);
                     }
                 }), function (error) {
                     console.log(error);
                 }
             };
 
-
+            /*Audio Player*/
             scope.isPlay = false;
-            scope.downloadAttachment= function (attachment) {
+            scope.downloadAttachment = function (attachment) {
                 fileService.downloadAttachment(attachment);
             };
             scope.config = {
@@ -1294,17 +1286,23 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
             };
 
             var videogularAPI = null;
-            scope.onPlayerReady = function(API)
-            {
+            scope.onPlayerReady = function (API) {
                 videogularAPI = API;
 
             };
-            scope.playFile = function(id){
+            scope.closePlayer = function () {
+                videogularAPI.stop();
+                scope.isPlay = false;
+            };
+            scope.onPlayerComplete = function (api) {
+                scope.closePlayer();
+            };
 
-                if(videogularAPI&&id)
-                {
+            scope.playFile = function (id) {
+
+                if (videogularAPI && id) {
                     var info = authService.GetCompanyInfo();
-                    /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
+                    //var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';
                     var fileToPlay = baseUrls.fileService +'InternalFileService/File/DownloadLatest/' + info.tenant + '/' + info.company + '/' + id + '.mp3';
 
                     var arr = [
@@ -1321,10 +1319,10 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
 
 
             };
-            scope.playAttachment = function(attachment){
+            videogularAPI.
+                scope.playAttachment = function (attachment) {
 
-                if(videogularAPI&&attachment.url)
-                {
+                if (videogularAPI && attachment.url) {
                     var info = authService.GetCompanyInfo();
                     /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
                     var fileToPlay = attachment.url;
@@ -1343,6 +1341,8 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
 
 
             };
+
+            /*Audio Player-end*/
         }
     }
 });

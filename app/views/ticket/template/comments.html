@@ -25,13 +25,14 @@
 
 
 <div ng-show="isPlay" class="videogular-container audio">
-    <i class="glyphicon glyphicon-remove" ng-click=""></i>
-    <videogular vg-auto-play="true" vg-player-ready="onPlayerReady($API)">
+
+    <videogular vg-auto-play="true" vg-player-ready="onPlayerReady($API)" vg-complete="onPlayerComplete($API)">
         <vg-media vg-src="config.sources"
                   vg-tracks="config.tracks"
                   vg-native-controls="true" vg-type="audio">
         </vg-media>
     </videogular>
+    <i class="main-icon-2-cancel" ng-click="closePlayer()"> </i>
 </div>
 
 <div class="row" ng-repeat="comment in ticket.comments">
