@@ -3,17 +3,12 @@
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
-                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService, filterFilter) {
+                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, profileDataParser, loginService, $state, uuid4, notificationService, filterFilter) {
+
 
     $scope.notifications = [];
     $scope.agentList = [];
-    getJSONData($http, 'notification', function (data) {
-        // $scope.notifications = data;
-    });
 
-    /*getJSONData($http, 'userList', function (data) {
-     $scope.agentList = data;
-     });*/
 
     $scope.status = {
         isopen: false
@@ -674,7 +669,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //add dashboard inside tab
 
     $scope.addDashBoard = function () {
-        $scope.addTab('dashboard', 'dashboard', 'dashboard', null);
+        $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad");
     };
     $scope.addDashBoard();
 
@@ -963,7 +958,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
-
     $scope.getMyProfile = function () {
 
 
@@ -971,19 +965,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             if (response.data.IsSuccess) {
 
-                myProfileDataParser.myProfile = response.data.Result;
-                $scope.loginAvatar = myProfileDataParser.myProfile.avatar;
-                getUnreadMailCounters(myProfileDataParser.myProfile._id);
+                profileDataParser.myProfile = response.data.Result;
+                $scope.loginAvatar = profileDataParser.myProfile.avatar;
+                getUnreadMailCounters(profileDataParser.myProfile._id);
             }
             else {
 
-                myProfileDataParser.myProfile = {};
+                profileDataParser.myProfile = {};
             }
-        }), function (error) {
+        }, function (error) {
 
 
-            myProfileDataParser.myProfile = {};
-        }
+            profileDataParser.myProfile = {};
+        });
 
 
     };
@@ -1021,9 +1015,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
-    $scope.goAgentDashboard = function () {
-        $scope.isViewDashBoard = !$scope.isViewDashBoard;
-    };
 
 
     $scope.reserveTicketTab = function (key, obj) {
@@ -1319,6 +1310,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     })();
     getCurrentState.breakState();
     getCurrentState.getResourceState();
+
+
 
 
 });

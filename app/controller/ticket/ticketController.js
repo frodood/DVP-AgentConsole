@@ -2,7 +2,7 @@
  * Created by Veery Team on 8/19/2016.
  */
 
-agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,myProfileDataParser) {
+agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,profileDataParser) {
 
     $scope.ticketList = {
         toDo: [],
@@ -61,7 +61,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                 });
 
                 $scope.assigneeList = $scope.userGroupList.concat($scope.assigneeList);
-                myProfileDataParser.assigneeList = $scope.assigneeList;
+                profileDataParser.assigneeList = $scope.assigneeList;
             }
 
         }), function (error) {
@@ -74,7 +74,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
         userService.getUserList().then(function (response) {
             $scope.userList=response.data.Result;
             console.log("USERS ",$scope.userList);
-            myProfileDataParser.userList=$scope.userList;
+            profileDataParser.userList=$scope.userList;
 
             if($scope.users) {
                 for (var i = 0; i < $scope.users.length; i++) {
@@ -89,7 +89,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                 });
 
                 $scope.assigneeList = $scope.users;
-                myProfileDataParser.assigneeList = $scope.assigneeList;
+                profileDataParser.assigneeList = $scope.assigneeList;
             }
 
             pickAllGroups();
@@ -1033,14 +1033,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
             if(response.data.IsSuccess)
             {
-                myProfileDataParser.myProfile=response.data.Result;
+                profileDataParser.myProfile=response.data.Result;
             }
             else
             {
-                myProfileDataParser.myProfile={};
+                profileDataParser.myProfile={};
             }
         }), function (error) {
-            myProfileDataParser.myProfile={};
+            profileDataParser.myProfile={};
         }
 
 

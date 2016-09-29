@@ -675,7 +675,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetTicketViews:getTicketViews,
         GetTicketsByView:getTicketsByView,
         AddNewCommentToTicket:AddNewCommentToTicket,
-
         AssignUserGroupToTicket: AssignUserGroupToTicket,
         getTicketNextLevel:getTicketNextLevel,
         createTimer: createTimer,
@@ -690,13 +689,12 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetExternalUserRecentTickets:getExternalUserRecentTickets,
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
-
-        getFormSubmissionByRef: getFormSubmissionByRef,
         AddNewAttachmentToTicket: AddNewAttachmentToTicket,
         RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
         PickTicket:pickTicket,
         searchTicket: searchTicket
+
     }
 });
 

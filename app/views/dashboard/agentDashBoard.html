@@ -25,13 +25,13 @@
                                     <div class="dark-product-wrapper">
                                         <div class="col-lg-4">
                                             <div class="dark-product-ticker-wrap">
-                                                <h1 class="Staffed">04:13:31</h1>
+                                                <h1 class="Staffed">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
                                                 <div class="title Staffed">Staffed Time</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">00:00:00</h1>
+                                                <h1 class="onCall">{{productivity.OnCallTime| date:'HH:mm:ss'}}</h1>
                                                 <div class="title onCall">On Call Time</div>
                                             </div>
                                         </div>
@@ -54,13 +54,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="dark-ticker-wrap">
-                                        <h1>10</h1>
+                                        <h1>{{openTicketCount}}</h1>
                                         <div class="title">open</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="dark-ticker-wrap">
-                                        <h1>5</h1>
+                                        <h1>{{resolveTicketCount}}</h1>
                                         <div class="title">resolve</div>
                                     </div>
                                 </div>
@@ -92,15 +92,15 @@
                             <div class="col-lg-12">
                                 <h5 class="dark-header">CALL STATUS</h5>
                             </div>
-                            <div class="col-lg-2" ng-repeat="status in callStatus">
+                            <div class="col-lg-2" ng-repeat="queue in queueDetails">
                                 <div class="dark-call-status-wrap">
                                     <div class="header text-center">
-                                        {{status.status_header}}
+                                        {{queue.QueueName}}
                                     </div>
                                     <div class="dark-footer">
                                         <div class="col-lg-6">
                                             <div class="dark-footer-wrap">
-                                                <h5 class="count"> {{status.current_count}}</h5>
+                                                <h5 class="count"> {{queue.QueueInfo.CurrentWaiting}}</h5>
                                                 <div class="title">
                                                     current waiting
                                                 </div>
@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="dark-footer-wrap">
-                                                <h5 class="count"> {{status.max_count}}</h5>
+                                                <h5 class="count"> {{queue.QueueInfo.MaxWaitTime}}</h5>
                                                 <div class="title">
                                                     max wait
                                                     time

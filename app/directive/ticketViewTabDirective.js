@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, myProfileDataParser, userService, uuid4, FileUploader, baseUrls, fileService) {
+agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, profileDataParser, userService, uuid4, FileUploader, baseUrls, fileService) {
     return {
         restrict: "EA",
         scope: {
@@ -576,8 +576,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.ticketID = scope.ticketDetails.notificationData._id;
 
-            scope.userList = myProfileDataParser.userList;
-            scope.assigneeList = myProfileDataParser.assigneeList;
+            scope.userList = profileDataParser.userList;
+            scope.assigneeList = profileDataParser.assigneeList;
 
             scope.loadTicketNextLevel = function () {
                 ticketService.getTicketNextLevel(scope.ticket.type, scope.ticket.status).then(function (response) {
@@ -854,7 +854,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
                     if (response.data.IsSuccess) {
-                        response.data.Result.author = myProfileDataParser.myProfile;
+                        response.data.Result.author = profileDataParser.myProfile;
                         scope.ticket.comments.push(response.data.Result);
                         console.log("New comment added ", response);
                         scope.showAlert("New Comment", "success", "completed");
@@ -935,7 +935,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 ticketService.PickTicket(id).then(function (response) {
                     if (response) {
                         scope.showAlert("Ticket assigning", "success", "Successfully assign.");
-                        scope.ticket.assignee = myProfileDataParser.myProfile;
+                        scope.ticket.assignee = profileDataParser.myProfile;
                     }
                     else {
                         scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
