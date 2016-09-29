@@ -667,7 +667,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.addMailInbox = function () {
-        $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null);
+        $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null, 'mailinbox_agentconsole');
         resizeDiv();
     };
 
@@ -695,7 +695,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 openNewEngagementTab(args, args.index);
                 break;
             case 'inbox':
-                openEngagementTabForMailReply(args.data);
+                openEngagementTabForMailReply(args.data, args.index);
                 break;
             default:
 
@@ -715,7 +715,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
 
-    var openEngagementTabForMailReply = function (args) {
+    var openEngagementTabForMailReply = function (args, index) {
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -725,7 +725,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             skill: '',
             sessionId: args.engagement_id
         };
-        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData);
+        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData, index);
     };
 
     /*use Common Method to open New Tab*/
