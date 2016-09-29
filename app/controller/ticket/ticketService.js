@@ -650,7 +650,22 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var PickLoggedTime = function (ticketId) {
 
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
 
 
     return {
@@ -675,7 +690,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetTicketViews:getTicketViews,
         GetTicketsByView:getTicketsByView,
         AddNewCommentToTicket:AddNewCommentToTicket,
-
         AssignUserGroupToTicket: AssignUserGroupToTicket,
         getTicketNextLevel:getTicketNextLevel,
         createTimer: createTimer,
@@ -690,13 +704,13 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetExternalUserRecentTickets:getExternalUserRecentTickets,
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
-
         getFormSubmissionByRef: getFormSubmissionByRef,
         AddNewAttachmentToTicket: AddNewAttachmentToTicket,
         RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
         PickTicket:pickTicket,
-        searchTicket: searchTicket
+        searchTicket: searchTicket,
+        PickLoggedTime:PickLoggedTime
     }
 });
 

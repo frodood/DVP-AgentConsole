@@ -591,11 +591,12 @@
                                         Estimated
                                     </div>
                                     <div class="col-sm-6">
-                                        <uib-progressbar value="22" type="warning">
+                                        <uib-progressbar value="100" type="warning">
                                         </uib-progressbar>
+
                                     </div>
                                     <div class="col-sm-3">
-                                        1W
+                                        <h6>{{ticketEstimatedTimeFormat}}</h6>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -603,11 +604,12 @@
                                         Remaining
                                     </div>
                                     <div class="col-sm-6">
-                                        <uib-progressbar value="22" type="success">
+                                        <uib-progressbar value="ticketRemainingPrecentage" type="success">
                                         </uib-progressbar>
+
                                     </div>
                                     <div class="col-sm-3">
-                                        0
+                                        <h6>{{ticketRemainingTimeFormat}}</h6>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -615,11 +617,12 @@
                                         Logged
                                     </div>
                                     <div class="col-sm-6">
-                                        <uib-progressbar value="100" type="danger">
+                                        <uib-progressbar value="ticketLoggedPrecentage" type="danger">
                                         </uib-progressbar>
+
                                     </div>
                                     <div class="col-sm-3">
-                                        2w 1d 4h 11m
+                                        <h6>{{ticketLoggedTimeFormat}}</h6>
                                     </div>
                                 </div>
                             </div>
