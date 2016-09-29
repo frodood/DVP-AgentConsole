@@ -997,134 +997,171 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.commonSearch = function(event){
         if(event.keyCode === 32) {
+            if($scope.searchText) {
+                var searchItems = $scope.searchText.split(":");
+                if (searchItems && searchItems.length > 1) {
+                    var queryText = searchItems.pop();
+                    var queryPath = searchItems.join(":");
 
-            var searchItems = $scope.searchText.split(":");
-            if (searchItems && searchItems.length > 1) {
-                var queryText = searchItems.pop();
-                var queryPath = searchItems.join(":");
-
-                switch (queryPath) {
-                    case "#ticket:tid":
-                        var queryFiledTid = searchItems.pop();
-                        ticketService.searchTicketByField(queryFiledTid, queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                    switch (queryPath) {
+                        case "#ticket:tid":
+                            var queryFiledTid = searchItems.pop();
+                            ticketService.searchTicketByField(queryFiledTid, queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "ticket",
+                                            value: result.tid + ":" + result.subject
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    case "#ticket:reference":
-                        var queryFiled = searchItems.pop();
-                        ticketService.searchTicketByField(queryFiled, queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                            });
+                            break;
+                        case "#ticket:reference":
+                            var queryFiled = searchItems.pop();
+                            ticketService.searchTicketByField(queryFiled, queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "ticket",
+                                            value: result.tid + ":" + result.subject
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    case "#ticket":
-                        ticketService.searchTicket(queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                            });
+                            break;
+                        case "#ticket":
+                            ticketService.searchTicket(queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "ticket",
+                                            value: result.tid + ":" + result.subject
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    case "#ticket:channel":
-                        ticketService.searchTicketByChannel(queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                            });
+                            break;
+                        case "#ticket:channel":
+                            ticketService.searchTicketByChannel(queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "ticket",
+                                            value: result.tid + ":" + result.subject
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    case "#ticket:groupId":
-                        ticketService.searchTicketByGroupId(queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                            });
+                            break;
+                        case "#ticket:groupId":
+                            ticketService.searchTicketByGroupId(queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "ticket",
+                                            value: result.tid + ":" + result.subject
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    case "#ticket:priority":
-                        ticketService.searchTicketByPriority(queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                            });
+                            break;
+                        case "#ticket:priority":
+                            ticketService.searchTicketByPriority(queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "ticket",
+                                            value: result.tid + ":" + result.subject
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    case "#ticket:requester":
-                        ticketService.searchTicketByRequester(queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                            });
+                            break;
+                        case "#ticket:requester":
+                            ticketService.searchTicketByRequester(queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "ticket",
+                                            value: result.tid + ":" + result.subject
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    case "#ticket:status":
-                        ticketService.searchTicketByStatus(queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                            });
+                            break;
+                        case "#ticket:status":
+                            ticketService.searchTicketByStatus(queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "ticket",
+                                            value: result.tid + ":" + result.subject
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    case "#profile":
-                        userService.searchExternalUsers(queryText).then(function (response) {
-                            if (response.IsSuccess) {
-                                var searchResult = [];
-                                for(var i = 0; i < response.Result.length; i++){
-                                    var result = response.Result[i];
-                                    searchResult.push({obj:result, type: "profile", value:result.firstname+" "+result.lastname});
+                            });
+                            break;
+                        case "#profile":
+                            userService.searchExternalUsers(queryText).then(function (response) {
+                                if (response.IsSuccess) {
+                                    var searchResult = [];
+                                    for (var i = 0; i < response.Result.length; i++) {
+                                        var result = response.Result[i];
+                                        searchResult.push({
+                                            obj: result,
+                                            type: "profile",
+                                            value: result.firstname + " " + result.lastname
+                                        });
+                                    }
+                                    $scope.states = searchResult;
+                                    $scope.searchText = "";
                                 }
-                                $scope.states = searchResult;
-                                $scope.searchText = "";
-                            }
-                        });
-                        break;
-                    default :
-                        break;
+                            });
+                            break;
+                        default :
+                            break;
+                    }
                 }
             }
         }else if(event.keyCode === 8 && $scope.searchText === ""){
