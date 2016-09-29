@@ -740,6 +740,24 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var PickLoggedTime = function (ticketId) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -786,7 +804,12 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         searchTicketByStatus: searchTicketByStatus,
         searchTicketByRequester: searchTicketByRequester,
         AddNewAttachmentToTicket: AddNewAttachmentToTicket,
-        RemoveAttachmentFromTicket: RemoveAttachmentFromTicket
+        searchTicket: searchTicket,
+        RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
+        getFormSubmissionByRef: getFormSubmissionByRef,
+        PickTicket:pickTicket,
+        searchTicket: searchTicket,
+        PickLoggedTime:PickLoggedTime
     }
 });
 
