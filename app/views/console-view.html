@@ -508,6 +508,9 @@
                             <div ng-switch-when="mail-inbox">
                                 <div ng-include="'app/views/mail-inbox/inbox-view.html'"></div>
                             </div>
+                            <div ng-switch-when="dashboard">
+                                <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
+                            </div>
                             <!--<div ng-switch-when="userProfile">
                                 <engagement-tab-update load-tags="reloadTagAndCategories()"
                                                        tag-category-list="tagCategories"
@@ -533,7 +536,7 @@
     <div ng-include="'app/views/agent/agentSettings.html'"></div>
 
     <!-- agent dashboard -->
-    <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
+    <!--<div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>-->
 </div>
 
 

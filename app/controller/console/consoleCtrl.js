@@ -671,6 +671,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         resizeDiv();
     };
 
+    //add dashboard inside tab
+
+    $scope.addDashBoard = function () {
+        $scope.addTab('dashboard', 'dashboard', 'dashboard', null);
+    };
+    $scope.addDashBoard();
+
 
     var openNewEngagementTab = function (args, index) {
         var notifyData = {
@@ -1312,7 +1319,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     })();
     getCurrentState.breakState();
     getCurrentState.getResourceState();
-
 
 
 });
