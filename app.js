@@ -8,12 +8,9 @@ var agentApp = angular.module('veeryAgentApp',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize','uuid','angular-flot','angularFileUpload','download','fileServiceModule',
         'com.2fdevs.videogular',
-        'com.2fdevs.videogular.plugins.controls',
-        'com.2fdevs.videogular.plugins.overlayplay',
-        'com.2fdevs.videogular.plugins.poster',
         'ui.tab.scroll','ngAnimate','mgcrea.ngStrap'
     ]);
-        
+
 
 agentApp.constant('moment', moment);
 
@@ -29,8 +26,7 @@ var baseUrls = {
     'oauthLogOutUrl': 'http://userservice.app.veery.cloud/oauth/token/revoke/',
     'oauthLoginUrl': 'http://userservice.app.veery.cloud/oauth/token',
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
-    'fileServiceUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/FileService/',
-    'internalFileServiceUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/InternalFileService/'
+    'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

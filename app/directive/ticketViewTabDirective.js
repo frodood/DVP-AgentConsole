@@ -16,7 +16,7 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
         link: function (scope, element, attributes) {
 
             scope.uploadedAttchments = [];
-            scope.userCompanyData =authService.GetCompanyTenant();
+            scope.userCompanyData =authService.GetCompanyInfo();
 
             scope.availableTags = scope.tagCategoryList;
             scope.tabReference = scope.tabReference + "-" + "18705056550";
@@ -1138,7 +1138,7 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
 
             scope.file = {};
             var uploader = scope.uploader = new FileUploader({
-                url: baseUrls.fileServiceUrl+"File/Upload",
+                url: baseUrls.fileService+"File/Upload",
                 headers: {'Authorization':  authService.GetToken()}
             });
 
@@ -1201,7 +1201,7 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
                     var attchmentData =
                     {
                         file:fileItem._file.name,
-                        url:baseUrls.internalFileServiceUrl+"File/Download/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/"+response.Result+"/SampleAttachment",
+                        url:baseUrls.fileService+"/InternalFileService/File/Download/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/"+response.Result+"/SampleAttachment",
                         type:fileItem._file.type,
                         size:fileItem._file.size
                     }
@@ -1309,6 +1309,28 @@ agentApp.directive("ticketTabView",function ($filter,$sce,moment,ticketService,$
                         {
                             src: $sce.trustAsResourceUrl(fileToPlay),
                             type: 'audio/mp3'
+                        }
+                    ];
+
+                    scope.config.sources = arr;
+                    videogularAPI.play();
+                    scope.isPlay = true;
+                }
+
+
+            };
+            scope.playAttachment = function(attachment){
+
+                if(videogularAPI&&attachment.url)
+                {
+                    var info = authService.GetCompanyInfo();
+                    /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
+                    var fileToPlay = attachment.url;
+
+                    var arr = [
+                        {
+                            src: $sce.trustAsResourceUrl(fileToPlay),
+                            type: attachment.type
                         }
                     ];
 

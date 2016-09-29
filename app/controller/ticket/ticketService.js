@@ -693,7 +693,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         getFormSubmissionByRef: getFormSubmissionByRef,
         AddNewAttachmentToTicket: AddNewAttachmentToTicket,
-        RemoveAttachmentFromTicket: RemoveAttachmentFromTicket
+        RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
         PickTicket:pickTicket,
         searchTicket: searchTicket
