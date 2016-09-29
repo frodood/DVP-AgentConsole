@@ -756,6 +756,39 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
 
     };
+    var PickUserLoggedTime = function (ticketId,userId) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId+"/User/"+userId,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            console.log("Time response "+JSON.stringify(response));
+            if(response.data.IsSuccess)
+            {
+                var loggedTime=0;
+                for(var i=0;i<response.data.Result.length;i++)
+                {
+                    loggedTime=loggedTime+response.data.Result[i].time;
+                    if(i==response.data.Result.length-1)
+                    {
+                        console.log("user logged "+loggedTime);
+                        return loggedTime;
+                    }
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        });
+
+    };
 
 
     return {
@@ -809,7 +842,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getFormSubmissionByRef: getFormSubmissionByRef,
         PickTicket:pickTicket,
         searchTicket: searchTicket,
-        PickLoggedTime:PickLoggedTime
+        PickLoggedTime:PickLoggedTime,
+        PickUserLoggedTime:PickUserLoggedTime
     }
 });
 

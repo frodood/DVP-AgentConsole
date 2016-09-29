@@ -10,7 +10,7 @@
                     <i class="main-icon-2-telephone-3" ng-click="playFile(ticket.engagement_session._id)"></i>
                 </div>
                 <div class="model-header-text small bold ">
-                    {{ticketID}}
+                    {{ticket.reference}}/{{ticket.tid}}
                 </div>
                 <br/>
                 <div class="model-header-text bold">
@@ -47,7 +47,7 @@
                     <div class="btn-warp ">
                         <span class="btn btn-default" ng-click="goToComment()">comment</span>
                     </div>
-                    <div class="btn-warp ">
+                    <div class="btn-warp " ng-show="!ticket.assignee">
                         <span class="btn btn-default" ng-click="assignToMe(ticket._id)">pick</span>
                     </div>
                     <div class="btn-warp ">
@@ -523,6 +523,7 @@
                                                     <div class="notification-text" ng-show="ticket.assignee">
                                                         {{ticket.assignee.name}}
                                                     </div>
+                                                    <a ng-show="ticket.assignee" ng-click="setAssigneeAsMe()">Assign to me</a>
                                                     <div class="notification-time text-uppercase bold color-green500" ng-if="!ticket.assignee.name" ng-show="ticket.assignee_group.name">
                                                         ASSIGNEE GROUP
                                                     </div>
@@ -549,32 +550,23 @@
                                     <!--</div>-->
                                 </h5>
                             </div>
-                            <div class="sub-task">
-                                <div class="pull-left  ">
-                                    <div class="pull-left commenter-img">
-                                        <img src="assets/img/avatar/defaultProfile.png" ng-src="assets/img/avatar/mikeluby.jpg"/>
-                                        Aaron, Hank
+                            <div ng-repeat="collaborator in ticket.collaborators">
+                                <div class="sub-task">
+                                    <div class="pull-left  ">
+                                        <div class="pull-left commenter-img">
+                                            <img src="assets/img/avatar/defaultProfile.png" ng-src="{{collaborator.avatar}}"/>
+                                            {{collaborator.name}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn">
-                                        92h 11m / 0h
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sub-task">
-                                <div class="pull-left  ">
-                                    <div class="pull-left commenter-img">
-                                        <img src="assets/img/avatar/defaultProfile.png" ng-src="assets/img/avatar/jaman_01.jpg"/>
-                                        Abourezk, James
-                                    </div>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="bg-checkbox gray300  font-white small-details inline-btn">
-                                        2h 11m / 0h
+                                    <div class="pull-right">
+                                        <div class="bg-checkbox gray300  font-white small-details inline-btn">
+                                            {{collaborator.loggedTime}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
                         <!-- END -->
 
