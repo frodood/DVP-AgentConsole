@@ -50,14 +50,7 @@
     "videogular": "^1.4.4",
     "angular-ui-tab-scroll": "^2.2.7",
     "angular-file-upload": "^2.3.4",
-    "angular-download": "^0.0.2",
-    "videogular-themes-default": "^1.4.4",
-    "videogular-controls": "^1.4.4",
-    "videogular-buffering": "^1.4.4",
-    "videogular-overlay-play": "^1.4.4",
-    "videogular-poster": "^1.4.4",
-    "videogular-ima-ads": "^1.4.4",
-    "videogular-angulartics": "^1.4.4"
+    "angular-download": "^0.0.2"
   },
   "resolutions": {
     "moment": "^2.14.1",
