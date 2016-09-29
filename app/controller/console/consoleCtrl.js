@@ -3,7 +3,7 @@
  */
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,
-                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService) {
+                                             jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, myProfileDataParser, loginService, $state, uuid4, notificationService, engagementService) {
 
     $scope.notifications = [];
     $scope.agentList = [];
@@ -622,6 +622,65 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
+
+    var openNewUserProfileTab = function (profile, index) {
+        var engUuid = uuid4.generate();
+        var engSessionObj = {
+            engagement_id: engUuid,
+            channel: "api",
+            channel_from: "direct",
+            channel_to: "direct",
+            direction: "direct",
+            has_profile: true
+        };
+        engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
+            if(response) {
+                if(response.IsSuccess) {
+                    console.log("Create Engagement Session success :: " + response);
+
+                    var notifyData = {
+                        company: profile.company,
+                        direction: "direct",
+                        channelFrom: "direct",
+                        channelTo: "direct",
+                        channel: "api",
+                        skill: '',
+                        sessionId: engUuid,
+                        userProfile: profile
+                    };
+                    $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
+                }else{
+                    var errMsg1 = "Create Engagement Session Failed";
+
+                    if (response.CustomMessage) {
+
+                        errMsg1 = response.CustomMessage;
+
+                    }
+
+                    $scope.showAlert('Error', 'error', errMsg1);
+                }
+            }else{
+                var errMsg = "Engagement Session Undefined";
+                $scope.showAlert('Error', 'error', errMsg);
+            }
+
+        }, function (err) {
+
+            var errMsg = "Create Engagement Session Failed";
+
+            if (err.statusText) {
+
+                errMsg = err.statusText;
+
+            }
+
+            $scope.showAlert('Error', 'error', errMsg);
+
+        });
+    };
+
+
     $scope.addMailInbox = function () {
         $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null);
         resizeDiv();
@@ -636,7 +695,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelTo: args.channel_to,
             channel: args.channel,
             skill: '',
-            sessionId: args.engagement_id
+            sessionId: args.engagement_id,
+            userProfile: undefined
         };
         $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, index);
     };
@@ -647,11 +707,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'ticketView':
                 openNewTicketTab(args, args.index);
                 break;
-            case 'engagement':
+            case 'engagement' || 'userProfile':
                 openNewEngagementTab(args, args.index);
                 break;
             case 'inbox':
                 openEngagementTabForMailReply(args.data);
+                break;
+            case 'userProfile':
+                openNewUserProfileTab(args, args.index);
                 break;
             default:
 
@@ -679,7 +742,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelTo: args.channel_to,
             channel: args.channel,
             skill: '',
-            sessionId: args.engagement_id
+            sessionId: args.engagement_id,
+            userProfile: undefined
         };
         $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData);
     };
@@ -855,20 +919,154 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //----------------------SearchBar-----------------------------------------------------
     //Main serch bar option
 
-    $scope.states = ["#ticket:", "#ticket:channel:", "#ticket:groupId:", "#ticket:tid:", "#ticket:priority:",
-        "#ticket:reference:", "#ticket:requester:", "#ticket:status:", "#profile:", "#profile:id:"];
+    $scope.searchText = "";
+    $scope.states = [{obj:{}, type: "searchKey", value:"#ticket:"}, {obj:{}, type: "searchKey", value:"#ticket:channel:"}, {obj:{}, type: "searchKey", value:"#ticket:groupId:"}, {obj:{}, type: "searchKey", value:"#ticket:tid:"}, {obj:{}, type: "searchKey", value:"#ticket:priority:"},
+        {obj:{}, type: "searchKey", value:"#ticket:reference:"}, {obj:{}, type: "searchKey", value:"#ticket:requester:"}, {obj:{}, type: "searchKey", value:"#ticket:status:"}, {obj:{}, type: "searchKey", value:"#profile:"}];
 
-    $scope.searchResult = [];
+    //$scope.searchResult = [];
 
-    $scope.searchExternalUsers = function ($query) {
-        return userService.searchExternalUsers($query).then(function (response) {
-            if (response.IsSuccess) {
-                return response.Result;
+    $scope.bindSearchData = function(){
+        if($scope.searchText && angular.isObject($scope.searchText) && $scope.searchText.type === "ticket"){
+            $scope.searchText.obj.tabType='ticketView';
+            $scope.searchText.obj.index=$scope.searchText.obj.reference;
+            $rootScope.$emit('openNewTab',$scope.searchText.obj);
+            $scope.states = [{obj:{}, type: "searchKey", value:"#ticket:"}, {obj:{}, type: "searchKey", value:"#ticket:channel:"}, {obj:{}, type: "searchKey", value:"#ticket:groupId:"}, {obj:{}, type: "searchKey", value:"#ticket:tid:"}, {obj:{}, type: "searchKey", value:"#ticket:priority:"},
+                {obj:{}, type: "searchKey", value:"#ticket:reference:"}, {obj:{}, type: "searchKey", value:"#ticket:requester:"}, {obj:{}, type: "searchKey", value:"#ticket:status:"}, {obj:{}, type: "searchKey", value:"#profile:"}];
+
+            $scope.searchText = "";
+        }else if($scope.searchText && angular.isObject($scope.searchText) && $scope.searchText.type === "profile"){
+            $scope.searchText.obj.tabType='userProfile';
+            $scope.searchText.obj.index=$scope.searchText.obj._id;
+            $rootScope.$emit('openNewTab',$scope.searchText.obj);
+            $scope.states = [{obj:{}, type: "searchKey", value:"#ticket:"}, {obj:{}, type: "searchKey", value:"#ticket:channel:"}, {obj:{}, type: "searchKey", value:"#ticket:groupId:"}, {obj:{}, type: "searchKey", value:"#ticket:tid:"}, {obj:{}, type: "searchKey", value:"#ticket:priority:"},
+                {obj:{}, type: "searchKey", value:"#ticket:reference:"}, {obj:{}, type: "searchKey", value:"#ticket:requester:"}, {obj:{}, type: "searchKey", value:"#ticket:status:"}, {obj:{}, type: "searchKey", value:"#profile:"}];
+
+            $scope.searchText = "";
+        }
+    };
+
+    $scope.commonSearch = function(event){
+        if(event.keyCode === 13) {
+
+            var searchItems = $scope.searchText.split(":");
+            if (searchItems && searchItems.length > 1) {
+                var queryText = searchItems.pop();
+                var queryPath = searchItems.join(":");
+
+                switch (queryPath) {
+                    case "#ticket:tid" || "#ticket:reference":
+                        var queryFiled = searchItems.pop();
+                        ticketService.searchTicketByField(queryFiled, queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    case "#ticket":
+                        ticketService.searchTicket(queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    case "#ticket:channel":
+                        ticketService.searchTicketByChannel(queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    case "#ticket:groupId":
+                        ticketService.searchTicketByGroupId(queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    case "#ticket:priority":
+                        ticketService.searchTicketByPriority(queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    case "#ticket:requester":
+                        ticketService.searchTicketByRequester(queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    case "#ticket:status":
+                        ticketService.searchTicketByStatus(queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "ticket", value:result.tid+":"+result.subject});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    case "#profile":
+                        userService.searchExternalUsers(queryText).then(function (response) {
+                            if (response.IsSuccess) {
+                                var searchResult = [];
+                                for(var i = 0; i < response.Result.length; i++){
+                                    var result = response.Result[i];
+                                    searchResult.push({obj:result, type: "profile", value:result.firstname+" "+result.lastname});
+                                }
+                                $scope.states = searchResult;
+                                $scope.searchText = "";
+                            }
+                        });
+                        break;
+                    default :
+                        break;
+                }
             }
-            else {
-                return [];
-            }
-        });
+        }else if(event.keyCode === 8 && $scope.searchText === ""){
+            $scope.states = [{obj:{}, type: "searchKey", value:"#ticket:"}, {obj:{}, type: "searchKey", value:"#ticket:channel:"}, {obj:{}, type: "searchKey", value:"#ticket:groupId:"}, {obj:{}, type: "searchKey", value:"#ticket:tid:"}, {obj:{}, type: "searchKey", value:"#ticket:priority:"},
+                {obj:{}, type: "searchKey", value:"#ticket:reference:"}, {obj:{}, type: "searchKey", value:"#ticket:requester:"}, {obj:{}, type: "searchKey", value:"#ticket:status:"}, {obj:{}, type: "searchKey", value:"#profile:"}];
+        }
     };
 
     $scope.clearSearchResult = function () {

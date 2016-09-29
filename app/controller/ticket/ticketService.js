@@ -615,6 +615,96 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var searchTicketByField= function (field, value) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketsByField/"+field+"/"+value,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByChannel= function (channel) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/Channel/"+channel+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByGroupId= function (groupId) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/Group/"+groupId+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByPriority= function (priority) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/Priority/"+priority+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByStatus= function (status) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/"+status+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByRequester= function (requester) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -653,7 +743,13 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
         PickTicket:pickTicket,
-        searchTicket: searchTicket
+        searchTicket: searchTicket,
+        searchTicketByField: searchTicketByField,
+        searchTicketByChannel: searchTicketByChannel,
+        searchTicketByGroupId: searchTicketByGroupId,
+        searchTicketByPriority: searchTicketByPriority,
+        searchTicketByStatus: searchTicketByStatus,
+        searchTicketByRequester: searchTicketByRequester
     }
 });
 

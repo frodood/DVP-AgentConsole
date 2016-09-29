@@ -31,7 +31,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             tagList: "=",
             tagCategoryList: "=",
             users: "=",
-            loadTags: '&'
+            loadTags: '&',
+            userProfile: "="
         },
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
@@ -952,42 +953,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
             scope.GetIvrDetailsByEngagementId();
 
-            /* Load Profile Details for Current Engagement */
 
-            scope.GetExternalUserProfileByContact = function () {
-                var category = "";
-                if (scope.direction === 'inbound' || scope.direction === 'outbound') {
-                    category = 'phone';
-                }
-                userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
-                    scope.profileDetails = response;
-                    if (scope.profileDetails) {
-                        if (scope.profileDetails.length == 1) {
-                            scope.profileDetail = scope.profileDetails[0];
-
-                            scope.currentSubmission = scope.profileDetails[0].form_submission;
-                            convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
-                                if (schemaDetails) {
-                                    scope.schema = schemaDetails.schema;
-                                    scope.form = schemaDetails.form;
-                                    scope.model = schemaDetails.model;
-                                }
-
-                            });
-
-
-                            scope.GetProfileHistory(scope.profileDetail._id);
-                            getExternalUserRecentTickets(scope.profileDetail._id);
-                        }
-                        else {
-                            // show multiple profile selection view
-                        }
-                    }
-                }, function (err) {
-                    scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                });
-            };
-            scope.GetExternalUserProfileByContact();
 
             /* Load Profile Details for Current Engagement */
             scope.ticketList = [];
@@ -1006,6 +972,75 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.GetAllTicketsByRequester(profileId, 1);
                 console.info("Profile History Loading........................");
             };
+
+
+
+            var getExternalUserRecentTickets = function (id) {
+                ticketService.GetExternalUserRecentTickets(id).then(function (response) {
+                    scope.recentTicketList = response;
+                }, function (err) {
+                    scope.showAlert("Ticket", "error", "Fail To Get Recent Tickets.")
+                });
+            };
+
+
+            /* Load Profile Details for Current Engagement */
+
+            scope.GetExternalUserProfileByContact = function () {
+                var category = "";
+                if (scope.direction === 'inbound' || scope.direction === 'outbound') {
+                    category = 'phone';
+                }
+
+                if(scope.userProfile){
+                    scope.profileDetail = scope.userProfile;
+
+                    scope.currentSubmission = scope.userProfile.form_submission;
+                    convertToSchemaForm(scope.userProfile.form_submission, function (schemaDetails) {
+                        if (schemaDetails) {
+                            scope.schema = schemaDetails.schema;
+                            scope.form = schemaDetails.form;
+                            scope.model = schemaDetails.model;
+                        }
+
+                    });
+
+
+                    scope.GetProfileHistory(scope.profileDetail._id);
+                    getExternalUserRecentTickets(scope.profileDetail._id);
+                }else {
+                    userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                        scope.profileDetails = response;
+                        if (scope.profileDetails) {
+                            if (scope.profileDetails.length == 1) {
+                                scope.profileDetail = scope.profileDetails[0];
+
+                                scope.currentSubmission = scope.profileDetails[0].form_submission;
+                                convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
+                                    if (schemaDetails) {
+                                        scope.schema = schemaDetails.schema;
+                                        scope.form = schemaDetails.form;
+                                        scope.model = schemaDetails.model;
+                                    }
+
+                                });
+
+
+                                scope.GetProfileHistory(scope.profileDetail._id);
+                                getExternalUserRecentTickets(scope.profileDetail._id);
+                            }
+                            else {
+                                // show multiple profile selection view
+                            }
+                        }
+                    }, function (err) {
+                        scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                    });
+                }
+            };
+            scope.GetExternalUserProfileByContact();
+
+
 
             scope.showAlert = function (tittle, type, msg) {
                 new PNotify({
@@ -1051,13 +1086,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 $rootScope.$emit('openNewTab', data);
             };
 
-            var getExternalUserRecentTickets = function (id) {
-                ticketService.GetExternalUserRecentTickets(id).then(function (response) {
-                    scope.recentTicketList = response;
-                }, function (err) {
-                    scope.showAlert("Ticket", "error", "Fail To Get Recent Tickets.")
-                });
-            };
 
             scope.queryTicketList = function (query) {
                 if (query === "*" || query === "") {
