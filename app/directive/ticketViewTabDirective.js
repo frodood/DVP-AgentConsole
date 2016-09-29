@@ -1137,8 +1137,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.file = {};
             var uploader = scope.uploader = new FileUploader({
-                url: baseUrls.fileService + "File/Upload",
-                headers: {'Authorization': authService.GetToken()}
+                url: baseUrls.fileService+"FileService/File/Upload",
+                headers: {'Authorization':  authService.GetToken()}
             });
 
             // FILTERS
@@ -1153,6 +1153,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             //uploader.formData.push({'DuoType' : 'fax'});
 
             // CALLBACKS
+
+            scope.file = {};
+            scope.file.Category = "TICKET_ATTACHMENTS";
 
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                 console.info('onWhenAddingFileFailed', item, filter, options);
@@ -1227,8 +1230,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             console.info('uploader', uploader);
 
-            scope.file = {};
-            scope.file.Category = "TICKET_ATTACHMENTS";
+
 
 
             scope.deleteAttachment = function (attchmntID) {
