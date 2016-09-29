@@ -2,7 +2,7 @@
  * Created by team verry on 9/23/2016.
  */
 
-agentApp.controller('agentDashboardCtrl', function ($scope, $http, dashboradService,authService) {
+agentApp.controller('agentDashboardCtrl', function ($scope,$rootScope, $http, dashboradService,ticketService,engagementService,profileDataParser, authService) {
 
     $scope.showAlert = function (tittle, type, msg) {
         new PNotify({
@@ -141,7 +141,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $http, dashboradServ
                     return item;
                 });
             }
-        }, function (err) { $scope.resolveTicket = [];
+        }, function (err) {
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
@@ -157,7 +157,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $http, dashboradServ
                     return item;
                 });
             }
-        }, function (err) { $scope.resolveTicket = [];
+        }, function (err) {
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
@@ -210,7 +210,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $http, dashboradServ
                     return item;
                 });
             }
-        }, function (err) { $scope.resolveTicket = [];
+        }, function (err) {
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
@@ -220,11 +220,37 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $http, dashboradServ
     var GetQueueDetails = function () {
         dashboradService.GetQueueDetails().then(function (response) {
             $scope.queueDetails = response;
-        }, function (err) { $scope.resolveTicket = [];
+        }, function (err) { $scope.queueDetails = [];
             $scope.showAlert("Queue Details", "error", "Fail To Load Queue Details.");
         });
     };
     GetQueueDetails();
+
+    $scope.recentTickets = [];
+    var GetMyRecentTickets = function () {
+        ticketService.GetMyRecentTickets().then(function (response) {
+            $scope.recentTickets = response;
+        }, function (err) {
+            $scope.showAlert("Ticket Details", "error", "Fail To Load Ticket Details.");
+        });
+    };
+    GetMyRecentTickets();
+
+    $scope.recentEngagements = [];
+    var GetMyRecentEngagements = function () {
+        engagementService.GetEngagementSessions(1111, profileDataParser.RecentEngagements).then(function (response) {
+            $scope.recentEngagements = response;
+        }, function (err) {
+            $scope.showAlert("Engagement Details", "error", "Fail To Load Recent Engagements.");
+        });
+    };
+    GetMyRecentEngagements();
+
+    $scope.viewTicket = function (data) {
+        data.tabType='ticketView';
+        data.index=data.reference;
+        $rootScope.$emit('openNewTab',data);
+    };
 
     $scope.pieOptions = {
         series: {
@@ -240,17 +266,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $http, dashboradServ
         }
     };
 
-    var pieSeries = Math.floor(Math.random() * 6) + 3;
-
-
-
-
-
-    //call status
-    $scope.callStatus = [];
-    getJSONData($http, 'callStatus', function (data) {
-        $scope.callStatus = data;
-    });
 
 
 });

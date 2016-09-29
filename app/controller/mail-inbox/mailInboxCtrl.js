@@ -93,7 +93,8 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
         {
             var tabObj = {
                 tabType: 'inbox',
-                data: $scope.currentDisplayMessage.engagement_session
+                data: $scope.currentDisplayMessage.engagement_session,
+                index: $scope.currentDisplayMessage.engagement_session._id
             };
             $rootScope.$emit('openNewTab', tabObj);
         }

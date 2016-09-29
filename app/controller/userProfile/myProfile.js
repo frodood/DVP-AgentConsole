@@ -6,7 +6,8 @@ angular.module('veeryAgentApp').factory('profileDataParser', function(){
 
     return {
         myProfile: undefined,
-        userList:[]
+        userList:[],
+        RecentEngagements:[]
     }
 });
 

@@ -89,6 +89,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     // .........................  get My tickets with status .................................
 
+    var getMyRecentTickets= function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"RecentTickets",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data.Result;
+        });
+    };
+
     var getMyNewTickets= function (page) {
         var authToken = authService.GetToken();
 
@@ -615,6 +630,96 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var searchTicketByField= function (field, value) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"TicketsByField/"+field+"/"+value,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByChannel= function (channel) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/Channel/"+channel+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByGroupId= function (groupId) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/Group/"+groupId+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByPriority= function (priority) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/Priority/"+priority+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByStatus= function (status) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/"+status+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var searchTicketByRequester= function (requester) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/25/1",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
     var AddNewAttachmentToTicket = function (ticketId,attachmentObject) {
 
         var authToken = authService.GetToken();
@@ -650,7 +755,22 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var PickLoggedTime = function (ticketId) {
 
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
 
 
     return {
@@ -660,6 +780,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getNewTickets:getNewTickets,
         getOpenTickets:getOpenTickets,
         getClosedTickets:getClosedTickets,
+        GetMyRecentTickets:getMyRecentTickets,
         getMyNewTickets:getMyNewTickets,
         getMyOpenTickets:getMyOpenTickets,
         getMyClosedTickets:getMyClosedTickets,
@@ -689,11 +810,18 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetExternalUserRecentTickets:getExternalUserRecentTickets,
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
+        PickTicket:pickTicket,
+        searchTicket: searchTicket,
+        searchTicketByField: searchTicketByField,
+        searchTicketByChannel: searchTicketByChannel,
+        searchTicketByGroupId: searchTicketByGroupId,
+        searchTicketByPriority: searchTicketByPriority,
+        searchTicketByStatus: searchTicketByStatus,
+        searchTicketByRequester: searchTicketByRequester,
         AddNewAttachmentToTicket: AddNewAttachmentToTicket,
         RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
-        PickTicket:pickTicket,
-        searchTicket: searchTicket
+        PickLoggedTime:PickLoggedTime
 
     }
 });

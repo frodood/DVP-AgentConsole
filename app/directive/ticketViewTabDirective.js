@@ -571,11 +571,97 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
 
+            String.prototype.toHHMMSS = function () {
+                var hours = Math.floor(this / 36e5),
+                    minutes = Math.floor((this % 36e5) / 6e4),
+                    seconds = Math.floor((this % 6e4) / 1000);
+
+                hours = (hours < 10) ? "0" + hours : hours;
+                minutes = (minutes < 10) ? "0" + minutes : minutes;
+                seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+                var days=0;
+                var weeks=0;
+
+                var returnFormat;
+
+                if(hours>24)
+                {
+                    days=hours/24;
+                    hours=hours%24;
+                }
+                if(days>7)
+                {
+                    weeks=days/7;
+                    days=days%7;
+                }
+
+
+                    return days+"d "+hours + "h " + minutes + "m "+seconds+"s ";
+            };
+
+
             scope.subTickets = [];
             scope.relTickets = [];
+            scope.ticketLoggedTime=0;
+            scope.ticketLoggedTimeFormat="";
+            scope.ticketEstimatedTimeFormat="";
+            scope.ticketRemainingTimeFormat="";
+            scope.ticketLoggedPrecentage=0;
+            scope.ticketRemainingPrecentage=0;
+
+            scope.getTicketLoggedTime = function (ticketId) {
+
+                ticketService.PickLoggedTime(ticketId).then(function (response) {
+
+                    if(response.data.IsSuccess)
+                    {
+                        if(response.data.Result.length>0)
+                        {
+                            for(var i=0;i<response.data.Result.length;i++)
+                            {
+                                scope.ticketLoggedTime=scope.ticketLoggedTime+response.data.Result[i].time;
+                                if(i==response.data.Result.length-1)
+                                {
+
+                                    scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
+                                    scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
+                                    scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toHHMMSS();
+                                    scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
+                                    scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toHHMMSS();
+
+                                    console.log("Estimated "+scope.ticketEstimatedTimeFormat);
+                                    console.log("Logged "+scope.ticketLoggedTimeFormat);
+                                    console.log("Remaining "+scope.ticketRemainingTimeFormat);
+
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            console.log("No logged to this ticket");
+                        }
+                    }
+                    else
+                    {
+                        console.log("Error in looged time picking");
+                    }
+
+                }), function (error) {
+                    console.log("Error in looged time picking");
+                }
+
+            }
+
+
+
 
             scope.ticketID = scope.ticketDetails.notificationData._id;
 
+
+            scope.userList = myProfileDataParser.userList;
+            scope.assigneeList = myProfileDataParser.assigneeList;
             scope.userList = profileDataParser.userList;
             scope.assigneeList = profileDataParser.assigneeList;
 
@@ -661,6 +747,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         scope.subTickets = scope.ticket.sub_tickets;
 
                         console.log("ticket ", scope.ticket);
+                        scope.getTicketLoggedTime(ticketID);
                         scope.loadTicketNextLevel();
                     }
                     else {
@@ -673,6 +760,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             }
 
             scope.loadTicketSummary(scope.ticketID);
+
+
 
 
             scope.showSubCreateTicket = false;
@@ -1319,8 +1408,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
             };
-            videogularAPI.
-                scope.playAttachment = function (attachment) {
+            scope.playAttachment = function (attachment) {
 
                 if (videogularAPI && attachment.url) {
                     var info = authService.GetCompanyInfo();
