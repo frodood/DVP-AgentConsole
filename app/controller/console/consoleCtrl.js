@@ -1016,7 +1016,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.goAgentDashboard = function () {
         $scope.isViewDashBoard = !$scope.isViewDashBoard;
-    }
+    };
 
 
     $scope.reserveTicketTab = function (key, obj) {

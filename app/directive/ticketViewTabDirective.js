@@ -1341,6 +1341,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
             /*Audio Player-end*/
+
+
         }
     }
 });
