@@ -84,9 +84,9 @@
 
                         <form class="form-inline navbar-form navbar-left ">
                             <div class="form-group">
-                                <input type="text" class="main-search-input" ng-model="searchText"
-                                       data-min-length="0" data-html="1" data-auto-select="true" ng-change="bindSearchData($index)" ng-keydown="commonSearch($event)"
-                                       bs-options="state.value for state in states" placeholder="Search by keyword, #ticker or #profile" bs-typeahead>
+                                <input id="commonSearch" type="text" class="main-search-input" ng-model="searchText"
+                                       typeahead-min-length="0" typeahead-focus-on-select="false" typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
+                                       uib-typeahead="state.value for state in states" placeholder="Search by keyword, #ticker or #profile">
                             </div>
 
                         </form>
