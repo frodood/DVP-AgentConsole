@@ -2862,3 +2862,11 @@ tags-input .tags .input {
     padding-top: 5px;
 }
 
+
+.banner-text-bg{
+    background-color:#fff;
+    width:150px;
+    height:150px;
+    position: absolute;
+    z-index: 1000;
+}
