@@ -123,9 +123,9 @@
                                 </li>
                                 <li>
                                     <small>Due To</small>
-                                        <div class="bg-checkbox red font-white small-details inline-btn"ng-show="isOverDue">
-                                            Overdue
-                                        </div>
+                                    <div class="bg-checkbox red font-white small-details inline-btn"ng-show="isOverDue">
+                                        Overdue
+                                    </div>
                                     <h5>{{ticket.due_at}}</h5>
                                 </li>
 
@@ -183,95 +183,95 @@
                                         </div>
                                     </div>
 
-                                   <!-- <div class="form-group" ng-show="uploader.queue.length>0">
-                                        <div class="col-md-12 col-sm-12 col-xs-12" ng-if="uploader.isHTML5">
-                                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" ng-show="uploader.queue.length>0">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <!-- <div class="form-group" ng-show="uploader.queue.length>0">
+                                         <div class="col-md-12 col-sm-12 col-xs-12" ng-if="uploader.isHTML5">
+                                             <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                                         </div>
+                                     </div>
+                                     <div class="form-group" ng-show="uploader.queue.length>0">
+                                         <div class="col-md-12 col-sm-12 col-xs-12">
 
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th width="50%">Name</th>
-                                                    <th ng-show="uploader.isHTML5">Size</th>
-                                                    <th ng-show="uploader.isHTML5">Progress</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr ng-repeat="item in uploader.queue">
-                                                    <td><strong>{{ item.file.name }}</strong></td>
-                                                    <td ng-if="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }}
-                                                        MB
-                                                    </td>
-                                                    <td ng-if="uploader.isHTML5">
-                                                        <div class="progress" style="margin-bottom: 0;">
-                                                            <div class="progress-bar" role="progressbar"
-                                                                 ng-style="{ 'width': item.progress + '%' }"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                            <span ng-if="item.isError"><i
-                                                    class="glyphicon glyphicon-remove"></i></span>
-                                                    </td>
-                                                    <td nowrap>
-                                                        <button type="button" class="btn btn-success btn-xs"
-                                                                ng-click="item.upload()"
-                                                                ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                                            <span class="glyphicon glyphicon-upload"></span> Upload
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs"
-                                                                ng-click="item.cancel()"
-                                                                ng-disabled="!item.isUploading">
-                                                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-xs"
-                                                                ng-click="item.remove()">
-                                                            <span class="glyphicon glyphicon-trash"></span> Remove
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                             <table class="table table-bordered">
+                                                 <thead>
+                                                 <tr>
+                                                     <th width="50%">Name</th>
+                                                     <th ng-show="uploader.isHTML5">Size</th>
+                                                     <th ng-show="uploader.isHTML5">Progress</th>
+                                                     <th>Status</th>
+                                                     <th>Actions</th>
+                                                 </tr>
+                                                 </thead>
+                                                 <tbody>
+                                                 <tr ng-repeat="item in uploader.queue">
+                                                     <td><strong>{{ item.file.name }}</strong></td>
+                                                     <td ng-if="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }}
+                                                         MB
+                                                     </td>
+                                                     <td ng-if="uploader.isHTML5">
+                                                         <div class="progress" style="margin-bottom: 0;">
+                                                             <div class="progress-bar" role="progressbar"
+                                                                  ng-style="{ 'width': item.progress + '%' }"></div>
+                                                         </div>
+                                                     </td>
+                                                     <td class="text-center">
+                                                         <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                                         <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                             <span ng-if="item.isError"><i
+                                                     class="glyphicon glyphicon-remove"></i></span>
+                                                     </td>
+                                                     <td nowrap>
+                                                         <button type="button" class="btn btn-success btn-xs"
+                                                                 ng-click="item.upload()"
+                                                                 ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                             <span class="glyphicon glyphicon-upload"></span> Upload
+                                                         </button>
+                                                         <button type="button" class="btn btn-warning btn-xs"
+                                                                 ng-click="item.cancel()"
+                                                                 ng-disabled="!item.isUploading">
+                                                             <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                                         </button>
+                                                         <button type="button" class="btn btn-danger btn-xs"
+                                                                 ng-click="item.remove()">
+                                                             <span class="glyphicon glyphicon-trash"></span> Remove
+                                                         </button>
+                                                     </td>
+                                                 </tr>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                                 </tbody>
+                                             </table>
+                                         </div>
+                                     </div>
 
-                                    <div class="ln_solid" ng-show="uploader.queue.length>0"></div>
-                                    <div class="form-group" ng-show="uploader.queue.length>0">
-                                        <label class="col-md-12 col-sm-12 col-xs-12">Queue progress</label>
+                                     <div class="ln_solid" ng-show="uploader.queue.length>0"></div>
+                                     <div class="form-group" ng-show="uploader.queue.length>0">
+                                         <label class="col-md-12 col-sm-12 col-xs-12">Queue progress</label>
 
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="progress right" style="">
-                                                <div class="progress-bar" role="progressbar"
-                                                     ng-style="{ 'width': uploader.progress + '%' }"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group" ng-show="uploader.queue.length>0">
-                                        <div layout-gt-sm="row">
+                                         <div class="col-md-12 col-sm-12 col-xs-12">
+                                             <div class="progress right" style="">
+                                                 <div class="progress-bar" role="progressbar"
+                                                      ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="form-group" ng-show="uploader.queue.length>0">
+                                         <div layout-gt-sm="row">
 
-                                            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()"
-                                                    ng-disabled="!uploader.getNotUploadedItems().length">
-                                                <span class="glyphicon glyphicon-upload"></span> Upload all
-                                            </button>
+                                             <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()"
+                                                     ng-disabled="!uploader.getNotUploadedItems().length">
+                                                 <span class="glyphicon glyphicon-upload"></span> Upload all
+                                             </button>
 
-                                            <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()"
-                                                    ng-disabled="!uploader.isUploading">
-                                                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                                            </button>
+                                             <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()"
+                                                     ng-disabled="!uploader.isUploading">
+                                                 <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                                             </button>
 
-                                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()"
-                                                    ng-disabled="!uploader.queue.length">
-                                                <span class="glyphicon glyphicon-trash"></span> Remove all
-                                            </button>
-                                        </div>
-                                    </div>-->
+                                             <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()"
+                                                     ng-disabled="!uploader.queue.length">
+                                                 <span class="glyphicon glyphicon-trash"></span> Remove all
+                                             </button>
+                                         </div>
+                                     </div>-->
                                 </form>
                             </div>
 
@@ -565,6 +565,40 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                        </div>
+                        <!-- END -->
+
+                        <!-- WATCHERS -->
+                        <div class="collaborators-wrapper">
+                            <div class="details">
+                                <h5 class="bold"> WATCHERS
+                                    <!--<div class="pull-right right-icon">-->
+                                    <!--<i class="main-icon-2-add"> </i>-->
+                                    <!--</div>-->
+                                </h5>
+                            </div>
+
+                            <div class="sub-task">
+                                <div class="pull-left  ">
+                                    <div class="pull-left commenter-img">
+
+                                        <div ng-if="ticket.watchers.length==1" ><div ng-if="ticket.watchers.length==1"  class="bg-checkbox gray300  font-white small-details inline-btn">{{ticket.watchers.length}}</div> user is watching this</div>
+                                        <div ng-if="ticket.watchers.length==1 && isWatching" >You are watching this</div>
+                                        <div ng-if="ticket.watchers.length>1"><div class="bg-checkbox gray300  font-white small-details inline-btn">{{ticket.watchers.length}}</div> users are watching this</div>
+                                        <div ng-if="ticket.watchers.length==0">No users watching this</div>
+
+
+                                    </div>
+                                </div>
+                                <div class="pull-right ">
+                                    <a  ng-if="isWatching" href="javascript:void(0);" ng-click="stopWatchTicket()">Stop watching this issue</a>
+                                    <a  ng-if="!isWatching" href="javascript:void(0);" ng-click="watchTicket()">Start watching this issue</a>
+                                </div>
+
+                            </div>
+
 
 
                         </div>
