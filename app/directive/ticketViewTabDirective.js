@@ -1406,12 +1406,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         var attachmentItem = $filter('filter')(scope.uploadedAttchments, {
                             _id: attchmntID
 
-                        });
+                        })[0];
 
-                        scope.uploadedAttchments.splice($filter('filter')(scope.uploadedAttchments, {
+                        scope.uploadedAttchments.splice(scope.uploadedAttchments.indexOf($filter('filter')(scope.uploadedAttchments, {
                             _id: attchmntID
 
-                        }), 1);
+                        })[0]), 1);
                     }
                 }), function (error) {
                     console.log(error);

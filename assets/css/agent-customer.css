@@ -2793,8 +2793,6 @@ tags-input .tags .input {
     opacity: 0.9;
 }
 
-
-
 .btn-tab-close:hover {
     color: #d90000;
 }
@@ -2823,6 +2821,7 @@ tags-input .tags .input {
     width: 100px;
     height: 100px;
 }
+
 .model-player-wrapper {
     height: 20px;
     width: 300px;
@@ -2836,6 +2835,7 @@ tags-input .tags .input {
 .position-center {
     position: center;
 }
+
 .player-operation-wrapper {
     width: 260px;
     height: 50px;
@@ -2860,5 +2860,20 @@ tags-input .tags .input {
     overflow: hidden;
     text-align: center;
     padding-top: 5px;
+}
+
+.activity-divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
+.ticket-comment-wrapper > .activity-divider {
+    height: 1px;
+    width: 100%;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: rgba(223, 255, 252, 0.29);
 }
 

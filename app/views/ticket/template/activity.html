@@ -1,18 +1,67 @@
-<div class="row">
+<!--<div class="row">
     <div class="ticket-comment-wrapper">
         <div class="col-lg-12" style="padding-left: 40px; padding-right: 40px;">
-            <div class="row">
-                <div class="pull-left commenter-img">
-                    <small class="bold "> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
-                </div>
-                <div class="pull-right">
-                    <small>06/Sep/16 11:01 AM</small>
+            <div ng-repeat="event in ticket.events">
+                <div class="row" >
+                    <div class="pull-left commenter-img">
+                        <small class="bold "> {{event.body.message}}</small>
+                    </div>
+                    <div class="pull-right">
+                        <small>{{event.body.time| date:'yyyy-MM-dd HH:mm:ss'}}</small>
+                    </div>
+                    <div class="activity-divider"></div>
+
                 </div>
             </div>
+
 
 
 
         </div>
 
     </div>
+</div>-->
+
+
+<div class="row" ng-repeat="event in ticket.events">
+    <div class="ticket-comment-wrapper">
+        <div class="col-lg-12" style="padding-left: 40px; padding-right: 40px;">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="pull-left commenter-img">
+
+                        <h4 class="bold color-green500">{{event.author}}</h4>
+
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="pull-left commenter-img">
+
+                        <h5> {{event.type}}</h5>
+
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="pull-right">
+                        <small>
+                            {{ event.create_at| date:'yyyy-MM-dd HH:mm:ss' }}
+                        </small>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                {{event.body.message}}
+            </div>
+
+
+        </div>
+        <div class="activity-divider"></div>
+    </div>
+
+
 </div>
