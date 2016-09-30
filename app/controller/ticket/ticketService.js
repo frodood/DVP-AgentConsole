@@ -89,6 +89,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     // .........................  get My tickets with status .................................
 
+    var getMyRecentTickets= function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"RecentTickets",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response.data.Result;
+        });
+    };
+
     var getMyNewTickets= function (page) {
         var authToken = authService.GetToken();
 
@@ -756,6 +771,39 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
 
     };
+    var PickUserLoggedTime = function (ticketId,userId) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId+"/User/"+userId,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            console.log("Time response "+JSON.stringify(response));
+            if(response.data.IsSuccess)
+            {
+                var loggedTime=0;
+                for(var i=0;i<response.data.Result.length;i++)
+                {
+                    loggedTime=loggedTime+response.data.Result[i].time;
+                    if(i==response.data.Result.length-1)
+                    {
+                        console.log("user logged "+loggedTime);
+                        return loggedTime;
+                    }
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        });
+
+    };
 
 
     return {
@@ -765,6 +813,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getNewTickets:getNewTickets,
         getOpenTickets:getOpenTickets,
         getClosedTickets:getClosedTickets,
+        GetMyRecentTickets:getMyRecentTickets,
         getMyNewTickets:getMyNewTickets,
         getMyOpenTickets:getMyOpenTickets,
         getMyClosedTickets:getMyClosedTickets,
@@ -794,7 +843,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetExternalUserRecentTickets:getExternalUserRecentTickets,
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
-        getFormSubmissionByRef: getFormSubmissionByRef,
         PickTicket:pickTicket,
         searchTicket: searchTicket,
         searchTicketByField: searchTicketByField,
@@ -804,12 +852,11 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         searchTicketByStatus: searchTicketByStatus,
         searchTicketByRequester: searchTicketByRequester,
         AddNewAttachmentToTicket: AddNewAttachmentToTicket,
-        searchTicket: searchTicket,
         RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
-        PickTicket:pickTicket,
-        searchTicket: searchTicket,
-        PickLoggedTime:PickLoggedTime
+        PickLoggedTime:PickLoggedTime,
+        PickUserLoggedTime:PickUserLoggedTime
+
     }
 });
 

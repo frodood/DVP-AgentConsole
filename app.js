@@ -24,7 +24,9 @@ var baseUrls = {
     'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
-    'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/'
+    'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'resourceService': 'http://localhost:8832/DVP/API/1.0.0.0/ResourceManager/',
+    'dashBordUrl': 'http://dashboard.app.veery.cloud/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

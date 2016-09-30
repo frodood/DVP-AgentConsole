@@ -311,7 +311,7 @@
                                                                     href="javascript:void(0);"> meal</a>
                             </li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a ng-click="goAgentDashboard();"
+                            <li class="menuitem" role="menuitem"><a ng-click="addDashBoard();"
                                                                     href="javascript:void(0)">Dashboard</a></li>
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
@@ -472,10 +472,9 @@
                     <uib-tab class="console-main-tab" ng-repeat="tab in tabs" select="tabSelected(tab.tabReference)">
                         <uib-tab-heading>
                             <div class="pull-left">{{tab.title}}
-                                <button data-ng-click='closeTab(tab.title)' class='btn btn-tab-close'>
-                                    <span class='ti-close'></span></button>
+                                <a data-ng-click='closeTab(tab.title)' class='btn btn-tab-close' href="javascript:">
+                                    <span class='ti-close'></span></a>
                             </div>
-
                         </uib-tab-heading>
 
                         <div ng-switch on="tab.viewType">

@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, myProfileDataParser, userService, uuid4, FileUploader, baseUrls, fileService) {
+agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, profileDataParser, userService, uuid4, FileUploader, baseUrls, fileService) {
     return {
         restrict: "EA",
         scope: {
@@ -569,32 +569,35 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
             String.prototype.toHHMMSS = function () {
-                var hours = Math.floor(this / 36e5),
-                    minutes = Math.floor((this % 36e5) / 6e4),
-                    seconds = Math.floor((this % 6e4) / 1000);
 
-                hours = (hours < 10) ? "0" + hours : hours;
-                minutes = (minutes < 10) ? "0" + minutes : minutes;
-                seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-                var days=0;
-                var weeks=0;
-
-                var returnFormat;
-
-                if(hours>24)
+                if(this)
                 {
-                    days=hours/24;
-                    hours=hours%24;
-                }
-                if(days>7)
-                {
-                    weeks=days/7;
-                    days=days%7;
-                }
+                    var hours = Math.floor(this / 36e5),
+                        minutes = Math.floor((this % 36e5) / 6e4),
+                        seconds = Math.floor((this % 6e4) / 1000);
+
+                    hours = (hours < 10) ? "0" + hours : hours;
+                    minutes = (minutes < 10) ? "0" + minutes : minutes;
+                    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+                    var days=0;
+
+
+                    if(hours>24)
+                    {
+                        days=hours/24;
+                        hours=hours%24;
+                    }
 
 
                     return days+"d "+hours + "h " + minutes + "m "+seconds+"s ";
+                }
+                else
+                {
+                    return "0d 00h 00m 00s";
+                }
+
+
             };
 
 
@@ -620,16 +623,20 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 scope.ticketLoggedTime=scope.ticketLoggedTime+response.data.Result[i].time;
                                 if(i==response.data.Result.length-1)
                                 {
+                                    if(scope.ticket.time_estimation && parseInt(scope.ticket.time_estimation)!=0)
+                                    {
+                                        scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
+                                        scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
+                                        scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toHHMMSS();
+                                        scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
+                                        scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toHHMMSS();
 
-                                    scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
-                                    scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
-                                    scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toHHMMSS();
-                                    scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
-                                    scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toHHMMSS();
+                                        console.log("Estimated "+scope.ticketEstimatedTimeFormat);
+                                        console.log("Logged "+scope.ticketLoggedTimeFormat);
+                                        console.log("Remaining "+scope.ticketRemainingTimeFormat);
+                                    }
 
-                                    console.log("Estimated "+scope.ticketEstimatedTimeFormat);
-                                    console.log("Logged "+scope.ticketLoggedTimeFormat);
-                                    console.log("Remaining "+scope.ticketRemainingTimeFormat);
+
 
                                 }
                             }
@@ -659,6 +666,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.userList = myProfileDataParser.userList;
             scope.assigneeList = myProfileDataParser.assigneeList;
+            scope.userList = profileDataParser.userList;
+            scope.assigneeList = profileDataParser.assigneeList;
 
             scope.loadTicketNextLevel = function () {
                 ticketService.getTicketNextLevel(scope.ticket.type, scope.ticket.status).then(function (response) {
@@ -744,6 +753,19 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         console.log("ticket ", scope.ticket);
                         scope.getTicketLoggedTime(ticketID);
                         scope.loadTicketNextLevel();
+
+
+                        for(var j=0;j<scope.ticket.collaborators.length;j++)
+                        {
+                            ticketService.PickUserLoggedTime(scope.ticket._id,scope.ticket.collaborators[j]._id).then(function (response) {
+                                console.log("Hit "+response);
+                                
+
+                            });
+
+                        }
+
+
                     }
                     else {
                         console.log("Error in picking ticket");
@@ -938,7 +960,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
                     if (response.data.IsSuccess) {
-                        response.data.Result.author = myProfileDataParser.myProfile;
+                        response.data.Result.author = profileDataParser.myProfile;
                         scope.ticket.comments.push(response.data.Result);
                         console.log("New comment added ", response);
                         scope.showAlert("New Comment", "success", "completed");
@@ -1015,11 +1037,28 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             };
 
+            scope.setAssigneeAsMe = function () {
+
+                ticketService.AssignUserToTicket(scope.ticket._id, myProfileDataParser.myProfile._id).then(function (response) {
+                    if (response && response.data.IsSuccess) {
+                        scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
+                        scope.ticket.assignee = myProfileDataParser.myProfile;
+
+                        scope.isEditAssignee = false;
+                    }
+                    else {
+                        scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                    }
+                }, function (error) {
+                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                });
+            }
+
             scope.assignToMe = function (id) {
                 ticketService.PickTicket(id).then(function (response) {
                     if (response) {
                         scope.showAlert("Ticket assigning", "success", "Successfully assign.");
-                        scope.ticket.assignee = myProfileDataParser.myProfile;
+                        scope.ticket.assignee = profileDataParser.myProfile;
                     }
                     else {
                         scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
