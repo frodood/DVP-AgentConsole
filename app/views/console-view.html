@@ -472,10 +472,9 @@
                     <uib-tab class="console-main-tab" ng-repeat="tab in tabs" select="tabSelected(tab.tabReference)">
                         <uib-tab-heading>
                             <div class="pull-left">{{tab.title}}
-                                <button data-ng-click='closeTab(tab.title)' class='btn btn-tab-close'>
-                                    <span class='ti-close'></span></button>
+                                <a data-ng-click='closeTab(tab.title)' class='btn btn-tab-close' href="javascript:">
+                                    <span class='ti-close'></span></a>
                             </div>
-
                         </uib-tab-heading>
 
                         <div ng-switch on="tab.viewType">
