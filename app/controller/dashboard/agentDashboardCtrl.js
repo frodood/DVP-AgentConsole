@@ -2,7 +2,7 @@
  * Created by team verry on 9/23/2016.
  */
 
-agentApp.controller('agentDashboardCtrl', function ($scope,$rootScope, $http, dashboradService,ticketService,engagementService,profileDataParser, authService) {
+agentApp.controller('agentDashboardCtrl', function ($scope,$rootScope, $http,$timeout, dashboradService,ticketService,engagementService,profileDataParser, authService) {
 
     $scope.showAlert = function (tittle, type, msg) {
         new PNotify({
@@ -32,6 +32,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope,$rootScope, $http, da
     var loadProductivity = function (id) {
         dashboradService.ProductivityByResourceId(id).then(function (response) {
             if (response) {
+                $scope.pieDataset = [];
                 $scope.productivity = response;
                 $scope.pieDataset.push({
                     label: 'Acw',
@@ -56,6 +57,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope,$rootScope, $http, da
 
                 $scope.productivity.OnCallTime=response.OnCallTime.toString().toHHMMSS();
                 $scope.productivity.StaffedTime=response.StaffedTime.toString().toHHMMSS();
+                $scope.productivity.BreakTime=response.BreakTime.toString().toHHMMSS();
             } else {
                 $scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
             }
@@ -111,7 +113,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope,$rootScope, $http, da
         series: {
             lines: {show: true, fill: false, color: "#114858"},
             points: {show: true},
-            shadowSize: 0, color: "#db4114"
+            /*shadowSize: 0, color: "#db4114"*/
         },
         color: {color: '#63a5a2'},
         legend: {
@@ -128,7 +130,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope,$rootScope, $http, da
                 return moment.unix(val).format("DD-MMM"); //moment.unix(val).date();
             }
         }
+
     };
+
 
 
     var GetCreatedicketSeries = function () {
@@ -259,14 +263,69 @@ agentApp.controller('agentDashboardCtrl', function ($scope,$rootScope, $http, da
                 show: true,
                 stroke: {color: '#15315a'},
                 background: {color: '#1c3ffd'},
+                combine: {
+                    color: '#761602',
+                    threshold: 0.1
+                }
+            }
+        },
+        legend: {
+            show: false
+        },
+        grid: {
+            hoverable: true,
+            clickable: true
+        }
+    };
+
+    /*$scope.pieOptions = {
+        series: {
+            pie: {
+                innerRadius: 0.5,
+                show: true,
+                stroke: {color: '#15315a'},
+                background: {color: '#1c3ffd'},
             }
         },
         legend: {
             show: false
         }
+    };*/
+
+    var loadGrapData = function(){
+        GetDeferenceResolvedTicketSeries();
+        GetResolvedTicketSeries();
+        GetCreatedicketSeries();
+        loadProductivity(authService.GetResourceId());
+    };
+    var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime*36000);
+
+    var loadRecentData = function(){
+        GetMyRecentEngagements();
+        GetMyRecentTickets();GetOpenTicketCount();
+        GetResolveTicketCount();
+        loadProductivity(authService.GetResourceId());
+    };
+    var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime*300);
+
+    var getAllRealTime = function () {
+        GetQueueDetails();
+        getAllRealTimeTimer = $timeout(getAllRealTime, $scope.refreshTime);
     };
 
+    var getAllRealTimeTimer = $timeout(getAllRealTime, $scope.refreshTime);
 
-
+    $scope.$on("$destroy", function () {
+        if (getAllRealTimeTimer) {
+            $timeout.cancel(getAllRealTimeTimer);
+        }
+        if (loadRecentDataTimer) {
+            $timeout.cancel(loadRecentDataTimer);
+        }
+        if (loadGrapDataTimer) {
+            $timeout.cancel(loadGrapDataTimer);
+        }
+    });
+    $scope.refreshTime = 1000;
 });
 
