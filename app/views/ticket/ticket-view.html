@@ -181,6 +181,10 @@
                                                 drop zone
                                             </div>
                                         </div>
+                                        <div class=" time-wrapper">
+                                            <uib-progressbar value="uploadProgress" type="warning">
+                                            </uib-progressbar>
+                                        </div>
                                     </div>
 
                                     <!-- <div class="form-group" ng-show="uploader.queue.length>0">
@@ -278,18 +282,61 @@
 
                             <div class="ticket-upload-view">
                                 <div class="row">
-                                    <div class="col-sm-3" ng-repeat="attchment in uploadedAttchments">
+                                    <!--<div class="col-sm-3" ng-repeat="attchment in uploadedAttchments">
 
 
-                                        <div class="attachment-img">
+                                    <div class="attachment-img">
+                                        <div class="image view view-first">
+
+                                            <img style="width: 100%; display: block;"
+                                                 src="{{attchment.url}}"
+                                                 on-error-src="asset/images/noimage.jpg" alt="image"/>
+
+                                            <div class="mask">
+                                                <p>{{attchment.file| limitTo:20}}</p>
+
+                                                <div class="tools tools-bottom">
+                                                    <a href="javascript:void(0);"><i class="fa fa-play"
+                                                                                     ng-click="playAttachment(attchment)"></i></a>
+                                                    <a href="javascript:void(0);"><i class="fa fa-cloud-download"
+                                                                                     ng-click="downloadAttachment(attchment)"></i></a>
+                                                    <a href="javascript:void(0);"><i class="fa fa-times"
+                                                                                     ng-click="deleteAttachment(attchment._id)"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="caption">
+                                            <p>{{file.DisplayName}}</p>
+
+                                            &lt;!&ndash;<p>{{file.FileCategory.Category}}</p>&ndash;&gt;
+
+                                            <p ng-hide="showDeleteSelection">{{file.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
+
+                                            <input ng-show="showDeleteSelection" type="checkbox" class="flat"
+                                                   ng-model="file.delete"
+                                                   ng-change="addToDelete(file)">
+
+                                        </div>
+                                    </div>
+
+                                    &lt;!&ndash;<div class="attachment-img">
+                                        <img src="assets/img/avatar/defaultProfile.png" ng-src={{attchment.url}}>
+                                    </div>
+                                    <small>image.png</small>&ndash;&gt;
+                                </div>-->
+
+                                    <div  ng-repeat="attchment in uploadedAttchments" class="col-sm-3">
+                                        <div class="thumbnail">
                                             <div class="image view view-first">
 
                                                 <img style="width: 100%; display: block;"
-                                                     src="{{attchment.url}}"
-                                                     on-error-src="asset/images/noimage.jpg" alt="image"/>
+                                                     ng-src="{{attchment.url}}"
+                                                     on-error-src="assets/img/noimage.jpg" ng-if="isImage(attchment.type)"/>
+                                                <img style="width: 100%; display: block;"
+                                                     src="assets/img/noimage.jpg" ng-if="!isImage(attchment.type)"/>
 
                                                 <div class="mask">
-                                                    <p>{{attchment.file| limitTo:20}}</p>
+                                                    <p>{{attchment.file| limitTo:10}}</p>
 
                                                     <div class="tools tools-bottom">
                                                         <a href="javascript:void(0);"><i class="fa fa-play"
@@ -301,24 +348,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="caption">
-                                                <p>{{file.DisplayName}}</p>
 
-                                                <!--<p>{{file.FileCategory.Category}}</p>-->
-
-                                                <p ng-hide="showDeleteSelection">{{file.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
-
-                                                <input ng-show="showDeleteSelection" type="checkbox" class="flat"
-                                                       ng-model="file.delete"
-                                                       ng-change="addToDelete(file)">
-
-                                            </div>
                                         </div>
-
-                                        <!--<div class="attachment-img">
-                                            <img src="assets/img/avatar/defaultProfile.png" ng-src={{attchment.url}}>
-                                        </div>
-                                        <small>image.png</small>-->
                                     </div>
 
                                 </div>

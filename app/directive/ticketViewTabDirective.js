@@ -1322,7 +1322,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.file = {};
             scope.file.Category = "TICKET_ATTACHMENTS";
-
+            scope.uploadProgress=0;
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                 console.info('onWhenAddingFileFailed', item, filter, options);
             };
@@ -1349,6 +1349,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             uploader.onProgressItem = function (fileItem, progress) {
                 console.info('onProgressItem', fileItem, progress);
+                scope.uploadProgress=progress;
+                if( scope.uploadProgress==100)
+                {
+                    scope.showAlert("Attachment","success","Successfully uploaded");
+                    setTimeout(function () {
+                        scope.uploadProgress=0;
+                    }, 500);
+
+                }
             };
             uploader.onProgressAll = function (progress) {
                 console.info('onProgressAll', progress);
@@ -1358,6 +1367,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {
                 console.info('onErrorItem', fileItem, response, status, headers);
+                scope.showAlert("Attachment","error","Uploading failed");
+                scope.uploadProgress=0;
             };
             uploader.onCancelItem = function (fileItem, response, status, headers) {
                 console.info('onCancelItem', fileItem, response, status, headers);
@@ -1368,7 +1379,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     var attchmentData =
                     {
                         file: fileItem._file.name,
-                        url: baseUrls.fileService + "/InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
+                        url: baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
                         type: fileItem._file.type,
                         size: fileItem._file.size
                     }
@@ -1540,6 +1551,20 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }), function (error) {
                     scope.showAlert("Error","success","Failed to stop watching this ticket");
                 }
+            };
+
+            scope.isImage = function (fileType) {
+
+                if(fileType.toString().split("/")[0]=="image")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
             };
 
             /*Audio Player-end*/
