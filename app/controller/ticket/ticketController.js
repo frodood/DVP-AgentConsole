@@ -2,7 +2,7 @@
  * Created by Veery Team on 8/19/2016.
  */
 
-agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,myProfileDataParser) {
+agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,profileDataParser) {
 
     $scope.ticketList = {
         toDo: [],
@@ -15,6 +15,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     };
 
 
+    String.prototype.toHH = function () {
+
+
+    }
     $scope.userList=[];
     $scope.userGroupList=[];
     $scope.isDefault=true;
@@ -42,7 +46,6 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickAllGroups= function () {
         userService.getUserGroupList().then(function (response) {
             $scope.userGroupList=response.data.Result;
-            console.log("USER Groups ",$scope.userGroupList);
             $scope.ticketList.loadCompleted =true;
             pickToDoList(1);
             pickProcessingTickets(1);
@@ -61,7 +64,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                 });
 
                 $scope.assigneeList = $scope.userGroupList.concat($scope.assigneeList);
-                myProfileDataParser.assigneeList = $scope.assigneeList;
+                profileDataParser.assigneeList = $scope.assigneeList;
             }
 
         }), function (error) {
@@ -73,8 +76,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
         $scope.assigneeList = [];
         userService.getUserList().then(function (response) {
             $scope.userList=response.data.Result;
-            console.log("USERS ",$scope.userList);
-            myProfileDataParser.userList=$scope.userList;
+            profileDataParser.userList=$scope.userList;
 
             if($scope.users) {
                 for (var i = 0; i < $scope.users.length; i++) {
@@ -89,7 +91,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                 });
 
                 $scope.assigneeList = $scope.users;
-                myProfileDataParser.assigneeList = $scope.assigneeList;
+                profileDataParser.assigneeList = $scope.assigneeList;
             }
 
             pickAllGroups();
@@ -102,9 +104,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 // ................. All Tickets ..............................
     var pickToDoList = function (page) {
-        console.log("hit To DO");
+
         ticketService.getNewTickets(page).then(function (response) {
-            console.log("All new tickets ",response.data.Result);
+
 
             if(response.data.IsSuccess)
             {
@@ -153,7 +155,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                         {
 
                             $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                            console.log("All new tickets ",$scope.ticketList.toDo);
+
 
                         }
                     }
@@ -184,7 +186,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickProcessingTickets = function (page) {
         ticketService.getOpenTickets(page).then(function (response) {
-            console.log("All open tickets ",response.data.Result);
+
             if(response.data.IsSuccess) {
                 if(response.data.Result.length==0)
                 {
@@ -202,7 +204,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.inProgress = $scope.ticketList.inProgress.concat(response.data.Result);
-                            console.log("All Processing tickets ",$scope.ticketList.inProgress);
+
                         }
                     }
                 }
@@ -232,7 +234,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickCompletedTickets = function (page) {
         ticketService.getClosedTickets(page).then(function (response) {
-            console.log("All Completed tickets ",response.data.Result);
+
 
             if(response.data.IsSuccess) {
 
@@ -284,7 +286,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickMyToDoList = function (page) {
 
         ticketService.getMyNewTickets(page).then(function (response) {
-            console.log("My new Tickets",response.data.Result);
+
 
             if(response.data.IsSuccess)
             {
@@ -354,29 +356,6 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                         }
 
-                        /*if(response.data.Result[i].assignee)
-                         {
-
-                         var assigneeData = $filter('filter')( $scope.userList, {
-                         _id: response.data.Result[i].assignee
-
-                         });
-
-                         response.data.Result[i].assignee_name=assigneeData[0].name;
-                         }
-
-                         if(response.data.Result[i].assignee_group)
-                         {
-
-                         var assigneeGroupData = $filter('filter')( $scope.userGroupList, {
-                         _id: response.data.Result[i].assignee_group
-
-                         });
-
-
-                         response.data.Result[i].assignee_group_name=assigneeGroupData[0].name;
-                         }*/
-
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.inProgress = $scope.ticketList.inProgress.concat(response.data.Result);
@@ -409,7 +388,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickMyCompletedTickets = function (page) {
         ticketService.getMyClosedTickets(page).then(function (response) {
-            console.log("My completed tickets",response.data.Result);
+
 
             if(response.data.IsSuccess) {
                 if(response.data.Result.length==0)
@@ -425,28 +404,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                         }
-                        //response.data.Result[i].subject=response.data.Result[i].subject+" : "+i;
-                        /*if (response.data.Result[i].assignee) {
 
-                         var assigneeData = $filter('filter')($scope.userList, {
-                         _id: response.data.Result[i].assignee
-
-                         });
-
-                         response.data.Result[i].assignee_name = assigneeData[0].name;
-                         }
-
-                         if (response.data.Result[i].assignee_group) {
-
-                         var assigneeGroupData = $filter('filter')($scope.userGroupList, {
-                         _id: response.data.Result[i].assignee_group
-
-                         });
-
-
-                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
-                         }
-                         */
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.done = $scope.ticketList.done.concat(response.data.Result);
                         }
@@ -478,7 +436,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
     var pickGroupToDoList = function (page) {
 
         ticketService.getMyGroupTickets(page).then(function (response) {
-            console.log("New Group Tickets ",response.data.Result);
+
 
             if(response.data.IsSuccess) {
                 if(response.data.Result.length==0)
@@ -527,7 +485,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickGroupProcessingTickets = function (page) {
         ticketService.getMyGroupOpenTickets(page).then(function (response) {
-            console.log("Group Open tickets",response.data.Result);
+
 
             if(response.data.IsSuccess) {
                 if(response.data.Result.length==0)
@@ -544,26 +502,6 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                         }
 
-                        /* if (response.data.Result[i].assignee) {
-
-                         var assigneeData = $filter('filter')($scope.userList, {
-                         _id: response.data.Result[i].assignee
-
-                         });
-
-                         response.data.Result[i].assignee_name = assigneeData[0].name;
-                         }
-
-                         if (response.data.Result[i].assignee_group) {
-
-                         var assigneeGroupData = $filter('filter')($scope.userGroupList, {
-                         _id: response.data.Result[i].assignee_group
-
-                         });
-
-
-                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
-                         }*/
 
 
                         if (i == response.data.Result.length - 1) {
@@ -596,7 +534,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     var pickGroupCompletedTickets = function (page) {
         ticketService.getMyGroupClosedTickets(page).then(function (response) {
-            console.log("Group closed tickets",response.data.Result);
+
 
             if(response.data.IsSuccess) {
                 if(response.data.Result.length==0)
@@ -612,27 +550,6 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                         }
-                        //response.data.Result[i].subject=response.data.Result[i].subject+" : "+i;
-                        /*if (response.data.Result[i].assignee) {
-
-                         var assigneeData = $filter('filter')($scope.userList, {
-                         _id: response.data.Result[i].assignee
-
-                         });
-
-                         response.data.Result[i].assignee_name = assigneeData[0].name;
-                         }
-
-                         if (response.data.Result[i].assignee_group) {
-
-                         var assigneeGroupData = $filter('filter')($scope.userGroupList, {
-                         _id: response.data.Result[i].assignee_group
-
-                         });
-
-
-                         response.data.Result[i].assignee_group_name = assigneeGroupData[0].name;
-                         }*/
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.done = $scope.ticketList.done.contact(response.data.Result);
@@ -724,25 +641,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isNewTicketLoadComplete)
             {
                 $scope.NewTicketPage=$scope.NewTicketPage+1;
-                /*ticketService.getNewTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickToDoList($scope.NewTicketPage);
 
             }
@@ -753,25 +652,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isNewTicketLoadComplete)
             {
                 $scope.NewTicketPage=$scope.NewTicketPage+1;
-                /*ticketService.getMyNewTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isMyNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickMyToDoList($scope.NewTicketPage);
             }
         }
@@ -780,25 +661,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isNewTicketLoadComplete)
             {
                 $scope.NewTicketPage=$scope.NewTicketPage+1;
-                /*ticketService.getMyGroupTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isMyNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickGroupToDoList($scope.NewTicketPage);
             }
         }
@@ -811,25 +674,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isOpenTicketLoadComplete)
             {
                 $scope.OpenTicketPage=$scope.OpenTicketPage+1;
-                /*ticketService.getNewTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickProcessingTickets($scope.OpenTicketPage);
 
             }
@@ -840,25 +685,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isOpenTicketLoadComplete)
             {
                 $scope.OpenTicketPage=$scope.OpenTicketPage+1;
-                /*ticketService.getMyNewTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isMyNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickMyProcessingTickets($scope.OpenTicketPage);
             }
         }
@@ -867,25 +694,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isOpenTicketLoadComplete)
             {
                 $scope.OpenTicketPage=$scope.OpenTicketPage+1;
-                /*ticketService.getMyGroupTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isMyNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickGroupCompletedTickets($scope.OpenTicketPage);
             }
         }
@@ -898,25 +707,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isCompletedTicketLoadComplete)
             {
                 $scope.CompletedTicketPage=$scope.CompletedTicketPage+1;
-                /*ticketService.getNewTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickCompletedTickets($scope.CompletedTicketPage);
 
             }
@@ -927,25 +718,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isCompletedTicketLoadComplete)
             {
                 $scope.CompletedTicketPage=$scope.CompletedTicketPage+1;
-                /*ticketService.getMyNewTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isMyNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickMyCompletedTickets($scope.CompletedTicketPage);
             }
         }
@@ -954,25 +727,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
             if(!$scope.isCompletedTicketLoadComplete)
             {
                 $scope.CompletedTicketPage=$scope.CompletedTicketPage+1;
-                /*ticketService.getMyGroupTickets($scope.NewTicketPage).then(function (response) {
 
-                 if(response.data.IsSuccess )
-                 {
-                 if(response.data.Result.length==0)
-                 {
-                 $scope.isMyNewTicketLoadComplete=true;
-                 }
-                 else
-                 {
-                 $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
-                 }
-
-                 }
-
-
-                 }), function (error) {
-                 console.log("new ticket error");
-                 }*/
                 pickGroupCompletedTickets($scope.CompletedTicketPage);
             }
         }
@@ -1024,31 +779,6 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
     };
 
-
-
-    /*var getMyProfile = function () {
-
-
-        userService.getMyProfileDetails().then(function (response) {
-
-            if(response.data.IsSuccess)
-            {
-                myProfileDataParser.myProfile=response.data.Result;
-            }
-            else
-            {
-                myProfileDataParser.myProfile={};
-            }
-        }), function (error) {
-            myProfileDataParser.myProfile={};
-        }
-
-
-
-    };
-
-    getMyProfile();
-*/
 
 
 

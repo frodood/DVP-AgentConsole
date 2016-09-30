@@ -95,12 +95,31 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         });
     };
 
+    var createEngagementSession = function (userId, engagementSession) {
+
+        return $http({
+            method: 'post',
+            data: engagementSession,
+            url: baseUrls.engagementUrl+"Engagement/"+userId+"/EngagementSession",
+            headers: {
+                'authorization':authService.GetToken()
+            }
+        }).then(function (response) {
+            if (response.data) {
+                return response.data;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
     return {
         GetEngagementIdsByProfile: getEngagementIdsByProfile,
         GetEngagementSession:getEngagementSession,
         GetEngagementSessions:getEngagementSessions,
         GetEngagementSessionNote:getEngagementSessionNote,
-        AppendNoteToEngagementSession:appendNoteToEngagementSession
+        AppendNoteToEngagementSession:appendNoteToEngagementSession,
+        createEngagementSession: createEngagementSession
     }
 });
 

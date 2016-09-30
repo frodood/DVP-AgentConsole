@@ -64,7 +64,7 @@
         //logoff
         function Logoff(callback) {
             var decodeToken = getTokenDecode();
-            $http.delete(baseUrls.oauthLogOutUrl + decodeToken.jti, {
+            $http.delete(baseUrls.authUrl+'/revoke/' + decodeToken.jti, {
                 headers: {
                     Authorization: 'Bearer ' + getToken()
                 }
@@ -83,11 +83,11 @@
         //http://userservice.app.veery.cloud
         //http://192.168.5.103:3636
         function Login(parm, callback) {
-            $http.post(baseUrls.oauthLoginUrl, {
+            $http.post(baseUrls.authUrl, {
                 grant_type: "password",
                 username: parm.userName,
                 password: parm.password,
-                scope: "all_all profile_veeryaccount write_ardsresource write_notification read_myUserProfile profile_veeryaccount resourceid"
+                scope: "all_all profile_veeryaccount write_ardsresource write_notification read_myUserProfile read_productivity profile_veeryaccount resourceid"
             }, {
                 headers: {
                     Authorization: 'Basic ' + parm.clientID

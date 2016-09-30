@@ -84,11 +84,9 @@
 
                         <form class="form-inline navbar-form navbar-left ">
                             <div class="form-group">
-                                <input type="text" class="main-search-input" ng-model="selectedState"
-                                       data-min-length="0" data-html="2" data-auto-select="true"
-                                       bs-options="state for state in states"
-                                       placeholder="Search by keyword, #ticker or #profile"
-                                       bs-typeahead>
+                                <input id="commonSearch" type="text" class="main-search-input" ng-model="searchText"
+                                       typeahead-min-length="0" typeahead-focus-on-select="false" typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
+                                       uib-typeahead="state.value for state in states" placeholder="Search by keyword, #ticker or #profile">
                             </div>
 
                         </form>
@@ -313,7 +311,7 @@
                                                                     href="javascript:void(0);"> meal</a>
                             </li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a ng-click="goAgentDashboard();"
+                            <li class="menuitem" role="menuitem"><a ng-click="addDashBoard();"
                                                                     href="javascript:void(0)">Dashboard</a></li>
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
@@ -474,10 +472,9 @@
                     <uib-tab class="console-main-tab" ng-repeat="tab in tabs" select="tabSelected(tab.tabReference)">
                         <uib-tab-heading>
                             <div class="pull-left">{{tab.title}}
-                                <button data-ng-click='closeTab(tab.title)' class='btn btn-tab-close'>
-                                    <span class='ti-close'></span></button>
+                                <a data-ng-click='closeTab(tab.title)' class='btn btn-tab-close' href="javascript:">
+                                    <span class='ti-close'></span></a>
                             </div>
-
                         </uib-tab-heading>
 
                         <div ng-switch on="tab.viewType">
@@ -491,7 +488,8 @@
                                                 channel="{{tab.notificationData.channel}}"
                                                 channel-from="{{tab.notificationData.channelFrom}}"
                                                 channel-to="{{tab.notificationData.channelTo}}"
-                                                direction="{{tab.notificationData.direction}}">
+                                                direction="{{tab.notificationData.direction}}"
+                                                user-profile="tab.notificationData.userProfile">
 
                                 </engagement-tab>
                             </div>
@@ -512,17 +510,7 @@
                                 <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
                             </div>
                             <!--<div ng-switch-when="userProfile">
-                                <engagement-tab-update load-tags="reloadTagAndCategories()"
-                                                       tag-category-list="tagCategories"
-                                                       tag-list="tags" users="users"
-                                                       session-id="{{tab.notificationData.sessionId}}"
-                                                       skill="{{tab.notificationData.skill}}"
-                                                       company="{{tab.notificationData.company}}"
-                                                       channel="{{tab.notificationData.channel}}"
-                                                       channel-from="{{tab.notificationData.channelFrom}}"
-                                                       channel-to="{{tab.notificationData.channelTo}}"
-                                                       direction="{{tab.notificationData.direction}}">
-                                </engagement-tab-update>
+                                <div ng-include="'app/views/profile/user-profile.html'"></div>
                             </div>-->
                         </div>
                     </uib-tab>
