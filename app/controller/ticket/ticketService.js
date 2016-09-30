@@ -771,39 +771,39 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
 
     };
-    var PickUserLoggedTime = function (ticketId,userId) {
+    var WatchTicket = function (ticketId) {
 
         var authToken = authService.GetToken();
 
         return $http({
-            method: 'GET',
-            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId+"/User/"+userId,
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Watch",
             headers: {
                 'authorization':authToken
             }
         }).then(function(response)
         {
-            console.log("Time response "+JSON.stringify(response));
-            if(response.data.IsSuccess)
-            {
-                var loggedTime=0;
-                for(var i=0;i<response.data.Result.length;i++)
-                {
-                    loggedTime=loggedTime+response.data.Result[i].time;
-                    if(i==response.data.Result.length-1)
-                    {
-                        console.log("user logged "+loggedTime);
-                        return loggedTime;
-                    }
-                }
-            }
-            else
-            {
-                return 0;
-            }
+            return response;
         });
 
     };
+    var StopWatchTicket = function (ticketId) {
+
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/StopWatch",
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+
+    };
+
 
 
     return {
@@ -855,7 +855,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
         PickLoggedTime:PickLoggedTime,
-        PickUserLoggedTime:PickUserLoggedTime
+        WatchTicket:WatchTicket,
+        StopWatchTicket:StopWatchTicket
 
     }
 });

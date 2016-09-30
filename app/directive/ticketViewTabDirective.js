@@ -579,9 +579,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         minutes = Math.floor((this % 36e5) / 6e4),
                         seconds = Math.floor((this % 6e4) / 1000);
 
-                    hours = (hours < 10) ? "0" + hours : hours;
-                    minutes = (minutes < 10) ? "0" + minutes : minutes;
-                    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
 
                     var days=0;
 
@@ -592,12 +590,17 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         hours=hours%24;
                     }
 
+                    days = (days < 10) ? "0" + days : days;
+                    hours = (hours < 10) ? "0" + hours : hours;
+                    minutes = (minutes < 10) ? "0" + minutes : minutes;
+                    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
 
                     return days+"d "+hours + "h " + minutes + "m "+seconds+"s ";
                 }
                 else
                 {
-                    return "0d 00h 00m 00s";
+                    return "00d 00h 00m 00s";
                 }
 
 
@@ -612,6 +615,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.ticketRemainingTimeFormat="";
             scope.ticketLoggedPrecentage=0;
             scope.ticketRemainingPrecentage=0;
+            scope.collaboratorLoggedTime={};
+            scope.isWatching=false;
+
+
 
             scope.getTicketLoggedTime = function (ticketId) {
 
@@ -621,6 +628,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     {
                         if(response.data.Result.length>0)
                         {
+                            scope.logedTimes = response.data.Result;
                             for(var i=0;i<response.data.Result.length;i++)
                             {
                                 scope.ticketLoggedTime=scope.ticketLoggedTime+response.data.Result[i].time;
@@ -643,6 +651,45 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                                 }
                             }
+
+
+
+                                scope.logedTimes.forEach(function(item){
+
+                                    //console.log(currentIndex);
+
+
+
+                                   var result = scope.ticket.collaborators.filter(function( obj ) {
+                                        return obj._id == item.user;
+                                    });
+
+                                    if(result && result.length> 0) {
+
+                                        if(!result[0].loggedTime)
+                                            result[0].loggedTime = 0;
+
+                                            result[0].loggedTime += item.time;
+                                    }
+
+                                });
+
+
+                            scope.ticket.collaborators.forEach(function(item){
+
+                                if(item.loggedTime){
+                                    item.loggedTime = item.loggedTime.toString().toHHMMSS();
+
+
+                                }
+                            });
+
+
+
+
+
+
+
 
                         }
                         else
@@ -667,8 +714,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.ticketID = scope.ticketDetails.notificationData._id;
 
 
-            scope.userList = myProfileDataParser.userList;
-            scope.assigneeList = myProfileDataParser.assigneeList;
+            scope.userList = profileDataParser.userList;
+            scope.assigneeList = profileDataParser.assigneeList;
             scope.userList = profileDataParser.userList;
             scope.assigneeList = profileDataParser.assigneeList;
 
@@ -731,6 +778,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             scope.ticket.created_at = moment(scope.ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss");
 
                         }
+
                         if (scope.ticket.due_at) {
                             scope.ticket.due_at = moment(scope.ticket.due_at).local().format("YYYY-MM-DD HH:mm:ss");
                             scope.nowDate = moment().local().format("YYYY-MM-DD HH:mm:ss");
@@ -748,25 +796,20 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             scope.uploadedAttchments = scope.ticket.attachments;
                         }
 
+                        if(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id)!=-1)
+                        {
+                            scope.isWatching=true;
+                        }
+
                         scope.ticket.updated_at = moment(scope.ticket.updated_at).local().format("YYYY-MM-DD HH:mm:ss");
 
                         scope.relTickets = scope.ticket.related_tickets;
                         scope.subTickets = scope.ticket.sub_tickets;
 
                         console.log("ticket ", scope.ticket);
+
                         scope.getTicketLoggedTime(ticketID);
                         scope.loadTicketNextLevel();
-
-
-                        for(var j=0;j<scope.ticket.collaborators.length;j++)
-                        {
-                            ticketService.PickUserLoggedTime(scope.ticket._id,scope.ticket.collaborators[j]._id).then(function (response) {
-                                console.log("Hit "+response);
-                                
-
-                            });
-
-                        }
 
 
                     }
@@ -1042,10 +1085,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.setAssigneeAsMe = function () {
 
-                ticketService.AssignUserToTicket(scope.ticket._id, myProfileDataParser.myProfile._id).then(function (response) {
+                ticketService.AssignUserToTicket(scope.ticket._id, profileDataParser.myProfile._id).then(function (response) {
                     if (response && response.data.IsSuccess) {
                         scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
-                        scope.ticket.assignee = myProfileDataParser.myProfile;
+                        scope.ticket.assignee = profileDataParser.myProfile;
 
                         scope.isEditAssignee = false;
                     }
@@ -1465,6 +1508,41 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
 
 
+            };
+
+
+            scope.watchTicket = function()
+            {
+                ticketService.WatchTicket(scope.ticket._id).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+                        scope.showAlert("Success","success","Ticket is started to watch");
+                        scope.isWatching=true;
+                        if(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id)==-1)
+                        {
+                            scope.ticket.watchers.push(profileDataParser.myProfile._id);
+                        }
+
+                    }
+                }), function (error) {
+                    scope.showAlert("Error","success","Failed to watch this ticket");
+                }
+            };
+            scope.stopWatchTicket = function()
+            {
+                ticketService.StopWatchTicket(scope.ticket._id).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+                        scope.showAlert("Success","success","Ticket watching stoped");
+                        if(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id)!=-1)
+                        {
+                           scope.ticket.watchers.splice(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id),1);
+                        }
+                        scope.isWatching=false;
+                    }
+                }), function (error) {
+                    scope.showAlert("Error","success","Failed to stop watching this ticket");
+                }
             };
 
             /*Audio Player-end*/
