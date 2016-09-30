@@ -1099,7 +1099,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                         });
                                     }
                                     $scope.states = searchResult;
-                                    $scope.searchText = queryText;
+                                    $scope.searchText = "";
                                 }
                             });
                             break;
