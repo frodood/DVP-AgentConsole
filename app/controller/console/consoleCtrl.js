@@ -993,11 +993,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //$scope.searchResult = [];
 
-    $scope.bindSearchData = function () {
-        if ($scope.searchText && angular.isObject($scope.searchText) && $scope.searchText.type === "ticket") {
-            $scope.searchText.obj.tabType = 'ticketView';
-            $scope.searchText.obj.index = $scope.searchText.obj.reference;
-            $rootScope.$emit('openNewTab', $scope.searchText.obj);
+    $scope.bindSearchData = function (item) {
+        if (item && item.obj && item.type === "ticket") {
+            item.obj.tabType = 'ticketView';
+            item.obj.index = item.obj.reference;
+            $rootScope.$emit('openNewTab', item.obj);
             $scope.states = [{obj: {}, type: "searchKey", value: "#ticket:"}, {
                 obj: {},
                 type: "searchKey",
@@ -1018,10 +1018,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }];
 
             $scope.searchText = "";
-        } else if ($scope.searchText && angular.isObject($scope.searchText) && $scope.searchText.type === "profile") {
-            $scope.searchText.obj.tabType = 'userProfile';
-            $scope.searchText.obj.index = $scope.searchText.obj._id;
-            $rootScope.$emit('openNewTab', $scope.searchText.obj);
+        } else if (item && item.obj && item.type === "profile") {
+            item.obj.tabType = 'userProfile';
+            item.obj.index = item.obj._id;
+            $rootScope.$emit('openNewTab', item.obj);
             $scope.states = [{obj: {}, type: "searchKey", value: "#ticket:"}, {
                 obj: {},
                 type: "searchKey",
@@ -1103,7 +1103,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                         });
                                     }
                                     $scope.states = searchResult;
-                                    $scope.searchText = "";
+                                    $scope.searchText = queryText;
                                 }
                             });
                             break;
