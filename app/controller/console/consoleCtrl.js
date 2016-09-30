@@ -253,7 +253,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
              });*/
         },
         unregisterWithArds: function () {
-            resourceService.UnregisterWithArds(dataParser.userProfile.id).then(function (response) {
+            resourceService.UnregisterWithArds(authService.GetResourceId()).then(function (response) {
                 $scope.registerdWithArds = !response;
             }, function (error) {
                 $scope.showAlert("Soft Phone", "error", "Unregister With ARDS Fail");
@@ -491,13 +491,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     }
 
 
+    var notificationEvent = {
+        onAgentFound: $scope.agentFound,
+        OnMessageReceived: $scope.OnMessage
+    };
+
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound, $scope.OnMessage);
-
-
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification,notificationEvent );
     };
 
     $scope.veeryNotification();
+
     /*--------------------------      Notification  ---------------------------------------*/
 
     /*---------------main tab panel----------------------- */
@@ -1312,10 +1316,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //logOut
     $scope.logOut = function () {
-        loginService.Logoff(function (data) {
-            if (data) {
-                $state.go('login');
-            }
+        $scope.veeryPhone.unregisterWithArds();
+        loginService.Logoff(function () {
+            $state.go('login');
         });
     };
 
@@ -1564,7 +1567,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {
                 if (res.IsSuccess) {
-                    resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result.ContactName).
+                    resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result).
                         then(function (data) {
                             console.log(data);
                         })
@@ -1576,7 +1579,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
             //
         }
-    }//end
+    };//end
 
     var getCurrentState = (function () {
         return {
