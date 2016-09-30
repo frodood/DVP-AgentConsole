@@ -253,7 +253,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
              });*/
         },
         unregisterWithArds: function () {
-            resourceService.UnregisterWithArds(dataParser.userProfile.id).then(function (response) {
+            resourceService.UnregisterWithArds(authService.GetResourceId()).then(function (response) {
                 $scope.registerdWithArds = !response;
             }, function (error) {
                 $scope.showAlert("Soft Phone", "error", "Unregister With ARDS Fail");
@@ -491,13 +491,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     }
 
 
+    var notificationEvent = {
+        onAgentFound: $scope.agentFound,
+        OnMessageReceived: $scope.OnMessage
+    };
+
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, $scope.agentFound, $scope.OnMessage);
-
-
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification,notificationEvent );
     };
 
     $scope.veeryNotification();
+
     /*--------------------------      Notification  ---------------------------------------*/
 
     /*---------------main tab panel----------------------- */
@@ -989,11 +993,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //$scope.searchResult = [];
 
-    $scope.bindSearchData = function () {
-        if ($scope.searchText && angular.isObject($scope.searchText) && $scope.searchText.type === "ticket") {
-            $scope.searchText.obj.tabType = 'ticketView';
-            $scope.searchText.obj.index = $scope.searchText.obj.reference;
-            $rootScope.$emit('openNewTab', $scope.searchText.obj);
+    $scope.bindSearchData = function (item) {
+        if (item && item.obj && item.type === "ticket") {
+            item.obj.tabType = 'ticketView';
+            item.obj.index = item.obj.reference;
+            $rootScope.$emit('openNewTab', item.obj);
             $scope.states = [{obj: {}, type: "searchKey", value: "#ticket:"}, {
                 obj: {},
                 type: "searchKey",
@@ -1014,10 +1018,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }];
 
             $scope.searchText = "";
-        } else if ($scope.searchText && angular.isObject($scope.searchText) && $scope.searchText.type === "profile") {
-            $scope.searchText.obj.tabType = 'userProfile';
-            $scope.searchText.obj.index = $scope.searchText.obj._id;
-            $rootScope.$emit('openNewTab', $scope.searchText.obj);
+        } else if (item && item.obj && item.type === "profile") {
+            item.obj.tabType = 'userProfile';
+            item.obj.index = item.obj._id;
+            $rootScope.$emit('openNewTab', item.obj);
             $scope.states = [{obj: {}, type: "searchKey", value: "#ticket:"}, {
                 obj: {},
                 type: "searchKey",
@@ -1323,10 +1327,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //logOut
     $scope.logOut = function () {
-        loginService.Logoff(function (data) {
-            if (data) {
-                $state.go('login');
-            }
+        $scope.veeryPhone.unregisterWithArds();
+        loginService.Logoff(function () {
+            $state.go('login');
         });
     };
 
@@ -1575,7 +1578,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {
                 if (res.IsSuccess) {
-                    resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result.ContactName).
+                    resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result).
                         then(function (data) {
                             console.log(data);
                         })
@@ -1587,7 +1590,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
             //
         }
-    }//end
+    };//end
 
     var getCurrentState = (function () {
         return {
