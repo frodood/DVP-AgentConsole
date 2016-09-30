@@ -517,7 +517,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 }
                 else {
-                    if (!formSubmission) {
+
                         //create form submission
 
                         var schema = {
@@ -561,10 +561,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                         });
 
-                    }
-                    else {
-                        callback(null);
-                    }
+
 
                 }
 
