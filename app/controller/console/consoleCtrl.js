@@ -56,6 +56,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
+    var showHideDialpad = undefined;
+    $scope.ShowHideDialpad = function () {
+        if (showHideDialpad) {
+            // is show phone
+            $('#phoneDialpad').addClass('phone-dialpad ').
+                removeClass('display-none');
+            showHideDialpad = undefined;
+        } else {
+            //is hide phone
+            $('#phoneDialpad').addClass('display-none ').
+                removeClass('display-block');
+            showHideDialpad = {};
+        }
+    };
+    $scope.ShowHideDialpad();
+
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
@@ -116,12 +132,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.profile.server.token = authService.TokenWithoutBearer();
 
     $scope.call = {};
-    $scope.call.number = {};
+    $scope.call.number = "";
 
     $scope.veeryPhone = {
         sipSendDTMF: function (dtmf) {
             sipSendDTMF(dtmf);
-            $scope.call.number = $scope.call.number + dtmf;
+            //$scope.call.number = $scope.call.number + dtmf;
         },
         makeCall: function (callNumber, tabReference) {
             $scope.veeryPhone.makeAudioCall(callNumber);
@@ -418,6 +434,39 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         uiCallTerminated: $scope.veeryPhone.uiCallTerminated
     };
 
+
+
+    $('#phoneDialpad input').click(function () {
+        var values = $(this).data('values');
+        var chr = values[0];
+        $scope.call.number = $scope.call.number + chr;
+        $scope.veeryPhone.sipSendDTMF(chr)
+    });
+
+    //dont remove this code
+    /*var prev, $result = $('#result'),
+        counter = 0,
+        timer;
+    $('#phoneDialpad input').click(function () {
+        var values = $(this).data('values'),
+            result = $result.text();
+        if (this == prev) {
+            result = result.slice(0, -1);
+            counter = values.length == counter + 1 ? 0 : counter + 1;
+        } else {
+            counter = 0;
+        }
+
+        $scope.call.number = $scope.call.number + values[counter];
+
+        prev = this;
+
+        //timer to reset
+        clearTimeout(timer)
+        timer = setTimeout(function () {
+            prev = undefined;
+        }, 1000)
+    });*/
     /*--------------------------Veery Phone---------------------------------------*/
 
     /*--------------------------      Notification  ---------------------------------------*/

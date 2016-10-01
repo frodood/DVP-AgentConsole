@@ -362,6 +362,63 @@
         <!-- phone operation panel  -->
         <div id="isOperationPhone" class="call-operation-wrapper " id="callOperation">
 
+
+            <!--#KeyPad-->
+            <div id='divKeyPad' class="phone-dialpad-display">
+
+                <input required type="text" class="phone-dialpad-no" id="number"
+                       ng-model="call.number"
+                       placeholder="Enter the phone no to call" >
+                <table class="phone-dialpad" id="phoneDialpad">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="button" class="phone-button" value="1" data-values='[1]' />
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="2" data-values='[2, "A", "B", "C"]' />
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="3" data-values='[3, "D", "E", "F"]' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" class="phone-button" value="4" data-values='[4, "G", "H", "I"]' />
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="5" data-values='[5, "J", "K", "L"]' />
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="6" data-values='[6, "M", "N", "O"]' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" class="phone-button" value="7" data-values='[7, "P", "Q", "R", "S"]' />
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="8" data-values='[8, "T", "U", "V"]' />
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="9" data-values='[9, "W", "X", "Y", "Z"]' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" class="phone-button" value="*" data-values='["*"]' />
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="0" data-values='[0, " "]' />
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="#" data-values='["#"]' />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <div class="phone-button-wrapper">
                 <div class="phone-btn">
                     <i class="veery-phone-icon-1-call-answer" ng-click="veeryPhone.makeAudioCall(call.number);"></i>
@@ -376,7 +433,7 @@
                     <i class="veery-font-1-muted "></i>
                 </div>
                 <div class="phone-btn">
-                    <i class="veery-font-1-menu-4"></i>
+                    <i class="veery-font-1-menu-4" ng-click="ShowHideDialpad();"></i>
                 </div>
                 <div class="phone-btn">
                     <i class="veery-font-1-speaker-4 "></i>
@@ -392,73 +449,7 @@
         </div>
 
 
-        <!--#KeyPad-->
 
-        <div id='divKeyPad'
-             ng-show="true"
-             class="span2 well div-keypad ">
-
-            <table style="width: 100%; height: 100%">
-                <tr>
-                    <input required type="text" class="form-control" id="number"
-                           ng-model="call.number"
-                           placeholder="Enter the phone no to call">
-                </tr>
-                <tr>
-                    <td><a class="dialpadbtn m-r-35"
-                           value="1"
-                           ng-click="veeryPhone.sipSendDTMF('1');">1</a>
-                        <a class="dialpadbtn m-r-35"
-                           value="2"
-                           ng-click="veeryPhone.sipSendDTMF('2');">2</a>
-                        <a class="dialpadbtn m-r-35"
-                           value="3"
-                           ng-click="veeryPhone.sipSendDTMF('3');">3</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a class="dialpadbtn m-r-35"
-                           value="4"
-                           ng-click="veeryPhone.sipSendDTMF('4');">4</a>
-                        <a class="dialpadbtn m-r-35"
-                           value="5"
-                           ng-click="veeryPhone.sipSendDTMF('5');">5</a>
-                        <a class="dialpadbtn m-r-35" value="6"
-                           ng-click="veeryPhone.sipSendDTMF('6');">6</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a class="dialpadbtn m-r-35"
-                           value="7"
-                           ng-click="veeryPhone.sipSendDTMF('7');">7</a>
-                        <a class="dialpadbtn m-r-35"
-                           value="8"
-                           ng-click="veeryPhone.sipSendDTMF('8');">8</a>
-                        <a class="dialpadbtn m-r-35"
-                           value="9"
-                           ng-click="veeryPhone.sipSendDTMF('9');">9</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a type="button" class="dialpadbtn m-r-35"
-                           value="*"
-                           ng-click="veeryPhone.sipSendDTMF('*');">*</a>
-                        <a type="button" class="dialpadbtn m-r-35"
-                           value="0"
-                           ng-click="veeryPhone.sipSendDTMF('0');">0</a>
-                        <a type="button" class="dialpadbtn m-r-35"
-                           value="#"
-                           ng-click="veeryPhone.sipSendDTMF('#');">#</a>
-                    </td>
-                </tr>
-                <tr>
-                    <!--<td colspan=3><input type="button" style="width: 100%"-->
-                    <!--class="btn btn-medium btn-danger" value="close"-->
-                    <!--ng-click="closeKeyPad()"/></td>-->
-                </tr>
-            </table>
-        </div>
         <!-- view ticket -->
         <div ng-include="'app/views/ticket/ticket-inbox.html'"></div>
 

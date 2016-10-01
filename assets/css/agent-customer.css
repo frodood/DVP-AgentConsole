@@ -2994,6 +2994,47 @@ tags-input .tags .input {
 }
 
 
-
-
-
+/*phone*/
+.phone-button {
+    position: relative;
+    width: 62px;
+    /*border: 1px solid black;*/
+    border: 1px solid black;
+    border-radius: 12px;
+    /*border-radius: 7px;*/
+    padding-top: 14px;
+    padding-bottom: 29px;
+    /*background-color: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(241,241,241,1)), color-stop(51%,rgba(225,225,225,1)), color-stop(100%,rgba(246,246,246,1)));*/
+    /* Chrome,Safari4+ */
+    background-color: White;
+    Outline: none;
+    padding-left:5px;
+    margin-left:2px;
+    margin-bottom:7px;
+    height:43px;
+    border-color:#ccc;
+}
+.phone-dialpad-display{
+    position: inherit;
+    bottom: 150px;
+    right: 94px;
+}
+.phone-dialpad {
+    width: 193px;
+    height: 161px;
+    /*margin: 25px auto;*/
+    border: 0px solid silver;
+    border-radius: 4px;
+    padding: 3px;
+    text-align: center;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    outline:none;
+}
+.phone-dialpad-no{
+    margin-bottom: 4px;
+    border-radius: 15px 15px 5px 5px;
+    width: 192px;
+    height: 35px;
+    text-align: center;
+}
