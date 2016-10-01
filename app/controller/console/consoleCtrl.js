@@ -50,6 +50,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#isOperationPhone').addClass('display-none ').removeClass('display-block');
         }
     };
+    $scope.ShowHidePhone();
 
     var showHideDialpad = undefined;
     $scope.ShowHideDialpad = function () {
@@ -154,10 +155,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.ShowIncomeingNotification(false);
         },
         muteCall: function () {
-            sipToggleMute();
+            /*btnMute.value = bMute ? "Unmute" : "Mute";*/
+            if(sipToggleMute()){
+                $('#muteButton').addClass('veery-font-1-muted').removeClass('veery-font-1-mute');
+            }else{
+                $('#muteButton').addClass('veery-font-1-mute').removeClass('veery-font-1-muted');
+            }
         },
         holdResumeCall: function () {
-            sipToggleHoldResume();
+            var h =sipToggleHoldResume();
+            if(h==='0'){ //connect
+                $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-1').removeClass('veery-phone-icon-1-phone-call-2');
+            }
+            else if(h==='1'){//hold
+                $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-2').removeClass('veery-phone-icon-1-phone-call-1');
+            }else {
+//error
+            }
         },
         registerWithArds: function (userProfile) {
             preInit(userEvent, userProfile);
@@ -310,6 +324,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     /*UIStateChange.inCallConnectedState();*/
                     phoneFuncion.showHoldButton();
                     phoneFuncion.showMuteButton();
+                    $scope.ShowIncomeingNotification(false);
                 }
             }
             catch (ex) {
@@ -434,6 +449,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         showHoldButton: function () {
             $('#holdResumeButton').addClass('phone-btn ').removeClass('display-none');
+            $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-1').removeClass('veery-phone-icon-1-phone-call-2');
         },
         hideHoldButton: function () {
             $('#holdResumeButton').addClass('display-none ').removeClass('display-block');
@@ -446,6 +462,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         showMuteButton: function () {
             $('#muteButton').addClass('phone-btn ').removeClass('display-none');
+            $('#muteButton').addClass('veery-font-1-mute').removeClass('veery-font-1-muted');
         },
         hideMuteButton: function () {
             $('#muteButton').addClass('display-none ').removeClass('display-block');
@@ -571,12 +588,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (index >= 0)
             $scope.notifications.splice(index, 1);
         $scope.unredNotifications = $scope.getCountOfUnredNotifications();
-    }
+    };
 
 
     $scope.getCountOfUnredNotifications = function () {
         return filterFilter($scope.notifications, {read: false}).length;
-    }
+    };
 
 
     var notificationEvent = {

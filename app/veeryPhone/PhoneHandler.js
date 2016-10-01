@@ -242,6 +242,12 @@ function sipToggleHoldResume() {
         if (i_ret != 0) {
             return 'Hold / Resume failed';
         }
+        if(oSipSessionCall.bHeld){
+            return '0';
+        }
+        else {
+            return '1';
+        }
     }
 }
 
@@ -255,7 +261,8 @@ function sipToggleMute() {
             return 'Mute / Unmute failed';
         }
         oSipSessionCall.bMute = bMute;
-        btnMute.value = bMute ? "Unmute" : "Mute";
+        /*btnMute.value = bMute ? "Unmute" : "Mute";*/
+        return bMute;
     }
 }
 
