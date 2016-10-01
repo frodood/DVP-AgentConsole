@@ -96,11 +96,11 @@ function postInit() {
     document.body.style.cursor = 'default';
     oConfigCall = {
         audio_remote: audioRemote,
-        video_local: viewVideoLocal,
+        /*video_local: viewVideoLocal,
         video_remote: viewVideoRemote,
+         video_size: {minWidth: undefined, minHeight: undefined, maxWidth: undefined, maxHeight: undefined},*/
         screencast_window_id: 0x00000000, // entire desktop
         bandwidth: {audio: undefined, video: undefined},
-        video_size: {minWidth: undefined, minHeight: undefined, maxWidth: undefined, maxHeight: undefined},
         events_listener: {events: '*', listener: onSipEventSession},
         sip_caps: [
             {name: '+g.oma.sip-im'},

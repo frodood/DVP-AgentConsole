@@ -420,23 +420,26 @@
             </div>
 
             <div class="phone-button-wrapper">
-                <div class="phone-btn">
+                <div class="phone-btn" id="answerButton">
                     <i class="veery-phone-icon-1-call-answer" ng-click="veeryPhone.makeAudioCall(call.number);"></i>
                 </div>
-                <div class="phone-btn">
+                <div class="phone-btn" id="holdResumeButton">
+                    <i class="veery-phone-icon-1-call-answer" ng-click="veeryPhone.holdResumeCall();"></i>
+                </div>
+                <div class="phone-btn" id="endButton">
                     <i class="veery-phone-icon-1-call-answer" ng-click="veeryPhone.endCall();"></i>
                 </div>
                 <div class="phone-btn">
                     <i class="veery-font-1-user"></i>
                 </div>
-                <div class="phone-btn">
-                    <i class="veery-font-1-muted "></i>
+                <div class="phone-btn" id="muteButton">
+                    <i class="veery-font-1-muted " ng-click="veeryPhone.muteCall();"></i>
                 </div>
                 <div class="phone-btn">
                     <i class="veery-font-1-menu-4" ng-click="ShowHideDialpad();"></i>
                 </div>
-                <div class="phone-btn">
-                    <i class="veery-font-1-speaker-4 "></i>
+                <div class="phone-btn" id="speakerButton">
+                    <i class="veery-font-1-speaker-4 "ng-click="veeryPhone.muteCall();"></i>
                 </div>
                 <div class="phone-btn">
                     <i class="veery-font-1-add"></i>
@@ -525,7 +528,7 @@
 
 <!--phone VIdeo/audio panel-->
 <div>
-    <div>
+    <!--<div>
         <div id="divVideo">
             <div id="divVideoRemote">
                 <video id="video_remote"
@@ -550,21 +553,21 @@
                 >
                 </div>
             </div>
-            <!--div id="div1" style="margin-left: 300px; border:0px solid #009; z-index: 1000">
+            &lt;!&ndash;div id="div1" style="margin-left: 300px; border:0px solid #009; z-index: 1000">
             <iframe class="previewvideo" style="border:0px solid #009; z-index: 1000"> </iframe>
             <div id="div2" class="previewvideo" style='border:0px solid #009; z-index: 1000'>
             <input type="button" class="btn" style="" id="Button1" value="Button1" /> &nbsp;
             <input type="button" class="btn" style="" id="Button2" value="Button2" /> &nbsp;
             </div>
-            </div-->
+            </div&ndash;&gt;
         </div>
-    </div>
+    </div>-->
 
     <div>
         <!-- Audios -->
         <audio id="audio_remote" autoplay="autoplay"></audio>
-        <audio id="ringtone" loop src="sounds/ringtone.wav"></audio>
-        <audio id="ringbacktone" loop src="sounds/ringbacktone.wav"></audio>
-        <audio id="dtmfTone" src="sounds/dtmf.wav"></audio>
+        <audio id="ringtone" loop src="DVP-AgentConsole/assets/sounds/ringtone.wav"></audio>
+        <audio id="ringbacktone" loop src="DVP-AgentConsole/assets/sounds/ringbacktone.wav"></audio>
+        <audio id="dtmfTone" src="DVP-AgentConsole/assets/sounds/dtmf.wav"></audio>
     </div>
 </div>

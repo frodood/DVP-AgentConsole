@@ -16,8 +16,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /*# console top menu */
     $scope.consoleTopMenu = {
         openTicket: function () {
-            $('#mainTicketWrapper').addClass(' display-block fadeIn').
-                removeClass('display-none zoomOut');
+            $('#mainTicketWrapper').addClass(' display-block fadeIn').removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -35,11 +34,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
-            $('#incomingNotification').addClass('display-block fadeIn').
-                removeClass('display-none zoomOut');
+            $('#incomingNotification').addClass('display-block fadeIn').removeClass('display-none zoomOut');
         } else {
-            $('#incomingNotification').addClass('display-none fadeIn').
-                removeClass('display-block  zoomOut');
+            $('#incomingNotification').addClass('display-none fadeIn').removeClass('display-block  zoomOut');
         }
     };
 
@@ -47,12 +44,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.showPhone = value;
         if (value) {
             // is show phone
-            $('#isOperationPhone').addClass('display-block ').
-                removeClass('display-none');
+            $('#isOperationPhone').addClass('display-block ').removeClass('display-none');
         } else {
             //is hide phone
-            $('#isOperationPhone').addClass('display-none ').
-                removeClass('display-block');
+            $('#isOperationPhone').addClass('display-none ').removeClass('display-block');
         }
     };
 
@@ -60,13 +55,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowHideDialpad = function () {
         if (showHideDialpad) {
             // is show phone
-            $('#phoneDialpad').addClass('phone-dialpad ').
-                removeClass('display-none');
+            $('#phoneDialpad').addClass('phone-dialpad ').removeClass('display-none');
             showHideDialpad = undefined;
         } else {
             //is hide phone
-            $('#phoneDialpad').addClass('display-none ').
-                removeClass('display-block');
+            $('#phoneDialpad').addClass('display-none ').removeClass('display-block');
             showHideDialpad = {};
         }
     };
@@ -74,19 +67,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.PhoneOnline = function () {
         //is loading done
-        $('#isLoadingRegPhone').addClass('display-none').
-            removeClass('display-block active-menu-icon ');
-        $('#isBtnReg').addClass('display-block active-menu-icon   ').
-            removeClass('display-none  ');
+        $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon ');
+        $('#isBtnReg').addClass('display-block active-menu-icon   ').removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
-        $('#isLoadingRegPhone').addClass('display-block').
-            removeClass('display-none');
-        $('#isBtnReg').addClass('display-none ').
-            removeClass('display-block active-menu-icon');
+        $('#isLoadingRegPhone').addClass('display-block').removeClass('display-none');
+        $('#isBtnReg').addClass('display-none ').removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -163,6 +152,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             //UIStateChange.inIdleState();
             rejectCall();
             $scope.ShowIncomeingNotification(false);
+        },
+        muteCall: function () {
+            sipToggleMute();
+        },
+        holdResumeCall: function () {
+            sipToggleHoldResume();
         },
         registerWithArds: function (userProfile) {
             preInit(userEvent, userProfile);
@@ -313,6 +308,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 else if (e.toString().toLowerCase() == 'in call') {
                     /*UIStateChange.inCallConnectedState();*/
+                    phoneFuncion.showHoldButton();
+                    phoneFuncion.showMuteButton();
                 }
             }
             catch (ex) {
@@ -388,6 +385,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 /*UIStateChange.inIncomingState();*/
                 $scope.call.number = sRemoteNumber;
                 $scope.ShowIncomeingNotification(true);
+                phoneFuncion.showEndButton();
+                phoneFuncion.hideHoldButton();
+                phoneFuncion.hideMuteButton();
                 /*addCallToHistory(sRemoteNumber, 2);*/
             }
             catch (ex) {
@@ -399,6 +399,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 console.log("uiCallTerminated");
                 $scope.ShowIncomeingNotification(false);
+                phoneFuncion.hideEndButton();
+                phoneFuncion.hideHoldButton();
+                phoneFuncion.hideMuteButton();
                 if (window.btnBFCP) window.btnBFCP.disabled = true;
 
 
@@ -420,8 +423,45 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 console.error(ex.message)
             }
         }
-
     };
+
+    var  phoneFuncion = {
+        showAnswerButton: function () {
+            $('#answerButton').addClass('phone-btn ').removeClass('display-none');
+        },
+        hideAnswerButton: function () {
+            $('#answerButton').addClass('display-none ').removeClass('display-block');
+        },
+        showHoldButton: function () {
+            $('#holdResumeButton').addClass('phone-btn ').removeClass('display-none');
+        },
+        hideHoldButton: function () {
+            $('#holdResumeButton').addClass('display-none ').removeClass('display-block');
+        },
+        showEndButton: function () {
+            $('#endButton').addClass('phone-btn ').removeClass('display-none');
+        },
+        hideEndButton: function () {
+            $('#endButton').addClass('display-none ').removeClass('display-block');
+        },
+        showMuteButton: function () {
+            $('#muteButton').addClass('phone-btn ').removeClass('display-none');
+        },
+        hideMuteButton: function () {
+            $('#muteButton').addClass('display-none ').removeClass('display-block');
+        },
+        showSpeakerButton: function () {
+            $('#speakerButton').addClass('phone-btn ').removeClass('display-none');
+        },
+        hideSpeakerButton: function () {
+            $('#speakerButton').addClass('display-none ').removeClass('display-block');
+        }
+    };
+
+    phoneFuncion.hideHoldButton();
+    phoneFuncion.hideMuteButton();
+    phoneFuncion.hideSpeakerButton();
+
 
     var userEvent = {
         onSipEventSession: $scope.veeryPhone.onSipEventSession,
@@ -435,7 +475,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-
     $('#phoneDialpad input').click(function () {
         var values = $(this).data('values');
         var chr = values[0];
@@ -445,28 +484,28 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //dont remove this code
     /*var prev, $result = $('#result'),
-        counter = 0,
-        timer;
-    $('#phoneDialpad input').click(function () {
-        var values = $(this).data('values'),
-            result = $result.text();
-        if (this == prev) {
-            result = result.slice(0, -1);
-            counter = values.length == counter + 1 ? 0 : counter + 1;
-        } else {
-            counter = 0;
-        }
+     counter = 0,
+     timer;
+     $('#phoneDialpad input').click(function () {
+     var values = $(this).data('values'),
+     result = $result.text();
+     if (this == prev) {
+     result = result.slice(0, -1);
+     counter = values.length == counter + 1 ? 0 : counter + 1;
+     } else {
+     counter = 0;
+     }
 
-        $scope.call.number = $scope.call.number + values[counter];
+     $scope.call.number = $scope.call.number + values[counter];
 
-        prev = this;
+     prev = this;
 
-        //timer to reset
-        clearTimeout(timer)
-        timer = setTimeout(function () {
-            prev = undefined;
-        }, 1000)
-    });*/
+     //timer to reset
+     clearTimeout(timer)
+     timer = setTimeout(function () {
+     prev = undefined;
+     }, 1000)
+     });*/
     /*--------------------------Veery Phone---------------------------------------*/
 
     /*--------------------------      Notification  ---------------------------------------*/
@@ -546,7 +585,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification,notificationEvent );
+        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, notificationEvent);
     };
 
     $scope.veeryNotification();
@@ -1038,7 +1077,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             obj: {},
             type: "searchKey",
             value: "#ticket:requester:"
-        }, {obj: {}, type: "searchKey", value: "#ticket:status:"}, {obj: {}, type: "searchKey", value: "#profile:search:"}];
+        }, {obj: {}, type: "searchKey", value: "#ticket:status:"}, {
+            obj: {},
+            type: "searchKey",
+            value: "#profile:search:"
+        }];
 
     //$scope.searchResult = [];
 
@@ -1071,17 +1114,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     function getDefaultState($query) {
-        return $q(function(resolve) {
-            if($query) {
+        return $q(function (resolve) {
+            if ($query) {
                 var resultList = [];
                 for (var i = 0; i < $scope.states.length; i++) {
                     var state = $scope.states[i];
-                    if(state.value.startsWith($query)){
+                    if (state.value.startsWith($query)) {
                         resultList.push(state);
                     }
                 }
                 resolve(resultList);
-            }else{
+            } else {
                 resolve($scope.states);
             }
         });
@@ -1089,13 +1132,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.commonSearch = function ($query) {
-        return getDefaultState($query).then(function(state) {
+        return getDefaultState($query).then(function (state) {
             if ($query) {
                 var searchItems = $query.split(":");
                 if (searchItems && searchItems.length > 2) {
                     var queryText = searchItems.pop();
                     var queryPath = searchItems.join(":");
-                    if(queryText) {
+                    if (queryText) {
                         switch (queryPath) {
                             case "#ticket:tid":
                                 var queryFiledTid = searchItems.pop();
@@ -1132,21 +1175,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 });
                                 break;
                             case "#ticket:search":
-                                return ticketService.searchTicket(queryText).
-                                    then(function (response) {
-                                        if (response.IsSuccess) {
-                                            var searchResult = [];
-                                            for (var i = 0; i < response.Result.length; i++) {
-                                                var result = response.Result[i];
-                                                searchResult.push({
-                                                    obj: result,
-                                                    type: "ticket",
-                                                    value: result.tid + ":" + result.subject
-                                                });
-                                            }
-                                            return searchResult;
+                                return ticketService.searchTicket(queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "ticket",
+                                                value: result.tid + ":" + result.subject
+                                            });
                                         }
-                                    });
+                                        return searchResult;
+                                    }
+                                });
                                 break;
                             case "#ticket:channel":
                                 return ticketService.searchTicketByChannel(queryText).then(function (response) {
@@ -1261,13 +1303,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 });
                                 break;
                         }
-                    }else{
+                    } else {
                         return state;
                     }
-                }else{
+                } else {
                     return state;
                 }
-            }else{
+            } else {
                 return state;
             }
         });
@@ -1286,26 +1328,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                    if (data.IsSuccess) {
-                        if (data.Result && data.Result.UNREAD) {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception) {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    console.log(err);
+                    },
+                    function (err) {
+                        console.log(err);
 
-                })
+                    })
 
         }
         catch (ex) {
@@ -1616,10 +1658,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {
                 if (res.IsSuccess) {
-                    resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result).
-                        then(function (data) {
-                            console.log(data);
-                        })
+                    resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result).then(function (data) {
+                        console.log(data);
+                    })
                 } else {
                     console.log(data);
                 }
