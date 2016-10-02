@@ -518,48 +518,48 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
                 else {
 
-                        //create form submission
+                    //create form submission
 
-                        var schema = {
-                            type: "object",
-                            properties: {}
-                        };
+                    var schema = {
+                        type: "object",
+                        properties: {}
+                    };
 
-                        var form = [];
+                    var form = [];
 
-                        scope.buildModel = true;
+                    scope.buildModel = true;
 
-                        ticketService.getFormsForCompany().then(function (response) {
-                            if (response && response.Result && response.Result.ticket_form) {
-                                //compare two forms
-                                buildFormSchema(schema, form, response.Result.ticket_form.fields);
-                                scope.currentForm = response.Result.ticket_form;
+                    ticketService.getFormsForCompany().then(function (response) {
+                        if (response && response.Result && response.Result.ticket_form) {
+                            //compare two forms
+                            buildFormSchema(schema, form, response.Result.ticket_form.fields);
+                            scope.currentForm = response.Result.ticket_form;
 
-                                form.push({
-                                    type: "submit",
-                                    title: "Save"
-                                });
-
-
-                                var schemaResponse = {};
-
-                                schemaResponse = {
-                                    schema: schema,
-                                    form: form,
-                                    model: {}
-                                };
-
-                                callback(schemaResponse);
-                            }
-                            else {
-                                callback(null);
-                            }
+                            form.push({
+                                type: "submit",
+                                title: "Save"
+                            });
 
 
-                        }).catch(function (err) {
+                            var schemaResponse = {};
+
+                            schemaResponse = {
+                                schema: schema,
+                                form: form,
+                                model: {}
+                            };
+
+                            callback(schemaResponse);
+                        }
+                        else {
                             callback(null);
+                        }
 
-                        });
+
+                    }).catch(function (err) {
+                        callback(null);
+
+                    });
 
 
 
@@ -651,25 +651,25 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
 
-                                scope.logedTimes.forEach(function(item){
+                            scope.logedTimes.forEach(function(item){
 
-                                    //console.log(currentIndex);
+                                //console.log(currentIndex);
 
 
 
-                                   var result = scope.ticket.collaborators.filter(function( obj ) {
-                                        return obj._id == item.user;
-                                    });
-
-                                    if(result && result.length> 0) {
-
-                                        if(!result[0].loggedTime)
-                                            result[0].loggedTime = 0;
-
-                                            result[0].loggedTime += item.time;
-                                    }
-
+                                var result = scope.ticket.collaborators.filter(function( obj ) {
+                                    return obj._id == item.user;
                                 });
+
+                                if(result && result.length> 0) {
+
+                                    if(!result[0].loggedTime)
+                                        result[0].loggedTime = 0;
+
+                                    result[0].loggedTime += item.time;
+                                }
+
+                            });
 
 
                             scope.ticket.collaborators.forEach(function(item){
@@ -1498,22 +1498,36 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             scope.playAttachment = function (attachment) {
 
-                if (videogularAPI && attachment.url) {
-                    var info = authService.GetCompanyInfo();
-                    /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
-                    var fileToPlay = attachment.url;
+                if(scope.isImage(attachment.type))
+                {
+                    document.getElementById("image-viewer").href=attachment.url;
 
-                    var arr = [
-                        {
-                            src: $sce.trustAsResourceUrl(fileToPlay),
-                            type: attachment.type
-                        }
-                    ];
+                   $('#image-viewer').trigger('click');
 
-                    scope.config.sources = arr;
-                    videogularAPI.play();
-                    scope.isPlay = true;
+
+
                 }
+                else
+                {
+                    if (videogularAPI && attachment.url) {
+                        var info = authService.GetCompanyInfo();
+                        /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
+                        var fileToPlay = attachment.url;
+
+                        var arr = [
+                            {
+                                src: $sce.trustAsResourceUrl(fileToPlay),
+                                type: attachment.type
+                            }
+                        ];
+
+                        scope.config.sources = arr;
+                        videogularAPI.play();
+                        scope.isPlay = true;
+                    }
+                }
+
+
 
 
             };
@@ -1544,7 +1558,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         scope.showAlert("Success","success","Ticket watching stoped");
                         if(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id)!=-1)
                         {
-                           scope.ticket.watchers.splice(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id),1);
+                            scope.ticket.watchers.splice(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id),1);
                         }
                         scope.isWatching=false;
                     }
@@ -1567,7 +1581,20 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             };
 
+            scope.isViewable = function (fileType) {
+                if( fileType.toString().split("/")[0]=="video" || fileType.toString().split("/")[0]=="audio")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+
             /*Audio Player-end*/
+
 
 
         }

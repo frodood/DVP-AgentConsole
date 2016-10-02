@@ -329,18 +329,21 @@
                                         <div class="thumbnail">
                                             <div class="image view view-first">
 
-                                                <img style="width: 100%; display: block;"
-                                                     ng-src="{{attchment.url}}"
-                                                     on-error-src="assets/img/noimage.jpg" ng-if="isImage(attchment.type)"/>
-                                                <img style="width: 100%; display: block;"
-                                                     src="assets/img/noimage.jpg" ng-if="!isImage(attchment.type)"/>
+                                                    <img style="width: 100%; display: block;"
+                                                         ng-src="{{attchment.url}}"
+                                                         on-error-src="assets/img/noimage.jpg" ng-if="isImage(attchment.type)"/>
+                                                    <img style="width: 100%; display: block;"
+                                                         src="assets/img/noimage.jpg" ng-if="!isImage(attchment.type)"/>
+
 
                                                 <div class="mask">
                                                     <p>{{attchment.file| limitTo:10}}</p>
 
                                                     <div class="tools tools-bottom">
-                                                        <a href="javascript:void(0);"><i class="fa fa-play"
-                                                                                         ng-click="playAttachment(attchment)"></i></a>
+                                                        <a href="javascript:void(0);"><i ng-if="isViewable(attchment.type)" class="fa fa-play"
+                                                                                         ng-click="playAttachment(attchment)"></i>
+                                                            <i ng-if="isImage(attchment.type)" class="fa fa-expand"
+                                                               ng-click="playAttachment(attchment)"></i></a>
                                                         <a href="javascript:void(0);"><i class="fa fa-cloud-download"
                                                                                          ng-click="downloadAttachment(attchment)"></i></a>
                                                         <a href="javascript:void(0);"><i class="fa fa-times"
@@ -733,5 +736,5 @@
 
     </div>
 
-
+    <a href="" id="image-viewer" data-lightbox="image-1" data-title=""></a>
 </div>
