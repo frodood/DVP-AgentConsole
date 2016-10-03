@@ -4,6 +4,8 @@
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService, ticketService, engagementService, profileDataParser, authService) {
 
+
+
     $scope.showAlert = function (tittle, type, msg) {
         new PNotify({
             title: tittle,
@@ -31,6 +33,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }
         return hours + ':' + minutes + ':' + seconds;
     };
+
+
 
 
     $scope.dataTest = {
@@ -61,7 +65,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     // Doughnut Chart Options
     $scope.labels = ["Acw", "Break", "OnCall", "Idle", "Hold"];
     $scope.type = 'doughnut';
-    $scope.doughnutoptions = {legend: {display: true},
+    $scope.doughnutoptions = {
+        legend: {display: true},
+        segmentShowStroke : true,
+        animationSteps : 10,
+        animationEasing : "linear",
         tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
@@ -76,7 +84,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
                 }
             }
-        }};
+        }
+    };
 
     $scope.toggle = function () {
         $scope.type = $scope.type === 'polarArea' ?
@@ -158,6 +167,40 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             if (response) {
 
                 $scope.pieDataset = [response.AcwTime, response.BreakTime, response.OnCallTime, response.IdleTime, response.HoldTime];
+
+                /*$scope.pieDataset = [
+                    {
+                        value: response.BreakTime,
+                        color:"#F7464A",
+                        highlight: "#FF5A5E",
+                        label: "Red"
+                    },
+                    {
+                        value: response.IdleTime,
+                        color: "#46BFBD",
+                        highlight: "#5AD3D1",
+                        label: "Green"
+                    },
+                    {
+                        value: response.AcwTime,
+                        color: "#FDB45C",
+                        highlight: "#FFC870",
+                        label: "Yellow"
+                    },
+                    {
+                        value: response.OnCallTime,
+                        color: "#949FB1",
+                        highlight: "#A8B3C5",
+                        label: "Grey"
+                    },
+                    {
+                        value: response.HoldTime,
+                        color: "#4D5360",
+                        highlight: "#616774",
+                        label: "Dark Grey"
+                    }
+
+                ];*/
 
 
                 $scope.productivity.OnCallTime = response.OnCallTime.toString().toHHMMSS();

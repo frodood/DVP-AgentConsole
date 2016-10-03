@@ -322,8 +322,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 else if (e.toString().toLowerCase() == 'in call') {
                     /*UIStateChange.inCallConnectedState();*/
+                    $scope.startCallTime();
                     phoneFuncion.showHoldButton();
                     phoneFuncion.showMuteButton();
+                    phoneFuncion.showEndButton();
                     $scope.ShowIncomeingNotification(false);
                 }
             }
@@ -413,8 +415,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             try {
 
                 console.log("uiCallTerminated");
+                $scope.stopCallTime();
                 $scope.ShowIncomeingNotification(false);
-                phoneFuncion.hideEndButton();
                 phoneFuncion.hideHoldButton();
                 phoneFuncion.hideMuteButton();
                 if (window.btnBFCP) window.btnBFCP.disabled = true;
@@ -1725,4 +1727,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     getCurrentState.getResourceState();
 
 
+    $scope.counter = 0;
+    var mytimeout = {};
+    $scope.duations = '';
+    $scope.onTimeout = function(){
+        $scope.counter++;
+        $scope.duations=$scope.counter.toString().toHHMMSS();
+        mytimeout = $timeout($scope.onTimeout,1000);
+    };
+
+
+    $scope.stopCallTime = function(){
+        $timeout.cancel(mytimeout);
+    };
+    $scope.startCallTime = function() {
+        $scope.counter = 0;
+        mytimeout = $timeout($scope.onTimeout, 1000);
+    }
 });
