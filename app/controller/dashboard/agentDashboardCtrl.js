@@ -32,18 +32,56 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         return hours + ':' + minutes + ':' + seconds;
     };
 
+
+    $scope.dataTest = {
+        labels: [
+            "Red",
+            "Blue",
+            "Yellow"
+        ],
+        datasets: [
+            {
+                data: [300, 50, 100],
+                backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56"
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56"
+                ]
+            }]
+    };
+
     $scope.pieDataset = [];
     $scope.productivity = {};
 
     // Doughnut Chart Options
     $scope.labels = ["Acw", "Break", "OnCall", "Idle", "Hold"];
     $scope.type = 'doughnut';
+    $scope.doughnutoptions = {legend: {display: true},
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var allData = data.datasets[tooltipItem.datasetIndex].data;
+                    var tooltipLabel = data.labels[tooltipItem.index];
+                    var tooltipData = allData[tooltipItem.index];
+                    var total = 0;
+                    for (var i in allData) {
+                        total += allData[i];
+                    }
+                    var tooltipPercentage = Math.round((tooltipData / total) * 100);
+                    return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+                }
+            }
+        }};
 
     $scope.toggle = function () {
         $scope.type = $scope.type === 'polarArea' ?
             'doughnut' : 'polarArea';
     };
-
 
     $scope.dataRange = [];
     var enumerateDaysBetweenDates = function(startDate, endDate) {
@@ -66,15 +104,19 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             pointBackgroundColor: 'rgba(0,128,0,1)',
             pointHoverBackgroundColor: 'rgba(0,128,0,1)',
             borderColor: 'rgba(0,128,0,1)',
-            pointBorderColor: '#fff',
-            pointHoverBorderColor: 'rgba(0,128,0,0.8)'
+            pointBorderColor: '#3333ff',
+            pointHoverBorderColor: 'rgba(0,128,0,0.8)',
+            /*fillColor: 'rgba(47, 132, 71, 0.8)',
+            strokeColor: 'rgba(47, 132, 71, 0.8)',
+            highlightFill: 'rgba(47, 132, 71, 0.8)',
+            highlightStroke: 'rgba(47, 132, 71, 0.8)'*/
         },
         { // dark grey
             backgroundColor: 'rgba(0,0,128,0.2)',
             pointBackgroundColor: 'rgba(0,0,128,1)',
             pointHoverBackgroundColor: 'rgba(0,0,128,1)',
             borderColor: 'rgba(0,0,128,1)',
-            pointBorderColor: '#fff',
+            pointBorderColor: '#cc00ff',
             pointHoverBorderColor: 'rgba(0,0,128,0.8)'
         }
     ];
@@ -89,6 +131,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         datasetFill: true,
         lineTension : 0,
         pointRadius: 0,
+        /*title: {
+            display: true,
+            text: 'OPEN VS CLOSE'
+        },*/
         scales: {
             yAxes: [
                 {

@@ -20,14 +20,10 @@
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="dark-pro-chart-wrap" ng-click="toggle();">
+                                    <div class="dark-pro-chart-wrap" >
 
-                                        <!--<canvas id="doughnut" class="chart chart-doughnut"
-                                                chart-data="pieDataset" chart-labels="labels">
-                                        </canvas>-->
-
-                                        <canvas id="base" class="chart-base" chart-type="type"
-                                                chart-data="pieDataset" chart-labels="labels" >
+                                        <canvas id="doughnut" class="chart-base" chart-type="type"
+                                                chart-data="pieDataset" chart-labels="labels" chart-options="doughnutoptions">
                                         </canvas>
 
                                     </div>
@@ -81,7 +77,7 @@
                                 <div class="col-lg-12">
                                     <h5 class="dark-header text-uppercase">Open vs Close</h5>
                                 </div>
-                                <canvas id="line" chart-colors="colors" class="chart chart-line" chart-data="openCloseData"
+                                <canvas width="436px" height="200px"  id="line" chart-colors="colors" class="chart chart-line" chart-data="openCloseData"
                                         chart-labels="dataRange" chart-series="openCloseSeries" chart-options="options"
                                          >
                                 </canvas>
@@ -93,7 +89,7 @@
 
                                 <div class="col-lg-12 agent-ticket-chart-wrapper">
 
-                                    <canvas id="lineq" chart-colors="defColors" class="chart chart-line" chart-data="data"
+                                    <canvas width="436px" height="100px" id="lineq" chart-colors="defColors" class="chart chart-line" chart-data="data"
                                             chart-labels="dataRange" chart-series="series" chart-options="options"
                                             >
                                     </canvas>
