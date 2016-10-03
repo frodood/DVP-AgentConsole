@@ -30,6 +30,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.newComment = "";
             scope.ticketNextLevels = [];
 
+            scope.myProfileID=profileDataParser.myProfile._id;
+
             scope.callToCustomer = function (no) {
                 var newId = scope.ticketDetails.tabReference;
                 scope.ticketDetails.tabReference = newId + "-Call" + no;
@@ -1100,14 +1102,16 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.assignToMe = function (id) {
                 ticketService.PickTicket(id).then(function (response) {
                     if (response) {
-                        scope.showAlert("Ticket assigning", "success", "Successfully assign.");
-                        scope.ticket.assignee = profileDataParser.myProfile;
+
+                            scope.showAlert("Ticket assigning", "success", "Successfully assign.");
+                            scope.ticket.assignee = profileDataParser.myProfile;
+
                     }
                     else {
                         scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
                     }
                 }, function (error) {
-                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed",error);
                 });
             };
 
