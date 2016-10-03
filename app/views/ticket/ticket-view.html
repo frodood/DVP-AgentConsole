@@ -557,7 +557,7 @@
                                                     <div class="notification-text" ng-show="ticket.assignee">
                                                         {{ticket.assignee.name}}
                                                     </div>
-                                                    <a ng-show="ticket.assignee" ng-click="setAssigneeAsMe()">Assign to me</a>
+                                                    <a ng-show="ticket.assignee && ticket.assignee._id!=myProfileID" ng-click="setAssigneeAsMe()">Assign to me</a>
                                                     <div class="notification-time text-uppercase bold color-green500" ng-if="!ticket.assignee.name" ng-show="ticket.assignee_group.name">
                                                         ASSIGNEE GROUP
                                                     </div>
