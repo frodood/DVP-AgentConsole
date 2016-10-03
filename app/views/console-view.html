@@ -420,26 +420,26 @@
             </div>
 
             <div class="phone-button-wrapper">
-                <div class="phone-btn" id="answerButton">
-                    <i class="veery-phone-icon-1-call-answer" ng-click="veeryPhone.makeAudioCall(call.number);"></i>
+                <div class="phone-btn" id="answerButton" ng-click="veeryPhone.makeAudioCall(call.number);">
+                    <i class="veery-phone-icon-1-call-answer" ></i>
                 </div>
-                <div class="phone-btn" id="endButton">
-                    <i class="veery-phone-icon-1-call-ended" ng-click="veeryPhone.endCall();"></i>
+                <div class="phone-btn" id="endButton" ng-click="veeryPhone.endCall();">
+                    <i class="veery-phone-icon-1-call-ended" ></i>
                 </div>
-                <div class="phone-btn" id="holdResumeButton">
-                    <i class="veery-phone-icon-1-phone-call-1" ng-click="veeryPhone.holdResumeCall();"></i>
+                <div class="phone-btn" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">
+                    <i class="veery-phone-icon-1-phone-call-1" ></i>
                 </div>
                 <div class="phone-btn">
                     <i class="veery-font-1-user"></i>
                 </div>
-                <div class="phone-btn" id="muteButton">
-                    <i class="veery-font-1-mute" ng-click="veeryPhone.muteCall();"></i>
+                <div class="phone-btn" id="muteButton" ng-click="veeryPhone.muteCall();">
+                    <i class="veery-font-1-mute" ></i>
                 </div>
-                <div class="phone-btn">
-                    <i class="veery-font-1-menu-4" ng-click="ShowHideDialpad();"></i>
+                <div class="phone-btn" ng-click="ShowHideDialpad();">
+                    <i class="veery-font-1-menu-4" ></i>
                 </div>
-                <div class="phone-btn" id="speakerButton">
-                    <i class="veery-font-1-speaker-4"ng-click="veeryPhone.muteCall();"></i>
+                <div class="phone-btn" id="speakerButton" ng-click="veeryPhone.muteCall();">
+                    <i class="veery-font-1-speaker-4"></i>
                 </div>
                 <div class="phone-btn">
                     <i class="veery-font-1-add"></i>
@@ -566,8 +566,8 @@
     <div>
         <!-- Audios -->
         <audio id="audio_remote" autoplay="autoplay"></audio>
-        <audio id="ringtone" loop src="DVP-AgentConsole/assets/sounds/ringtone.wav"></audio>
-        <audio id="ringbacktone" loop src="DVP-AgentConsole/assets/sounds/ringbacktone.wav"></audio>
-        <audio id="dtmfTone" src="DVP-AgentConsole/assets/sounds/dtmf.wav"></audio>
+        <audio id="ringtone" loop src="/assets/sounds/ringtone.wav"></audio>
+        <audio id="ringbacktone" loop src="/assets/sounds/ringbacktone.wav"></audio>
+        <audio id="dtmfTone" src="/assets/sounds/dtmf.wav"></audio>
     </div>
 </div>

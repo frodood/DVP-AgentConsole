@@ -98,9 +98,9 @@ function postInit() {
         audio_remote: audioRemote,
         /*video_local: viewVideoLocal,
         video_remote: viewVideoRemote,
-         video_size: {minWidth: undefined, minHeight: undefined, maxWidth: undefined, maxHeight: undefined},*/
-        screencast_window_id: 0x00000000, // entire desktop
-        bandwidth: {audio: undefined, video: undefined},
+         video_size: {minWidth: undefined, minHeight: undefined, maxWidth: undefined, maxHeight: undefined},
+        screencast_window_id: 0x00000000, */
+        bandwidth: {audio: undefined},
         events_listener: {events: '*', listener: onSipEventSession},
         sip_caps: [
             {name: '+g.oma.sip-im'},
@@ -135,7 +135,6 @@ function sipRegister() {
                 enable_early_ims: true, // Must be true unless you're using a real IMS network
                 enable_media_stream_cache: true,
                 bandwidth: null, // could be redefined a session-level
-                video_size: null, // could be redefined a session-level
                 sip_headers: [
                     {name: 'User-Agent', value: 'IM-client/OMA1.0 sipML5-v1.2016.03.04'},
                     {name: 'Organization', value: 'DuoSoftware'}
