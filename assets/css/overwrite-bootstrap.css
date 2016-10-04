@@ -143,9 +143,9 @@ label {
 .console-main-tab {
     background: #fff;
     border-left: 1px solid #f7f5f5;
-    border-bottom: 1px solid #f7f5f5;
+    border-bottom: 1px solid #36ba45;
     padding-top: 0px;
-    padding-bottom: 6px;
+    padding-bottom: 0px;
 }
 
 .console-main-tab >
@@ -158,9 +158,9 @@ label {
 }
 
 .nav-tabs > li.console-main-tab.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-    color: #555;
+    color: #36ba45;
     cursor: default;
-    background-color: #fff;
+    background-color: #17373c;
     border: 0px solid #ddd;
     border-bottom: 2px solid #36ba45;
 }

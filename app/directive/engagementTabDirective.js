@@ -1136,7 +1136,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     scope.$apply(function () {
                         scope.myImage = loadEvent.target.result
                     });
-                }
+
+                };
                 reader.readAsDataURL(changeEvent.target.files[0]);
             });
         }

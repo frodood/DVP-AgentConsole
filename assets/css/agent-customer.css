@@ -2958,11 +2958,6 @@ tags-input .tags .input {
     background-color: rgba(223, 255, 252, 0.29);
 }
 
-
-
-
-
-
 .thumbnail {
     height: 150px;
     overflow: hidden;
@@ -3011,6 +3006,7 @@ tags-input .tags .input {
 .view-first:hover p {
     transition-delay: 0.1s;
 }
+
 .view {
     overflow: hidden;
     position: relative;
@@ -3018,6 +3014,7 @@ tags-input .tags .input {
     box-shadow: 1px 1px 2px #e6e6e6;
     cursor: default;
 }
+
 .view .mask, .view .content {
     position: absolute;
     width: 100%;
@@ -3074,7 +3071,6 @@ tags-input .tags .input {
     box-shadow: 0 0 1px #000;
 }
 
-
 /*phone*/
 .phone-button {
     position: relative;
@@ -3089,17 +3085,19 @@ tags-input .tags .input {
     /* Chrome,Safari4+ */
     background-color: White;
     Outline: none;
-    padding-left:5px;
-    margin-left:2px;
-    margin-bottom:7px;
-    height:43px;
-    border-color:#ccc;
+    padding-left: 5px;
+    margin-left: 2px;
+    margin-bottom: 7px;
+    height: 43px;
+    border-color: #ccc;
 }
-.phone-dialpad-display{
+
+.phone-dialpad-display {
     position: inherit;
     bottom: 150px;
     right: 94px;
 }
+
 .phone-dialpad {
     width: 193px;
     height: 161px;
@@ -3110,17 +3108,16 @@ tags-input .tags .input {
     text-align: center;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
-    outline:none;
+    outline: none;
 }
-.phone-dialpad-no{
+
+.phone-dialpad-no {
     margin-bottom: 4px;
     border-radius: 15px 15px 5px 5px;
     width: 192px;
     height: 35px;
     text-align: center;
 }
-
-
 
 /*new update */
 
@@ -3153,7 +3150,7 @@ tags-input .tags .input {
     text-align: center;
     margin: 20px auto;
     position: relative;
-    overflow: hidden;
+    padding-top: 15px;
 }
 
 .profile-image-crop > div > img {
@@ -3161,27 +3158,27 @@ tags-input .tags .input {
     height: 150px;
     border-radius: 50%;
     cursor: pointer;
+    border: 2px solid #f7f5f5;
 }
 
 .profile-image-crop > div {
-    width: 150px;
-    height: 150px;
-    position: relative;
-    overflow: hidden;
-    margin: 0 auto;
+    /*width: 150px;*/
+    /*height: 150px;*/
+    /*position: relative;*/
+    /*overflow: hidden;*/
+    /*margin: 0 auto;*/
 }
 
 .image-edit {
-    position: absolute;
-    top: 118px;
-    left: 60px;
+    text-align: center;
+    margin-top: 15px;
 }
 
 .image-edit > .btn-edit-img {
-    color: #36ba45;
+    color: #ffffff;
     text-transform: uppercase;
-    background-color: rgba(54, 186, 69, 0.52);
-    padding: 5px;
+    background-color: rgba(54, 186, 69, 0.6);
+    padding: 6px 18px 6px 18px;
     border-radius: 5px;
     font-size: 11px;
     cursor: pointer;
@@ -3312,4 +3309,8 @@ tags-input .tags .input {
 .profile-tab-pills > ul.nav-pills > li.active > a:hover {
     color: #4f9300;
     background-color: #1a3d42;
+}
+
+.footer-new-profile {
+    margin-top: 30px;
 }
