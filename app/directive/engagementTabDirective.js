@@ -1084,7 +1084,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 $rootScope.$emit('openNewTab', data);
             };
 
-
             scope.queryTicketList = function (query) {
                 if (query === "*" || query === "") {
                     if (scope.ticketList) {
