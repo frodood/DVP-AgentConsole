@@ -68,14 +68,17 @@
                                 </div>
                             </div>-->
                             <form name="engagementFrm" novalidate>
-                                <div class="new-note-wrapper" ng-class="{ 'has-error': engagementFrm.noteBody.$invalid && engagementFrm.noteBody.$dirty }" >
+                                <div class="new-note-wrapper"
+                                     ng-class="{ 'has-error': engagementFrm.noteBody.$invalid && engagementFrm.noteBody.$dirty }">
 
-                                    <textarea ng-model="noteBody" class="form-control" rows="3" name="noteBody" required placeholder="Enter Note" ></textarea>
-                                    <div class="help-block" ng-messages="engagementFrm.noteBody.$error" ng-if="engagementFrm.noteBody.$touched">
+                                    <textarea ng-model="noteBody" class="form-control" rows="3" name="noteBody" required
+                                              placeholder="Enter Note"></textarea>
+                                    <div class="help-block" ng-messages="engagementFrm.noteBody.$error"
+                                         ng-if="engagementFrm.noteBody.$touched">
                                         <p ng-message="required">Note is required.</p>
                                     </div>
                                     <div class="btn-warp inline-btn  p-top-6 pull-right">
-                              <span  ng-disabled="engagementFrm.$invalid" class="btn  btn-default btn-sm "
+                              <span ng-disabled="engagementFrm.$invalid" class="btn  btn-default btn-sm "
                                     ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
                                     </div>
                                 </div>
@@ -154,9 +157,6 @@
             <div class="col-md-3 col-lg-3 col-sm-12 ">
                 <div class="btn-wrapper">
                     <div class="btn-warp inline-btn">
-                        <span class="btn  btn-default">new</span>
-                    </div>
-                    <div class="btn-warp inline-btn">
                         <span class="btn  btn-default">search</span>
                     </div>
                 </div>
@@ -165,8 +165,8 @@
     </div>
 
 
-    <uib-tabset type="pills">
-        <uib-tab heading="Profile" class="btn tab-btn">
+    <uib-tabset class="profile-tab-pills" type="pills">
+        <uib-tab heading="Profile">
             <div class="animated ">
                 <!-- PROFILE HEADER2 -->
                 <div class=" col-sm-12 col-lg-12 col-md-12 p-0">
@@ -202,7 +202,8 @@
                                     </li>
                                     <li>
                                         <small>Address</small>
-                                        <h5>{{profileDetail.address.zipcode}} ,{{profileDetail.address.street}}, {{profileDetail.address.city}}</h5>
+                                        <h5>{{profileDetail.address.zipcode}} ,{{profileDetail.address.street}},
+                                            {{profileDetail.address.city}}</h5>
                                     </li>
                                     <li>
                                         <div class="details-wrap">
@@ -374,21 +375,28 @@
                             <div class="prn2-recent-activity ">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent Activity</h5>
+                                        <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent
+                                            Activity</h5>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6" ng-repeat="recentTicket in recentTicketList.tickets">
                                         <div class="recent-activity-wrap ">
                                             <div class="col-lg-9 p-0 font-color-blue900">
-                                                <small class="ticker-id bold" ng-click="gotoTicket(recentTicket)">{{recentTicket.reference}}</small>
+                                                <small class="ticker-id bold" ng-click="gotoTicket(recentTicket)">
+                                                    {{recentTicket.reference}}
+                                                </small>
                                                 <br>
-                                                {{recentTicket.description}}
+                                                {{ recentTicket.description | limitTo: 25}}
+                                                {{recentTicket.description.length > 25 ? '...' : ''}}
                                             </div>
                                             <div class="col-lg-3 p-0">
                                                 <small class="font-color-yellow">{{recentTicket.status}}</small>
                                                 <br>
-                                                <small class="font-color-green"><time-ago from-time='{{ recentTicket.created_at }}' format='MM/dd/yyyy'></time-ago></small>
+                                                <small class="font-color-green">
+                                                    <time-ago from-time='{{ recentTicket.created_at }}'
+                                                              format='MM/dd/yyyy'></time-ago>
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -461,11 +469,14 @@
                                                 </div>
                                                 <div>
                                                     <div ng-if="!buildModel">
-                                                        <label>Ticket form has been modified, please fill data to new form</label>
+                                                        <label>Ticket form has been modified, please fill data to new
+                                                            form</label>
                                                         <div>{{oldFormModel}}</div>
                                                     </div>
 
-                                                    <form name="customFormProfile" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(customFormProfile)"></form>
+                                                    <form name="customFormProfile" sf-schema="schema" sf-form="form"
+                                                          sf-model="model"
+                                                          ng-submit="onSubmit(customFormProfile)"></form>
                                                 </div>
                                             </div>
                                         </div>
@@ -479,15 +490,20 @@
 
             </div>
         </uib-tab>
-        <uib-tab heading="Time line" classes="btn tab-btn">
+        <uib-tab heading="Time line">
             <div class="animated">
                 <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
             </div>
         </uib-tab>
-        <uib-tab heading="Ticket" classes="btn tab-btn">
+        <uib-tab heading="Ticket">
             <div class="animated">
                 <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
             </div>
+        </uib-tab>
+        <uib-tab index="4" heading="New"
+        <div class="animated">
+            <div ng-include="'app/views/profile/new-profile.html'"></div>
+        </div>
         </uib-tab>
     </uib-tabset>
 
@@ -497,12 +513,24 @@
         <div class="prn2-multiple-wrapper">
             <div class="col-md-3">
                 <div class="profile-multiple-wrap">
-
+                    <div class="pin-dote left"></div>
+                    <div class="pin-dote right"></div>
+                    <div class="profile-img-wrapper">
+                        <img src="assets/img/avatar/defaultProfile.jpg"
+                             ng-src="assets/img/avatar/kurafire.jpg">
+                    </div>
+                    <div class="btn-profile-view">
+                        view
+                    </div>
+                    <div class="profile-body">
+                        <h5 class="bold">john amaratunga</h5>
+                        <small>0777888888</small>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
+
 </div>
 
 <!-- add new ticket -->
@@ -539,10 +567,13 @@
                         <div class="model-body">
 
                             <form name="userForm" novalidate>
-                                <div class="form-group" ng-class="{ 'has-error': userForm.Subject.$invalid && userForm.Subject.$dirty }" >
+                                <div class="form-group"
+                                     ng-class="{ 'has-error': userForm.Subject.$invalid && userForm.Subject.$dirty }">
                                     <label class="control-label">Subject*</label>
-                                    <input type="text" class="form-control" name="Subject" ng-model="ticket.subject" id="ticketSubject" required placeholder="Subject" />
-                                    <div class="help-block" ng-messages="userForm.Subject.$error" ng-if="userForm.Subject.$touched">
+                                    <input type="text" class="form-control" name="Subject" ng-model="ticket.subject"
+                                           id="ticketSubject" required placeholder="Subject"/>
+                                    <div class="help-block" ng-messages="userForm.Subject.$error"
+                                         ng-if="userForm.Subject.$touched">
                                         <p ng-message="required">Subject is required.</p>
                                     </div>
                                 </div>
@@ -552,34 +583,41 @@
                                         <div class="col-xs-7">
                                             <label for="ticketSubject">Priority</label>
                                             <div class="form-inline">
-                                                <div class="bg-checkbox red font-white inline-btn" ng-click="setPriority('urgent');">
-                                                    <i class="main-icon-2-cancel" ></i>
+                                                <div class="bg-checkbox red font-white inline-btn"
+                                                     ng-click="setPriority('urgent');">
+                                                    <i class="main-icon-2-cancel"></i>
                                                     urgent
                                                 </div>
-                                                <div class="bg-checkbox red font-white orange" ng-click="setPriority('high');">
+                                                <div class="bg-checkbox red font-white orange"
+                                                     ng-click="setPriority('high');">
                                                     <i class="main-icon-2-cancel"></i>
                                                     high
                                                 </div>
-                                                <div class="bg-checkbox red font-white teal600"  ng-click="setPriority('normal');">
+                                                <div class="bg-checkbox red font-white teal600"
+                                                     ng-click="setPriority('normal');">
                                                     <i class="main-icon-2-cancel"></i>
                                                     normal
                                                 </div>
-                                                <div class="bg-checkbox red font-white gray300" ng-click="setPriority('low');">
+                                                <div class="bg-checkbox red font-white gray300"
+                                                     ng-click="setPriority('low');">
                                                     <i class="main-icon-2-cancel"></i>
                                                     low
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-5">
-                                            <div class="form-group" ng-class="{ 'has-error': userForm.type.$invalid && userForm.type.$dirty }">
+                                            <div class="form-group"
+                                                 ng-class="{ 'has-error': userForm.type.$invalid && userForm.type.$dirty }">
                                                 <label for="ticketSubject">Type*</label>
-                                                <select class="form-control" ng-model="ticket.type" name="type" required placeholder="Select" >
+                                                <select class="form-control" ng-model="ticket.type" name="type" required
+                                                        placeholder="Select">
                                                     <option>question</option>
                                                     <option>complain</option>
                                                     <option>incident</option>
                                                     <option>action</option>
                                                 </select>
-                                                <div class="help-block" ng-messages="userForm.type.$error" ng-if="userForm.type.$touched">
+                                                <div class="help-block" ng-messages="userForm.type.$error"
+                                                     ng-if="userForm.type.$touched">
                                                     <p ng-message="required">Type is required.</p>
                                                 </div>
                                             </div>
@@ -589,12 +627,14 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="ticketSubject">Tags</label><button ng-click="loadTags();" > Reload  </button>
+                                    <label for="ticketSubject">Tags</label>
+                                    <button ng-click="loadTags();"> Reload</button>
                                     <tags-input ng-model="postTags" display-property="name" placeholder="...">
                                         <auto-complete source="loadPostTags($query)"></auto-complete>
                                     </tags-input>
 
-                                    <tags-input ng-model="newAddTags" placeholder="choose Tags" replace-spaces-with-dashes="false"
+                                    <tags-input ng-model="newAddTags" placeholder="choose Tags"
+                                                replace-spaces-with-dashes="false"
                                                 display-property="name"
                                                 add-from-autocomplete-only="true"
                                                 on-tag-added="onChipAddTag($tag)"
@@ -620,17 +660,21 @@
                                                         min-length="1"></auto-complete>
                                      </tags-input>
                                  </div>-->
-                                <div class="form-group" ng-class="{ 'has-error': userForm.Description.$invalid && userForm.Description.$dirty }" >
+                                <div class="form-group"
+                                     ng-class="{ 'has-error': userForm.Description.$invalid && userForm.Description.$dirty }">
                                     <label for="ticketSubject">Description*</label>
-                                    <textarea ng-model="ticket.description" class="form-control" rows="3" name="Description" required placeholder="Description" ></textarea>
-                                    <div class="help-block" ng-messages="userForm.Description.$error" ng-if="userForm.Description.$touched">
+                                    <textarea ng-model="ticket.description" class="form-control" rows="3"
+                                              name="Description" required placeholder="Description"></textarea>
+                                    <div class="help-block" ng-messages="userForm.Description.$error"
+                                         ng-if="userForm.Description.$touched">
                                         <p ng-message="required">Description is required.</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="ticketSubject">Related Tickets</label>
-                                    <tags-input ng-model="ticket.related" placeholder="choose Ticket" replace-spaces-with-dashes="false"
+                                    <tags-input ng-model="ticket.related" placeholder="choose Ticket"
+                                                replace-spaces-with-dashes="false"
                                                 display-property="reference"
                                                 add-from-autocomplete-only="true"
                                                 ng-disabled="" min-length="1">
@@ -669,7 +713,7 @@
                                         <div class="btn-warp ">
                                 <span ng-disabled="userForm.$invalid" class="btn btn-default"
                                       ng-click="saveTicket(ticket);"
-                                        >Save</span>
+                                >Save</span>
                                         </div>
                                     </div>
 
