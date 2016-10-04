@@ -1,39 +1,61 @@
-<div class="profile-ticket-wrapper">
+<div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
 
-    <div class="profile-ticker-wrap new-ticker" ng-repeat="ticket in ticketList">
+    <div class="profile-ticker-wrap"
+         ng-class="{'high-boarder':ticket.priority=='urgent',
+                        'normal-boarder':ticket.priority=='normal'}">
         <div class="ticket-channel call">
-            <i class="veery-font-3-mail-4"></i>
+            <i class="fa fa-facebook"></i>
         </div>
-        <div class="left-avatar">
-            <img class="object-fit_cover" src="assets/img/avatar/default-user.png" ng-src="{{ticket.submitter.avatar}}">
-        </div>
+
         <div class="right-ticket-details">
-            <div class="row">
-                <div class="ticker-id bold" ng-click="gotoTicket(ticket)">
-                    {{ticket.reference}}
+            <div class="col-md-12 p-0">
+                <div class="col-md-2 p-0">
+                    <div class="left-avatar">
+                        <img class="object-fit_cover" src="assets/img/avatar/avater_ticket.jpg"
+                             ng-src="{{ticket.submitter.avatar}}">
+                    </div>
                 </div>
-                <div class="ticket-subj bold">
-                    {{ticket.subject}}
-                    <small class="high">{{ticket.priority}}</small>
+                <div class="col-md-8 ">
+                    <div class="ticker-id bold" ng-click="gotoTicket(ticket)">
+                        {{ticket.reference}}
+                        <small class="color-cyan500 text-uppercase">
+                            <time-ago from-time='{{ticket.created_at}}' format='MM/dd/yyyy'></time-ago>
+                        </small>
+                    </div>
+                    <div class="ticket-subj bold">
+                        {{ticket.subject}}
+                        <small ng-class="{'high':ticket.priority=='urgent',
+                        'normal':ticket.priority=='normal'}">{{ticket.priority}}
+                        </small>
+                    </div>
+                    <div class="ticket-desc">
+                        <div class="pull-left">
+                            <div class="ticket-desc">
+                                {{ticket.description}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="ticket-desc">
-                    {{ticket.description}}
-                </div>
-                <ul class="info-list-lg">
-                    <li>
-                        <small>OWNER</small>
-                        <h5>{{ticket.submitter.name}}</h5>
-                    </li>
-                    <li>
-                        <small>USER</small>
-                        <h5>{{ticket.requester.name}}</h5>
-                    </li>
-                </ul>
-                <div class="ticket-date">
-                    <time-ago from-time='{{ticket.created_at}}' format='MM/dd/yyyy'></time-ago>
+                <div class="col-md-2">
+                    <div class="row">
+                        <ul class="info-list-lg ticket-details-list pull-left">
+                            <li>
+                                <small>OWNER</small>
+                                <h5>{{ticket.submitter.name}}</h5>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="row">
+                        <ul class="info-list-lg ticket-details-list pull-left">
+                            <li>
+                                <small>USER</small>
+                                <h5>{{ticket.requester.name}}</h5>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

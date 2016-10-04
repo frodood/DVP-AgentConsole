@@ -1102,7 +1102,19 @@ ul.info-list-lg > li > h5 {
 }
 
 .ticket-subj > small.high {
-    color: #d90000;
+    color: #d90000 !important;
+}
+
+.ticket-subj > small.normal {
+    color: #d2c242 !important;
+}
+
+.high-boarder {
+    border-top: 3px solid #d90000;
+}
+
+.normal-boarder {
+    border-top: 3px solid #d2c242;
 }
 
 .ticket-channel {
@@ -2312,6 +2324,7 @@ tags-input .tags .input {
 .prn2-image-wrapper > div > .profile-details-img {
     margin: 0px;
     padding-bottom: 15px;
+    overflow: hidden;
 }
 
 .prn2-image-wrapper > div > .profile-details-img > img {
@@ -2362,6 +2375,7 @@ tags-input .tags .input {
 .recent-activity-wrap {
     min-height: 50px;
     border-right: 2px solid #45bf55;
+    margin-bottom: 15px;
 }
 
 .border-0 {
@@ -2423,14 +2437,79 @@ tags-input .tags .input {
 }
 
 .profile-multiple-wrap {
-    min-height: 250px;
-    border-radius: 10px;
+    min-height: 195px;
+    border-radius: 5px 5px 0px 0px;
     height: auto;
     overflow: hidden;
     background: #ffffff;
-    -webkit-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
-    -moz-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
-    box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53)
+    -webkit-box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53)
+}
+
+.profile-multiple-wrap > .profile-img-wrapper {
+    text-align: center;
+    margin: 0 auto;
+    background-color: #f7f5f5;
+}
+
+.profile-multiple-wrap > .profile-img-wrapper > img {
+    margin: 20px auto;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid #36ba96;
+}
+
+.profile-multiple-wrap > .profile-body {
+    text-align: center;
+}
+
+.profile-multiple-wrap > .profile-body > h5 {
+    margin-bottom: 2px;
+    color: #36ba45;
+}
+
+.profile-multiple-wrap > .profile-body > small {
+    margin-bottom: 2px;
+    color: #d2c242;
+}
+
+.profile-multiple-wrap > .btn-profile-view {
+    width: 50px;
+    height: 25px;
+    background-color: #36ba96;
+    color: #fff;
+    padding-left: 11px;
+    padding-top: 2px;
+    border-radius: 25px;
+    position: absolute;
+    top: 90px;
+    left: 84px;
+    cursor: pointer;
+}
+
+.profile-multiple-wrap > .pin-dote {
+    background: #fff;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+
+    top: 10px;
+}
+
+.profile-multiple-wrap > .pin-dote.left {
+    left: 25px;
+}
+
+.profile-multiple-wrap > .pin-dote.right {
+    right: 25px;
+}
+
+.profile-multiple-wrap > .btn-profile-view:hover {
+    background-color: #f7f5f5;
+    color: #36ba96;
 }
 
 .prn2-other-wrapper {
@@ -2471,8 +2550,8 @@ tags-input .tags .input {
     width: 100%;
     height: 950px;
     border-radius: 0px;
-    background: url(../img/bg/bg-dashboard.jpg) no-repeat;
-    background-position: top -123px;
+    /*background: url(../img/bg/bg-dashboard.jpg) no-repeat;*/
+    /*background-position: top -123px;*/
     position: relative;
     padding-left: 10px;
     padding-right: 10px;
@@ -2638,7 +2717,9 @@ tags-input .tags .input {
 .recent-activity {
     width: 100%;
     min-height: 65px;
+    overflow: hidden;
     height: auto;
+    padding-bottom: 10px;
     background: rgba(21, 169, 250, 0.03);
     margin-bottom: 5px;
 }
@@ -3037,4 +3118,198 @@ tags-input .tags .input {
     width: 192px;
     height: 35px;
     text-align: center;
+}
+
+
+
+/*new update */
+
+.banner-text-bg {
+    background-color: #fff;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    z-index: 1000;
+}
+
+.add-cont {
+    width: 30px;
+    height: 30px;
+    background: #36ba45;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    padding-top: 6px;
+    text-align: center;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.add-cont > i {
+    font-size: 18px;
+}
+
+.profile-image-crop {
+    text-align: center;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-image-crop > div > img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile-image-crop > div {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.image-edit {
+    position: absolute;
+    top: 118px;
+    left: 60px;
+}
+
+.image-edit > .btn-edit-img {
+    color: #36ba45;
+    text-transform: uppercase;
+    background-color: rgba(54, 186, 69, 0.52);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.image-edit > .btn-edit-img:hover {
+    color: #fff;
+    background-color: rgba(54, 186, 69, 1);
+}
+
+.cropArea {
+    background: transparent;
+    overflow: hidden;
+    width: 500px;
+    height: 350px;
+    margin: 0 auto;
+}
+
+.cropArea > .ng-isolate-scope > canvas {
+    margin: 0px !important;
+}
+
+.profile-upload-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    top: 0;
+}
+
+.upload-wrapper {
+    width: 100%;
+    text-align: center;
+    margin: 15px auto;
+}
+
+.input-file {
+    background: #36ba45;
+    border-radius: .5em;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    width: 270px;
+    margin: 10px auto;
+    color: #fff;
+    padding: 10px 12px 10px 10px;
+}
+
+.input-file > input[type=file] {
+    cursor: inherit;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+
+}
+
+.input-file input {
+    display: block !important;
+    width: 157px !important;
+    height: 57px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+}
+
+.input-file [type=file] {
+    cursor: pointer;
+}
+
+.crop-text {
+    text-align: center;
+    font-size: 33px;
+    margin-top: 100px;
+    color: #f7f5f5;
+}
+
+.crop-text > i {
+    font-size: 66px;
+    color: #36ba45;
+}
+
+.crop-window-close {
+    color: #36ba45;
+    padding-top: 30px;
+    float: right;
+    width: 100%;
+    text-align: right;
+}
+
+.crop-window-close > i {
+    width: 20px;
+    height: 20px;
+    background-color: #17373c;
+    border-radius: 50%;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.crop-window-close > i:hover {
+    color: #fff;
+}
+
+.done-btn-wrapper {
+    text-align: center;
+}
+
+/*customer profile tab panel*/
+.profile-tab-pills > ul.nav {
+    position: absolute;
+    top: 12px;
+    left: 300px;
+}
+
+.profile-tab-pills > ul.nav > li > a {
+    padding: 6px 15px;
+    color: #8298ae;
+}
+
+.profile-tab-pills > ul.nav-pills > li.active > a,
+.profile-tab-pills > ul.nav-pills > li.active > a:focus,
+.profile-tab-pills > ul.nav-pills > li.active > a:hover {
+    color: #4f9300;
+    background-color: #1a3d42;
 }

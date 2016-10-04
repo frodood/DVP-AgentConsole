@@ -1,6 +1,5 @@
-<div class="agent-dashboard-wrapper" ng-controller="agentDashboardCtrl" >
+<div class="agent-dashboard-wrapper animated fadeIn" ng-controller="agentDashboardCtrl">
     <div class="container">
-
 
 
         <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
@@ -20,10 +19,11 @@
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="dark-pro-chart-wrap" >
+                                    <div class="dark-pro-chart-wrap">
 
                                         <canvas id="doughnut" class="chart-base" chart-type="type"
-                                                chart-data="pieDataset" chart-labels="labels" chart-options="doughnutoptions">
+                                                chart-data="pieDataset" chart-labels="labels"
+                                                chart-options="doughnutoptions">
                                         </canvas>
 
                                     </div>
@@ -77,9 +77,10 @@
                                 <div class="col-lg-12">
                                     <h5 class="dark-header text-uppercase">Open vs Close</h5>
                                 </div>
-                                <canvas width="436px" height="200px"  id="line" chart-colors="colors" class="chart chart-line" chart-data="openCloseData"
+                                <canvas width="436px" height="200px" id="line" chart-colors="colors"
+                                        class="chart chart-line" chart-data="openCloseData"
                                         chart-labels="dataRange" chart-series="openCloseSeries" chart-options="options"
-                                         >
+                                >
                                 </canvas>
 
 
@@ -89,9 +90,10 @@
 
                                 <div class="col-lg-12 agent-ticket-chart-wrapper">
 
-                                    <canvas width="436px" height="100px" id="lineq" chart-colors="defColors" class="chart chart-line" chart-data="data"
+                                    <canvas width="436px" height="100px" id="lineq" chart-colors="defColors"
+                                            class="chart chart-line" chart-data="data"
                                             chart-labels="dataRange" chart-series="series" chart-options="options"
-                                            >
+                                    >
                                     </canvas>
 
                                     <!--<canvas id="bar" chart-colors="defColors" class="chart chart-line" chart-data="data"
@@ -155,10 +157,13 @@
                                         <div class="col-lg-4">
                                             <div class="pull-right">
                                                 <div class="dark-footer-wrap recent-activity-right">
-                                                    <small ng-click="viewTicket(ticket);">{{ticket.reference}}</small>
+                                                    <h5 class="count" style="cursor: pointer"
+                                                        ng-click="viewTicket(ticket);">
+                                                        {{ticket.reference}}</h5>
                                                     <h5 class="count "> {{ticket.status}}</h5>
                                                     <div class="title">
-                                                        <time-ago from-time='{{ ticket.updated_at }}' format='MM/dd/yyyy'></time-ago>
+                                                        <time-ago from-time='{{ ticket.updated_at }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,7 +174,7 @@
                             <div class="col-lg-6">
                                 <h5 class="dark-header">RECENT ACTIVITY - ENGAGEMENT</h5>
                                 <div class="recent-activity" ng-repeat="eng in recentEngagements">
-                                    <div class="col-lg-8" >
+                                    <div class="col-lg-8">
                                         <div class="pull-left recent-activity-left">
                                             {{eng.channel}}
                                         </div>
@@ -180,7 +185,8 @@
                                                 <h5 class="count "> {{eng.direction}}</h5>
                                                 <h5 class="count "> {{eng.channel_from}}</h5>
                                                 <div class="title">
-                                                    <time-ago from-time='{{ eng.updated_at }}' format='MM/dd/yyyy'></time-ago>
+                                                    <time-ago from-time='{{ eng.updated_at }}'
+                                                              format='MM/dd/yyyy'></time-ago>
                                                 </div>
                                             </div>
                                         </div>
