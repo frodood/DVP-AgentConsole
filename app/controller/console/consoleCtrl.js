@@ -535,7 +535,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             direction: values[7],
             channelFrom: values[3],
             channelTo: values[5],
-            channel: 'Call',
+            channel: 'call',
             skill: values[6],
             sessionId: values[1]
         };
