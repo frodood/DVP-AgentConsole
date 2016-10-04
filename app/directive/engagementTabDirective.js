@@ -544,53 +544,53 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
                 else {
                     //if (!formSubmission) {
-                        //create form submission
+                    //create form submission
 
-                        var schema = {
-                            type: "object",
-                            properties: {}
-                        };
+                    var schema = {
+                        type: "object",
+                        properties: {}
+                    };
 
-                        var form = [];
+                    var form = [];
 
-                        scope.buildModel = true;
+                    scope.buildModel = true;
 
-                        ticketService.getFormsForCompany().then(function (response) {
-                            if (response && response.Result && response.Result.profile_form) {
-                                //compare two forms
-                                buildFormSchema(schema, form, response.Result.profile_form.fields);
-                                scope.currentForm = response.Result.profile_form;
+                    ticketService.getFormsForCompany().then(function (response) {
+                        if (response && response.Result && response.Result.profile_form) {
+                            //compare two forms
+                            buildFormSchema(schema, form, response.Result.profile_form.fields);
+                            scope.currentForm = response.Result.profile_form;
 
-                                form.push({
-                                    type: "submit",
-                                    title: "Save"
-                                });
-
-
-                                var schemaResponse = {};
-
-                                schemaResponse = {
-                                    schema: schema,
-                                    form: form,
-                                    model: {}
-                                };
-
-                                callback(schemaResponse);
-                            }
-                            else {
-                                callback(null);
-                            }
+                            form.push({
+                                type: "submit",
+                                title: "Save"
+                            });
 
 
-                        }).catch(function (err) {
+                            var schemaResponse = {};
+
+                            schemaResponse = {
+                                schema: schema,
+                                form: form,
+                                model: {}
+                            };
+
+                            callback(schemaResponse);
+                        }
+                        else {
                             callback(null);
+                        }
 
-                        });
+
+                    }).catch(function (err) {
+                        callback(null);
+
+                    });
 
                     /*}
-                    else {
-                        callback(null);
-                    }*/
+                     else {
+                     callback(null);
+                     }*/
 
                 }
 
@@ -674,7 +674,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             else {
                                 scope.availableTags = chip.tags;
                             }
-                            if(scope.availableTags.length===0){
+                            if (scope.availableTags.length === 0) {
                                 setToDefault();
                             }
                             return;
@@ -955,7 +955,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.GetIvrDetailsByEngagementId();
 
 
-
             /* Load Profile Details for Current Engagement */
             scope.ticketList = [];
             scope.GetAllTicketsByRequester = function (requester, page) {
@@ -975,7 +974,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
 
-
             var getExternalUserRecentTickets = function (id) {
                 ticketService.GetExternalUserRecentTickets(id).then(function (response) {
                     scope.recentTicketList = response;
@@ -993,7 +991,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     category = 'phone';
                 }
 
-                if(scope.userProfile){
+                if (scope.userProfile) {
                     scope.profileDetail = scope.userProfile;
 
                     scope.currentSubmission = scope.userProfile.form_submission;
@@ -1009,7 +1007,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                     scope.GetProfileHistory(scope.profileDetail._id);
                     getExternalUserRecentTickets(scope.profileDetail._id);
-                }else {
+                } else {
                     userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                         scope.profileDetails = response;
                         if (scope.profileDetails) {
@@ -1040,7 +1038,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
             };
             scope.GetExternalUserProfileByContact();
-
 
 
             scope.showAlert = function (tittle, type, msg) {
@@ -1076,13 +1073,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.gotoTicket = function (data) {
                 data.tabType = "ticketView";
                 data.activeSession = {
-                   "sessionId": scope.sessionId,
+                    "sessionId": scope.sessionId,
                     "direction": scope.direction,
                     "channelFrom": scope.channelFrom,
                     "channelTo": scope.channelTo,
                     "channel": scope.channel,
                     "skill": scope.skill,
-                    "authorExternal":scope.profileDetail._id
+                    "authorExternal": scope.profileDetail._id
                 };
                 $rootScope.$emit('openNewTab', data);
             };
@@ -1110,6 +1107,48 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             };
 
+            //engagement console
+            //image crop deatails
+            scope.isShowCrop = false;
+            scope.myImage = '';
+            scope.myCroppedImage = '';
+            scope.cropImageURL = null;
+
+            scope.viewCropArea = function () {
+                scope.isShowCrop = !scope.isShowCrop;
+            };
+            scope.cropImage = function () {
+                scope.cropImageURL = scope.myCroppedImage;
+                scope.isShowCrop = !scope.isShowCrop;
+            };
+
+            var handleFileSelect = function (evt) {
+                var file = evt.currentTarget.files[0];
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    scope.$apply(function ($scope) {
+                        scope.myImage = evt.target.result;
+                    });
+                };
+                reader.readAsDataURL(file);
+            };
         }
     }
-});
+}).directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.myImage = loadEvent.target.result
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);

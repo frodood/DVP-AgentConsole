@@ -17,7 +17,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         },
         Register: function () {
             if ($scope.isRegistor) {
@@ -36,10 +36,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ShowIncomeingNotification = function (status) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').
-                removeClass('display-none zoomOut');
+            removeClass('display-none zoomOut');
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').
-                removeClass('display-block  zoomOut');
+            removeClass('display-block  zoomOut');
         }
     };
 
@@ -48,29 +48,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('#isOperationPhone').addClass('display-block ').
-                removeClass('display-none');
+            removeClass('display-none');
         } else {
             //is hide phone
             $('#isOperationPhone').addClass('display-none ').
-                removeClass('display-block');
+            removeClass('display-block');
         }
     };
 
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').
-            removeClass('display-block active-menu-icon ');
+        removeClass('display-block active-menu-icon ');
         $('#isBtnReg').addClass('display-block active-menu-icon   ').
-            removeClass('display-none  ');
+        removeClass('display-none  ');
         $scope.ShowHidePhone(true);
     };
 
     $scope.PhoneOffline = function () {
 
         $('#isLoadingRegPhone').addClass('display-block').
-            removeClass('display-none');
+        removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').
-            removeClass('display-block active-menu-icon');
+        removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -738,6 +738,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.addDashBoard();
 
+    //$scope.addTab('multiple-profile', 'multiple-profile', 'multiple-profile', "multiple-profile");
+
 
     var openNewEngagementTab = function (args, index) {
         var notifyData = {
@@ -1244,26 +1246,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                    if (data.IsSuccess) {
-                        if (data.Result && data.Result.UNREAD) {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception) {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    console.log(err);
+                    },
+                    function (err) {
+                        console.log(err);
 
-                })
+                    })
 
         }
         catch (ex) {
@@ -1566,7 +1568,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $('#Available').addClass('font-color-green bold');
             });
         }
-    }//end
+    };//end
 
     //change agent Register status
     $scope.changeRegisterStatus = {
@@ -1576,9 +1578,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             resourceService.GetContactVeeryFormat().then(function (res) {
                 if (res.IsSuccess) {
                     resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result.ContactName).
-                        then(function (data) {
-                            console.log(data);
-                        })
+                    then(function (data) {
+                        console.log(data);
+                    })
                 } else {
                     console.log(data);
                 }
@@ -1587,7 +1589,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
             //
         }
-    }//end
+    };//end
 
     var getCurrentState = (function () {
         return {
@@ -1624,6 +1626,34 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     })();
     getCurrentState.breakState();
     getCurrentState.getResourceState();
+
+    // crate new profile
+    //image crop deatails
+    $scope.isShowCrop = false;
+    $scope.myImage = '';
+    $scope.myCroppedImage = '';
+    $scope.cropImageURL = null;
+
+    $scope.viewCropArea = function () {
+        $scope.isShowCrop = !$scope.isShowCrop;
+    };
+    $scope.cropImage = function () {
+        $scope.cropImageURL = $scope.myCroppedImage;
+        $scope.isShowCrop = !$scope.isShowCrop;
+    };
+
+    var handleFileSelect = function (evt) {
+        var file = evt.currentTarget.files[0];
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            $scope.$apply(function ($scope) {
+                $scope.myImage = evt.target.result;
+            });
+        };
+        reader.readAsDataURL(file);
+    };
+
+    angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
 
 
 });

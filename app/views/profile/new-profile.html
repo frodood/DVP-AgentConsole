@@ -1,0 +1,186 @@
+<!-- Crate new profile -->
+<div>
+    <!-- crate new profile -->
+    <div class="col-lg-12">
+        <div class="new-profile-wrapper">
+            <div class="profile-image-crop">
+                <div>
+                    <img ng-src="{{cropImageURL}}" src="assets/img/avatar/profile_img150x150.jpg">
+                    <div class="image-edit">
+                        <span class="btn-edit-img" ng-click="viewCropArea()">edit</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <h5>Address</h5>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="no">P.O. Box / Building No</label>
+                        <input type="text" class="form-control" id="no" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" id="country" placeholder="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="street">Street</label>
+                        <input type="text" class="form-control" id="street" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Province</label>
+                        <input type="text" class="form-control" id="province" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ZipCode">Zip Code</label>
+                        <input type="text" class="form-control" id="ZipCode" placeholder="">
+                    </div>
+                </div>
+
+                <!-- personal information -->
+                <div class="col-lg-12">
+                    <div class="row">
+                        <h5>Personal Information</h5>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="FirstName">First Name</label>
+                            <input type="text" class="form-control" id="FirstName" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="street">Last Name</label>
+                            <input type="text" class="form-control" id="street" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="province">Locale</label>
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="city">Nick Name</label>
+                            <input type="text" class="form-control" id="city" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <!-- Birthday -->
+                        <label>Birthday</label>
+                        <form class="form-inline">
+                            <div class="form-group ">
+                                <select class="form-control ">
+                                    <option value="" disabled selected>Select day</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <select class="form-control">
+                                        <option value="" disabled selected>Select month</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option value="" disabled selected>Select year</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!-- contact information -->
+                <div class="col-md-12">
+                    <h5>Veery Account Information</h5>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="ZipCode">Contact Type</label>
+                            <div class="form-group ">
+                                <select class="form-control ">
+                                    <option value="" disabled selected>Select contact type</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ZipCode">Link</label>
+                            <input type="text" class="form-control" id="Link" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div class="add-cont">
+                                <i class="ti-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end -->
+    <div class="profile-upload-wrapper" ng-show="isShowCrop">
+        <div class="col-lg-12">
+            <div class="crop-window-close" ng-click="viewCropArea()">
+                <i class="ti-close"></i>
+            </div>
+            <div class="cropArea">
+                <div class="crop-text" ng-if="myImage.length==0">
+                    <i class="veery-font-1-upload"></i></br>
+                    Upload photo
+                </div>
+                <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
+            </div>
+
+
+            <div class="upload-wrapper">
+                <div class="input-file inline-block">
+                    Select a photo from your computer
+                    <input type="file"
+                           fileread="vm.uploadme""/>
+                </div>
+            </div>
+            <div class="done-btn-wrapper">
+                <div ng-click="cropImage();" class="btn-warp inline-block" ng-show="myImage.length">
+                    <span class="btn btn-default2">Done</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end -->

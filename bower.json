@@ -50,7 +50,9 @@
     "videogular": "^1.4.4",
     "angular-ui-tab-scroll": "^2.2.7",
     "angular-file-upload": "^2.3.4",
-    "angular-download": "^0.0.2"
+    "angular-download": "^0.0.2",
+    "angular-owl-carousel": "^0.2.3",
+    "ng-img-crop": "ngImgCrop#^0.3.2"
   },
   "resolutions": {
     "moment": "^2.14.1",

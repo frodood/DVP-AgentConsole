@@ -6,9 +6,11 @@
 var agentApp = angular.module('veeryAgentApp',
     ['ngRoute', 'ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize','uuid','angular-flot','angularFileUpload','download','fileServiceModule',
+        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize', 'uuid', 'angular-flot',
+        'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll','ngAnimate','mgcrea.ngStrap'
+        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap',
+        'ngImgCrop'
     ]);
 
 
@@ -31,8 +33,8 @@ var baseUrls = {
 
 agentApp.constant('baseUrls', baseUrls);
 
-agentApp.config(function(scrollableTabsetConfigProvider){
-    scrollableTabsetConfigProvider.setShowTooltips (true);
+agentApp.config(function (scrollableTabsetConfigProvider) {
+    scrollableTabsetConfigProvider.setShowTooltips(true);
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
@@ -57,8 +59,8 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
                 requireLogin: false
             }
         })
-    }],function(scrollableTabsetConfigProvider){
-    scrollableTabsetConfigProvider.setShowTooltips (true);
+    }], function (scrollableTabsetConfigProvider) {
+    scrollableTabsetConfigProvider.setShowTooltips(true);
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });

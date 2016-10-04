@@ -1,5 +1,5 @@
 <div id="main" ng-controller="consoleCtrl">
-    <div >
+    <div>
         <nav id="navBar" class="navbar navbar-default console-nav-bar">
 
 
@@ -85,8 +85,10 @@
                         <form class="form-inline navbar-form navbar-left ">
                             <div class="form-group">
                                 <input id="commonSearch" type="text" class="main-search-input" ng-model="searchText"
-                                       typeahead-min-length="0" typeahead-focus-on-select="false" typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
-                                       uib-typeahead="state.value for state in states" placeholder="Search by keyword, #ticker or #profile">
+                                       typeahead-min-length="0" typeahead-focus-on-select="false"
+                                       typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
+                                       uib-typeahead="state.value for state in states"
+                                       placeholder="Search by keyword, #ticker or #profile">
                             </div>
 
                         </form>
@@ -508,6 +510,9 @@
                             </div>
                             <div ng-switch-when="dashboard">
                                 <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
+                            </div>
+                            <div ng-switch-when="multiple-profile">
+                                <div ng-include="'app/views/profile/multiple-profile-view.html'"></div>
                             </div>
                             <!--<div ng-switch-when="userProfile">
                                 <div ng-include="'app/views/profile/user-profile.html'"></div>
