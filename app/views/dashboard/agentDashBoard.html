@@ -1,6 +1,9 @@
 <div class="agent-dashboard-wrapper animated fadeIn" ng-controller="agentDashboardCtrl" >
     <div class="container">
-        <div class="col-md-offset-1 col-md-10 col-sm-10 col-xs-10 col-lg-10">
+
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
             <div class="dashboard-wrapper">
                 <div id="dashboard-opacity"></div>
 
@@ -17,8 +20,12 @@
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="dark-pro-chart-wrap">
-                                        <flot dataset="pieDataset" options="pieOptions" height="320px"></flot>
+                                    <div class="dark-pro-chart-wrap" >
+
+                                        <canvas id="doughnut" class="chart-base" chart-type="type"
+                                                chart-data="pieDataset" chart-labels="labels" chart-options="doughnutoptions">
+                                        </canvas>
+
                                     </div>
                                     <div class="dark-product-wrapper">
                                         <div class="col-lg-4">
@@ -34,8 +41,9 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="dark-status text-left">
-                                                Available
+                                            <div class="dark-product-ticker-wrap">
+                                                <h1 class="onCall">{{productivity.BreakTime| date:'HH:mm:ss'}}</h1>
+                                                <div class="title onCall">Break Time</div>
                                             </div>
                                         </div>
                                     </div>
@@ -50,6 +58,7 @@
                                 <div class="col-lg-12">
                                     <h5 class="dark-header">TICKET</h5>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="dark-ticker-wrap">
                                         <h1>{{openTicketCount}}</h1>
@@ -66,17 +75,29 @@
 
                             <div class="dark-chart-wrapper">
                                 <div class="col-lg-12">
-                                    <h5 class="dark-header text-uppercase"> resolved Chart</h5>
+                                    <h5 class="dark-header text-uppercase">Open vs Close</h5>
                                 </div>
-                                <div class="col-lg-12 agent-ticket-chart-wrapper">
-                                    <flot dataset="myData" options="myChartOptions"
-                                          height="160px"></flot>
-                                </div>
+                                <canvas width="436px" height="200px"  id="line" chart-colors="colors" class="chart chart-line" chart-data="openCloseData"
+                                        chart-labels="dataRange" chart-series="openCloseSeries" chart-options="options"
+                                         >
+                                </canvas>
+
+
                             </div>
                             <div class="dark-chart-wrapper">
+
+
                                 <div class="col-lg-12 agent-ticket-chart-wrapper">
-                                    <flot dataset="myData2" options="myChartOptions2"
-                                          height="90px"></flot>
+
+                                    <canvas width="436px" height="100px" id="lineq" chart-colors="defColors" class="chart chart-line" chart-data="data"
+                                            chart-labels="dataRange" chart-series="series" chart-options="options"
+                                            >
+                                    </canvas>
+
+                                    <!--<canvas id="bar" chart-colors="defColors" class="chart chart-line" chart-data="data"
+                                            chart-labels="dataRange" chart-series="series" chart-options="defoptions"
+                                             >
+                                    </canvas>-->
                                 </div>
                             </div>
 

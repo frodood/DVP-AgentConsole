@@ -30,6 +30,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.newComment = "";
             scope.ticketNextLevels = [];
 
+            scope.myProfileID=profileDataParser.myProfile._id;
+
             scope.callToCustomer = function (no) {
                 var newId = scope.ticketDetails.tabReference;
                 scope.ticketDetails.tabReference = newId + "-Call" + no;
@@ -518,48 +520,48 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
                 else {
 
-                        //create form submission
+                    //create form submission
 
-                        var schema = {
-                            type: "object",
-                            properties: {}
-                        };
+                    var schema = {
+                        type: "object",
+                        properties: {}
+                    };
 
-                        var form = [];
+                    var form = [];
 
-                        scope.buildModel = true;
+                    scope.buildModel = true;
 
-                        ticketService.getFormsForCompany().then(function (response) {
-                            if (response && response.Result && response.Result.ticket_form) {
-                                //compare two forms
-                                buildFormSchema(schema, form, response.Result.ticket_form.fields);
-                                scope.currentForm = response.Result.ticket_form;
+                    ticketService.getFormsForCompany().then(function (response) {
+                        if (response && response.Result && response.Result.ticket_form) {
+                            //compare two forms
+                            buildFormSchema(schema, form, response.Result.ticket_form.fields);
+                            scope.currentForm = response.Result.ticket_form;
 
-                                form.push({
-                                    type: "submit",
-                                    title: "Save"
-                                });
-
-
-                                var schemaResponse = {};
-
-                                schemaResponse = {
-                                    schema: schema,
-                                    form: form,
-                                    model: {}
-                                };
-
-                                callback(schemaResponse);
-                            }
-                            else {
-                                callback(null);
-                            }
+                            form.push({
+                                type: "submit",
+                                title: "Save"
+                            });
 
 
-                        }).catch(function (err) {
+                            var schemaResponse = {};
+
+                            schemaResponse = {
+                                schema: schema,
+                                form: form,
+                                model: {}
+                            };
+
+                            callback(schemaResponse);
+                        }
+                        else {
                             callback(null);
+                        }
 
-                        });
+
+                    }).catch(function (err) {
+                        callback(null);
+
+                    });
 
 
 
@@ -651,25 +653,25 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
 
-                                scope.logedTimes.forEach(function(item){
+                            scope.logedTimes.forEach(function(item){
 
-                                    //console.log(currentIndex);
+                                //console.log(currentIndex);
 
 
 
-                                   var result = scope.ticket.collaborators.filter(function( obj ) {
-                                        return obj._id == item.user;
-                                    });
-
-                                    if(result && result.length> 0) {
-
-                                        if(!result[0].loggedTime)
-                                            result[0].loggedTime = 0;
-
-                                            result[0].loggedTime += item.time;
-                                    }
-
+                                var result = scope.ticket.collaborators.filter(function( obj ) {
+                                    return obj._id == item.user;
                                 });
+
+                                if(result && result.length> 0) {
+
+                                    if(!result[0].loggedTime)
+                                        result[0].loggedTime = 0;
+
+                                    result[0].loggedTime += item.time;
+                                }
+
+                            });
 
 
                             scope.ticket.collaborators.forEach(function(item){
@@ -1100,14 +1102,16 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.assignToMe = function (id) {
                 ticketService.PickTicket(id).then(function (response) {
                     if (response) {
-                        scope.showAlert("Ticket assigning", "success", "Successfully assign.");
-                        scope.ticket.assignee = profileDataParser.myProfile;
+
+                            scope.showAlert("Ticket assigning", "success", "Successfully assign.");
+                            scope.ticket.assignee = profileDataParser.myProfile;
+
                     }
                     else {
                         scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
                     }
                 }, function (error) {
-                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed",error);
                 });
             };
 
@@ -1322,7 +1326,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.file = {};
             scope.file.Category = "TICKET_ATTACHMENTS";
-
+            scope.uploadProgress=0;
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                 console.info('onWhenAddingFileFailed', item, filter, options);
             };
@@ -1349,6 +1353,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             uploader.onProgressItem = function (fileItem, progress) {
                 console.info('onProgressItem', fileItem, progress);
+                scope.uploadProgress=progress;
+                if( scope.uploadProgress==100)
+                {
+                    scope.showAlert("Attachment","success","Successfully uploaded");
+                    setTimeout(function () {
+                        scope.uploadProgress=0;
+                    }, 500);
+
+                }
             };
             uploader.onProgressAll = function (progress) {
                 console.info('onProgressAll', progress);
@@ -1358,6 +1371,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {
                 console.info('onErrorItem', fileItem, response, status, headers);
+                scope.showAlert("Attachment","error","Uploading failed");
+                scope.uploadProgress=0;
             };
             uploader.onCancelItem = function (fileItem, response, status, headers) {
                 console.info('onCancelItem', fileItem, response, status, headers);
@@ -1368,7 +1383,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     var attchmentData =
                     {
                         file: fileItem._file.name,
-                        url: baseUrls.fileService + "/InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
+                        url: baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
                         type: fileItem._file.type,
                         size: fileItem._file.size
                     }
@@ -1406,12 +1421,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         var attachmentItem = $filter('filter')(scope.uploadedAttchments, {
                             _id: attchmntID
 
-                        });
+                        })[0];
 
-                        scope.uploadedAttchments.splice($filter('filter')(scope.uploadedAttchments, {
+                        scope.uploadedAttchments.splice(scope.uploadedAttchments.indexOf($filter('filter')(scope.uploadedAttchments, {
                             _id: attchmntID
 
-                        }), 1);
+                        })[0]), 1);
                     }
                 }), function (error) {
                     console.log(error);
@@ -1487,22 +1502,36 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             scope.playAttachment = function (attachment) {
 
-                if (videogularAPI && attachment.url) {
-                    var info = authService.GetCompanyInfo();
-                    /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
-                    var fileToPlay = attachment.url;
+                if(scope.isImage(attachment.type))
+                {
+                    document.getElementById("image-viewer").href=attachment.url;
 
-                    var arr = [
-                        {
-                            src: $sce.trustAsResourceUrl(fileToPlay),
-                            type: attachment.type
-                        }
-                    ];
+                   $('#image-viewer').trigger('click');
 
-                    scope.config.sources = arr;
-                    videogularAPI.play();
-                    scope.isPlay = true;
+
+
                 }
+                else
+                {
+                    if (videogularAPI && attachment.url) {
+                        var info = authService.GetCompanyInfo();
+                        /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
+                        var fileToPlay = attachment.url;
+
+                        var arr = [
+                            {
+                                src: $sce.trustAsResourceUrl(fileToPlay),
+                                type: attachment.type
+                            }
+                        ];
+
+                        scope.config.sources = arr;
+                        videogularAPI.play();
+                        scope.isPlay = true;
+                    }
+                }
+
+
 
 
             };
@@ -1533,7 +1562,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         scope.showAlert("Success","success","Ticket watching stoped");
                         if(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id)!=-1)
                         {
-                           scope.ticket.watchers.splice(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id),1);
+                            scope.ticket.watchers.splice(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id),1);
                         }
                         scope.isWatching=false;
                     }
@@ -1542,7 +1571,34 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
             };
 
+            scope.isImage = function (fileType) {
+
+                if(fileType.toString().split("/")[0]=="image")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            };
+
+            scope.isViewable = function (fileType) {
+                if( fileType.toString().split("/")[0]=="video" || fileType.toString().split("/")[0]=="audio")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+
             /*Audio Player-end*/
+
 
 
         }

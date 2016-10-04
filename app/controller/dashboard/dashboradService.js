@@ -94,7 +94,7 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
     var getQueueDetails = function () {
         return $http({
             method: 'get',
-            url: baseUrls.dashBordUrl+"/DashboardEvent/QueueDetails",
+            url: baseUrls.dashBordUrl+"DashboardEvent/QueueDetails",
             headers: {
                 'authorization': authService.GetToken()
             }

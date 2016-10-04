@@ -2941,193 +2941,179 @@ tags-input .tags .input {
     padding-top: 5px;
 }
 
-.banner-text-bg {
-    background-color: #fff;
-    width: 150px;
-    height: 150px;
-    position: absolute;
-    z-index: 1000;
-}
-
-.add-cont {
-    width: 30px;
-    height: 30px;
-    background: #36ba45;
-    border-radius: 50%;
-    color: #fff;
-    cursor: pointer;
-    padding-top: 6px;
-    text-align: center;
+.activity-divider {
+    height: 1px;
+    margin: 9px 0;
     overflow: hidden;
-    margin-top: 20px;
+    background-color: #e5e5e5;
 }
 
-.add-cont > i {
-    font-size: 18px;
-}
-
-.profile-image-crop {
-    text-align: center;
-    margin: 20px auto;
-    position: relative;
-    overflow: hidden;
-}
-
-.profile-image-crop > div > img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.profile-image-crop > div {
-    width: 150px;
-    height: 150px;
-    position: relative;
-    overflow: hidden;
-    margin: 0 auto;
-}
-
-.image-edit {
-    position: absolute;
-    top: 118px;
-    left: 60px;
-}
-
-.image-edit > .btn-edit-img {
-    color: #36ba45;
-    text-transform: uppercase;
-    background-color: rgba(54, 186, 69, 0.52);
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.image-edit > .btn-edit-img:hover {
-    color: #fff;
-    background-color: rgba(54, 186, 69, 1);
-}
-
-.cropArea {
-    background: transparent;
-    overflow: hidden;
-    width: 500px;
-    height: 350px;
-    margin: 0 auto;
-}
-
-.cropArea > .ng-isolate-scope > canvas {
-    margin: 0px !important;
-}
-
-.profile-upload-wrapper {
+.ticket-comment-wrapper > .activity-divider {
+    height: 1px;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    position: absolute;
-    top: 0;
-}
-
-.upload-wrapper {
-    width: 100%;
-    text-align: center;
-    margin: 15px auto;
-}
-
-.input-file {
-    background: #36ba45;
-    border-radius: .5em;
-    text-align: center;
+    margin: 9px 0;
     overflow: hidden;
-    position: relative;
-    width: 270px;
-    margin: 10px auto;
-    color: #fff;
-    padding: 10px 12px 10px 10px;
+    background-color: rgba(223, 255, 252, 0.29);
 }
 
-.input-file > input[type=file] {
-    cursor: inherit;
-    display: block;
-    font-size: 999px;
-    filter: alpha(opacity=0);
-    min-height: 100%;
-    min-width: 100%;
+
+
+
+
+
+.thumbnail {
+    height: 150px;
+    overflow: hidden;
+}
+
+.thumbnail .image {
+    height: 120px;
+    overflow: hidden;
+}
+
+.view-first img {
+    transition: all 0.2s linear;
+}
+
+.view-first .mask {
     opacity: 0;
-    position: absolute;
-    right: 0;
-    text-align: right;
-    top: 0;
-
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease-in-out;
 }
 
-.input-file input {
-    display: block !important;
-    width: 157px !important;
-    height: 57px !important;
-    opacity: 0 !important;
-    overflow: hidden !important;
+.view-first .tools {
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
 }
 
-.input-file [type=file] {
-    cursor: pointer;
+.view-first p {
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.2s linear;
 }
 
-.crop-text {
+.view-first:hover img {
+    transform: scale(1.1);
+}
+
+.view-first:hover .mask {
+    opacity: 1;
+}
+
+.view-first:hover .tools, .view-first:hover p {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.view-first:hover p {
+    transition-delay: 0.1s;
+}
+.view {
+    overflow: hidden;
+    position: relative;
     text-align: center;
-    font-size: 33px;
-    margin-top: 100px;
-    color: #f7f5f5;
+    box-shadow: 1px 1px 2px #e6e6e6;
+    cursor: default;
 }
-
-.crop-text > i {
-    font-size: 66px;
-    color: #36ba45;
-}
-
-.crop-window-close {
-    color: #36ba45;
-    padding-top: 30px;
-    float: right;
+.view .mask, .view .content {
+    position: absolute;
     width: 100%;
-    text-align: right;
+    overflow: hidden;
+    top: 0;
+    left: 0;
 }
 
-.crop-window-close > i {
-    width: 20px;
-    height: 20px;
-    background-color: #17373c;
-    border-radius: 50%;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
+.view img {
+    display: block;
+    position: relative;
 }
 
-.crop-window-close > i:hover {
+.view .tools {
+    text-transform: uppercase;
     color: #fff;
+    text-align: center;
+    position: relative;
+    font-size: 17px;
+    padding: 3px;
+    background: rgba(0, 0, 0, 0.35);
+    margin: 43px 0 0 0;
 }
 
-.done-btn-wrapper {
+.mask.no-caption .tools {
+    margin: 90px 0 0 0;
+}
+
+.view .tools a {
+    display: inline-block;
+    color: #FFF;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 0 4px;
+}
+
+.view p {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 12px;
+    position: relative;
+    color: #fff;
+    padding: 10px 20px 20px;
     text-align: center;
 }
 
-/*customer profile tab panel*/
-.profile-tab-pills > ul.nav {
-    position: absolute;
-    top: 12px;
-    left: 300px;
-
+.view a.info {
+    display: inline-block;
+    text-decoration: none;
+    padding: 7px 14px;
+    background: #000;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: 0 0 1px #000;
 }
 
-.profile-tab-pills > ul.nav > li > a {
-    padding: 6px 15px;
-    color: #044d29;
-}
 
-.profile-tab-pills > ul.nav-pills > li.active > a,
-.profile-tab-pills > ul.nav-pills > li.active > a:focus,
-.profile-tab-pills > ul.nav-pills > li.active > a:hover {
-    color: #4f9300;
-    background-color: #1a3d42;
+/*phone*/
+.phone-button {
+    position: relative;
+    width: 62px;
+    /*border: 1px solid black;*/
+    border: 1px solid black;
+    border-radius: 12px;
+    /*border-radius: 7px;*/
+    padding-top: 14px;
+    padding-bottom: 29px;
+    /*background-color: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(241,241,241,1)), color-stop(51%,rgba(225,225,225,1)), color-stop(100%,rgba(246,246,246,1)));*/
+    /* Chrome,Safari4+ */
+    background-color: White;
+    Outline: none;
+    padding-left:5px;
+    margin-left:2px;
+    margin-bottom:7px;
+    height:43px;
+    border-color:#ccc;
+}
+.phone-dialpad-display{
+    position: inherit;
+    bottom: 150px;
+    right: 94px;
+}
+.phone-dialpad {
+    width: 193px;
+    height: 161px;
+    /*margin: 25px auto;*/
+    border: 0px solid silver;
+    border-radius: 4px;
+    padding: 3px;
+    text-align: center;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    outline:none;
+}
+.phone-dialpad-no{
+    margin-bottom: 4px;
+    border-radius: 15px 15px 5px 5px;
+    width: 192px;
+    height: 35px;
+    text-align: center;
 }

@@ -6,11 +6,9 @@
 var agentApp = angular.module('veeryAgentApp',
     ['ngRoute', 'ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize', 'uuid', 'angular-flot',
-        'angularFileUpload', 'download', 'fileServiceModule',
+        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize','uuid','angular-flot','angularFileUpload','download','fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap',
-        'ngImgCrop'
+        'ui.tab.scroll','ngAnimate','mgcrea.ngStrap','chart.js'
     ]);
 
 
@@ -27,14 +25,14 @@ var baseUrls = {
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
     'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'resourceService': 'http://localhost:8832/DVP/API/1.0.0.0/ResourceManager/',
+    'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
     'dashBordUrl': 'http://dashboard.app.veery.cloud/'
 };
 
 agentApp.constant('baseUrls', baseUrls);
 
-agentApp.config(function (scrollableTabsetConfigProvider) {
-    scrollableTabsetConfigProvider.setShowTooltips(true);
+agentApp.config(function(scrollableTabsetConfigProvider){
+    scrollableTabsetConfigProvider.setShowTooltips (true);
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
@@ -59,8 +57,8 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
                 requireLogin: false
             }
         })
-    }], function (scrollableTabsetConfigProvider) {
-    scrollableTabsetConfigProvider.setShowTooltips(true);
+    }],function(scrollableTabsetConfigProvider){
+    scrollableTabsetConfigProvider.setShowTooltips (true);
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });

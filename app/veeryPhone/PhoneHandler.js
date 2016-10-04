@@ -96,11 +96,11 @@ function postInit() {
     document.body.style.cursor = 'default';
     oConfigCall = {
         audio_remote: audioRemote,
-        video_local: viewVideoLocal,
+        /*video_local: viewVideoLocal,
         video_remote: viewVideoRemote,
-        screencast_window_id: 0x00000000, // entire desktop
-        bandwidth: {audio: undefined, video: undefined},
-        video_size: {minWidth: undefined, minHeight: undefined, maxWidth: undefined, maxHeight: undefined},
+         video_size: {minWidth: undefined, minHeight: undefined, maxWidth: undefined, maxHeight: undefined},
+        screencast_window_id: 0x00000000, */
+        bandwidth: {audio: undefined},
         events_listener: {events: '*', listener: onSipEventSession},
         sip_caps: [
             {name: '+g.oma.sip-im'},
@@ -135,7 +135,6 @@ function sipRegister() {
                 enable_early_ims: true, // Must be true unless you're using a real IMS network
                 enable_media_stream_cache: true,
                 bandwidth: null, // could be redefined a session-level
-                video_size: null, // could be redefined a session-level
                 sip_headers: [
                     {name: 'User-Agent', value: 'IM-client/OMA1.0 sipML5-v1.2016.03.04'},
                     {name: 'Organization', value: 'DuoSoftware'}
@@ -242,6 +241,12 @@ function sipToggleHoldResume() {
         if (i_ret != 0) {
             return 'Hold / Resume failed';
         }
+        if(oSipSessionCall.bHeld){
+            return '0';
+        }
+        else {
+            return '1';
+        }
     }
 }
 
@@ -255,7 +260,8 @@ function sipToggleMute() {
             return 'Mute / Unmute failed';
         }
         oSipSessionCall.bMute = bMute;
-        btnMute.value = bMute ? "Unmute" : "Mute";
+        /*btnMute.value = bMute ? "Unmute" : "Mute";*/
+        return bMute;
     }
 }
 
