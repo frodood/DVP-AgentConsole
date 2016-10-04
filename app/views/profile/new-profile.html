@@ -148,6 +148,13 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="btn-warp pull-right " style="margin-top: 10px;">
+                            <span ng-disabled="userForm.$invalid" class="btn btn-default"
+                                  disabled="disabled">Save</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -176,7 +183,8 @@
                 </div>
             </div>
             <div class="done-btn-wrapper">
-                <div ng-click="cropImage();" class="btn-warp inline-block" ng-show="myImage.length">
+                <div ng-click="cropImage();" class="btn-warp inline-block"
+                     ng-show="myImage.length">
                     <span class="btn btn-default2">Done</span>
                 </div>
             </div>

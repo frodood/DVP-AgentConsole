@@ -2550,8 +2550,8 @@ tags-input .tags .input {
     width: 100%;
     height: 950px;
     border-radius: 0px;
-    background: url(../img/bg/bg-dashboard.jpg) no-repeat;
-    background-position: top -123px;
+    /*background: url(../img/bg/bg-dashboard.jpg) no-repeat;*/
+    /*background-position: top -123px;*/
     position: relative;
     padding-left: 10px;
     padding-right: 10px;
@@ -2717,7 +2717,9 @@ tags-input .tags .input {
 .recent-activity {
     width: 100%;
     min-height: 65px;
+    overflow: hidden;
     height: auto;
+    padding-bottom: 10px;
     background: rgba(21, 169, 250, 0.03);
     margin-bottom: 5px;
 }
