@@ -236,3 +236,7 @@ label {
 input:focus, textarea:focus, keygen:focus, select:focus {
     outline: 0 !important;
 }
+
+.ui-tabs-scrollable > .spacer > div:first-child > .tab-content > .active {
+    overflow: hidden;
+}
