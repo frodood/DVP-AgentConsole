@@ -73,6 +73,7 @@
 
                                     <textarea ng-model="noteBody" class="form-control" rows="3" name="noteBody" required
                                               placeholder="Enter Note"></textarea>
+
                                     <div class="help-block" ng-messages="engagementFrm.noteBody.$error"
                                          ng-if="engagementFrm.noteBody.$touched">
                                         <p ng-message="required">Note is required.</p>
@@ -471,6 +472,7 @@
                                                     <div ng-if="!buildModel">
                                                         <label>Ticket form has been modified, please fill data to new
                                                             form</label>
+
                                                         <div>{{oldFormModel}}</div>
                                                     </div>
 
@@ -500,16 +502,16 @@
                 <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
             </div>
         </uib-tab>
-        <uib-tab index="4" heading="New"
-        <div class="animated">
-            <div ng-include="'app/views/profile/new-profile.html'"></div>
-        </div>
+        <uib-tab index="4" heading="New">
+            <div class="animated">
+                <div ng-include="'app/views/profile/new-profile.html'"></div>
+            </div>
         </uib-tab>
     </uib-tabset>
 
 
     <!-- MULTIPLE PROFILE -->
-    <div class=" display-none col-lg-12">
+    <div class=" col-lg-12">
         <div class="prn2-multiple-wrapper">
             <div class="col-md-3">
                 <div class="profile-multiple-wrap">
@@ -572,6 +574,7 @@
                                     <label class="control-label">Subject*</label>
                                     <input type="text" class="form-control" name="Subject" ng-model="ticket.subject"
                                            id="ticketSubject" required placeholder="Subject"/>
+
                                     <div class="help-block" ng-messages="userForm.Subject.$error"
                                          ng-if="userForm.Subject.$touched">
                                         <p ng-message="required">Subject is required.</p>
@@ -582,6 +585,7 @@
                                     <div class="row">
                                         <div class="col-xs-7">
                                             <label for="ticketSubject">Priority</label>
+
                                             <div class="form-inline">
                                                 <div class="bg-checkbox red font-white inline-btn"
                                                      ng-click="setPriority('urgent');">
@@ -616,6 +620,7 @@
                                                     <option>incident</option>
                                                     <option>action</option>
                                                 </select>
+
                                                 <div class="help-block" ng-messages="userForm.type.$error"
                                                      ng-if="userForm.type.$touched">
                                                     <p ng-message="required">Type is required.</p>
@@ -665,6 +670,7 @@
                                     <label for="ticketSubject">Description*</label>
                                     <textarea ng-model="ticket.description" class="form-control" rows="3"
                                               name="Description" required placeholder="Description"></textarea>
+
                                     <div class="help-block" ng-messages="userForm.Description.$error"
                                          ng-if="userForm.Description.$touched">
                                         <p ng-message="required">Description is required.</p>
@@ -713,7 +719,7 @@
                                         <div class="btn-warp ">
                                 <span ng-disabled="userForm.$invalid" class="btn btn-default"
                                       ng-click="saveTicket(ticket);"
-                                >Save</span>
+                                        >Save</span>
                                         </div>
                                     </div>
 
