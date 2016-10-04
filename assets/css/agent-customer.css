@@ -1182,7 +1182,6 @@ div > div >
     margin-top: 20px;
     padding: 10px 25px 20px 25px;
     position: relative;
-
 }
 
 .model-footer-wrapper {
@@ -2485,7 +2484,7 @@ tags-input .tags .input {
     border-radius: 25px;
     position: absolute;
     top: 90px;
-    left: 84px;
+    left: 61px;
     cursor: pointer;
 }
 
@@ -3207,6 +3206,7 @@ tags-input .tags .input {
     background-color: rgba(0, 0, 0, 0.9);
     position: absolute;
     top: 0;
+    z-index: 10;
 }
 
 .upload-wrapper {
@@ -3313,4 +3313,11 @@ tags-input .tags .input {
 
 .footer-new-profile {
     margin-top: 30px;
+}
+
+.model-body.model-body-scroll {
+    padding: 9px 0px 10px 0px;
+    height: 564px;
+    overflow: hidden;
+    overflow-y: auto;
 }

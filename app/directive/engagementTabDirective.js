@@ -1641,6 +1641,46 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.isShowCrop = !scope.isShowCrop;
             };
 
+            //update code damith
+            //create new profile
+            //view multiple profile
+            scope.multipleProfile = function () {
+                scope.modelHeader = null;
+                scope.showMultipleProfile = false;
+                scope.foundProfiles = false;
+                scope.showNewProfile = false;
+                return {
+                    showProfiles: function () {
+                        scope.showMultipleProfile = true;
+                        scope.foundProfiles = true;
+                        scope.showNewProfile = false;
+                        this.getModelHeader();
+                    },
+                    closeProfile: function () {
+                        scope.showMultipleProfile = false;
+                        scope.foundProfiles = false;
+                        scope.showNewProfile = false;
+                    },
+                    createNewProfile: function () {
+                        scope.showMultipleProfile = true;
+                        scope.foundProfiles = false;
+                        scope.showNewProfile = true;
+                        this.getModelHeader();
+                    },
+                    closeNewProfile: function () {
+                        scope.showNewProfile = false;
+                    },
+                    getModelHeader: function () {
+                        if (scope.showMultipleProfile) {
+                            scope.modelHeader = "Found 3 Multiple Profiles";
+                        }
+                        if (scope.showNewProfile) {
+                            scope.modelHeader = " Create New Profile";
+                        }
+                    }
+                }
+            }();//end
+            scope.multipleProfile.showProfiles();
         }
     }
 }).directive("fileread", [function () {
@@ -1653,9 +1693,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 var reader = new FileReader();
                 reader.onload = function (loadEvent) {
                     scope.$apply(function () {
-                        scope.myImage = loadEvent.target.result
+                        scope.myImage = loadEvent.target.result;
                     });
-
                 };
                 reader.readAsDataURL(changeEvent.target.files[0]);
             });
