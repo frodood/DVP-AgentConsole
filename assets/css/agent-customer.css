@@ -2671,6 +2671,7 @@ tags-input .tags .input {
     width: 100%;
     min-height: 250px;
     height: auto;
+    margin-top: 38px;
 }
 
 .dark-product-wrapper {

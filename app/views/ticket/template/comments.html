@@ -4,12 +4,17 @@
             <div class="new-note-wrapper comment">
                 <label class="label-green">comment</label>
                 <textarea class="form-control" rows="3" ng-model="newComment"></textarea>
-                <select class="" placeholder=""
-                        ng-model="messageMode">
-                    <option selected>public</option>
-                    <option>private</option>
-                    <option>internal</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-4" style="margin-top: 8px;">
+                        <select class="form-control " placeholder=""
+                                ng-model="messageMode">
+                            <option selected>public</option>
+                            <option>private</option>
+                            <option>internal</option>
+                        </select>
+                    </div>
+                </div>
+
 
                 <div class="btn-warp inline-btn  p-top-6 ">
                     <span class="btn  btn-default btn-block "
@@ -63,7 +68,8 @@
                 {{comment.body}}
             </div>
             <div ng-show="comment.channel==='call'">
-                <a href="javascript:void(0);"><i class="fa fa-play" ng-click="playFile(comment.engagement_session)">Play</i></a>
+                <a href="javascript:void(0);"><i class="fa fa-play"
+                                                 ng-click="playFile(comment.engagement_session)">Play</i></a>
             </div>
 
         </div>

@@ -8,7 +8,7 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="col-lg-7">
+                        <div class="col-lg-5">
                             <div class="dark-dashboard-header">
 
                                 <div class="header">
@@ -47,12 +47,32 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="dark-product-wrapper">
+                                        <div class="col-lg-4">
+                                            <div class="dark-product-ticker-wrap">
+                                                <h1 class="Staffed">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
+                                                <div class="title Staffed">Staffed Time</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="dark-product-ticker-wrap">
+                                                <h1 class="onCall">{{productivity.OnCallTime| date:'HH:mm:ss'}}</h1>
+                                                <div class="title onCall">On Call Time</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="dark-product-ticker-wrap">
+                                                <h1 class="onCall">{{productivity.BreakTime| date:'HH:mm:ss'}}</h1>
+                                                <div class="title onCall">Break Time</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
 
                         </div>
-                        <div class="col-lg-5" style="padding-right: 3px;">
+                        <div class="col-lg-7" style="padding-right: 3px;">
 
                             <div class="dark-ticker-wrapper">
                                 <div class="col-lg-12">
