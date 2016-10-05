@@ -156,20 +156,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         muteCall: function () {
             /*btnMute.value = bMute ? "Unmute" : "Mute";*/
-            if(sipToggleMute()){
+            if (sipToggleMute()) {
                 $('#muteButton').addClass('veery-font-1-muted').removeClass('veery-font-1-mute');
-            }else{
+            } else {
                 $('#muteButton').addClass('veery-font-1-mute').removeClass('veery-font-1-muted');
             }
         },
         holdResumeCall: function () {
-            var h =sipToggleHoldResume();
-            if(h==='0'){ //connect
+            var h = sipToggleHoldResume();
+            if (h === '0') { //connect
                 $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-1').removeClass('veery-phone-icon-1-phone-call-2');
             }
-            else if(h==='1'){//hold
+            else if (h === '1') {//hold
                 $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-2').removeClass('veery-phone-icon-1-phone-call-1');
-            }else {
+            } else {
 //error
             }
         },
@@ -442,7 +442,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
-    var  phoneFuncion = {
+    var phoneFuncion = {
         showAnswerButton: function () {
             $('#answerButton').addClass('phone-btn ').removeClass('display-none');
         },
@@ -1347,26 +1347,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                        if (data.IsSuccess) {
-                            if (data.Result && data.Result.UNREAD) {
-                                $scope.unreadMailCount = data.Result.UNREAD;
-                            }
+                    if (data.IsSuccess) {
+                        if (data.Result && data.Result.UNREAD) {
+                            $scope.unreadMailCount = data.Result.UNREAD;
                         }
-                        else {
-                            var errMsg = data.CustomMessage;
+                    }
+                    else {
+                        var errMsg = data.CustomMessage;
 
-                            if (data.Exception) {
-                                errMsg = data.Exception.Message;
-                            }
-                            console.log(errMsg);
+                        if (data.Exception) {
+                            errMsg = data.Exception.Message;
                         }
+                        console.log(errMsg);
+                    }
 
 
-                    },
-                    function (err) {
-                        console.log(err);
+                },
+                function (err) {
+                    console.log(err);
 
-                    })
+                })
 
         }
         catch (ex) {
@@ -1727,21 +1727,25 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     getCurrentState.getResourceState();
 
 
+    // Phone Call Timers
     $scope.counter = 0;
-    var mytimeout = {};
+    var callDurationTimeout = {};
     $scope.duations = '';
-    $scope.onTimeout = function(){
+    $scope.onTimeout = function () {
         $scope.counter++;
-        $scope.duations=$scope.counter.toString().toHHMMSS();
-        mytimeout = $timeout($scope.onTimeout,1000);
+        $scope.duations = $scope.counter.toString().toHHMMSS();
+        callDurationTimeout = $timeout($scope.onTimeout, 1000);
     };
 
 
-    $scope.stopCallTime = function(){
-        $timeout.cancel(mytimeout);
+    $scope.stopCallTime = function () {
+        $timeout.cancel(callDurationTimeout);
     };
-    $scope.startCallTime = function() {
+    $scope.startCallTime = function () {
         $scope.counter = 0;
-        mytimeout = $timeout($scope.onTimeout, 1000);
-    }
+        callDurationTimeout = $timeout($scope.onTimeout, 1000);
+    };
+
+
+
 });

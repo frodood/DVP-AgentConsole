@@ -1,5 +1,5 @@
 <div id="main" ng-controller="consoleCtrl">
-    <div >
+    <div>
         <nav id="navBar" class="navbar navbar-default console-nav-bar">
 
             <div class="container-fluid">
@@ -84,13 +84,35 @@
                         <form class="form-inline navbar-form navbar-left ">
                             <label id="commonLable" ng-show="false"></label>
                             <div class="form-group">
-                                <input id="commonSearch" type="text" autocomplete="off" class="main-search-input" ng-model="searchText"
+                                <input id="commonSearch" type="text" autocomplete="off" class="main-search-input"
+                                       ng-model="searchText"
                                        typeahead-min-length="0" typeahead-on-select="bindSearchData($item)"
-                                       uib-typeahead="state as state.value for state in commonSearch($viewValue)" placeholder="Search by keyword, #ticker or #profile">
+                                       uib-typeahead="state as state.value for state in commonSearch($viewValue)"
+                                       placeholder="Search by keyword, #ticker or #profile">
                             </div>
 
                         </form>
+
+
                     </ul>
+
+
+                    <ul class="nav navbar-nav" uib-dropdown>
+                        <li id="addNewPage" class="console-menu-icon m-left-10" uib-dropdown-toggle><i
+                                class="veery-font-1-add"></i></li>
+                        <ul class="dropdown-menu console-drop-menu add-new-page" uib-dropdown-menu role="menu"
+                            + aria-labelledby="btn-append-to-single-button">
+                            <li><a class="drop-header">Add new page</a></li>
+                            <li class="divider"></li>
+                            <li class="menuitem menuitem-with-icon" role="menuitem">
+                                <a href="#">Create new profile
+                                    <i class="veery-font-1-user"></i></a>
+                            </li>
+                            <li class="menuitem menuitem-with-icon" role="menuitem"><a href="#">Create new ticket
+                                <i class="veery-font-1-add-2"></i></a></a></li>
+                        </ul>
+                    </ul>
+
 
                     <ul class="nav navbar-nav navbar-right" uib-dropdown>
 
@@ -368,51 +390,51 @@
 
                 <input required type="text" class="phone-dialpad-no" id="number"
                        ng-model="call.number"
-                       placeholder="Enter the phone no to call" >
+                       placeholder="Enter the phone no to call">
                 <table class="phone-dialpad" id="phoneDialpad">
                     <tbody>
                     <tr>
                         <td>
-                            <input type="button" class="phone-button" value="1" data-values='[1]' />
+                            <input type="button" class="phone-button" value="1" data-values='[1]'/>
                         </td>
                         <td>
-                            <input type="button" class="phone-button" value="2" data-values='[2, "A", "B", "C"]' />
+                            <input type="button" class="phone-button" value="2" data-values='[2, "A", "B", "C"]'/>
                         </td>
                         <td>
-                            <input type="button" class="phone-button" value="3" data-values='[3, "D", "E", "F"]' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" class="phone-button" value="4" data-values='[4, "G", "H", "I"]' />
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="5" data-values='[5, "J", "K", "L"]' />
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="6" data-values='[6, "M", "N", "O"]' />
+                            <input type="button" class="phone-button" value="3" data-values='[3, "D", "E", "F"]'/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="button" class="phone-button" value="7" data-values='[7, "P", "Q", "R", "S"]' />
+                            <input type="button" class="phone-button" value="4" data-values='[4, "G", "H", "I"]'/>
                         </td>
                         <td>
-                            <input type="button" class="phone-button" value="8" data-values='[8, "T", "U", "V"]' />
+                            <input type="button" class="phone-button" value="5" data-values='[5, "J", "K", "L"]'/>
                         </td>
                         <td>
-                            <input type="button" class="phone-button" value="9" data-values='[9, "W", "X", "Y", "Z"]' />
+                            <input type="button" class="phone-button" value="6" data-values='[6, "M", "N", "O"]'/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="button" class="phone-button" value="*" data-values='["*"]' />
+                            <input type="button" class="phone-button" value="7" data-values='[7, "P", "Q", "R", "S"]'/>
                         </td>
                         <td>
-                            <input type="button" class="phone-button" value="0" data-values='[0, " "]' />
+                            <input type="button" class="phone-button" value="8" data-values='[8, "T", "U", "V"]'/>
                         </td>
                         <td>
-                            <input type="button" class="phone-button" value="#" data-values='["#"]' />
+                            <input type="button" class="phone-button" value="9" data-values='[9, "W", "X", "Y", "Z"]'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" class="phone-button" value="*" data-values='["*"]'/>
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="0" data-values='[0, " "]'/>
+                        </td>
+                        <td>
+                            <input type="button" class="phone-button" value="#" data-values='["#"]'/>
                         </td>
                     </tr>
                     </tbody>
@@ -422,22 +444,22 @@
             <div class="phone-button-wrapper">
 
                 <div class="phone-btn" id="answerButton" ng-click="veeryPhone.makeAudioCall(call.number);">
-                    <i class="veery-phone-icon-1-call-answer" ></i>
+                    <i class="veery-phone-icon-1-call-answer"></i>
                 </div>
                 <div class="phone-btn" id="endButton" ng-click="veeryPhone.endCall();">
-                    <i class="veery-phone-icon-1-call-ended" ></i>
+                    <i class="veery-phone-icon-1-call-ended"></i>
                 </div>
                 <div class="phone-btn" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">
-                    <i class="veery-phone-icon-1-phone-call-1" ></i>
+                    <i class="veery-phone-icon-1-phone-call-1"></i>
                 </div>
                 <div class="phone-btn">
                     <i class="veery-font-1-user"></i>
                 </div>
                 <div class="phone-btn" id="muteButton" ng-click="veeryPhone.muteCall();">
-                    <i class="veery-font-1-mute" ></i>
+                    <i class="veery-font-1-mute"></i>
                 </div>
                 <div class="phone-btn" ng-click="ShowHideDialpad();">
-                    <i class="veery-font-1-menu-4" ></i>
+                    <i class="veery-font-1-menu-4"></i>
                 </div>
                 <div class="phone-btn" id="speakerButton" ng-click="veeryPhone.muteCall();">
                     <i class="veery-font-1-speaker-4"></i>
@@ -453,7 +475,6 @@
                 <!--</div>-->
             </div>
         </div>
-
 
 
         <!-- view ticket -->
@@ -487,7 +508,7 @@
                                                 channel-from="{{tab.notificationData.channelFrom}}"
                                                 channel-to="{{tab.notificationData.channelTo}}"
                                                 direction="{{tab.notificationData.direction}}"
-                                                user-profile="tab.notificationData.userProfile">
+                                                profile-detail="tab.notificationData.userProfile">
 
                                 </engagement-tab>
                             </div>
