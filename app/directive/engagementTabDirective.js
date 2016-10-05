@@ -859,13 +859,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.showCreateTicket = false;
 
 
-            scope.clickAddNewTicket = function () {
-                /* scope.ticket = {};
-                 scope.ticket.priority = 'normal';
-                 scope.ticket.submitter = {};
-                 scope.ticket.submitter.avatar ="assets/img/avatar/bobbyjkane.jpg";*/
-                scope.showCreateTicket = !scope.showCreateTicket;
-                if (scope.showCreateTicket) {
+            scope.showNewTicket = function () {
+                if(scope.profileDetail&&scope.profileDetail._id){
+                    scope.showCreateTicket = !scope.showCreateTicket;
+                }else{
+                    scope.showAlert("Ticket", "error", "Please Create Profile First.")
+                }
+
+                /*if (scope.showCreateTicket) {
                     if (scope.users.length > 0) {
                         var id = ticketService.GetResourceIss();
                         scope.ids = $filter('filter')(scope.users, {username: id});
@@ -875,7 +876,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             }
                         }
                     }
-                }
+                }*/
+            };
+            scope.closeNewTicket = function () {
+                scope.showCreateTicket = false;
             };
 
 
