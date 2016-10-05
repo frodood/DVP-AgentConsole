@@ -271,7 +271,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             backgroundColor: 'rgba(128,0,128,0.6)',
             pointBackgroundColor: 'rgba(128,0,128,1)',
             pointHoverBackgroundColor: 'rgba(128,0,128,1)',
-            borderColor: 'rgba(128,0,128,1)',
+            borderColor: 'rgba(128,0,128,0.5)',
             pointBorderColor: '#fff',
             pointHoverBorderColor: 'rgba(128,0,128,0.8)'
         }
