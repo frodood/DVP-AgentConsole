@@ -32,7 +32,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             tagCategoryList: "=",
             users: "=",
             loadTags: '&',
-            userProfile: "="
+            profileDetail: "="
         },
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
@@ -42,19 +42,22 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.oldFormModel = null;
             scope.currentSubmission = null;
             scope.currentForm = null;
-
             scope.availableTags = scope.tagCategoryList;
-            scope.profileDetail = {};
-            scope.profileDetail.avatar = "assets/img/avatar/default-user.png";
-            scope.profileDetails = [];
-            scope.profileDetail.address = {
-                zipcode: "",
-                number: "",
-                street: "",
-                city: "",
-                province: "",
-                country: ""
-            };
+
+            /*if(!scope.profileDetail){
+             scope.profileDetail = {};
+             }
+
+             scope.profileDetail.avatar = "assets/img/avatar/default-user.png";
+             scope.profileDetails = [];
+             scope.profileDetail.address = {
+             zipcode: "",
+             number: "",
+             street: "",
+             city: "",
+             province: "",
+             country: ""
+             };*/
 
             scope.ticket = {};
             scope.ticket.priority = 'normal';
@@ -991,11 +994,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     category = 'phone';
                 }
 
-                if (scope.userProfile) {
-                    scope.profileDetail = scope.userProfile;
+                if (scope.profileDetail) {
 
-                    scope.currentSubmission = scope.userProfile.form_submission;
-                    convertToSchemaForm(scope.userProfile.form_submission, function (schemaDetails) {
+                    scope.currentSubmission = scope.profileDetail.form_submission;
+                    convertToSchemaForm(scope.profileDetail.form_submission, function (schemaDetails) {
                         if (schemaDetails) {
                             scope.schema = schemaDetails.schema;
                             scope.form = schemaDetails.form;
@@ -1028,9 +1030,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                 scope.GetProfileHistory(scope.profileDetail._id);
                                 getExternalUserRecentTickets(scope.profileDetail._id);
                             }
-                            else {
+                            else if (scope.profileDetails.length > 1) {
                                 // show multiple profile selection view
+                                scope.showMultiProfile = true;
+                                scope.showNewProfile = false;
                             }
+                            else {
+                                // show new profile
+                                scope.showMultiProfile = false;
+                                scope.showNewProfile = true;
+                            }
+                        }
+                        else {
+                            // show new profile
+                            scope.showMultiProfile = false;
+                            scope.showNewProfile = true;
                         }
                     }, function (err) {
                         scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
@@ -1573,14 +1587,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 {"code": "yo", "name": "Yoruba", "nativeName": "Yorùbá"},
                 {"code": "za", "name": "Zhuang, Chuang", "nativeName": "Sa? cue??, Saw cuengh"}
             ];
-            var genDayList = function()
-            {
+            var genDayList = function () {
                 var max = 31;
 
                 var dayArr = [];
 
-                for(min=1; min<=max; min++)
-                {
+                for (min = 1; min <= max; min++) {
                     dayArr.push(min);
                 }
 
@@ -1589,36 +1601,36 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             scope.dayList = genDayList();
             scope.monthList = [
-                {index:1, name: "January"},
-                {index:2, name: "February"},
-                {index:3, name: "March"},
-                {index:4, name: "April"},
-                {index:5, name: "May"},
-                {index:6, name: "June"},
-                {index:7, name: "July"},
-                {index:8, name: "August"},
-                {index:9, name: "September"},
-                {index:10, name: "October"},
-                {index:11, name: "November"},
-                {index:12, name: "December"}
+                {index: 1, name: "January"},
+                {index: 2, name: "February"},
+                {index: 3, name: "March"},
+                {index: 4, name: "April"},
+                {index: 5, name: "May"},
+                {index: 6, name: "June"},
+                {index: 7, name: "July"},
+                {index: 8, name: "August"},
+                {index: 9, name: "September"},
+                {index: 10, name: "October"},
+                {index: 11, name: "November"},
+                {index: 12, name: "December"}
 
             ];
             scope.yearList = [];
-            var getYears = function (){
+            var getYears = function () {
                 var currentYear = new Date().getFullYear();
-                for (var i = 0; i < 100 + 1; i++){
+                for (var i = 0; i < 100 + 1; i++) {
                     scope.yearList.push(currentYear - i);
                 }
             };
             getYears();
             scope.saveNewProfile = function (profile) {
-                var collectionDate = profile.dob.year +'-'+ profile.dob.month+'-'+profile.dob.day;
+                var collectionDate = profile.dob.year + '-' + profile.dob.month + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
                 userService.CreateExternalUser(profile).then(function (response) {
-                    if(response){
+                    if (response) {
                         scope.GetExternalUserProfileByContact();
                     }
-                    else{
+                    else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
                     }
                 }, function (err) {
@@ -1670,6 +1682,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     closeNewProfile: function () {
                         scope.showNewProfile = false;
                     },
+                    closeProfileSelection: function () {
+                        scope.showMultiProfile = false;
+                    },
+                    openSelectedProfile: function (profile) {
+                        scope.profileDetail = profile;
+                        scope.showMultiProfile = false;
+                        scope.showNewProfile = false;
+                    },
                     getModelHeader: function () {
                         if (scope.showMultipleProfile) {
                             scope.modelHeader = "Found 3 Multiple Profiles";
@@ -1680,7 +1700,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     }
                 }
             }();//end
-            scope.multipleProfile.showProfiles();
         }
     }
 }).directive("fileread", [function () {
