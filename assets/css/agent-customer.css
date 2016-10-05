@@ -1982,6 +1982,19 @@ div > div >
     padding-top: 3px;
 }
 
+.mail-icon-large {
+    color: #36ba45;
+    font-size: 18px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #0d1c34;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 13px;
+}
+
 .main-text {
     display: inline-block;
     color: #36ba45;
