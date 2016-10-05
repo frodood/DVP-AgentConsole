@@ -56,7 +56,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }]
     };
 
-    $scope.pieDataset = [];
+    $scope.pieDataset = [0, 0, 0, 0, 0];
     $scope.productivity = {};
 
     // Doughnut Chart Options
@@ -77,6 +77,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     for (var i in allData) {
                         total += allData[i];
                     }
+                    if (total == 0)
+                        return tooltipLabel + ': ' + tooltipData + ' (' + 0 + '%)';
                     var tooltipPercentage = Math.round((tooltipData / total) * 100);
                     return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
                 }
@@ -163,6 +165,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dashboradService.ProductivityByResourceId(id).then(function (response) {
             if (response) {
 
+                if (response.length === 0)
+                    return;
                 $scope.pieDataset = [response.AcwTime, response.BreakTime, response.OnCallTime, response.IdleTime, response.HoldTime];
 
                 /*$scope.pieDataset = [

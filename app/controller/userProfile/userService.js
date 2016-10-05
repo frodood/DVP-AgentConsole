@@ -112,6 +112,23 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
+    var createExternalUser = function (profile) {
+        return $http({
+            method: 'Post',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser",
+            headers: {
+                'authorization': authService.GetToken()
+            },
+            data:profile
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.IsSuccess;
+            } else {
+                return false;
+            }
+        });
+    };
+
 
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
@@ -120,8 +137,8 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         getUserGroupList:getUserGroupList,
         searchExternalUsers:searchExternalUsers,
         getMyProfileDetails:getMyProfileDetails,
-        mapFormSubmissionToProfile:mapFormSubmissionToProfile
-
+        mapFormSubmissionToProfile:mapFormSubmissionToProfile,
+        CreateExternalUser:createExternalUser
     }
 });
 
