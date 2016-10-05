@@ -347,10 +347,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             fields: arr
                         };
                         ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function (response) {
-                            scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                            scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                         }).catch(function (err) {
-                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                            scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                         })
                     }
@@ -372,58 +372,58 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                             userService.mapFormSubmissionToProfile(responseUpdate.Result._id, scope.profileDetail._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
-                                                scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                                                scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                                             }).catch(function (err) {
-                                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                                scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                                             });
                                         }
                                         else {
-                                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                            scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
                                         }
 
 
                                     }).catch(function (err) {
-                                        scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                        scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                                     })
                                 }
                                 else {
-                                    ///////// CHECK FROM HERE //////////
+
                                     ticketService.createFormSubmissionData(obj).then(function (response) {
                                         //tag submission to ticket
                                         if (response && response.Result) {
                                             userService.mapFormSubmissionToProfile(response.Result._id, scope.profileDetail._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
-                                                scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                                                scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                                             }).catch(function (err) {
-                                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                                scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                                             });
                                         }
                                         else {
-                                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                            scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
                                         }
 
 
                                     }).catch(function (err) {
-                                        scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                        scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                                     })
                                 }
 
                             }).catch(function (err) {
-                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                             });
 
 
                         }
                         else {
-                            scope.showAlert('Operation Failed', 'error', 'Ticket not found');
+                            scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
                         }
 
                     }

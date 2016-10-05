@@ -4,6 +4,15 @@
 agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService, profileDataParser) {
 
 
+    $scope.showAlert = function (tittle, type, msg) {
+        new PNotify({
+            title: tittle,
+            text: msg,
+            type: type,
+            styling: 'bootstrap3',
+            icon: true
+        });
+    };
 
     $scope.clickMoreEmailDetails = function (messageDetails) {
 
@@ -24,6 +33,7 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                 })
                 .catch(function(err)
                 {
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to set mail status');
 
                 });
         }
@@ -211,22 +221,21 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to retrieve counters');
                     }
 
                     callback();
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to retrieve counters');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
-
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to retrieve counters');
         }
 
     };
@@ -494,20 +503,21 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to delete message');
 
                         callback(data.Exception, data.Result);
                     }
 
                 },
                 function (err) {
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to delete message');
                     callback(err, false);
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to delete message');
             callback(ex, false);
 
         }
@@ -539,19 +549,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                     }
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
@@ -583,19 +593,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                     }
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
@@ -627,19 +637,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                     }
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
@@ -671,19 +681,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                     }
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
@@ -715,19 +725,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                     }
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
@@ -759,19 +769,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                     }
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
@@ -803,19 +813,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                     }
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
@@ -847,19 +857,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
                         {
                             errMsg = data.Exception.Message;
                         }
-                        console.log(errMsg);
+                        $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                     }
 
                 },
                 function (err) {
-                    console.log(err);
+                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
                 })
 
         }
         catch(ex)
         {
-            console.log(ex);
+            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
