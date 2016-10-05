@@ -981,6 +981,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.GetEngagementIdsByProfile(profileId);
                 scope.GetAllTicketsByRequester(profileId, 1);
                 scope.getEnggemntCount(profileId);
+                scope.getExternalUserTicketCounts(profileId);
                 console.info("Profile History Loading........................");
             };
 
@@ -1710,12 +1711,33 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             }();//end
 
             //engamanet details
-            scope.enggemntDetailsCount =[];
+            scope.enggemntDetailsCount =[];scope.enggemntDetailsTotalCount = 0;
             scope.getEnggemntCount = function (id) {
                 engagementService.EngagementCount(id).then(function (response) {
-                    scope.enggemntDetailsCount = response;
+                    if(response){
+                        response.forEach(function(item){
+                            scope.enggemntDetailsTotalCount = scope.enggemntDetailsTotalCount+item.count;
+                        });
+
+                        response.forEach(function(item){
+                            var p = ((item.count / scope.enggemntDetailsTotalCount) * 100).toFixed(2);
+                            scope.enggemntDetailsCount.push({"_id":item._id,
+                            "count":item.count,
+                            "val":p});
+                        });
+                    }
+                    //scope.enggemntDetailsCount = response;
                 }, function (err) {
                     scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
+                });
+            };
+            //ExternalUserTicketCounts details
+            scope.ExternalUserTicketCounts =[];
+            scope.getExternalUserTicketCounts = function (id) {
+                ticketService.GetExternalUserTicketCounts(id).then(function (response) {
+                    scope.ExternalUserTicketCounts = response;
+                }, function (err) {
+                    scope.showAlert("Ticket", "error", "Fail To Get Ticket Count.")
                 });
             };
         }

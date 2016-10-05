@@ -242,14 +242,15 @@
                                         {{d._id}}
                                     </div>
                                     <div class="col-sm-6 prn2">
-                                        <uib-progressbar value="count" type="warning">
-                                        </uib-progressbar>
+                                        <!--<uib-progressbar value="(d.count/enggemntDetailsTotalCount)*100" type="warning">
+                                        </uib-progressbar>-->
+                                        <uib-progressbar animate="true" value="d.val" type="success"><b>{{d.val}}%</b></uib-progressbar>
                                     </div>
                                     <div class="col-sm-3 font-white text-right">
                                         {{d.count}}
                                     </div>
                                 </div>
-                               <!-- <div class="row">
+                                <!--<div class="row">
                                     <div class="col-sm-3 font-white">
                                         Sms
                                     </div>
@@ -272,16 +273,18 @@
                                     <div class="col-sm-3 font-white text-right">
                                         10
                                     </div>
-                                </div>
-                                <div class="row" style="padding-bottom: 5px;">
+                                </div>-->
+
+
+                                <div class="row" style="padding-bottom: 5px;" ng-repeat="t in ExternalUserTicketCounts">
                                     <div class="col-sm-6 font-CyanA200">
-                                        Total Ticket
+                                        Total {{t._id}}
                                     </div>
                                     <div class="col-sm-6 font-CyanA200 text-right">
-                                        5
+                                        {{t.count}}
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!--<div class="row">
                                     <div class="col-sm-6 font-CyanA200">
                                         Pending Ticket
                                     </div>
