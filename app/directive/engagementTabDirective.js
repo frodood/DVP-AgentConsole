@@ -845,10 +845,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
 
                 ticketService.SaveTicket(ticket).then(function (response) {
-                    if (!response) {
-                        scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.")
+                    if (response.IsSuccess) {
+                        scope.ticketList.push(response.Result);
+                    }else{
+                        scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
+
                     }
-                    scope.showCreateTicket = !response;
+                    scope.showCreateTicket = !response.IsSuccess;
                 }, function (err) {
                     scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
                 });
@@ -977,6 +980,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.GetProfileHistory = function (profileId) {
                 scope.GetEngagementIdsByProfile(profileId);
                 scope.GetAllTicketsByRequester(profileId, 1);
+                scope.getEnggemntCount(profileId);
                 console.info("Profile History Loading........................");
             };
 
@@ -1704,6 +1708,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     }
                 }
             }();//end
+
+            //engamanet details
+            scope.enggemntDetailsCount =[];
+            scope.getEnggemntCount = function (id) {
+                engagementService.EngagementCount(id).then(function (response) {
+                    scope.enggemntDetailsCount = response;
+                }, function (err) {
+                    scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
+                });
+            };
         }
     }
 }).directive("fileread", [function () {

@@ -61,21 +61,21 @@
 
                                 <div class="col-lg-6">
                                     <div class="dark-ticker-wrap">
-                                        <h1>{{openTicketCount}}</h1>
-                                        <div class="title">open</div>
+                                        <h1>{{newTicketCount}}</h1>
+                                        <div class="title">New</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="dark-ticker-wrap">
-                                        <h1>{{resolveTicketCount}}</h1>
-                                        <div class="title">resolve</div>
+                                        <h1>{{closeTicketCount}}</h1>
+                                        <div class="title">Closed</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="dark-chart-wrapper">
                                 <div class="col-lg-12">
-                                    <h5 class="dark-header text-uppercase">Open vs Close</h5>
+                                    <h5 class="dark-header text-uppercase">New vs Closed</h5>
                                 </div>
                                 <canvas width="436px" height="200px" id="line" chart-colors="colors"
                                         class="chart chart-line" chart-data="openCloseData"

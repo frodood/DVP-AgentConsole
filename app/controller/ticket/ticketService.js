@@ -31,7 +31,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             data:ticket
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
-                return response.data.Result;
+                return response.data;
             } else {
                 return undefined;
             }

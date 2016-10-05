@@ -237,19 +237,19 @@
                                 </div>
                             </div>
                             <div class="prn2 time-wrapper">
-                                <div class="row">
+                                <div class="row" ng-repeat="d in enggemntDetailsCount">
                                     <div class="col-sm-3 font-white">
-                                        Call
+                                        {{d._id}}
                                     </div>
                                     <div class="col-sm-6 prn2">
-                                        <uib-progressbar value="22" type="warning">
+                                        <uib-progressbar value="count" type="warning">
                                         </uib-progressbar>
                                     </div>
                                     <div class="col-sm-3 font-white text-right">
-                                        5
+                                        {{d.count}}
                                     </div>
                                 </div>
-                                <div class="row">
+                               <!-- <div class="row">
                                     <div class="col-sm-3 font-white">
                                         Sms
                                     </div>
@@ -288,7 +288,7 @@
                                     <div class="col-sm-6 font-CyanA200 text-right">
                                         10
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
