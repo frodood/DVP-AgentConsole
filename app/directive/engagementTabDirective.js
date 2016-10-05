@@ -70,7 +70,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     text: msg,
                     type: type,
                     styling: 'bootstrap3',
-                    icon: false
+                    icon: true
                 });
             };
 
