@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-4 col-sm-4 ">
                 <div class="btn-left-icon pull-right p-top-6"
-                     ng-click="clickAddNewTicket();">
+                     ng-click="showNewTicket();">
                     <i class="veery-font-1-add-2"></i>
                     new ticket
                 </div>
@@ -600,19 +600,19 @@
                                 </div>
                             </div>
                             <div class="prn2 time-wrapper">
-                                <div class="row">
+                                <div class="row" ng-repeat="d in enggemntDetailsCount">
                                     <div class="col-sm-3 font-white">
-                                        Call
+                                        {{d._id}}
                                     </div>
                                     <div class="col-sm-6 prn2">
-                                        <uib-progressbar value="22" type="warning">
+                                        <uib-progressbar value="count" type="warning">
                                         </uib-progressbar>
                                     </div>
                                     <div class="col-sm-3 font-white text-right">
-                                        5
+                                        {{d.count}}
                                     </div>
                                 </div>
-                                <div class="row">
+                               <!-- <div class="row">
                                     <div class="col-sm-3 font-white">
                                         Sms
                                     </div>
@@ -651,7 +651,7 @@
                                     <div class="col-sm-6 font-CyanA200 text-right">
                                         10
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -895,7 +895,7 @@
                                 <div class="model-btn-wrapper">
                                     <div class="btn-warp ">
                                 <span class="btn btn-default btn-close"
-                                      ng-click="clickAddNewTicket('#addNewTicket','display-none')"
+                                      ng-click="closeNewTicket();"
                                       id="closeTicket">close</span>
                                     </div>
                                 </div>

@@ -347,10 +347,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             fields: arr
                         };
                         ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function (response) {
-                            scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                            scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                         }).catch(function (err) {
-                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                            scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                         })
                     }
@@ -372,58 +372,58 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                             userService.mapFormSubmissionToProfile(responseUpdate.Result._id, scope.profileDetail._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
-                                                scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                                                scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                                             }).catch(function (err) {
-                                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                                scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                                             });
                                         }
                                         else {
-                                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                            scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
                                         }
 
 
                                     }).catch(function (err) {
-                                        scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                        scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                                     })
                                 }
                                 else {
-                                    ///////// CHECK FROM HERE //////////
+
                                     ticketService.createFormSubmissionData(obj).then(function (response) {
                                         //tag submission to ticket
                                         if (response && response.Result) {
                                             userService.mapFormSubmissionToProfile(response.Result._id, scope.profileDetail._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
-                                                scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                                                scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                                             }).catch(function (err) {
-                                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                                scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                                             });
                                         }
                                         else {
-                                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                            scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
                                         }
 
 
                                     }).catch(function (err) {
-                                        scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                        scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                                     })
                                 }
 
                             }).catch(function (err) {
-                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
 
                             });
 
 
                         }
                         else {
-                            scope.showAlert('Operation Failed', 'error', 'Ticket not found');
+                            scope.showAlert('Profile Other Data', 'error', 'Profile other data save failed');
                         }
 
                     }
@@ -845,10 +845,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
 
                 ticketService.SaveTicket(ticket).then(function (response) {
-                    if (!response) {
-                        scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.")
+                    if (response.IsSuccess) {
+                        scope.ticketList.push(response.Result);
+                    }else{
+                        scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
+
                     }
-                    scope.showCreateTicket = !response;
+                    scope.showCreateTicket = !response.IsSuccess;
                 }, function (err) {
                     scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
                 });
@@ -859,13 +862,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.showCreateTicket = false;
 
 
-            scope.clickAddNewTicket = function () {
-                /* scope.ticket = {};
-                 scope.ticket.priority = 'normal';
-                 scope.ticket.submitter = {};
-                 scope.ticket.submitter.avatar ="assets/img/avatar/bobbyjkane.jpg";*/
-                scope.showCreateTicket = !scope.showCreateTicket;
-                if (scope.showCreateTicket) {
+            scope.showNewTicket = function () {
+                if(scope.profileDetail&&scope.profileDetail._id){
+                    scope.showCreateTicket = !scope.showCreateTicket;
+                }else{
+                    scope.showAlert("Ticket", "error", "Please Create Profile First.")
+                }
+
+                /*if (scope.showCreateTicket) {
                     if (scope.users.length > 0) {
                         var id = ticketService.GetResourceIss();
                         scope.ids = $filter('filter')(scope.users, {username: id});
@@ -875,7 +879,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             }
                         }
                     }
-                }
+                }*/
+            };
+            scope.closeNewTicket = function () {
+                scope.showCreateTicket = false;
             };
 
 
@@ -973,6 +980,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.GetProfileHistory = function (profileId) {
                 scope.GetEngagementIdsByProfile(profileId);
                 scope.GetAllTicketsByRequester(profileId, 1);
+                scope.getEnggemntCount(profileId);
                 console.info("Profile History Loading........................");
             };
 
@@ -1700,6 +1708,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     }
                 }
             }();//end
+
+            //engamanet details
+            scope.enggemntDetailsCount =[];
+            scope.getEnggemntCount = function (id) {
+                engagementService.EngagementCount(id).then(function (response) {
+                    scope.enggemntDetailsCount = response;
+                }, function (err) {
+                    scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
+                });
+            };
         }
     }
 }).directive("fileread", [function () {

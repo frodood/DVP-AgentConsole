@@ -217,23 +217,23 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
     loadProductivity(authService.GetResourceId());
 
-    $scope.openTicketCount = 0;
+    $scope.newTicketCount = 0;
     var GetOpenTicketCount = function () {
-        dashboradService.GetTotalTicketCount('OPENTICKET').then(function (response) {
-            $scope.openTicketCount = response;
+        dashboradService.GetTotalTicketCount('NEWTICKET').then(function (response) {
+            $scope.newTicketCount = response;
         }, function (err) {
-            $scope.openTicketCount = 0;
+            $scope.newTicketCount = 0;
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
     GetOpenTicketCount();
 
-    $scope.resolveTicketCount = 0;
+    $scope.closeTicketCount = 0;
     var GetResolveTicketCount = function () {
-        dashboradService.GetTotalTicketCount('SOLVEDTICKET').then(function (response) {
-            $scope.resolveTicketCount = response;
+        dashboradService.GetTotalTicketCount('CLOSEDTICKET').then(function (response) {
+            $scope.closeTicketCount = response;
         }, function (err) {
-            $scope.resolveTicketCount = 0;
+            $scope.closeTicketCount = 0;
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };

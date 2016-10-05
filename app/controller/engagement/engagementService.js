@@ -113,13 +113,31 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         });
     };
 
+    var engagementCount = function (userId) {
+
+        return $http({
+            method: 'get',
+            url: baseUrls.engagementUrl+"EngagementSessionCount/"+userId,
+            headers: {
+                'authorization':authService.GetToken()
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
     return {
         GetEngagementIdsByProfile: getEngagementIdsByProfile,
         GetEngagementSession:getEngagementSession,
         GetEngagementSessions:getEngagementSessions,
         GetEngagementSessionNote:getEngagementSessionNote,
         AppendNoteToEngagementSession:appendNoteToEngagementSession,
-        createEngagementSession: createEngagementSession
+        createEngagementSession: createEngagementSession,
+        EngagementCount:engagementCount
     }
 });
 
