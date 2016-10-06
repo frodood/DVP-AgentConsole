@@ -755,7 +755,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelFrom: "33",
             channelTo: "33",
             channel: "555"
-        });
+        },'ticketFilter');
     };
 
     var openNewTicketTab = function (ticket, index) {

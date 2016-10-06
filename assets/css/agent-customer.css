@@ -1176,6 +1176,10 @@ div > div >
     z-index: 100;
 }
 
+.bg-opacity-8 {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
 .model-main-wrapper {
     background: #fff;
     height: 690px;
@@ -1982,6 +1986,19 @@ div > div >
     padding-top: 3px;
 }
 
+.mail-icon-large {
+    color: #36ba45;
+    font-size: 18px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #0d1c34;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 13px;
+}
+
 .main-text {
     display: inline-block;
     color: #36ba45;
@@ -2313,6 +2330,7 @@ tags-input .tags .input {
 .prn2-image-wrapper {
     width: 100%;
     min-height: 230px;
+    max-height: 230px;
     height: auto;
     padding: 0px;
     overflow: hidden;
@@ -2327,7 +2345,8 @@ tags-input .tags .input {
 }
 
 .prn2-image-wrapper > div > .profile-details-img > img {
-    border-radius: 0px 0px 15px 0px;
+    border-radius: 0px 0px 5px 0px;
+    height: 155px;
 }
 
 .text-uppercase.header-text-h5 {
@@ -2671,6 +2690,7 @@ tags-input .tags .input {
     width: 100%;
     min-height: 250px;
     height: auto;
+    margin-top: 38px;
 }
 
 .dark-product-wrapper {

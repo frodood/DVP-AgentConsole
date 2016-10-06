@@ -21,6 +21,22 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getExternalUserTicketCounts = function (requester) {
+        return $http({
+            method: 'get',
+            url: baseUrls.ticketUrl+"ExternalUserTicketCounts/"+requester,
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
     var saveTicket = function (ticket) {
         return $http({
             method: 'Post',
@@ -31,7 +47,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
             data:ticket
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
-                return response.data.Result;
+                return response.data;
             } else {
                 return undefined;
             }
@@ -856,8 +872,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         getFormSubmissionByRef: getFormSubmissionByRef,
         PickLoggedTime:PickLoggedTime,
         WatchTicket:WatchTicket,
-        StopWatchTicket:StopWatchTicket
-
+        StopWatchTicket:StopWatchTicket,
+        GetExternalUserTicketCounts:getExternalUserTicketCounts
     }
 });
 

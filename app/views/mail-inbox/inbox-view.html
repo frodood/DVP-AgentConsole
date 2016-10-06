@@ -217,9 +217,12 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-lg-5">
-                                    <div class="user-img pull-left">
-                                        <img class="round-img-80"
-                                             src="assets/img/avatar/oykun.jpg">
+                                    <div class="pull-left mail-icon-large">
+                                        <i ng-if="currentDisplayMessage.message_type === 'NOTIFICATION'" class="fa fa-bell-o fa-2x"></i>
+                                        <i ng-if="currentDisplayMessage.message_type === 'FACEBOOK'" class="fa fa-facebook fa-2x"></i>
+                                        <i ng-if="currentDisplayMessage.message_type === 'TWITTER'" class="fa fa-twitter fa-2x"></i>
+                                        <i ng-if="currentDisplayMessage.message_type === 'SMS'" class="fa fa-envelope fa-2x"></i>
+                                        <!--<i class="fa fa-2x" ng-class="'fa-bell-o'" style="margin: 0 auto;"></i>-->
                                     </div>
                                     <div class="pull-left p-left-15">
                                         <h5 class="bold"><div ng-if="currentDisplayMessage.from">From : {{currentDisplayMessage.from.toUpperCase()}}</div><div ng-if="!currentDisplayMessage.from && currentDisplayMessage.engagement_session && currentDisplayMessage.engagement_session.channel_from">From : {{currentDisplayMessage.engagement_session.channel_from.toUpperCase()}}</div></h5>
