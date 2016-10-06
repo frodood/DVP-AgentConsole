@@ -976,16 +976,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
             //scope.GetAllTicketsByRequester();
 
-
-            scope.GetProfileHistory = function (profileId) {
-                scope.GetEngagementIdsByProfile(profileId);
-                scope.GetAllTicketsByRequester(profileId, 1);
-                scope.getEnggemntCount(profileId);
-                scope.getExternalUserTicketCounts(profileId);
-                console.info("Profile History Loading........................");
-            };
-
-
             var getExternalUserRecentTickets = function (id) {
                 ticketService.GetExternalUserRecentTickets(id).then(function (response) {
                     scope.recentTicketList = response;
@@ -1722,8 +1712,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         response.forEach(function(item){
                             var p = ((item.count / scope.enggemntDetailsTotalCount) * 100).toFixed(2);
                             scope.enggemntDetailsCount.push({"_id":item._id,
-                            "count":item.count,
-                            "val":p});
+                                "count":item.count,
+                                "val":p});
                         });
                     }
                     //scope.enggemntDetailsCount = response;
@@ -1740,6 +1730,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     scope.showAlert("Ticket", "error", "Fail To Get Ticket Count.")
                 });
             };
+
+            scope.GetProfileHistory = function (profileId) {
+                scope.GetEngagementIdsByProfile(profileId);
+                scope.GetAllTicketsByRequester(profileId, 1);
+                scope.getEnggemntCount(profileId);
+                scope.getExternalUserTicketCounts(profileId);
+                console.info("Profile History Loading........................");
+            };
+
         }
     }
 }).directive("fileread", [function () {
