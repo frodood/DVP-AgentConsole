@@ -50,20 +50,20 @@
                                     <div class="dark-product-wrapper">
                                         <div class="col-lg-4">
                                             <div class="dark-product-ticker-wrap">
-                                                <h1 class="Staffed">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title Staffed">Staffed Time</div>
+                                                <h1 class="Staffed">{{productivity.IncomingCallCount}}</h1>
+                                                <div class="title Staffed">Incoming Calls</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.OnCallTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title onCall">On Call Time</div>
+                                                <h1 class="onCall">{{productivity.MissCallCount}}</h1>
+                                                <div class="title onCall">Miss Call</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.BreakTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title onCall">Break Time</div>
+                                                <h1 class="onCall">{{productivity.TransferCallCount}}</h1>
+                                                <div class="title onCall">Transfer Call</div>
                                             </div>
                                         </div>
                                     </div>
