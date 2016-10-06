@@ -207,6 +207,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 $scope.productivity.OnCallTime = response.OnCallTime.toString().toHHMMSS();
                 $scope.productivity.StaffedTime = response.StaffedTime.toString().toHHMMSS();
                 $scope.productivity.BreakTime = response.BreakTime.toString().toHHMMSS();
+                $scope.productivity.IncomingCallCount = response.IncomingCallCount;
+                $scope.productivity.MissCallCount = response.MissCallCount;
+                $scope.productivity.TransferCallCount = response.TransferCallCount;
             } else {
                 $scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
             }
