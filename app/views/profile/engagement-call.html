@@ -407,7 +407,6 @@
 
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -521,7 +520,7 @@
                 <div class="btn-wrapper">
                     <div class="btn-warp inline-btn"
                          ng-click="multipleProfile.createNewProfile();">
-                        <span class="btn  btn-default">new</span>
+                        <span class="btn  btn-default">edit</span>
                     </div>
 
                     <div class="btn-warp inline-btn">
@@ -569,8 +568,8 @@
                                     </li>
                                     <li>
                                         <small>Last Name</small>
-                                        <h5 ng-show="!profileDetail.lastname">{{profileDetail.lastname}}</h5>
-                                        <h5 ng-show="profileDetail.lastname">-</h5>
+                                        <h5 ng-show="profileDetail.lastname">{{profileDetail.lastname}}</h5>
+                                        <h5 ng-show="!profileDetail.lastname">-</h5>
                                     </li>
                                     <li>
                                         <small>Address</small>
@@ -599,20 +598,40 @@
                                     <h5 class="text-uppercase header-text-h5 ">Engagement</h5>
                                 </div>
                             </div>
-                            <div class="prn2 time-wrapper">
+                            <div class="col-lg-6">
+                                <!-- left wrapper -->
+                                <div ng-if="enggemntDetailsCount.length==0" class="engagement-loading">
+                                    loading..
+                                </div>
                                 <div class="row" ng-repeat="d in enggemntDetailsCount">
-                                    <div class="col-sm-3 font-white">
+                                    <div class="col-sm-3 font-white" style="text-transform: uppercase">
                                         {{d._id}}
                                     </div>
                                     <div class="col-sm-6 prn2">
                                         <!--<uib-progressbar value="(d.count/enggemntDetailsTotalCount)*100" type="warning">
                                         </uib-progressbar>-->
-                                        <uib-progressbar animate="true" value="d.val" type="success"><b>{{d.val}}%</b></uib-progressbar>
+                                        <uib-progressbar animate="true" value="d.val"
+                                                         type="{{getRandomColor($index)}}"><b>{{d.val}}%</b>
+                                        </uib-progressbar>
                                     </div>
                                     <div class="col-sm-3 font-white text-right">
                                         {{d.count}}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row" style="padding-bottom: 5px;" ng-repeat="t in ExternalUserTicketCounts">
+                                    <div class="col-sm-6 font-CyanA200">
+                                        Total {{t._id}}
+                                    </div>
+                                    <div class="col-sm-6 font-CyanA200 text-right">
+                                        {{t.count}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="prn2 time-wrapper">
+
                                 <!--<div class="row">
                                     <div class="col-sm-3 font-white">
                                         Sms
@@ -639,14 +658,6 @@
                                 </div>-->
 
 
-                                <div class="row" style="padding-bottom: 5px;" ng-repeat="t in ExternalUserTicketCounts">
-                                    <div class="col-sm-6 font-CyanA200">
-                                        Total {{t._id}}
-                                    </div>
-                                    <div class="col-sm-6 font-CyanA200 text-right">
-                                        {{t.count}}
-                                    </div>
-                                </div>
                                 <!--<div class="row">
                                     <div class="col-sm-6 font-CyanA200">
                                         Pending Ticket
@@ -668,19 +679,54 @@
                                 <div class="row">
                                     <div class="layout-header prn2-layout-header2">
                                         <div class="col-md-8 col-sm-8">
-                                            <div class="text-header bold">
+                                            <div ng-show="!isAddNewContact" class="text-header bold">
                                                 CONTACT
+                                            </div>
+                                            <div ng-show="isAddNewContact" class="text-header bold">
+                                                ADD NEW CONTACT
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-4 ">
-                                            <div class="btn-left-icon pull-right ">
-                                                <i class="veery-font-1-add-2"></i>
+                                            <div class="btn-left-icon pull-right "
+                                                 ng-click="showAddNewContact();">
+                                                <i ng-show="!isAddNewContact" class="veery-font-1-add-2"></i>
+                                                <i ng-show="isAddNewContact" class="main-icon-2-close"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="prn2-contact-body">
+                                        <!-- add new contact into the list -->
+                                        <div ng-show="isAddNewContact"
+                                             ng-class="{'add-contact-show':isAddNewContact == 'true'}"
+                                             class="add-contact-wrapper">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group ">
+                                                        <select class="form-control ">
+                                                            <option value="" disabled selected>Select
+                                                                contact
+                                                                type
+                                                            </option>
+                                                            <option>Facebook</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                            <option>5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <input type="text" class="form-control" placeholder="value">
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12 m-top-10">
+                                                    <button class="btn btn-block btn-default">
+                                                        Add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end -->
                                         <div class="prn2 header-round-icon">
                                             <div class="icon-left">
                                                 <i class="fa fa-facebook"></i>

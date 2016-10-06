@@ -1,4 +1,4 @@
-<div id="main" ng-controller="consoleCtrl">
+<div id="main" main-scroll ng-controller="consoleCtrl">
     <div>
         <nav id="navBar" class="navbar navbar-default console-nav-bar">
 
@@ -486,7 +486,11 @@
         <!-- tab panel -->
         <div class="console-tab-wrapper">
             <!--div ng-include="'app/views/console-tab-panel.html'"></div-->
-            <scrollable-tabset api="scrlTabsApi" tooltip-left-placement="top">
+            <scrollable-tabset ng-class="{'fix-console-tab':isFiexedTab==true,
+                                         '':isFiexedTab==false}"
+                               api="scrlTabsApi"
+                               tooltip-left-placement="top"
+                               id="consoleMainTab">
                 <uib-tabset class="scrollable-tab-overwrite" active="activeTabIndex" id="tab_view">
                     <uib-tab class="console-main-tab" ng-repeat="tab in tabs" select="tabSelected(tab.tabReference)">
                         <uib-tab-heading>
