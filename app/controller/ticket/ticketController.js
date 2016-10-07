@@ -2,7 +2,7 @@
  * Created by Veery Team on 8/19/2016.
  */
 
-agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticketService,moment,$rootScope,userService,profileDataParser) {
+agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$state,ticketService,moment,$rootScope,userService,profileDataParser) {
 
     $scope.ticketList = {
         toDo: [],
@@ -13,6 +13,8 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
     };
+
+
 
 
     String.prototype.toHH = function () {
@@ -774,12 +776,28 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,ticke
 
 
     $scope.closeTicketInbox = function () {
-         $('#mainTicketWrapper').addClass('display-none').
-         removeClass('display-block fadeIn');
+        $('#mainTicketWrapper').addClass('display-none').
+            removeClass('display-block fadeIn');
 
     };
 
 
+    $scope.reloadTickets = function () {
+        //$state.reload();
+        $scope.ticketList.toDo=[];
+        $scope.ticketList.inProgress=[];
+        $scope.ticketList.done=[];
+
+        setToInitiate();
+        $scope.ticketList.loadCompleted =true;
+        pickToDoList(1);
+        pickProcessingTickets(1);
+        pickCompletedTickets(1);
+    }
+
+    $rootScope.$on('reloadInbox', function (events, args) {
+        $scope.reloadTickets();
+    });
 
 
 

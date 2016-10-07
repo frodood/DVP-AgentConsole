@@ -17,6 +17,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').removeClass('display-none zoomOut');
+            if(profileDataParser.isInitiateLoad)
+            {
+                profileDataParser.isInitiateLoad=false;
+            }
+            else
+            {
+                $rootScope.$emit('reloadInbox',true);
+            }
+
         },
         Register: function () {
             if ($scope.isRegistor) {

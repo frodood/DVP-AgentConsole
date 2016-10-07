@@ -7,7 +7,8 @@ angular.module('veeryAgentApp').factory('profileDataParser', function(){
     return {
         myProfile: undefined,
         userList:[],
-        RecentEngagements:[]
+        RecentEngagements:[],
+        isInitiateLoad:true
     }
 });
 
