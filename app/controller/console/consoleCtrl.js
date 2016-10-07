@@ -156,20 +156,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         muteCall: function () {
             /*btnMute.value = bMute ? "Unmute" : "Mute";*/
-            if(sipToggleMute()){
+            if (sipToggleMute()) {
                 $('#muteButton').addClass('veery-font-1-muted').removeClass('veery-font-1-mute');
-            }else{
+            } else {
                 $('#muteButton').addClass('veery-font-1-mute').removeClass('veery-font-1-muted');
             }
         },
         holdResumeCall: function () {
-            var h =sipToggleHoldResume();
-            if(h==='0'){ //connect
+            var h = sipToggleHoldResume();
+            if (h === '0') { //connect
                 $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-1').removeClass('veery-phone-icon-1-phone-call-2');
             }
-            else if(h==='1'){//hold
+            else if (h === '1') {//hold
                 $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-2').removeClass('veery-phone-icon-1-phone-call-1');
-            }else {
+            } else {
 //error
             }
         },
@@ -322,8 +322,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 else if (e.toString().toLowerCase() == 'in call') {
                     /*UIStateChange.inCallConnectedState();*/
+                    $scope.startCallTime();
                     phoneFuncion.showHoldButton();
                     phoneFuncion.showMuteButton();
+                    phoneFuncion.showEndButton();
                     $scope.ShowIncomeingNotification(false);
                 }
             }
@@ -413,8 +415,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             try {
 
                 console.log("uiCallTerminated");
+                $scope.stopCallTime();
                 $scope.ShowIncomeingNotification(false);
-                phoneFuncion.hideEndButton();
                 phoneFuncion.hideHoldButton();
                 phoneFuncion.hideMuteButton();
                 if (window.btnBFCP) window.btnBFCP.disabled = true;
@@ -440,7 +442,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
-    var  phoneFuncion = {
+    var phoneFuncion = {
         showAnswerButton: function () {
             $('#answerButton').addClass('phone-btn ').removeClass('display-none');
         },
@@ -533,7 +535,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             direction: values[7],
             channelFrom: values[3],
             channelTo: values[5],
-            channel: 'Call',
+            channel: 'call',
             skill: values[6],
             sessionId: values[1]
         };
@@ -753,7 +755,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelFrom: "33",
             channelTo: "33",
             channel: "555"
-        });
+        },'ticketFilter');
     };
 
     var openNewTicketTab = function (ticket, index) {
@@ -1725,4 +1727,35 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     getCurrentState.getResourceState();
 
 
+    // Phone Call Timers
+    $scope.counter = 0;
+    var callDurationTimeout = {};
+    $scope.duations = '';
+    $scope.onTimeout = function () {
+        $scope.counter++;
+        $scope.duations = $scope.counter.toString().toHHMMSS();
+        callDurationTimeout = $timeout($scope.onTimeout, 1000);
+    };
+
+
+    $scope.stopCallTime = function () {
+        $timeout.cancel(callDurationTimeout);
+    };
+    $scope.startCallTime = function () {
+        $scope.counter = 0;
+        callDurationTimeout = $timeout($scope.onTimeout, 1000);
+    };
+
+
+}).directive("mainScroll", function ($window) {
+    return function (scope, element, attrs) {
+        angular.element($window).bind("scroll", function () {
+            if (this.pageYOffset >= 20) {
+                scope.isFiexedTab = true;
+            } else {
+                scope.isFiexedTab = false;
+            }
+            scope.$apply();
+        });
+    };
 });

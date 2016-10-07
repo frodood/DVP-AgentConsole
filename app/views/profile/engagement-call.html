@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-4 col-sm-4 ">
                 <div class="btn-left-icon pull-right p-top-6"
-                     ng-click="clickAddNewTicket();">
+                     ng-click="showNewTicket();">
                     <i class="veery-font-1-add-2"></i>
                     new ticket
                 </div>
@@ -60,13 +60,31 @@
                 <div class="note-ivr-wrapper">
                     <uib-tabset active="activePill" type="pills">
                         <uib-tab index="0" heading="NOTE">
-                            <div class="new-note-wrapper">
+                            <!--<div class="new-note-wrapper">
                                 <textarea class="form-control" rows="3" ng-model="noteBody"></textarea>
                                 <div class="btn-warp inline-btn  p-top-6 pull-right">
                               <span class="btn  btn-default btn-sm "
                                     ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
                                 </div>
-                            </div>
+                            </div>-->
+                            <form name="engagementFrm" novalidate>
+                                <div class="new-note-wrapper"
+                                     ng-class="{ 'has-error': engagementFrm.noteBody.$invalid && engagementFrm.noteBody.$dirty }">
+
+                                    <textarea ng-model="noteBody" class="form-control" rows="3" name="noteBody" required
+                                              placeholder="Enter Note"></textarea>
+                                    <div class="help-block" ng-messages="engagementFrm.noteBody.$error"
+                                         ng-if="engagementFrm.noteBody.$touched">
+                                        <p ng-message="required">Note is required.</p>
+                                    </div>
+                                    <div class="btn-warp inline-btn  p-top-6 pull-right">
+                              <span ng-disabled="engagementFrm.$invalid" class="btn  btn-default btn-sm "
+                                    ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
+                                    </div>
+                                </div>
+
+                            </form>
+
                             <div class="engagement-note-list">
                                 <div class="note-wrap" ng-repeat="engNote in currentEngagement.notes">
                                     <div class="left-icon">
@@ -100,7 +118,369 @@
 </div>
 
 
+<!--  Profile Detail -->
 <div class="col-sm-12 col-md-8 col-lg-8 p-0">
+    <!-- add new Profile -->
+    <div ng-show="showNewProfile">
+        <div class="position-relative">
+            <div id="addNewProfile" class="fixed-model-opacity bg-opacity-8">
+                <div class="container">
+                    <div class="col-lg-8 col-md-8 col-xs-8 ">
+                        <div class="model-main-wrapper p-0 animated fadeInDown ">
+                            <!-- MODEL HEADER -->
+                            <div class="model-header">
+                                <div style="padding-top: 7px;" class="col-md-6">
+                                    <div class="mode-left-icon">
+                                        <i class="veery-font-1-notepad"></i>
+                                    </div>
+                                    <div class="model-header-text">
+                                        Create New Profile
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 ">
+                                    <div class="model-btn-wrapper">
+                                        <div class="btn-warp ">
+                                <span class="btn btn-default btn-close"
+                                      ng-show="showNewProfile"
+                                      ng-click="multipleProfile.closeNewProfile();"
+                                >close</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODEL HEADER -->
+
+                            <!-- MODEL HEADER -->
+                            <div class="model-body model-body-scroll">
+                                <div class="col-lg-12">
+                                    <form name="newProfileForm" novalidate>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3 col-lg-3 col-sm-12">
+                                                    <div class="profile-image-crop">
+                                                        <div>
+                                                            <img ng-src="{{cropImageURL}}"
+                                                                 src="assets/img/avatar/profile_img150x150.jpg">
+                                                        </div>
+                                                        <div class="image-edit">
+                                                            <span class="btn-edit-img" ng-click="viewCropArea()">change image</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-9 col-sm-12 col-xs-12" style="margin-top: 15px;">
+                                                    <!-- personal information -->
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 text-header bold">
+                                                            Personal Information
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label for="FirstName">First Name</label>
+                                                                <input type="text" class="form-control" id="FirstName"
+                                                                       placeholder=""
+                                                                       ng-model="newProfile.firstname">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>Last Name</label>
+                                                                <input type="text" class="form-control" placeholder=""
+                                                                       ng-model="newProfile.lastname">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>Nick Name</label>
+                                                                <input type="text" class="form-control" placeholder=""
+                                                                       ng-model="newProfile.name">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group"
+                                                                 ng-class="{ 'has-error': newProfileForm.phoneno.$invalid && newProfileForm.phoneno.$dirty }">
+                                                                <label for="phoneno" class="control-label">Phone
+                                                                    Number*</label>
+                                                                <input type="text" class="form-control" id="phoneno"
+                                                                       name="phoneno" ng-model="newProfile.phone"
+                                                                       required placeholder="Phone Number"/>
+                                                                <div class="help-block"
+                                                                     ng-messages="newProfileForm.phoneno.$error"
+                                                                     ng-if="newProfileForm.phoneno.$touched">
+                                                                    <p ng-message="required">Phone Number is
+                                                                        required.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group"
+                                                                 ng-class="{ 'has-error': newProfileForm.pEmail.$invalid && newProfileForm.pEmail.$dirty }">
+                                                                <label for="pEmail" class="control-label">Phone
+                                                                    Number*</label>
+                                                                <input type="text" class="form-control" id="pEmail"
+                                                                       name="pEmail" ng-model="newProfile.email"
+                                                                       required placeholder="Email"/>
+                                                                <div class="help-block"
+                                                                     ng-messages="newProfileForm.pEmail.$error"
+                                                                     ng-if="newProfileForm.pEmail.$touched">
+                                                                    <p ng-message="required">Email is required.</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label for="province">Locale</label>
+                                                                <select class="form-control"
+                                                                        ng-model="newProfile.locale">
+                                                                    <option ng-repeat="locale in languages"
+                                                                            value="{{locale.code}}">
+                                                                        {{locale.name}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="row">
+                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <label for="province">Birthday</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-xs-4 col-sm-12">
+                                                                <div class="row">
+                                                                    <select class="form-control "
+                                                                            ng-model="newProfile.dob.day">
+                                                                        <option value="" disabled selected>Select day
+                                                                        </option>
+                                                                        <option ng-repeat="day in dayList"
+                                                                                value="{{day}}">
+                                                                            {{day}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-xs-4 col-sm-12">
+                                                                <div class="row"
+                                                                     style="padding-left: 5px;padding-right: 5px;">
+                                                                    <select class="form-control"
+                                                                            ng-model="newProfile.dob.month">
+                                                                        <option value="" disabled selected>Select month
+                                                                        </option>
+                                                                        <option ng-repeat="month in monthList"
+                                                                                value="{{month.index}}">
+                                                                            {{month.name}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-xs-4 col-sm-12">
+                                                                <div class="row">
+                                                                    <select class="form-control"
+                                                                            ng-model="newProfile.dob.year">
+                                                                        <option value="" disabled selected>Select year
+                                                                        </option>
+                                                                        <option ng-repeat="y in yearList" value="{{y}}">
+                                                                            {{y}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 text-header bold">
+                                                            Address
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label for="no">P.O. Box / Building No</label>
+                                                                <input type="text" class="form-control" id="no"
+                                                                       placeholder="" ng-model="newProfile.title">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label for="street1">Street</label>
+                                                                <input type="text" class="form-control" id="street1"
+                                                                       placeholder=""
+                                                                       ng-model="newProfile.address.street">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label for="City2">City</label>
+                                                                <input type="text" class="form-control" id="City2"
+                                                                       placeholder=""
+                                                                       ng-model="newProfile.address.city">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label for="province">Province</label>
+                                                                <input type="text" class="form-control" id="province"
+                                                                       placeholder=""
+                                                                       ng-model="newProfile.address.province">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label for="country">Country</label>
+                                                                <select class="select2_single form-control"
+                                                                        tabindex="-1"
+                                                                        aria-hidden="true" id="country"
+                                                                        name="country"
+                                                                        ng-model="newProfile.address.country">
+                                                                    <option ng-repeat="country in countryList"
+                                                                            value="{{country.name}}">
+                                                                        {{country.name}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group">
+                                                                <label for="ZipCode">Zip Code</label>
+                                                                <input type="text" class="form-control" id="ZipCode"
+                                                                       placeholder=""
+                                                                       ng-model="newProfile.address.zipcode">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 text-header bold">
+                                                            Veery Account Information
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="form-group">
+                                                                <label for="ZipCode">Contact Type</label>
+                                                                <div class="form-group ">
+                                                                    <select class="form-control ">
+                                                                        <option value="" disabled selected>Select
+                                                                            contact
+                                                                            type
+                                                                        </option>
+                                                                        <option>2</option>
+                                                                        <option>3</option>
+                                                                        <option>4</option>
+                                                                        <option>5</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="form-group">
+                                                                <label for="ZipCode">Link</label>
+                                                                <input type="text" class="form-control" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="model-footer-wrapper">
+                                    <div class="model-btn-wrapper">
+                                        <div class="btn-warp ">
+                                <span ng-disabled="newProfileForm.$invalid" class="btn btn-default"
+                                      ng-click="saveTicket(ticket);"
+                                >Save</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- END MODEL HEADER -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end -->
+
+    <!-- Multiple Profile -->
+    <div ng-show="showMultiProfile">
+        <div class="position-relative">
+            <div class="animated fixed-model-opacity bg-opacity-8">
+                <div class="container">
+                    <div class="col-lg-8 col-md-8 col-xs-8 ">
+                        <div class="model-main-wrapper p-0 animated fadeInDown ">
+                            <!-- MODEL HEADER -->
+                            <div class="model-header">
+                                <div style="padding-top: 7px;" class="col-md-6">
+                                    <div class="mode-left-icon">
+                                        <i class="veery-font-1-notepad"></i>
+                                    </div>
+                                    <div class="model-header-text">
+                                        Multiple Profile
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 ">
+                                    <div class="model-btn-wrapper">
+                                        <div class="btn-warp ">
+                                <span class="btn btn-default btn-close"
+                                      ng-click="multipleProfile.closeProfileSelection();"
+                                >close</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODEL HEADER -->
+
+                            <!-- MODEL HEADER -->
+                            <div class="model-body model-body-scroll">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="prn2-multiple-wrapper">
+                                            <div class="col-md-3" ng-repeat="p in profileDetails">
+                                                <div class="profile-multiple-wrap">
+                                                    <div class="pin-dote left"></div>
+                                                    <div class="pin-dote right"></div>
+                                                    <div class="profile-img-wrapper">
+                                                        <img src="assets/img/avatar/defaultProfile.png"
+                                                             ng-src="{{p.avatar}}">
+                                                    </div>
+                                                    <div class="btn-profile-view"
+                                                         ng-click="multipleProfile.openSelectedProfile(p);">
+                                                        view
+                                                    </div>
+                                                    <div class="profile-body">
+                                                        <h5 class="bold">{{p.name}}</h5>
+                                                        <small>{{p.phone}}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END MODEL HEADER -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end -->
+
     <div class="col-lg-12 col-md-12 col-sm-12 p-0">
         <!-- PROFILE HEADER -->
         <div class="prn2-header-wrapper bg-color-Teal900">
@@ -138,9 +518,11 @@
             </div>
             <div class="col-md-3 col-lg-3 col-sm-12 ">
                 <div class="btn-wrapper">
-                    <div class="btn-warp inline-btn">
-                        <span class="btn  btn-default">new</span>
+                    <div class="btn-warp inline-btn"
+                         ng-click="multipleProfile.createNewProfile();">
+                        <span class="btn  btn-default">edit</span>
                     </div>
+
                     <div class="btn-warp inline-btn">
                         <span class="btn  btn-default">search</span>
                     </div>
@@ -149,9 +531,12 @@
         </div>
     </div>
 
-
-    <uib-tabset type="pills">
-        <uib-tab heading="Profile" class="btn tab-btn">
+    <!-- tab panel
+         time line
+         ticker view
+         profile information -->
+    <uib-tabset class="profile-tab-pills" type="pills">
+        <uib-tab heading="Profile">
             <div class="animated ">
                 <!-- PROFILE HEADER2 -->
                 <div class=" col-sm-12 col-lg-12 col-md-12 p-0">
@@ -160,7 +545,7 @@
                         <div class="prn2-image-wrapper bg-color-Teal900">
                             <div class="col-md-5 p-0">
                                 <div class="profile-details-img pull-left">
-                                    <img src="assets/img/avatar/profile_img150x150.jpg"
+                                    <img src="assets/img/avatar/defaultProfile.jpg"
                                          ng-src="{{profileDetail.avatar}}">
                                 </div>
                                 <div class="prn2 profile-status bold ">
@@ -183,11 +568,13 @@
                                     </li>
                                     <li>
                                         <small>Last Name</small>
-                                        <h5>{{profileDetail.lastname}}</h5>
+                                        <h5 ng-show="profileDetail.lastname">{{profileDetail.lastname}}</h5>
+                                        <h5 ng-show="!profileDetail.lastname">-</h5>
                                     </li>
                                     <li>
                                         <small>Address</small>
-                                        <h5>{{profileDetail.address.zipcode}} ,{{profileDetail.address.street}}, {{profileDetail.address.city}}</h5>
+                                        <h5>{{profileDetail.address.zipcode}} ,{{profileDetail.address.street}},
+                                            {{profileDetail.address.city}}</h5>
                                     </li>
                                     <li>
                                         <div class="details-wrap">
@@ -195,7 +582,7 @@
                                                 test1
                                             </div>
                                             <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn">
-                                                test1
+                                                test2
                                             </div>
                                         </div>
                                     </li>
@@ -211,20 +598,41 @@
                                     <h5 class="text-uppercase header-text-h5 ">Engagement</h5>
                                 </div>
                             </div>
-                            <div class="prn2 time-wrapper">
-                                <div class="row">
-                                    <div class="col-sm-3 font-white">
-                                        Call
+                            <div class="col-lg-6">
+                                <!-- left wrapper -->
+                                <div ng-if="enggemntDetailsCount.length==0" class="engagement-loading">
+                                    loading..
+                                </div>
+                                <div class="row" ng-repeat="d in enggemntDetailsCount">
+                                    <div class="col-sm-3 font-white" style="text-transform: uppercase">
+                                        {{d._id}}
                                     </div>
                                     <div class="col-sm-6 prn2">
-                                        <uib-progressbar value="22" type="warning">
+                                        <!--<uib-progressbar value="(d.count/enggemntDetailsTotalCount)*100" type="warning">
+                                        </uib-progressbar>-->
+                                        <uib-progressbar animate="true" value="d.val"
+                                                         type="{{getRandomColor($index)}}"><b>{{d.val}}%</b>
                                         </uib-progressbar>
                                     </div>
                                     <div class="col-sm-3 font-white text-right">
-                                        5
+                                        {{d.count}}
                                     </div>
                                 </div>
-                                <div class="row">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row" style="padding-bottom: 5px;" ng-repeat="t in ExternalUserTicketCounts">
+                                    <div class="col-sm-6 font-CyanA200">
+                                        Total {{t._id}}
+                                    </div>
+                                    <div class="col-sm-6 font-CyanA200 text-right">
+                                        {{t.count}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="prn2 time-wrapper">
+
+                                <!--<div class="row">
                                     <div class="col-sm-3 font-white">
                                         Sms
                                     </div>
@@ -247,23 +655,17 @@
                                     <div class="col-sm-3 font-white text-right">
                                         10
                                     </div>
-                                </div>
-                                <div class="row" style="padding-bottom: 5px;">
-                                    <div class="col-sm-6 font-CyanA200">
-                                        Total Ticket
-                                    </div>
-                                    <div class="col-sm-6 font-CyanA200 text-right">
-                                        5
-                                    </div>
-                                </div>
-                                <div class="row">
+                                </div>-->
+
+
+                                <!--<div class="row">
                                     <div class="col-sm-6 font-CyanA200">
                                         Pending Ticket
                                     </div>
                                     <div class="col-sm-6 font-CyanA200 text-right">
                                         10
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -277,19 +679,54 @@
                                 <div class="row">
                                     <div class="layout-header prn2-layout-header2">
                                         <div class="col-md-8 col-sm-8">
-                                            <div class="text-header bold">
+                                            <div ng-show="!isAddNewContact" class="text-header bold">
                                                 CONTACT
+                                            </div>
+                                            <div ng-show="isAddNewContact" class="text-header bold">
+                                                ADD NEW CONTACT
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-4 ">
-                                            <div class="btn-left-icon pull-right ">
-                                                <i class="veery-font-1-add-2"></i>
+                                            <div class="btn-left-icon pull-right "
+                                                 ng-click="showAddNewContact();">
+                                                <i ng-show="!isAddNewContact" class="veery-font-1-add-2"></i>
+                                                <i ng-show="isAddNewContact" class="main-icon-2-close"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="prn2-contact-body">
+                                        <!-- add new contact into the list -->
+                                        <div ng-show="isAddNewContact"
+                                             ng-class="{'add-contact-show':isAddNewContact == 'true'}"
+                                             class="add-contact-wrapper">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group ">
+                                                        <select class="form-control ">
+                                                            <option value="" disabled selected>Select
+                                                                contact
+                                                                type
+                                                            </option>
+                                                            <option>Facebook</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                            <option>5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <input type="text" class="form-control" placeholder="value">
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12 m-top-10">
+                                                    <button class="btn btn-block btn-default">
+                                                        Add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end -->
                                         <div class="prn2 header-round-icon">
                                             <div class="icon-left">
                                                 <i class="fa fa-facebook"></i>
@@ -357,27 +794,58 @@
 
                         <div class="col-md-9 " style="padding-right: 0px;">
                             <div class="prn2-recent-activity ">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent Activity</h5>
-                                    </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent
+                                        Activity</h5>
                                 </div>
+
                                 <div class="row">
-                                    <div class="col-md-6" ng-repeat="recentTicket in recentTicketList.tickets">
-                                        <div class="recent-activity-wrap ">
-                                            <div class="col-lg-9 p-0 font-color-blue900">
-                                                <small class="ticker-id bold" ng-click="gotoTicket(recentTicket)">{{recentTicket.reference}}</small>
-                                                <br>
-                                                {{recentTicket.description}}
-                                            </div>
-                                            <div class="col-lg-3 p-0">
-                                                <small class="font-color-yellow">{{recentTicket.status}}</small>
-                                                <br>
-                                                <small class="font-color-green"><time-ago from-time='{{ recentTicket.created_at }}' format='MM/dd/yyyy'></time-ago></small>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="recentTicket in recentTicketList">
+                                            <div class="recent-activity-wrap ">
+                                                <div class="col-lg-9 p-0 font-color-blue900">
+                                                    <small class="ticker-id bold" ng-click="gotoTicket(recentTicket)">
+                                                        {{recentTicket.reference}}
+                                                    </small>
+                                                    <br>
+                                                    {{ recentTicket.description | limitTo: 25}}
+                                                    {{recentTicket.description.length > 25 ? '...' : ''}}
+                                                </div>
+                                                <div class="col-lg-3 p-0">
+                                                    <small class="font-color-yellow">{{recentTicket.status}}</small>
+                                                    <br>
+                                                    <small class="font-color-green">
+                                                        <time-ago from-time='{{ recentTicket.created_at }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </small>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="eng in recentEngList">
+                                            <div class="recent-activity-wrap ">
+                                                <div class="col-lg-9 p-0 font-color-blue900">
+                                                    <small class="ticker-id bold" ng-click="">
+                                                        {{eng.channel_to}}
+                                                    </small>
+                                                    <br>
+                                                    {{eng.channel_from}}
+                                                </div>
+                                                <div class="col-lg-3 p-0">
+                                                    <small class="font-color-yellow">{{eng.channel_to}}</small>
+                                                    <br>
+                                                    <small class="font-color-green">
+                                                        <time-ago from-time='{{ eng.created_at }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
+
                             </div>
                         </div>
 
@@ -436,7 +904,6 @@
                                 <div class="prn2-other-wrapper">
                                     <div class="row">
                                         <div class="col-lg-12">
-
                                             <div class="header-round-icon">
                                                 <div class="icon-left">
                                                     <i class="veery-font-1-user"></i>
@@ -446,11 +913,14 @@
                                                 </div>
                                                 <div>
                                                     <div ng-if="!buildModel">
-                                                        <label>Ticket form has been modified, please fill data to new form</label>
+                                                        <label>Ticket form has been modified, please fill data to new
+                                                            form</label>
                                                         <div>{{oldFormModel}}</div>
                                                     </div>
 
-                                                    <form name="customFormProfile" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(customFormProfile)"></form>
+                                                    <form name="customFormProfile" sf-schema="schema" sf-form="form"
+                                                          sf-model="model"
+                                                          ng-submit="onSubmit(customFormProfile)"></form>
                                                 </div>
                                             </div>
                                         </div>
@@ -460,34 +930,20 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </uib-tab>
-        <uib-tab heading="Time line" classes="btn tab-btn">
+        <uib-tab heading="Time line">
             <div class="animated">
                 <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
             </div>
         </uib-tab>
-        <uib-tab heading="Ticket" classes="btn tab-btn">
+        <uib-tab heading="Ticket">
             <div class="animated">
                 <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
             </div>
         </uib-tab>
+
     </uib-tabset>
-
-
-    <!-- MULTIPLE PROFILE -->
-    <div class=" display-none col-lg-12">
-        <div class="prn2-multiple-wrapper">
-            <div class="col-md-3">
-                <div class="profile-multiple-wrap">
-
-                </div>
-            </div>
-        </div>
-
-    </div>
 </div>
 
 <!-- add new ticket -->
@@ -496,10 +952,10 @@
         <div id="addNewTicket" class="animated fixed-model-opacity">
             <div class="container">
                 <div class="col-lg-offset-2 col-lg-8 col-md-8 col-xs-8 ">
-                    <div class="model-main-wrapper ">
+                    <div class="model-main-wrapper p-0 ">
                         <!-- MODEL HEADER -->
                         <div class="model-header">
-                            <div class="col-md-6">
+                            <div style="padding-top: 7px;" class="col-md-6">
                                 <div class="mode-left-icon">
                                     <i class="veery-font-1-notepad"></i>
                                 </div>
@@ -512,7 +968,7 @@
                                 <div class="model-btn-wrapper">
                                     <div class="btn-warp ">
                                 <span class="btn btn-default btn-close"
-                                      ng-click="clickAddNewTicket('#addNewTicket','display-none')"
+                                      ng-click="closeNewTicket();"
                                       id="closeTicket">close</span>
                                     </div>
                                 </div>
@@ -521,142 +977,165 @@
                         <!-- END MODEL HEADER -->
 
                         <!-- MODEL HEADER -->
-                        <div class="model-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="ticketSubject">Subject</label>
-                                    <input  ng-model="ticket.subject"  type="text" class="form-control" id="ticketSubject" placeholder="">
-                                </div>
-
-                                <div class="form-group">
-
-                                    <div class="row">
-                                        <div class="col-xs-7">
-                                            <label for="ticketSubject">Priority</label>
-                                            <div class="form-inline">
-                                                <div class="bg-checkbox red font-white inline-btn" ng-click="setPriority('urgent');">
-                                                    <i class="main-icon-2-cancel" ></i>
-                                                    urgent
-                                                </div>
-                                                <div class="bg-checkbox red font-white orange" ng-click="setPriority('high');">
-                                                    <i class="main-icon-2-cancel"></i>
-                                                    high
-                                                </div>
-                                                <div class="bg-checkbox red font-white teal600"  ng-click="setPriority('normal');">
-                                                    <i class="main-icon-2-cancel"></i>
-                                                    normal
-                                                </div>
-                                                <div class="bg-checkbox red font-white gray300" ng-click="setPriority('low');">
-                                                    <i class="main-icon-2-cancel"></i>
-                                                    low
-                                                </div>
-                                            </div>
+                        <div class="model-body model-body-scroll">
+                            <div class="col-lg-12">
+                                <form name="userForm" novalidate>
+                                    <div class="form-group"
+                                         ng-class="{ 'has-error': userForm.Subject.$invalid && userForm.Subject.$dirty }">
+                                        <label class="control-label">Subject*</label>
+                                        <input type="text" class="form-control" name="Subject" ng-model="ticket.subject"
+                                               id="ticketSubject" required placeholder="Subject"/>
+                                        <div class="help-block" ng-messages="userForm.Subject.$error"
+                                             ng-if="userForm.Subject.$touched">
+                                            <p ng-message="required">Subject is required.</p>
                                         </div>
-                                        <div class="col-xs-5">
-                                            <div class="form-group">
-                                                <label for="ticketSubject">Type</label>
-                                                <select class="form-control" ng-model="ticket.type">
-                                                    <option>question</option>
-                                                    <option>complain</option>
-                                                    <option>incident</option>
-                                                    <option>action</option>
-                                                </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-xs-7">
+                                                <label for="ticketSubject">Priority</label>
+                                                <div class="form-inline">
+                                                    <div class="bg-checkbox red font-white inline-btn"
+                                                         ng-click="setPriority('urgent');">
+                                                        <i class="main-icon-2-cancel"></i>
+                                                        urgent
+                                                    </div>
+                                                    <div class="bg-checkbox red font-white orange"
+                                                         ng-click="setPriority('high');">
+                                                        <i class="main-icon-2-cancel"></i>
+                                                        high
+                                                    </div>
+                                                    <div class="bg-checkbox red font-white teal600"
+                                                         ng-click="setPriority('normal');">
+                                                        <i class="main-icon-2-cancel"></i>
+                                                        normal
+                                                    </div>
+                                                    <div class="bg-checkbox red font-white gray300"
+                                                         ng-click="setPriority('low');">
+                                                        <i class="main-icon-2-cancel"></i>
+                                                        low
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <div class="col-xs-5">
+                                                <div class="form-group"
+                                                     ng-class="{ 'has-error': userForm.type.$invalid && userForm.type.$dirty }">
+                                                    <label for="ticketSubject">Type*</label>
+                                                    <select class="form-control" ng-model="ticket.type" name="type"
+                                                            required
+                                                            placeholder="Select">
+                                                        <option>question</option>
+                                                        <option>complain</option>
+                                                        <option>incident</option>
+                                                        <option>action</option>
+                                                    </select>
+                                                    <div class="help-block" ng-messages="userForm.type.$error"
+                                                         ng-if="userForm.type.$touched">
+                                                        <p ng-message="required">Type is required.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
 
                                     </div>
+                                    <div class="form-group">
+                                        <label for="ticketSubject">Tags</label>
+                                        <button ng-click="loadTags();"> Reload</button>
+                                        <tags-input ng-model="postTags" display-property="name" placeholder="...">
+                                            <auto-complete source="loadPostTags($query)"></auto-complete>
+                                        </tags-input>
 
+                                        <tags-input ng-model="newAddTags" placeholder="choose Tags"
+                                                    replace-spaces-with-dashes="false"
+                                                    display-property="name"
+                                                    add-from-autocomplete-only="true"
+                                                    on-tag-added="onChipAddTag($tag)"
+                                                    on-tag-removed="onChipDeleteTag($tag)"
+                                                    ng-disabled="" min-length="1">
+                                            <auto-complete source="queryTagSearch($query)"
+                                                           load-on-empty="true"
+                                                           load-on-focus="true"
+                                                           min-length="1"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                         <label for="ticketSubject">Tags</label>
+                                         <tags-input ng-model="newAddTags" placeholder="choose Tags" replace-spaces-with-dashes="false"
+                                                     display-property="name"
+                                                     add-from-autocomplete-only="true"
+                                                     on-tag-added="onChipAddTag($tag)"
+                                                     on-tag-removed="onChipDeleteTag($tag)"
+                                                     ng-disabled="" min-length="1">
+                                             <auto-complete source="queryTagSearch($query)"
+                                                            load-on-empty="true"
+                                                            load-on-focus="true"
+                                                            min-length="1"></auto-complete>
+                                         </tags-input>
+                                     </div>-->
+                                    <div class="form-group"
+                                         ng-class="{ 'has-error': userForm.Description.$invalid && userForm.Description.$dirty }">
+                                        <label for="ticketSubject">Description*</label>
+                                    <textarea ng-model="ticket.description" class="form-control" rows="3"
+                                              name="Description" required placeholder="Description"></textarea>
+                                        <div class="help-block" ng-messages="userForm.Description.$error"
+                                             ng-if="userForm.Description.$touched">
+                                            <p ng-message="required">Description is required.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ticketSubject">Related Tickets</label>
+                                        <tags-input ng-model="ticket.related" placeholder="choose Ticket"
+                                                    replace-spaces-with-dashes="false"
+                                                    display-property="reference"
+                                                    add-from-autocomplete-only="true"
+                                                    ng-disabled="" min-length="1">
+                                            <auto-complete source="queryTicketList($query)"
+                                                           load-on-empty="true"
+                                                           load-on-focus="true"
+                                                           min-length="1"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ticketSubject">Assignee user</label>
+                                        <!--<tags-input ng-model="ticket.assignUsers" placeholder="choose assignee user" replace-spaces-with-dashes="false"
+                                                    display-property="username"
+                                                    add-from-autocomplete-only="true"
+                                                    on-tag-added="onChipAddUser($tag)"
+                                                    on-tag-removed="onChipDeleteUser($tag)"
+                                                    ng-disabled="" min-length="1">
+                                            <auto-complete source="querySearch($query)"
+                                                           load-on-empty="true"
+                                                           load-on-focus="true"
+                                                           min-length="1"></auto-complete>
+                                        </tags-input>-->
+
+                                        <select class="form-control" ng-model="ticket.assignee"
+                                                ng-model-options="{trackBy: '$value'}">
+                                            <option ng-repeat="c in users" value='{{c._id}}'>
+                                                {{c.username}}
+                                            </option>
+                                        </select>
+
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="model-footer-wrapper">
+                                <div class="model-btn-wrapper">
+                                    <div class="btn-warp ">
+                                <span ng-disabled="userForm.$invalid" class="btn btn-default"
+                                      ng-click="saveTicket(ticket);"
+                                >Save</span>
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="ticketSubject">Tags</label><button ng-click="loadTags();" >
-                                    Reload
-                                </button>
-                                    <tags-input ng-model="postTags" display-property="name" placeholder="...">
-                                        <auto-complete source="loadPostTags($query)"></auto-complete>
-                                    </tags-input>
-
-                                    <tags-input ng-model="newAddTags" placeholder="choose Tags" replace-spaces-with-dashes="false"
-                                                display-property="name"
-                                                add-from-autocomplete-only="true"
-                                                on-tag-added="onChipAddTag($tag)"
-                                                on-tag-removed="onChipDeleteTag($tag)"
-                                                ng-disabled="" min-length="1">
-                                        <auto-complete source="queryTagSearch($query)"
-                                                       load-on-empty="true"
-                                                       load-on-focus="true"
-                                                       min-length="1"></auto-complete>
-                                    </tags-input>
-                                </div>
-
-
-                                <!-- <div class="form-group">
-                                     <label for="ticketSubject">Tags</label>
-                                     <tags-input ng-model="newAddTags" placeholder="choose Tags" replace-spaces-with-dashes="false"
-                                                 display-property="name"
-                                                 add-from-autocomplete-only="true"
-                                                 on-tag-added="onChipAddTag($tag)"
-                                                 on-tag-removed="onChipDeleteTag($tag)"
-                                                 ng-disabled="" min-length="1">
-                                         <auto-complete source="queryTagSearch($query)"
-                                                        load-on-empty="true"
-                                                        load-on-focus="true"
-                                                        min-length="1"></auto-complete>
-                                     </tags-input>
-                                 </div>-->
-                                <div class="form-group">
-                                    <label for="ticketSubject">Description</label>
-                                    <textarea ng-model="ticket.description" class="form-control" rows="3"></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ticketSubject">Related Tickets</label>
-                                    <tags-input ng-model="ticket.related" placeholder="choose Ticket" replace-spaces-with-dashes="false"
-                                                display-property="reference"
-                                                add-from-autocomplete-only="true"
-                                                ng-disabled="" min-length="1">
-                                        <auto-complete source="queryTicketList($query)"
-                                                       load-on-empty="true"
-                                                       load-on-focus="true"
-                                                       min-length="1"></auto-complete>
-                                    </tags-input>
-                                </div>
-                                <div class="form-group">
-                                    <label for="ticketSubject">Assignee user</label>
-                                    <!--<tags-input ng-model="ticket.assignUsers" placeholder="choose assignee user" replace-spaces-with-dashes="false"
-                                                display-property="username"
-                                                add-from-autocomplete-only="true"
-                                                on-tag-added="onChipAddUser($tag)"
-                                                on-tag-removed="onChipDeleteUser($tag)"
-                                                ng-disabled="" min-length="1">
-                                        <auto-complete source="querySearch($query)"
-                                                       load-on-empty="true"
-                                                       load-on-focus="true"
-                                                       min-length="1"></auto-complete>
-                                    </tags-input>-->
-
-                                    <select class="form-control" ng-model="ticket.assignee"
-                                            ng-model-options="{trackBy: '$value'}">
-                                        <option ng-repeat="c in users" value='{{c._id}}'>
-                                            {{c.username}}
-                                        </option>
-                                    </select>
-
-
-                                </div>
-                            </form>
+                            </div>
                         </div>
                         <!-- END MODEL HEADER -->
-                        <div class="model-footer-wrapper">
-                            <div class="model-btn-wrapper">
-                                <div class="btn-warp ">
-                                <span class="btn btn-default"
-                                      ng-click="saveTicket(ticket);"
-                                        >Save</span>
-                                </div>
-                            </div>
 
-                        </div>
                     </div>
                 </div>
 
@@ -664,5 +1143,7 @@
         </div>
     </div>
 </div>
+<!-- end -->
+
 
 

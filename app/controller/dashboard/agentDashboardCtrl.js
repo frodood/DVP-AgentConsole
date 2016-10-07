@@ -4,6 +4,7 @@
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService, ticketService, engagementService, profileDataParser, authService) {
 
+
     $scope.showAlert = function (tittle, type, msg) {
         new PNotify({
             title: tittle,
@@ -32,31 +33,76 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         return hours + ':' + minutes + ':' + seconds;
     };
 
-    $scope.pieDataset = [];
+
+    $scope.dataTest = {
+        labels: [
+            "Red",
+            "Blue",
+            "Yellow"
+        ],
+        datasets: [
+            {
+                data: [300, 50, 100],
+                backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56"
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56"
+                ]
+            }]
+    };
+
+    $scope.pieDataset = [0, 0, 0, 0, 0];
     $scope.productivity = {};
 
     // Doughnut Chart Options
     $scope.labels = ["Acw", "Break", "OnCall", "Idle", "Hold"];
     $scope.type = 'doughnut';
+    $scope.doughnutoptions = {
+        legend: {display: true},
+        segmentShowStroke: true,
+        animationSteps: 10,
+        animationEasing: "linear",
+        tooltips: {
+            callbacks: {
+                label: function (tooltipItem, data) {
+                    var allData = data.datasets[tooltipItem.datasetIndex].data;
+                    var tooltipLabel = data.labels[tooltipItem.index];
+                    var tooltipData = allData[tooltipItem.index];
+                    var total = 0;
+                    for (var i in allData) {
+                        total += allData[i];
+                    }
+                    if (total == 0)
+                        return tooltipLabel + ': ' + tooltipData + ' (' + 0 + '%)';
+                    var tooltipPercentage = Math.round((tooltipData / total) * 100);
+                    return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+                }
+            }
+        }
+    };
 
     $scope.toggle = function () {
         $scope.type = $scope.type === 'polarArea' ?
             'doughnut' : 'polarArea';
     };
 
-
     $scope.dataRange = [];
-    var enumerateDaysBetweenDates = function(startDate, endDate) {
+    var enumerateDaysBetweenDates = function (startDate, endDate) {
         $scope.dataRange = [];
 
         var currDate = startDate.clone().startOf('day');
         var lastDate = endDate.add('days', 1).clone().startOf('day');
 
-        while(currDate.add('days', 1).diff(lastDate) < 0) {
+        while (currDate.add('days', 1).diff(lastDate) < 0) {
             $scope.dataRange.push(currDate.format("DD-MMM"));//$scope.dataRange.push(moment.unix(currDate.clone().toDate()).format("DD-MMM"));
         }
     };
-    enumerateDaysBetweenDates(moment().subtract(1, 'month'),moment());
+    enumerateDaysBetweenDates(moment().subtract(1, 'month'), moment());
 
 
     // line chat open vs Close
@@ -66,15 +112,19 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             pointBackgroundColor: 'rgba(0,128,0,1)',
             pointHoverBackgroundColor: 'rgba(0,128,0,1)',
             borderColor: 'rgba(0,128,0,1)',
-            pointBorderColor: '#fff',
-            pointHoverBorderColor: 'rgba(0,128,0,0.8)'
+            pointBorderColor: '#3333ff',
+            pointHoverBorderColor: 'rgba(0,128,0,0.8)',
+            /*fillColor: 'rgba(47, 132, 71, 0.8)',
+             strokeColor: 'rgba(47, 132, 71, 0.8)',
+             highlightFill: 'rgba(47, 132, 71, 0.8)',
+             highlightStroke: 'rgba(47, 132, 71, 0.8)'*/
         },
         { // dark grey
             backgroundColor: 'rgba(0,0,128,0.2)',
             pointBackgroundColor: 'rgba(0,0,128,1)',
             pointHoverBackgroundColor: 'rgba(0,0,128,1)',
             borderColor: 'rgba(0,0,128,1)',
-            pointBorderColor: '#fff',
+            pointBorderColor: '#cc00ff',
             pointHoverBorderColor: 'rgba(0,0,128,0.8)'
         }
     ];
@@ -87,8 +137,12 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     $scope.options = {
         fill: false,
         datasetFill: true,
-        lineTension : 0,
+        lineTension: 0,
         pointRadius: 0,
+        /*title: {
+         display: true,
+         text: 'OPEN VS CLOSE'
+         },*/
         scales: {
             yAxes: [
                 {
@@ -111,12 +165,51 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dashboradService.ProductivityByResourceId(id).then(function (response) {
             if (response) {
 
+                if (response.length === 0)
+                    return;
                 $scope.pieDataset = [response.AcwTime, response.BreakTime, response.OnCallTime, response.IdleTime, response.HoldTime];
+
+                /*$scope.pieDataset = [
+                 {
+                 value: response.BreakTime,
+                 color:"#F7464A",
+                 highlight: "#FF5A5E",
+                 label: "Red"
+                 },
+                 {
+                 value: response.IdleTime,
+                 color: "#46BFBD",
+                 highlight: "#5AD3D1",
+                 label: "Green"
+                 },
+                 {
+                 value: response.AcwTime,
+                 color: "#FDB45C",
+                 highlight: "#FFC870",
+                 label: "Yellow"
+                 },
+                 {
+                 value: response.OnCallTime,
+                 color: "#949FB1",
+                 highlight: "#A8B3C5",
+                 label: "Grey"
+                 },
+                 {
+                 value: response.HoldTime,
+                 color: "#4D5360",
+                 highlight: "#616774",
+                 label: "Dark Grey"
+                 }
+
+                 ];*/
 
 
                 $scope.productivity.OnCallTime = response.OnCallTime.toString().toHHMMSS();
                 $scope.productivity.StaffedTime = response.StaffedTime.toString().toHHMMSS();
                 $scope.productivity.BreakTime = response.BreakTime.toString().toHHMMSS();
+                $scope.productivity.IncomingCallCount = response.IncomingCallCount;
+                $scope.productivity.MissCallCount = response.MissCallCount;
+                $scope.productivity.TransferCallCount = response.TransferCallCount;
             } else {
                 $scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
             }
@@ -127,23 +220,23 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
     loadProductivity(authService.GetResourceId());
 
-    $scope.openTicketCount = 0;
+    $scope.newTicketCount = 0;
     var GetOpenTicketCount = function () {
-        dashboradService.GetTotalTicketCount('OPENTICKET').then(function (response) {
-            $scope.openTicketCount = response;
+        dashboradService.GetTotalTicketCount('NEWTICKET').then(function (response) {
+            $scope.newTicketCount = response;
         }, function (err) {
-            $scope.openTicketCount = 0;
+            $scope.newTicketCount = 0;
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
     GetOpenTicketCount();
 
-    $scope.resolveTicketCount = 0;
+    $scope.closeTicketCount = 0;
     var GetResolveTicketCount = function () {
-        dashboradService.GetTotalTicketCount('SOLVEDTICKET').then(function (response) {
-            $scope.resolveTicketCount = response;
+        dashboradService.GetTotalTicketCount('CLOSEDTICKET').then(function (response) {
+            $scope.closeTicketCount = response;
         }, function (err) {
-            $scope.resolveTicketCount = 0;
+            $scope.closeTicketCount = 0;
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
@@ -152,8 +245,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     var GetCreatedicketSeries = function () {
         dashboradService.GetCreatedTicketSeries().then(function (response) {
             if (angular.isArray(response)) {
-                $scope.openCloseData[0] =  response.map(function (c, index) {
-                    return c[0] ?Math.ceil(c[0])  : 0;
+                $scope.openCloseData[0] = response.map(function (c, index) {
+                    return c[0] ? Math.ceil(c[0]) : 0;
                 });
             }
         }, function (err) {
@@ -166,7 +259,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dashboradService.GetResolvedTicketSeries().then(function (response) {
             if (angular.isArray(response)) {
                 $scope.openCloseData[1] = response.map(function (c, index) {
-                    return c[0] ? Math.ceil(c[0]): 0;
+                    return c[0] ? Math.ceil(c[0]) : 0;
                 });
             }
         }, function (err) {
@@ -181,7 +274,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             backgroundColor: 'rgba(128,0,128,0.6)',
             pointBackgroundColor: 'rgba(128,0,128,1)',
             pointHoverBackgroundColor: 'rgba(128,0,128,1)',
-            borderColor: 'rgba(128,0,128,1)',
+            borderColor: 'rgba(128,0,128,0.5)',
             pointBorderColor: '#fff',
             pointHoverBorderColor: 'rgba(128,0,128,0.8)'
         }
@@ -189,7 +282,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     $scope.defoptions = {
         fill: false,
         datasetFill: false,
-        lineTension : 0,
+        lineTension: 0,
         pointRadius: 0,
         scales: {
             yAxes: [

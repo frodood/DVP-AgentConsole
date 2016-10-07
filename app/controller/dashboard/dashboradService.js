@@ -103,6 +103,22 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getNewTicketCountViaChenal = function (chenal) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.dashBordUrl+"DashboardEvent/TotalCount/NEWTICKET/via_"+chenal+"/*",//http://dashboard.app.veery.cloud/DashboardEvent/TotalCount/NEWTICKET/via_CALL/*
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            if (response.data) {
+                return response.data;
+            } else {
+                return 0;
+            }
+        });
+
+    };
 
     return {
         ProductivityByResourceId: productivityByResourceId,

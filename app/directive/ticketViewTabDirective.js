@@ -45,7 +45,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     text: msg,
                     type: type,
                     styling: 'bootstrap3',
-                    icon: false
+                    icon: true
                 });
             };
 
@@ -320,10 +320,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             fields: arr
                         };
                         ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function (response) {
-                            scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                            scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
 
                         }).catch(function (err) {
-                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                            scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
                         })
                     }
@@ -345,20 +345,20 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                             ticketService.mapFormSubmissionToTicket(responseUpdate.Result._id, scope.ticket._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
-                                                scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                                                scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
 
                                             }).catch(function (err) {
-                                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                                scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
                                             });
                                         }
                                         else {
-                                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                            scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
                                         }
 
 
                                     }).catch(function (err) {
-                                        scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                        scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
                                     })
                                 }
@@ -369,33 +369,33 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                             ticketService.mapFormSubmissionToTicket(response.Result._id, scope.ticket._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
-                                                scope.showAlert('Operation Successful', 'info', 'Data saved successfully');
+                                                scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
 
                                             }).catch(function (err) {
-                                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                                scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
                                             });
                                         }
                                         else {
-                                            scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                            scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
                                         }
 
 
                                     }).catch(function (err) {
-                                        scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                        scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
                                     })
                                 }
 
                             }).catch(function (err) {
-                                scope.showAlert('Operation Failed', 'error', 'Data Save Failed');
+                                scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
                             });
 
 
                         }
                         else {
-                            scope.showAlert('Operation Failed', 'error', 'Ticket not found');
+                            scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
                         }
 
                     }
