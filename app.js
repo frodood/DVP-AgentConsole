@@ -6,9 +6,9 @@
 var agentApp = angular.module('veeryAgentApp',
     ['ngRoute', 'ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize','uuid','angular-flot','angularFileUpload','download','fileServiceModule',
+        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize','uuid','angularFileUpload','download','fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll','ngAnimate','mgcrea.ngStrap','chart.js'
+        'ui.tab.scroll','ngAnimate','mgcrea.ngStrap'
     ]);
 
 

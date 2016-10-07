@@ -33,70 +33,12 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         return hours + ':' + minutes + ':' + seconds;
     };
 
-
-    $scope.dataTest = {
-        labels: [
-            "Red",
-            "Blue",
-            "Yellow"
-        ],
-        datasets: [
-            {
-                data: [300, 50, 100],
-                backgroundColor: [
-                    "#FF6384",
-                    "#36A2EB",
-                    "#FFCE56"
-                ],
-                hoverBackgroundColor: [
-                    "#FF6384",
-                    "#36A2EB",
-                    "#FFCE56"
-                ]
-            }]
-    };
-
-    $scope.pieDataset = [0, 0, 0, 0, 0];
-    $scope.productivity = {};
-
-    // Doughnut Chart Options
-    $scope.labels = ["Acw", "Break", "OnCall", "Idle", "Hold"];
-    $scope.type = 'doughnut';
-    $scope.doughnutoptions = {
-        legend: {display: true},
-        segmentShowStroke: true,
-        animationSteps: 10,
-        animationEasing: "linear",
-        tooltips: {
-            callbacks: {
-                label: function (tooltipItem, data) {
-                    var allData = data.datasets[tooltipItem.datasetIndex].data;
-                    var tooltipLabel = data.labels[tooltipItem.index];
-                    var tooltipData = allData[tooltipItem.index];
-                    var total = 0;
-                    for (var i in allData) {
-                        total += allData[i];
-                    }
-                    if (total == 0)
-                        return tooltipLabel + ': ' + tooltipData + ' (' + 0 + '%)';
-                    var tooltipPercentage = Math.round((tooltipData / total) * 100);
-                    return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
-                }
-            }
-        }
-    };
-
-    $scope.toggle = function () {
-        $scope.type = $scope.type === 'polarArea' ?
-            'doughnut' : 'polarArea';
-    };
-
     $scope.dataRange = [];
     var enumerateDaysBetweenDates = function (startDate, endDate) {
         $scope.dataRange = [];
 
-        var currDate = startDate.clone().startOf('day');
-        var lastDate = endDate.add('days', 1).clone().startOf('day');
+        var currDate = startDate.add('days', 1).clone().startOf('day');
+        var lastDate = endDate.clone().startOf('day');
 
         while (currDate.add('days', 1).diff(lastDate) < 0) {
             $scope.dataRange.push(currDate.format("DD-MMM"));//$scope.dataRange.push(moment.unix(currDate.clone().toDate()).format("DD-MMM"));
@@ -104,104 +46,189 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
     enumerateDaysBetweenDates(moment().subtract(1, 'month'), moment());
 
-
-    // line chat open vs Close
-    $scope.colors = [
-        { // grey
-            backgroundColor: 'rgba(0,128,0,0.2)',
-            pointBackgroundColor: 'rgba(0,128,0,1)',
-            pointHoverBackgroundColor: 'rgba(0,128,0,1)',
-            borderColor: 'rgba(0,128,0,1)',
-            pointBorderColor: '#3333ff',
-            pointHoverBorderColor: 'rgba(0,128,0,0.8)',
-            /*fillColor: 'rgba(47, 132, 71, 0.8)',
-             strokeColor: 'rgba(47, 132, 71, 0.8)',
-             highlightFill: 'rgba(47, 132, 71, 0.8)',
-             highlightStroke: 'rgba(47, 132, 71, 0.8)'*/
-        },
-        { // dark grey
-            backgroundColor: 'rgba(0,0,128,0.2)',
-            pointBackgroundColor: 'rgba(0,0,128,1)',
-            pointHoverBackgroundColor: 'rgba(0,0,128,1)',
-            borderColor: 'rgba(0,0,128,1)',
-            pointBorderColor: '#cc00ff',
-            pointHoverBorderColor: 'rgba(0,0,128,0.8)'
-        }
-    ];
-    $scope.openCloseSeries = ['Open', 'Close'];
-    $scope.openCloseData = [
-        [],
-        []
-    ];
-    $scope.datasetOverride = [];
-    $scope.options = {
-        fill: false,
-        datasetFill: true,
-        lineTension: 0,
-        pointRadius: 0,
-        /*title: {
-         display: true,
-         text: 'OPEN VS CLOSE'
-         },*/
-        scales: {
-            yAxes: [
-                {
-                    id: 'Open',
-                    type: 'linear',
-                    display: true,
-                    position: 'left'
-                },
-                {
-                    id: 'Open',
-                    type: 'linear',
-                    display: true,
-                    position: 'left'
-                }
-            ]
-        }
+    var randomColorFactor = function () {
+        return Math.round(Math.random() * 255);
+    };
+    var randomColor = function (opacity) {
+        return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
     };
 
+    /* -------------------- Chart Configurations -----------------------------------------*/
+    /*Open Vs Close Chart Configurations*/
+    $scope.createVsOpenConfig = {
+        type: 'line',
+        data: {
+            labels: $scope.dataRange,
+            datasets: [{
+                label: "Created Ticket",
+                data: [],
+                fill: true,
+                /*lineTension: 0,*/
+                borderDash: [0, 0]
+            }, {
+                label: "Resolved Ticket",
+                data: [],
+                fill: true,
+                /* lineTension: 0,*/
+                borderDash: [0, 0]
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: "Created Vs Resolved Tickets"
+            }, tooltips: {
+                mode: 'label',
+            },
+            hover: {
+                mode: 'label'
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks: {
+                        userCallback: function (dataLabel, index) {
+                            return ''; //index % 2 === 0 ? dataLabel : '';
+                        }
+                    },
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Days'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    beginAtZero: false,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Count'
+                    }
+                }]
+            }
+        }
+    };
+    $.each($scope.createVsOpenConfig.data.datasets, function (i, dataset) {
+        dataset.borderColor = randomColor(0.4);
+        dataset.backgroundColor = randomColor(0.5);
+        dataset.pointBorderColor = randomColor(0.7);
+        dataset.pointBackgroundColor = randomColor(0.5);
+        dataset.pointBorderWidth = 1;
+    });
+    var openclose = document.getElementById("openclosecanvas").getContext("2d");
+    window.opencloseChart = new Chart(openclose, $scope.createVsOpenConfig);
+
+    /* Deference  Chart Configurations*/
+    $scope.deferenceConfig = {
+        type: 'line',
+        data: {
+            labels: $scope.dataRange,
+            datasets: [{
+                label: "Deference",
+                data: [],
+                fill: true,
+                /*lineTension: 0,*/
+                borderDash: [0, 0]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false,
+                labels: {
+                    fontColor: 'rgb(255, 99, 132)'
+                }
+            },
+            title: {
+                display: false,
+                text: "Created Vs Resolved Tickets Deference"
+            }, tooltips: {
+                mode: 'label',
+            },
+            hover: {
+                mode: 'label'
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks: {
+                        userCallback: function (dataLabel, index) {
+                            return index % 3 === 0 ? dataLabel : '';
+                        }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Days'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    beginAtZero: false,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Count'
+                    }
+                }]
+            }
+        }
+    };
+    $.each($scope.deferenceConfig.data.datasets, function (i, dataset) {
+        dataset.borderColor = randomColor(0.4);
+        dataset.backgroundColor = randomColor(0.5);
+        dataset.pointBorderColor = randomColor(0.7);
+        dataset.pointBackgroundColor = randomColor(0.5);
+        dataset.pointBorderWidth = 1;
+    });
+    var deference = document.getElementById("deferencecanvas").getContext("2d");
+    window.deferenceChart = new Chart(deference, $scope.deferenceConfig);
+
+    /*productivity*/
+    $scope.doughnutData = {
+        labels: ["Acw", "Break", "OnCall", "Idle", "Hold"],
+        datasets: [
+            {
+                data: [0, 0, 0, 0, 0],
+                backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#42f44e",
+                    "#850bba"
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#42f44e",
+                    "#850bba"
+                ]
+            }]
+    };
+    var doughnutChart = document.getElementById("doughnutChart");
+    window.myDoughnutChart = new Chart(doughnutChart, {
+        type: 'doughnut',
+        data: $scope.doughnutData,
+        options: {title: {
+            display: true,
+            text: "Productivity [hours]"
+        }}
+    });
+
+    /* -------------------- Chart Configurations End-----------------------------------------*/
+
+    function secondToHours(seconds) {
+        return (seconds / 3600).toFixed(2);
+    }
+
+    $scope.productivity = {};
     var loadProductivity = function (id) {
         dashboradService.ProductivityByResourceId(id).then(function (response) {
             if (response) {
 
                 if (response.length === 0)
                     return;
-                $scope.pieDataset = [response.AcwTime, response.BreakTime, response.OnCallTime, response.IdleTime, response.HoldTime];
-
-                /*$scope.pieDataset = [
-                 {
-                 value: response.BreakTime,
-                 color:"#F7464A",
-                 highlight: "#FF5A5E",
-                 label: "Red"
-                 },
-                 {
-                 value: response.IdleTime,
-                 color: "#46BFBD",
-                 highlight: "#5AD3D1",
-                 label: "Green"
-                 },
-                 {
-                 value: response.AcwTime,
-                 color: "#FDB45C",
-                 highlight: "#FFC870",
-                 label: "Yellow"
-                 },
-                 {
-                 value: response.OnCallTime,
-                 color: "#949FB1",
-                 highlight: "#A8B3C5",
-                 label: "Grey"
-                 },
-                 {
-                 value: response.HoldTime,
-                 color: "#4D5360",
-                 highlight: "#616774",
-                 label: "Dark Grey"
-                 }
-
-                 ];*/
+                $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime),secondToHours( response.BreakTime), secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
+                window.myDoughnutChart.update();
 
 
                 $scope.productivity.OnCallTime = response.OnCallTime.toString().toHHMMSS();
@@ -245,9 +272,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     var GetCreatedicketSeries = function () {
         dashboradService.GetCreatedTicketSeries().then(function (response) {
             if (angular.isArray(response)) {
-                $scope.openCloseData[0] = response.map(function (c, index) {
+                $scope.createVsOpenConfig.data.datasets[0].data = response.map(function (c, index) {
                     return c[0] ? Math.ceil(c[0]) : 0;
                 });
+                window.opencloseChart.update();
             }
         }, function (err) {
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
@@ -258,9 +286,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     var GetResolvedTicketSeries = function () {
         dashboradService.GetResolvedTicketSeries().then(function (response) {
             if (angular.isArray(response)) {
-                $scope.openCloseData[1] = response.map(function (c, index) {
+                $scope.createVsOpenConfig.data.datasets[1].data = response.map(function (c, index) {
                     return c[0] ? Math.ceil(c[0]) : 0;
                 });
+                window.opencloseChart.update();
             }
         }, function (err) {
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
@@ -268,44 +297,13 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
     GetResolvedTicketSeries();
 
-    // line chat deference
-    $scope.defColors = [
-        { // grey
-            backgroundColor: 'rgba(128,0,128,0.6)',
-            pointBackgroundColor: 'rgba(128,0,128,1)',
-            pointHoverBackgroundColor: 'rgba(128,0,128,1)',
-            borderColor: 'rgba(128,0,128,0.5)',
-            pointBorderColor: '#fff',
-            pointHoverBorderColor: 'rgba(128,0,128,0.8)'
-        }
-    ];
-    $scope.defoptions = {
-        fill: false,
-        datasetFill: false,
-        lineTension: 0,
-        pointRadius: 0,
-        scales: {
-            yAxes: [
-                {
-                    id: 'y-axis-1',
-                    type: 'linear',
-                    display: true,
-                    position: 'left'
-                }
-            ]
-        }
-    };
-    $scope.data = [
-        []
-    ];
-
     var GetDeferenceResolvedTicketSeries = function () {
         dashboradService.GetDeferenceResolvedTicketSeries().then(function (response) {
             if (angular.isArray(response)) {
-
-                $scope.data[0] = response.map(function (c, index) {
+                $scope.deferenceConfig.data.datasets[0].data = response.map(function (c, index) {
                     return c[0] ? Math.ceil(c[0]) : 0;
                 });
+                window.deferenceChart.update();
             }
         }, function (err) {
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
@@ -350,47 +348,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         $rootScope.$emit('openNewTab', data);
     };
 
-    $scope.pieOptions = {
-        series: {
-            pie: {
-                innerRadius: 0.5,
-                show: true,
-                stroke: {color: '#15315a'},
-                background: {color: '#1c3ffd'},
-                /*combine: {
-                 color: '#761602',
-                 threshold:0.01
-                 },
-                 label: {
-                 show: true,
-                 threshold: 0
-                 }*/
-            }
-        },
-        legend: {
-            show: false
-        },
-        grid: {
-            hoverable: true,
-            clickable: true
-        }
-    };
-
-
-    /*$scope.pieOptions = {
-     series: {
-     pie: {
-     innerRadius: 0.5,
-     show: true,
-     stroke: {color: '#15315a'},
-     background: {color: '#1c3ffd'},
-     }
-     },
-     legend: {
-     show: false
-     }
-     };*/
-
     var loadGrapData = function () {
         GetDeferenceResolvedTicketSeries();
         GetResolvedTicketSeries();
@@ -412,7 +369,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         GetQueueDetails();
         getAllRealTimeTimer = $timeout(getAllRealTime, $scope.refreshTime);
     };
-
     var getAllRealTimeTimer = $timeout(getAllRealTime, $scope.refreshTime);
 
     $scope.$on("$destroy", function () {

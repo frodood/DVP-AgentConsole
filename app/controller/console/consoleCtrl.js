@@ -5,6 +5,7 @@
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, profileDataParser, loginService, $state, uuid4, notificationService, filterFilter, engagementService, $q) {
 
 
+
     $scope.notifications = [];
     $scope.agentList = [];
 
