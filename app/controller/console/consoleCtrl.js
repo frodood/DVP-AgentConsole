@@ -682,7 +682,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
                 $scope.reCalcScroll();
-
+                $scope.searchExternalUsers = {};
             }
 
         });
@@ -899,7 +899,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (item.notificationData._id == args) {
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
-
+                $scope.searchExternalUsers = {};
 
             }
 
