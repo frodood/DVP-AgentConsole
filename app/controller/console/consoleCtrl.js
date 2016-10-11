@@ -682,7 +682,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
                 $scope.reCalcScroll();
-
+                $scope.searchExternalUsers = {};
             }
 
         });
@@ -899,7 +899,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (item.notificationData._id == args) {
 
                 $scope.tabs.splice($scope.tabs.indexOf(item), 1);
-
+                $scope.searchExternalUsers = {};
 
             }
 
@@ -1093,6 +1093,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //Main serch bar option
 
     $scope.searchText = "";
+    $scope.commonSearchQuery = "";
+    $scope.searchTabReference = "";
     $scope.states = [{obj: {}, type: "searchKey", value: "#ticket:search:"}, {
         obj: {},
         type: "searchKey",
@@ -1110,12 +1112,49 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             obj: {},
             type: "searchKey",
             value: "#profile:search:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:email:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:firstname:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:lastname:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:phone:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:ssn:"
         }];
 
     //$scope.searchResult = [];
 
     $scope.bindSearchData = function (item) {
-        if (item && item.obj && item.type === "ticket") {
+        if($scope.searchExternalUsers && $scope.searchExternalUsers.tabReference && item && item.obj && item.type === "profile"){
+            console.log("search from engagement");
+            var tabItem = {};
+            $scope.tabs.filter(function (item) {
+                if (item.tabReference == $scope.searchExternalUsers.tabReference) {
+                    tabItem = item;
+                }
+            });
+
+            if(tabItem){
+                tabItem.notificationData.userProfile = item.obj;
+                $scope.searchExternalUsers.updateProfileTab(item.obj);
+            }
+
+            $scope.searchExternalUsers = {};
+            $scope.searchText = "";
+        }
+        else if (item && item.obj && item.type === "ticket") {
             item.obj.tabType = 'ticketView';
             item.obj.index = item.obj.reference;
             $rootScope.$emit('openNewTab', item.obj);
@@ -1131,16 +1170,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $scope.searchExternalUsers = function ($query) {
-        return userService.searchExternalUsers($query).then(function (response) {
-            if (response.IsSuccess) {
-                return response.Result;
-            }
-            else {
-                return [];
-            }
-        });
-    };
+    $scope.searchExternalUsers = {};
 
     function getDefaultState($query) {
         return $q(function (resolve) {
@@ -1161,6 +1191,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.commonSearch = function ($query) {
+        $scope.commonSearchQuery = $query;
         return getDefaultState($query).then(function (state) {
             if ($query) {
                 var searchItems = $query.split(":");
@@ -1301,6 +1332,102 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 break;
                             case "#profile:search":
                                 return userService.searchExternalUsers(queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#eng:profile:search":
+                                return userService.searchExternalUsers(queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:firstname":
+                                return userService.getExternalUserProfileByField("firstname", queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:lastname":
+                                return userService.getExternalUserProfileByField("lastname", queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:phone":
+                                return userService.GetExternalUserProfileByContact("phone", queryText).then(function (response) {
+                                    if (response) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.length; i++) {
+                                            var result = response[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:email":
+                                return userService.GetExternalUserProfileByContact("email", queryText).then(function (response) {
+                                    if (response) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.length; i++) {
+                                            var result = response[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:ssn":
+                                return userService.getExternalUserProfileBySsn(queryText).then(function (response) {
                                     if (response.IsSuccess) {
                                         var searchResult = [];
                                         for (var i = 0; i < response.Result.length; i++) {

@@ -129,6 +129,46 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
+    var UpdateExternalUserProfileContact= function (profileId, contactInfo) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.userServiceBaseUrl+'ExternalUser/' + profileId + '/Contact/'+contactInfo.contact,
+            headers: {
+                'authorization':authToken
+            },
+            data: JSON.stringify(contactInfo)
+        }).then(function(response)
+        {
+            return response.data;
+        });
+    };
+
+    var getExternalUserProfileByField = function (field,value) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByField/"+field+"/"+value,
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+    var getExternalUserProfileBySsn = function (ssn) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/BySSN/"+ssn,
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
 
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
@@ -138,7 +178,10 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         searchExternalUsers:searchExternalUsers,
         getMyProfileDetails:getMyProfileDetails,
         mapFormSubmissionToProfile:mapFormSubmissionToProfile,
-        CreateExternalUser:createExternalUser
+        CreateExternalUser:createExternalUser,
+        UpdateExternalUserProfileContact:UpdateExternalUserProfileContact,
+        getExternalUserProfileByField:getExternalUserProfileByField,
+        getExternalUserProfileBySsn:getExternalUserProfileBySsn
     }
 });
 
