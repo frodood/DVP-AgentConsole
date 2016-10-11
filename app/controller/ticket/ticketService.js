@@ -820,7 +820,20 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
+    var pickCompanyInfo = function (tenant,company) {
+        var authToken = authService.GetToken();
 
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"Organisation/Name/"+tenant+"/"+company,
+            headers: {
+                'authorization':authToken
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
@@ -873,7 +886,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         PickLoggedTime:PickLoggedTime,
         WatchTicket:WatchTicket,
         StopWatchTicket:StopWatchTicket,
-        GetExternalUserTicketCounts:getExternalUserTicketCounts
+        GetExternalUserTicketCounts:getExternalUserTicketCounts,
+        pickCompanyInfo:pickCompanyInfo
     }
 });
 

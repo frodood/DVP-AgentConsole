@@ -809,6 +809,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                         scope.getTicketLoggedTime(ticketID);
                         scope.loadTicketNextLevel();
+                        scope.pickCompanyData(scope.ticket.tenant,scope.ticket.company);
 
 
                     }
@@ -824,7 +825,20 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.loadTicketSummary(scope.ticketID);
 
 
+            scope.pickCompanyData = function (tenant,company) {
+                ticketService.pickCompanyInfo(tenant,company).then(function (response) {
 
+                    console.log(response);
+                    if(response.data.IsSuccess)
+                    {
+
+                        scope.ticket.companyName=response.data.Result.companyName;
+                    }
+
+                }, function (error) {
+                    console.log("Error in loading company info",error)
+                });
+            }
 
             scope.showSubCreateTicket = false;
             scope.test = Math.floor((Math.random() * 6) + 1);
@@ -1103,8 +1117,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 ticketService.PickTicket(id).then(function (response) {
                     if (response) {
 
-                            scope.showAlert("Ticket assigning", "success", "Successfully assign.");
-                            scope.ticket.assignee = profileDataParser.myProfile;
+                        scope.showAlert("Ticket assigning", "success", "Successfully assign.");
+                        scope.ticket.assignee = profileDataParser.myProfile;
 
                     }
                     else {
@@ -1506,7 +1520,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 {
                     document.getElementById("image-viewer").href=attachment.url;
 
-                   $('#image-viewer').trigger('click');
+                    $('#image-viewer').trigger('click');
 
 
 
