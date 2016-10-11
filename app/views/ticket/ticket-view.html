@@ -105,7 +105,7 @@
                                 </li>
                                 <li>
                                     <small>Company</small>
-                                    <h5>Duo Sofatware</h5>
+                                    <h5>{{ticket.companyName}}</h5>
                                 </li>
                             </ul>
                         </div>
@@ -736,12 +736,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ticket-main-wrap ticker-tab-wrapper">
-                    <div class="details">
+                    <div class="details comment-goto-div">
                         <h5 class="bold"> ACTIVITY
                         </h5>
                     </div>
 
-                    <div class="tab-wrap">
+                    <div class="tab-wrap ">
                         <uib-tabset class="ticket-tab-panle" active="active">
                             <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}"
                                      disable="tab.disabled">
