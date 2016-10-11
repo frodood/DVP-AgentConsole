@@ -981,7 +981,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
                     scope.ticketList = response;
                         scope.recentTicketList = response.slice(0, 1);
-                    }
+
                 }, function (err) {
                     scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
                 });
@@ -991,9 +991,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             scope.getEnggemntCount = function (id) {
                 engagementService.EngagementCount(id).then(function (response) {
+                    if(response){
+                        response.forEach(function(item){
+                            scope.enggemntDetailsTotalCount = scope.enggemntDetailsTotalCount+item.count;
                         });
 
+                        response.forEach(function(item){
                             var p = ((item.count / scope.enggemntDetailsTotalCount) * 100).toFixed(2);
+                            scope.enggemntDetailsCount.push({"_id":item._id,
+                                "count":item.count,
+                                "val":p});
                         });
                     }
                     //scope.enggemntDetailsCount = response;
@@ -1042,9 +1049,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     });
 
 
+                    if(scope.profileDetail.phone && scope.profileDetail.phone != scope.channelFrom){
                         var setContact = true;
+                        if(scope.profileDetail.contacts && scope.profileDetail.contacts.length > 0){
 
+                            for(var i= 0; i < scope.profileDetail.contacts.length; i++){
                                 var contact = scope.profileDetail.contacts[i];
+                                if(contact.type === category && contact.contact === scope.channelFrom){
                                     setContact = false;
                                     break;
                                 }
@@ -1052,10 +1063,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                         }
 
+                        if(scope.channelFrom != "direct" && setContact){
                             var r = confirm("Add to Contact");
                             if (r == true) {
+                                var contactInfo = {contact: scope.channelFrom, type: category, display: scope.channelFrom};
                                 userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
+                                    if(response.IsSuccess){
                                         scope.showAlert('Profile Contact', 'success', response.CustomMessage);
+                                    }else{
                                         scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                                     }
                                 }, function (err) {
@@ -1340,8 +1355,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             scope.modelHeader = " Create New Profile";
                         }
                     },
+                    searchProfile: function(){
                         scope.internalControl = scope.searchUsers || {};
                         scope.internalControl.tabReference = scope.tabReference;
+                        scope.internalControl.updateProfileTab = function(newProfile) {
                             scope.profileDetail = newProfile;
                             scope.GetExternalUserProfileByContact();
                         };
