@@ -888,7 +888,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.goToComment = function () {
                 $('html,body').animate({
-                        scrollTop: $(".comment").offset().top
+                        scrollTop: $(".comment-goto-div").offset().top
                     },
                     'slow');
             };

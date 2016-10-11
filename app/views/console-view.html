@@ -161,7 +161,7 @@
 
                         <li class="console-menu-icon m-left-10 m-right-10"
                             uib-dropdown uib-dropdown-toggle>
-                            <i class="veery-font-1-file-1"  ng-click="consoleTopMenu.openTicket()" ></i>
+                            <i class="veery-font-1-file-1" ng-click="consoleTopMenu.openTicket()"></i>
                         <li class="console-menu-icon m-left-10 m-right-10">
                             <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none"
                                style="margin-top: 3px;"></i>
@@ -544,8 +544,16 @@
 
     </div>
 
+    <div ng-click="goToTopScroller();"
+         ng-class="{'display-block bounceIn':isFiexedTab==true,
+              'display-none':isFiexedTab==false}" class="quick-scroller bold animated">
+        TOP
+    </div>
+
+
     <!-- agent setting -->
-    <div ng-include="'app/views/agent/agentSettings.html'"></div>
+    <div
+            ng-include="'app/views/agent/agentSettings.html'"></div>
 
     <!-- agent dashboard -->
     <!--<div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>-->
