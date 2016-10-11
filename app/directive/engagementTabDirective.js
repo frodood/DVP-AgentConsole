@@ -1037,6 +1037,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                 if (scope.profileDetail) {
 
+                    scope.GetProfileHistory(scope.profileDetail._id);
                     scope.currentSubmission = scope.profileDetail.form_submission;
                     convertToSchemaForm(scope.profileDetail.form_submission, function (schemaDetails) {
                         if (schemaDetails) {
@@ -1047,8 +1048,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                     });
 
-
-                    scope.GetProfileHistory(scope.profileDetail._id);
 
                     if(scope.profileDetail.phone && scope.profileDetail.phone != scope.channelFrom){
                         var setContact = true;
@@ -1219,7 +1218,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     "province": "",
                     "country": ""
                 },
-                "phone": "",
+                "phone": scope.channelFrom,
                 "email": "",
                 "dob": {
                     "day": 0,
@@ -1767,6 +1766,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.profileDetail = profile;
                         scope.showMultiProfile = false;
                         scope.showNewProfile = false;
+                        scope.GetProfileHistory(profile._id);
                     },
                     getModelHeader: function () {
                         if (scope.showMultipleProfile) {
