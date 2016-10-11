@@ -32,7 +32,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             tagCategoryList: "=",
             users: "=",
             loadTags: '&',
-            profileDetail: "="
+            profileDetail: "=",
+            tabReference: "@",
+            searchUsers: "="
         },
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
@@ -987,6 +989,42 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             //scope.GetAllTicketsByRequester();
 
 
+            scope.getEnggemntCount = function (id) {
+                engagementService.EngagementCount(id).then(function (response) {
+                    if(response){
+                        response.forEach(function(item){
+                            scope.enggemntDetailsTotalCount = scope.enggemntDetailsTotalCount+item.count;
+                        });
+
+                        response.forEach(function(item){
+                            var p = ((item.count / scope.enggemntDetailsTotalCount) * 100).toFixed(2);
+                            scope.enggemntDetailsCount.push({"_id":item._id,
+                                "count":item.count,
+                                "val":p});
+                        });
+                    }
+                    //scope.enggemntDetailsCount = response;
+                }, function (err) {
+                    scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
+                });
+            };
+
+
+            scope.getExternalUserTicketCounts = function (id) {
+                ticketService.GetExternalUserTicketCounts(id).then(function (response) {
+                    scope.ExternalUserTicketCounts = response;
+                }, function (err) {
+                    scope.showAlert("Ticket", "error", "Fail To Get Ticket Count.")
+                });
+            };
+
+            scope.GetProfileHistory = function (profileId) {
+                scope.GetEngagementIdsByProfile(profileId);
+                scope.GetAllTicketsByRequester(profileId, 1);
+                scope.getEnggemntCount(profileId);
+                scope.getExternalUserTicketCounts(profileId);
+                console.info("Profile History Loading........................");
+            };
 
 
             /* Load Profile Details for Current Engagement */
@@ -1700,48 +1738,26 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         if (scope.showNewProfile) {
                             scope.modelHeader = " Create New Profile";
                         }
+                    },
+                    searchProfile: function(){
+                        scope.internalControl = scope.searchUsers || {};
+                        scope.internalControl.tabReference = scope.tabReference;
+                        scope.internalControl.updateProfileTab = function(newProfile) {
+                            scope.profileDetail = newProfile;
+                            scope.GetExternalUserProfileByContact();
+                        };
+                        var searchElement = document.getElementById("commonSearch");
+                        searchElement.value = "#eng:profile:search:";
+                        searchElement.focus();
                     }
                 }
             }();//end
 
             //engamanet details
             scope.enggemntDetailsCount =[];scope.enggemntDetailsTotalCount = 0;
-            scope.getEnggemntCount = function (id) {
-                engagementService.EngagementCount(id).then(function (response) {
-                    if(response){
-                        response.forEach(function(item){
-                            scope.enggemntDetailsTotalCount = scope.enggemntDetailsTotalCount+item.count;
-                        });
-
-                        response.forEach(function(item){
-                            var p = ((item.count / scope.enggemntDetailsTotalCount) * 100).toFixed(2);
-                            scope.enggemntDetailsCount.push({"_id":item._id,
-                                "count":item.count,
-                                "val":p});
-                        });
-                    }
-                    //scope.enggemntDetailsCount = response;
-                }, function (err) {
-                    scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
-                });
-            };
             //ExternalUserTicketCounts details
             scope.ExternalUserTicketCounts =[];
-            scope.getExternalUserTicketCounts = function (id) {
-                ticketService.GetExternalUserTicketCounts(id).then(function (response) {
-                    scope.ExternalUserTicketCounts = response;
-                }, function (err) {
-                    scope.showAlert("Ticket", "error", "Fail To Get Ticket Count.")
-                });
-            };
 
-            scope.GetProfileHistory = function (profileId) {
-                scope.GetEngagementIdsByProfile(profileId);
-                scope.GetAllTicketsByRequester(profileId, 1);
-                scope.getEnggemntCount(profileId);
-                scope.getExternalUserTicketCounts(profileId);
-                console.info("Profile History Loading........................");
-            };
 
         }
     }

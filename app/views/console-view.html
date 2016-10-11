@@ -82,7 +82,6 @@
                         </li>
 
                         <form class="form-inline navbar-form navbar-left ">
-                            <label id="commonLable" ng-show="false"></label>
                             <div class="form-group">
                                 <input id="commonSearch" type="text" autocomplete="off" class="main-search-input"
                                        ng-model="searchText"
@@ -512,7 +511,9 @@
                                                 channel-from="{{tab.notificationData.channelFrom}}"
                                                 channel-to="{{tab.notificationData.channelTo}}"
                                                 direction="{{tab.notificationData.direction}}"
-                                                profile-detail="tab.notificationData.userProfile">
+                                                profile-detail="tab.notificationData.userProfile"
+                                                tab-reference="{{tab.tabReference}}"
+                                                search-users="searchExternalUsers">
 
                                 </engagement-tab>
                             </div>

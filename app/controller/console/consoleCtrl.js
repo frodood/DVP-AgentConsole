@@ -1093,6 +1093,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //Main serch bar option
 
     $scope.searchText = "";
+    $scope.commonSearchQuery = "";
+    $scope.searchTabReference = "";
     $scope.states = [{obj: {}, type: "searchKey", value: "#ticket:search:"}, {
         obj: {},
         type: "searchKey",
@@ -1115,7 +1117,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //$scope.searchResult = [];
 
     $scope.bindSearchData = function (item) {
-        if (item && item.obj && item.type === "ticket") {
+        if($scope.searchExternalUsers && $scope.searchExternalUsers.tabReference && item && item.obj && item.type === "profile"){
+            console.log("search from engagement");
+            var tabItem = {};
+            $scope.tabs.filter(function (item) {
+                if (item.tabReference == $scope.searchExternalUsers.tabReference) {
+                    tabItem = item;
+                }
+            });
+
+            if(tabItem){
+                tabItem.notificationData.userProfile = item.obj;
+                $scope.searchExternalUsers.updateProfileTab(item.obj);
+            }
+
+            $scope.searchExternalUsers = {};
+            $scope.searchText = "";
+        }
+        else if (item && item.obj && item.type === "ticket") {
             item.obj.tabType = 'ticketView';
             item.obj.index = item.obj.reference;
             $rootScope.$emit('openNewTab', item.obj);
@@ -1131,16 +1150,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $scope.searchExternalUsers = function ($query) {
-        return userService.searchExternalUsers($query).then(function (response) {
-            if (response.IsSuccess) {
-                return response.Result;
-            }
-            else {
-                return [];
-            }
-        });
-    };
+    $scope.searchExternalUsers = {};
 
     function getDefaultState($query) {
         return $q(function (resolve) {
@@ -1161,6 +1171,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.commonSearch = function ($query) {
+        $scope.commonSearchQuery = $query;
         return getDefaultState($query).then(function (state) {
             if ($query) {
                 var searchItems = $query.split(":");
@@ -1300,6 +1311,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 });
                                 break;
                             case "#profile:search":
+                                return userService.searchExternalUsers(queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#eng:profile:search":
                                 return userService.searchExternalUsers(queryText).then(function (response) {
                                     if (response.IsSuccess) {
                                         var searchResult = [];
