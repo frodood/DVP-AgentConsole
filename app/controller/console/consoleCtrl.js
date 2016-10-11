@@ -1112,6 +1112,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             obj: {},
             type: "searchKey",
             value: "#profile:search:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:email:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:firstname:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:lastname:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:phone:"
+        },{
+            obj: {},
+            type: "searchKey",
+            value: "#profile:ssn:"
         }];
 
     //$scope.searchResult = [];
@@ -1328,6 +1348,86 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 break;
                             case "#eng:profile:search":
                                 return userService.searchExternalUsers(queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:firstname":
+                                return userService.getExternalUserProfileByField("firstname", queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:lastname":
+                                return userService.getExternalUserProfileByField("lastname", queryText).then(function (response) {
+                                    if (response.IsSuccess) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.Result.length; i++) {
+                                            var result = response.Result[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:phone":
+                                return userService.GetExternalUserProfileByContact("phone", queryText).then(function (response) {
+                                    if (response) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.length; i++) {
+                                            var result = response[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:email":
+                                return userService.GetExternalUserProfileByContact("email", queryText).then(function (response) {
+                                    if (response) {
+                                        var searchResult = [];
+                                        for (var i = 0; i < response.length; i++) {
+                                            var result = response[i];
+                                            searchResult.push({
+                                                obj: result,
+                                                type: "profile",
+                                                value: result.firstname + " " + result.lastname
+                                            });
+                                        }
+                                        return searchResult;
+                                    }
+                                });
+                                break;
+                            case "#profile:ssn":
+                                return userService.getExternalUserProfileBySsn(queryText).then(function (response) {
                                     if (response.IsSuccess) {
                                         var searchResult = [];
                                         for (var i = 0; i < response.Result.length; i++) {

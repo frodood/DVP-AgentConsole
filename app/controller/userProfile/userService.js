@@ -145,6 +145,31 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getExternalUserProfileByField = function (field,value) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByField/"+field+"/"+value,
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+    var getExternalUserProfileBySsn = function (ssn) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/BySSN/"+ssn,
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
         LoadUser:loadUser,
@@ -154,7 +179,9 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         getMyProfileDetails:getMyProfileDetails,
         mapFormSubmissionToProfile:mapFormSubmissionToProfile,
         CreateExternalUser:createExternalUser,
-        UpdateExternalUserProfileContact:UpdateExternalUserProfileContact
+        UpdateExternalUserProfileContact:UpdateExternalUserProfileContact,
+        getExternalUserProfileByField:getExternalUserProfileByField,
+        getExternalUserProfileBySsn:getExternalUserProfileBySsn
     }
 });
 

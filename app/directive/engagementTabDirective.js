@@ -1064,7 +1064,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                         }
 
-                        if(setContact){
+                        if(scope.channelFrom != "direct" && setContact){
                             var r = confirm("Add to Contact");
                             if (r == true) {
                                 var contactInfo = {contact: scope.channelFrom, type: category, display: scope.channelFrom};
