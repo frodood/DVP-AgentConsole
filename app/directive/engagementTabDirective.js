@@ -1050,6 +1050,43 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                     scope.GetProfileHistory(scope.profileDetail._id);
 
+                    if(scope.profileDetail.phone && scope.profileDetail.phone != scope.channelFrom){
+                        var setContact = true;
+                        if(scope.profileDetail.contacts && scope.profileDetail.contacts.length > 0){
+
+                            for(var i= 0; i < scope.profileDetail.contacts.length; i++){
+                                var contact = scope.profileDetail.contacts[i];
+                                if(contact.type === category && contact.contact === scope.channelFrom){
+                                    setContact = false;
+                                    break;
+                                }
+                            }
+
+                        }
+
+                        if(setContact){
+                            var r = confirm("Add to Contact");
+                            if (r == true) {
+                                var contactInfo = {contact: scope.channelFrom, type: category, display: scope.channelFrom};
+                                userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
+                                    if(response.IsSuccess){
+                                        scope.showAlert('Profile Contact', 'success', response.CustomMessage);
+                                    }else{
+                                        scope.showAlert('Profile Contact', 'error', response.CustomMessage);
+                                    }
+                                }, function (err) {
+                                    var errMsg = "Update Profile Contacts Failed";
+                                    if (err.statusText) {
+                                        errMsg = err.statusText;
+                                    }
+                                    scope.showAlert('Profile Contact', 'error', errMsg);
+                                });
+                            } else {
+                                console.log("You pressed Cancel!");
+                            }
+                        }
+                    }
+
                 } else {
                     userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                         scope.profileDetails = response;
