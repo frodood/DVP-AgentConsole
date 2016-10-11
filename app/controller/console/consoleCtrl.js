@@ -5,7 +5,6 @@
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, profileDataParser, loginService, $state, uuid4, notificationService, filterFilter, engagementService, $q) {
 
 
-
     $scope.notifications = [];
     $scope.agentList = [];
 
@@ -18,13 +17,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').removeClass('display-none zoomOut');
-            if(profileDataParser.isInitiateLoad)
-            {
-                profileDataParser.isInitiateLoad=false;
+            if (profileDataParser.isInitiateLoad) {
+                profileDataParser.isInitiateLoad = false;
             }
-            else
-            {
-                $rootScope.$emit('reloadInbox',true);
+            else {
+                $rootScope.$emit('reloadInbox', true);
             }
 
         },
@@ -765,7 +762,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelFrom: "33",
             channelTo: "33",
             channel: "555"
-        },'ticketFilter');
+        }, 'ticketFilter');
     };
 
     var openNewTicketTab = function (ticket, index) {
@@ -1112,23 +1109,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             obj: {},
             type: "searchKey",
             value: "#profile:search:"
-        },{
+        }, {
             obj: {},
             type: "searchKey",
             value: "#profile:email:"
-        },{
+        }, {
             obj: {},
             type: "searchKey",
             value: "#profile:firstname:"
-        },{
+        }, {
             obj: {},
             type: "searchKey",
             value: "#profile:lastname:"
-        },{
+        }, {
             obj: {},
             type: "searchKey",
             value: "#profile:phone:"
-        },{
+        }, {
             obj: {},
             type: "searchKey",
             value: "#profile:ssn:"
@@ -1137,7 +1134,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //$scope.searchResult = [];
 
     $scope.bindSearchData = function (item) {
-        if($scope.searchExternalUsers && $scope.searchExternalUsers.tabReference && item && item.obj && item.type === "profile"){
+        if ($scope.searchExternalUsers && $scope.searchExternalUsers.tabReference && item && item.obj && item.type === "profile") {
             console.log("search from engagement");
             var tabItem = {};
             $scope.tabs.filter(function (item) {
@@ -1146,7 +1143,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             });
 
-            if(tabItem){
+            if (tabItem) {
                 tabItem.notificationData.userProfile = item.obj;
                 $scope.searchExternalUsers.updateProfileTab(item.obj);
             }
@@ -1896,9 +1893,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         callDurationTimeout = $timeout($scope.onTimeout, 1000);
     };
 
+    $scope.goToTopScroller = function () {
+        $('html, body').animate({scrollTop: 0}, 'fast');
+    };
+
 
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
+        scope.isFiexedTab = false;
         angular.element($window).bind("scroll", function () {
             if (this.pageYOffset >= 20) {
                 scope.isFiexedTab = true;

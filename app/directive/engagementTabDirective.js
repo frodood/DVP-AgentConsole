@@ -909,7 +909,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
                         scope.engagementsList = scope.engagementsList.concat(reply);
 
-                        if (angular.isArray(reply) && scope.recentEngList.length === 0) {
+                        if (angular.isArray(reply)&&scope.recentEngList.length===0) {
                             scope.recentEngList = reply.slice(0, 1);
                         }
 
@@ -980,9 +980,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.GetAllTicketsByRequester = function (requester, page) {
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
                     scope.ticketList = response;
-                    if (angular.isArray(response) && scope.recentTicketList.length === 0) {
                         scope.recentTicketList = response.slice(0, 1);
-                    }
+
                 }, function (err) {
                     scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
                 });
@@ -992,18 +991,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             scope.getEnggemntCount = function (id) {
                 engagementService.EngagementCount(id).then(function (response) {
-                    if (response) {
-                        response.forEach(function (item) {
-                            scope.enggemntDetailsTotalCount = scope.enggemntDetailsTotalCount + item.count;
+                    if(response){
+                        response.forEach(function(item){
+                            scope.enggemntDetailsTotalCount = scope.enggemntDetailsTotalCount+item.count;
                         });
 
-                        response.forEach(function (item) {
+                        response.forEach(function(item){
                             var p = ((item.count / scope.enggemntDetailsTotalCount) * 100).toFixed(2);
-                            scope.enggemntDetailsCount.push({
-                                "_id": item._id,
-                                "count": item.count,
-                                "val": p
-                            });
+                            scope.enggemntDetailsCount.push({"_id":item._id,
+                                "count":item.count,
+                                "val":p});
                         });
                     }
                     //scope.enggemntDetailsCount = response;
@@ -1040,6 +1037,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                 if (scope.profileDetail) {
 
+                    scope.GetProfileHistory(scope.profileDetail._id);
                     scope.currentSubmission = scope.profileDetail.form_submission;
                     convertToSchemaForm(scope.profileDetail.form_submission, function (schemaDetails) {
                         if (schemaDetails) {
@@ -1051,15 +1049,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     });
 
 
-                    scope.GetProfileHistory(scope.profileDetail._id);
-
-                    if (scope.profileDetail.phone && scope.profileDetail.phone != scope.channelFrom) {
+                    if(scope.profileDetail.phone && scope.profileDetail.phone != scope.channelFrom){
                         var setContact = true;
-                        if (scope.profileDetail.contacts && scope.profileDetail.contacts.length > 0) {
+                        if(scope.profileDetail.contacts && scope.profileDetail.contacts.length > 0){
 
-                            for (var i = 0; i < scope.profileDetail.contacts.length; i++) {
+                            for(var i= 0; i < scope.profileDetail.contacts.length; i++){
                                 var contact = scope.profileDetail.contacts[i];
-                                if (contact.type === category && contact.contact === scope.channelFrom) {
+                                if(contact.type === category && contact.contact === scope.channelFrom){
                                     setContact = false;
                                     break;
                                 }
@@ -1067,18 +1063,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                         }
 
-                        if (scope.channelFrom != "direct" && setContact) {
+                        if(scope.channelFrom != "direct" && setContact){
                             var r = confirm("Add to Contact");
                             if (r == true) {
-                                var contactInfo = {
-                                    contact: scope.channelFrom,
-                                    type: category,
-                                    display: scope.channelFrom
-                                };
+                                var contactInfo = {contact: scope.channelFrom, type: category, display: scope.channelFrom};
                                 userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
-                                    if (response.IsSuccess) {
+                                    if(response.IsSuccess){
                                         scope.showAlert('Profile Contact', 'success', response.CustomMessage);
-                                    } else {
+                                    }else{
                                         scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                                     }
                                 }, function (err) {
@@ -1226,7 +1218,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     "province": "",
                     "country": ""
                 },
-                "phone": "",
+                "phone": scope.channelFrom,
                 "email": "",
                 "dob": {
                     "day": 0,
@@ -1353,6 +1345,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.profileDetail = profile;
                         scope.showMultiProfile = false;
                         scope.showNewProfile = false;
+                        scope.GetProfileHistory(profile._id);
                     },
                     getModelHeader: function () {
                         if (scope.showMultipleProfile) {
@@ -1362,10 +1355,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             scope.modelHeader = " Create New Profile";
                         }
                     },
-                    searchProfile: function () {
+                    searchProfile: function(){
                         scope.internalControl = scope.searchUsers || {};
                         scope.internalControl.tabReference = scope.tabReference;
-                        scope.internalControl.updateProfileTab = function (newProfile) {
+                        scope.internalControl.updateProfileTab = function(newProfile) {
                             scope.profileDetail = newProfile;
                             scope.GetExternalUserProfileByContact();
                         };
@@ -1377,11 +1370,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             }();//end
 
             //engamanet details
-            scope.enggemntDetailsCount = [];
-            scope.enggemntDetailsTotalCount = 0;
+            scope.enggemntDetailsCount =[];scope.enggemntDetailsTotalCount = 0;
             //ExternalUserTicketCounts details
-            scope.ExternalUserTicketCounts = [];
-
+            scope.ExternalUserTicketCounts =[];
 
         }
     }

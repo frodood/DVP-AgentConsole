@@ -302,7 +302,7 @@
                                                             <div class="form-group">
                                                                 <label for="no">P.O. Box / Building No</label>
                                                                 <input type="text" class="form-control" id="no"
-                                                                       placeholder="" ng-model="newProfile.title">
+                                                                       placeholder="" ng-model="newProfile.address.number">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 col-sm-4 col-xs-4">
@@ -396,7 +396,7 @@
                                     <div class="model-btn-wrapper">
                                         <div class="btn-warp ">
                                 <span ng-disabled="newProfileForm.$invalid" class="btn btn-default"
-                                      ng-click="saveTicket(ticket);"
+                                      ng-click="saveNewProfile(newProfile);"
                                 >Save</span>
                                         </div>
                                     </div>
@@ -578,11 +578,8 @@
                                     </li>
                                     <li>
                                         <div class="details-wrap">
-                                            <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn">
-                                                test1
-                                            </div>
-                                            <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn">
-                                                test2
+                                            <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn" ng-repeat="tag in profileDetail.tags" >
+                                                {{tag}}
                                             </div>
                                         </div>
                                     </li>

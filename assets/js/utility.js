@@ -4,7 +4,6 @@
 
 function getJSONData(http, file, callback) {
     http.get('assets/json/' + file + '.json').success(function (data) {
-        console.log(data.d);
         callback(data.d);
     })
 }
