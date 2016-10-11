@@ -948,15 +948,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             /* Add New Note To Engagement  */
             scope.noteBody = "";
-            scope.AppendNoteToEngagementSession = function (noteBody) {
-                engagementService.AppendNoteToEngagementSession(scope.sessionId, {body: noteBody}).then(function (response) {
+            scope.AppendNoteToEngagementSession = function (note) {
+                if(!note){
+                    scope.showAlert("Note", "error", "Please Enter Note to Save.");
+                    return;
+                }
+                engagementService.AppendNoteToEngagementSession(scope.sessionId, {body: note}).then(function (response) {
                     if (response) {
-                        scope.currentEngagement.notes.push({body: noteBody});
+                        scope.currentEngagement.notes.push({body: note});
+                        document.getElementById("noteBody").innerHTML = "";
+                        document.getElementById("noteBody").value = "";
                         scope.showAlert("Note", "success", "Note Add Successfully.");
-                        scope.noteBody = "";
+
                     }
                     else {
-                        scope.showAlert("Note", "error", "Fail To Add Note.")
+                        scope.showAlert("Note", "error", "Fail To Add Note.");
                     }
                 }, function (err) {
                     scope.showAlert("Engagement Session Note", "error", "Fail To Get Engagement Session Note.")

@@ -60,30 +60,34 @@
                 <div class="note-ivr-wrapper">
                     <uib-tabset active="activePill" type="pills">
                         <uib-tab index="0" heading="NOTE">
-                            <!--<div class="new-note-wrapper">
-                                <textarea class="form-control" rows="3" ng-model="noteBody"></textarea>
+                            <div class="new-note-wrapper">
+                                <textarea id="noteBody" class="form-control" rows="3" ng-model="noteBody"></textarea>
                                 <div class="btn-warp inline-btn  p-top-6 pull-right">
                               <span class="btn  btn-default btn-sm "
                                     ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
                                 </div>
-                            </div>-->
-                            <form name="engagementFrm" novalidate>
+                            </div>
+                            <!--<form name="engagementFrm" novalidate>
                                 <div class="new-note-wrapper"
-                                     ng-class="{ 'has-error': engagementFrm.noteBody.$invalid && engagementFrm.noteBody.$dirty }">
-
-                                    <textarea ng-model="noteBody" class="form-control" rows="3" name="noteBody" required
+                                     ng-class="{ 'has-error': engagementFrm.noteBodytext.$invalid && engagementFrm.noteBodytext.$dirty }">
+                                    <label for="noteBodytext" class="control-label">Note*</label>
+                                    <textarea ng-model="noteBody" class="form-control" rows="3" id="noteBodytext" name="noteBodytext" required
                                               placeholder="Enter Note"></textarea>
-                                    <div class="help-block" ng-messages="engagementFrm.noteBody.$error"
-                                         ng-if="engagementFrm.noteBody.$touched">
+                                    <div class="help-block" ng-messages="engagementFrm.noteBodytext.$error"
+                                         ng-if="engagementFrm.noteBodytext.$touched">
                                         <p ng-message="required">Note is required.</p>
                                     </div>
-                                    <div class="btn-warp inline-btn  p-top-6 pull-right">
+
+                                </div>
+                                <div class="btn-warp inline-btn  p-top-6 pull-right">
                               <span ng-disabled="engagementFrm.$invalid" class="btn  btn-default btn-sm "
                                     ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
-                                    </div>
                                 </div>
 
-                            </form>
+                            </form>-->
+
+
+
 
                             <div class="engagement-note-list">
                                 <div class="note-wrap" ng-repeat="engNote in currentEngagement.notes">
@@ -619,7 +623,7 @@
                             <div class="col-lg-6">
                                 <div class="row" style="padding-bottom: 5px;" ng-repeat="t in ExternalUserTicketCounts">
                                     <div class="col-sm-6 font-CyanA200">
-                                        Total {{t._id}}
+                                        {{t._id}}
                                     </div>
                                     <div class="col-sm-6 font-CyanA200 text-right">
                                         {{t.count}}
