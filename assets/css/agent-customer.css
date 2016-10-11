@@ -135,7 +135,7 @@ body {
 
 .console-menu-icon {
     margin-top: 4px;
-    background: #17373c;
+    background: rgba(12, 12, 5, 0.52);
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -149,9 +149,6 @@ body {
     cursor: pointer;
 }
 
-.console-menu-icon > i:hover {
-    color: #ffffff;
-}
 
 .console-left-icon {
     display: inline-block;
