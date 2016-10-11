@@ -1370,8 +1370,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             }();//end
 
             //engamanet details
+            scope.enggemntDetailsCount =[];scope.enggemntDetailsTotalCount = 0;
             //ExternalUserTicketCounts details
-
+            scope.ExternalUserTicketCounts =[];
 
         }
     }
