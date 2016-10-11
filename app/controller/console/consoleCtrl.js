@@ -1484,26 +1484,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                        if (data.IsSuccess) {
-                            if (data.Result && data.Result.UNREAD) {
-                                $scope.unreadMailCount = data.Result.UNREAD;
-                            }
+                    if (data.IsSuccess) {
+                        if (data.Result && data.Result.UNREAD) {
+                            $scope.unreadMailCount = data.Result.UNREAD;
                         }
-                        else {
-                            var errMsg = data.CustomMessage;
+                    }
+                    else {
+                        var errMsg = data.CustomMessage;
 
-                            if (data.Exception) {
-                                errMsg = data.Exception.Message;
-                            }
-                            console.log(errMsg);
+                        if (data.Exception) {
+                            errMsg = data.Exception.Message;
                         }
+                        console.log(errMsg);
+                    }
 
 
-                    },
-                    function (err) {
-                        console.log(err);
+                },
+                function (err) {
+                    console.log(err);
 
-                    })
+                })
 
         }
         catch (ex) {
@@ -1593,11 +1593,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     /* Set the width of the side navigation to 250px */
+
+    $scope.isUserListOpen=false;
     $scope.openNav = function () {
 
-        getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
-        document.getElementById("mySidenav").style.width = "300px";
-        document.getElementById("main").style.marginRight = "285px";
+        if($scope.isUserListOpen)
+        {
+            $scope.closeNav();
+        }
+        else
+        {
+            getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
+            document.getElementById("mySidenav").style.width = "300px";
+            document.getElementById("main").style.marginRight = "285px";
+        }
+
+        $scope.isUserListOpen=!$scope.isUserListOpen;
+
+
         // document.getElementById("navBar").style.marginRight = "300px";
     };
 

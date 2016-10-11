@@ -135,7 +135,7 @@ body {
 
 .console-menu-icon {
     margin-top: 4px;
-    background: #17373c;
+    background: rgba(12, 12, 5, 0.52);
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -149,9 +149,6 @@ body {
     cursor: pointer;
 }
 
-.console-menu-icon > i:hover {
-    color: #ffffff;
-}
 
 .console-left-icon {
     display: inline-block;
@@ -2361,8 +2358,8 @@ tags-input .tags .input {
 
 .prn2-engagement-summary {
     width: 100%;
-    min-height: 230px;
-    height: auto;
+    height: 230px;
+    /* height: auto; */
     overflow: hidden;
     display: block;
     padding: 14px 10px 10px 25px;
@@ -2562,7 +2559,7 @@ tags-input .tags .input {
     width: 100%;
     height: 100%;
     /* position: fixed; */
-    background: rgba(13, 28, 51, 1);
+    background: rgb(23, 55, 60);
     z-index: 2000;
     top: 0;
 }
@@ -2579,12 +2576,12 @@ tags-input .tags .input {
 }
 
 #dashboard-opacity {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(13, 28, 51, 0.97);
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*background: rgba(13, 28, 51, 0.97);*/
 }
 
 .dark-dashboard-header {
@@ -2624,9 +2621,9 @@ tags-input .tags .input {
     width: 100%;
     min-height: 130px;
     height: auto;
-    background: rgba(6, 54, 80, 0.1);
+    background: rgba(54, 186, 69, 0.08);
     text-align: center;
-    border: 1px solid #15315a;
+    border: 1px solid #36ba45;
     margin-bottom: 15px;
 }
 

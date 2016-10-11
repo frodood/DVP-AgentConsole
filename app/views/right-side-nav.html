@@ -46,12 +46,7 @@
                     <input type="text" class="form-control nav-search-text"
                            placeholder="search user or group">
                 </div>
-                <div class="col-md-6">
-                    <div class="nav-bottom-icon">
-                        <i class="main-icon-2-cancel" ng-click="closeNav()"> </i>
-                    </div>
 
-                </div>
 
             </div>
         </div>
@@ -81,9 +76,12 @@
                                   class="form-control" rows="3" ng-model="notificationMsg.Message">
                         </textarea>
                     </div>
-                    <div class="btn-warp inline-btn pull-right">
-                        <span class="btn btn-default " ng-click="sendNotification()">send</span>
-                    </div>
+                    <fieldset>
+                        <div class="btn-warp inline-btn pull-right">
+                            <span class="btn btn-default " ng-click="sendNotification()" ng-disabled="!notificationMsg.Message">send</span>
+                        </div>
+                    </fieldset>
+
 
                 </div>
             </div>
