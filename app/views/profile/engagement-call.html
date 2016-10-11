@@ -787,6 +787,21 @@
                                                 <small>{{profileDetail.googleplus}}</small>
                                             </div>
                                         </div>
+                                        <div class="prn2 header-round-icon" ng-repeat="c in profileDetail.contacts">
+                                            <div class="icon-left">
+                                                <i class="fa fa-skype"></i> <!--base on type,need to cheage icon-->
+                                            </div>
+                                            <div class="prn2-contact text-header ">
+                                                {{c.type}}
+                                                <br/>
+                                                <small>{{c.contact}}</small>
+                                            </div>
+                                        </div>
+
+                                        <!--<li ng-repeat="c in profileDetail.contacts">
+                                            <small>{{c.type}}</small>
+                                            <h5>{{c.contact}}</h5>
+                                        </li>-->
                                     </div>
                                 </div>
                             </div>
@@ -891,10 +906,7 @@
                                             <h5>{{profileDetail.created_at| date:'MM-dd-yyyy @ h:mma'}}</h5>
                                         </li>
 
-                                        <li ng-repeat="c in profileDetail.contacts">
-                                            <small>{{c.type}}</small>
-                                            <h5>{{c.contact}}</h5>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
