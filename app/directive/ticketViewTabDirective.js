@@ -16,7 +16,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
         link: function (scope, element, attributes) {
 
             scope.uploadedAttchments = [];
+            scope.timeValidateMessage="";
+            scope.isTimeEdit=false;
             scope.userCompanyData = authService.GetCompanyInfo();
+            scope.defaultEstimateTime=0;
 
             scope.availableTags = scope.tagCategoryList;
             scope.tabReference = scope.tabReference + "-" + "18705056550";
@@ -31,6 +34,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.ticketNextLevels = [];
 
             scope.myProfileID=profileDataParser.myProfile._id;
+
+
+            scope.messageMode="public";
 
             scope.callToCustomer = function (no) {
                 var newId = scope.ticketDetails.tabReference;
@@ -572,35 +578,35 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             String.prototype.toHHMMSS = function () {
 
-                if(this)
+                var mill_sec_num = parseInt(this, 10); // don't forget the second param
+                var sec_num = Math.floor(mill_sec_num/1000);
+                var hours = Math.floor(sec_num / 3600);
+                var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+                var seconds = sec_num - (hours * 3600) - (minutes * 60);
+                var days="";
+
+                if(hours>=24)
                 {
-                    var hours = Math.floor(this / 36e5),
-                        minutes = Math.floor((this % 36e5) / 6e4),
-                        seconds = Math.floor((this % 6e4) / 1000);
-
-
-
-                    var days=0;
-
-
-                    if(hours>24)
-                    {
-                        days=hours/24;
-                        hours=hours%24;
-                    }
-
-                    days = (days < 10) ? "0" + days : days;
-                    hours = (hours < 10) ? "0" + hours : hours;
-                    minutes = (minutes < 10) ? "0" + minutes : minutes;
-                    seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-
-                    return days+"d "+hours + "h " + minutes + "m "+seconds+"s ";
+                    days=Math.floor(hours/24);
+                    hours=Math.floor(hours%24);
                 }
-                else
-                {
-                    return "00d 00h 00m 00s";
+
+
+                if (hours < 10) {
+                    hours = "0" + hours;
                 }
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
+                }
+                if (days < 10) {
+                    days = "0" + days;
+                }
+
+                /*return hours + ':' + minutes + ':' + seconds;*/
+                return days+"d:"+hours + "h:" + minutes + "m:"+seconds+"s";
 
 
             };
@@ -612,10 +618,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.ticketLoggedTimeFormat="";
             scope.ticketEstimatedTimeFormat="";
             scope.ticketRemainingTimeFormat="";
+            scope.ticketEstimatedPrecentage=0;
             scope.ticketLoggedPrecentage=0;
             scope.ticketRemainingPrecentage=0;
             scope.collaboratorLoggedTime={};
             scope.isWatching=false;
+            scope.newTicketEstimatedTimeFormat="";
 
 
 
@@ -633,18 +641,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 scope.ticketLoggedTime=scope.ticketLoggedTime+response.data.Result[i].time;
                                 if(i==response.data.Result.length-1)
                                 {
-                                    if(scope.ticket.time_estimation && parseInt(scope.ticket.time_estimation)!=0)
+                                    if(scope.ticket.time_estimation && Number(scope.ticket.time_estimation)!=0)
                                     {
-                                        scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
-                                        scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
-                                        scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toHHMMSS();
-                                        scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
-                                        scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toHHMMSS();
-
-                                        console.log("Estimated "+scope.ticketEstimatedTimeFormat);
-                                        console.log("Logged "+scope.ticketLoggedTimeFormat);
-                                        console.log("Remaining "+scope.ticketRemainingTimeFormat);
+                                        scope.TimePanelMaker();
                                     }
+
 
 
 
@@ -685,11 +686,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
 
-
-
-
-
-
                         }
                         else
                         {
@@ -706,8 +702,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
 
             }
-
-
 
 
             scope.ticketID = scope.ticketDetails.notificationData._id;
@@ -807,6 +801,13 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                         console.log("ticket ", scope.ticket);
 
+
+
+
+
+
+
+
                         scope.getTicketLoggedTime(ticketID);
                         scope.loadTicketNextLevel();
                         scope.pickCompanyData(scope.ticket.tenant,scope.ticket.company);
@@ -828,7 +829,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.pickCompanyData = function (tenant,company) {
                 ticketService.pickCompanyInfo(tenant,company).then(function (response) {
 
-                    console.log(response);
+
                     if(response.data.IsSuccess)
                     {
 
@@ -1019,11 +1020,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
                     if (response.data.IsSuccess) {
+                        scope.newComment = '';
                         response.data.Result.author = profileDataParser.myProfile;
                         scope.ticket.comments.push(response.data.Result);
                         console.log("New comment added ", response);
                         scope.showAlert("New Comment", "success", "completed");
-                        scope.newComment = "";
+
                     }
                     else {
                         console.log("Error new comment ", response);
@@ -1614,7 +1616,123 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             /*Audio Player-end*/
 
 
+            // Estimated time edit
+            scope.isValidTime=true;
+            scope.TimePanelMaker = function () {
+                scope.ticketEstimatedPrecentage=100;
+                try
+                {
+                    scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
+                    scope.newTicketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
+                    scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
+                    scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
+                    scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toHHMMSS();
+                    scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toHHMMSS();
+
+
+                    /*if(scope.ticketLoggedPrecentage>100)
+                     {
+                     scope.ticketRemainingTimeFormat="00d:00h:00m:00s";
+                     scope.ticketRemainingPrecentage=0;
+                     }*/
+
+                    if(scope.ticketLoggedPrecentage>100)
+                    {
+                        scope.ticketRemainingTimeFormat="00d00h00m00s";
+                    }
+
+                    console.log("Estimated "+scope.ticketEstimatedTimeFormat);
+                    console.log("Logged "+scope.ticketLoggedTimeFormat);
+                    console.log("Remaining "+scope.ticketRemainingTimeFormat);
+                    scope.isValidTime=true;
+                }
+                catch(ex)
+                {
+                    scope.showAlert("Error","error","Invalid Time format");
+                    scope.timeValidateMessage="Invalid Time format";
+                    scope.isValidTime=false;
+                }
+
+
+            }
+
+            scope.updateTicketEstimatedTime = function () {
+
+
+                    var timeArray= scope.newTicketEstimatedTimeFormat.split(":");
+                    var timeInSeconds=0;
+
+
+                    for(var i=0;i<timeArray.length;i++)
+                    {
+                        var item = timeArray[i];
+
+                        if(item.indexOf("d")!=-1)
+                        {
+                            timeInSeconds=timeInSeconds+Number(item.split("d")[0]*24*60*60*1000);
+                        }
+                        if(item.indexOf("h")!=-1)
+                        {
+                            timeInSeconds=timeInSeconds+Number(item.split("h")[0]*60*60*1000);
+                        }
+                        if(item.indexOf("m")!=-1)
+                        {
+                            timeInSeconds=timeInSeconds+Number(item.split("m")[0]*60*1000);
+                        }
+                        if(item.indexOf("s")!=-1)
+                        {
+                            timeInSeconds=timeInSeconds+Number(item.split("s")[0]*1000);
+                        }
+                        if(i==timeArray.length-1)
+                        {
+                            //return timeInSeconds;
+
+                            if(isNaN(timeInSeconds))
+                            {
+                                scope.timeValidateMessage="Invalid Time format";
+                                scope.isTimeEdit=true;
+                                scope.showAlert("Error","error","Invalid Time format");
+                                scope.isValidTime=false;
+                            }
+                            else
+                            {
+                                scope.isTimeEdit=false;
+                                scope.isValidTime=true;
+
+                                ticketService.updateTicketEstimateTime(scope.ticket._id,timeInSeconds).then(function (response) {
+                                    if(response.data.IsSuccess)
+                                    {
+                                        scope.ticket.time_estimation=response.data.Result.time_estimation;
+                                        scope.showAlert("Success","success","Estimated Time Changed");
+                                        scope.TimePanelMaker();
+
+                                    }else
+                                    {
+                                        scope.showAlert("Error","error","Estimated Time updation failed");
+                                        console.log("Estimated Time updation failed");
+                                    }
+                                }, function (error) {
+                                    scope.showAlert("Error","error","Estimated Time updation failed");
+                                    console.log("Estimated Time updation failed",error);
+                                })
+                            }
+
+
+                        }
+                    }
+
+
+
+
+
+
+            }
+
+
 
         }
+
+
     }
+
 });

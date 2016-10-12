@@ -1,9 +1,22 @@
 <div class="timelline-wrapper prn2-time-line-wrap">
     <ul class="timeline " scrolly="showMore()">
-        <li ng-repeat="eng in engagementsList" ng-class="{'timeline-inverted':eng.direction=='outbound' }">
-            <div class="timeline-badge twitter" ng-class="{'facebook':eng.direction=='outbound' }"><i class="fa fa-facebook"></i></div>
+        <li ng-repeat="eng in engagementsList"
+            ng-class="{'timeline-inverted':eng.direction=='outbound' }">
+            <div class="timeline-badge"
+                 ng-class="{'api-channel':eng.channel=='api',
+                  'twitter-channel':eng.channel=='twitter',
+                  'call-channel':eng.channel=='call',
+                  'sms-channel':eng.channel=='sms',
+                  'email-channel':eng.channel=='email'}">
+                <i class=""
+                   ng-class="{'fa fa-random':eng.channel=='api',
+                  'fa fa-twitter':eng.channel=='twitter',
+                  'main-icon-2-telephone-3':eng.channel=='call',
+                  'fa fa-bell-o':eng.channel=='sms',
+                  'fa fa-envelope-o':eng.channel=='email'}"></i>
+            </div>
             <div class="timeline-panel">
-                <div class="timeline-heading">
+                <div class="timeline-heading ">
 
                     <ul class="info-list">
                         <li>
@@ -28,7 +41,9 @@
 
                 <div class="timeline-heading">
                     <p>
-                        <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i> <time-ago from-time='{{eng.created_at}}' format='MM/dd/yyyy'></time-ago> via
+                        <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i>
+                            <time-ago from-time='{{eng.created_at}}' format='MM/dd/yyyy'></time-ago>
+                            via
                             {{eng.channel}}
                         </small>
                     </p>

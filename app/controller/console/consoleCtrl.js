@@ -29,7 +29,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if ($scope.isRegistor) {
                 $scope.ShowHidePhone(!$scope.showPhone);
             } else {
-                $scope.veeryPhone.Register('duoarafath', 'DuoS123');
+                $scope.veeryPhone.Register('DuoS123');
             }
         },
         openTicketViews: function () {
@@ -73,15 +73,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.ShowHideDialpad();
 
+    $scope.PhoneOffline = function () {
+        //is loading done
+        $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
+        $('#isBtnReg').addClass('display-none').removeClass('display-block active-menu-icon');
+        $('#isCallOnline').addClass('display-block deactive-menu-icon').removeClass('display-none');
+        $scope.ShowHidePhone(false);
+    };
+
     $scope.PhoneOnline = function () {
         //is loading done
-        $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon ');
-        $('#isBtnReg').addClass('display-block active-menu-icon   ').removeClass('display-none  ');
+        $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
+        $('#isBtnReg').addClass('display-block active-menu-icon').removeClass('display-none');
+        $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $scope.ShowHidePhone(true);
     };
 
-    $scope.PhoneOffline = function () {
-
+    $scope.PhoneLoading = function () {
+        $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $('#isLoadingRegPhone').addClass('display-block').removeClass('display-none');
         $('#isBtnReg').addClass('display-none ').removeClass('display-block active-menu-icon');
         /*IsRegisterPhone: function (status) {
@@ -181,6 +190,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
         },
         registerWithArds: function (userProfile) {
+            sipUnRegister();
             preInit(userEvent, userProfile);
             /*resourceService.RegisterWithArds(userProfile.id, userProfile.veeryFormat).then(function (response) {
              $scope.registerdWithArds = response;
@@ -191,8 +201,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
              $scope.showAlert("Soft Phone", "error", "Fail To Register With Resource Server.");
              });*/
         },
-        Register: function (userName, password) {
-            $scope.PhoneOffline();
+        Register: function (password) {
+            $scope.PhoneLoading();
             $scope.phoneStatus = "Registering With Servers";
 
 
@@ -351,8 +361,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert("Soft Phone", "info", description);
                 }
                 else if (description == 'Forbidden') {
-                    console.error(description);
                     $scope.showAlert("Soft Phone", "error", description);
+                    console.error(description);
                 }
             }
             catch (ex) {
@@ -852,7 +862,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //add dashboard inside tab
 
     $scope.addDashBoard = function () {
-        $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad");
+        $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad","dashborad");
     };
     $scope.addDashBoard();
 
