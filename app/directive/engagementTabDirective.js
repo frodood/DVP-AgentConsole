@@ -1131,6 +1131,17 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         }
                         else {
                             // show new profile
+
+                            convertToSchemaForm(null, function (schemaDetails) {
+                                if (schemaDetails) {
+                                    scope.schema = schemaDetails.schema;
+                                    scope.form = schemaDetails.form;
+                                    scope.model = schemaDetails.model;
+                                }
+
+                            });
+
+
                             scope.showMultiProfile = false;
                             scope.showNewProfile = true;
                         }
