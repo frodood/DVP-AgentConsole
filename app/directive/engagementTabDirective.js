@@ -1484,6 +1484,28 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             //ExternalUserTicketCounts details
             scope.ExternalUserTicketCounts = [];
 
+
+            scope.newContact = {};
+            scope.newContact.contactType = "";
+            scope.newContact.contact = "";
+            scope.addContactToUsr = function(newContact){
+                var contactInfo = {
+                    contact: newContact.contact,
+                    type: newContact.contactType,
+                    display: newContact.contact
+                };
+                userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
+                    if (response.IsSuccess) {
+                        scope.profileDetail.contacts.push(contactInfo);
+                    }else{
+                        scope.showAlert('Profile Contact', 'error', response.CustomMessage);
+                    }
+                    scope.isAddNewContact = !response.IsSuccess;
+                }, function (err) {
+                    scope.showAlert('Profile Contact', 'error', "Update Profile Contacts Failed");
+                });
+            }
+
         }
     }
 }).directive("fileread", [function () {
