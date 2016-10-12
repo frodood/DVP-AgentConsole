@@ -1,0 +1,22 @@
+{
+  "d": [
+    {
+      "cutomerType": "VVIP"
+    },
+    {
+      "cutomerType": "VIP"
+    },
+    {
+      "cutomerType": "Corporate"
+    },
+    {
+      "cutomerType": "Loyalty"
+    },
+    {
+      "cutomerType": "General"
+    },
+    {
+      "cutomerType": "Rev"
+    }
+  ]
+}

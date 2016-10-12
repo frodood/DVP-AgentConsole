@@ -852,7 +852,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.ticketList.splice(0, 0, response.Result); //scope.ticketList.push(response.Result);
                         scope.recentTicketList.pop();
                         scope.recentTicketList.push(response.Result);
-
+                        scope.ticket = {};scope.newAddTags = [];
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -1223,6 +1223,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
 
+
             // New Profile
 
             scope.newProfile = {
@@ -1268,6 +1269,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.languages = res;
             });
 
+            getJSONData($http, "customerType", function (res) {
+                scope.customerType = res;
+            });
+
             var genDayList = function () {
                 var max = 31;
 
@@ -1278,6 +1283,28 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
 
                 return dayArr;
+            };
+
+            scope.cutomerTypes=[];
+            scope.loadCutomerType = function (query) {
+                if (query === "*" || query === "") {
+                    if (scope.customerType) {
+                        return scope.customerType;
+                    }
+                    else {
+                        return [];
+                    }
+                }
+                else {
+                    var results = query ? scope.customerType.filter(function (query) {
+                        var lowercaseQuery = angular.lowercase(query);
+                        return function filterFn(group) {
+                            return (group.customerType.toLowerCase().indexOf(lowercaseQuery) != -1);
+                        };
+                    }) : [];
+                    return results;
+                }
+
             };
 
             scope.dayList = genDayList();

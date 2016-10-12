@@ -169,18 +169,16 @@
                                                             Personal Information
                                                         </div>
                                                         <div class="col-md-4 col-sm-4 col-xs-4">
-                                                            <div class="form-group">
-                                                                <label for="FirstName">First Name</label>
-                                                                <input type="text" class="form-control" id="FirstName"
-                                                                       placeholder=""
-                                                                       ng-model="newProfile.firstname">
+                                                            <div class="form-group" ng-class="{ 'has-error': newProfileForm.newProfilefirstname.$invalid && newProfileForm.newProfilefirstname.$dirty }" >
+                                                                <label class="control-label">First Name*</label>
+                                                                <input type="text" class="form-control" name="newProfilefirstname" ng-model="newProfile.firstname" required placeholder="Enter First Name" />
                                                             </div>
+
                                                         </div>
                                                         <div class="col-md-4 col-sm-4 col-xs-4">
-                                                            <div class="form-group">
-                                                                <label>Last Name</label>
-                                                                <input type="text" class="form-control" placeholder=""
-                                                                       ng-model="newProfile.lastname">
+                                                            <div class="form-group" ng-class="{ 'has-error': newProfileForm.newProfilelastname.$invalid && newProfileForm.newProfilelastname.$dirty }" >
+                                                                <label class="control-label">Last Name*</label>
+                                                                <input type="text" class="form-control" name="newProfilelastname" ng-model="newProfile.lastname" required placeholder="Enter Last Name" />
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 col-sm-4 col-xs-4">
@@ -192,36 +190,19 @@
                                                         </div>
 
                                                         <div class="col-md-4 col-sm-4 col-xs-4">
-                                                            <div class="form-group"
-                                                                 ng-class="{ 'has-error': newProfileForm.phoneno.$invalid && newProfileForm.phoneno.$dirty }">
-                                                                <label for="phoneno" class="control-label">Phone
-                                                                    Number*</label>
-                                                                <input type="text" class="form-control" id="phoneno"
-                                                                       name="phoneno" ng-model="newProfile.phone"
-                                                                       required placeholder="Phone Number"/>
 
-                                                                <div class="help-block"
-                                                                     ng-messages="newProfileForm.phoneno.$error"
-                                                                     ng-if="newProfileForm.phoneno.$touched">
-                                                                    <p ng-message="required">Phone Number is
-                                                                        required.</p>
-                                                                </div>
+                                                            <div class="form-group" ng-class="{ 'has-error': newProfileForm.newProfilephone.$invalid && newProfileForm.newProfilephone.$dirty }" >
+                                                                <label class="control-label">Phone Number*</label>
+                                                                <input type="text" class="form-control" name="newProfilephone" ng-model="newProfile.phone" required placeholder="Phone Number" />
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-4 col-xs-4">
-                                                            <div class="form-group"
-                                                                 ng-class="{ 'has-error': newProfileForm.pEmail.$invalid && newProfileForm.pEmail.$dirty }">
-                                                                <label for="pEmail" class="control-label">Phone
-                                                                    Number*</label>
-                                                                <input type="text" class="form-control" id="pEmail"
-                                                                       name="pEmail" ng-model="newProfile.email"
-                                                                       required placeholder="Email"/>
 
-                                                                <div class="help-block"
-                                                                     ng-messages="newProfileForm.pEmail.$error"
-                                                                     ng-if="newProfileForm.pEmail.$touched">
-                                                                    <p ng-message="required">Email is required.</p>
-                                                                </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group" ng-class="{ 'has-error': newProfileForm.newProfileemail.$invalid && newProfileForm.newProfileemail.$dirty }" >
+                                                                <label class="control-label">Email*</label>
+                                                                <input type="email" class="form-control" name="newProfileemail" ng-model="newProfile.email" required placeholder="Email" />
                                                             </div>
 
                                                         </div>
@@ -229,7 +210,7 @@
                                                             <div class="form-group">
                                                                 <label for="province">Locale</label>
                                                                 <select class="form-control"
-                                                                        ng-model="newProfile.locale">
+                                                                        ng-model="newProfile.locale" >
                                                                     <option ng-repeat="locale in languages"
                                                                             value="{{locale.code}}">
                                                                         {{locale.name}}
@@ -249,8 +230,7 @@
                                                                 <div class="row">
                                                                     <select class="form-control "
                                                                             ng-model="newProfile.dob.day">
-                                                                        <option value="" disabled selected>Select day
-                                                                        </option>
+
                                                                         <option ng-repeat="day in dayList"
                                                                                 value="{{day}}">
                                                                             {{day}}
@@ -263,8 +243,6 @@
                                                                      style="padding-left: 5px;padding-right: 5px;">
                                                                     <select class="form-control"
                                                                             ng-model="newProfile.dob.month">
-                                                                        <option value="" disabled selected>Select month
-                                                                        </option>
                                                                         <option ng-repeat="month in monthList"
                                                                                 value="{{month.index}}">
                                                                             {{month.name}}
@@ -276,8 +254,7 @@
                                                                 <div class="row">
                                                                     <select class="form-control"
                                                                             ng-model="newProfile.dob.year">
-                                                                        <option value="" disabled selected>Select year
-                                                                        </option>
+
                                                                         <option ng-repeat="y in yearList" value="{{y}}">
                                                                             {{y}}
                                                                         </option>
@@ -352,7 +329,33 @@
 
                                                 <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
                                                     <div class="row">
-                                                        <div class="col-md-12 col-sm-12 col-xs-12 text-header bold">
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group" ng-class="{ 'has-error': newProfileForm.newProfilessn.$invalid && newProfileForm.newProfilessn.$dirty }" >
+                                                                <label class="control-label">SSN*</label>
+                                                                <input type="email" class="form-control" name="newProfilessn" ng-model="newProfile.ssn" required placeholder="" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8 col-sm-8 col-xs-8">
+                                                            <div class="form-group" ng-class="{ 'has-error': newProfileForm.newProfilessn.$invalid && newProfileForm.newProfilessn.$dirty }" >
+                                                                <label class="control-label">Tags</label>
+                                                                <tags-input
+                                                                        ng-model="cutomerTypes"
+                                                                        display-property="cutomerType"
+                                                                        placeholder="Search Tags"
+                                                                        replace-spaces-with-dashes="false">
+                                                                    <auto-complete source="loadCutomerType($query)"
+                                                                                   min-length="0"
+                                                                                   load-on-focus="true"
+                                                                                   load-on-empty="true"
+                                                                                   max-results-to-show="32"
+                                                                            >
+                                                                    </auto-complete>
+                                                                </tags-input>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <!--<div class="col-md-12 col-sm-12 col-xs-12 text-header bold">
                                                             Veery Account Information
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 col-xs-6">
@@ -378,7 +381,7 @@
                                                                 <label for="ZipCode">Link</label>
                                                                 <input type="text" class="form-control" placeholder="">
                                                             </div>
-                                                        </div>
+                                                        </div>-->
                                                     </div>
                                                 </div>
 
