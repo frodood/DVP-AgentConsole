@@ -1386,11 +1386,32 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
             getYears();
             scope.saveNewProfile = function (profile) {
-                var collectionDate = profile.dob.year + '-' + profile.dob.month + '-' + profile.dob.day;
+                var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
                 userService.CreateExternalUser(profile).then(function (response) {
                     if (response) {
-                        scope.GetExternalUserProfileByContact();
+                        scope.isLoadinNewProfile = false;
+                        scope.showNewProfile = false;
+                        scope.profileDetail = response;
+                        scope.GetProfileHistory(response._id);
+                    }
+                    else {
+                        scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                    }
+                }, function (err) {
+                    scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                });
+            };
+
+            scope.UpdateExternalUser = function (profile) {
+                var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
+                profile.birthday = new Date(collectionDate);
+                userService.UpdateExternalUser(profile).then(function (response) {
+                    if (response) {
+                        scope.isLoadinNewProfile = false;
+                        scope.showNewProfile = false;
+                        scope.profileDetail = response;
+                        scope.showAlert("Profile", "success", "Update Successfully.");
                     }
                     else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");

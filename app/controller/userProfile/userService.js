@@ -122,9 +122,26 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
             data:profile
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
-                return response.data.IsSuccess;
+                return response.data.Result;
             } else {
-                return false;
+                return undefined;
+            }
+        });
+    };
+
+    var updateExternalUser = function (profile) {
+        return $http({
+            method: 'put',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/"+profile._id,
+            headers: {
+                'authorization': authService.GetToken()
+            },
+            data:profile
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
             }
         });
     };
@@ -179,6 +196,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         getMyProfileDetails:getMyProfileDetails,
         mapFormSubmissionToProfile:mapFormSubmissionToProfile,
         CreateExternalUser:createExternalUser,
+        UpdateExternalUser:updateExternalUser,
         UpdateExternalUserProfileContact:UpdateExternalUserProfileContact,
         getExternalUserProfileByField:getExternalUserProfileByField,
         getExternalUserProfileBySsn:getExternalUserProfileBySsn

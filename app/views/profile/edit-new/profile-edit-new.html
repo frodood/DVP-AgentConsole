@@ -301,9 +301,13 @@
             <div class="model-footer-wrapper" style="background-color: transparent;">
                 <div class="model-btn-wrapper">
                     <div class="btn-warp ">
-                                <span ng-disabled="newProfileForm.$invalid" class="btn btn-default"
+                                <span ng-show="isLoadinNewProfile" ng-disabled="newProfileForm.$invalid" class="btn btn-default"
                                       ng-click="saveNewProfile(newProfile);"
                                 >Save</span>
+
+                        <span  ng-hide="isLoadinNewProfile" ng-disabled="newProfileForm.$invalid" class="btn btn-default"
+                              ng-click="UpdateExternalUser(newProfile);"
+                                >Update</span>
                     </div>
                 </div>
 
