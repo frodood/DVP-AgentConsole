@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http) {
+                                              userService, ticketService, tagService, $http,authService) {
     return {
         restrict: "EA",
         scope: {
@@ -41,7 +41,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
         link: function (scope, element, attributes) {
 
             /*Initialize default scope*/
-
+            scope.companyName="";
             scope.oldFormModel = null;
             scope.currentSubmission = null;
             scope.currentForm = null;
@@ -70,6 +70,29 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             /* End Initialize default scope*/
 
             /*form submit*/
+
+
+            scope.pickCompanyInfo = function () {
+                var userCompanyData = authService.GetCompanyInfo();
+                ticketService.pickCompanyInfo(userCompanyData.tenant,userCompanyData.company).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+                        scope.companyName=response.data.Result.companyName;
+                    }
+                    else
+                    {
+                        console.log("No company info found");
+                    }
+
+                }, function (error) {
+                    console.log("Error in loading company info",error);
+                })
+            };
+
+
+            scope.pickCompanyInfo();
+
+
             scope.showAlert = function (tittle, type, msg) {
                 new PNotify({
                     title: tittle,
