@@ -1,4 +1,9 @@
 <div class="timelline-wrapper prn2-time-line-wrap">
+
+    <div ng-show="engagementsList.length==0" class="data-not-found" style="">
+        - DATA NOT FOUND -
+    </div>
+
     <ul class="timeline " scrolly="showMore()">
         <li ng-repeat="eng in engagementsList"
             ng-class="{'timeline-inverted':eng.direction=='outbound' }">
@@ -6,11 +11,13 @@
                  ng-class="{'api-channel':eng.channel=='api',
                   'twitter-channel':eng.channel=='twitter',
                   'call-channel':eng.channel=='call',
+                  'facebook-channel':eng.channel=='facebook',
                   'sms-channel':eng.channel=='sms',
                   'email-channel':eng.channel=='email'}">
                 <i class=""
                    ng-class="{'fa fa-random':eng.channel=='api',
                   'fa fa-twitter':eng.channel=='twitter',
+                   'fa fa-facebook':eng.channel=='facebook',
                   'main-icon-2-telephone-3':eng.channel=='call',
                   'fa fa-bell-o':eng.channel=='sms',
                   'fa fa-envelope-o':eng.channel=='email'}"></i>

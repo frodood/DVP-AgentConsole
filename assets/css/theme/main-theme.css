@@ -28,7 +28,7 @@
 }
 
 .console-drop-menu > li > a {
-    color: #8298ae ;
+    color: #8298ae;
 }
 
 .dropdown-menu > li > a:focus,
@@ -96,6 +96,10 @@
     border-top: 4px solid #14d0a0;
 }
 
+.bg-orange {
+    background-color: #ff8c00;
+}
+
 .facebook {
     background: #3b5998 !important;
 }
@@ -142,7 +146,10 @@
 }
 
 .ticket-channel.call {
-    background: #d2c242;
+    background: #fff;
+    -webkit-box-shadow: -1px 0px 23px -7px rgba(0, 0, 0, 0.66);
+    -moz-box-shadow: -1px 0px 23px -7px rgba(0, 0, 0, 0.66);
+    box-shadow: -1px 0px 23px -7px rgba(0, 0, 0, 0.66);
 }
 
 .font-CyanA200 {
@@ -225,6 +232,27 @@
 .validation-on {
     color: #d90000;
 }
+
+.color-fb {
+    color: #3b5998 !important;;
+}
+
+.color-twitter {
+    color: #55acee !important;;
+}
+
+.color-linkedin  {
+    color: #0077B5 !important;;
+}
+.color-skype {
+    color: #00aff0  !important;;
+}
+
+.color-google {
+    color: #d34836  !important;;
+}
+
+
 
 
 

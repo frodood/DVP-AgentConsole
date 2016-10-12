@@ -1,13 +1,30 @@
+<div ng-show="ticketList.length==0" class="data-not-found" style="">
+    - DATA NOT FOUND -
+</div>
+
 <div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
 
-    <div class="profile-ticker-wrap"
+    <div class="profile-ticker-wrap "
          ng-class="{'high-boarder':ticket.priority=='urgent',
                         'normal-boarder':ticket.priority=='normal'}">
-        <div class="ticket-channel call">
-            <i class="fa fa-facebook"></i>
+        <div class="ticket-channel call"
+             ng-class="{'api-channel':ticket.channel=='api',
+                  'twitter-channel':ticket.channel=='twitter',
+                  'call-channel':ticket.channel=='call',
+                  'facebook-channel':ticket.channel=='facebook',
+                  'sms-channel':ticket.channel=='sms',
+                  'email-channel':ticket.channel=='email'}">
+            <i class=""
+               ng-class="{'fa fa-random':ticket.channel=='api',
+                  'fa fa-twitter':ticket.channel=='twitter',
+                   'fa fa-facebook':ticket.channel=='facebook',
+                  'fa fa-phone':ticket.channel=='call',
+                  'fa fa-bell-o':ticket.channel=='sms',
+                  'fa fa-envelope-o':ticket.channel=='email'}"></i>
         </div>
 
-        <div class="right-ticket-details">
+
+        <div class="right-ticket-details ">
             <div class="col-md-12 p-0">
                 <div class="col-md-2 p-0">
                     <div class="left-avatar">

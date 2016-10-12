@@ -26,7 +26,8 @@
                         <!-- notification -->
                         <li class="console-menu-icon m-left-10 m-right-10" id="notificationAlarm" uib-dropdown
                             uib-dropdown-toggle>
-                            <i class="animated   veery-font-1-alarm"> </i>
+                            <i class="animated   veery-font-1-alarm"
+                               ng-class="{'bg-orange':unredNotifications!=0}"> </i>
 
                             <div class="console-notification-header">
                                 {{unredNotifications}}
@@ -121,7 +122,8 @@
                                 <div class="time-tracker-wrapper">
                                     <div class="time-tracker-body">
                                         <div class="time-counter inline-block">
-                                            <a style="cursor:pointer" ng-click="openTimerTicket()">{{ttimer.ticketRef}}</a>
+                                            <a style="cursor:pointer"
+                                               ng-click="openTimerTicket()">{{ttimer.ticketRef}}</a>
                                             <br/>
                                             <timer autostart="false" interval="1000"
                                                    ng-show="ttimer.active"

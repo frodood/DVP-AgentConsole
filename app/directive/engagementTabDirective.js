@@ -1403,6 +1403,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.showMultipleProfile = true;
                         scope.foundProfiles = false;
                         scope.showNewProfile = true;
+                        scope.newProfile = scope.profileDetail;
+                        scope.dob.day = moment(scope.profileDetail.birthday).day();
+                       // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
+                       // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
                         this.getModelHeader();
                     },
                     closeNewProfile: function () {
@@ -1488,7 +1492,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.newContact = {};
             scope.newContact.contactType = "";
             scope.newContact.contact = "";
-            scope.addContactToUsr = function(newContact){
+            scope.addContactToUsr = function (newContact) {
                 var contactInfo = {
                     contact: newContact.contact,
                     type: newContact.contactType,
@@ -1497,7 +1501,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
                     if (response.IsSuccess) {
                         scope.profileDetail.contacts.push(contactInfo);
-                    }else{
+                    } else {
                         scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                     }
                     scope.isAddNewContact = !response.IsSuccess;
