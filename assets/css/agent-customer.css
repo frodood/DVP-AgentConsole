@@ -3532,6 +3532,7 @@ tags-input .tags .input {
     overflow: hidden;
     padding-top: 13px;
     border: 1px solid #d2c242;
+    z-index: 1;
 }
 
 /*scrollable option*/
