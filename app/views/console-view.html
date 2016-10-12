@@ -26,10 +26,10 @@
                         <!-- notification -->
                         <li class="console-menu-icon m-left-10 m-right-10" id="notificationAlarm" uib-dropdown
                             uib-dropdown-toggle>
-                            <i class="animated   veery-font-1-alarm"
-                               ng-class="{'bg-orange':unredNotifications!=0}"> </i>
+                            <i class="animated  veery-font-1-alarm"
+                               ng-class="{'color-orange':unredNotifications!=0}"> </i>
 
-                            <div class="console-notification-header">
+                            <div class="console-notification-header" ng-class="{'bg-orange':unredNotifications!=0}">
                                 {{unredNotifications}}
                             </div>
                             <ul class="dropdown-menu console-drop-menu notification-menu-left " uib-dropdown-menu
@@ -105,10 +105,11 @@
                             <li><a class="drop-header">Add new page</a></li>
                             <li class="divider"></li>
                             <li class="menuitem menuitem-with-icon" role="menuitem">
-                                <a href="#">Create new profile
+                                <a href="javascript:void(0);">Create new profile
                                     <i class="veery-font-1-user"></i></a>
                             </li>
-                            <li class="menuitem menuitem-with-icon" role="menuitem"><a href="#">Create new ticket
+                            <li class="menuitem menuitem-with-icon" role="menuitem"><a href="javascript:void(0);">Create
+                                new ticket
                                 <i class="veery-font-1-add-2"></i></a></a></li>
                         </ul>
                     </ul>
@@ -168,7 +169,8 @@
                             <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none"
                                style="margin-top: 3px;"></i>
                             <i id="isBtnReg" class="main-icon-2-telephone-3" ng-click="consoleTopMenu.Register()"></i>
-                            <i id="isCallOnline" class="main-icon-2-telephone-4 display-none" ng-click="consoleTopMenu.Register()"></i>
+                            <i id="isCallOnline" class="main-icon-2-telephone-4 display-none"
+                               ng-click="consoleTopMenu.Register()"></i>
                         </li>
 
                         <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle>
@@ -226,71 +228,6 @@
                         <li class="console-menu-icon m-left-10 m-right-10"
                             ng-click="openNav()">
                             <i class="veery-font-1-paper-plane"></i>
-                            <!--<ul class="dropdown-menu console-drop-menu notification-menu" uib-dropdown-menu role="menu"-->
-                            <!--aria-labelledby="btn-append-to-single-button">-->
-                            <!--<li class="notification-header">-->
-                            <!--<a class="drop-header"-->
-                            <!--style="padding-top: 16px;-->
-                            <!--padding-bottom: 15px;">-->
-                            <!--Send notification-->
-                            <!--</a>-->
-                            <!--<span class="drop-sub-header">-->
-                            <!--<input type="text"-->
-                            <!--class="form-control bg-transparent txt-notification-search"-->
-                            <!--placeholder="Search...">-->
-                            <!--</span>-->
-                            <!--</li>-->
-
-                            <!--<div class="console-notofication-wrapper"-->
-                            <!--ng-slimscroll-->
-                            <!--opacity="0.1"-->
-                            <!--distance="10px"-->
-                            <!--height="355px"-->
-                            <!--width="100%"-->
-                            <!--ng-mouseover="chatWidgetscrollEnabled = true"-->
-                            <!--ng-mouseleave="chatWidgetscrollEnabled = false"-->
-                            <!--enabled="{{ chatWidgetscrollEnabled }}">-->
-                            <!--<div class="notification-status">-->
-                            <!--No new notification-->
-                            <!--</div>-->
-                            <!--<div class="row notification-list" ng-repeat="agent in agentList">-->
-                            <!--<div class="col-lg-3">-->
-                            <!--<div class="notification-icon user-list  ">-->
-                            <!--<img src="assets/img/avatar/oykun.jpg"-->
-                            <!--ng-src="{{agent.img}}">-->
-
-                            <!--<div class="user-state"-->
-                            <!--ng-class="agent.status"></div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="col-lg-9">-->
-                            <!--<div class="row">-->
-                            <!--<div class="notification-text ">-->
-                            <!--{{agent.profileName}}-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="row">-->
-                            <!--<div class="notification-time "-->
-                            <!--ng-class="agent.status=='online'?'online-text':'offline-text'">-->
-                            <!--{{agent.status}}-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="send-notification-wrapper">-->
-                            <!--<div class="wrap">-->
-                            <!--<div class="form-group">-->
-                            <!--<label for="txtSubject">Subject</label>-->
-                            <!--<input type="text" class="form-control" id="txtSubject">-->
-                            <!--</div>-->
-                            <!--<div class="form-group">-->
-                            <!--<label for="txtMessage">Message</label>-->
-                            <!--<textarea id="txtMessage" class="form-control" rows="3"></textarea>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</ul>-->
                         </li>
 
 

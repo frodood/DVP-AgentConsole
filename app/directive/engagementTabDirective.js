@@ -1466,10 +1466,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.newProfile.dob = {};
                         scope.newProfile.dob.day = date.date();
                         scope.newProfile.dob.month = {
-                            'index' :date.month(),
-                        'name':date.month()
-                        } ;
-                        scope.newProfile.dob.year =date.year();
+                            'index': date.month(),
+                            'name': date.month()
+                        };
+                        scope.newProfile.dob.year = date.year();
                         this.getModelHeader();
                     },
                     closeNewProfile: function () {
@@ -1573,6 +1573,30 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 });
             }
 
+            //Progressbar random color
+            scope.getRandomColor = function ($index) {
+                switch ($index) {
+                    case 0:
+                        return 'warning';
+                        break;
+                    case 1:
+                        return 'success';
+                        break;
+                    case 2:
+                        return 'danger';
+                        break;
+                    case 3:
+                        return 'success';
+                        break;
+                    case 4:
+                        return 'warning';
+                    case 5:
+                        return 'success';
+                    default:
+                        return 'success';
+                        break;
+                }
+            }//end
         }
     }
 }).directive("fileread", [function () {

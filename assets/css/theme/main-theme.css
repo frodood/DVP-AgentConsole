@@ -96,8 +96,12 @@
     border-top: 4px solid #14d0a0;
 }
 
+.color-orange {
+    color: #ff8c00 !important;
+}
+
 .bg-orange {
-    background-color: #ff8c00;
+    background: #ff8c00;
 }
 
 .facebook {
@@ -241,15 +245,16 @@
     color: #55acee !important;;
 }
 
-.color-linkedin  {
+.color-linkedin {
     color: #0077B5 !important;;
 }
+
 .color-skype {
-    color: #00aff0  !important;;
+    color: #00aff0 !important;;
 }
 
 .color-google {
-    color: #d34836  !important;;
+    color: #d34836 !important;;
 }
 
 

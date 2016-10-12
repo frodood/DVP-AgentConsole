@@ -58,7 +58,7 @@
             </div>
         </li>
     </ul>
-    <div class="load-more-wrapper" style="margin-top: -11px;">
+    <div ng-show="engagementsList.length!=0" class="load-more-wrapper" style="margin-top: -11px;">
         <h5 ng-show="!isShowTimeLine" ng-click="showMore();"> Load More</h5>
         <h5 ng-show="isShowTimeLine"><i class="fa fa-spinner fa-spin"></i></h5>
     </div>

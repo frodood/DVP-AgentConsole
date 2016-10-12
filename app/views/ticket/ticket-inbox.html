@@ -15,13 +15,15 @@
                     <div class="col-md-6 col-sm-6 ">
                         <div class="model-btn-wrapper">
                             <div class="btn-warp">
-                                <span id ="rldbtn" class="btn btn-default2 "  ng-click="reloadTickets()"> Refresh </span>
+                                <span id="rldbtn" class="btn btn-default2 " ng-click="reloadTickets()"> Refresh </span>
                             </div>
                             <div class="btn-warp">
-                                <span id ="mybtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted" ng-click="switchTickets('MY')">my ticket</span>
+                                <span id="mybtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted"
+                                      ng-click="switchTickets('MY')">my ticket</span>
                             </div>
                             <div class="btn-warp">
-                                <span id="grpbtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted" ng-click="switchTickets('GROUP')">group</span>
+                                <span id="grpbtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted"
+                                      ng-click="switchTickets('GROUP')">group</span>
                             </div>
                             <div class="btn-warp ">
                                 <span class="btn btn-default btn-close"
@@ -46,54 +48,49 @@
                              ng-mouseover="chatWidgetscrollEnabled = true"
                              ng-mouseleave="chatWidgetscrollEnabled = false"
                              enabled="{{ chatWidgetscrollEnabled }}"
-                              id="scrltodo">
-                            <div class="ticket-details todo " id="todo-items" ng-repeat="todo in ticketList.toDo">
+                             id="scrltodo">
+                            <div class="ticket-details"
+                                 ng-class="{'high-boarder':todo.priority=='high',
+                        'normal-boarder':todo.priority=='normal',
+                        'low-boarder':todo.priority=='low',
+                        'urgent-boarder':todo.priority=='urgent'}"
+                                 id="todo-items" ng-repeat="todo in ticketList.toDo">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
-                                        <img src="assets/img/avatar/defaultProfile.png" ng-src="{{todo.assignee.avatar}}"
+                                        <img src="assets/img/avatar/defaultProfile.png"
+                                             ng-src="{{todo.assignee.avatar}}"
                                              ng-src="">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="notification-time ">
+                                                {{todo.type}}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6" style="padding-right: 0px;">
+                                            <div class="notification-ref link pull-right" ng-click="gotoTicket(todo)">
+                                                {{todo.reference}}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="notification-text ">
                                             <div class="col-lg-12"> {{todo.subject}}</div>
-                                            <div class="col-lg-1"></div>
-                                            <div  class="col-lg-4 bg-checkbox font-white small-details inline-btn row"
-                                                 ng-class="{'red':todo.priority=='urgent','orange':todo.priority=='high','teal600':todo.priority=='normal','gray300':todo.priority=='low' }">
-                                                {{todo.priority}}
+                                            <div class="notification-time group pull-right">
+                                                {{todo.timeDelay}}
                                             </div>
-                                            <div class="col-lg-6 notification-ref link" ng-click="gotoTicket(todo)">
-                                            {{todo.reference}}
-                                        </div>
                                         </div>
 
-                                    </div>
-                                    <div class="row">
-                                        <div class="notification-time ">
-                                            {{todo.type}}
-                                        </div>
-
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="notification-time " ng-if="todo.assignee.name">
-                                          {{todo.assignee.name}}
-                                        </div>
-                                        <div class="notification-time " ng-if="todo.assignee_group.name">
-                                             {{todo.assignee_group.name}}
-                                        </div>
-                                        <div class="notification-time group ">
-                                            {{todo.timeDelay}}
-                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4" >
+                    <div class="col-md-4">
                         <div class="ticket-list-header">
                             IN PROGRESS ({{ticketList.inProgress.length}})
                         </div>
@@ -106,51 +103,47 @@
                              ng-mouseleave="chatWidgetscrollEnabled = false"
 
                              id="scrlopen">
-                            <div class="ticket-details in-progress" ng-repeat="inprogress in ticketList.inProgress">
+                            <div class="ticket-details in-progress"
+                                 ng-class="{'high-boarder':inprogress.priority=='high',
+                        'normal-boarder':inprogress.priority=='normal',
+                        'low-boarder':inprogress.priority=='low',
+                        'urgent-boarder':inprogress.priority=='urgent'}"
+                                 ng-repeat="inprogress in ticketList.inProgress">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
-                                        <img src="assets/img/avatar/defaultProfile.png" ng-src="{{inprogress.assignee.avatar}}">
+                                        <img src="assets/img/avatar/defaultProfile.png"
+                                             ng-src="{{inprogress.assignee.avatar}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="row">
-                                        <div class="notification-text ">
-                                            <div class="col-lg-12">{{inprogress.subject}}</div>
-                                            <div  class=" col-lg-1"></div>
-                                            <div  class=" col-lg-4 bg-checkbox font-white small-details inline-btn row"
-                                                  ng-class="{'red':inprogress.priority=='urgent','orange':inprogress.priority=='high','teal600':inprogress.priority=='normal','gray300':inprogress.priority=='low' }">
-                                                {{inprogress.priority}}
+                                        <div class="col-lg-6">
+                                            <div class="notification-time ">
+                                                {{inprogress.type}}
                                             </div>
-
-                                            <div class="col-lg-6 notification-ref link" ng-click="gotoTicket(inprogress)">
+                                        </div>
+                                        <div class="col-lg-6" style="padding-right: 0px;">
+                                            <div class="notification-ref link pull-right"
+                                                 ng-click="gotoTicket(inprogress)">
                                                 {{inprogress.reference}}
                                             </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="notification-time ">
-                                            {{inprogress.type}}
                                         </div>
-
                                     </div>
                                     <div class="row">
-                                        <div class="notification-time " ng-show="inprogress.assignee.name">
-                                            assignee {{inprogress.assignee.name}}
+                                        <div class="notification-text ">
+                                            <div class="col-lg-12"> {{inprogress.subject}}</div>
+                                            <div class="notification-time group pull-right">
+                                                {{inprogress.timeDelay}}
+                                            </div>
                                         </div>
 
-                                        <div class="notification-time " ng-show="inprogress.assignee_group.name">
-                                            group {{inprogress.assignee_group.name}}
-                                        </div>
-                                    <div class="notification-time group ">
-                                        {{inprogress.timeDelay}}
-                                    </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 " >
+                    <div class="col-md-4 ">
                         <div class="ticket-list-header">
                             DONE ({{ticketList.done.length}})
                         </div>
@@ -162,44 +155,41 @@
                              ng-mouseover="scrollEnabled = true"
                              ng-mouseleave="scrollEnabled = false"
                              enabled="{{ scrollEnabled }}"
-                                id="scroldone">
-                            <div class="ticket-details done" ng-repeat="done in ticketList.done">
+                             id="scroldone">
+                            <div class="ticket-details"
+                                 ng-class="{'high-boarder':done.priority=='high',
+                        'normal-boarder':done.priority=='normal',
+                        'low-boarder':done.priority=='low',
+                        'urgent-boarder':done.priority=='urgent'}"
+                                 ng-repeat="done in ticketList.done">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list  ">
-                                        <img  src="assets/img/avatar/defaultProfile.png" ng-src="{{done.assignee.avatar}}"
+                                        <img src="assets/img/avatar/defaultProfile.png"
+                                             ng-src="{{done.assignee.avatar}}"
                                              ng-src="{{done.assignee.avatar}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="row">
-                                        <div class="notification-text ">
-                                            <div class="col-lg-12">{{done.subject}}</div>
-                                            <div class="col-lg-1"></div>
-                                            <div  class="col-lg-4 bg-checkbox font-white small-details inline-btn row"
-                                                  ng-class="{'red':done.priority=='urgent','orange':done.priority=='high','teal600':done.priority=='normal','gray300':done.priority=='low' }">
-                                                {{done.priority}}
+                                        <div class="col-lg-6">
+                                            <div class="notification-time ">
+                                                {{done.type}}
                                             </div>
-                                            <div class=" col-lg-6 notification-ref link" ng-click="gotoTicket(done)">
+                                        </div>
+                                        <div class="col-lg-6" style="padding-right: 0px;">
+                                            <div class="notification-ref link pull-right" ng-click="gotoTicket(done)">
                                                 {{done.reference}}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="notification-time ">
-                                            {{done.type}}
+                                        <div class="notification-text ">
+                                            <div class="col-lg-12"> {{done.subject}}</div>
+                                            <div class="notification-time group pull-right">
+                                                {{done.timeDelay}}
+                                            </div>
                                         </div>
 
-                                    </div>
-                                    <div class="row">
-                                        <div class="notification-time " ng-show="done.assignee.name">
-                                            {{done.assignee.name}}
-                                        </div>
-                                        <div class="notification-time " ng-show="done.assignee_group.name">
-                                            {{done.assignee_group.name}}
-                                        </div>
-                                        <div class="notification-time group ">
-                                            {{done.timeDelay}}
-                                        </div>
                                     </div>
                                 </div>
                             </div>

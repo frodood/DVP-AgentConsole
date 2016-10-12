@@ -1154,19 +1154,19 @@ ul.info-list-lg > li > h5 {
 }
 
 .urgent-boarder {
-    border-top: 1px solid #d90000;
+    border-top: 3px solid #d90000;
 }
 
 .high-boarder {
-    border-top: 1px solid #d2c242;
+    border-top: 3px solid #d2c242;
 }
 
 .normal-boarder {
-    border-top: 1px solid #04756f;
+    border-top: 3px solid #04756f;
 }
 
 .low-boarder {
-    border-top: 1px solid #8298ae;
+    border-top: 3px solid #8298ae;
 }
 
 .ticket-channel {
