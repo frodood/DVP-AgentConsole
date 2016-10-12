@@ -724,23 +724,25 @@
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group ">
-                                                            <select class="form-control ">
+                                                            <select class="form-control " ng-model="newContact.contactType">
                                                                 <option value="" disabled selected>Select
                                                                     contact
                                                                     type
                                                                 </option>
+                                                                <option>Call</option>
+                                                                <option>Email</option>
+                                                                <option>sms</option>
                                                                 <option>Facebook</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
+                                                                <option>Twitter</option>
+                                                                <option>Skype</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <input type="text" class="form-control" placeholder="value">
+                                                        <input type="text" class="form-control" ng-model="newContact.contact" placeholder="">
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12 m-top-10">
-                                                        <button class="btn btn-block btn-default">
+                                                        <button class="btn btn-block btn-default" ng-click="addContactToUsr(newContact);">
                                                             Add
                                                         </button>
                                                     </div>
