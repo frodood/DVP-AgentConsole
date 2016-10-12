@@ -706,7 +706,7 @@
 
                                     </div>
 
-                                    <span ng-show="isTimeEdit"><button class="fa fa-check" ng-click="updateTicketEstimatedTime()"></button><button class="fa fa-remove"></button>
+                                    <span ng-show="isTimeEdit"><button class="fa fa-check" ng-click="updateTicketEstimatedTime()"></button><button class="fa fa-remove" ng-click="isTimeEdit=!isTimeEdit"></button>
 
                                     </span>
                                     <span class="col-sm-3 fa fa-pencil" ng-show="!isTimeEdit" ng-click="isTimeEdit=!isTimeEdit"></span>
