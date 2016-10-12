@@ -45,7 +45,13 @@ var preInit = function (userEvent, profile) {
     if (s_webrtc_type) SIPml.setWebRtcType(s_webrtc_type);
 
     // initialize SIPML5
-    SIPml.init(postInit);
+    if (SIPml.isInitialized()) {
+        postInit();
+         }
+    else{
+        SIPml.init(postInit);
+    }
+
 };
 
 function postInit() {

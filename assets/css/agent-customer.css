@@ -541,6 +541,9 @@ body {
 .active-menu-icon {
     color: #ffffff !important;
 }
+.deactive-menu-icon {
+    color: #AF302D !important;
+}
 
 .ticket-details {
     background: #ffffff;
