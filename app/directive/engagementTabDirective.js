@@ -40,6 +40,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
 
+
             /*Initialize default scope*/
             scope.companyName="";
             scope.oldFormModel = null;
@@ -1012,19 +1013,26 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.recentTicketList = [];
             scope.GetAllTicketsByRequester = function (requester, page) {
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
+                    if(response){
+                        response.map(function (item, index) {
+                            item.displayData = "[" + item.reference + "] " + item.subject;
+                            scope.ticketList.push(item);
+                        });
 
-
-                    scope.ticketList = response.map(function (item, index) {
-                        item.displayData = "[" + item.reference + "] " + item.subject;
-                        return item;
-                    });
-                    scope.recentTicketList = response.slice(0, 1);
+                        if(scope.currentTicketPage==1)
+                            scope.recentTicketList = response.slice(0, 1);
+                    }
 
                 }, function (err) {
                     scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
                 });
             };
-            //scope.GetAllTicketsByRequester();
+
+            scope.currentTicketPage = 1;
+            scope.loadNextTickets = function () {
+                scope.currentTicketPage = scope.currentTicketPage + 1;
+                scope.GetAllTicketsByRequester(scope.profileDetail._id,scope.currentTicketPage);
+            };
 
 
             scope.getEnggemntCount = function (id) {
@@ -1426,6 +1434,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.showMultipleProfile = true;
                         scope.foundProfiles = false;
                         scope.showNewProfile = true;
+                        scope.newProfile = scope.profileDetail;
+                        scope.dob.day = moment(scope.profileDetail.birthday).day();
+                       // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
+                       // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
                         this.getModelHeader();
                     },
                     closeNewProfile: function () {
@@ -1511,7 +1523,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.newContact = {};
             scope.newContact.contactType = "";
             scope.newContact.contact = "";
-            scope.addContactToUsr = function(newContact){
+            scope.addContactToUsr = function (newContact) {
                 var contactInfo = {
                     contact: newContact.contact,
                     type: newContact.contactType,
@@ -1520,7 +1532,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
                     if (response.IsSuccess) {
                         scope.profileDetail.contacts.push(contactInfo);
-                    }else{
+                    } else {
                         scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                     }
                     scope.isAddNewContact = !response.IsSuccess;

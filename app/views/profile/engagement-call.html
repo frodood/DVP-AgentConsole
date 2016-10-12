@@ -89,10 +89,19 @@
 
                         <uib-tab index="1" heading="IVR">
                             <div class="IVR-wrapper">
-                                <div class="IVR-details-wrap">
+                                <div class="IVR-details-wrap"
+                                     ng-slimscroll
+                                     opacity="0.1"
+                                     distance="5px"
+                                     height="480px"
+                                     width="100%"
+                                     ng-mouseover="chatWidgetscrollEnabled = true"
+                                     ng-mouseleave="chatWidgetscrollEnabled = false"
+                                     enabled="{{ chatWidgetscrollEnabled }}">
                                     <div ng-show="ivrDetails.length==0" class="data-not-found">
                                         - DATA NOT FOUND -
                                     </div>
+
                                     <div class="ivr-list" ng-show="ivrDetails.length!=0">
                                         <table class="table">
                                             <thead>
@@ -171,13 +180,12 @@
                             </div>
 
                             <div class="col-md-6 col-sm-6 ">
-                                <!--<div class="model-btn-wrapper">-->
-                                <!--<div class="btn-warp ">-->
-                                <!--<span class="btn btn-default btn-close"-->
-                                <!--ng-click="multipleProfile.closeProfileSelection();"-->
-                                <!--&gt;close</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
+                                <div class="model-btn-wrapper">
+                                    <div class="btn-warp inline-btn"
+                                         ng-click="multipleProfile.searchProfile();">
+                                        <span class="btn  btn-default">search</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- END MODEL HEADER -->
@@ -358,7 +366,8 @@
                                         loading..
                                     </div>
                                     <div class="row" ng-repeat="d in enggemntDetailsCount">
-                                        <div class="col-sm-3 font-white" style="text-transform: uppercase">
+                                        <div class="col-sm-3 font-white"
+                                             style="text-transform: uppercase;font-size: 12px;">
                                             {{d._id}}
                                         </div>
                                         <div class="col-sm-6 prn2">
@@ -368,7 +377,7 @@
                                                              type="{{getRandomColor($index)}}"><b>{{d.val}}%</b>
                                             </uib-progressbar>
                                         </div>
-                                        <div class="col-sm-3 font-white text-right">
+                                        <div class="col-sm-3 font-white text-right" style="font-size: 12px;">
                                             {{d.count}}
                                         </div>
                                     </div>
@@ -459,7 +468,8 @@
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group ">
-                                                            <select class="form-control " ng-model="newContact.contactType">
+                                                            <select class="form-control "
+                                                                    ng-model="newContact.contactType">
                                                                 <option value="" disabled selected>Select
                                                                     contact
                                                                     type
@@ -474,84 +484,126 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <input type="text" class="form-control" ng-model="newContact.contact" placeholder="">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="newContact.contact" placeholder="">
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12 m-top-10">
-                                                        <button class="btn btn-block btn-default" ng-click="addContactToUsr(newContact);">
+                                                        <button class="btn btn-block btn-default"
+                                                                ng-click="addContactToUsr(newContact);">
                                                             Add
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- end -->
-                                            <div class="prn2 header-round-icon">
-                                                <div class="icon-left">
-                                                    <i class="fa fa-facebook"></i>
+                                            <div ng-slimscroll
+                                                 opacity="0.1"
+                                                 distance="5px"
+                                                 height="400px"
+                                                 width="100%"
+                                                 ng-mouseover="chatWidgetscrollEnabled = true"
+                                                 ng-mouseleave="chatWidgetscrollEnabled = false"
+                                                 enabled="{{ chatWidgetscrollEnabled }}">
+                                                <div class="prn2 header-round-icon">
+                                                    <div class="icon-left">
+                                                        <i class="fa fa-facebook "></i>
+                                                    </div>
+                                                    <div class="prn2-contact text-header">
+                                                        facebook
+                                                        <br/>
+                                                        <small ng-show="profileDetail.facebook">{{
+                                                            profileDetail.facebook}}
+                                                        </small>
+                                                        <small ng-show="!profileDetail.facebook">
+                                                            -
+                                                        </small>
+                                                    </div>
                                                 </div>
-                                                <div class="prn2-contact text-header">
-                                                    facebook
-                                                    <br/>
-                                                    <small>{{ profileDetail.facebook}}</small>
+                                                <div class="prn2 header-round-icon">
+                                                    <div class="icon-left">
+                                                        <i class="fa fa-twitter "></i>
+                                                    </div>
+                                                    <div class="prn2-contact text-header ">
+                                                        twitter
+                                                        <br/>
+                                                        <small ng-show="profileDetail.twitter">{{
+                                                            profileDetail.twitter}}
+                                                        </small>
+                                                        <small ng-show="!profileDetail.twitter">
+                                                            -
+                                                        </small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="prn2 header-round-icon">
-                                                <div class="icon-left">
-                                                    <i class="fa fa-twitter"></i>
+                                                <div class="prn2 header-round-icon">
+                                                    <div class="icon-left">
+                                                        <i class="fa fa-linkedin "></i>
+                                                    </div>
+                                                    <div class="prn2-contact text-header ">
+                                                        linkedin
+                                                        <br/>
+                                                        <small ng-show="profileDetail.linkedin">{{
+                                                            profileDetail.linkedin}}
+                                                        </small>
+                                                        <small ng-show="!profileDetail.linkedin">
+                                                            -
+                                                        </small>
+                                                    </div>
                                                 </div>
-                                                <div class="prn2-contact text-header ">
-                                                    twitter
-                                                    <br/>
-                                                    <small>{{ profileDetail.twitter}}</small>
+                                                <div class="prn2 header-round-icon">
+                                                    <div class="icon-left">
+                                                        <i class="fa fa-envelope-o"></i>
+                                                    </div>
+                                                    <div class="prn2-contact text-header ">
+                                                        email
+                                                        <br/>
+                                                        <small ng-show="profileDetail.email">{{profileDetail.email}}
+                                                        </small>
+                                                        <small ng-show="!profileDetail.email">
+                                                            -
+                                                        </small>
+
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="prn2 header-round-icon">
-                                                <div class="icon-left">
-                                                    <i class="fa fa-linkedin"></i>
+                                                <div class="prn2 header-round-icon">
+                                                    <div class="icon-left">
+                                                        <i class="fa fa-skype "></i>
+                                                    </div>
+                                                    <div class="prn2-contact text-header ">
+                                                        skype
+                                                        <br/>
+                                                        <small ng-show="profileDetail.skype">{{profileDetail.skype}}
+                                                        </small>
+                                                        <small ng-show="!profileDetail.skype">
+                                                            -
+                                                        </small>
+                                                    </div>
                                                 </div>
-                                                <div class="prn2-contact text-header ">
-                                                    linkedin
-                                                    <br/>
-                                                    <small>{{ profileDetail.linkedin}}</small>
+                                                <div class="prn2 header-round-icon">
+                                                    <div class="icon-left">
+                                                        <i class="fa fa-google-plus "></i>
+                                                    </div>
+                                                    <div class="prn2-contact text-header ">
+                                                        google+
+                                                        <br/>
+                                                        <small ng-show="profileDetail.googleplus">
+                                                            {{profileDetail.googleplus}}
+                                                        </small>
+                                                        <small ng-show="!profileDetail.googleplus">
+                                                            -
+                                                        </small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="prn2 header-round-icon">
-                                                <div class="icon-left">
-                                                    <i class="fa fa-envelope-o"></i>
-                                                </div>
-                                                <div class="prn2-contact text-header ">
-                                                    email
-                                                    <br/>
-                                                    <small>{{profileDetail.email}}</small>
-                                                </div>
-                                            </div>
-                                            <div class="prn2 header-round-icon">
-                                                <div class="icon-left">
-                                                    <i class="fa fa-skype"></i>
-                                                </div>
-                                                <div class="prn2-contact text-header ">
-                                                    skype
-                                                    <br/>
-                                                    <small>{{profileDetail.skype}}</small>
-                                                </div>
-                                            </div>
-                                            <div class="prn2 header-round-icon">
-                                                <div class="icon-left">
-                                                    <i class="fa fa-google-plus"></i>
-                                                </div>
-                                                <div class="prn2-contact text-header ">
-                                                    google+
-                                                    <br/>
-                                                    <small>{{profileDetail.googleplus}}</small>
-                                                </div>
-                                            </div>
-                                            <div class="prn2 header-round-icon" ng-repeat="c in profileDetail.contacts">
-                                                <div class="icon-left">
-                                                    <i class="fa fa-phone"></i> <!--base on type,need to cheage icon-->
-                                                </div>
-                                                <div class="prn2-contact text-header ">
-                                                    {{c.type}}
-                                                    <br/>
-                                                    <small>{{c.contact}}</small>
+                                                <div class="prn2 header-round-icon"
+                                                     ng-repeat="c in profileDetail.contacts">
+                                                    <div class="icon-left">
+                                                        <i class="fa fa-phone"></i>
+                                                        <!--base on type,need to cheage icon-->
+                                                    </div>
+                                                    <div class="prn2-contact text-header ">
+                                                        {{c.type}}
+                                                        <br/>
+                                                        <small>{{c.contact}}</small>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -662,6 +714,11 @@
                                                 <small>Created</small>
                                                 <h5>{{profileDetail.created_at| date:'MM-dd-yyyy @ h:mma'}}</h5>
                                             </li>
+                                            <li>
+                                                <small>SSN</small>
+                                                <h5 ng-show="profileDetail.ssn">{{profileDetail.ssn}}</h5>
+                                                <h5 ng-show="!profileDetail.ssn">-</h5>
+                                            </li>
 
 
                                         </ul>
@@ -689,6 +746,7 @@
 
                                                 <div>{{oldFormModel}}</div>
                                             </div>
+
 
                                             <form name="customFormProfile" sf-schema="schema" sf-form="form"
                                                   sf-model="model"

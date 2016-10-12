@@ -6,7 +6,10 @@
                 <div class="mode-left-icon">
                     <i class="veery-font-1-notepad"></i>
                 </div>
-                <div class="model-header-text">
+                <div class="model-header-text" ng-show="!isLoadinNewProfile">
+                    Edit Profile
+                </div>
+                <div class="model-header-text" ng-show="isLoadinNewProfile">
                     Create New Profile
                 </div>
             </div>
@@ -18,6 +21,9 @@
                                       ng-show="!isLoadinNewProfile"
                                       ng-click="multipleProfile.closeNewProfile();"
                                 >close</span>
+                    </div>
+                    <div class="btn-warp inline-btn" ng-click="multipleProfile.searchProfile();">
+                        <span class="btn  btn-default">search</span>
                     </div>
                 </div>
             </div>
@@ -285,7 +291,7 @@
 
                 </form>
             </div>
-            <div class="model-footer-wrapper">
+            <div class="model-footer-wrapper" style="background-color: transparent;">
                 <div class="model-btn-wrapper">
                     <div class="btn-warp ">
                                 <span ng-disabled="newProfileForm.$invalid" class="btn btn-default"

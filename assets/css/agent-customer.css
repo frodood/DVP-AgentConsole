@@ -510,6 +510,12 @@ body {
     font-size: 25px;
     padding-right: 20px;
     padding-left: 13px;
+
+    overflow: hidden;
+}
+
+.mode-left-icon-ticket > i {
+    font-size: 35px;
 }
 
 .model-header-text {
@@ -517,6 +523,7 @@ body {
     font-size: 20px;
     padding-left: 15px;
     color: #0d1c33;
+    overflow: hidden;
 }
 
 .model-btn-wrapper > .btn-warp {
@@ -908,24 +915,28 @@ ul.info-list-lg > li > h5 {
     padding-top: 10px;
 }
 
-.timeline-badge.api-channel > i {
+.api-channel > i {
     color: #0eeaff !important;
 }
 
-.timeline-badge.twitter-channel > i {
+.twitter-channel > i {
     color: #55acee !important;
 }
 
-.timeline-badge.call-channel > i {
+.call-channel > i {
     color: #369d3e !important;
 }
 
-.timeline-badge.email-channel > i {
+.email-channel > i {
     color: #2fb81b !important;
 }
 
-.timeline-badge.sms-channel > i {
+.sms-channel > i {
     color: #f0ad4e !important;
+}
+
+.facebook-channel > i {
+    color: #3b5998 !important;
 }
 
 .timeline-title {
@@ -1159,7 +1170,7 @@ ul.info-list-lg > li > h5 {
     height: 50px;
     border-radius: 50%;
     position: absolute;
-    right: -14px;
+    right: 10px;
     top: 34px;
     text-align: center;
     padding-top: 14px;
