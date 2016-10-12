@@ -35,6 +35,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.myProfileID=profileDataParser.myProfile._id;
 
+
+            scope.messageMode="public";
+
             scope.callToCustomer = function (no) {
                 var newId = scope.ticketDetails.tabReference;
                 scope.ticketDetails.tabReference = newId + "-Call" + no;
@@ -575,39 +578,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             String.prototype.toHHMMSS = function () {
 
-               /* if(this)
-                {
-                    var hours = Math.floor(this / 36e5),
-                        minutes = Math.floor((this % 36e5) / 6e4),
-                        seconds = Math.floor((this % 6e4) / 1000);
-
-
-
-                    var days=0;
-
-
-                    if(hours>24)
-                    {
-                        days=hours/24;
-                        hours=hours%24;
-                    }
-
-                    days = (days < 10) ? "0" + days : days;
-                    hours = (hours < 10) ? "0" + hours : hours;
-                    minutes = (minutes < 10) ? "0" + minutes : minutes;
-                    seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-
-                    return days+"d:"+hours + "h:" + minutes + "m:"+seconds+"s";
-                }
-                else
-                {
-                    return "00d 00h 00m 00s";
-                }*/
-
-
-
-                var sec_num = parseInt(this, 10); // don't forget the second param
+                var mill_sec_num = parseInt(this, 10); // don't forget the second param
+                var sec_num = Math.floor(mill_sec_num/1000);
                 var hours = Math.floor(sec_num / 3600);
                 var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
                 var seconds = sec_num - (hours * 3600) - (minutes * 60);
@@ -673,6 +645,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                     {
                                         scope.TimePanelMaker();
                                     }
+
 
 
 
@@ -827,6 +800,13 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         scope.subTickets = scope.ticket.sub_tickets;
 
                         console.log("ticket ", scope.ticket);
+
+
+
+
+
+
+
 
                         scope.getTicketLoggedTime(ticketID);
                         scope.loadTicketNextLevel();
@@ -1040,11 +1020,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
                     if (response.data.IsSuccess) {
+                        scope.newComment = '';
                         response.data.Result.author = profileDataParser.myProfile;
                         scope.ticket.comments.push(response.data.Result);
                         console.log("New comment added ", response);
                         scope.showAlert("New Comment", "success", "completed");
-                        scope.newComment = "";
+
                     }
                     else {
                         console.log("Error new comment ", response);
@@ -1636,71 +1617,113 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
             // Estimated time edit
-
+            scope.isValidTime=true;
             scope.TimePanelMaker = function () {
                 scope.ticketEstimatedPrecentage=100;
-                scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
-                scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
-                scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toHHMMSS();
-                scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
-                scope.newTicketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
-                scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toHHMMSS();
+                try
+                {
+                    scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
+                    scope.newTicketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
+                    scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
+                    scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
+                    scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toHHMMSS();
+                    scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toHHMMSS();
 
-                console.log("Estimated "+scope.ticketEstimatedTimeFormat);
-                console.log("Logged "+scope.ticketLoggedTimeFormat);
-                console.log("Remaining "+scope.ticketRemainingTimeFormat);
+
+                    /*if(scope.ticketLoggedPrecentage>100)
+                     {
+                     scope.ticketRemainingTimeFormat="00d:00h:00m:00s";
+                     scope.ticketRemainingPrecentage=0;
+                     }*/
+
+                    if(scope.ticketLoggedPrecentage>100)
+                    {
+                        scope.ticketRemainingTimeFormat="00d00h00m00s";
+                    }
+
+                    console.log("Estimated "+scope.ticketEstimatedTimeFormat);
+                    console.log("Logged "+scope.ticketLoggedTimeFormat);
+                    console.log("Remaining "+scope.ticketRemainingTimeFormat);
+                    scope.isValidTime=true;
+                }
+                catch(ex)
+                {
+                    scope.showAlert("Error","error","Invalid Time format");
+                    scope.timeValidateMessage="Invalid Time format";
+                    scope.isValidTime=false;
+                }
+
+
             }
 
             scope.updateTicketEstimatedTime = function () {
 
 
-                var timeArray= scope.newTicketEstimatedTimeFormat.split(":");
-                var timeInSeconds=0;
+                    var timeArray= scope.newTicketEstimatedTimeFormat.split(":");
+                    var timeInSeconds=0;
 
 
-                for(var i=0;i<timeArray.length;i++)
-                {
-                    var item = timeArray[i];
+                    for(var i=0;i<timeArray.length;i++)
+                    {
+                        var item = timeArray[i];
 
-                    if(item.indexOf("d")!=-1)
-                    {
-                        timeInSeconds=timeInSeconds+Number(item.split("d")[0]*24*60*60);
-                    }
-                    if(item.indexOf("h")!=-1)
-                    {
-                        timeInSeconds=timeInSeconds+Number(item.split("h")[0]*60*60);
-                    }
-                    if(item.indexOf("m")!=-1)
-                    {
-                        timeInSeconds=timeInSeconds+Number(item.split("m")[0]*60);
-                    }
-                    if(item.indexOf("s")!=-1)
-                    {
-                        timeInSeconds=timeInSeconds+Number(item.split("s")[0]);
-                    }
-                    if(i==timeArray.length-1)
-                    {
-                        //return timeInSeconds;
-                        scope.isTimeEdit=false;
+                        if(item.indexOf("d")!=-1)
+                        {
+                            timeInSeconds=timeInSeconds+Number(item.split("d")[0]*24*60*60*1000);
+                        }
+                        if(item.indexOf("h")!=-1)
+                        {
+                            timeInSeconds=timeInSeconds+Number(item.split("h")[0]*60*60*1000);
+                        }
+                        if(item.indexOf("m")!=-1)
+                        {
+                            timeInSeconds=timeInSeconds+Number(item.split("m")[0]*60*1000);
+                        }
+                        if(item.indexOf("s")!=-1)
+                        {
+                            timeInSeconds=timeInSeconds+Number(item.split("s")[0]*1000);
+                        }
+                        if(i==timeArray.length-1)
+                        {
+                            //return timeInSeconds;
 
-                        ticketService.updateTicketEstimateTime(scope.ticket._id,timeInSeconds).then(function (response) {
-                            if(response.data.IsSuccess)
+                            if(isNaN(timeInSeconds))
                             {
-                                scope.ticket.time_estimation=response.data.Result.time_estimation;
-                                scope.showAlert("Success","success","Estimated Time Changed");
-                                scope.TimePanelMaker();
-
-                            }else
-                            {
-                                scope.showAlert("Error","error","Estimated Time updation failed");
-                                console.log("Estimated Time updation failed");
+                                scope.timeValidateMessage="Invalid Time format";
+                                scope.isTimeEdit=true;
+                                scope.showAlert("Error","error","Invalid Time format");
+                                scope.isValidTime=false;
                             }
-                        }, function (error) {
-                            scope.showAlert("Error","error","Estimated Time updation failed");
-                            console.log("Estimated Time updation failed",error);
-                        })
+                            else
+                            {
+                                scope.isTimeEdit=false;
+                                scope.isValidTime=true;
+
+                                ticketService.updateTicketEstimateTime(scope.ticket._id,timeInSeconds).then(function (response) {
+                                    if(response.data.IsSuccess)
+                                    {
+                                        scope.ticket.time_estimation=response.data.Result.time_estimation;
+                                        scope.showAlert("Success","success","Estimated Time Changed");
+                                        scope.TimePanelMaker();
+
+                                    }else
+                                    {
+                                        scope.showAlert("Error","error","Estimated Time updation failed");
+                                        console.log("Estimated Time updation failed");
+                                    }
+                                }, function (error) {
+                                    scope.showAlert("Error","error","Estimated Time updation failed");
+                                    console.log("Estimated Time updation failed",error);
+                                })
+                            }
+
+
+                        }
                     }
-                }
+
+
+
+
 
 
             }

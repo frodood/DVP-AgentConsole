@@ -1199,17 +1199,16 @@ div > div >
     z-index: 100;
 }
 
-.new-profile-model{
-    /* position: absolute; */
-    /* background: rgba(0, 0, 0, 0.5); */
-    /* top: 0; */
-    /* left: 0; */
-    /* width: 100%; */
+.new-profile-model {
     height: 111vh;
     z-index: 100;
-    -webkit-box-shadow: -2px 2px 16px -3px rgba(0,0,0,0.75);
-    -moz-box-shadow: -2px 2px 16px -3px rgba(0,0,0,0.75);
-    box-shadow: -2px 3px 6px -4px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -2px 0px 4px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -2px 0px 4px -3px rgba(0, 0, 0, 0.75);
+    box-shadow: -2px 0px 4px -3px rgba(0, 0, 0, 0.75);
+}
+
+.new-profile-boarder {
+    border: 1px solid #f7f5f5;
 }
 
 .bg-opacity-8 {
@@ -1219,9 +1218,11 @@ div > div >
 .model-main-wrapper {
     background: #fff;
     height: 690px;
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px 25px 20px 25px;
     position: relative;
+    z-index: 95;
+
 }
 
 .model-footer-wrapper {
@@ -2501,7 +2502,7 @@ tags-input .tags .input {
     border-radius: 5px 5px 0px 0px;
     height: auto;
     overflow: hidden;
-    background: #ffffff;
+    background: #f7f5f5;
     -webkit-box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53);
     -moz-box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53);
     box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53)
@@ -2511,18 +2512,23 @@ tags-input .tags .input {
     text-align: center;
     margin: 0 auto;
     background-color: #f7f5f5;
+    padding-bottom: 15px;
 }
 
 .profile-multiple-wrap > .profile-img-wrapper > img {
-    margin: 20px auto;
+    /* margin: 0px auto; */
+    margin-top: 20px;
+    margin-bottom: 20px;
     width: 90px;
     height: 90px;
     border-radius: 50%;
     border: 3px solid #36ba96;
+    /* padding-top: 10px; */
 }
 
 .profile-multiple-wrap > .profile-body {
     text-align: center;
+    padding-bottom: 25px;
 }
 
 .profile-multiple-wrap > .profile-body > h5 {
@@ -2535,18 +2541,27 @@ tags-input .tags .input {
     color: #d2c242;
 }
 
-.profile-multiple-wrap > .btn-profile-view {
+.profile-body > .btn-profile-view {
     width: 50px;
     height: 25px;
     background-color: #36ba96;
     color: #fff;
-    padding-left: 11px;
     padding-top: 2px;
     border-radius: 25px;
-    position: absolute;
-    top: 90px;
-    left: 61px;
+    /* position: absolute; */
+    /* top: 90px; */
+    /* left: 61px; */
     cursor: pointer;
+    margin: 10px auto;
+}
+
+.profile-multiple-wrap.create-new {
+    background-color: #17373c;
+    border-radius: 5px;
+    min-height: 260px;
+    webkit-box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53);
+    box-shadow: -1px 1px 10px -4px rgba(0, 0, 0, 0.53);
 }
 
 .profile-multiple-wrap > .pin-dote {
@@ -2555,19 +2570,46 @@ tags-input .tags .input {
     width: 10px;
     height: 10px;
     border-radius: 50%;
+}
 
-    top: 10px;
+.create-new-pro > i {
+    color: #36ba96;
+    font-size: 75px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.create-new-pro > i:hover {
+    color: #8298ae;
+}
+
+.create-new-pro {
+    width: 100%;
+    text-align: center;
+    margin-top: 66px;
 }
 
 .profile-multiple-wrap > .pin-dote.left {
+    top: 10px;
     left: 25px;
 }
 
 .profile-multiple-wrap > .pin-dote.right {
+    top: 10px;
     right: 25px;
 }
 
-.profile-multiple-wrap > .btn-profile-view:hover {
+.profile-multiple-wrap > .pin-dote.b-left {
+    bottom: 10px;
+    left: 25px;
+}
+
+.profile-multiple-wrap > .pin-dote.b-right {
+    bottom: 10px;
+    right: 25px;
+}
+
+.profile-body > .btn-profile-view:hover {
     background-color: #f7f5f5;
     color: #36ba96;
 }
@@ -3526,7 +3568,7 @@ div.btn-group.dropdown {
 }
 
 .note-ivr-wrapper > div > ul {
-    border-bottom: 1px solid #1a3d42;
+    border-bottom: 1px solid #f7f5f5;
 }
 
 .note-ivr-wrapper > div > ul.nav-pills > li > a {
