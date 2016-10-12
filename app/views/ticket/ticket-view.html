@@ -94,9 +94,11 @@
                                 <li>
                                     <small>Priority</small>
                                     <h5>
-                                        <div class="bg-checkbox red font-white small-details inline-btn">
+                                        <div id="prioritylvl" class="bg-checkbox font-white small-details inline-btn"
+                                             ng-class="{'red':ticket.priority=='urgent','orange':ticket.priority=='high','teal600':ticket.priority=='normal','gray300':ticket.priority=='low' }">
                                             {{ticket.priority}}
                                         </div>
+
                                     </h5>
                                 </li>
                                 <li>
@@ -694,15 +696,18 @@
 
                                         <div ng-show="isTimeEdit">
                                             <input ng-model="newTicketEstimatedTimeFormat" type="text" placeholder="00d:00h:00m:00s">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <small class="pull-right" style="color: red" ng-show="!isValidTime">{{timeValidateMessage}}</small>
+                                                </div>
+                                            </div>
                                         </div>
 
 
                                     </div>
 
                                     <span ng-show="isTimeEdit"><button class="fa fa-check" ng-click="updateTicketEstimatedTime()"></button><button class="fa fa-remove"></button>
-                                        <div class="row">
-                                            <span>{{timeValidateMessage}}</span>
-                                        </div>
+
                                     </span>
                                     <span class="col-sm-3 fa fa-pencil" ng-show="!isTimeEdit" ng-click="isTimeEdit=!isTimeEdit"></span>
 
