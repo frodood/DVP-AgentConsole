@@ -62,13 +62,15 @@
                         <uib-tab index="0" heading="NOTE">
 
                             <form name="userFormTest" novalidate>
-                                <div class="new-note-wrapper" ng-class="{ 'has-error': userFormTest.name.$invalid && userFormTest.name.$dirty }">
+                                <div class="new-note-wrapper"
+                                     ng-class="{ 'has-error': userFormTest.name.$invalid && userFormTest.name.$dirty }">
                                     <textarea id="noteBody" type="text" class="form-control" name="name"
                                               ng-model="noteBody" required placeholder="Add Note to Engagement"/>
 
                                     <div class="btn-warp inline-btn  p-top-6 pull-right">
                               <span class="btn  btn-default btn-sm "
-                                    ng-click="AppendNoteToEngagementSession(noteBody);"  ng-disabled="userFormTest.$invalid">save</span>
+                                    ng-click="AppendNoteToEngagementSession(noteBody);"
+                                    ng-disabled="userFormTest.$invalid">save</span>
                                     </div>
                                 </div>
 
@@ -985,23 +987,19 @@
                         <!-- MODEL HEADER -->
                         <div class="model-body model-body-scroll">
                             <div class="col-lg-12">
-                                <form name="userForm" novalidate>
-                                    <div class="form-group"
-                                         ng-class="{ 'has-error': userForm.Subject.$invalid && userForm.Subject.$dirty }">
-                                        <label class="control-label">Subject*</label>
-                                        <input type="text" class="form-control" name="Subject" ng-model="ticket.subject"
-                                               id="ticketSubject" required placeholder="Subject"/>
+                                <form name="addNewTicketForm" novalidate>
 
-                                        <div class="help-block" ng-messages="userForm.Subject.$error"
-                                             ng-if="userForm.Subject.$touched">
-                                            <p ng-message="required">Subject is required.</p>
-                                        </div>
+                                    <div class="form-group"
+                                         ng-class="{ 'has-error': addNewTicketForm.ticketsubject.$invalid && addNewTicketForm.ticketsubject.$dirty }">
+                                        <label class="control-label" >Subject*</label>
+                                        <input type="text" class="form-control" id="subject" name="ticketsubject" ng-model="ticket.subject"
+                                               required placeholder="subject"/>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-7">
-                                                <label for="ticketSubject">Priority</label>
+                                                <label>Priority</label>
 
                                                 <div class="form-inline">
                                                     <div class="bg-checkbox red font-white inline-btn"
@@ -1028,9 +1026,9 @@
                                             </div>
                                             <div class="col-xs-5">
                                                 <div class="form-group"
-                                                     ng-class="{ 'has-error': userForm.type.$invalid && userForm.type.$dirty }">
-                                                    <label for="ticketSubject">Type*</label>
-                                                    <select class="form-control" ng-model="ticket.type" name="type"
+                                                     ng-class="{ 'has-error': addNewTicketForm.ticketType.$invalid && addNewTicketForm.ticketType.$dirty }">
+                                                    <label class="control-label" >Type*</label>
+                                                    <select class="form-control" ng-model="ticket.type" name="ticketType"
                                                             required
                                                             placeholder="Select">
                                                         <option>question</option>
@@ -1038,11 +1036,6 @@
                                                         <option>incident</option>
                                                         <option>action</option>
                                                     </select>
-
-                                                    <div class="help-block" ng-messages="userForm.type.$error"
-                                                         ng-if="userForm.type.$touched">
-                                                        <p ng-message="required">Type is required.</p>
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -1050,7 +1043,7 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="ticketSubject">Tags</label>
+                                        <label>Tags</label>
                                         <button ng-click="loadTags();"> Reload</button>
                                         <tags-input ng-model="postTags" display-property="name" placeholder="...">
                                             <auto-complete source="loadPostTags($query)"></auto-complete>
@@ -1069,34 +1062,15 @@
                                                            min-length="1"></auto-complete>
                                         </tags-input>
                                     </div>
-                                    <!-- <div class="form-group">
-                                         <label for="ticketSubject">Tags</label>
-                                         <tags-input ng-model="newAddTags" placeholder="choose Tags" replace-spaces-with-dashes="false"
-                                                     display-property="name"
-                                                     add-from-autocomplete-only="true"
-                                                     on-tag-added="onChipAddTag($tag)"
-                                                     on-tag-removed="onChipDeleteTag($tag)"
-                                                     ng-disabled="" min-length="1">
-                                             <auto-complete source="queryTagSearch($query)"
-                                                            load-on-empty="true"
-                                                            load-on-focus="true"
-                                                            min-length="1"></auto-complete>
-                                         </tags-input>
-                                     </div>-->
                                     <div class="form-group"
-                                         ng-class="{ 'has-error': userForm.Description.$invalid && userForm.Description.$dirty }">
-                                        <label for="ticketSubject">Description*</label>
-                                    <textarea ng-model="ticket.description" class="form-control" rows="3"
-                                              name="Description" required placeholder="Description"></textarea>
-
-                                        <div class="help-block" ng-messages="userForm.Description.$error"
-                                             ng-if="userForm.Description.$touched">
-                                            <p ng-message="required">Description is required.</p>
-                                        </div>
+                                         ng-class="{ 'has-error': addNewTicketForm.ticketDescription.$invalid && addNewTicketForm.ticketDescription.$dirty }">
+                                        <label class="control-label" >Description*</label>
+                                        <textarea ng-model="ticket.description" class="form-control" rows="3"
+                                                                        name="ticketDescription" required placeholder="Description"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ticketSubject">Related Tickets</label>
+                                        <label>Related Tickets</label>
                                         <tags-input ng-model="ticket.related" placeholder="choose Ticket"
                                                     replace-spaces-with-dashes="false"
                                                     display-property="displayData"
@@ -1109,7 +1083,7 @@
                                         </tags-input>
                                     </div>
                                     <div class="form-group">
-                                        <label for="ticketSubject">Assignee user</label>
+                                        <label>Assignee user</label>
                                         <!--<tags-input ng-model="ticket.assignUsers" placeholder="choose assignee user" replace-spaces-with-dashes="false"
                                                     display-property="username"
                                                     add-from-autocomplete-only="true"
@@ -1132,11 +1106,12 @@
 
                                     </div>
                                 </form>
+
                             </div>
                             <div class="model-footer-wrapper">
                                 <div class="model-btn-wrapper">
                                     <div class="btn-warp ">
-                                <span ng-disabled="userForm.$invalid" class="btn btn-default"
+                                <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
                                       ng-click="saveTicket(ticket);"
                                         >Save</span>
                                     </div>
