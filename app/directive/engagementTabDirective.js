@@ -852,7 +852,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.ticketList.splice(0, 0, response.Result); //scope.ticketList.push(response.Result);
                         scope.recentTicketList.pop();
                         scope.recentTicketList.push(response.Result);
-                        scope.ticket = {};scope.newAddTags = [];
+                        scope.ticket = {};
+                        scope.newAddTags = [];
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -1130,12 +1131,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             else if (scope.profileDetails.length > 1) {
                                 // show multiple profile selection view
                                 scope.showMultiProfile = true;
-                                scope.showNewProfile = false;
+                                scope.isLoadinNewProfile = false;
                             }
                             else {
                                 // show new profile
                                 scope.showMultiProfile = false;
-                                scope.showNewProfile = true;
                                 scope.isLoadinNewProfile = true;
 
                                 scope.currentSubmission = null;
@@ -1164,7 +1164,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
 
                             scope.showMultiProfile = false;
-                            scope.showNewProfile = true;
+                            scope.isLoadinNewProfile = true;
                         }
                     }, function (err) {
                         scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
@@ -1241,7 +1241,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
 
-
             // New Profile
 
             scope.newProfile = {
@@ -1303,7 +1302,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 return dayArr;
             };
 
-            scope.cutomerTypes=[];
+            scope.cutomerTypes = [];
             scope.loadCutomerType = function (query) {
                 if (query === "*" || query === "") {
                     if (scope.customerType) {
@@ -1469,7 +1468,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.isAddNewContact = false;
             scope.showAddNewContact = function () {
                 scope.isAddNewContact = !scope.isAddNewContact;
-            }//end
+            };//end
+
+
+            //update new function
+            // create new profile
+            scope.createNProfile = function () {
+                scope.isLoadinNewProfile = true;
+                scope.showMultiProfile = false;
+            };
 
             //engamanet details
             scope.enggemntDetailsCount = [];
