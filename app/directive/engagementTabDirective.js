@@ -1426,7 +1426,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             scope.GetExternalUserProfileByContact();
                         };
                         var searchElement = document.getElementById("commonSearch");
-                        searchElement.value = "#eng:profile:search:";
+                        searchElement.value = "#profile:search:";
                         searchElement.focus();
                     }
                 }

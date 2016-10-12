@@ -1426,22 +1426,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                     }
                                 });
                                 break;
-                            case "#eng:profile:search":
-                                return userService.searchExternalUsers(queryText).then(function (response) {
-                                    if (response.IsSuccess) {
-                                        var searchResult = [];
-                                        for (var i = 0; i < response.Result.length; i++) {
-                                            var result = response.Result[i];
-                                            searchResult.push({
-                                                obj: result,
-                                                type: "profile",
-                                                value: result.firstname + " " + result.lastname
-                                            });
-                                        }
-                                        return searchResult;
-                                    }
-                                });
-                                break;
+                            //case "#eng:profile:search":
+                            //    return userService.searchExternalUsers(queryText).then(function (response) {
+                            //        if (response.IsSuccess) {
+                            //            var searchResult = [];
+                            //            for (var i = 0; i < response.Result.length; i++) {
+                            //                var result = response.Result[i];
+                            //                searchResult.push({
+                            //                    obj: result,
+                            //                    type: "profile",
+                            //                    value: result.firstname + " " + result.lastname
+                            //                });
+                            //            }
+                            //            return searchResult;
+                            //        }
+                            //    });
+                            //    break;
                             case "#profile:firstname":
                                 return userService.getExternalUserProfileByField("firstname", queryText).then(function (response) {
                                     if (response.IsSuccess) {
@@ -1546,6 +1546,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     return state;
                 }
             } else {
+                if(!document.getElementById("commonSearch").value){
+                    $scope.searchExternalUsers = {};
+                }
                 return state;
             }
         });
