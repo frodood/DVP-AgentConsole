@@ -548,6 +548,7 @@ body {
 .active-menu-icon {
     color: #ffffff !important;
 }
+
 .deactive-menu-icon {
     color: #AF302D !important;
 }
@@ -1142,8 +1143,10 @@ ul.info-list-lg > li > h5 {
 .ticket-subj > small.normal {
     color: #04756f !important;
 }
+
 .ticket-subj > small.low {
-    color: #8298ae; !important;
+    color: #8298ae;
+!important;
 }
 
 .ticket-subj > small.urgent {
@@ -1151,18 +1154,19 @@ ul.info-list-lg > li > h5 {
 }
 
 .urgent-boarder {
-    border-top: 3px solid #d90000;
+    border-top: 1px solid #d90000;
 }
 
 .high-boarder {
-    border-top: 3px solid #d2c242;
+    border-top: 1px solid #d2c242;
 }
+
 .normal-boarder {
-    border-top: 3px solid #04756f;
+    border-top: 1px solid #04756f;
 }
 
 .low-boarder {
-    border-top: 3px solid #8298ae;
+    border-top: 1px solid #8298ae;
 }
 
 .ticket-channel {
@@ -3628,7 +3632,6 @@ div.btn-group.dropdown {
     overflow: hidden;
 }
 
-
 .model-edit-ticket-wrapper {
     background: #fff;
     height: 500px;
@@ -3636,5 +3639,24 @@ div.btn-group.dropdown {
     padding: 10px 25px 20px 25px;
     position: relative;
     z-index: 95;
+}
 
+.load-more-wrapper {
+    width: 100%;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.load-more-wrapper > h5 {
+    font-size: 15px;
+    color: #14d0a0;
+    cursor: pointer;
+    background: #17373c;
+    width: 150px;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.load-more-wrapper > h5:hover {
+    color: #168039;
 }

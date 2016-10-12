@@ -13,13 +13,13 @@
              ng-class="{'api-channel':ticket.channel=='api',
                   'twitter-channel':ticket.channel=='twitter',
                   'call-channel':ticket.channel=='call',
-                  'facebook-channel':ticket.channel=='facebook',
+                  'facebook-channel':ticket.channel=='facebook-post',
                   'sms-channel':ticket.channel=='sms',
                   'email-channel':ticket.channel=='email'}">
             <i class=""
                ng-class="{'fa fa-random':ticket.channel=='api',
                   'fa fa-twitter':ticket.channel=='twitter',
-                   'fa fa-facebook':ticket.channel=='facebook',
+                   'fa fa-facebook':ticket.channel=='facebook-post',
                   'fa fa-phone':ticket.channel=='call',
                   'fa fa-bell-o':ticket.channel=='sms',
                   'fa fa-envelope-o':ticket.channel=='email'}"></i>
@@ -44,7 +44,8 @@
                     <div class="ticket-subj bold">
                         {{ticket.type}}
                         <small ng-class="{'high':ticket.priority=='high',
-                        'normal':ticket.priority=='normal','low':ticket.priority=='low','urgent':ticket.priority=='urgent'}">{{ticket.priority}}
+                        'normal':ticket.priority=='normal','low':ticket.priority=='low','urgent':ticket.priority=='urgent'}">
+                            {{ticket.priority}}
                         </small>
                     </div>
                     <div class="">
@@ -82,8 +83,13 @@
         </div>
     </div>
 </div>
-<div class="btn-warp inline-btn  p-top-6 pull-right">
-                              <span class="btn  btn-default btn-sm "
-                                    ng-click="loadNextTickets();"
-                                      >Load more</span>
+
+<div class="load-more-wrapper">
+    <h5 ng-show="!isLoadingTicke" ng-click="loadNextTickets();"> Load More</h5>
+    <h5 ng-show="isLoadingTicke"><i class="fa fa-spinner fa-spin"></i></h5>
 </div>
+<!--<div class="btn-warp inline-btn  ">-->
+<!--<span class="btn  btn-default btn-sm "-->
+<!---->
+<!--&gt;Load more</span>-->
+<!--</div>-->

@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http,authService) {
+                                              userService, ticketService, tagService, $http, authService) {
     return {
         restrict: "EA",
         scope: {
@@ -42,7 +42,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
 
             /*Initialize default scope*/
-            scope.companyName="";
+            scope.companyName = "";
             scope.oldFormModel = null;
             scope.currentSubmission = null;
             scope.currentForm = null;
@@ -75,18 +75,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             scope.pickCompanyInfo = function () {
                 var userCompanyData = authService.GetCompanyInfo();
-                ticketService.pickCompanyInfo(userCompanyData.tenant,userCompanyData.company).then(function (response) {
-                    if(response.data.IsSuccess)
-                    {
-                        scope.companyName=response.data.Result.companyName;
+                ticketService.pickCompanyInfo(userCompanyData.tenant, userCompanyData.company).then(function (response) {
+                    if (response.data.IsSuccess) {
+                        scope.companyName = response.data.Result.companyName;
                     }
-                    else
-                    {
+                    else {
                         console.log("No company info found");
                     }
 
                 }, function (error) {
-                    console.log("Error in loading company info",error);
+                    console.log("Error in loading company info", error);
                 })
             };
 
@@ -927,6 +925,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             scope.recentEngList = []
             scope.currentPage = 1;
+            scope.isShowTimeLine = false;
             scope.loadNextEngagement = function () {
                 var begin = ((scope.currentPage - 1) * 10)
                     , end = begin + 10;
@@ -934,15 +933,18 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 var ids = scope.sessionIds.slice(begin, end);
                 if (ids) {
                     scope.currentPage = scope.currentPage + 1;
+                    scope.isShowTimeLine = true;
                     engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
                         scope.engagementsList = scope.engagementsList.concat(reply);
 
                         if (angular.isArray(reply) && scope.recentEngList.length === 0) {
                             scope.recentEngList = reply.slice(0, 1);
                         }
+                        scope.isShowTimeLine = false;
 
                     }, function (err) {
-                        scope.showAlert("Get Engagement Sessions", "error", "Fail To Get Engagement Sessions Data.")
+                        scope.showAlert("Get Engagement Sessions", "error", "Fail To Get Engagement Sessions Data.");
+                        scope.isShowTimeLine = false;
                     });
                 }
             };
@@ -1011,27 +1013,31 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             /* Load Profile Details for Current Engagement */
             scope.ticketList = [];
             scope.recentTicketList = [];
+            scope.isLoadingTicke = false;
             scope.GetAllTicketsByRequester = function (requester, page) {
+                scope.isLoadingTicke = true;
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
-                    if(response){
+                    if (response) {
                         response.map(function (item, index) {
                             item.displayData = "[" + item.reference + "] " + item.subject;
                             scope.ticketList.push(item);
                         });
 
-                        if(scope.currentTicketPage==1)
+                        if (scope.currentTicketPage == 1)
                             scope.recentTicketList = response.slice(0, 1);
                     }
+                    scope.isLoadingTicke = false;
 
                 }, function (err) {
-                    scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
+                    scope.showAlert("Ticket", "error", "Fail To Get Ticket List.");
+                    scope.isLoadingTicke = false;
                 });
             };
 
             scope.currentTicketPage = 1;
             scope.loadNextTickets = function () {
                 scope.currentTicketPage = scope.currentTicketPage + 1;
-                scope.GetAllTicketsByRequester(scope.profileDetail._id,scope.currentTicketPage);
+                scope.GetAllTicketsByRequester(scope.profileDetail._id, scope.currentTicketPage);
             };
 
 
@@ -1436,8 +1442,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.showNewProfile = true;
                         scope.newProfile = scope.profileDetail;
                         scope.dob.day = moment(scope.profileDetail.birthday).day();
-                       // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
-                       // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
+                        // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
+                        // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
                         this.getModelHeader();
                     },
                     closeNewProfile: function () {
