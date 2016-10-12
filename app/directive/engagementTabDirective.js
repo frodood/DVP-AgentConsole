@@ -1130,11 +1130,22 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                 // show new profile
                                 scope.showMultiProfile = false;
                                 scope.showNewProfile = true;
+
+                                scope.currentSubmission = null;
+                                convertToSchemaForm(null, function (schemaDetails) {
+                                    if (schemaDetails) {
+                                        scope.schema = schemaDetails.schema;
+                                        scope.form = schemaDetails.form;
+                                        scope.model = schemaDetails.model;
+                                    }
+
+                                });
                             }
                         }
                         else {
                             // show new profile
 
+                            scope.currentSubmission = null;
                             convertToSchemaForm(null, function (schemaDetails) {
                                 if (schemaDetails) {
                                     scope.schema = schemaDetails.schema;
@@ -1398,6 +1409,33 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.showMultiProfile = false;
                         scope.showNewProfile = false;
                         scope.GetProfileHistory(profile._id);
+
+                        if(scope.profileDetail)
+                        {
+                            scope.currentSubmission = scope.profileDetail.form_submission;
+                            convertToSchemaForm(scope.profileDetail.form_submission, function (schemaDetails) {
+                                if (schemaDetails) {
+                                    scope.schema = schemaDetails.schema;
+                                    scope.form = schemaDetails.form;
+                                    scope.model = schemaDetails.model;
+                                }
+
+                            });
+                        }
+                        else
+                        {
+                            scope.currentSubmission = null;
+                            convertToSchemaForm(null, function (schemaDetails) {
+                                if (schemaDetails) {
+                                    scope.schema = schemaDetails.schema;
+                                    scope.form = schemaDetails.form;
+                                    scope.model = schemaDetails.model;
+                                }
+
+                            });
+                        }
+
+
                     },
                     getModelHeader: function () {
                         if (scope.showMultipleProfile) {
@@ -1415,7 +1453,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             scope.GetExternalUserProfileByContact();
                         };
                         var searchElement = document.getElementById("commonSearch");
-                        searchElement.value = "#eng:profile:search:";
+                        searchElement.value = "#profile:search:";
                         searchElement.focus();
                     }
                 }

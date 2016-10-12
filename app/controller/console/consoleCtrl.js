@@ -978,7 +978,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ttimer.active = false;
     $scope.ttimer.pause = false;
     $scope.ttimer.startTime = {};
+    $scope.ttimer.pausedTime = {};
     $scope.ttimer.ticketRef = "Start";
+    $scope.ttimer.ticket = undefined;
+
+    $scope.openTimerTicket = function(){
+        if($scope.ttimer.ticket) {
+            $scope.ttimer.ticket.tabType = 'ticketView';
+            $scope.ttimer.ticket.index = $scope.ttimer.ticket.reference;
+            $rootScope.$emit('openNewTab', $scope.ttimer.ticket);
+        }
+    };
 
     $scope.stopTime = function () {
         ticketService.stopTimer($scope.ttimer.trackerId).then(function (response) {
@@ -987,8 +997,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
                 $scope.status.active = false;
                 $scope.ttimer.active = false;
+                $scope.ttimer.pause = false;
                 $scope.ttimer.ticketRef = "Start";
                 $scope.ttimer.trackerId = undefined;
+                $scope.ttimer.ticket = undefined;
 
             }
             else {
@@ -1005,7 +1017,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response) {
 
                 $scope.ttimer.pause = true;
-                document.getElementById('clock-timer').getElementsByTagName('timer')[0].clear();
+                $scope.ttimer.pausedTime = moment.utc();
+                document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
 
             }
             else {
@@ -1028,10 +1041,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if ($scope.ttimer.pause) {
             ticketService.startTimer().then(function (response) {
                 if (response) {
+                    var timeNow = moment.utc();
+                    var timeDiff = timeNow.diff($scope.ttimer.pausedTime, 'seconds');
+                    if (timeDiff > 0) {
+                        $scope.ttimer.startTime = $scope.ttimer.startTime + (timeDiff * 1000);
+                    }
 
                     document.getElementById('clock-timer').getElementsByTagName('timer')[0].resume();
                     $scope.ttimer.pause = false;
                     $scope.status.active = true;
+                    $scope.ttimer.pausedTime = {};
 
                 }
                 else {
@@ -1065,6 +1084,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         $scope.status.active = true;
                         $scope.ttimer.active = true;
 
+                        $scope.ttimer.ticket = $scope.activeTab.notificationData;
                         $scope.ttimer.ticketId = $scope.activeTab.notificationData._id;
                         $scope.ttimer.ticketRef = $scope.activeTab.content;
                         $scope.ttimer.trackerId = response._id;
@@ -1086,28 +1106,59 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.checkTimerOnLogin = function(){
         ticketService.getMyTimer().then(function (response) {
-            if (response) {
-                var timeNow = moment.utc();
-                if (response.last_event === "pause" || response.last_event === "start") {
-                    var lastTimeStamp = moment.utc(response.last_event_date);
-                    var timeDiff = timeNow.diff(lastTimeStamp, 'seconds');
+            if (response && response.ticket) {
+                ticketService.getTicket(response.ticket).then(function (ticketResponse) {
 
-                    if (timeDiff > 0) {
-                        var startTime = timeNow.subtract(timeDiff, 'seconds');
-                        $scope.ttimer.startTime = parseInt(startTime.format('x'));
-                    } else {
-                        $scope.ttimer.startTime = parseInt(timeNow.format('x'));
+                    if(ticketResponse && ticketResponse.data && ticketResponse.data.IsSuccess) {
+                        var ticket = ticketResponse.data.Result;
+                        var timeNow = moment.utc();
+                        if (response.last_event === "pause" || response.last_event === "start") {
+
+                            var currentTime = Math.ceil(response.time / 1000);
+                            if (response.last_event === "pause") {
+                                if(currentTime) {
+                                    var pauseTime = timeNow.subtract(currentTime, 'seconds');
+                                    $scope.ttimer.startTime = parseInt(pauseTime.format('x'));
+                                }
+                            } else {
+                                var lastTimeStamp = moment.utc(response.last_event_date);
+                                var timeDiff = timeNow.diff(lastTimeStamp, 'seconds');
+                                if(currentTime) {
+                                    timeDiff = timeDiff + currentTime;
+                                }
+                                if (timeDiff > 0) {
+                                    var startTime = timeNow.subtract(timeDiff, 'seconds');
+                                    $scope.ttimer.startTime = parseInt(startTime.format('x'));
+                                } else {
+                                    $scope.ttimer.startTime = parseInt(timeNow.format('x'));
+                                }
+                            }
+
+
+                            $scope.status.active = true;
+                            $scope.ttimer.active = true;
+
+                            $scope.ttimer.ticket = ticket;
+                            $scope.ttimer.ticketId = response.ticket;
+                            $scope.ttimer.ticketRef = ticket.reference;
+                            $scope.ttimer.trackerId = response._id;
+
+                            document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
+
+                            if (response.last_event === "pause") {
+                                $timeout(function () {
+                                    $scope.ttimer.pause = true;
+                                    $scope.ttimer.pausedTime = moment.utc();
+                                    document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
+                                }, 1000);
+                            }
+                        }
                     }
-                    document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
 
-
-                    $scope.status.active = true;
-                    $scope.ttimer.active = true;
-
-                    $scope.ttimer.ticketId = response.ticket;
-                    $scope.ttimer.ticketRef = $scope.activeTab.content;
-                    $scope.ttimer.trackerId = response._id;
-                }
+                }, function (error) {
+                    console.log(error);
+                    $scope.showError("Error", "Error", "ok", "Timer failed to load ticket details ");
+                });
             }
         }, function (error) {
             console.log(error);
@@ -1375,22 +1426,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                     }
                                 });
                                 break;
-                            case "#eng:profile:search":
-                                return userService.searchExternalUsers(queryText).then(function (response) {
-                                    if (response.IsSuccess) {
-                                        var searchResult = [];
-                                        for (var i = 0; i < response.Result.length; i++) {
-                                            var result = response.Result[i];
-                                            searchResult.push({
-                                                obj: result,
-                                                type: "profile",
-                                                value: result.firstname + " " + result.lastname
-                                            });
-                                        }
-                                        return searchResult;
-                                    }
-                                });
-                                break;
+                            //case "#eng:profile:search":
+                            //    return userService.searchExternalUsers(queryText).then(function (response) {
+                            //        if (response.IsSuccess) {
+                            //            var searchResult = [];
+                            //            for (var i = 0; i < response.Result.length; i++) {
+                            //                var result = response.Result[i];
+                            //                searchResult.push({
+                            //                    obj: result,
+                            //                    type: "profile",
+                            //                    value: result.firstname + " " + result.lastname
+                            //                });
+                            //            }
+                            //            return searchResult;
+                            //        }
+                            //    });
+                            //    break;
                             case "#profile:firstname":
                                 return userService.getExternalUserProfileByField("firstname", queryText).then(function (response) {
                                     if (response.IsSuccess) {
@@ -1495,6 +1546,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     return state;
                 }
             } else {
+                if(!document.getElementById("commonSearch").value){
+                    $scope.searchExternalUsers = {};
+                }
                 return state;
             }
         });
