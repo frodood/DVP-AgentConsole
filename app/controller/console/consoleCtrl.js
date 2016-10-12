@@ -659,8 +659,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $timeout(function () {
                 //$scope.tabSelected(newTab.tabReference);
                 $scope.activeTabIndex = $scope.tabs.length - 1;
-                document.getElementById("tab_view").active = $scope.tabs.length - 1;
-                $scope.$broadcast("checkTabs");
+                //document.getElementById("tab_view").active = $scope.tabs.length - 1;
+                //$scope.$broadcast("checkTabs");
                 $scope.reCalcScroll();
             });
         }
@@ -698,7 +698,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.activeTab = item;
 
                 $scope.activeTabIndex = currTab;
-                document.getElementById("tab_view").active = currTab;
+                //document.getElementById("tab_view").active = currTab;
             }
         });
 
