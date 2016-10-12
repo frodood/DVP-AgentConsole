@@ -67,7 +67,7 @@
 
                     <div ng-show="ticketDetails.notificationData.activeSession" class="btn-group" uib-dropdown
                          is-open="status.isopen">
-                        <span class="btn btn-default" ng-click="updateTicketByReference();">Map</span>
+                        <span title="Map New Call Session To Existing Ticket." class="btn btn-default" ng-click="updateTicketByReference();">Map</span>
                     </div>
 
 
@@ -686,12 +686,27 @@
                                     <div class="col-sm-3">
                                         Estimated
                                     </div>
-                                    <div class="col-sm-6">
-                                        <uib-progressbar value="100" type="warning">
-                                        </uib-progressbar>
+                                    <div class="col-sm-6"   >
+                                        <div ng-show="!isTimeEdit">
+                                            <uib-progressbar value="ticketEstimatedPrecentage" type="warning">
+                                            </uib-progressbar>
+                                        </div>
+
+                                        <div ng-show="isTimeEdit">
+                                            <input ng-model="newTicketEstimatedTimeFormat" type="text" placeholder="00d:00h:00m:00s">
+                                        </div>
+
 
                                     </div>
-                                    <div class="col-sm-3">
+
+                                    <span ng-show="isTimeEdit"><button class="fa fa-check" ng-click="updateTicketEstimatedTime()"></button><button class="fa fa-remove"></button>
+                                        <div class="row">
+                                            <span>{{timeValidateMessage}}</span>
+                                        </div>
+                                    </span>
+                                    <span class="col-sm-3 fa fa-pencil" ng-show="!isTimeEdit" ng-click="isTimeEdit=!isTimeEdit"></span>
+
+                                    <div class="col-sm-3" ng-show="!isTimeEdit">
                                         <h6>{{ticketEstimatedTimeFormat}}</h6>
                                     </div>
                                 </div>
