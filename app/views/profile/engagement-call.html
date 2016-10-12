@@ -365,8 +365,8 @@
                                     <div ng-if="enggemntDetailsCount.length==0" class="engagement-loading">
                                         loading..
                                     </div>
-                                    <div class="row" ng-repeat="d in enggemntDetailsCount">
-                                        <div class="col-sm-3 font-white"
+                                    <div class="row" ng-repeat="d in enggemntDetailsCount track by $index ">
+                                        <div class="col-sm-4 font-white"
                                              style="text-transform: uppercase;font-size: 12px;">
                                             {{d._id}}
                                         </div>
@@ -377,7 +377,7 @@
                                                              type="{{getRandomColor($index)}}"><b>{{d.val}}%</b>
                                             </uib-progressbar>
                                         </div>
-                                        <div class="col-sm-3 font-white text-right" style="font-size: 12px;">
+                                        <div class="col-sm-2 font-white text-right" style="font-size: 12px;">
                                             {{d.count}}
                                         </div>
                                     </div>
@@ -700,7 +700,9 @@
                                             </li>
                                             <li>
                                                 <small>Birthday</small>
-                                                <h5>{{profileDetail.birthday| date:'MM-dd-yyyy'}}</h5>
+                                                <h5 ng-show="profileDetail.birthday">{{profileDetail.birthday|
+                                                    date:'MM-dd-yyyy'}}</h5>
+                                                <h5 ng-show="!profileDetail.birthday">-</h5>
                                             </li>
                                             <li>
                                                 <small>Email</small>

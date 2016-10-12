@@ -36,7 +36,7 @@
                             VIEWS -
                             <small class="color-grey500">total {{views.length}}</small>
                         </div>
-                        <div class="pull-right" >
+                        <div class="pull-right">
                             <div class="refresh color-green500" ng-click="loadTicketViews()">
                                 refresh
                             </div>
@@ -68,7 +68,7 @@
                         Your unsolved tickets
                     </div>
                     <div class="profile-ticket-wrapper  ng-scope">
-                        <div ng-show="isProgress" >
+                        <div ng-show="isProgress">
                             <div class="row ">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="data-state-wrap">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
 
-                        <div ng-show="isNoData" >
+                        <div ng-show="isNoData">
                             <div class="row ">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="data-state-wrap">
@@ -91,32 +91,49 @@
                         </div>
 
                         <div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
-                            <div class="profile-ticker-wrap new-ticker"
+                            <div class="profile-ticker-wrap "
                                  ng-class="{'high-boarder':ticket.priority=='high',
                         'normal-boarder':ticket.priority=='normal',
                         'low-boarder':ticket.priority=='low',
                         'urgent-boarder':ticket.priority=='urgent'}">
-                                <div class="ticket-channel call">
-                                    <i class="fa fa-facebook"></i>
+                                <div class="ticket-channel call"
+                                     ng-class="{'api-channel':ticket.channel=='api',
+                  'twitter-channel':ticket.channel=='twitter',
+                  'call-channel':ticket.channel=='call',
+                  'facebook-channel':ticket.channel=='facebook-post',
+                  'sms-channel':ticket.channel=='sms',
+                  'email-channel':ticket.channel=='email'}">
+                                    <i class=""
+                                       ng-class="{'fa fa-random':ticket.channel=='api',
+                  'fa fa-twitter':ticket.channel=='twitter',
+                   'fa fa-facebook':ticket.channel=='facebook-post',
+                  'fa fa-phone':ticket.channel=='call',
+                  'fa fa-bell-o':ticket.channel=='sms',
+                  'fa fa-envelope-o':ticket.channel=='email'}"></i>
                                 </div>
 
                                 <div class="right-ticket-details">
                                     <div class="col-md-12 p-0">
                                         <div class="col-md-2 p-0">
                                             <div class="left-avatar">
-                                                <img class="object-fit_cover" src="assets/img/avatar/default-user.png" ng-src="{{ticket.requester.avatar}}">
+                                                <img class="object-fit_cover" src="assets/img/avatar/default-user.png"
+                                                     ng-src="{{ticket.requester.avatar}}">
                                             </div>
                                         </div>
                                         <div class="col-md-8 ">
                                             <div class="ticker-id bold" ng-click="viewSpecificTicket(ticket)">
                                                 {{ticket.reference}} -
-                                                <small class="color-cyan500 text-uppercase"><time-ago from-time='{{ ticket.created_at }}' format='MM/dd/yyyy'></time-ago></small>
+                                                <small class="color-cyan500 text-uppercase">
+                                                    <time-ago from-time='{{ ticket.created_at }}'
+                                                              format='MM/dd/yyyy'></time-ago>
+                                                </small>
 
                                             </div>
                                             <div class="ticket-subj bold">
                                                 {{ticket.type}}
                                                 <small ng-class="{'high':ticket.priority=='high',
-                        'normal':ticket.priority=='normal','low':ticket.priority=='low','urgent':ticket.priority=='urgent'}">{{ticket.priority}}
+                        'normal':ticket.priority=='normal','low':ticket.priority=='low','urgent':ticket.priority=='urgent'}">
+                                                    {{ticket.priority}}
                                                 </small>
                                             </div>
                                             <div class="ticket-desc">

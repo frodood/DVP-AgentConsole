@@ -84,7 +84,7 @@
     </div>
 </div>
 
-<div class="load-more-wrapper">
+<div ng-show="ticketList.length!=0" class="load-more-wrapper">
     <h5 ng-show="!isLoadingTicke" ng-click="loadNextTickets();"> Load More</h5>
     <h5 ng-show="isLoadingTicke"><i class="fa fa-spinner fa-spin"></i></h5>
 </div>
