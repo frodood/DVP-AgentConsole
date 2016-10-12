@@ -829,7 +829,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.pickCompanyData = function (tenant,company) {
                 ticketService.pickCompanyInfo(tenant,company).then(function (response) {
 
-                    console.log(response);
+
                     if(response.data.IsSuccess)
                     {
 

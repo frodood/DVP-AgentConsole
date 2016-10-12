@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http) {
+                                              userService, ticketService, tagService, $http,authService) {
     return {
         restrict: "EA",
         scope: {
@@ -40,8 +40,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
 
-            /*Initialize default scope*/
 
+            /*Initialize default scope*/
+            scope.companyName="";
             scope.oldFormModel = null;
             scope.currentSubmission = null;
             scope.currentForm = null;
@@ -70,6 +71,29 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             /* End Initialize default scope*/
 
             /*form submit*/
+
+
+            scope.pickCompanyInfo = function () {
+                var userCompanyData = authService.GetCompanyInfo();
+                ticketService.pickCompanyInfo(userCompanyData.tenant,userCompanyData.company).then(function (response) {
+                    if(response.data.IsSuccess)
+                    {
+                        scope.companyName=response.data.Result.companyName;
+                    }
+                    else
+                    {
+                        console.log("No company info found");
+                    }
+
+                }, function (error) {
+                    console.log("Error in loading company info",error);
+                })
+            };
+
+
+            scope.pickCompanyInfo();
+
+
             scope.showAlert = function (tittle, type, msg) {
                 new PNotify({
                     title: tittle,
@@ -989,19 +1013,26 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.recentTicketList = [];
             scope.GetAllTicketsByRequester = function (requester, page) {
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
+                    if(response){
+                        response.map(function (item, index) {
+                            item.displayData = "[" + item.reference + "] " + item.subject;
+                            scope.ticketList.push(item);
+                        });
 
-
-                    scope.ticketList = response.map(function (item, index) {
-                        item.displayData = "[" + item.reference + "] " + item.subject;
-                        return item;
-                    });
-                    scope.recentTicketList = response.slice(0, 1);
+                        if(scope.currentTicketPage==1)
+                            scope.recentTicketList = response.slice(0, 1);
+                    }
 
                 }, function (err) {
                     scope.showAlert("Ticket", "error", "Fail To Get Ticket List.")
                 });
             };
-            //scope.GetAllTicketsByRequester();
+
+            scope.currentTicketPage = 1;
+            scope.loadNextTickets = function () {
+                scope.currentTicketPage = scope.currentTicketPage + 1;
+                scope.GetAllTicketsByRequester(scope.profileDetail._id,scope.currentTicketPage);
+            };
 
 
             scope.getEnggemntCount = function (id) {

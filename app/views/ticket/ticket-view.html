@@ -5,33 +5,20 @@
     <div class="ticket-view-wrapper">
         <!-- MODEL HEADER -->
         <div class="model-header">
-            <div class="col-md-7">
-                <div class="mode-left-icon  dark float-left mode-left-icon-ticket"
-                     ng-class="{'api-channel':ticket.channel=='api',
-                  'twitter-channel':ticket.channel=='twitter',
-                  'call-channel':ticket.channel=='call',
-                  'facebook-channel':ticket.channel=='facebook',
-                  'sms-channel':ticket.channel=='sms',
-                  'email-channel':ticket.channel=='email'}">
-                    <i class=""
-                       ng-class="{'fa fa-random':ticket.channel=='api',
-                  'fa fa-twitter':ticket.channel=='twitter',
-                  'fa fa-phone':ticket.channel=='call',
-                  'fa fa-facebook':ticket.channel=='facebook',
-                  'fa fa-bell-o':ticket.channel=='sms',
-                  'fa fa-envelope-o':ticket.channel=='email'}"
-                       ng-click="playFile(ticket.engagement_session._id)"></i>
+            <div class="col-md-6">
+                <div class="mode-left-icon  dark float-left">
+                    <i class="main-icon-2-telephone-3" ng-click="playFile(ticket.engagement_session._id)"></i>
                 </div>
-                <div class="model-header-text small bold  ">
+                <div class="model-header-text small bold ">
                     {{ticket.reference}}/{{ticket.tid}}
                 </div>
                 <br/>
-                <div class="model-header-text bold" style="font-size: 17px;">
+                <div class="model-header-text bold">
                     {{ticket.subject}}
                 </div>
             </div>
 
-            <div class="col-md-5 col-sm-6 ">
+            <div class="col-md-6 col-sm-6 ">
                 <div class="model-btn-wrapper">
                     <div class="btn-warp" uib-dropdown>
                         <span class="btn btn-default" uib-dropdown-toggle>
@@ -80,8 +67,7 @@
 
                     <div ng-show="ticketDetails.notificationData.activeSession" class="btn-group" uib-dropdown
                          is-open="status.isopen">
-                        <span title="Map New Call Session To Existing Ticket." class="btn btn-default"
-                              ng-click="updateTicketByReference();">Map</span>
+                        <span title="Map New Call Session To Existing Ticket." class="btn btn-default" ng-click="updateTicketByReference();">Map</span>
                     </div>
 
 
@@ -148,6 +134,7 @@
                                     </div>
                                     <h5>{{ticket.due_at}}</h5>
                                 </li>
+
 
                             </ul>
                         </div>
@@ -702,20 +689,17 @@
                                     <div class="col-sm-3">
                                         Estimated
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6"   >
                                         <div ng-show="!isTimeEdit">
                                             <uib-progressbar value="ticketEstimatedPrecentage" type="warning">
                                             </uib-progressbar>
                                         </div>
 
                                         <div ng-show="isTimeEdit">
-                                            <input ng-model="newTicketEstimatedTimeFormat" type="text"
-                                                   placeholder="00d:00h:00m:00s">
+                                            <input ng-model="newTicketEstimatedTimeFormat" type="text" placeholder="00d:00h:00m:00s">
                                             <div class="row">
                                                 <div class="row">
-                                                    <small class="pull-right" style="color: red" ng-show="!isValidTime">
-                                                        {{timeValidateMessage}}
-                                                    </small>
+                                                    <small class="pull-right" style="color: red" ng-show="!isValidTime">{{timeValidateMessage}}</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -723,13 +707,10 @@
 
                                     </div>
 
-                                    <span ng-show="isTimeEdit"><button class="fa fa-check"
-                                                                       ng-click="updateTicketEstimatedTime()"></button><button
-                                            class="fa fa-remove"></button>
+                                    <span ng-show="isTimeEdit"><button class="fa fa-check" ng-click="updateTicketEstimatedTime()"></button><button class="fa fa-remove" ng-click="isTimeEdit=!isTimeEdit"></button>
 
                                     </span>
-                                    <span class="col-sm-3 fa fa-pencil" ng-show="!isTimeEdit"
-                                          ng-click="isTimeEdit=!isTimeEdit"></span>
+                                    <span class="col-sm-3 fa fa-pencil" ng-show="!isTimeEdit" ng-click="isTimeEdit=!isTimeEdit"></span>
 
                                     <div class="col-sm-3" ng-show="!isTimeEdit">
                                         <h6>{{ticketEstimatedTimeFormat}}</h6>

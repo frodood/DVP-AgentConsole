@@ -5,8 +5,10 @@
 <div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
 
     <div class="profile-ticker-wrap "
-         ng-class="{'high-boarder':ticket.priority=='urgent',
-                        'normal-boarder':ticket.priority=='normal'}">
+         ng-class="{'high-boarder':ticket.priority=='high',
+                        'normal-boarder':ticket.priority=='normal',
+                        'low-boarder':ticket.priority=='low',
+                        'urgent-boarder':ticket.priority=='urgent'}">
         <div class="ticket-channel call"
              ng-class="{'api-channel':ticket.channel=='api',
                   'twitter-channel':ticket.channel=='twitter',
@@ -40,18 +42,22 @@
                         </small>
                     </div>
                     <div class="ticket-subj bold">
-                        {{ticket.subject}}
-                        <small ng-class="{'high':ticket.priority=='urgent',
-                        'normal':ticket.priority=='normal'}">{{ticket.priority}}
+                        {{ticket.type}}
+                        <small ng-class="{'high':ticket.priority=='high',
+                        'normal':ticket.priority=='normal','low':ticket.priority=='low','urgent':ticket.priority=='urgent'}">{{ticket.priority}}
                         </small>
                     </div>
-                    <div class="ticket-desc">
+                    <div class="">
+                        {{ticket.subject}}
+
+                    </div>
+                    <!--<div class="ticket-desc">
                         <div class="pull-left">
                             <div class="ticket-desc">
                                 {{ticket.description}}
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="col-md-2">
                     <div class="row">
@@ -75,4 +81,9 @@
             </div>
         </div>
     </div>
+</div>
+<div class="btn-warp inline-btn  p-top-6 pull-right">
+                              <span class="btn  btn-default btn-sm "
+                                    ng-click="loadNextTickets();"
+                                      >Load more</span>
 </div>
