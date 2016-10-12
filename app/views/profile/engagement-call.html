@@ -60,28 +60,20 @@
                 <div class="note-ivr-wrapper">
                     <uib-tabset active="activePill" type="pills">
                         <uib-tab index="0" heading="NOTE">
-                            <!--<div class="new-note-wrapper">
-                                <textarea class="form-control" rows="3" ng-model="noteBody"></textarea>
-                                <div class="btn-warp inline-btn  p-top-6 pull-right">
-                              <span class="btn  btn-default btn-sm "
-                                    ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
-                                </div>
-                            </div>-->
-                            <form name="engagementFrm" novalidate>
-                                <div class="new-note-wrapper"
-                                     ng-class="{ 'has-error': engagementFrm.noteBody.$invalid && engagementFrm.noteBody.$dirty }">
 
-                                    <textarea ng-model="noteBody" class="form-control" rows="3" name="noteBody" required
-                                              placeholder="Enter Note"></textarea>
-                                    <div class="help-block" ng-messages="engagementFrm.noteBody.$error"
-                                         ng-if="engagementFrm.noteBody.$touched">
-                                        <p ng-message="required">Note is required.</p>
-                                    </div>
+                            <form name="userFormTest" novalidate>
+                                <div class="new-note-wrapper"
+                                     ng-class="{ 'has-error': userFormTest.name.$invalid && userFormTest.name.$dirty }">
+                                    <textarea id="noteBody" type="text" class="form-control" name="name"
+                                              ng-model="noteBody" required placeholder="Add Note to Engagement"/>
+
                                     <div class="btn-warp inline-btn  p-top-6 pull-right">
-                              <span ng-disabled="engagementFrm.$invalid" class="btn  btn-default btn-sm "
-                                    ng-click="AppendNoteToEngagementSession(noteBody);">save</span>
+                              <span class="btn  btn-default btn-sm "
+                                    ng-click="AppendNoteToEngagementSession(noteBody);"
+                                    ng-disabled="userFormTest.$invalid">save</span>
                                     </div>
                                 </div>
+
 
                             </form>
 
@@ -144,7 +136,7 @@
                                 <span class="btn btn-default btn-close"
                                       ng-show="showNewProfile"
                                       ng-click="multipleProfile.closeNewProfile();"
-                                >close</span>
+                                        >close</span>
                                         </div>
                                     </div>
                                 </div>
@@ -207,6 +199,7 @@
                                                                 <input type="text" class="form-control" id="phoneno"
                                                                        name="phoneno" ng-model="newProfile.phone"
                                                                        required placeholder="Phone Number"/>
+
                                                                 <div class="help-block"
                                                                      ng-messages="newProfileForm.phoneno.$error"
                                                                      ng-if="newProfileForm.phoneno.$touched">
@@ -223,6 +216,7 @@
                                                                 <input type="text" class="form-control" id="pEmail"
                                                                        name="pEmail" ng-model="newProfile.email"
                                                                        required placeholder="Email"/>
+
                                                                 <div class="help-block"
                                                                      ng-messages="newProfileForm.pEmail.$error"
                                                                      ng-if="newProfileForm.pEmail.$touched">
@@ -302,7 +296,8 @@
                                                             <div class="form-group">
                                                                 <label for="no">P.O. Box / Building No</label>
                                                                 <input type="text" class="form-control" id="no"
-                                                                       placeholder="" ng-model="newProfile.address.number">
+                                                                       placeholder=""
+                                                                       ng-model="newProfile.address.number">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 col-sm-4 col-xs-4">
@@ -363,6 +358,7 @@
                                                         <div class="col-md-6 col-sm-6 col-xs-6">
                                                             <div class="form-group">
                                                                 <label for="ZipCode">Contact Type</label>
+
                                                                 <div class="form-group ">
                                                                     <select class="form-control ">
                                                                         <option value="" disabled selected>Select
@@ -397,7 +393,7 @@
                                         <div class="btn-warp ">
                                 <span ng-disabled="newProfileForm.$invalid" class="btn btn-default"
                                       ng-click="saveNewProfile(newProfile);"
-                                >Save</span>
+                                        >Save</span>
                                         </div>
                                     </div>
 
@@ -436,7 +432,7 @@
                                         <div class="btn-warp ">
                                 <span class="btn btn-default btn-close"
                                       ng-click="multipleProfile.closeProfileSelection();"
-                                >close</span>
+                                        >close</span>
                                         </div>
                                     </div>
                                 </div>
@@ -578,7 +574,8 @@
                                     </li>
                                     <li>
                                         <div class="details-wrap">
-                                            <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn" ng-repeat="tag in profileDetail.tags" >
+                                            <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn"
+                                                 ng-repeat="tag in profileDetail.tags">
                                                 {{tag}}
                                             </div>
                                         </div>
@@ -619,7 +616,7 @@
                             <div class="col-lg-6">
                                 <div class="row" style="padding-bottom: 5px;" ng-repeat="t in ExternalUserTicketCounts">
                                     <div class="col-sm-6 font-CyanA200">
-                                        Total {{t._id}}
+                                        {{t._id}}
                                     </div>
                                     <div class="col-sm-6 font-CyanA200 text-right">
                                         {{t.count}}
@@ -813,7 +810,8 @@
 
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="recentTicket in recentTicketList">
+                                        <div class="col-lg-12 col-md-12 col-sm-12"
+                                             ng-repeat="recentTicket in recentTicketList">
                                             <div class="recent-activity-wrap ">
                                                 <div class="col-lg-9 p-0 font-color-blue900">
                                                     <small class="ticker-id bold" ng-click="gotoTicket(recentTicket)">
@@ -924,6 +922,7 @@
                                                     <div ng-if="!buildModel">
                                                         <label>Ticket form has been modified, please fill data to new
                                                             form</label>
+
                                                         <div>{{oldFormModel}}</div>
                                                     </div>
 
@@ -988,22 +987,20 @@
                         <!-- MODEL HEADER -->
                         <div class="model-body model-body-scroll">
                             <div class="col-lg-12">
-                                <form name="userForm" novalidate>
+                                <form name="addNewTicketForm" novalidate>
+
                                     <div class="form-group"
-                                         ng-class="{ 'has-error': userForm.Subject.$invalid && userForm.Subject.$dirty }">
-                                        <label class="control-label">Subject*</label>
-                                        <input type="text" class="form-control" name="Subject" ng-model="ticket.subject"
-                                               id="ticketSubject" required placeholder="Subject"/>
-                                        <div class="help-block" ng-messages="userForm.Subject.$error"
-                                             ng-if="userForm.Subject.$touched">
-                                            <p ng-message="required">Subject is required.</p>
-                                        </div>
+                                         ng-class="{ 'has-error': addNewTicketForm.ticketsubject.$invalid && addNewTicketForm.ticketsubject.$dirty }">
+                                        <label class="control-label" >Subject*</label>
+                                        <input type="text" class="form-control" id="subject" name="ticketsubject" ng-model="ticket.subject"
+                                               required placeholder="subject"/>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-7">
-                                                <label for="ticketSubject">Priority</label>
+                                                <label>Priority</label>
+
                                                 <div class="form-inline">
                                                     <div class="bg-checkbox red font-white inline-btn"
                                                          ng-click="setPriority('urgent');">
@@ -1029,9 +1026,9 @@
                                             </div>
                                             <div class="col-xs-5">
                                                 <div class="form-group"
-                                                     ng-class="{ 'has-error': userForm.type.$invalid && userForm.type.$dirty }">
-                                                    <label for="ticketSubject">Type*</label>
-                                                    <select class="form-control" ng-model="ticket.type" name="type"
+                                                     ng-class="{ 'has-error': addNewTicketForm.ticketType.$invalid && addNewTicketForm.ticketType.$dirty }">
+                                                    <label class="control-label" >Type*</label>
+                                                    <select class="form-control" ng-model="ticket.type" name="ticketType"
                                                             required
                                                             placeholder="Select">
                                                         <option>question</option>
@@ -1039,10 +1036,6 @@
                                                         <option>incident</option>
                                                         <option>action</option>
                                                     </select>
-                                                    <div class="help-block" ng-messages="userForm.type.$error"
-                                                         ng-if="userForm.type.$touched">
-                                                        <p ng-message="required">Type is required.</p>
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -1050,7 +1043,7 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="ticketSubject">Tags</label>
+                                        <label>Tags</label>
                                         <button ng-click="loadTags();"> Reload</button>
                                         <tags-input ng-model="postTags" display-property="name" placeholder="...">
                                             <auto-complete source="loadPostTags($query)"></auto-complete>
@@ -1069,36 +1062,18 @@
                                                            min-length="1"></auto-complete>
                                         </tags-input>
                                     </div>
-                                    <!-- <div class="form-group">
-                                         <label for="ticketSubject">Tags</label>
-                                         <tags-input ng-model="newAddTags" placeholder="choose Tags" replace-spaces-with-dashes="false"
-                                                     display-property="name"
-                                                     add-from-autocomplete-only="true"
-                                                     on-tag-added="onChipAddTag($tag)"
-                                                     on-tag-removed="onChipDeleteTag($tag)"
-                                                     ng-disabled="" min-length="1">
-                                             <auto-complete source="queryTagSearch($query)"
-                                                            load-on-empty="true"
-                                                            load-on-focus="true"
-                                                            min-length="1"></auto-complete>
-                                         </tags-input>
-                                     </div>-->
                                     <div class="form-group"
-                                         ng-class="{ 'has-error': userForm.Description.$invalid && userForm.Description.$dirty }">
-                                        <label for="ticketSubject">Description*</label>
-                                    <textarea ng-model="ticket.description" class="form-control" rows="3"
-                                              name="Description" required placeholder="Description"></textarea>
-                                        <div class="help-block" ng-messages="userForm.Description.$error"
-                                             ng-if="userForm.Description.$touched">
-                                            <p ng-message="required">Description is required.</p>
-                                        </div>
+                                         ng-class="{ 'has-error': addNewTicketForm.ticketDescription.$invalid && addNewTicketForm.ticketDescription.$dirty }">
+                                        <label class="control-label" >Description*</label>
+                                        <textarea ng-model="ticket.description" class="form-control" rows="3"
+                                                                        name="ticketDescription" required placeholder="Description"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ticketSubject">Related Tickets</label>
+                                        <label>Related Tickets</label>
                                         <tags-input ng-model="ticket.related" placeholder="choose Ticket"
                                                     replace-spaces-with-dashes="false"
-                                                    display-property="reference"
+                                                    display-property="displayData"
                                                     add-from-autocomplete-only="true"
                                                     ng-disabled="" min-length="1">
                                             <auto-complete source="queryTicketList($query)"
@@ -1108,7 +1083,7 @@
                                         </tags-input>
                                     </div>
                                     <div class="form-group">
-                                        <label for="ticketSubject">Assignee user</label>
+                                        <label>Assignee user</label>
                                         <!--<tags-input ng-model="ticket.assignUsers" placeholder="choose assignee user" replace-spaces-with-dashes="false"
                                                     display-property="username"
                                                     add-from-autocomplete-only="true"
@@ -1131,13 +1106,14 @@
 
                                     </div>
                                 </form>
+
                             </div>
                             <div class="model-footer-wrapper">
                                 <div class="model-btn-wrapper">
                                     <div class="btn-warp ">
-                                <span ng-disabled="userForm.$invalid" class="btn btn-default"
+                                <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
                                       ng-click="saveTicket(ticket);"
-                                >Save</span>
+                                        >Save</span>
                                     </div>
                                 </div>
 

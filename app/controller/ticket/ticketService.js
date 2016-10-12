@@ -854,6 +854,22 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getMyTimer = function () {
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"MyTimer",
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -907,7 +923,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         StopWatchTicket:StopWatchTicket,
         GetExternalUserTicketCounts:getExternalUserTicketCounts,
         pickCompanyInfo:pickCompanyInfo,
-        updateTicketEstimateTime:updateTicketEstimateTime
+        getMyTimer:getMyTimer,
+updateTicketEstimateTime:updateTicketEstimateTime
     }
 });
 
