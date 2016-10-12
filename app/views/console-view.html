@@ -121,7 +121,7 @@
                                 <div class="time-tracker-wrapper">
                                     <div class="time-tracker-body">
                                         <div class="time-counter inline-block">
-                                            <span>{{ttimer.ticketRef}}</span>
+                                            <a style="cursor:pointer" ng-click="openTimerTicket()">{{ttimer.ticketRef}}</a>
                                             <br/>
                                             <timer autostart="false" interval="1000"
                                                    ng-show="ttimer.active"
