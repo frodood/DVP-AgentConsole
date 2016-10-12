@@ -64,9 +64,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 data: [],
                 fill: true,
                 /*lineTension: 0,*/
-                borderDash: [0, 0]
+                borderDash: [0, 0],
+
             }, {
                 label: "Resolved Ticket",
+
                 data: [],
                 fill: true,
                 /* lineTension: 0,*/
@@ -77,7 +79,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             responsive: true,
             title: {
                 display: true,
-                text: "Created Vs Resolved Tickets"
+
+
             }, tooltips: {
                 mode: 'label',
             },
@@ -109,10 +112,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }
     };
     $.each($scope.createVsOpenConfig.data.datasets, function (i, dataset) {
-        dataset.borderColor = randomColor(0.4);
-        dataset.backgroundColor = randomColor(0.5);
-        dataset.pointBorderColor = randomColor(0.7);
-        dataset.pointBackgroundColor = randomColor(0.5);
+        dataset.borderColor = 'rgba(14,234,255,1)';
+        dataset.backgroundColor = 'rgba(14,234,255,0.2)';
+        dataset.pointBorderColor = 'rgba(14,234,255,0.2)';
+        dataset.pointBackgroundColor = 'rgba(14,234,255,0.5)';
         dataset.pointBorderWidth = 1;
     });
     var openclose = document.getElementById("openclosecanvas").getContext("2d");
@@ -140,8 +143,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 }
             },
             title: {
-                display: false,
-                text: "Created Vs Resolved Tickets Deference"
+                display: false
             }, tooltips: {
                 mode: 'label',
             },
@@ -208,10 +210,12 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     window.myDoughnutChart = new Chart(doughnutChart, {
         type: 'doughnut',
         data: $scope.doughnutData,
-        options: {title: {
-            display: true,
-            text: "Productivity [hours]"
-        }}
+        options: {
+            title: {
+                display: true,
+                text: "Productivity [hours]"
+            }
+        }
     });
 
     /* -------------------- Chart Configurations End-----------------------------------------*/
@@ -227,7 +231,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
                 if (response.length === 0)
                     return;
-                $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime),secondToHours( response.BreakTime), secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
+                $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime), secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
                 window.myDoughnutChart.update();
 
 
