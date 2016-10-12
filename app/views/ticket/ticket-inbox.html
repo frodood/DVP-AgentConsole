@@ -15,7 +15,7 @@
                     <div class="col-md-6 col-sm-6 ">
                         <div class="model-btn-wrapper">
                             <div class="btn-warp">
-                                <span id ="rldbtn" class="btn btn-default2 fa fa-refresh"  ng-click="reloadTickets()"></span>
+                                <span id ="rldbtn" class="btn btn-default2 "  ng-click="reloadTickets()"> Refresh </span>
                             </div>
                             <div class="btn-warp">
                                 <span id ="mybtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted" ng-click="switchTickets('MY')">my ticket</span>
@@ -58,7 +58,13 @@
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="notification-text ">
-                                            {{todo.subject}}<div class="notification-ref link" ng-click="gotoTicket(todo)">
+                                            <div class="col-lg-12"> {{todo.subject}}</div>
+                                            <div class="col-lg-1"></div>
+                                            <div  class="col-lg-4 bg-checkbox font-white small-details inline-btn row"
+                                                 ng-class="{'red':todo.priority=='urgent','orange':todo.priority=='high','teal600':todo.priority=='normal','gray300':todo.priority=='low' }">
+                                                {{todo.priority}}
+                                            </div>
+                                            <div class="col-lg-6 notification-ref link" ng-click="gotoTicket(todo)">
                                             {{todo.reference}}
                                         </div>
                                         </div>
@@ -109,12 +115,19 @@
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="notification-text ">
-                                            {{inprogress.subject}}
-                                            <div class="notification-ref link" ng-click="gotoTicket(inprogress)">
+                                            <div class="col-lg-12">{{inprogress.subject}}</div>
+                                            <div  class=" col-lg-1"></div>
+                                            <div  class=" col-lg-4 bg-checkbox font-white small-details inline-btn row"
+                                                  ng-class="{'red':inprogress.priority=='urgent','orange':inprogress.priority=='high','teal600':inprogress.priority=='normal','gray300':inprogress.priority=='low' }">
+                                                {{inprogress.priority}}
+                                            </div>
+
+                                            <div class="col-lg-6 notification-ref link" ng-click="gotoTicket(inprogress)">
                                                 {{inprogress.reference}}
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="notification-time ">
                                             {{inprogress.type}}
@@ -160,8 +173,13 @@
                                 <div class="col-lg-9">
                                     <div class="row">
                                         <div class="notification-text ">
-                                            {{done.subject}}
-                                            <div class="notification-ref link" ng-click="gotoTicket(done)">
+                                            <div class="col-lg-12">{{done.subject}}</div>
+                                            <div class="col-lg-1"></div>
+                                            <div  class="col-lg-4 bg-checkbox font-white small-details inline-btn row"
+                                                  ng-class="{'red':done.priority=='urgent','orange':done.priority=='high','teal600':done.priority=='normal','gray300':done.priority=='low' }">
+                                                {{done.priority}}
+                                            </div>
+                                            <div class=" col-lg-6 notification-ref link" ng-click="gotoTicket(done)">
                                                 {{done.reference}}
                                             </div>
                                         </div>

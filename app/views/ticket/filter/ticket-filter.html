@@ -91,7 +91,11 @@
                         </div>
 
                         <div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
-                            <div class="profile-ticker-wrap new-ticker">
+                            <div class="profile-ticker-wrap new-ticker"
+                                 ng-class="{'high-boarder':ticket.priority=='high',
+                        'normal-boarder':ticket.priority=='normal',
+                        'low-boarder':ticket.priority=='low',
+                        'urgent-boarder':ticket.priority=='urgent'}">
                                 <div class="ticket-channel call">
                                     <i class="fa fa-facebook"></i>
                                 </div>
@@ -111,7 +115,9 @@
                                             </div>
                                             <div class="ticket-subj bold">
                                                 {{ticket.type}}
-                                                <small class="high">{{ticket.priority}}</small>
+                                                <small ng-class="{'high':ticket.priority=='high',
+                        'normal':ticket.priority=='normal','low':ticket.priority=='low','urgent':ticket.priority=='urgent'}">{{ticket.priority}}
+                                                </small>
                                             </div>
                                             <div class="ticket-desc">
                                                 <div class="pull-left">
