@@ -835,6 +835,25 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+
+    var updateTicketEstimateTime = function (ticketID,estimTime) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/EstimatedTime",
+            headers: {
+                'authorization':authToken
+            },
+            data:{
+                time_estimation:estimTime
+            }
+        }).then(function(response)
+        {
+            return response;
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -887,7 +906,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         WatchTicket:WatchTicket,
         StopWatchTicket:StopWatchTicket,
         GetExternalUserTicketCounts:getExternalUserTicketCounts,
-        pickCompanyInfo:pickCompanyInfo
+        pickCompanyInfo:pickCompanyInfo,
+        updateTicketEstimateTime:updateTicketEstimateTime
     }
 });
 
