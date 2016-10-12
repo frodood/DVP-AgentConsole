@@ -990,8 +990,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
 
 
-                    scope.ticketList = response.map(function(item,index){
-                        item.displayData = "["+item.reference+"] "+item.subject;
+                    scope.ticketList = response.map(function (item, index) {
+                        item.displayData = "[" + item.reference + "] " + item.subject;
                         return item;
                     });
                     scope.recentTicketList = response.slice(0, 1);
@@ -1136,6 +1136,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                 // show new profile
                                 scope.showMultiProfile = false;
                                 scope.showNewProfile = true;
+                                scope.isLoadinNewProfile = true;
 
                                 scope.currentSubmission = null;
                                 convertToSchemaForm(null, function (schemaDetails) {
@@ -1359,6 +1360,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.showMultipleProfile = false;
                 scope.foundProfiles = false;
                 scope.showNewProfile = false;
+                scope.isLoadinNewProfile = false;
                 return {
                     showProfiles: function () {
                         scope.showMultipleProfile = true;
@@ -1389,8 +1391,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.showNewProfile = false;
                         scope.GetProfileHistory(profile._id);
 
-                        if(scope.profileDetail)
-                        {
+                        if (scope.profileDetail) {
                             scope.currentSubmission = scope.profileDetail.form_submission;
                             convertToSchemaForm(scope.profileDetail.form_submission, function (schemaDetails) {
                                 if (schemaDetails) {
@@ -1401,8 +1402,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                             });
                         }
-                        else
-                        {
+                        else {
                             scope.currentSubmission = null;
                             convertToSchemaForm(null, function (schemaDetails) {
                                 if (schemaDetails) {

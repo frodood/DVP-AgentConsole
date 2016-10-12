@@ -57,10 +57,9 @@
                 </ul>
 
 
-                <div class="note-ivr-wrapper">
+                <div class="note-ivr-wrapper ">
                     <uib-tabset active="activePill" type="pills">
                         <uib-tab index="0" heading="NOTE">
-
                             <form name="userFormTest" novalidate>
                                 <div class="new-note-wrapper"
                                      ng-class="{ 'has-error': userFormTest.name.$invalid && userFormTest.name.$dirty }">
@@ -91,8 +90,30 @@
                         <uib-tab index="1" heading="IVR">
                             <div class="IVR-wrapper">
                                 <div class="IVR-details-wrap">
-                                    <div class="ivr-list" ng-repeat="ivr in ivrDetails">
-                                        {{ivr.EventName}};{{ivr.EventClass}};{{ivr.EventType}};{{ivr.EventCategory}};{{ivr.EventTime}}
+                                    <div ng-show="ivrDetails.length==0" class="data-not-found">
+                                        - DATA NOT FOUND -
+                                    </div>
+                                    <div class="ivr-list" ng-show="ivrDetails.length!=0">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Class</th>
+                                                <th>Type</th>
+                                                <th>Category</th>
+                                                <th>Time</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="ivr in ivrDetails">
+                                                <th> {{ivr.EventName}}</th>
+                                                <td>{{ivr.EventClass}}</td>
+                                                <td>{{ivr.EventCategory}}</td>
+                                                <td>{{ivr.EventType}}</td>
+                                                <td>{{ivr.EventTime}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +139,7 @@
             <div id="addNewProfile" class="fixed-model-opacity bg-opacity-8">
                 <div class="container">
                     <div class="col-lg-8 col-md-8 col-xs-8 ">
-                        <div class="model-main-wrapper p-0 animated fadeInDown ">
+                        <div class="model-main-wrapper p-0 animated fadeIn ">
                             <!-- MODEL HEADER -->
                             <div class="model-header">
                                 <div style="padding-top: 7px;" class="col-md-6">
@@ -134,9 +155,9 @@
                                     <div class="model-btn-wrapper">
                                         <div class="btn-warp ">
                                 <span class="btn btn-default btn-close"
-                                      ng-show="showNewProfile"
+                                      ng-show="!isLoadinNewProfile"
                                       ng-click="multipleProfile.closeNewProfile();"
-                                        >close</span>
+                                >close</span>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +175,7 @@
                                                     <div class="profile-image-crop">
                                                         <div>
                                                             <img ng-src="{{cropImageURL}}"
-                                                                 src="assets/img/avatar/profile_img150x150.jpg">
+                                                                 src="assets/img/avatar/profileAvatar.png">
                                                         </div>
                                                         <div class="image-edit">
                                                             <span class="btn-edit-img" ng-click="viewCropArea()">change image</span>
@@ -393,7 +414,7 @@
                                         <div class="btn-warp ">
                                 <span ng-disabled="newProfileForm.$invalid" class="btn btn-default"
                                       ng-click="saveNewProfile(newProfile);"
-                                        >Save</span>
+                                >Save</span>
                                         </div>
                                     </div>
 
@@ -412,7 +433,7 @@
     <!-- Multiple Profile -->
     <div ng-show="showMultiProfile">
         <div class="position-relative">
-            <div class="animated fixed-model-opacity bg-opacity-8">
+            <div class="animated new-profile-model">
                 <div class="container">
                     <div class="col-lg-8 col-md-8 col-xs-8 ">
                         <div class="model-main-wrapper p-0 animated fadeInDown ">
@@ -432,7 +453,7 @@
                                         <div class="btn-warp ">
                                 <span class="btn btn-default btn-close"
                                       ng-click="multipleProfile.closeProfileSelection();"
-                                        >close</span>
+                                >close</span>
                                         </div>
                                     </div>
                                 </div>
@@ -475,395 +496,397 @@
             </div>
         </div>
     </div>
-    <!-- end -->
 
-    <div class="col-lg-12 col-md-12 col-sm-12 p-0">
-        <!-- PROFILE HEADER -->
-        <div class="prn2-header-wrapper bg-color-Teal900">
-            <div class="col-md-4 col-sm-12">
-                <div class=" left-text">
-                    Profile Detail
-                </div>
-            </div>
-            <div class="col-lg-5 col-md-5 col-sm-12">
-                <!--<div class="model-btn-wrapper p-0 text-center">-->
-                <!--<div class="btn-warp">-->
-                <!--<span id="timeLine"-->
-                <!--ng-click="showProfileView('#viewTimeLine','#timeLine')"-->
-                <!--class="btn tab-btn">-->
-                <!--<i class="veery-font-3-clock-2"></i>-->
-                <!--time line-->
-                <!--</span>-->
-                <!--</div>-->
-                <!--<div class="btn-warp">-->
-                <!--<span id="ticket"-->
-                <!--ng-click="showProfileView('#viewTicketView','#ticket')"-->
-                <!--class="btn tab-btn">-->
-                <!--<i class="veery-font-1-flag"></i>-->
-                <!--ticket</span>-->
-                <!--</div>-->
-                <!--<div class="btn-warp ">-->
-                <!--<span id="profile"-->
-                <!--ng-click="showProfileView('#viewProfile','#profile')"-->
-                <!--class="btn tab-btn active">-->
-                <!--<i class="veery-font-1-user"></i>-->
-                <!--profile</span>-->
-                <!--</div>-->
-                <!--</div>-->
 
-            </div>
-            <div class="col-md-3 col-lg-3 col-sm-12 ">
-                <div class="btn-wrapper">
-                    <div class="btn-warp inline-btn"
-                         ng-click="multipleProfile.createNewProfile();">
-                        <span class="btn  btn-default">edit</span>
+    <!-- VIEW CUSTOMER PROFILE DETAILS -->
+    <div ng-show="!isLoadinNewProfile">
+        <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+            <!-- PROFILE HEADER -->
+            <div class="prn2-header-wrapper bg-color-Teal900">
+                <div class="col-md-4 col-sm-12">
+                    <div class=" left-text">
+                        Profile Detail
                     </div>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <!--<div class="model-btn-wrapper p-0 text-center">-->
+                    <!--<div class="btn-warp">-->
+                    <!--<span id="timeLine"-->
+                    <!--ng-click="showProfileView('#viewTimeLine','#timeLine')"-->
+                    <!--class="btn tab-btn">-->
+                    <!--<i class="veery-font-3-clock-2"></i>-->
+                    <!--time line-->
+                    <!--</span>-->
+                    <!--</div>-->
+                    <!--<div class="btn-warp">-->
+                    <!--<span id="ticket"-->
+                    <!--ng-click="showProfileView('#viewTicketView','#ticket')"-->
+                    <!--class="btn tab-btn">-->
+                    <!--<i class="veery-font-1-flag"></i>-->
+                    <!--ticket</span>-->
+                    <!--</div>-->
+                    <!--<div class="btn-warp ">-->
+                    <!--<span id="profile"-->
+                    <!--ng-click="showProfileView('#viewProfile','#profile')"-->
+                    <!--class="btn tab-btn active">-->
+                    <!--<i class="veery-font-1-user"></i>-->
+                    <!--profile</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
 
-                    <div class="btn-warp inline-btn" ng-click="multipleProfile.searchProfile();">
-                        <span class="btn  btn-default">search</span>
+                </div>
+                <div class="col-md-3 col-lg-3 col-sm-12 ">
+                    <div class="btn-wrapper">
+                        <div class="btn-warp inline-btn"
+                             ng-click="multipleProfile.createNewProfile();">
+                            <span class="btn  btn-default">edit</span>
+                        </div>
+
+                        <div class="btn-warp inline-btn" ng-click="multipleProfile.searchProfile();">
+                            <span class="btn  btn-default">search</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- tab panel
-         time line
-         ticker view
-         profile information -->
-    <uib-tabset class="profile-tab-pills" type="pills">
-        <uib-tab heading="Profile">
-            <div class="animated ">
-                <!-- PROFILE HEADER2 -->
-                <div class=" col-sm-12 col-lg-12 col-md-12 p-0">
-                    <!-- left profile details -->
-                    <div class="col-md-6 p-0">
-                        <div class="prn2-image-wrapper bg-color-Teal900">
-                            <div class="col-md-5 p-0">
-                                <div class="profile-details-img pull-left">
-                                    <img src="assets/img/avatar/defaultProfile.jpg"
-                                         ng-src="{{profileDetail.avatar}}">
+        <!-- tab panel
+             time line
+             ticker view
+             profile information -->
+        <uib-tabset class="profile-tab-pills" type="pills">
+            <uib-tab heading="Profile">
+                <div class="animated ">
+                    <!-- PROFILE HEADER2 -->
+                    <div class=" col-sm-12 col-lg-12 col-md-12 p-0">
+                        <!-- left profile details -->
+                        <div class="col-md-6 p-0">
+                            <div class="prn2-image-wrapper bg-color-Teal900">
+                                <div class="col-md-5 p-0">
+                                    <div class="profile-details-img pull-left">
+                                        <img src="assets/img/avatar/profileAvatar.png"
+                                             ng-src="{{profileDetail.avatar}}">
+                                    </div>
+                                    <div class="prn2 profile-status bold ">
+                                        {{profileDetail.name}}
+                                        <br/>
+                                        <span>{{channelFrom}}</span>
+                                    </div>
                                 </div>
-                                <div class="prn2 profile-status bold ">
-                                    {{profileDetail.name}}
-                                    <br/>
-                                    <span>{{channelFrom}}</span>
+
+                                <div class="col-md-7" style="padding-top: 15px;">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h5 class="text-uppercase header-text-h5">Personal Information</h5>
+                                        </div>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li>
+                                            <small>First Name</small>
+                                            <h5>{{profileDetail.firstname}}</h5>
+                                        </li>
+                                        <li>
+                                            <small>Last Name</small>
+                                            <h5 ng-show="profileDetail.lastname">{{profileDetail.lastname}}</h5>
+                                            <h5 ng-show="!profileDetail.lastname">-</h5>
+                                        </li>
+                                        <li>
+                                            <small>Address</small>
+                                            <h5>{{profileDetail.address.zipcode}} ,{{profileDetail.address.street}},
+                                                {{profileDetail.address.city}}</h5>
+                                        </li>
+                                        <li>
+                                            <div class="details-wrap">
+                                                <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn"
+                                                     ng-repeat="tag in profileDetail.tags">
+                                                    {{tag}}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-
-                            <div class="col-md-7" style="padding-top: 15px;">
+                        </div>
+                        <!-- engagement summary-->
+                        <div class="col-md-6 p-0">
+                            <div class="prn2-engagement-summary bg-color-Teal800">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h5 class="text-uppercase header-text-h5">Personal Information</h5>
+                                        <h5 class="text-uppercase header-text-h5 ">Engagement</h5>
                                     </div>
                                 </div>
-                                <ul class="info-list">
-                                    <li>
-                                        <small>First Name</small>
-                                        <h5>{{profileDetail.firstname}}</h5>
-                                    </li>
-                                    <li>
-                                        <small>Last Name</small>
-                                        <h5 ng-show="profileDetail.lastname">{{profileDetail.lastname}}</h5>
-                                        <h5 ng-show="!profileDetail.lastname">-</h5>
-                                    </li>
-                                    <li>
-                                        <small>Address</small>
-                                        <h5>{{profileDetail.address.zipcode}} ,{{profileDetail.address.street}},
-                                            {{profileDetail.address.city}}</h5>
-                                    </li>
-                                    <li>
-                                        <div class="details-wrap">
-                                            <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn"
-                                                 ng-repeat="tag in profileDetail.tags">
-                                                {{tag}}
-                                            </div>
+                                <div class="col-lg-6">
+                                    <!-- left wrapper -->
+                                    <div ng-if="enggemntDetailsCount.length==0" class="engagement-loading">
+                                        loading..
+                                    </div>
+                                    <div class="row" ng-repeat="d in enggemntDetailsCount">
+                                        <div class="col-sm-3 font-white" style="text-transform: uppercase">
+                                            {{d._id}}
                                         </div>
-                                    </li>
-                                </ul>
+                                        <div class="col-sm-6 prn2">
+                                            <!--<uib-progressbar value="(d.count/enggemntDetailsTotalCount)*100" type="warning">
+                                            </uib-progressbar>-->
+                                            <uib-progressbar animate="true" value="d.val"
+                                                             type="{{getRandomColor($index)}}"><b>{{d.val}}%</b>
+                                            </uib-progressbar>
+                                        </div>
+                                        <div class="col-sm-3 font-white text-right">
+                                            {{d.count}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="row" style="padding-bottom: 5px;"
+                                         ng-repeat="t in ExternalUserTicketCounts">
+                                        <div class="col-sm-6 font-CyanA200">
+                                            {{t._id}}
+                                        </div>
+                                        <div class="col-sm-6 font-CyanA200 text-right">
+                                            {{t.count}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="prn2 time-wrapper">
+
+                                    <!--<div class="row">
+                                        <div class="col-sm-3 font-white">
+                                            Sms
+                                        </div>
+                                        <div class="col-sm-6 prn2">
+                                            <uib-progressbar value="22" type="success">
+                                            </uib-progressbar>
+                                        </div>
+                                        <div class="col-sm-3 font-white text-right">
+                                            5
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 font-white">
+                                            FB
+                                        </div>
+                                        <div class="col-sm-6 prn2">
+                                            <uib-progressbar value="100" type="danger">
+                                            </uib-progressbar>
+                                        </div>
+                                        <div class="col-sm-3 font-white text-right">
+                                            10
+                                        </div>
+                                    </div>-->
+
+
+                                    <!--<div class="row">
+                                        <div class="col-sm-6 font-CyanA200">
+                                            Pending Ticket
+                                        </div>
+                                        <div class="col-sm-6 font-CyanA200 text-right">
+                                            10
+                                        </div>
+                                    </div>-->
+                                </div>
                             </div>
                         </div>
+                        <!-- right profile details -->
                     </div>
-                    <!-- engagement summary-->
-                    <div class="col-md-6 p-0">
-                        <div class="prn2-engagement-summary bg-color-Teal800">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h5 class="text-uppercase header-text-h5 ">Engagement</h5>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <!-- left wrapper -->
-                                <div ng-if="enggemntDetailsCount.length==0" class="engagement-loading">
-                                    loading..
-                                </div>
-                                <div class="row" ng-repeat="d in enggemntDetailsCount">
-                                    <div class="col-sm-3 font-white" style="text-transform: uppercase">
-                                        {{d._id}}
-                                    </div>
-                                    <div class="col-sm-6 prn2">
-                                        <!--<uib-progressbar value="(d.count/enggemntDetailsTotalCount)*100" type="warning">
-                                        </uib-progressbar>-->
-                                        <uib-progressbar animate="true" value="d.val"
-                                                         type="{{getRandomColor($index)}}"><b>{{d.val}}%</b>
-                                        </uib-progressbar>
-                                    </div>
-                                    <div class="col-sm-3 font-white text-right">
-                                        {{d.count}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row" style="padding-bottom: 5px;" ng-repeat="t in ExternalUserTicketCounts">
-                                    <div class="col-sm-6 font-CyanA200">
-                                        {{t._id}}
-                                    </div>
-                                    <div class="col-sm-6 font-CyanA200 text-right">
-                                        {{t.count}}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="prn2 time-wrapper">
-
-                                <!--<div class="row">
-                                    <div class="col-sm-3 font-white">
-                                        Sms
-                                    </div>
-                                    <div class="col-sm-6 prn2">
-                                        <uib-progressbar value="22" type="success">
-                                        </uib-progressbar>
-                                    </div>
-                                    <div class="col-sm-3 font-white text-right">
-                                        5
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3 font-white">
-                                        FB
-                                    </div>
-                                    <div class="col-sm-6 prn2">
-                                        <uib-progressbar value="100" type="danger">
-                                        </uib-progressbar>
-                                    </div>
-                                    <div class="col-sm-3 font-white text-right">
-                                        10
-                                    </div>
-                                </div>-->
-
-
-                                <!--<div class="row">
-                                    <div class="col-sm-6 font-CyanA200">
-                                        Pending Ticket
-                                    </div>
-                                    <div class="col-sm-6 font-CyanA200 text-right">
-                                        10
-                                    </div>
-                                </div>-->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- right profile details -->
-                </div>
-                <!--PROFILE BODY -->
-                <div class=" col-lg-12 col-md-12 col-sm-12 p-0">
-                    <div class="prn2-body-wrapper">
-                        <div class="col-md-3">
-                            <div class="prn2-contact">
-                                <div class="row">
-                                    <div class="layout-header prn2-layout-header2">
-                                        <div class="col-md-8 col-sm-8">
-                                            <div ng-show="!isAddNewContact" class="text-header bold">
-                                                CONTACT
+                    <!--PROFILE BODY -->
+                    <div class=" col-lg-12 col-md-12 col-sm-12 p-0">
+                        <div class="prn2-body-wrapper">
+                            <div class="col-md-3">
+                                <div class="prn2-contact">
+                                    <div class="row">
+                                        <div class="layout-header prn2-layout-header2">
+                                            <div class="col-md-8 col-sm-8">
+                                                <div ng-show="!isAddNewContact" class="text-header bold">
+                                                    CONTACT
+                                                </div>
+                                                <div ng-show="isAddNewContact" class="text-header bold">
+                                                    ADD NEW CONTACT
+                                                </div>
                                             </div>
-                                            <div ng-show="isAddNewContact" class="text-header bold">
-                                                ADD NEW CONTACT
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 ">
-                                            <div class="btn-left-icon pull-right "
-                                                 ng-click="showAddNewContact();">
-                                                <i ng-show="!isAddNewContact" class="veery-font-1-add-2"></i>
-                                                <i ng-show="isAddNewContact" class="main-icon-2-close"></i>
+                                            <div class="col-md-4 col-sm-4 ">
+                                                <div class="btn-left-icon pull-right "
+                                                     ng-click="showAddNewContact();">
+                                                    <i ng-show="!isAddNewContact" class="veery-font-1-add-2"></i>
+                                                    <i ng-show="isAddNewContact" class="main-icon-2-close"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="prn2-contact-body">
-                                        <!-- add new contact into the list -->
-                                        <div ng-show="isAddNewContact"
-                                             ng-class="{'add-contact-show':isAddNewContact == 'true'}"
-                                             class="add-contact-wrapper">
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="prn2-contact-body">
+                                            <!-- add new contact into the list -->
+                                            <div ng-show="isAddNewContact"
+                                                 ng-class="{'add-contact-show':isAddNewContact == 'true'}"
+                                                 class="add-contact-wrapper">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group ">
-                                                        <select class="form-control ">
-                                                            <option value="" disabled selected>Select
-                                                                contact
-                                                                type
-                                                            </option>
-                                                            <option>Facebook</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
-                                                        </select>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group ">
+                                                            <select class="form-control ">
+                                                                <option value="" disabled selected>Select
+                                                                    contact
+                                                                    type
+                                                                </option>
+                                                                <option>Facebook</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <input type="text" class="form-control" placeholder="value">
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12 m-top-10">
+                                                        <button class="btn btn-block btn-default">
+                                                            Add
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="text" class="form-control" placeholder="value">
+                                            </div>
+                                            <!-- end -->
+                                            <div class="prn2 header-round-icon">
+                                                <div class="icon-left">
+                                                    <i class="fa fa-facebook"></i>
                                                 </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12 m-top-10">
-                                                    <button class="btn btn-block btn-default">
-                                                        Add
-                                                    </button>
+                                                <div class="prn2-contact text-header">
+                                                    facebook
+                                                    <br/>
+                                                    <small>{{ profileDetail.facebook}}</small>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- end -->
-                                        <div class="prn2 header-round-icon">
-                                            <div class="icon-left">
-                                                <i class="fa fa-facebook"></i>
+                                            <div class="prn2 header-round-icon">
+                                                <div class="icon-left">
+                                                    <i class="fa fa-twitter"></i>
+                                                </div>
+                                                <div class="prn2-contact text-header ">
+                                                    twitter
+                                                    <br/>
+                                                    <small>{{ profileDetail.twitter}}</small>
+                                                </div>
                                             </div>
-                                            <div class="prn2-contact text-header">
-                                                facebook
-                                                <br/>
-                                                <small>{{ profileDetail.facebook}}</small>
+                                            <div class="prn2 header-round-icon">
+                                                <div class="icon-left">
+                                                    <i class="fa fa-linkedin"></i>
+                                                </div>
+                                                <div class="prn2-contact text-header ">
+                                                    linkedin
+                                                    <br/>
+                                                    <small>{{ profileDetail.linkedin}}</small>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="prn2 header-round-icon">
-                                            <div class="icon-left">
-                                                <i class="fa fa-twitter"></i>
+                                            <div class="prn2 header-round-icon">
+                                                <div class="icon-left">
+                                                    <i class="fa fa-envelope-o"></i>
+                                                </div>
+                                                <div class="prn2-contact text-header ">
+                                                    email
+                                                    <br/>
+                                                    <small>{{profileDetail.email}}</small>
+                                                </div>
                                             </div>
-                                            <div class="prn2-contact text-header ">
-                                                twitter
-                                                <br/>
-                                                <small>{{ profileDetail.twitter}}</small>
+                                            <div class="prn2 header-round-icon">
+                                                <div class="icon-left">
+                                                    <i class="fa fa-skype"></i>
+                                                </div>
+                                                <div class="prn2-contact text-header ">
+                                                    skype
+                                                    <br/>
+                                                    <small>{{profileDetail.skype}}</small>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="prn2 header-round-icon">
-                                            <div class="icon-left">
-                                                <i class="fa fa-linkedin"></i>
+                                            <div class="prn2 header-round-icon">
+                                                <div class="icon-left">
+                                                    <i class="fa fa-google-plus"></i>
+                                                </div>
+                                                <div class="prn2-contact text-header ">
+                                                    google+
+                                                    <br/>
+                                                    <small>{{profileDetail.googleplus}}</small>
+                                                </div>
                                             </div>
-                                            <div class="prn2-contact text-header ">
-                                                linkedin
-                                                <br/>
-                                                <small>{{ profileDetail.linkedin}}</small>
+                                            <div class="prn2 header-round-icon" ng-repeat="c in profileDetail.contacts">
+                                                <div class="icon-left">
+                                                    <i class="fa fa-phone"></i> <!--base on type,need to cheage icon-->
+                                                </div>
+                                                <div class="prn2-contact text-header ">
+                                                    {{c.type}}
+                                                    <br/>
+                                                    <small>{{c.contact}}</small>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="prn2 header-round-icon">
-                                            <div class="icon-left">
-                                                <i class="fa fa-envelope-o"></i>
-                                            </div>
-                                            <div class="prn2-contact text-header ">
-                                                email
-                                                <br/>
-                                                <small>{{profileDetail.email}}</small>
-                                            </div>
-                                        </div>
-                                        <div class="prn2 header-round-icon">
-                                            <div class="icon-left">
-                                                <i class="fa fa-skype"></i>
-                                            </div>
-                                            <div class="prn2-contact text-header ">
-                                                skype
-                                                <br/>
-                                                <small>{{profileDetail.skype}}</small>
-                                            </div>
-                                        </div>
-                                        <div class="prn2 header-round-icon">
-                                            <div class="icon-left">
-                                                <i class="fa fa-google-plus"></i>
-                                            </div>
-                                            <div class="prn2-contact text-header ">
-                                                google+
-                                                <br/>
-                                                <small>{{profileDetail.googleplus}}</small>
-                                            </div>
-                                        </div>
-                                        <div class="prn2 header-round-icon" ng-repeat="c in profileDetail.contacts">
-                                            <div class="icon-left">
-                                                <i class="fa fa-skype"></i> <!--base on type,need to cheage icon-->
-                                            </div>
-                                            <div class="prn2-contact text-header ">
-                                                {{c.type}}
-                                                <br/>
-                                                <small>{{c.contact}}</small>
-                                            </div>
-                                        </div>
 
-                                        <!--<li ng-repeat="c in profileDetail.contacts">
-                                            <small>{{c.type}}</small>
-                                            <h5>{{c.contact}}</h5>
-                                        </li>-->
+                                            <!--<li ng-repeat="c in profileDetail.contacts">
+                                                <small>{{c.type}}</small>
+                                                <h5>{{c.contact}}</h5>
+                                            </li>-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-9 " style="padding-right: 0px;">
-                            <div class="prn2-recent-activity ">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent
-                                        Activity</h5>
-                                </div>
+                            <div class="col-md-9 " style="padding-right: 0px;">
+                                <div class="prn2-recent-activity ">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent
+                                            Activity</h5>
+                                    </div>
 
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <div class="col-lg-12 col-md-12 col-sm-12"
-                                             ng-repeat="recentTicket in recentTicketList">
-                                            <div class="recent-activity-wrap ">
-                                                <div class="col-lg-9 p-0 font-color-blue900">
-                                                    <small class="ticker-id bold" ng-click="gotoTicket(recentTicket)">
-                                                        {{recentTicket.reference}}
-                                                    </small>
-                                                    <br>
-                                                    {{ recentTicket.description | limitTo: 25}}
-                                                    {{recentTicket.description.length > 25 ? '...' : ''}}
-                                                </div>
-                                                <div class="col-lg-3 p-0">
-                                                    <small class="font-color-yellow">{{recentTicket.status}}</small>
-                                                    <br>
-                                                    <small class="font-color-green">
-                                                        <time-ago from-time='{{ recentTicket.created_at }}'
-                                                                  format='MM/dd/yyyy'></time-ago>
-                                                    </small>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-12 col-md-12 col-sm-12"
+                                                 ng-repeat="recentTicket in recentTicketList">
+                                                <div class="recent-activity-wrap ">
+                                                    <div class="col-lg-9 p-0 font-color-blue900">
+                                                        <small class="ticker-id bold"
+                                                               ng-click="gotoTicket(recentTicket)">
+                                                            {{recentTicket.reference}}
+                                                        </small>
+                                                        <br>
+                                                        {{ recentTicket.description | limitTo: 25}}
+                                                        {{recentTicket.description.length > 25 ? '...' : ''}}
+                                                    </div>
+                                                    <div class="col-lg-3 p-0">
+                                                        <small class="font-color-yellow">{{recentTicket.status}}</small>
+                                                        <br>
+                                                        <small class="font-color-green">
+                                                            <time-ago from-time='{{ recentTicket.created_at }}'
+                                                                      format='MM/dd/yyyy'></time-ago>
+                                                        </small>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="eng in recentEngList">
-                                            <div class="recent-activity-wrap ">
-                                                <div class="col-lg-9 p-0 font-color-blue900">
-                                                    <small class="ticker-id bold" ng-click="">
-                                                        {{eng.channel_to}}
-                                                    </small>
-                                                    <br>
-                                                    {{eng.channel_from}}
-                                                </div>
-                                                <div class="col-lg-3 p-0">
-                                                    <small class="font-color-yellow">{{eng.channel_to}}</small>
-                                                    <br>
-                                                    <small class="font-color-green">
-                                                        <time-ago from-time='{{ eng.created_at }}'
-                                                                  format='MM/dd/yyyy'></time-ago>
-                                                    </small>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="eng in recentEngList">
+                                                <div class="recent-activity-wrap ">
+                                                    <div class="col-lg-9 p-0 font-color-blue900">
+                                                        <small class="ticker-id bold" ng-click="">
+                                                            {{eng.channel_to}}
+                                                        </small>
+                                                        <br>
+                                                        {{eng.channel_from}}
+                                                    </div>
+                                                    <div class="col-lg-3 p-0">
+                                                        <small class="font-color-yellow">{{eng.channel_to}}</small>
+                                                        <br>
+                                                        <small class="font-color-green">
+                                                            <time-ago from-time='{{ eng.created_at }}'
+                                                                      format='MM/dd/yyyy'></time-ago>
+                                                        </small>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
 
                                 </div>
-
                             </div>
-                        </div>
 
-                        <!-- MORE INFORMATION -->
-                        <div class="col-md-7 ">
-                            <div class="prn2-recent-information ">
-                                <div class="row">
-                                    <div class="col-lg-12">
+                            <!-- MORE INFORMATION -->
+                            <div class="col-md-9 ">
+                                <div class="prn2-recent-information ">
+                                    <div class="row">
                                         <div class="header-round-icon">
                                             <div class="icon-left">
                                                 <i class="veery-font-1-user"></i>
@@ -873,44 +896,43 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <ul class="info-list-lg">
-                                        <li>
-                                            <small>Gender</small>
-                                            <h5>{{profileDetail.gender}}</h5>
-                                        </li>
-                                        <li>
-                                            <small>Local</small>
-                                            <h5>{{profileDetail.locale}}</h5>
-                                        </li>
-                                        <li>
-                                            <small>Birthday</small>
-                                            <h5>{{profileDetail.birthday| date:'MM-dd-yyyy'}}</h5>
-                                        </li>
-                                        <li>
-                                            <small>Email</small>
-                                            <h5>{{profileDetail.email}}</h5>
-                                        </li>
-                                        <li>
-                                            <small>Company</small>
-                                            <h5>{{company}}</h5>
-                                        </li>
-                                        <li>
-                                            <small>Created</small>
-                                            <h5>{{profileDetail.created_at| date:'MM-dd-yyyy @ h:mma'}}</h5>
-                                        </li>
-
-
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- PROFILE OTHER -->
-                            <div class="col-lg-12 col-md-12">
-                                <div class="prn2-other-wrapper">
                                     <div class="row">
-                                        <div class="col-lg-12">
+                                        <ul class="info-list-lg">
+                                            <li>
+                                                <small>Gender</small>
+                                                <h5>{{profileDetail.gender}}</h5>
+                                            </li>
+                                            <li>
+                                                <small>Local</small>
+                                                <h5>{{profileDetail.locale}}</h5>
+                                            </li>
+                                            <li>
+                                                <small>Birthday</small>
+                                                <h5>{{profileDetail.birthday| date:'MM-dd-yyyy'}}</h5>
+                                            </li>
+                                            <li>
+                                                <small>Email</small>
+                                                <h5>{{profileDetail.email}}</h5>
+                                            </li>
+                                            <li>
+                                                <small>Company</small>
+                                                <h5>{{company}}</h5>
+                                            </li>
+                                            <li>
+                                                <small>Created</small>
+                                                <h5>{{profileDetail.created_at| date:'MM-dd-yyyy @ h:mma'}}</h5>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- END -->
+
+                                <!-- PROFILE OTHER -->
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="prn2-other-wrapper">
+                                        <div class="row">
                                             <div class="header-round-icon">
                                                 <div class="icon-left">
                                                     <i class="veery-font-1-user"></i>
@@ -918,40 +940,43 @@
                                                 <div class="text-header bold">
                                                     OTHER
                                                 </div>
-                                                <div>
-                                                    <div ng-if="!buildModel">
-                                                        <label>Ticket form has been modified, please fill data to new
-                                                            form</label>
-
-                                                        <div>{{oldFormModel}}</div>
-                                                    </div>
-
-                                                    <form name="customFormProfile" sf-schema="schema" sf-form="form"
-                                                          sf-model="model"
-                                                          ng-submit="onSubmit(customFormProfile)"></form>
-                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                            <div ng-if="!buildModel">
+                                                <label>Ticket form has been modified, please fill data to new
+                                                    form</label>
+
+                                                <div>{{oldFormModel}}</div>
+                                            </div>
+
+                                            <form name="customFormProfile" sf-schema="schema" sf-form="form"
+                                                  sf-model="model"
+                                                  ng-submit="onSubmit(customFormProfile)"></form>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- END -->
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </uib-tab>
-        <uib-tab heading="Time line">
-            <div class="animated">
-                <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
-            </div>
-        </uib-tab>
-        <uib-tab heading="Ticket">
-            <div class="animated">
-                <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
-            </div>
-        </uib-tab>
+            </uib-tab>
+            <uib-tab heading="Time line">
+                <div class="animated">
+                    <div ng-include="'app/views/time-line/profile-time-line.html'"></div>
+                </div>
+            </uib-tab>
+            <uib-tab heading="Ticket">
+                <div class="animated">
+                    <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
+                </div>
+            </uib-tab>
 
-    </uib-tabset>
+        </uib-tabset>
+    </div>
+
 </div>
 
 <!-- add new ticket -->
@@ -991,8 +1016,9 @@
 
                                     <div class="form-group"
                                          ng-class="{ 'has-error': addNewTicketForm.ticketsubject.$invalid && addNewTicketForm.ticketsubject.$dirty }">
-                                        <label class="control-label" >Subject*</label>
-                                        <input type="text" class="form-control" id="subject" name="ticketsubject" ng-model="ticket.subject"
+                                        <label class="control-label">Subject*</label>
+                                        <input type="text" class="form-control" id="subject" name="ticketsubject"
+                                               ng-model="ticket.subject"
                                                required placeholder="subject"/>
                                     </div>
 
@@ -1027,8 +1053,9 @@
                                             <div class="col-xs-5">
                                                 <div class="form-group"
                                                      ng-class="{ 'has-error': addNewTicketForm.ticketType.$invalid && addNewTicketForm.ticketType.$dirty }">
-                                                    <label class="control-label" >Type*</label>
-                                                    <select class="form-control" ng-model="ticket.type" name="ticketType"
+                                                    <label class="control-label">Type*</label>
+                                                    <select class="form-control" ng-model="ticket.type"
+                                                            name="ticketType"
                                                             required
                                                             placeholder="Select">
                                                         <option>question</option>
@@ -1064,9 +1091,10 @@
                                     </div>
                                     <div class="form-group"
                                          ng-class="{ 'has-error': addNewTicketForm.ticketDescription.$invalid && addNewTicketForm.ticketDescription.$dirty }">
-                                        <label class="control-label" >Description*</label>
+                                        <label class="control-label">Description*</label>
                                         <textarea ng-model="ticket.description" class="form-control" rows="3"
-                                                                        name="ticketDescription" required placeholder="Description"></textarea>
+                                                  name="ticketDescription" required
+                                                  placeholder="Description"></textarea>
                                     </div>
 
                                     <div class="form-group">
@@ -1113,7 +1141,7 @@
                                     <div class="btn-warp ">
                                 <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
                                       ng-click="saveTicket(ticket);"
-                                        >Save</span>
+                                >Save</span>
                                     </div>
                                 </div>
 
