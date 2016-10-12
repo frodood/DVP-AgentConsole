@@ -1083,6 +1083,38 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
+
+    $scope.checkTimerOnLogin = function(){
+        ticketService.getMyTimer().then(function (response) {
+            if (response) {
+                var timeNow = moment.utc();
+                if (response.last_event === "pause" || response.last_event === "start") {
+                    var lastTimeStamp = moment.utc(response.last_event_date);
+                    var timeDiff = timeNow.diff(lastTimeStamp, 'seconds');
+
+                    if (timeDiff > 0) {
+                        var startTime = timeNow.subtract(timeDiff, 'seconds');
+                        $scope.ttimer.startTime = parseInt(startTime.format('x'));
+                    } else {
+                        $scope.ttimer.startTime = parseInt(timeNow.format('x'));
+                    }
+                    document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
+
+
+                    $scope.status.active = true;
+                    $scope.ttimer.active = true;
+
+                    $scope.ttimer.ticketId = response.ticket;
+                    $scope.ttimer.ticketRef = $scope.activeTab.content;
+                    $scope.ttimer.trackerId = response._id;
+                }
+            }
+        }, function (error) {
+            console.log(error);
+            $scope.showError("Error", "Error", "ok", "Timer failed to start ");
+        });
+    };
+    $scope.checkTimerOnLogin();
     //end time tracker function
 
 
