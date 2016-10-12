@@ -1,5 +1,5 @@
 <div class="timelline-wrapper prn2-time-line-wrap">
-    <ul class="timeline " scrolly="showMore()">
+    <ul class="timeline " ><!--scrolly="showMore()"-->
         <li ng-repeat="eng in engagementsList"
             ng-class="{'timeline-inverted':eng.direction=='outbound' }">
             <div class="timeline-badge"
@@ -50,7 +50,11 @@
                 </div>
             </div>
         </li>
-
+        <div class="btn-warp inline-btn  p-top-6 pull-right">
+                              <span class="btn  btn-default btn-sm "
+                                    ng-click="showMore();"
+                                    >Load more</span>
+        </div>
 
         <!-- <li>
              <div class="timeline-badge twitter"><i class="fa fa-twitter"></i></div>
