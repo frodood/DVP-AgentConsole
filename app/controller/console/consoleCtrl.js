@@ -668,7 +668,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.tabs.push(newTab);
             $timeout(function () {
                 //$scope.tabSelected(newTab.tabReference);
-                $scope.activeTabIndex = $scope.tabs.length - 1;
+                if($scope.tabs.length === 0){
+                    $scope.activeTabIndex = 0;
+                }else {
+                    $scope.activeTabIndex = $scope.tabs.length - 1;
+                }
                 //document.getElementById("tab_view").active = $scope.tabs.length - 1;
                 //$scope.$broadcast("checkTabs");
                 $scope.reCalcScroll();
@@ -686,10 +690,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         $scope.tabs.filter(function (item) {
             if (item.title == title) {
+                var tIndex = $scope.tabs.indexOf(item);
+                if(tIndex > -1) {
+                    $scope.tabs.splice(tIndex, 1);
 
-                $scope.tabs.splice($scope.tabs.indexOf(item), 1);
-                $scope.reCalcScroll();
-                $scope.searchExternalUsers = {};
+                    var nxtIndex = $scope.tabs.length - 1;
+                    if(nxtIndex > -1) {
+                        $scope.activeTabIndex = nxtIndex;
+                    }else{
+                        $scope.activeTabIndex = 0;
+                    }
+                    $scope.reCalcScroll();
+                    $scope.searchExternalUsers = {};
+                }
             }
 
         });

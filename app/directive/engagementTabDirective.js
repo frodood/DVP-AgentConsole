@@ -1441,9 +1441,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.foundProfiles = false;
                         scope.showNewProfile = true;
                         scope.newProfile = scope.profileDetail;
-                        scope.dob.day = moment(scope.profileDetail.birthday).day();
-                        // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
-                        // scope.dob.day = moment(scope.profileDetail.birthday, 'DD');
+                        var date = moment(scope.profileDetail.birthday);
+                        scope.newProfile.dob = {};
+                        scope.newProfile.dob.day = date.date();
+                        scope.newProfile.dob.month = {
+                            'index' :date.month(),
+                        'name':date.month()
+                        } ;
+                        scope.newProfile.dob.year =date.year();
                         this.getModelHeader();
                     },
                     closeNewProfile: function () {

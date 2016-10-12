@@ -125,37 +125,44 @@
                                         </div>
                                         <div class="col-md-4 col-xs-4 col-sm-12">
                                             <div class="row">
+
                                                 <select class="form-control "
+                                                        ng-options="day for day in dayList track by day"
+                                                        ng-model="newProfile.dob.day"></select>
+
+                                                <!--<select class="form-control "
                                                         ng-model="newProfile.dob.day">
 
                                                     <option ng-repeat="day in dayList"
                                                             value="{{day}}">
                                                         {{day}}
                                                     </option>
-                                                </select>
+                                                </select>-->
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-xs-4 col-sm-12">
                                             <div class="row"
                                                  style="padding-left: 5px;padding-right: 5px;">
-                                                <select class="form-control"
+
+                                                <select class="form-control "
+                                                        ng-options="month.name for month in monthList track by month.index"
+                                                        ng-model="newProfile.dob.month"></select>
+
+                                                <!--<select class="form-control"
                                                         ng-model="newProfile.dob.month">
                                                     <option ng-repeat="month in monthList"
                                                             value="{{month.index}}">
                                                         {{month.name}}
                                                     </option>
-                                                </select>
+                                                </select>-->
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-xs-4 col-sm-12">
                                             <div class="row">
-                                                <select class="form-control"
-                                                        ng-model="newProfile.dob.year">
+                                                <select class="form-control "
+                                                        ng-options="y for y in yearList track by y"
+                                                        ng-model="newProfile.dob.year"></select>
 
-                                                    <option ng-repeat="y in yearList" value="{{y}}">
-                                                        {{y}}
-                                                    </option>
-                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +237,7 @@
                                         <div class="form-group"
                                              ng-class="{ 'has-error': newProfileForm.newProfilessn.$invalid && newProfileForm.newProfilessn.$dirty }">
                                             <label class="control-label">SSN*</label>
-                                            <input type="email" class="form-control" name="newProfilessn"
+                                            <input type="text" class="form-control" name="newProfilessn"
                                                    ng-model="newProfile.ssn" required placeholder=""/>
                                         </div>
                                     </div>
