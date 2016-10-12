@@ -852,7 +852,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //add dashboard inside tab
 
     $scope.addDashBoard = function () {
-        $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad");
+        $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad","dashborad");
     };
     $scope.addDashBoard();
 
