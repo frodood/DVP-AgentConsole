@@ -985,7 +985,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.recentTicketList = [];
             scope.GetAllTicketsByRequester = function (requester, page) {
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
-                    scope.ticketList = response;
+
+
+                    scope.ticketList = response.map(function(item,index){
+                        item.displayData = "["+item.reference+"] "+item.subject;
+                        return item;
+                    });
                         scope.recentTicketList = response.slice(0, 1);
 
                 }, function (err) {
