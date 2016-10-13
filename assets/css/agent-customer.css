@@ -3670,3 +3670,7 @@ div.btn-group.dropdown {
 .bg-checkbox {
     cursor: pointer;
 }
+
+.active-test {
+    background: #4f9300 !important;
+}
