@@ -631,7 +631,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /*---------------main tab panel----------------------- */
 
 
-    $scope.activeTabIndex = 0;
+    $scope.activeTabIndex = undefined;
     $scope.tabReference = "";
     $scope.tabs = [];
 
@@ -669,9 +669,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $timeout(function () {
                 //$scope.tabSelected(newTab.tabReference);
                 if($scope.tabs.length === 0){
-                    $scope.activeTabIndex = 0;
+                    $scope.activeTabIndex = undefined;
                 }else {
-                    $scope.activeTabIndex = $scope.tabs.length - 1;
+                    $scope.activeTabIndex = newTab.tabReference;
                 }
                 //document.getElementById("tab_view").active = $scope.tabs.length - 1;
                 //$scope.$broadcast("checkTabs");
@@ -686,23 +686,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isForceFocused = false;
     $scope.currTab = 0;
 
-    $scope.closeTab = function (title) {
+    $scope.closeTab = function (tab) {
 
-        $scope.tabs.filter(function (item) {
-            if (item.title == title) {
-                var tIndex = $scope.tabs.indexOf(item);
-                if(tIndex > -1) {
-                    $scope.tabs.splice(tIndex, 1);
+        $scope.tabs.filter(function (item, c) {
+            if (item.tabReference == tab.tabReference) {
+                //var tIndex = $scope.tabs.indexOf(item);
+                //if(tIndex > -1) {
+                    $scope.tabs.splice(c, 1);
 
                     var nxtIndex = $scope.tabs.length - 1;
                     if(nxtIndex > -1) {
-                        $scope.activeTabIndex = nxtIndex;
+                        $scope.activeTabIndex = $scope.tabs[$scope.tabs.length - 1].tabReference;
                     }else{
-                        $scope.activeTabIndex = 0;
+                        $scope.activeTabIndex = undefined;
                     }
                     $scope.reCalcScroll();
                     $scope.searchExternalUsers = {};
-                }
+                //}
             }
 
         });
@@ -720,7 +720,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 currTab = $scope.tabs.indexOf(item);
                 $scope.activeTab = item;
 
-                $scope.activeTabIndex = currTab;
+                $scope.activeTabIndex = item.tabReference;
                 //document.getElementById("tab_view").active = currTab;
             }
         });
@@ -891,16 +891,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: args.engagement_id,
             userProfile: undefined
         };
-        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, index);
+        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, args.engagement_id);
     };
 
     $rootScope.$on('openNewTab', function (events, args) {
 
         switch (args.tabType) {
             case 'ticketView':
-                openNewTicketTab(args, args.index);
+                openNewTicketTab(args, args.reference);
                 break;
-            case 'engagement' || 'userProfile':
+            case 'engagement':
                 openNewEngagementTab(args, args.index);
                 break;
             case 'inbox':
@@ -938,7 +938,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: args.engagement_id,
             userProfile: undefined
         };
-        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData, index);
+        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData, args.engagement_id);
     };
 
     /*use Common Method to open New Tab*/
