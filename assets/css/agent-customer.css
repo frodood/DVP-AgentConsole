@@ -3661,3 +3661,12 @@ div.btn-group.dropdown {
 .load-more-wrapper > h5:hover {
     color: #168039;
 }
+
+/*ticket view tab selected */
+.selected-this {
+    background: #4f9300;
+}
+
+.bg-checkbox {
+    cursor: pointer;
+}

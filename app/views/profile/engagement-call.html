@@ -829,23 +829,39 @@
 
                                                 <div class="form-inline">
                                                     <div class="bg-checkbox red font-white inline-btn"
+                                                         ng-class="{'selected-this':ticket.priority=='urgent'}"
                                                          ng-click="setPriority('urgent');">
-                                                        <i class="main-icon-2-cancel"></i>
+                                                        <i ng-show="ticket.priority!='urgent'"
+                                                           class="main-icon-2-cancel"></i>
+                                                        <i ng-show="ticket.priority=='urgent'"
+                                                           class="main-icon-2-checked"></i>
                                                         urgent
                                                     </div>
                                                     <div class="bg-checkbox red font-white orange"
+                                                         ng-class="{'selected-this':ticket.priority=='high'}"
                                                          ng-click="setPriority('high');">
-                                                        <i class="main-icon-2-cancel"></i>
+                                                        <i ng-show="ticket.priority!='high'"
+                                                           class="main-icon-2-cancel"></i>
+                                                        <i ng-show="ticket.priority=='high'"
+                                                           class="main-icon-2-checked"></i>
                                                         high
                                                     </div>
                                                     <div class="bg-checkbox red font-white teal600"
+                                                         ng-class="{'selected-this':ticket.priority=='normal'}"
                                                          ng-click="setPriority('normal');">
-                                                        <i class="main-icon-2-cancel"></i>
+                                                        <i ng-show="ticket.priority!='normal'"
+                                                           class="main-icon-2-cancel"></i>
+                                                        <i ng-show="ticket.priority=='normal'"
+                                                           class="main-icon-2-checked"></i>
                                                         normal
                                                     </div>
                                                     <div class="bg-checkbox red font-white gray300"
+                                                         ng-class="{'selected-this':ticket.priority=='low'}"
                                                          ng-click="setPriority('low');">
-                                                        <i class="main-icon-2-cancel"></i>
+                                                        <i ng-show="ticket.priority!='low'"
+                                                           class="main-icon-2-cancel"></i>
+                                                        <i ng-show="ticket.priority=='low'"
+                                                           class="main-icon-2-checked"></i>
                                                         low
                                                     </div>
                                                 </div>
