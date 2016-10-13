@@ -431,10 +431,12 @@
                                tooltip-left-placement="top"
                                id="consoleMainTab">
                 <uib-tabset class="scrollable-tab-overwrite" active="activeTabIndex" id="tab_view">
-                    <uib-tab class="console-main-tab" ng-repeat="tab in tabs" select="tabSelected(tab.tabReference)">
+                    <uib-tab class="console-main-tab"
+                             index="tab.tabReference" ng-repeat="tab in tabs"
+                             select="tabSelected(tab.tabReference)">
                         <uib-tab-heading>
                             <div class="pull-left">{{tab.title}}
-                                <a data-ng-click='closeTab(tab.title)' class='btn btn-tab-close' href="javascript:">
+                                <a data-ng-click='closeTab(tab)' class='btn btn-tab-close' href="javascript:">
                                     <span class='ti-close'></span></a>
                             </div>
                         </uib-tab-heading>

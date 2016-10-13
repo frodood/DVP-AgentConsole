@@ -631,7 +631,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /*---------------main tab panel----------------------- */
 
 
-    $scope.activeTabIndex = 0;
+    $scope.activeTabIndex = undefined;
     $scope.tabReference = "";
     $scope.tabs = [];
 
@@ -668,41 +668,45 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.tabs.push(newTab);
             $timeout(function () {
                 //$scope.tabSelected(newTab.tabReference);
-                if($scope.tabs.length === 0){
-                    $scope.activeTabIndex = 0;
-                }else {
-                    $scope.activeTabIndex = $scope.tabs.length - 1;
+                if ($scope.tabs.length === 0) {
+                    $scope.activeTabIndex = undefined;
+                } else {
+                    $scope.activeTabIndex = newTab.tabReference;
                 }
                 //document.getElementById("tab_view").active = $scope.tabs.length - 1;
                 //$scope.$broadcast("checkTabs");
                 $scope.reCalcScroll();
             });
+            $scope.tabSelected(index);
         }
         else {
             $scope.tabSelected(index);
         }
 
+
     };
     $scope.isForceFocused = false;
     $scope.currTab = 0;
 
-    $scope.closeTab = function (title) {
+    $scope.closeTab = function (tab) {
 
-        $scope.tabs.filter(function (item) {
-            if (item.title == title) {
-                var tIndex = $scope.tabs.indexOf(item);
-                if(tIndex > -1) {
-                    $scope.tabs.splice(tIndex, 1);
+        $scope.tabs.filter(function (item, c) {
+            if (item.tabReference == tab.tabReference) {
+                //var tIndex = $scope.tabs.indexOf(item);
+                //if(tIndex > -1) {
+                $scope.tabs.splice(c, 1);
 
-                    var nxtIndex = $scope.tabs.length - 1;
-                    if(nxtIndex > -1) {
-                        $scope.activeTabIndex = nxtIndex;
-                    }else{
-                        $scope.activeTabIndex = 0;
-                    }
-                    $scope.reCalcScroll();
-                    $scope.searchExternalUsers = {};
+                var nxtIndex = $scope.tabs.length - 1;
+                if (nxtIndex > -1) {
+                    $scope.activeTabIndex = $scope.tabs[nxtIndex].tabReference;
+                    $scope.tabSelected(nxtIndex);
+                } else {
+                    $scope.activeTabIndex = undefined;
                 }
+                $scope.reCalcScroll();
+                $scope.searchExternalUsers = {};
+
+                //}
             }
 
         });
@@ -720,7 +724,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 currTab = $scope.tabs.indexOf(item);
                 $scope.activeTab = item;
 
-                $scope.activeTabIndex = currTab;
+                $scope.activeTabIndex = item.tabReference;
                 //document.getElementById("tab_view").active = currTab;
             }
         });
@@ -875,7 +879,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //add dashboard inside tab
 
     $scope.addDashBoard = function () {
-        $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad","dashborad");
+        $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad", "dashborad");
     };
     $scope.addDashBoard();
 
@@ -891,16 +895,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: args.engagement_id,
             userProfile: undefined
         };
-        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, index);
+        $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, args.engagement_id);
     };
 
     $rootScope.$on('openNewTab', function (events, args) {
 
         switch (args.tabType) {
             case 'ticketView':
-                openNewTicketTab(args, args.index);
+                openNewTicketTab(args, args.reference);
                 break;
-            case 'engagement' || 'userProfile':
+            case 'engagement':
                 openNewEngagementTab(args, args.index);
                 break;
             case 'inbox':
@@ -938,7 +942,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: args.engagement_id,
             userProfile: undefined
         };
-        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData, index);
+        $scope.addTab('Engagement' + args.channel_from, 'Engagement', 'engagement', notifyData, args.engagement_id);
     };
 
     /*use Common Method to open New Tab*/
@@ -1005,8 +1009,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ttimer.ticketRef = "Start";
     $scope.ttimer.ticket = undefined;
 
-    $scope.openTimerTicket = function(){
-        if($scope.ttimer.ticket) {
+    $scope.openTimerTicket = function () {
+        if ($scope.ttimer.ticket) {
             $scope.ttimer.ticket.tabType = 'ticketView';
             $scope.ttimer.ticket.index = $scope.ttimer.ticket.reference;
             $rootScope.$emit('openNewTab', $scope.ttimer.ticket);
@@ -1127,26 +1131,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $scope.checkTimerOnLogin = function(){
+    $scope.checkTimerOnLogin = function () {
         ticketService.getMyTimer().then(function (response) {
             if (response && response.ticket) {
                 ticketService.getTicket(response.ticket).then(function (ticketResponse) {
 
-                    if(ticketResponse && ticketResponse.data && ticketResponse.data.IsSuccess) {
+                    if (ticketResponse && ticketResponse.data && ticketResponse.data.IsSuccess) {
                         var ticket = ticketResponse.data.Result;
                         var timeNow = moment.utc();
                         if (response.last_event === "pause" || response.last_event === "start") {
 
                             var currentTime = Math.ceil(response.time / 1000);
                             if (response.last_event === "pause") {
-                                if(currentTime) {
+                                if (currentTime) {
                                     var pauseTime = timeNow.subtract(currentTime, 'seconds');
                                     $scope.ttimer.startTime = parseInt(pauseTime.format('x'));
                                 }
                             } else {
                                 var lastTimeStamp = moment.utc(response.last_event_date);
                                 var timeDiff = timeNow.diff(lastTimeStamp, 'seconds');
-                                if(currentTime) {
+                                if (currentTime) {
                                     timeDiff = timeDiff + currentTime;
                                 }
                                 if (timeDiff > 0) {
@@ -1569,7 +1573,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     return state;
                 }
             } else {
-                if(!document.getElementById("commonSearch").value){
+                if (!document.getElementById("commonSearch").value) {
                     $scope.searchExternalUsers = {};
                 }
                 return state;
@@ -1590,26 +1594,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                    if (data.IsSuccess) {
-                        if (data.Result && data.Result.UNREAD) {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception) {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    console.log(err);
+                    },
+                    function (err) {
+                        console.log(err);
 
-                })
+                    })
 
         }
         catch (ex) {
@@ -1700,21 +1704,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /* Set the width of the side navigation to 250px */
 
-    $scope.isUserListOpen=false;
+    $scope.isUserListOpen = false;
     $scope.openNav = function () {
 
-        if($scope.isUserListOpen)
-        {
+        if ($scope.isUserListOpen) {
             $scope.closeNav();
         }
-        else
-        {
+        else {
             getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
             document.getElementById("mySidenav").style.width = "300px";
             document.getElementById("main").style.marginRight = "285px";
         }
 
-        $scope.isUserListOpen=!$scope.isUserListOpen;
+        $scope.isUserListOpen = !$scope.isUserListOpen;
 
 
         // document.getElementById("navBar").style.marginRight = "300px";
@@ -2005,6 +2007,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.goToTopScroller = function () {
         $('html, body').animate({scrollTop: 0}, 'fast');
     };
+
+    //code by damith
+    //check selected tab and focus
+
+    $('#consoleMainTab').find('li').on('click', function (ev) {
+        var $li = $(this).parent();
+
+        console.log('event fire..');
+
+    });
 
 
 }).directive("mainScroll", function ($window) {

@@ -3532,6 +3532,7 @@ tags-input .tags .input {
     overflow: hidden;
     padding-top: 13px;
     border: 1px solid #d2c242;
+    z-index: 1;
 }
 
 /*scrollable option*/
@@ -3659,4 +3660,17 @@ div.btn-group.dropdown {
 
 .load-more-wrapper > h5:hover {
     color: #168039;
+}
+
+/*ticket view tab selected */
+.selected-this {
+    background: #4f9300;
+}
+
+.bg-checkbox {
+    cursor: pointer;
+}
+
+.active-test {
+    background: #4f9300 !important;
 }
