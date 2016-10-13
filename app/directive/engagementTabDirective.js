@@ -42,6 +42,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
 
             /*Initialize default scope*/
+            scope.profileLoadin = true;
+            scope.showNewProfile = false;
+            scope.editProfile = false;
             scope.companyName = "";
             scope.oldFormModel = null;
             scope.currentSubmission = null;
@@ -1091,7 +1094,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                 if (scope.profileDetail) {
 
-                    scope.GetProfileHistory(scope.profileDetail._id);
+                    scope.GetProfileHistory(scope.profileDetail._id);scope.profileLoadin = false;
                     scope.currentSubmission = scope.profileDetail.form_submission;
                     convertToSchemaForm(scope.profileDetail.form_submission, function (schemaDetails) {
                         if (schemaDetails) {
@@ -1150,7 +1153,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         if (scope.profileDetails) {
                             if (scope.profileDetails.length == 1) {
                                 scope.profileDetail = scope.profileDetails[0];
-
+                                scope.GetProfileHistory(scope.profileDetail._id);
+                                scope.profileLoadin = false;
                                 scope.currentSubmission = scope.profileDetails[0].form_submission;
                                 convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
                                     if (schemaDetails) {
@@ -1161,19 +1165,17 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                                 });
 
-
-                                scope.GetProfileHistory(scope.profileDetail._id);
-
                             }
                             else if (scope.profileDetails.length > 1) {
                                 // show multiple profile selection view
+                                scope.profileLoadin = false;
                                 scope.showMultiProfile = true;
-                                scope.isLoadinNewProfile = false;
+
                             }
                             else {
                                 // show new profile
                                 scope.showMultiProfile = false;
-                                scope.isLoadinNewProfile = true;
+                                scope.profileLoadin = false;
 
                                 scope.currentSubmission = null;
                                 convertToSchemaForm(null, function (schemaDetails) {
@@ -1185,6 +1187,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                                 });
                             }
+
                         }
                         else {
                             // show new profile
@@ -1201,7 +1204,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
 
                             scope.showMultiProfile = false;
-                            scope.isLoadinNewProfile = true;
+
                         }
                     }, function (err) {
                         scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
@@ -1390,9 +1393,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 profile.birthday = new Date(collectionDate);
                 userService.CreateExternalUser(profile).then(function (response) {
                     if (response) {
-                        scope.isLoadinNewProfile = false;
-                        scope.showNewProfile = false;
                         scope.profileDetail = response;
+                        scope.showNewProfile = false;
+
                         scope.GetProfileHistory(response._id);
                     }
                     else {
@@ -1408,8 +1411,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 profile.birthday = new Date(collectionDate);
                 userService.UpdateExternalUser(profile).then(function (response) {
                     if (response) {
-                        scope.isLoadinNewProfile = false;
                         scope.showNewProfile = false;
+                        scope.editProfile = false;
                         scope.profileDetail = response;
                         scope.showAlert("Profile", "success", "Update Successfully.");
                     }
@@ -1443,24 +1446,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.modelHeader = null;
                 scope.showMultipleProfile = false;
                 scope.foundProfiles = false;
-                scope.showNewProfile = false;
-                scope.isLoadinNewProfile = false;
+
+
                 return {
-                    showProfiles: function () {
-                        scope.showMultipleProfile = true;
-                        scope.foundProfiles = true;
-                        scope.showNewProfile = false;
-                        this.getModelHeader();
-                    },
-                    closeProfile: function () {
-                        scope.showMultipleProfile = false;
-                        scope.foundProfiles = false;
-                        scope.showNewProfile = false;
-                    },
                     createNewProfile: function () {
                         scope.showMultipleProfile = true;
                         scope.foundProfiles = false;
-                        scope.showNewProfile = true;
+
                         scope.newProfile = scope.profileDetail;
                         var date = moment(scope.profileDetail.birthday);
                         scope.newProfile.dob = {};
@@ -1470,10 +1462,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             'name': date.month()
                         };
                         scope.newProfile.dob.year = date.year();
-                        this.getModelHeader();
+
                     },
                     closeNewProfile: function () {
-                        scope.showNewProfile = false;
+
+                    },
+                    editProfile: function () {
+                        scope.newProfile = scope.profileDetail;
+                        var date = moment(scope.profileDetail.birthday);
+                        scope.newProfile.dob = {};
+                        scope.newProfile.dob.day = date.date();
+                        scope.newProfile.dob.month = {
+                            'index': date.month(),
+                            'name': date.month()
+                        };
+                        scope.newProfile.dob.year = date.year();
+                        scope.showNewProfile = true;
+                        scope.editProfile = true;
                     },
                     closeProfileSelection: function () {
                         scope.showMultiProfile = false;
@@ -1481,7 +1486,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     openSelectedProfile: function (profile) {
                         scope.profileDetail = profile;
                         scope.showMultiProfile = false;
-                        scope.showNewProfile = false;
+
                         scope.GetProfileHistory(profile._id);
 
                         if (scope.profileDetail) {
@@ -1509,14 +1514,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
 
                     },
-                    getModelHeader: function () {
-                        if (scope.showMultipleProfile) {
-                            scope.modelHeader = "Found 3 Multiple Profiles";
-                        }
-                        if (scope.showNewProfile) {
-                            scope.modelHeader = " Create New Profile";
-                        }
-                    },
                     searchProfile: function () {
                         scope.internalControl = scope.searchUsers || {};
                         scope.internalControl.tabReference = scope.tabReference;
@@ -1541,8 +1538,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             //update new function
             // create new profile
             scope.createNProfile = function () {
-                scope.isLoadinNewProfile = true;
                 scope.showMultiProfile = false;
+                scope.profileLoadin = false;
+                scope.showNewProfile = true;
+                scope.editProfile = false;
             };
 
             //engamanet details
@@ -1571,7 +1570,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }, function (err) {
                     scope.showAlert('Profile Contact', 'error', "Update Profile Contacts Failed");
                 });
-            }
+            };
 
             //Progressbar random color
             scope.getRandomColor = function ($index) {
