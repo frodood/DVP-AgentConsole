@@ -296,7 +296,7 @@
 
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <button type="button" class="btn btn-primary">Cancel</button>
+                        <button type="button" class="btn btn-primary" ng-click="multipleProfile.closeProfileSelection();">Cancel</button>
                         <button ng-show="editProfile" type="button" class="btn btn-success" ng-disabled="newProfileForm.$invalid" ng-click="UpdateExternalUser(newProfile);">Update</button>
                         <button ng-hide="editProfile" type="button" class="btn btn-success" ng-disabled="newProfileForm.$invalid" ng-click="saveNewProfile(newProfile);">Save</button>
                     </div>

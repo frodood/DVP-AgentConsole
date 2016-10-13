@@ -1481,7 +1481,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.editProfile = true;
                     },
                     closeProfileSelection: function () {
-                        scope.showMultiProfile = false;
+                        scope.showNewProfile = false;
+                        scope.editProfile = false;
                     },
                     openSelectedProfile: function (profile) {
                         scope.profileDetail = profile;

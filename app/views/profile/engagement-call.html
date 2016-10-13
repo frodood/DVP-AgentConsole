@@ -780,188 +780,188 @@
     </div>
 
 
-
-</div>
-
-
-<!-- add new ticket -->
-<div ng-show="showCreateTicket">
-    <div class="position-relative">
-        <div id="addNewTicket" class="animated fixed-model-opacity">
-            <div class="container">
-                <div class="col-lg-offset-2 col-lg-8 col-md-8 col-xs-8 ">
-                    <div class="model-main-wrapper p-0 ">
-                        <!-- MODEL HEADER -->
-                        <div class="model-header">
-                            <div style="padding-top: 7px;" class="col-md-6">
-                                <div class="mode-left-icon">
-                                    <i class="veery-font-1-notepad"></i>
+    <!-- add new ticket -->
+    <div ng-show="showCreateTicket">
+        <div class="position-relative">
+            <div id="addNewTicket" class="animated fixed-model-opacity">
+                <div class="container">
+                    <div class="col-lg-offset-2 col-lg-8 col-md-8 col-xs-8 ">
+                        <div class="model-main-wrapper p-0 ">
+                            <!-- MODEL HEADER -->
+                            <div class="model-header">
+                                <div style="padding-top: 7px;" class="col-md-6">
+                                    <div class="mode-left-icon">
+                                        <i class="veery-font-1-notepad"></i>
+                                    </div>
+                                    <div class="model-header-text" ng-click="showNewTicket();">
+                                        Add New Ticket
+                                    </div>
                                 </div>
-                                <div class="model-header-text" ng-click="showNewTicket();">
-                                    Add New Ticket
-                                </div>
-                            </div>
 
-                            <div class="col-md-6 col-sm-6 ">
-                                <div class="model-btn-wrapper">
-                                    <div class="btn-warp ">
+                                <div class="col-md-6 col-sm-6 ">
+                                    <div class="model-btn-wrapper">
+                                        <div class="btn-warp ">
                                 <span class="btn btn-default btn-close"
                                       ng-click="closeNewTicket();"
                                       id="closeTicket">close</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- END MODEL HEADER -->
+                            <!-- END MODEL HEADER -->
 
-                        <!-- MODEL HEADER -->
-                        <div class="model-body model-body-scroll">
-                            <div class="col-lg-12">
-                                <form name="addNewTicketForm" novalidate>
+                            <!-- MODEL HEADER -->
+                            <div class="model-body model-body-scroll">
+                                <div class="col-lg-12">
+                                    <form name="addNewTicketForm" novalidate>
 
-                                    <div class="form-group"
-                                         ng-class="{ 'has-error': addNewTicketForm.ticketsubject.$invalid && addNewTicketForm.ticketsubject.$dirty }">
-                                        <label class="control-label">Subject*</label>
-                                        <input type="text" class="form-control" id="subject" name="ticketsubject"
-                                               ng-model="ticket.subject"
-                                               required placeholder="subject"/>
-                                    </div>
+                                        <div class="form-group"
+                                             ng-class="{ 'has-error': addNewTicketForm.ticketsubject.$invalid && addNewTicketForm.ticketsubject.$dirty }">
+                                            <label class="control-label">Subject*</label>
+                                            <input type="text" class="form-control" id="subject" name="ticketsubject"
+                                                   ng-model="ticket.subject"
+                                                   required placeholder="subject"/>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-xs-7">
-                                                <label>Priority</label>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-xs-7">
+                                                    <label>Priority</label>
 
-                                                <div class="form-inline">
-                                                    <div class="bg-checkbox red font-white inline-btn"
-                                                         ng-click="setPriority('urgent');">
-                                                        <i class="main-icon-2-cancel"></i>
-                                                        urgent
-                                                    </div>
-                                                    <div class="bg-checkbox red font-white orange"
-                                                         ng-click="setPriority('high');">
-                                                        <i class="main-icon-2-cancel"></i>
-                                                        high
-                                                    </div>
-                                                    <div class="bg-checkbox red font-white teal600"
-                                                         ng-click="setPriority('normal');">
-                                                        <i class="main-icon-2-cancel"></i>
-                                                        normal
-                                                    </div>
-                                                    <div class="bg-checkbox red font-white gray300"
-                                                         ng-click="setPriority('low');">
-                                                        <i class="main-icon-2-cancel"></i>
-                                                        low
+                                                    <div class="form-inline">
+                                                        <div class="bg-checkbox red font-white inline-btn"
+                                                             ng-click="setPriority('urgent');">
+                                                            <i class="main-icon-2-cancel"></i>
+                                                            urgent
+                                                        </div>
+                                                        <div class="bg-checkbox red font-white orange"
+                                                             ng-click="setPriority('high');">
+                                                            <i class="main-icon-2-cancel"></i>
+                                                            high
+                                                        </div>
+                                                        <div class="bg-checkbox red font-white teal600"
+                                                             ng-click="setPriority('normal');">
+                                                            <i class="main-icon-2-cancel"></i>
+                                                            normal
+                                                        </div>
+                                                        <div class="bg-checkbox red font-white gray300"
+                                                             ng-click="setPriority('low');">
+                                                            <i class="main-icon-2-cancel"></i>
+                                                            low
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-5">
-                                                <div class="form-group"
-                                                     ng-class="{ 'has-error': addNewTicketForm.ticketType.$invalid && addNewTicketForm.ticketType.$dirty }">
-                                                    <label class="control-label">Type*</label>
-                                                    <select class="form-control" ng-model="ticket.type"
-                                                            name="ticketType"
-                                                            required
-                                                            placeholder="Select">
-                                                        <option>question</option>
-                                                        <option>complain</option>
-                                                        <option>incident</option>
-                                                        <option>action</option>
-                                                    </select>
+                                                <div class="col-xs-5">
+                                                    <div class="form-group"
+                                                         ng-class="{ 'has-error': addNewTicketForm.ticketType.$invalid && addNewTicketForm.ticketType.$dirty }">
+                                                        <label class="control-label">Type*</label>
+                                                        <select class="form-control" ng-model="ticket.type"
+                                                                name="ticketType"
+                                                                required
+                                                                placeholder="Select">
+                                                            <option>question</option>
+                                                            <option>complain</option>
+                                                            <option>incident</option>
+                                                            <option>action</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
+
                                             </div>
 
                                         </div>
+                                        <div class="form-group">
+                                            <label>Tags</label>
+                                            <button ng-click="loadTags();"> Reload</button>
+                                            <tags-input ng-model="postTags" display-property="name" placeholder="...">
+                                                <auto-complete source="loadPostTags($query)"></auto-complete>
+                                            </tags-input>
 
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tags</label>
-                                        <button ng-click="loadTags();"> Reload</button>
-                                        <tags-input ng-model="postTags" display-property="name" placeholder="...">
-                                            <auto-complete source="loadPostTags($query)"></auto-complete>
-                                        </tags-input>
-
-                                        <tags-input ng-model="newAddTags" placeholder="choose Tags"
-                                                    replace-spaces-with-dashes="false"
-                                                    display-property="name"
-                                                    add-from-autocomplete-only="true"
-                                                    on-tag-added="onChipAddTag($tag)"
-                                                    on-tag-removed="onChipDeleteTag($tag)"
-                                                    ng-disabled="" min-length="1">
-                                            <auto-complete source="queryTagSearch($query)"
-                                                           load-on-empty="true"
-                                                           load-on-focus="true"
-                                                           min-length="1"></auto-complete>
-                                        </tags-input>
-                                    </div>
-                                    <div class="form-group"
-                                         ng-class="{ 'has-error': addNewTicketForm.ticketDescription.$invalid && addNewTicketForm.ticketDescription.$dirty }">
-                                        <label class="control-label">Description*</label>
+                                            <tags-input ng-model="newAddTags" placeholder="choose Tags"
+                                                        replace-spaces-with-dashes="false"
+                                                        display-property="name"
+                                                        add-from-autocomplete-only="true"
+                                                        on-tag-added="onChipAddTag($tag)"
+                                                        on-tag-removed="onChipDeleteTag($tag)"
+                                                        ng-disabled="" min-length="1">
+                                                <auto-complete source="queryTagSearch($query)"
+                                                               load-on-empty="true"
+                                                               load-on-focus="true"
+                                                               min-length="1"></auto-complete>
+                                            </tags-input>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{ 'has-error': addNewTicketForm.ticketDescription.$invalid && addNewTicketForm.ticketDescription.$dirty }">
+                                            <label class="control-label">Description*</label>
                                         <textarea ng-model="ticket.description" class="form-control" rows="3"
                                                   name="ticketDescription" required
                                                   placeholder="Description"></textarea>
-                                    </div>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label>Related Tickets</label>
-                                        <tags-input ng-model="ticket.related" placeholder="choose Ticket"
-                                                    replace-spaces-with-dashes="false"
-                                                    display-property="displayData"
-                                                    add-from-autocomplete-only="true"
-                                                    ng-disabled="" min-length="1">
-                                            <auto-complete source="queryTicketList($query)"
-                                                           load-on-empty="true"
-                                                           load-on-focus="true"
-                                                           min-length="1"></auto-complete>
-                                        </tags-input>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Assignee user</label>
-                                        <!--<tags-input ng-model="ticket.assignUsers" placeholder="choose assignee user" replace-spaces-with-dashes="false"
-                                                    display-property="username"
-                                                    add-from-autocomplete-only="true"
-                                                    on-tag-added="onChipAddUser($tag)"
-                                                    on-tag-removed="onChipDeleteUser($tag)"
-                                                    ng-disabled="" min-length="1">
-                                            <auto-complete source="querySearch($query)"
-                                                           load-on-empty="true"
-                                                           load-on-focus="true"
-                                                           min-length="1"></auto-complete>
-                                        </tags-input>-->
+                                        <div class="form-group">
+                                            <label>Related Tickets</label>
+                                            <tags-input ng-model="ticket.related" placeholder="choose Ticket"
+                                                        replace-spaces-with-dashes="false"
+                                                        display-property="displayData"
+                                                        add-from-autocomplete-only="true"
+                                                        ng-disabled="" min-length="1">
+                                                <auto-complete source="queryTicketList($query)"
+                                                               load-on-empty="true"
+                                                               load-on-focus="true"
+                                                               min-length="1"></auto-complete>
+                                            </tags-input>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Assignee user</label>
+                                            <!--<tags-input ng-model="ticket.assignUsers" placeholder="choose assignee user" replace-spaces-with-dashes="false"
+                                                        display-property="username"
+                                                        add-from-autocomplete-only="true"
+                                                        on-tag-added="onChipAddUser($tag)"
+                                                        on-tag-removed="onChipDeleteUser($tag)"
+                                                        ng-disabled="" min-length="1">
+                                                <auto-complete source="querySearch($query)"
+                                                               load-on-empty="true"
+                                                               load-on-focus="true"
+                                                               min-length="1"></auto-complete>
+                                            </tags-input>-->
 
-                                        <select class="form-control" ng-model="ticket.assignee"
-                                                ng-model-options="{trackBy: '$value'}">
-                                            <option ng-repeat="c in users" value='{{c._id}}'>
-                                                {{c.username}}
-                                            </option>
-                                        </select>
+                                            <select class="form-control" ng-model="ticket.assignee"
+                                                    ng-model-options="{trackBy: '$value'}">
+                                                <option ng-repeat="c in users" value='{{c._id}}'>
+                                                    {{c.username}}
+                                                </option>
+                                            </select>
 
 
-                                    </div>
-                                </form>
+                                        </div>
+                                    </form>
 
-                            </div>
-                            <div class="model-footer-wrapper">
-                                <div class="model-btn-wrapper">
-                                    <div class="btn-warp ">
+                                </div>
+                                <div class="model-footer-wrapper">
+                                    <div class="model-btn-wrapper">
+                                        <div class="btn-warp ">
                                 <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
                                       ng-click="saveTicket(ticket);"
                                         >Save</span>
+                                        </div>
                                     </div>
+
                                 </div>
-
                             </div>
+                            <!-- END MODEL HEADER -->
+
                         </div>
-                        <!-- END MODEL HEADER -->
-
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
+    <!-- end -->
+
+
 </div>
-<!-- end -->
+
 
 
 
