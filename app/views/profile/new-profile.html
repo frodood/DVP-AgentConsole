@@ -1,306 +1,254 @@
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <div class="model-header">
-                    <div style="padding-top: 7px;" class="col-md-6">
-                        <div class="mode-left-icon">
-                            <i class="veery-font-1-notepad"></i>
-                        </div>
-                        <div class="model-header-text" ng-hide="editProfile">
-                            Create New Profile
-                        </div>
-                        <div class="model-header-text" ng-show="editProfile">
-                            Edit Profile
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-sm-6 ">
-                        <div class="model-btn-wrapper">
-                            <div class="btn-warp inline-btn"
-                                 ng-click="multipleProfile.searchProfile();">
-                                <span class="btn  btn-default">search</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="model-header">
+        <div style="padding-top: 7px;" class="col-md-6">
+            <div class="mode-left-icon">
+                <i class="veery-font-1-notepad"></i>
             </div>
-            <div class="x_content">
-                <br />
-                <form name="newProfileForm" data-parsley-validate class="form-horizontal form-label-left" novalidate>
+            <div class="model-header-text" ng-hide="editProfile">
+                Create New Profile
+            </div>
+            <div class="model-header-text" ng-show="editProfile">
+                Edit Profile
+            </div>
+        </div>
 
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-3 col-lg-3 col-sm-12">
-                                <div class="profile-image-crop">
-                                    <div>
-                                        <img ng-src="{{cropImageURL}}"
-                                             src="assets/img/avatar/profileAvatar.png">
-                                    </div>
-                                    <div class="image-edit">
-                                        <span class="btn-edit-img" ng-click="viewCropArea()">change image</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-9 col-sm-12 col-xs-12" style="margin-top: 15px;">
-                                <!-- personal information -->
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12 text-header bold">
-                                        Personal Information
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group"
-                                             ng-class="{ 'has-error': newProfileForm.newProfilefirstname.$invalid && newProfileForm.newProfilefirstname.$dirty }">
-                                            <label class="control-label">First Name*</label>
-                                            <input type="text" class="form-control" name="newProfilefirstname"
-                                                   ng-model="newProfile.firstname" required
-                                                   placeholder="Enter First Name"/>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group"
-                                             ng-class="{ 'has-error': newProfileForm.newProfilelastname.$invalid && newProfileForm.newProfilelastname.$dirty }">
-                                            <label class="control-label">Last Name*</label>
-                                            <input type="text" class="form-control" name="newProfilelastname"
-                                                   ng-model="newProfile.lastname" required
-                                                   placeholder="Enter Last Name"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group">
-                                            <label>Nick Name</label>
-                                            <input type="text" class="form-control" placeholder=""
-                                                   ng-model="newProfile.name">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-
-                                        <div class="form-group"
-                                             ng-class="{ 'has-error': newProfileForm.newProfilephone.$invalid && newProfileForm.newProfilephone.$dirty }">
-                                            <label class="control-label">Phone Number*</label>
-                                            <input type="text" class="form-control" name="newProfilephone"
-                                                   ng-model="newProfile.phone" required placeholder="Phone Number"/>
-                                        </div>
-
-                                    </div>
+        <div class="col-md-6 col-sm-6 ">
+            <div class="model-btn-wrapper">
+                <div class="btn-warp inline-btn"
+                     ng-click="multipleProfile.searchProfile();">
+                    <span class="btn  btn-default">search</span>
+                </div>
+                <div class="btn-warp inline-btn"
+                     ng-click="multipleProfile.closeProfileSelection();">
+                    <span class="btn  btn-default">cancel</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
 
 
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group"
-                                             ng-class="{ 'has-error': newProfileForm.newProfileemail.$invalid && newProfileForm.newProfileemail.$dirty }">
-                                            <label class="control-label">Email*</label>
-                                            <input type="email" class="form-control" name="newProfileemail"
-                                                   ng-model="newProfile.email" required placeholder="Email"/>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group">
-                                            <label for="province">Locale</label>
-                                            <select class="form-control"
-                                                    ng-model="newProfile.locale">
-                                                <option ng-repeat="locale in languages"
-                                                        value="{{locale.code}}">
-                                                    {{locale.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="row">
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <label for="province">Birthday</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xs-4 col-sm-12">
-                                            <div class="row">
-
-                                                <select class="form-control "
-                                                        ng-options="day for day in dayList track by day"
-                                                        ng-model="newProfile.dob.day"></select>
-
-                                                <!--<select class="form-control "
-                                                        ng-model="newProfile.dob.day">
-
-                                                    <option ng-repeat="day in dayList"
-                                                            value="{{day}}">
-                                                        {{day}}
-                                                    </option>
-                                                </select>-->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xs-4 col-sm-12">
-                                            <div class="row"
-                                                 style="padding-left: 5px;padding-right: 5px;">
-
-                                                <select class="form-control "
-                                                        ng-options="month.name for month in monthList track by month.index"
-                                                        ng-model="newProfile.dob.month"></select>
-
-                                                <!--<select class="form-control"
-                                                        ng-model="newProfile.dob.month">
-                                                    <option ng-repeat="month in monthList"
-                                                            value="{{month.index}}">
-                                                        {{month.name}}
-                                                    </option>
-                                                </select>-->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-xs-4 col-sm-12">
-                                            <div class="row">
-                                                <select class="form-control "
-                                                        ng-options="y for y in yearList track by y"
-                                                        ng-model="newProfile.dob.year"></select>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12 text-header bold">
-                                        Address
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group">
-                                            <label for="no">P.O. Box / Building No</label>
-                                            <input type="text" class="form-control" id="no"
-                                                   placeholder=""
-                                                   ng-model="newProfile.address.number">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group">
-                                            <label for="street1">Street</label>
-                                            <input type="text" class="form-control" id="street1"
-                                                   placeholder=""
-                                                   ng-model="newProfile.address.street">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group">
-                                            <label for="City2">City</label>
-                                            <input type="text" class="form-control" id="City2"
-                                                   placeholder=""
-                                                   ng-model="newProfile.address.city">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group">
-                                            <label for="province">Province</label>
-                                            <input type="text" class="form-control" id="province"
-                                                   placeholder=""
-                                                   ng-model="newProfile.address.province">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group">
-                                            <label for="country">Country</label>
-                                            <select class="select2_single form-control"
-                                                    tabindex="-1"
-                                                    aria-hidden="true" id="country"
-                                                    name="country"
-                                                    ng-model="newProfile.address.country">
-                                                <option ng-repeat="country in countryList"
-                                                        value="{{country.name}}">
-                                                    {{country.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group">
-                                            <label for="ZipCode">Zip Code</label>
-                                            <input type="text" class="form-control" id="ZipCode"
-                                                   placeholder=""
-                                                   ng-model="newProfile.address.zipcode">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <div class="form-group"
-                                             ng-class="{ 'has-error': newProfileForm.newProfilessn.$invalid && newProfileForm.newProfilessn.$dirty }">
-                                            <label class="control-label">SSN*</label>
-                                            <input type="text" class="form-control" name="newProfilessn"
-                                                   ng-model="newProfile.ssn" required placeholder=""/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-sm-8 col-xs-8">
-                                        <div class="form-group"
-                                             ng-class="{ 'has-error': newProfileForm.newProfilessn.$invalid && newProfileForm.newProfilessn.$dirty }">
-                                            <label class="control-label">Tags</label>
-                                            <tags-input
-                                                    ng-model="cutomerTypes"
-                                                    display-property="cutomerType"
-                                                    placeholder="Search Tags"
-                                                    replace-spaces-with-dashes="false">
-                                                <auto-complete source="loadCutomerType($query)"
-                                                               min-length="0"
-                                                               load-on-focus="true"
-                                                               load-on-empty="true"
-                                                               max-results-to-show="32"
-                                                        >
-                                                </auto-complete>
-                                            </tags-input>
-                                        </div>
-
-                                    </div>
-
-                                    <!--<div class="col-md-12 col-sm-12 col-xs-12 text-header bold">
-                                        Veery Account Information
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <label for="ZipCode">Contact Type</label>
-
-                                            <div class="form-group ">
-                                                <select class="form-control ">
-                                                    <option value="" disabled selected>Select
-                                                        contact
-                                                        type
-                                                    </option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <label for="ZipCode">Link</label>
-                                            <input type="text" class="form-control" placeholder="">
-                                        </div>
-                                    </div>-->
-                                </div>
-                            </div>
-
+<div class="col-lg-12 col-md-12">
+    <form name="newProfileForm" data-parsley-validate novalidate>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-sm-12">
+                    <div class="profile-image-crop">
+                        <div>
+                            <img ng-src="{{cropImageURL}}"
+                                 src="assets/img/avatar/profileAvatar.png">
                         </div>
-
-                    </div>
-
-                </form>
-                <div class="ln_solid"></div>
-
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <button type="button" class="btn btn-primary" ng-click="multipleProfile.closeProfileSelection();">Cancel</button>
-                        <button ng-show="editProfile" type="button" class="btn btn-success" ng-disabled="newProfileForm.$invalid" ng-click="UpdateExternalUser(newProfile);">Update</button>
-                        <button ng-hide="editProfile" type="button" class="btn btn-success" ng-disabled="newProfileForm.$invalid" ng-click="saveNewProfile(newProfile);">Save</button>
+                        <div class="image-edit">
+                            <span class="btn-edit-img" ng-click="viewCropArea()">change image</span>
+                        </div>
                     </div>
                 </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 text-header text-uppercase"
+                             style="margin-top: 20px;margin-bottom: 14px;">
+                            Personal Information
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': newProfileForm.newProfilefirstname.$invalid && newProfileForm.newProfilefirstname.$dirty }">
+                                <label class="control-label">First Name*</label>
+                                <input type="text" class="form-control" name="newProfilefirstname"
+                                       ng-model="newProfile.firstname" required
+                                       placeholder="Enter First Name"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': newProfileForm.newProfilelastname.$invalid && newProfileForm.newProfilelastname.$dirty }">
+                                <label class="control-label">Last Name*</label>
+                                <input type="text" class="form-control" name="newProfilelastname"
+                                       ng-model="newProfile.lastname" required
+                                       placeholder="Enter Last Name"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label>Nick Name</label>
+                                <input type="text" class="form-control" placeholder=""
+                                       ng-model="newProfile.name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': newProfileForm.newProfilephone.$invalid && newProfileForm.newProfilephone.$dirty }">
+                                <label class="control-label">Phone Number*</label>
+                                <input type="text" class="form-control" name="newProfilephone"
+                                       ng-model="newProfile.phone" required placeholder="Phone Number"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': newProfileForm.newProfileemail.$invalid && newProfileForm.newProfileemail.$dirty }">
+                                <label class="control-label">Email*</label>
+                                <input type="email" class="form-control" name="newProfileemail"
+                                       ng-model="newProfile.email" required placeholder="Email"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label for="province">Locale</label>
+                                <select class="form-control"
+                                        ng-model="newProfile.locale">
+                                    <option ng-repeat="locale in languages"
+                                            value="{{locale.code}}">
+                                        {{locale.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label for="province">Birthday</label>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-12">
+                            <select class="form-control "
+                                    ng-options="day for day in dayList track by day"
+                                    ng-model="newProfile.dob.day"></select>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-12">
+                            <select class="form-control "
+                                    ng-options="month.name for month in monthList track by month.index"
+                                    ng-model="newProfile.dob.month"></select>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-12">
+                            <select class="form-control "
+                                    ng-options="y for y in yearList track by y"
+                                    ng-model="newProfile.dob.year"></select>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ADDRESS -->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12 text-header text-uppercase"
+                             style="margin-top: 10px;margin-bottom: 14px;">
+                            <div class="row">
+                                Address
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <label for="no">P.O. Box / Building No</label>
+                                    <input type="text" class="form-control" id="no"
+                                           placeholder=""
+                                           ng-model="newProfile.address.number">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <label for="street1">Street</label>
+                                    <input type="text" class="form-control" id="street1"
+                                           placeholder=""
+                                           ng-model="newProfile.address.street">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <label for="City2">City</label>
+                                    <input type="text" class="form-control" id="City2"
+                                           placeholder=""
+                                           ng-model="newProfile.address.city">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <label for="province">Province</label>
+                                    <input type="text" class="form-control" id="province"
+                                           placeholder=""
+                                           ng-model="newProfile.address.province">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <select class="select2_single form-control"
+                                            tabindex="-1"
+                                            aria-hidden="true" id="country"
+                                            name="country"
+                                            ng-model="newProfile.address.country">
+                                        <option ng-repeat="country in countryList"
+                                                value="{{country.name}}">
+                                            {{country.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <label for="ZipCode">Zip Code</label>
+                                    <input type="text" class="form-control" id="ZipCode"
+                                           placeholder=""
+                                           ng-model="newProfile.address.zipcode">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="form-group"
+                             ng-class="{ 'has-error': newProfileForm.newProfilessn.$invalid
+                                 && newProfileForm.newProfilessn.$dirty }">
+                            <label class="control-label">SSN*</label>
+                            <input type="text" class="form-control" name="newProfilessn"
+                                   ng-model="newProfile.ssn" required placeholder=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group"
+                             ng-class="{ 'has-error': newProfileForm.newProfilessn.$invalid &&
+                                  newProfileForm.newProfilessn.$dirty }">
+                            <label class="control-label">Tags</label>
+                            <tags-input
+                                    ng-model="cutomerTypes"
+                                    display-property="cutomerType"
+                                    placeholder="Search Tags"
+                                    replace-spaces-with-dashes="false">
+                                <auto-complete source="loadCutomerType($query)"
+                                               min-length="0"
+                                               load-on-focus="true"
+                                               load-on-empty="true"
+                                               max-results-to-show="32">
+                                </auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <div class="clearfix"></div>
+    <div class="form-group">
+        <div class="col-md-12 col-sm-12 col-xs-12 text-right">
+            <div ng-show="editProfile" class="btn-warp inline-btn"
+                 ng-disabled="newProfileForm.$invalid"
+                 ng-click="UpdateExternalUser(newProfile);">
+                <span class="btn  btn-default">UPDATE</span>
+            </div>
+            <div ng-hide="editProfile" class="btn-warp inline-btn"
+                 ng-disabled="newProfileForm.$invalid"
+                 ng-click="saveNewProfile(newProfile);">
+                <span class="btn  btn-default">SAVE</span>
             </div>
         </div>
     </div>
