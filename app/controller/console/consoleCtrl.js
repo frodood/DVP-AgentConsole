@@ -457,6 +457,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 console.error(ex.message)
             }
         }
+
     };
 
     var phoneFuncion = {
@@ -2050,15 +2051,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('html, body').animate({scrollTop: 0}, 'fast');
     };
 
-    //code by damith
-    //check selected tab and focus
 
-    $('#consoleMainTab').find('li').on('click', function (ev) {
-        var $li = $(this).parent();
-
-        console.log('event fire..');
-
-    });
 
 
 }).directive("mainScroll", function ($window) {

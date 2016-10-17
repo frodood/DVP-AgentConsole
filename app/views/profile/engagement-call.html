@@ -1,150 +1,144 @@
 <div class="row">
     <!-- left main wrappper -->
     <div class="col-md-4 col-sm-4 col-xs-4">
-        <div class="x_panel">
-            <div class="x_title">
-                <div class="layout-header">
-                    <div class="col-md-8 col-sm-8">
-                        <div class="left-text header-small pull-left">
-                            ID :{{sessionId}}
-                            <i class="veery-font-3-copy copy"></i>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 ">
-                        <div class="btn-left-icon pull-right p-top-6"
-                             ng-click="showNewTicket();">
-                            <i class="veery-font-1-add-2"></i>
-                            new ticket
-                        </div>
-                    </div>
+        <div class="layout-header">
+            <div class="col-md-8 col-sm-8">
+                <div class="left-text header-small pull-left">
+                    ID :{{sessionId}}
+                    <i class="veery-font-3-copy copy"></i>
                 </div>
-                <div class="clearfix"></div>
             </div>
-            <div class="x_content">
-                <br/>
-
-                <form class="form-horizontal form-label-left input_mask">
-                    <!-- ENGAGEMENT WRAPPER -->
-                    <div>
-                        <div class="engagement-wrapper">
-                            <div class="header-round-icon">
-                                <div class="icon-left">
-                                    <i class="veery-font-1-user"></i>
-                                </div>
-                                <div class="text-header bold">
-                                    ENGAGEMENT
-                                </div>
-                            </div>
-                            <ul class="info-list-lg">
-                                <li>
-                                    <small>Company</small>
-                                    <h5>{{company}}</h5>
-                                </li>
-                                <li>
-                                    <small>Direction</small>
-                                    <h5>{{direction}}</h5>
-                                </li>
-                                <li>
-                                    <small>Channel From</small>
-                                    <h5>{{channelFrom}}</h5>
-                                </li>
-                                <li>
-                                    <small>Channel To</small>
-                                    <h5>{{channelTo}}</h5>
-                                </li>
-                                <li>
-                                    <small>Channel</small>
-                                    <h5>{{channel}}</h5>
-                                </li>
-                                <li>
-                                    <small>Skill</small>
-                                    <h5>{{skill}}</h5>
-                                </li>
-                            </ul>
+            <div class="col-md-4 col-sm-4 ">
+                <div class="btn-left-icon pull-right p-top-6"
+                     ng-click="showNewTicket();">
+                    <i class="veery-font-1-add-2"></i>
+                     ticket
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
 
 
-                            <div class="note-ivr-wrapper ">
-                                <uib-tabset active="activePill" type="pills">
-                                    <uib-tab index="0" heading="NOTE">
-                                        <form name="userFormTest" novalidate>
-                                            <div class="new-note-wrapper"
-                                                 ng-class="{ 'has-error': userFormTest.name.$invalid && userFormTest.name.$dirty }">
+        <form class="form-horizontal form-label-left input_mask">
+            <!-- ENGAGEMENT WRAPPER -->
+            <div>
+                <div class="engagement-wrapper">
+                    <div class="header-round-icon">
+                        <div class="icon-left">
+                            <i class="veery-font-1-user"></i>
+                        </div>
+                        <div class="text-header bold">
+                            ENGAGEMENT
+                        </div>
+                    </div>
+                    <ul class="info-list-lg">
+                        <li>
+                            <small>Company</small>
+                            <h5>{{company}}</h5>
+                        </li>
+                        <li>
+                            <small>Direction</small>
+                            <h5>{{direction}}</h5>
+                        </li>
+                        <li>
+                            <small>Channel From</small>
+                            <h5>{{channelFrom}}</h5>
+                        </li>
+                        <li>
+                            <small>Channel To</small>
+                            <h5>{{channelTo}}</h5>
+                        </li>
+                        <li>
+                            <small>Channel</small>
+                            <h5>{{channel}}</h5>
+                        </li>
+                        <li>
+                            <small>Skill</small>
+                            <h5>{{skill}}</h5>
+                        </li>
+                    </ul>
+
+
+                    <div class="note-ivr-wrapper ">
+                        <uib-tabset active="activePill" type="pills">
+                            <uib-tab index="0" heading="NOTE">
+                                <form name="userFormTest" novalidate>
+                                    <div class="new-note-wrapper"
+                                         ng-class="{ 'has-error': userFormTest.name.$invalid && userFormTest.name.$dirty }">
                                     <textarea id="noteBody" type="text" class="form-control" name="name"
                                               ng-model="noteBody" required placeholder="Add Note to Engagement"/>
 
-                                                <div class="btn-warp inline-btn  p-top-6 pull-right">
+                                        <div class="btn-warp inline-btn  p-top-6 pull-right">
                               <span class="btn  btn-default btn-sm "
                                     ng-click="AppendNoteToEngagementSession(noteBody);"
                                     ng-disabled="userFormTest.$invalid">save</span>
-                                                </div>
-                                            </div>
-
-
-                                        </form>
-
-                                        <div class="engagement-note-list">
-                                            <div class="note-wrap" ng-repeat="engNote in currentEngagement.notes">
-                                                <div class="left-icon">
-                                                    <i class="veery-font-1-list"></i>
-                                                </div>
-                                                {{engNote.body}}
-                                            </div>
-
                                         </div>
-                                    </uib-tab>
+                                    </div>
 
-                                    <uib-tab index="1" heading="IVR">
-                                        <div class="IVR-wrapper">
-                                            <div class="IVR-details-wrap"
-                                                 ng-slimscroll
-                                                 opacity="0.1"
-                                                 distance="5px"
-                                                 height="480px"
-                                                 width="100%"
-                                                 ng-mouseover="chatWidgetscrollEnabled = true"
-                                                 ng-mouseleave="chatWidgetscrollEnabled = false"
-                                                 enabled="{{ chatWidgetscrollEnabled }}">
-                                                <div ng-show="ivrDetails.length==0" class="data-not-found">
-                                                    - DATA NOT FOUND -
-                                                </div>
 
-                                                <div class="ivr-list" ng-show="ivrDetails.length!=0">
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Class</th>
-                                                            <th>Type</th>
-                                                            <th>Category</th>
-                                                            <th>Time</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr ng-repeat="ivr in ivrDetails">
-                                                            <th> {{ivr.EventName}}</th>
-                                                            <td>{{ivr.EventClass}}</td>
-                                                            <td>{{ivr.EventCategory}}</td>
-                                                            <td>{{ivr.EventType}}</td>
-                                                            <td>{{ivr.EventTime}}</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                </form>
+
+                                <div class="engagement-note-list">
+                                    <div class="note-wrap" ng-repeat="engNote in currentEngagement.notes">
+                                        <div class="left-icon">
+                                            <i class="veery-font-1-list"></i>
                                         </div>
-                                    </uib-tab>
-                                </uib-tabset>
-                            </div>
+                                        {{engNote.body}}
+                                    </div>
 
+                                </div>
+                            </uib-tab>
 
-                        </div>
+                            <uib-tab index="1" heading="IVR">
+                                <div class="IVR-wrapper">
+                                    <div class="IVR-details-wrap"
+                                         ng-slimscroll
+                                         opacity="0.1"
+                                         distance="5px"
+                                         height="480px"
+                                         width="100%"
+                                         ng-mouseover="chatWidgetscrollEnabled = true"
+                                         ng-mouseleave="chatWidgetscrollEnabled = false"
+                                         enabled="{{ chatWidgetscrollEnabled }}">
+                                        <div ng-show="ivrDetails.length==0" class="data-not-found">
+                                            - DATA NOT FOUND -
+                                        </div>
 
+                                        <div class="ivr-list" ng-show="ivrDetails.length!=0">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Class</th>
+                                                    <th>Type</th>
+                                                    <th>Category</th>
+                                                    <th>Time</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="ivr in ivrDetails">
+                                                    <th> {{ivr.EventName}}</th>
+                                                    <td>{{ivr.EventClass}}</td>
+                                                    <td>{{ivr.EventCategory}}</td>
+                                                    <td>{{ivr.EventType}}</td>
+                                                    <td>{{ivr.EventTime}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
                     </div>
-                    <!-- END -->
 
-                </form>
+
+                </div>
+
             </div>
-        </div>
+            <!-- END -->
+
+        </form>
     </div>
 
 
@@ -161,30 +155,6 @@
                             </div>
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-12">
-                            <!--<div class="model-btn-wrapper p-0 text-center">-->
-                            <!--<div class="btn-warp">-->
-                            <!--<span id="timeLine"-->
-                            <!--ng-click="showProfileView('#viewTimeLine','#timeLine')"-->
-                            <!--class="btn tab-btn">-->
-                            <!--<i class="veery-font-3-clock-2"></i>-->
-                            <!--time line-->
-                            <!--</span>-->
-                            <!--</div>-->
-                            <!--<div class="btn-warp">-->
-                            <!--<span id="ticket"-->
-                            <!--ng-click="showProfileView('#viewTicketView','#ticket')"-->
-                            <!--class="btn tab-btn">-->
-                            <!--<i class="veery-font-1-flag"></i>-->
-                            <!--ticket</span>-->
-                            <!--</div>-->
-                            <!--<div class="btn-warp ">-->
-                            <!--<span id="profile"-->
-                            <!--ng-click="showProfileView('#viewProfile','#profile')"-->
-                            <!--class="btn tab-btn active">-->
-                            <!--<i class="veery-font-1-user"></i>-->
-                            <!--profile</span>-->
-                            <!--</div>-->
-                            <!--</div>-->
 
                         </div>
                         <div class="col-md-3 col-lg-3 col-sm-12 ">
@@ -197,6 +167,7 @@
                                 <div class="btn-warp inline-btn" ng-click="multipleProfile.searchProfile();">
                                     <span class="btn  btn-default">search</span>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -243,7 +214,8 @@
                                                 </li>
                                                 <li>
                                                     <small>Address</small>
-                                                    <h5>{{profileDetail.address.zipcode}} ,{{profileDetail.address.street}},
+                                                    <h5>{{profileDetail.address.zipcode}}
+                                                        ,{{profileDetail.address.street}},
                                                         {{profileDetail.address.city}}</h5>
                                                 </li>
                                                 <li>
@@ -359,7 +331,8 @@
                                                     <div class="col-md-4 col-sm-4 ">
                                                         <div class="btn-left-icon pull-right "
                                                              ng-click="showAddNewContact();">
-                                                            <i ng-show="!isAddNewContact" class="veery-font-1-add-2"></i>
+                                                            <i ng-show="!isAddNewContact"
+                                                               class="veery-font-1-add-2"></i>
                                                             <i ng-show="isAddNewContact" class="main-icon-2-close"></i>
                                                         </div>
                                                     </div>
@@ -462,7 +435,8 @@
                                                             <div class="prn2-contact text-header ">
                                                                 email
                                                                 <br/>
-                                                                <small ng-show="profileDetail.email">{{profileDetail.email}}
+                                                                <small ng-show="profileDetail.email">
+                                                                    {{profileDetail.email}}
                                                                 </small>
                                                                 <small ng-show="!profileDetail.email">
                                                                     -
@@ -477,7 +451,8 @@
                                                             <div class="prn2-contact text-header ">
                                                                 skype
                                                                 <br/>
-                                                                <small ng-show="profileDetail.skype">{{profileDetail.skype}}
+                                                                <small ng-show="profileDetail.skype">
+                                                                    {{profileDetail.skype}}
                                                                 </small>
                                                                 <small ng-show="!profileDetail.skype">
                                                                     -
@@ -567,7 +542,8 @@
                                                                 {{eng.channel_from}}
                                                             </div>
                                                             <div class="col-lg-3 p-0">
-                                                                <small class="font-color-yellow">{{eng.channel_to}}</small>
+                                                                <small class="font-color-yellow">{{eng.channel_to}}
+                                                                </small>
                                                                 <br>
                                                                 <small class="font-color-green">
                                                                     <time-ago from-time='{{ eng.created_at }}'
@@ -685,7 +661,7 @@
                 </uib-tabset>
             </div>
             <!--  New Profile Detail -->
-            <div  ng-show="showNewProfile">
+            <div ng-show="showNewProfile">
                 <div ng-include="'app/views/profile/new-profile.html'"></div>
             </div>
         </div>
@@ -942,7 +918,7 @@
                                         <div class="btn-warp ">
                                 <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
                                       ng-click="saveTicket(ticket);"
-                                        >Save</span>
+                                >Save</span>
                                         </div>
                                     </div>
 

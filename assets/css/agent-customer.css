@@ -432,18 +432,70 @@ body {
 }
 
 .call-operation-wrapper {
-    width: 260px;
-    height: 50px;
+    width: 230px;
+    height: 60px;
     position: fixed;
     bottom: 100px;
     right: 50px;
-    background: #ffffff;
-    -webkit-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
-    -moz-box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
-    box-shadow: -1px 1px 10px -2px rgba(0, 0, 0, 0.53);
-    padding: 12px;
-    border-radius: 45px;
+    background: rgba(255, 255, 255, 0.98);
     z-index: 2000;
+    border-radius: 0px 0px 15px 15px;
+    overflow: hidden;
+    box-shadow: -1px 3px 23px -11px rgba(0, 0, 0, 0.5);
+    transition: all 80ms;
+    padding: 12px 0px 5px 15px;
+}
+
+.phone-bg-btn {
+    width: 45px;
+    height: 45px;
+    background: #f7f5f5;
+    border-radius: 50%;
+    margin: 7px 4px 0px 9px;
+    background: radial-gradient(circle at 50% 10%, #f5f5f5, #f9f9f9);
+    box-shadow: 0 0.22em 0.27em -0.18em rgba(0, 0, 0, 0.45), inset 0 0.15em 0.2em -0.15em rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding-top: 13px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.more-btn-wrapper {
+    margin-top: 15px;
+}
+
+.phone-sm-btn {
+    width: 35px;
+    height: 35px;
+    background: #f7f5f5;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 10px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    background: radial-gradient(circle at 50% 10%, #ebecec, #fff8f8);
+    box-shadow: 0 0.22em 0.27em -0.18em rgba(0, 0, 0, 0.45), inset 0 0.15em 0.2em -0.15em rgba(255, 255, 255, 0.8);
+    transition: all 80ms;
+    outline: none !important;
+    margin-right: 5px;
+}
+
+.phone-bg-btn > i {
+    font-size: 20px;
+    color: #36ba45;
+}
+
+.phone-sm-btn:hover {
+    background: radial-gradient(circle at 50% 5%, #ffffff, #c5c5c5);
+}
+
+.phone-bg-btn:hover {
+    background: radial-gradient(circle at 50% 5%, #ffffff, #c5c5c5);
+}
+
+.phone-sm-btn.close:hover {
+    background: radial-gradient(circle at 50% 5%, #c31b1b, #ff0000);
 }
 
 .phone-button-wrapper > .phone-btn {
@@ -1396,6 +1448,10 @@ div > div >
 
 .m-top-10 {
     margin-top: 10px;
+}
+
+.m-top-20 {
+    margin-top: 20px;
 }
 
 .p-top-10 {
@@ -3258,29 +3314,31 @@ tags-input .tags .input {
 
 /*phone*/
 .phone-button {
-    position: relative;
-    width: 62px;
-    /*border: 1px solid black;*/
-    border: 1px solid black;
-    border-radius: 12px;
-    /*border-radius: 7px;*/
-    padding-top: 14px;
-    padding-bottom: 29px;
-    /*background-color: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(241,241,241,1)), color-stop(51%,rgba(225,225,225,1)), color-stop(100%,rgba(246,246,246,1)));*/
-    /* Chrome,Safari4+ */
-    background-color: White;
+    width: 45px;
+    border: 1px solid transparent;
     Outline: none;
-    padding-left: 5px;
-    margin-left: 2px;
-    margin-bottom: 7px;
-    height: 43px;
-    border-color: #ccc;
+    margin-left: 30px;
+    margin-bottom: 5px;
+    height: 45px;
+    background-color: rgba(249, 249, 249, 0);
+    border-radius: 50%;
+    cursor: pointer;
+    text-align: center;
+    color: #36ba45;
+    font-size: 25px;
+    /* box-shadow: 0px 3px 10px #eaeaea, inset 0px 2px 4px #f7f5f5; */
+}
+
+.phone-button:hover {
+    background-color: #F5F5F5;
+    border: 1px solid #f0efef;
 }
 
 .phone-dialpad-display {
     position: inherit;
-    bottom: 150px;
-    right: 94px;
+    bottom: 205px;
+    right: 102px;
+    margin: 0 auto;
 }
 
 .phone-dialpad {
@@ -3673,6 +3731,51 @@ div.btn-group.dropdown {
 
 .active-test {
     background: #4f9300 !important;
+}
+
+.phone-sm-btn > .veery-font-1-microphone {
+    color: #d90000;
+}
+
+.dial-pad-wrapper {
+    background-color: rgb(255, 255, 255) !important;
+    width: 230px;
+    overflow: hidden;
+    position: fixed;
+    height: 0;
+    z-index: 2000;
+    right: 50px;
+    bottom: 132px;
+    box-shadow: -1px 3px 23px -11px rgba(0, 0, 0, 0.5);
+    border-radius: 15px 15px 0px 0px;
+}
+
+.phone-screen {
+    width: 200px;
+    height: 45px;
+    background: transparent;
+    position: absolute;
+    top: 18px;
+    left: 17px;
+    overflow: hidden;
+    padding-top: 1px;
+    text-transform: capitalize;
+    border-bottom: 1px solid #f7f5f5;
+}
+
+.phone-screen > .no-action {
+    text-align: center;
+    font-size: 23px;
+    color: #f7f5f5;
+}
+
+.phone-screen > .dial-action {
+    text-align: center;
+    font-size: 23px;
+    color: #f7f5f5;
+}
+
+
 }
 
 /*notification loading color */
