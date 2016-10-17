@@ -320,102 +320,6 @@
         </div>
 
 
-        <!-- phone operation panel  -->
-        <div id="isOperationPhone" class="call-operation-wrapper " id="callOperation">
-
-
-            <!--#KeyPad-->
-            <div id='divKeyPad' class="phone-dialpad-display">
-
-                <input required type="text" class="phone-dialpad-no" id="number"
-                       ng-model="call.number"
-                       placeholder="Enter the phone no to call">
-                <table class="phone-dialpad" id="phoneDialpad">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <input type="button" class="phone-button" value="1" data-values='[1]'/>
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="2" data-values='[2, "A", "B", "C"]'/>
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="3" data-values='[3, "D", "E", "F"]'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" class="phone-button" value="4" data-values='[4, "G", "H", "I"]'/>
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="5" data-values='[5, "J", "K", "L"]'/>
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="6" data-values='[6, "M", "N", "O"]'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" class="phone-button" value="7" data-values='[7, "P", "Q", "R", "S"]'/>
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="8" data-values='[8, "T", "U", "V"]'/>
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="9" data-values='[9, "W", "X", "Y", "Z"]'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" class="phone-button" value="*" data-values='["*"]'/>
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="0" data-values='[0, " "]'/>
-                        </td>
-                        <td>
-                            <input type="button" class="phone-button" value="#" data-values='["#"]'/>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="phone-button-wrapper">
-
-                <div class="phone-btn" id="answerButton" ng-click="veeryPhone.makeAudioCall(call.number);">
-                    <i class="veery-phone-icon-1-call-answer"></i>
-                </div>
-                <div class="phone-btn" id="endButton" ng-click="veeryPhone.endCall();">
-                    <i class="veery-phone-icon-1-call-ended"></i>
-                </div>
-                <div class="phone-btn" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">
-                    <i class="veery-phone-icon-1-phone-call-1"></i>
-                </div>
-                <div class="phone-btn">
-                    <i class="veery-font-1-user"></i>
-                </div>
-                <div class="phone-btn" id="muteButton" ng-click="veeryPhone.muteCall();">
-                    <i class="veery-font-1-mute"></i>
-                </div>
-                <div class="phone-btn" ng-click="ShowHideDialpad();">
-                    <i class="veery-font-1-menu-4"></i>
-                </div>
-                <div class="phone-btn" id="speakerButton" ng-click="veeryPhone.muteCall();">
-                    <i class="veery-font-1-speaker-4"></i>
-                </div>
-                <div class="phone-btn">
-                    <i class="veery-font-1-add"></i>
-                </div>
-                {{duations}}
-
-
-                <!--<div class="phone-btn">-->
-                <!--<i style="font-size: 38px;" class="veery-phone-icon-1-end-call-button"></i>-->
-                <!--</div>-->
-            </div>
-        </div>
-
-
         <!-- view ticket -->
         <div ng-include="'app/views/ticket/ticket-inbox.html'"></div>
 
@@ -492,10 +396,8 @@
         TOP
     </div>
 
-
     <!-- agent setting -->
-    <div
-            ng-include="'app/views/agent/agentSettings.html'"></div>
+    <div ng-include="'app/views/agent/agentSettings.html'"></div>
 
     <!-- agent dashboard -->
     <!--<div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>-->
@@ -548,5 +450,167 @@
         <audio id="ringtone" loop src="/assets/sounds/ringtone.wav"></audio>
         <audio id="ringbacktone" loop src="/assets/sounds/ringbacktone.wav"></audio>
         <audio id="dtmfTone" src="/assets/sounds/dtmf.wav"></audio>
+    </div>
+</div>
+
+<!-- web phone -->
+<!-- phone operation panel  -->
+
+<div class="dial-pad-wrapper">
+    {{call.number}}
+    <div class="phone-screen">
+        <div class="no-action" ng-show="!call.number">
+            000-000-0000
+        </div>
+        <div class="dial-action" ng-show="call.number">
+            {{call.number}}
+        </div>
+    </div>
+    <!--#KeyPad-->
+    <div id='divKeyPad' class="phone-dialpad-display ">
+        <!--<input required type="text" class="phone-dialpad-no" id="number"-->
+        <!--ng-model="call.number"-->
+        <!--placeholder="Enter the phone no to call">-->
+        <table class="phone-dialpad" id="phoneDialpad">
+            <tbody>
+            <tr>
+                <td>
+                    <input type="button" class="phone-button" value="1" data-values='[1]'/>
+                </td>
+                <td>
+                    <input type="button" class="phone-button" value="2" data-values='[2, "A", "B", "C"]'/>
+                </td>
+                <td>
+                    <input type="button" class="phone-button" value="3" data-values='[3, "D", "E", "F"]'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" class="phone-button" value="4" data-values='[4, "G", "H", "I"]'/>
+                </td>
+                <td>
+                    <input type="button" class="phone-button" value="5" data-values='[5, "J", "K", "L"]'/>
+                </td>
+                <td>
+                    <input type="button" class="phone-button" value="6" data-values='[6, "M", "N", "O"]'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" class="phone-button" value="7" data-values='[7, "P", "Q", "R", "S"]'/>
+                </td>
+                <td>
+                    <input type="button" class="phone-button" value="8" data-values='[8, "T", "U", "V"]'/>
+                </td>
+                <td>
+                    <input type="button" class="phone-button" value="9" data-values='[9, "W", "X", "Y", "Z"]'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" class="phone-button" value="*" data-values='["*"]'/>
+                </td>
+                <td>
+                    <input type="button" class="phone-button" value="0" data-values='[0, " "]'/>
+                </td>
+                <td>
+                    <input type="button" class="phone-button" value="#" data-values='["#"]'/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="isOperationPhone" class="call-operation-wrapper animated flipInX" id="callOperation">
+    <div id="phoneBtnWrapper" class="phone-button-wrapper ">
+        <div id="initiallyBtnWrapper" class="initially-btn-wrapper ">
+            <div class="phone-sm-btn">
+                <i class="veery-phone-icon-1-call-answer"></i>
+            </div>
+            <div class="phone-sm-btn">
+                <i class="veery-phone-icon-1-call-ended"></i>
+            </div>
+            <div class="phone-sm-btn" onclick="showDilapad()">
+                <i class="veery-phone-icon-1-telephone-keypad-with-ten-keys"></i>
+            </div>
+            <div class="phone-sm-btn">
+                <i class="veery-font-1-pause"></i>
+            </div>
+            <div class="phone-sm-btn" onclick="showMoreButton();">
+                <i class="veery-font-1-more-1"></i>
+            </div>
+        </div>
+
+        <div id="phoneMoreBtnWrapper" class="initially-btn-wrapper display-none">
+            <div class="phone-sm-btn" onclick="backToMaiaButtton();">
+                <i class="veery-font-1-multiply text-color-red"></i>
+            </div>
+            <div class="phone-sm-btn" onclick="callTransfer();">
+                <i class="veery-font-1-shuffle"></i>
+            </div>
+            <div class="phone-sm-btn">
+                <i class="veery-font-1-user display-block"></i>
+                <i class="veery-font-1-pause display-none"></i>
+            </div>
+            <div id="microphoneOption"
+                 onclick="showMicrophoneOption()"
+                 class="phone-sm-btn">
+                <i id="micMuted" class="veery-font-1-muted display-block"></i>
+                <i id="micUnMuted" class="veery-font-1-microphone display-none"></i>
+            </div>
+            <div class="phone-sm-btn">
+                <i class="veery-font-1-more-1"></i>
+            </div>
+        </div>
+
+
+        <div id="callTransfer" class="initially-btn-wrapper display-none">
+            <div class="phone-sm-btn" onclick="closeCallTransfer()">
+                <i class="veery-font-1-multiply text-color-red"></i>
+            </div>
+            <div class="phone-sm-btn">
+                <i class="veery-font-1-shuffle"></i>
+            </div>
+            <div class="phone-sm-btn">
+                <i class="veery-font-1-user display-block"></i>
+                <i class="veery-font-1-pause display-none"></i>
+            </div>
+
+            <div class="phone-sm-btn">
+                <i class="veery-font-1-more-1"></i>
+            </div>
+        </div>
+
+        <!--<div class="phone-btn" id="answerButton" ng-click="veeryPhone.makeAudioCall(call.number);">-->
+        <!--<i class="veery-phone-icon-1-call-answer"></i>-->
+        <!--</div>-->
+        <!--<div class="phone-btn" id="endButton" ng-click="veeryPhone.endCall();">-->
+        <!--<i class="veery-phone-icon-1-call-ended"></i>-->
+        <!--</div>-->
+        <!--<div class="phone-btn" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">-->
+        <!--<i class="veery-phone-icon-1-phone-call-1"></i>-->
+        <!--</div>-->
+        <!--<div class="phone-btn">-->
+        <!--<i class="veery-font-1-user"></i>-->
+        <!--</div>-->
+        <!--<div class="phone-btn" id="muteButton" ng-click="veeryPhone.muteCall();">-->
+        <!--<i class="veery-font-1-mute"></i>-->
+        <!--</div>-->
+        <!--<div class="phone-btn" ng-click="ShowHideDialpad();">-->
+        <!--<i class="veery-font-1-menu-4"></i>-->
+        <!--</div>-->
+        <!--<div class="phone-btn" id="speakerButton" ng-click="veeryPhone.muteCall();">-->
+        <!--<i class="veery-font-1-speaker-4"></i>-->
+        <!--</div>-->
+        <!--<div class="phone-btn">-->
+        <!--<i class="veery-font-1-add"></i>-->
+        <!--</div>-->
+        <!--{{duations}}-->
+
+
+        <!--<div class="phone-btn">-->
+        <!--<i style="font-size: 38px;" class="veery-phone-icon-1-end-call-button"></i>-->
+        <!--</div>-->
     </div>
 </div>

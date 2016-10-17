@@ -192,6 +192,10 @@
     color: #ffffff;
 }
 
+.text-color-red {
+    color: #d90000;
+}
+
 .font-white {
     color: #ffffff !important;
 }
