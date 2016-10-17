@@ -40,6 +40,10 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
             socket.on('authenticated', function () {
                 isAuthenticated = true;
                 console.log('socket is jwt authenticated');
+                if(notificationEvent.onAgentAuthenticated)
+                {
+                    notificationEvent.onAgentAuthenticated();
+                }
                 //document.getElementById("lblNotification").innerHTML = "socket is jwt authenticated";
                 /* Notification.success({
                  message: "Register With Notification Provider.",
@@ -62,6 +66,10 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
             socket.on('disconnect', function (reason) {
                 //Notification.info({message: reason, delay: 500, closeOnClick: true});
                 console.log(reason);
+
+                if (notificationEvent.onAgentDisconnected)
+                    notificationEvent.onAgentDisconnected();
+
             });
 
             socket.on('message', function (data) {
@@ -91,6 +99,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 //var displayMsg = "Company : " + data.Company + "<br> Company No : " + values[5] + "<br> Caller : " + values[3] + "<br> Skill : " + values[6];
                 if (notificationEvent.onAgentFound)
                     notificationEvent.onAgentFound(data);
+                console.log("Agent found data "+data);
             });
 
             socket.on('agent_disconnected', function (data) {
