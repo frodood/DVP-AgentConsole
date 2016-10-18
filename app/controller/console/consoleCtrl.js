@@ -576,13 +576,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.unredNotifications = 0;
 
     $scope.OnMessage = function (data) {
+
+        var senderAvatar;
+
+        senderAvatar = $filter('filter')($scope.agentList, {username: data.From})[0].avatar;
+
+
+
         var objMessage = {
             "id": data.TopicKey,
             "header": data.Message,
             "type": "menu",
             "icon": "main-icon-2-speech-bubble",
             "time": new Date(),
-            "read": false
+            "read": false,
+            "avatar":senderAvatar
         };
         if (data.TopicKey) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
@@ -616,9 +624,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
+    $scope.isSocketRegistered = false;
+    $scope.isLoadingNotifiReg = false;
+
+
+    $scope.agentDisconnected = function () {
+        $scope.isSocketRegistered = false;
+        $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register")
+    }
+    $scope.agentAuthenticated = function () {
+        $scope.isSocketRegistered = true;
+        $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
+        $('#regNotification').addClass('display-block').removeClass('display-none');
+    }
+
+
     var notificationEvent = {
         onAgentFound: $scope.agentFound,
-        OnMessageReceived: $scope.OnMessage
+        OnMessageReceived: $scope.OnMessage,
+        onAgentDisconnected: $scope.agentDisconnected,
+        onAgentAuthenticated: $scope.agentAuthenticated
     };
 
     $scope.veeryNotification = function () {
@@ -626,6 +651,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.veeryNotification();
+
+
+    $scope.checkAndRegister = function () {
+
+
+        if (!$scope.isSocketRegistered) {
+            $('#regNotification').addClass('display-none').removeClass('display-block');
+            $('#regNotificationLoading').addClass('display-block').removeClass('display-none');
+            $scope.isLoadingNotifiReg = true;
+            $scope.veeryNotification();
+        }
+
+    }
+
 
     /*--------------------------      Notification  ---------------------------------------*/
 
@@ -1595,26 +1634,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                        if (data.IsSuccess) {
-                            if (data.Result && data.Result.UNREAD) {
-                                $scope.unreadMailCount = data.Result.UNREAD;
-                            }
+                    if (data.IsSuccess) {
+                        if (data.Result && data.Result.UNREAD) {
+                            $scope.unreadMailCount = data.Result.UNREAD;
                         }
-                        else {
-                            var errMsg = data.CustomMessage;
+                    }
+                    else {
+                        var errMsg = data.CustomMessage;
 
-                            if (data.Exception) {
-                                errMsg = data.Exception.Message;
-                            }
-                            console.log(errMsg);
+                        if (data.Exception) {
+                            errMsg = data.Exception.Message;
                         }
+                        console.log(errMsg);
+                    }
 
 
-                    },
-                    function (err) {
-                        console.log(err);
+                },
+                function (err) {
+                    console.log(err);
 
-                    })
+                })
 
         }
         catch (ex) {
@@ -1882,6 +1921,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.showAlert('Error', 'error', errMsg);
         });
     };
+
+
+    loadOnlineAgents();
 
     var getAllRealTime = function () {
         loadOnlineAgents();

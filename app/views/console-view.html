@@ -19,20 +19,25 @@
                     </a>
                 </div>
 
+
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav m-left-25" uib-dropdown>
                         <!-- notification -->
-                        <li class="console-menu-icon m-left-10 m-right-10" id="notificationAlarm" uib-dropdown
+                        <li class="console-menu-icon m-left-10 m-right-10" id="notificationAlarm"
+                            ng-click="checkAndRegister()" uib-dropdown
                             uib-dropdown-toggle>
-                            <i class="animated  veery-font-1-alarm"
-                               ng-class="{'color-orange':unredNotifications!=0}"> </i>
+                            <i id="regNotification" class="animated  veery-font-1-alarm display-block"
+                               ng-class="{'color-orange':unredNotifications!=0,'color-red':!isSocketRegistered}"> </i>
+                            <i id="regNotificationLoading" class="fa fa-spinner fa-spin display-none" style="margin-top: 3px;"></i>
 
-                            <div class="console-notification-header" ng-class="{'bg-orange':unredNotifications!=0}">
+                            <div class="console-notification-header" ng-class="{'bg-orange':unredNotifications!=0}"
+                                 ng-show="isSocketRegistered">
                                 {{unredNotifications}}
                             </div>
-                            <ul class="dropdown-menu console-drop-menu notification-menu-left " uib-dropdown-menu
+                            <ul class="dropdown-menu console-drop-menu notification-menu-left "
+                                ng-show="isSocketRegistered" uib-dropdown-menu
                                 role="menu"
                                 aria-labelledby="btn-append-to-single-button">
                                 <li class="notification-header">
@@ -58,8 +63,12 @@
                                     <div class="row notification-list" ng-repeat="notifi in notifications"
                                          ng-click="readNotification(notifi.id)">
                                         <div class="col-lg-3">
-                                            <div class="notification-icon  ">
+                                            <!--<div class="notification-icon  ">
                                                 <i class=" {{notifi.icon}}"></i>
+                                                <i class=" {{notifi.icon}}"></i>
+                                            </div>-->
+                                            <div class="notify-img-small">
+                                                <img ng-src="{{notifi.avatar}}"  src="assest/images/defaultProfile.png" alt="Profile Image">
                                             </div>
                                         </div>
                                         <div class="col-lg-9">
@@ -158,6 +167,7 @@
                             <!-- end tracker -->
                         </li>
 
+
                         <li class="console-menu-icon m-left-10 m-right-10">
                             <i class="veery-font-1-notepad" ng-click="addFilterTab();">
                             </i>
@@ -233,12 +243,13 @@
 
                         <div id="consoleProfileImg" class="console-profile-img" uib-dropdown-toggle>
                             <img src="assets/img/avatar/default-user.png" ng-src="{{loginAvatar}}">
+
                             <div id="userStatus" class="user-state online"></div>
                         </div>
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                            >Hi,{{loginName}}</a>
+                                    >Hi,{{loginName}}</a>
                             <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
@@ -277,7 +288,7 @@
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
-                            >Logout</a></li>
+                                    >Logout</a></li>
                         </ul>
 
 

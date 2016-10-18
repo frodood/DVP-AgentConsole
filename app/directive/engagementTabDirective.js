@@ -1094,7 +1094,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                 if (scope.profileDetail) {
 
-                    scope.GetProfileHistory(scope.profileDetail._id);scope.profileLoadin = false;
+                    scope.GetProfileHistory(scope.profileDetail._id);
+                    scope.profileLoadin = false;
+                    scope.showMultiProfile = false;
+                    scope.showNewProfile = false;
                     scope.currentSubmission = scope.profileDetail.form_submission;
                     convertToSchemaForm(scope.profileDetail.form_submission, function (schemaDetails) {
                         if (schemaDetails) {
@@ -1174,8 +1177,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             }
                             else {
                                 // show new profile
-                                scope.showMultiProfile = false;
                                 scope.profileLoadin = false;
+                                scope.showMultiProfile = true;
 
                                 scope.currentSubmission = null;
                                 convertToSchemaForm(null, function (schemaDetails) {
