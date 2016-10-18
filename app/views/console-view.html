@@ -456,14 +456,19 @@
 <!-- web phone -->
 <!-- phone operation panel  -->
 
-<div class="dial-pad-wrapper">
-    {{call.number}}
+<div class=" isOperationPhone dial-pad-wrapper">
+    <a id="pinScreen" class="pin-screen-wrapper display-block" onclick="pinScreen()">
+        PIN
+    </a>
+    <a id="removePinScreen" class="pin-screen-wrapper display-none" onclick="removePin()">
+        Remove
+    </a>
     <div class="phone-screen">
-        <div class="no-action" ng-show="!call.number">
+        <div class="no-action">
             000-000-0000
         </div>
-        <div class="dial-action" ng-show="call.number">
-            {{call.number}}
+        <div class="dial-action">
+            Incoming...
         </div>
     </div>
     <!--#KeyPad-->
@@ -522,7 +527,8 @@
     </div>
 </div>
 
-<div id="isOperationPhone" class="call-operation-wrapper animated flipInX" id="callOperation">
+<!--PHONE MAIN WRAPPER -->
+<div class="isOperationPhone call-operation-wrapper animated flipInX" id="callOperation">
     <div id="phoneBtnWrapper" class="phone-button-wrapper ">
         <div id="initiallyBtnWrapper" class="initially-btn-wrapper ">
             <div class="phone-sm-btn">
@@ -581,36 +587,39 @@
                 <i class="veery-font-1-more-1"></i>
             </div>
         </div>
-
-        <!--<div class="phone-btn" id="answerButton" ng-click="veeryPhone.makeAudioCall(call.number);">-->
-        <!--<i class="veery-phone-icon-1-call-answer"></i>-->
-        <!--</div>-->
-        <!--<div class="phone-btn" id="endButton" ng-click="veeryPhone.endCall();">-->
-        <!--<i class="veery-phone-icon-1-call-ended"></i>-->
-        <!--</div>-->
-        <!--<div class="phone-btn" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">-->
-        <!--<i class="veery-phone-icon-1-phone-call-1"></i>-->
-        <!--</div>-->
-        <!--<div class="phone-btn">-->
-        <!--<i class="veery-font-1-user"></i>-->
-        <!--</div>-->
-        <!--<div class="phone-btn" id="muteButton" ng-click="veeryPhone.muteCall();">-->
-        <!--<i class="veery-font-1-mute"></i>-->
-        <!--</div>-->
-        <!--<div class="phone-btn" ng-click="ShowHideDialpad();">-->
-        <!--<i class="veery-font-1-menu-4"></i>-->
-        <!--</div>-->
-        <!--<div class="phone-btn" id="speakerButton" ng-click="veeryPhone.muteCall();">-->
-        <!--<i class="veery-font-1-speaker-4"></i>-->
-        <!--</div>-->
-        <!--<div class="phone-btn">-->
-        <!--<i class="veery-font-1-add"></i>-->
-        <!--</div>-->
-        <!--{{duations}}-->
-
-
-        <!--<div class="phone-btn">-->
-        <!--<i style="font-size: 38px;" class="veery-phone-icon-1-end-call-button"></i>-->
-        <!--</div>-->
     </div>
 </div>
+<!-- END PHONE -->
+
+
+<!--<div class="phone-btn" id="answerButton" ng-click="veeryPhone.makeAudioCall(call.number);">-->
+<!--<i class="veery-phone-icon-1-call-answer"></i>-->
+<!--</div>-->
+<!--<div class="phone-btn" id="endButton" ng-click="veeryPhone.endCall();">-->
+<!--<i class="veery-phone-icon-1-call-ended"></i>-->
+<!--</div>-->
+<!--<div class="phone-btn" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">-->
+<!--<i class="veery-phone-icon-1-phone-call-1"></i>-->
+<!--</div>-->
+<!--<div class="phone-btn">-->
+<!--<i class="veery-font-1-user"></i>-->
+<!--</div>-->
+<!--<div class="phone-btn" id="muteButton" ng-click="veeryPhone.muteCall();">-->
+<!--<i class="veery-font-1-mute"></i>-->
+<!--</div>-->
+<!--<div class="phone-btn" ng-click="ShowHideDialpad();">-->
+<!--<i class="veery-font-1-menu-4"></i>-->
+<!--</div>-->
+<!--<div class="phone-btn" id="speakerButton" ng-click="veeryPhone.muteCall();">-->
+<!--<i class="veery-font-1-speaker-4"></i>-->
+<!--</div>-->
+<!--<div class="phone-btn">-->
+<!--<i class="veery-font-1-add"></i>-->
+<!--</div>-->
+<!--{{duations}}-->
+
+
+<!--<div class="phone-btn">-->
+<!--<i style="font-size: 38px;" class="veery-phone-icon-1-end-call-button"></i>-->
+<!--</div>-->
+

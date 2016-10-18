@@ -51,10 +51,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.showPhone = value;
         if (value) {
             // is show phone
-            $('#isOperationPhone').addClass('display-block ').removeClass('display-none');
+            $('.isOperationPhone').addClass('display-block ').removeClass('display-none');
         } else {
             //is hide phone
-            $('#isOperationPhone').addClass('display-none ').removeClass('display-block');
+            $('.isOperationPhone').addClass('display-none ').removeClass('display-block');
         }
     };
     $scope.ShowHidePhone();
@@ -2008,8 +2008,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.goToTopScroller = function () {
         $('html, body').animate({scrollTop: 0}, 'fast');
     };
-
-
 
 
 }).directive("mainScroll", function ($window) {
