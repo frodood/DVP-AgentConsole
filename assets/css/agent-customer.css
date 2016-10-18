@@ -437,11 +437,11 @@ body {
     position: fixed;
     bottom: 100px;
     right: 50px;
-    background: rgba(255, 255, 255, 0.98);
+    background: rgb(198, 206, 205);
     z-index: 2000;
-    border-radius: 0px 0px 15px 15px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: -1px 3px 23px -11px rgba(0, 0, 0, 0.5);
+    box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
     transition: all 80ms;
     padding: 12px 0px 5px 15px;
 }
@@ -3746,7 +3746,7 @@ div.btn-group.dropdown {
     z-index: 2000;
     right: 50px;
     bottom: 132px;
-    box-shadow: -1px 3px 23px -11px rgba(0, 0, 0, 0.5);
+    box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
     border-radius: 15px 15px 0px 0px;
 }
 
@@ -3755,7 +3755,7 @@ div.btn-group.dropdown {
     height: 45px;
     background: transparent;
     position: absolute;
-    top: 18px;
+    top: 10px;
     left: 17px;
     overflow: hidden;
     padding-top: 1px;
@@ -3765,14 +3765,22 @@ div.btn-group.dropdown {
 
 .phone-screen > .no-action {
     text-align: center;
-    font-size: 23px;
-    color: #f7f5f5;
+    font-size: 16px;
+    color: #000000;
 }
 
 .phone-screen > .dial-action {
     text-align: center;
-    font-size: 23px;
-    color: #f7f5f5;
+    font-size: 15px;
+    color: #4f9300;
+}
+
+.pin-screen-wrapper {
+    text-align: left;
+    padding-top: 5px;
+    padding-right: 7px;
+    cursor: pointer;
+    z-index: 500;
 }
 
 
