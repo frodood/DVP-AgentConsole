@@ -440,7 +440,7 @@ body {
     background: rgb(198, 206, 205);
     z-index: 2000;
     border-radius: 15px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
     transition: all 80ms;
     padding: 12px 0px 5px 15px;
@@ -481,9 +481,16 @@ body {
     margin-right: 5px;
 }
 
-.phone-bg-btn > i {
-    font-size: 20px;
+.phone-sm-bn-p8 {
+    padding-top: 8px;
+}
+
+.phone-sm-btn.answer > i {
     color: #36ba45;
+}
+
+.phone-sm-btn.call-ended > i {
+    color: #c31b1b;
 }
 
 .phone-sm-btn:hover {
@@ -507,6 +514,7 @@ body {
     overflow: hidden;
     text-align: center;
     padding-top: 5px;
+    cursor: pointer;
 }
 
 .phone-button-wrapper > .phone-btn > i {
@@ -3355,11 +3363,12 @@ tags-input .tags .input {
 }
 
 .phone-dialpad-no {
-    margin-bottom: 4px;
-    border-radius: 15px 15px 5px 5px;
+    margin-bottom: 0;
+    border-radius: 0;
     width: 192px;
-    height: 35px;
+    height: 20px;
     text-align: center;
+    border: none;
 }
 
 /*new update */
@@ -3734,7 +3743,7 @@ div.btn-group.dropdown {
 }
 
 .phone-sm-btn > .veery-font-1-microphone {
-    color: #d90000;
+   /*// color: #d90000;*/
 }
 
 .dial-pad-wrapper {
@@ -3752,13 +3761,13 @@ div.btn-group.dropdown {
 
 .phone-screen {
     width: 200px;
-    height: 45px;
+    height: 66px;
     background: transparent;
     position: absolute;
     top: 10px;
     left: 17px;
     overflow: hidden;
-    padding-top: 1px;
+    padding-top: 0px;
     text-transform: capitalize;
     border-bottom: 1px solid #f7f5f5;
 }
@@ -3771,19 +3780,24 @@ div.btn-group.dropdown {
 
 .phone-screen > .dial-action {
     text-align: center;
-    font-size: 15px;
+    font-size: 13px;
     color: #4f9300;
 }
 
 .pin-screen-wrapper {
-    text-align: left;
-    padding-top: 5px;
-    padding-right: 7px;
     cursor: pointer;
-    z-index: 500;
-}
-
-
+    z-index: 1000;
+    width: 30px;
+    height: 30px;
+    background: rgba(247, 245, 245, 0.54);
+    position: absolute;
+    overflow: hidden;
+    top: 14px;
+    border-radius: 100%;
+    text-align: center;
+    padding-top: 6px;
+    right: 12px;
+    color: #36ba45;
 }
 
 /*notification loading color */
@@ -3797,10 +3811,153 @@ div.btn-group.dropdown {
     position: absolute;
 
 }
-.notify-img-small> img {
+
+.notify-img-small > img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    overflow:visible;
-    position:relative;
+    overflow: visible;
+    position: relative;
+}
+
+.call-duations {
+    color: #14c67d;
+    text-align: center;
+    font-size: 10px;
+}
+
+#softPhoneDragElem {
+    cursor: move;
+    position: relative;
+    /* important (all position that's not `static`) */
+}
+
+
+.Phone.is-animating {
+    animation: phone-outer 3000ms infinite;
+}
+
+.Phone.is-animating:before {
+    animation: phone-inner 3000ms infinite;
+}
+
+.Phone.is-animating:after {
+    animation: phone-icon 3000ms infinite;
+}
+
+@keyframes phone-outer {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+        box-shadow: 0 0 0 0em rgba(#3498db, 0),
+        0em 0.05em 0.1em rgba(#000000, 0.2);
+    }
+    33.3333% {
+        transform: translate3d(0, 0, 0) scale(1.1);
+        box-shadow: 0 0 0 0em rgba(#3498db, 0.1),
+        0em 0.05em 0.1em rgba(#000000, 0.5);
+    }
+    66.6666% {
+        transform: translate3d(0, 0, 0) scale(1);
+        box-shadow: 0 0 0 0.5em rgba(#3498db, 0),
+        0em 0.05em 0.1em rgba(#000000, 0.2);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+        box-shadow: 0 0 0 0em rgba(#3498db, 0),
+        0em 0.05em 0.1em rgba(#000000, 0.2);
+    }
+}
+
+@keyframes phone-inner {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(0);
+    }
+    33.3333% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(0.9);
+    }
+    66.6666% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) scale(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) scale(0);
+    }
+}
+
+@keyframes phone-icon {
+    0% {
+        transform: translate3d(0em, 0, 0);
+    }
+    2% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    4% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    6% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    8% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    10% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    12% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    14% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    16% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    18% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    20% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    22% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    24% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    26% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    28% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    30% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    32% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    34% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    36% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    38% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    40% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    42% {
+        transform: translate3d(0.01em, 0, 0);
+    }
+    44% {
+        transform: translate3d(-0.01em, 0, 0);
+    }
+    46% {
+        transform: translate3d(0em, 0, 0);
+    }
 }

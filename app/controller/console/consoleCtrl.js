@@ -61,14 +61,28 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     var showHideDialpad = undefined;
     $scope.ShowHideDialpad = function () {
-        if (showHideDialpad) {
-            // is show phone
-            $('#phoneDialpad').addClass('phone-dialpad ').removeClass('display-none');
-            showHideDialpad = undefined;
+        //if (showHideDialpad) {
+        //    // is show phone
+        //    $('#phoneDialpad').addClass('phone-dialpad ').removeClass('display-none');
+        //    showHideDialpad = undefined;
+        //} else {
+        //    //is hide phone
+        //    $('#phoneDialpad').addClass('display-none ').removeClass('display-block');
+        //    showHideDialpad = {};
+        //}
+        var $wrapper = $('.dial-pad-wrapper'),
+            animateTime = 500,
+            height = 310;
+        if ($wrapper.height() === 0 || $wrapper.height() === 80) {
+            phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
+                if (res) {
+                    $('#phoneDialpad').removeClass('display-none').addClass('display-block');
+                }
+            });
+
         } else {
-            //is hide phone
-            $('#phoneDialpad').addClass('display-none ').removeClass('display-block');
-            showHideDialpad = {};
+            $wrapper.stop().animate({height: pinHeight}, animateTime);
+            $('#phoneDialpad').removeClass('display-block').addClass('display-none');
         }
     };
     $scope.ShowHideDialpad();
@@ -139,6 +153,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.call = {};
     $scope.call.number = "";
+
 
     $scope.veeryPhone = {
         sipSendDTMF: function (dtmf) {
@@ -462,42 +477,68 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     var phoneFuncion = {
         showAnswerButton: function () {
+            return;
             $('#answerButton').addClass('phone-btn ').removeClass('display-none');
         },
         hideAnswerButton: function () {
+            return;
             $('#answerButton').addClass('display-none ').removeClass('display-block');
         },
         showHoldButton: function () {
+            return;
             $('#holdResumeButton').addClass('phone-btn ').removeClass('display-none');
             $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-1').removeClass('veery-phone-icon-1-phone-call-2');
         },
         hideHoldButton: function () {
+            return;
             $('#holdResumeButton').addClass('display-none ').removeClass('display-block');
         },
         showEndButton: function () {
+            return;
             $('#endButton').addClass('phone-btn ').removeClass('display-none');
         },
         hideEndButton: function () {
+            return;
             $('#endButton').addClass('display-none ').removeClass('display-block');
         },
         showMuteButton: function () {
+            return;
             $('#muteButton').addClass('phone-btn ').removeClass('display-none');
             $('#muteButton').addClass('veery-font-1-mute').removeClass('veery-font-1-muted');
         },
         hideMuteButton: function () {
+            return;
             $('#muteButton').addClass('display-none ').removeClass('display-block');
         },
         showSpeakerButton: function () {
+            return;
             $('#speakerButton').addClass('phone-btn ').removeClass('display-none');
         },
         hideSpeakerButton: function () {
+            return;
             $('#speakerButton').addClass('display-none ').removeClass('display-block');
+        },
+        updateCallStatus: function (status) {
+            $scope.call.status = status;
+        },
+        hideTransfer: function () {
+            $('#transferCall').addClass('display-none').removeClass('display-block');
+        },
+        showTransfer: function () {
+            $('#transferCall').addClass('display-block').removeClass('display-none');
+        },
+        hideSlap: function () {
+            $('#slapCall').addClass('display-none').removeClass('display-block');
+        },
+        showSlap: function () {
+            $('#slapCall').addClass('display-block').removeClass('display-none');
         }
     };
 
     phoneFuncion.hideHoldButton();
     phoneFuncion.hideMuteButton();
     phoneFuncion.hideSpeakerButton();
+    phoneFuncion.updateCallStatus("Dial Number");
 
 
     var userEvent = {
@@ -516,7 +557,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var values = $(this).data('values');
         var chr = values[0];
         $scope.call.number = $scope.call.number + chr;
-        $scope.veeryPhone.sipSendDTMF(chr)
+        $scope.veeryPhone.sipSendDTMF(chr);
+        $scope.$apply();
     });
 
     //dont remove this code
@@ -582,7 +624,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         senderAvatar = $filter('filter')($scope.agentList, {username: data.From})[0].avatar;
 
 
-
         var objMessage = {
             "id": data.TopicKey,
             "header": data.Message,
@@ -590,7 +631,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "icon": "main-icon-2-speech-bubble",
             "time": new Date(),
             "read": false,
-            "avatar":senderAvatar
+            "avatar": senderAvatar
         };
         if (data.TopicKey) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
@@ -1634,26 +1675,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                    if (data.IsSuccess) {
-                        if (data.Result && data.Result.UNREAD) {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception) {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    console.log(err);
+                    },
+                    function (err) {
+                        console.log(err);
 
-                })
+                    })
 
         }
         catch (ex) {

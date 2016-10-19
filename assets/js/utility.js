@@ -106,8 +106,8 @@ function closeCallTransfer() {
 
 var pinHeight = 0;
 function pinScreen() {
-    pinHeight = 80;
-    $('.dial-pad-wrapper').stop().animate({height: '80'}, 500);
+    pinHeight = 90;
+    $('.dial-pad-wrapper').stop().animate({height: '90'}, 500);
     $('#phoneDialpad').removeClass('display-block').addClass('display-none');
     $('#pinScreen').removeClass('display-block').addClass('display-none');
     $('#removePinScreen').removeClass('display-none').addClass('display-block');
@@ -159,6 +159,8 @@ function showMicrophoneOption() {
         }
     });
 }
+
+
 
 
 
