@@ -620,9 +620,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.OnMessage = function (data) {
 
         var senderAvatar;
+        
 
-        senderAvatar = $filter('filter')($scope.agentList, {username: data.From})[0].avatar;
-
+        if(data.From && $filter('filter')($scope.agentList, {username: data.From})[0].avatar)
+        {
+            senderAvatar = $filter('filter')($scope.agentList, {username: data.From})[0].avatar;
+        }
 
         var objMessage = {
             "id": data.TopicKey,
@@ -671,12 +674,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.agentDisconnected = function () {
         $scope.isSocketRegistered = false;
-        $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register")
+        $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
     }
     $scope.agentAuthenticated = function () {
         $scope.isSocketRegistered = true;
         $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
         $('#regNotification').addClass('display-block').removeClass('display-none');
+        $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
     }
 
 
