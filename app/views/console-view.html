@@ -524,11 +524,19 @@
 
                 </div>
                 <!-- call transfer button -->
-                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 ">
+                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 " ng-click="veeryPhone.transferCall(call.number);">
                     <i class="main-icon-2-transfer-8"></i>
                 </div>
                 <!-- call swap button -->
-                <div id="swapCall" class="phone-sm-btn phone-sm-bn-p8">
+                <div id="swapCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.swapCall();">
+                    <i class="main-icon-2-transfer"></i>
+                </div>
+                <!-- ETL button -->
+                <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();">
+                    <i class="main-icon-2-transfer"></i>
+                </div>
+                <!-- conference button -->
+                <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();">
                     <i class="main-icon-2-transfer"></i>
                 </div>
                 <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();">

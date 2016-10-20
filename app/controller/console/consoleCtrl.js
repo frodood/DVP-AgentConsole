@@ -2,7 +2,7 @@
  * Created by Veery Team on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, profileDataParser, loginService, $state, uuid4, notificationService, filterFilter, engagementService, $q) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, $q, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, profileDataParser, loginService, $state, uuid4, notificationService, filterFilter, engagementService,phoneSetting) {
 
 
     $scope.notifications = [];
@@ -101,6 +101,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isBtnReg').addClass('display-block active-menu-icon').removeClass('display-none');
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $scope.ShowHidePhone(true);
+        phoneFuncion.hideConference();
+        phoneFuncion.hideEtl();
+        phoneFuncion.hideTransfer();
+        phoneFuncion.hideSwap();
     };
 
     $scope.PhoneLoading = function () {
@@ -161,6 +165,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             //$scope.call.number = $scope.call.number + dtmf;
         },
         makeCall: function (callNumber, tabReference) {
+           phoneFuncion.updateCallStatus('Dialing');
             $scope.veeryPhone.makeAudioCall(callNumber);
 
             //  var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
@@ -172,9 +177,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 return
             }
             sipCall('call-audio', callNumber);
+            phoneFuncion.updateCallStatus('Dialing');
         },
         endCall: function () {
             sipHangUp();
+            phoneFuncion.updateCallStatus('');
         },
         answerCall: function () {
             answerCall();
@@ -184,6 +191,41 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             //UIStateChange.inIdleState();
             rejectCall();
             $scope.ShowIncomeingNotification(false);
+            phoneFuncion.updateCallStatus('');
+        },
+        etlCall: function () {
+           var dtmfSet = phoneSetting.EtlCode.split('');
+            angular.forEach(dtmfSet, function(chr) {
+                sipSendDTMF(chr);
+            });
+        },
+        swapCall: function () {
+           var dtmfSet = phoneSetting.SwapCode.split('');
+            angular.forEach(dtmfSet, function(chr) {
+                sipSendDTMF(chr);
+            });
+        },
+        conferenceCall: function () {
+           var dtmfSet = phoneSetting.ConferenceCode.split('');
+            angular.forEach(dtmfSet, function(chr) {
+                sipSendDTMF(chr);
+            });
+        },
+        transferCall: function (no) {
+            var dtmfSet = no.length <= 5 ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
+            angular.forEach(dtmfSet, function(chr) {
+                sipSendDTMF(chr);
+            });
+            $timeout(function () {
+                dtmfSet = no.split('');
+                angular.forEach(dtmfSet, function(chr) {
+                    sipSendDTMF(chr);
+                });
+            }, 1000);
+            phoneFuncion.showSwap();
+            phoneFuncion.showEtl();
+            phoneFuncion.showConference();
+
         },
         muteCall: function () {
             /*btnMute.value = bMute ? "Unmute" : "Mute";*/
@@ -254,60 +296,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
             });
 
-            /*var url = baseUrls.authUrl;
-             var encoded = $base64.encode("ae849240-2c6d-11e6-b274-a9eec7dab26b:6145813102144258048");
-             var config = {
-             headers: {
-             'Authorization': 'Basic ' + encoded
-             }
-             };
-             var data = {
-             "grant_type": "password",
-             "username": userName,
-             "password": password,
-             "scope": "write_ardsresource write_notification read_myUserProfile profile_veeryaccount resourceid"
-             };
-             $http.post(url, data, config)
-             .success(function (data, status, headers, config) {
-             $scope.PostDataResponse = data;
-
-             if (data) {
-             var decodeData = jwtHelper.decodeToken(data.access_token);
-
-             var values = decodeData.context.veeryaccount.contact.split("@");
-             $scope.profile.id = decodeData.context.resourceid;
-             $scope.profile.displayName = values[0];
-             $scope.profile.authorizationName = values[0];
-             $scope.profile.publicIdentity = "sip:" + decodeData.context.veeryaccount.contact;//sip:bob@159.203.160.47
-             $scope.profile.password = password;
-             $scope.profile.server.token = data.access_token;
-             $scope.profile.server.domain = values[1];
-             $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
-             $scope.profile.server.outboundProxy = "";
-             $scope.profile.server.enableRtcwebBreaker = false;
-             dataParser.userProfile = $scope.profile;
-             if (!decodeData.context.resourceid) {
-             $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
-             return;
-             }
-             resourceService.GetContactVeeryFormat().then(function (response) {
-             if (response.IsSuccess) {
-             if ($scope.profile.server.password)
-             $scope.profile.password = $scope.profile.server.password;
-             $scope.profile.veeryFormat = response.Result;
-             dataParser.userProfile = $scope.profile;
-             $scope.veeryPhone.registerWithArds($scope.profile);
-             }
-             else {
-             $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
-             }
-             }, function (error) {
-             $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
-             });
-
-
-             }
-             });*/
         },
         unregisterWithArds: function () {
             resourceService.UnregisterWithArds(authService.GetResourceId()).then(function (response) {
@@ -359,6 +347,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     phoneFuncion.showSpeakerButton();
                     phoneFuncion.showMuteButton();
                     phoneFuncion.showEndButton();
+                    phoneFuncion.showTransfer();
+                    phoneFuncion.hideAnswerButton();
+                    phoneFuncion.updateCallStatus('In Call');
                     $scope.ShowIncomeingNotification(false);
                 }
             }
@@ -439,6 +430,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.hideHoldButton();
                 phoneFuncion.hideMuteButton();
                 /*addCallToHistory(sRemoteNumber, 2);*/
+                phoneFuncion.updateCallStatus('Incoming Call');
             }
             catch (ex) {
                 console.error(ex.message);
@@ -452,6 +444,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.ShowIncomeingNotification(false);
                 phoneFuncion.hideHoldButton();
                 phoneFuncion.hideMuteButton();
+                phoneFuncion.hideSpeakerButton();
+                phoneFuncion.hideSwap();
+                phoneFuncion.hideEtl();
+                phoneFuncion.hideTransfer();
+                phoneFuncion.hideConference();
+                phoneFuncion.hideConnectedBtn();
+                phoneFuncion.showAnswerButton();
+                phoneFuncion.updateCallStatus('');
+
                 if (window.btnBFCP) window.btnBFCP.disabled = true;
 
 
@@ -483,10 +484,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     var phoneFuncion = {
         showAnswerButton: function () {
-            $('#answerButton').addClass('phone-btn ').removeClass('display-none');
+            $('#answerButton').addClass('phone-sm-btn answer').removeClass('display-none');
         },
         hideAnswerButton: function () {
-            $('#answerButton').addClass('display-none ').removeClass('display-block');
+            $('#answerButton').addClass('display-none ').removeClass('phone-sm-btn answer');
         },
         showHoldButton: function () {
             $('#holdResumeButton').addClass('phone-sm-btn phone-sm-bn-p8').removeClass('display-none');
@@ -515,7 +516,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#speakerButton').addClass('display-none ');
         },
         updateCallStatus: function (status) {
-
             $scope.call.status = status;
         },
         hideTransfer: function () {
@@ -525,10 +525,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#transferCall').addClass('display-block').removeClass('display-none');
         },
         hideSwap: function () {
-            $('#slapCall').addClass('display-none').removeClass('display-block');
+            $('#swapCall').addClass('display-none').removeClass('display-block');
         },
         showSwap: function () {
-            $('#slapCall').addClass('display-block').removeClass('display-none');
+            $('#swapCall').addClass('display-block').removeClass('display-none');
+        },
+        hideEtl: function () {
+            $('#etlCall').addClass('display-none').removeClass('display-block');
+        },
+        showEtl: function () {
+            $('#etlCall').addClass('display-block').removeClass('display-none');
+        },
+        hideConference: function () {
+            $('#conferenceCall').addClass('display-none').removeClass('display-block');
+        },
+        showConference: function () {
+            $('#conferenceCall').addClass('display-block').removeClass('display-none');
         },
         showConnectedBtn: function () {
             $('#onlinePhoneBtnWrapper').removeClass('display-none');
