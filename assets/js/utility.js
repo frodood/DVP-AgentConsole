@@ -124,7 +124,7 @@ function showDilapad() {
     var $wrapper = $('.dial-pad-wrapper'),
         animateTime = 500,
         height = 310;
-    if ($wrapper.height() === 0 || $wrapper.height() === 80) {
+    if ($wrapper.height() === 0 || $wrapper.height() === 90) {
         phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
             if (res) {
                 $('#phoneDialpad').removeClass('display-none').addClass('display-block');

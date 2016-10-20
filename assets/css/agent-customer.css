@@ -3369,6 +3369,7 @@ tags-input .tags .input {
     height: 20px;
     text-align: center;
     border: none;
+    background: transparent;
 }
 
 /*new update */
@@ -3760,16 +3761,18 @@ div.btn-group.dropdown {
 }
 
 .phone-screen {
-    width: 200px;
+    width: 202px;
     height: 66px;
-    background: transparent;
+    background: #17373c;
     position: absolute;
     top: 10px;
-    left: 17px;
+    left: 15px;
     overflow: hidden;
     padding-top: 0px;
     text-transform: capitalize;
-    border-bottom: 1px solid #f7f5f5;
+    border-bottom: 1px solid #36ba45;
+    padding-top: 7px;
+    border-radius: 15px 0px 0px 0px;
 }
 
 .phone-screen > .no-action {
@@ -3787,17 +3790,18 @@ div.btn-group.dropdown {
 .pin-screen-wrapper {
     cursor: pointer;
     z-index: 1000;
-    width: 30px;
-    height: 30px;
-    background: rgba(247, 245, 245, 0.54);
+    width: 20px;
+    height: 20px;
+    background: rgb(255, 255, 255);
     position: absolute;
     overflow: hidden;
-    top: 14px;
+    top: 5px;
     border-radius: 100%;
     text-align: center;
-    padding-top: 6px;
-    right: 12px;
+    padding-top: 3px;
+    right: 5px;
     color: #36ba45;
+    font-size: 12px;
 }
 
 /*notification loading color */

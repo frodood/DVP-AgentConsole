@@ -251,7 +251,7 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                                    >Hi,{{loginName}}</a>
+                            >Hi,{{loginName}}</a>
                             <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
@@ -290,7 +290,7 @@
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
-                                    >Logout</a></li>
+                            >Logout</a></li>
                         </ul>
 
 
@@ -511,25 +511,29 @@
                     <i class="veery-font-1-pause"></i>
                 </div>
                 <!--  contact list button -->
-                <div class="phone-sm-btn phone-sm-bn-p8 display-none">
-                    <i class="veery-font-1-user"></i>
+                <div class="phone-sm-btn phone-sm-bn-p8"
+                     ng-click="veeryPhone.showOnlineBtn();">
+                    <i class="veery-font-1-more"></i>
                 </div>
+            </div>
+
+            <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none">
                 <!-- mute/unmiute hold button -->
-                <div class="phone-sm-btn phone-sm-bn-p8" id="speakerButton" ng-click="veeryPhone.muteCall();">
+                <div class="phone-sm-btn phone-sm-bn-p8" id="speakerButton"
+                     ng-click="veeryPhone.muteCall();">
 
-                    <!--<i id="muted" class="veery-font-1-microphone display-none"></i>-->
                 </div>
-
                 <!-- call transfer button -->
                 <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 ">
                     <i class="main-icon-2-transfer-8"></i>
                 </div>
-
-                <!-- call slap button -->
-                <div id="slapCall" class="phone-sm-btn phone-sm-bn-p8">
+                <!-- call swap button -->
+                <div id="swapCall" class="phone-sm-btn phone-sm-bn-p8">
                     <i class="main-icon-2-transfer"></i>
                 </div>
-
+                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();">
+                    <i class="ti-close"></i>
+                </div>
             </div>
         </div>
     </div>

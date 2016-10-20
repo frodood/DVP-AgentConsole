@@ -73,7 +73,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 80) {
+        if ($wrapper.height() === 0 || $wrapper.height() === 90) {
             phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
                 if (res) {
                     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
@@ -135,7 +135,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             text: msg,
             type: type,
             styling: 'bootstrap3',
-            icon: false
+            icon: 'ti-bell'
         });
     };
 
@@ -374,7 +374,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     /*UIStateChange.inIdleState();*/
                     $scope.PhoneOnline();
                     $scope.isRegistor = true;
-                    $scope.showAlert("Soft Phone", "info", description);
+                    $scope.showAlert("Soft Phone", "success", description);
                 }
                 else if (description == 'Forbidden') {
                     $scope.showAlert("Soft Phone", "error", description);
@@ -472,8 +472,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             catch (ex) {
                 console.error(ex.message)
             }
+        },
+        showOnlineBtn: function () {
+            phoneFuncion.showConnectedBtn();
+        },
+        hideOnlineBtn: function () {
+            phoneFuncion.hideConnectedBtn();
         }
-
     };
 
     var phoneFuncion = {
@@ -510,6 +515,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#speakerButton').addClass('display-none ');
         },
         updateCallStatus: function (status) {
+
             $scope.call.status = status;
         },
         hideTransfer: function () {
@@ -518,12 +524,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         showTransfer: function () {
             $('#transferCall').addClass('display-block').removeClass('display-none');
         },
-        hideSlap: function () {
+        hideSwap: function () {
             $('#slapCall').addClass('display-none').removeClass('display-block');
         },
-        showSlap: function () {
+        showSwap: function () {
             $('#slapCall').addClass('display-block').removeClass('display-none');
-        }
+        },
+        showConnectedBtn: function () {
+            $('#onlinePhoneBtnWrapper').removeClass('display-none');
+            $('#phoneBtnWrapper').addClass('display-none');
+        },
+        hideConnectedBtn: function () {
+            $('#phoneBtnWrapper').removeClass('display-none');
+            $('#onlinePhoneBtnWrapper').addClass('display-none');
+        },
+
+
     };
 
     phoneFuncion.hideHoldButton();
@@ -611,10 +627,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.OnMessage = function (data) {
 
         var senderAvatar;
-        
 
-        if(data.From && $filter('filter')($scope.agentList, {username: data.From})[0].avatar)
-        {
+
+        if (data.From && $filter('filter')($scope.agentList, {username: data.From})[0].avatar) {
             senderAvatar = $filter('filter')($scope.agentList, {username: data.From})[0].avatar;
         }
 
