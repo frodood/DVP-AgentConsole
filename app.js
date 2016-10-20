@@ -26,7 +26,8 @@ var baseUrls = {
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
     'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
-    'dashBordUrl': 'http://dashboard.app.veery.cloud/'
+    'dashBordUrl': 'http://dashboard.app.veery.cloud/',
+    'toDoUrl': 'http://127.0.0.1:3636/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

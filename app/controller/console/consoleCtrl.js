@@ -2,7 +2,7 @@
  * Created by Veery Team on 8/16/2016.
  */
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, profileDataParser, loginService, $state, uuid4, notificationService, filterFilter, engagementService, $q) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout,$uibModal, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, profileDataParser, loginService, $state, uuid4, notificationService, filterFilter, engagementService, $q,toDoService) {
 
 
     $scope.notifications = [];
@@ -580,9 +580,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var senderAvatar;
         
 
-        if(data.From && $filter('filter')($scope.agentList, {username: data.From})[0].avatar)
+        if(data.From)
         {
-            senderAvatar = $filter('filter')($scope.agentList, {username: data.From})[0].avatar;
+            if($filter('filter')($scope.users, {username: data.From}))
+            {
+                senderAvatar = $filter('filter')($scope.users, {username: data.From})[0].avatar;
+            }
+            else if($filter('filter')($scope.userGroups, {name: data.From}))
+            {
+                senderAvatar = $filter('filter')($scope.userGroups, {username: data.From})[0].avatar;
+            }
+
+
         }
 
 
@@ -1720,6 +1729,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.veeryPhone.unregisterWithArds();
         loginService.Logoff(function () {
             $state.go('login');
+            $timeout.cancel(getAllRealTimeTimer);
         });
     };
 
@@ -1927,7 +1937,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    loadOnlineAgents();
 
     var getAllRealTime = function () {
         loadOnlineAgents();
@@ -2056,6 +2065,68 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
+
+    $scope.showMesssageModal=false;
+
+    $scope.showNotificationMessage= function (notifyMessage) {
+
+        $scope.showMesssageModal=true;
+
+        $scope.showModal(notifyMessage);
+
+
+
+        //$scope.showAlert("Message","success",notifyMessage.Message);
+    }
+
+
+    $scope.discardNotifications = function (notifyMessage) {
+        $scope.notifications.splice($scope.notifications.indexOf(notifyMessage),1);
+        $scope.unredNotifications=$scope.notifications.length;
+    }
+
+    $scope.addToDoList = function (todoMessage) {
+        todoMessage.title=todoMessage.header;
+        toDoService.addNewToDo(todoMessage).then(function (response) {
+            $scope.discardNotifications(todoMessage);
+            $scope.showAlert("Added to ToDo","success","Notification successfully added as To Do");
+        },function (error) {
+            $scope.showAlert("Adding failed ","error","Notification is failed to add as To Do");
+        });
+    }
+
+    $scope.showModal= function (MessageObj) {
+        //modal show
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'app/views/messageModal.html',
+            controller: 'notificationModalController',
+            size: 'sm',
+            backdrop: 'static',
+            keyboard: false,
+            resolve: {
+                MessageObj: function () {
+                    return MessageObj;
+                },
+                DiscardNotifications: function () {
+                    return $scope.discardNotifications;
+                },
+                AddToDoList: function () {
+                    return $scope.addToDoList;
+                }
+            }
+        });
+    };
+
+
+
+
+
+
+
+
+
+
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
         scope.isFiexedTab = false;
@@ -2068,4 +2139,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             scope.$apply();
         });
     };
+});
+
+agentApp.controller("notificationModalController", function ($scope, $uibModalInstance,MessageObj,DiscardNotifications,AddToDoList) {
+
+
+    $scope.showMesssageModal=true;
+    $scope.MessageObj=MessageObj;
+
+
+
+    $scope.keepNotification= function () {
+        $uibModalInstance.dismiss('cancel');
+    }
+    $scope.discardNotification= function (msgObj) {
+        DiscardNotifications(msgObj);
+        $uibModalInstance.dismiss('cancel');
+    }
+    $scope.addToTodo = function (MessageData) {
+        AddToDoList(MessageData);
+        $uibModalInstance.dismiss('cancel');
+    }
+
+
 });
