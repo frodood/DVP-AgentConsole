@@ -29,15 +29,21 @@
                         <li class="console-menu-icon m-left-10 m-right-10" id="notificationAlarm"
                             ng-click="checkAndRegister()" uib-dropdown
                             uib-dropdown-toggle>
+
                             <i id="regNotification" class="animated  veery-font-1-alarm display-block"
                                ng-class="{'color-orange':unredNotifications!=0,'color-red':!isSocketRegistered}"> </i>
                             <i id="regNotificationLoading" class="fa fa-spinner fa-spin display-none"
                                style="margin-top: 3px;"></i>
 
-                            <div class="console-notification-header" ng-class="{'bg-orange':unredNotifications!=0}"
+                            <div class="console-notification-header"
+                                 ng-class="{'bg-orange ':unredNotifications!=0}"
                                  ng-show="isSocketRegistered">
                                 {{unredNotifications}}
+                                <div class="sonar-wave"
+                                     ng-show="isSocketRegistered"
+                                     ng-if="unredNotifications!=0"></div>
                             </div>
+
                             <ul class="dropdown-menu console-drop-menu notification-menu-left "
                                 ng-show="isSocketRegistered" uib-dropdown-menu
                                 role="menu"
@@ -303,7 +309,8 @@
 
 
         <!-- incoming call notification -->
-        <div id="incomingNotification" class="console-phone-wrapper display-none Phone is-animating " id="phoneWidget">
+        <div id="incomingNotification" class="console-phone-wrapper display-none Phone is-animating "
+             id="phoneWidget">
             <div class="income-call-wrapper ">
                 <div class="income-call-details">
                     <div class="company-details">
@@ -541,7 +548,9 @@
 </div>
 
 
-<div ui-view></div>
+<div ui-view>
+
+</div>
 
 <!--phone VIdeo/audio panel-->
 <div>
