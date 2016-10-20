@@ -188,18 +188,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         muteCall: function () {
             /*btnMute.value = bMute ? "Unmute" : "Mute";*/
             if (sipToggleMute()) {
-                $('#muteButton').addClass('veery-font-1-muted').removeClass('veery-font-1-mute');
+                $('#speakerButton').addClass('veery-font-1-muted').removeClass('veery-font-1-microphone');
             } else {
-                $('#muteButton').addClass('veery-font-1-mute').removeClass('veery-font-1-muted');
+                $('#speakerButton').addClass('veery-font-1-microphone').removeClass('veery-font-1-muted');
             }
         },
         holdResumeCall: function () {
             var h = sipToggleHoldResume();
             if (h === '0') { //connect
-                $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-1').removeClass('veery-phone-icon-1-phone-call-2');
+                $('#holdResumeButton').addClass('phone-sm-btn phone-sm-bn-p8').removeClass('call-ended');
             }
             else if (h === '1') {//hold
-                $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-2').removeClass('veery-phone-icon-1-phone-call-1');
+                $('#holdResumeButton').addClass('phone-sm-btn phone-sm-bn-p8 call-ended');
             } else {
 //error
             }
@@ -356,6 +356,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     /*UIStateChange.inCallConnectedState();*/
                     $scope.startCallTime();
                     phoneFuncion.showHoldButton();
+                    phoneFuncion.showSpeakerButton();
                     phoneFuncion.showMuteButton();
                     phoneFuncion.showEndButton();
                     $scope.ShowIncomeingNotification(false);
@@ -477,46 +478,36 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     var phoneFuncion = {
         showAnswerButton: function () {
-            return;
             $('#answerButton').addClass('phone-btn ').removeClass('display-none');
         },
         hideAnswerButton: function () {
-            return;
             $('#answerButton').addClass('display-none ').removeClass('display-block');
         },
         showHoldButton: function () {
-            return;
-            $('#holdResumeButton').addClass('phone-btn ').removeClass('display-none');
-            $('#holdResumeButton').addClass('veery-phone-icon-1-phone-call-1').removeClass('veery-phone-icon-1-phone-call-2');
+            $('#holdResumeButton').addClass('phone-sm-btn phone-sm-bn-p8').removeClass('display-none');
+            /*$('#holdResumeButton').addClass('phone-sm-btn phone-sm-bn-p8').removeClass('veery-phone-icon-1-phone-call-2');*/
         },
         hideHoldButton: function () {
-            return;
             $('#holdResumeButton').addClass('display-none ').removeClass('display-block');
         },
         showEndButton: function () {
-            return;
-            $('#endButton').addClass('phone-btn ').removeClass('display-none');
+            $('#endButton').addClass('phone-sm-btn call-ended').removeClass('display-none');
         },
         hideEndButton: function () {
-            return;
-            $('#endButton').addClass('display-none ').removeClass('display-block');
+            $('#endButton').addClass('display-none ');
         },
         showMuteButton: function () {
-            return;
             $('#muteButton').addClass('phone-btn ').removeClass('display-none');
             $('#muteButton').addClass('veery-font-1-mute').removeClass('veery-font-1-muted');
         },
         hideMuteButton: function () {
-            return;
             $('#muteButton').addClass('display-none ').removeClass('display-block');
         },
         showSpeakerButton: function () {
-            return;
-            $('#speakerButton').addClass('phone-btn ').removeClass('display-none');
+            $('#speakerButton').addClass('veery-font-1-microphone').removeClass('veery-font-1-muted display-none');
         },
         hideSpeakerButton: function () {
-            return;
-            $('#speakerButton').addClass('display-none ').removeClass('display-block');
+            $('#speakerButton').addClass('display-none ');
         },
         updateCallStatus: function (status) {
             $scope.call.status = status;
