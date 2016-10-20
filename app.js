@@ -32,6 +32,15 @@ var baseUrls = {
 
 agentApp.constant('baseUrls', baseUrls);
 
+var phoneSetting = {
+    'TransferPhnCode':'*6',
+    'TransferExtCode':'*3',
+    'EtlCode':'#',
+    'SwapCode':'1',
+    'ConferenceCode':'0'
+};
+agentApp.constant('phoneSetting', phoneSetting);
+
 agentApp.config(function(scrollableTabsetConfigProvider){
     scrollableTabsetConfigProvider.setShowTooltips (true);
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');

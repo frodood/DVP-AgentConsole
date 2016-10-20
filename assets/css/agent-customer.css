@@ -166,6 +166,7 @@ body {
     text-align: center;
     font-size: 6px;
     padding-top: 5px;
+    z-index: 10;
 }
 
 .console-drop-menu.notification-menu,
@@ -440,7 +441,7 @@ body {
     background: rgb(198, 206, 205);
     z-index: 2000;
     border-radius: 15px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
     transition: all 80ms;
     padding: 12px 0px 5px 15px;
@@ -481,9 +482,16 @@ body {
     margin-right: 5px;
 }
 
-.phone-bg-btn > i {
-    font-size: 20px;
+.phone-sm-bn-p8 {
+    padding-top: 8px;
+}
+
+.phone-sm-btn.answer > i {
     color: #36ba45;
+}
+
+.phone-sm-btn.call-ended > i {
+    color: #c31b1b;
 }
 
 .phone-sm-btn:hover {
@@ -507,6 +515,7 @@ body {
     overflow: hidden;
     text-align: center;
     padding-top: 5px;
+    cursor: pointer;
 }
 
 .phone-button-wrapper > .phone-btn > i {
@@ -3355,11 +3364,13 @@ tags-input .tags .input {
 }
 
 .phone-dialpad-no {
-    margin-bottom: 4px;
-    border-radius: 15px 15px 5px 5px;
+    margin-bottom: 0;
+    border-radius: 0;
     width: 192px;
-    height: 35px;
+    height: 20px;
     text-align: center;
+    border: none;
+    background: transparent;
 }
 
 /*new update */
@@ -3734,7 +3745,7 @@ div.btn-group.dropdown {
 }
 
 .phone-sm-btn > .veery-font-1-microphone {
-    color: #d90000;
+   /*// color: #d90000;*/
 }
 
 .dial-pad-wrapper {
@@ -3751,16 +3762,18 @@ div.btn-group.dropdown {
 }
 
 .phone-screen {
-    width: 200px;
-    height: 45px;
-    background: transparent;
+    width: 202px;
+    height: 66px;
+    background: #17373c;
     position: absolute;
     top: 10px;
-    left: 17px;
+    left: 15px;
     overflow: hidden;
-    padding-top: 1px;
+    padding-top: 0px;
     text-transform: capitalize;
-    border-bottom: 1px solid #f7f5f5;
+    border-bottom: 1px solid #36ba45;
+    padding-top: 7px;
+    border-radius: 15px 0px 0px 0px;
 }
 
 .phone-screen > .no-action {
@@ -3771,19 +3784,26 @@ div.btn-group.dropdown {
 
 .phone-screen > .dial-action {
     text-align: center;
-    font-size: 15px;
+    font-size: 13px;
     color: #4f9300;
 }
 
 .pin-screen-wrapper {
-    text-align: left;
-    padding-top: 5px;
-    padding-right: 7px;
     cursor: pointer;
-    z-index: 500;
+    z-index: 1000;
+    width: 20px;
+    height: 20px;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    overflow: hidden;
+    top: 5px;
+    border-radius: 100%;
+    text-align: center;
+    padding-top: 3px;
+    right: 5px;
+    color: #36ba45;
+    font-size: 12px;
 }
-
-
 
 /*notification loading color */
 #notificationAlarm > i.fa.fa-spinner {
@@ -3796,12 +3816,64 @@ div.btn-group.dropdown {
     position: absolute;
 
 }
-.notify-img-small> img {
+
+.notify-img-small > img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    overflow:visible;
-    position:relative;
+    overflow: visible;
+    position: relative;
+}
+
+.call-duations {
+    color: #14c67d;
+    text-align: center;
+    font-size: 10px;
+}
+
+#softPhoneDragElem {
+    cursor: move;
+    position: relative;
+    /* important (all position that's not `static`) */
+}
+
+/* Prevent scrollbars to appear when waves go out of bound */
+.sonar-wrapper {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+}
+
+
+/* the 'wave', same shape and size as its parent */
+.sonar-wave {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    width: 15px;
+    height: 15px;
+    border-radius: 9999px;
+    background-color: #ff8c00;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none
+}
+/*
+  Animate!
+  NOTE: add browser prefixes where needed.
+*/
+.sonar-wave {
+    animation: sonarWave 2s linear infinite;
+}
+
+@keyframes sonarWave {
+    from {
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(3);
+        opacity: 0;
+    }
 }
 
 .modal-message-wrapper{
