@@ -314,11 +314,11 @@
             <div class="income-call-wrapper ">
                 <div class="income-call-details">
                     <div class="company-details">
-                        <small>Company : 5</small>
+                        <small>Company : {{call.CompanyNo}}</small>
                     </div>
                     <div class="user-details">
                         <h4>{{call.number}}</h4>
-                        <small>Sinhala</small>
+                        <small>{{call.skill}}</small>
                     </div>
                     <div class="incoming-action-wrapper">
                         <div class="row">
@@ -600,9 +600,9 @@
     <div>
         <!-- Audios -->
         <audio id="audio_remote" autoplay="autoplay"></audio>
-        <audio id="ringtone" loop src="/assets/sounds/ringtone.wav"></audio>
-        <audio id="ringbacktone" loop src="/assets/sounds/ringbacktone.wav"></audio>
-        <audio id="dtmfTone" src="/assets/sounds/dtmf.wav"></audio>
+        <audio id="ringtone" loop src="assets/sounds/ringtone.wav"></audio>
+        <audio id="ringbacktone" loop src="assets/sounds/ringbacktone.wav"></audio>
+        <audio id="dtmfTone" src="assets/sounds/dtmf.wav"></audio>
     </div>
 </div>
 

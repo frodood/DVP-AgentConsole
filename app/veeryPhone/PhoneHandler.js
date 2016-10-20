@@ -5,11 +5,10 @@
 var sTransferNumber;
 var oRingTone, oRingbackTone;
 var oSipStack, oSipSessionRegister, oSipSessionCall, oSipSessionTransferCall;
-var videoRemote, videoLocal, audioRemote;
+var audioRemote;
 var bFullScreen = false;
 var oNotifICall;
 var bDisableVideo = false;
-var viewVideoLocal, viewVideoRemote, viewLocalScreencast; // <video> (webrtc) or <div> (webrtc4all)
 var oConfigCall;
 var oReadyStateTimer;
 var ringtone, ringbacktone;
@@ -32,8 +31,6 @@ var preInit = function (userEvent, profile) {
 
     UserEvent = userEvent;
     Profile = profile;
-    videoLocal = document.getElementById("video_local");
-    videoRemote = document.getElementById("video_remote");
     audioRemote = document.getElementById("audio_remote");
     ringtone = document.getElementById("ringtone");
     ringbacktone = document.getElementById("ringbacktone");
@@ -89,9 +86,6 @@ function postInit() {
         return;
     }
 
-    // FIXME: displays must be per session
-    viewVideoLocal = videoLocal;
-    viewVideoRemote = videoRemote;
 
     if (!SIPml.isWebRtcSupported()) {
         if (confirm('Your browser don\'t support WebRTC.\naudio/video calls will be disabled.\nDo you want to download a WebRTC-capable browser?')) {
@@ -362,7 +356,7 @@ function onSipEventStack(e /*SIPml.Stack.Event*/) {
             stopRingbackTone();
             stopRingTone();
 
-            UserEvent.uiVideoDisplayShowHide(false);
+            //UserEvent.uiVideoDisplayShowHide(false);
             break;
         }
 
@@ -439,8 +433,8 @@ function onSipEventSession(e /* SIPml.Session.Event */) {
 
 
                 if (SIPml.isWebRtc4AllSupported()) { // IE don't provide stream callback
-                    UserEvent.uiVideoDisplayEvent(false, true);
-                    UserEvent.uiVideoDisplayEvent(true, true);
+                   /* UserEvent.uiVideoDisplayEvent(false, true);
+                    UserEvent.uiVideoDisplayEvent(true, true);*/
                 }
             }
             break;
@@ -467,28 +461,28 @@ function onSipEventSession(e /* SIPml.Session.Event */) {
         case 'm_stream_video_local_added':
         {
             if (e.session == oSipSessionCall) {
-                UserEvent.uiVideoDisplayEvent(true, true);
+                //UserEvent.uiVideoDisplayEvent(true, true);
             }
             break;
         }
         case 'm_stream_video_local_removed':
         {
             if (e.session == oSipSessionCall) {
-                UserEvent.uiVideoDisplayEvent(true, false);
+               // UserEvent.uiVideoDisplayEvent(true, false);
             }
             break;
         }
         case 'm_stream_video_remote_added':
         {
             if (e.session == oSipSessionCall) {
-                UserEvent.uiVideoDisplayEvent(false, true);
+               // UserEvent.uiVideoDisplayEvent(false, true);
             }
             break;
         }
         case 'm_stream_video_remote_removed':
         {
             if (e.session == oSipSessionCall) {
-                UserEvent.uiVideoDisplayEvent(false, false);
+               // UserEvent.uiVideoDisplayEvent(false, false);
             }
             break;
         }
@@ -557,8 +551,8 @@ function onSipEventSession(e /* SIPml.Session.Event */) {
                 oSipSessionCall.bHeld = false;
 
                 if (SIPml.isWebRtc4AllSupported()) { // IE don't provide stream callback yet
-                    UserEvent.uiVideoDisplayEvent(false, true);
-                    UserEvent.uiVideoDisplayEvent(true, true);
+                   /* UserEvent.uiVideoDisplayEvent(false, true);
+                    UserEvent.uiVideoDisplayEvent(true, true);*/
                 }
             }
             break;

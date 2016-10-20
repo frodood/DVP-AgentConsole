@@ -158,6 +158,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.call = {};
     $scope.call.number = "";
+    $scope.call.skill = "";
+    $scope.call.Company = "";
+    $scope.call.CompanyNo = "";
 
 
     $scope.veeryPhone = {
@@ -629,7 +632,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             });
         }
-
+        $scope.call.number = notifyData.channelFrom;
+        $scope.call.skill = notifyData.skill;
+        $scope.call.Company = notifyData.company;
+        $scope.call.CompanyNo = notifyData.channelTo;
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
     };
