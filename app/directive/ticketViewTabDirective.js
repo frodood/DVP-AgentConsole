@@ -16,6 +16,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
         link: function (scope, element, attributes) {
 
             scope.uploadedAttchments = [];
+            scope.uploadedCommentAttchments=[];
             scope.timeValidateMessage="";
             scope.isTimeEdit=false;
             scope.userCompanyData = authService.GetCompanyInfo();
@@ -45,9 +46,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
 
-            scope.showAlert = function (tittle, type, msg) {
+            scope.showAlert = function (title, type, msg) {
                 new PNotify({
-                    title: tittle,
+                    title: title,
                     text: msg,
                     type: type,
                     styling: 'bootstrap3',
@@ -982,7 +983,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             };
 
-
+            scope.showCommentDrop=false;
             scope.addComment = function (message, mode) {
 
                 var channel = "";
@@ -1038,6 +1039,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 };
 
             };
+
+            scope.showCommentDropArea = function () {
+                scope.showCommentDrop=!scope.showCommentDrop;
+            }
 
 
             //edit assignee
@@ -1336,6 +1341,21 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
             });
 
+            /*var com_uploader = scope.uploader = new FileUploader({
+             url: baseUrls.fileService+"FileService/File/Upload",
+             headers: {'Authorization':  authService.GetToken()}
+             });
+
+             // FILTERS
+
+             com_uploader.filters.push({
+             name: 'customFilter',
+             fn: function (item /!*{File|FileLikeObject}*!/, options) {
+             return this.queue.length < 10;
+             }
+             });*/
+
+
             //uploader.formData.push({'DuoType' : 'fax'});
 
             // CALLBACKS
@@ -1343,14 +1363,25 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.file = {};
             scope.file.Category = "TICKET_ATTACHMENTS";
             scope.uploadProgress=0;
+            scope.isTicketAttachment=true;
+
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                 console.info('onWhenAddingFileFailed', item, filter, options);
             };
             uploader.onAfterAddingFile = function (fileItem) {
                 console.info('onAfterAddingFile', fileItem);
                 fileItem.upload();
+                /*if( scope.file.Category=="COMMENT_ATTACHMENTS")
+                {
+                    scope.file.Category="TICKET_ATTACHMENTS";
+                }
+                else
+                {
+                    scope.file.Category="COMMENT_ATTACHMENTS";
+                }*/
             };
             uploader.onAfterAddingAll = function (addedFileItems) {
+
                 if (!scope.file.Category) {
                     uploader.clearQueue();
                     new PNotify({
@@ -1361,9 +1392,13 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     });
                     return;
                 }
+
+
+
                 console.info('onAfterAddingAll', addedFileItems);
             };
             uploader.onBeforeUploadItem = function (item) {
+
                 item.formData.push({'fileCategory': scope.file.Category});
                 console.info('onBeforeUploadItem', item);
             };
@@ -1373,9 +1408,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 if( scope.uploadProgress==100)
                 {
                     scope.showAlert("Attachment","success","Successfully uploaded");
-                    setTimeout(function () {
-                        scope.uploadProgress=0;
-                    }, 500);
+                    /* setTimeout(function () {
+                     scope.uploadProgress=0;
+                     }, 500);*/
 
                 }
             };
@@ -1404,19 +1439,21 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         size: fileItem._file.size
                     }
 
-
                     ticketService.AddNewAttachmentToTicket(scope.ticket._id, attchmentData).then(function (response) {
 
-                        if (response.data.IsSuccess) {
-                            scope.uploadedAttchments.push(response.data.Result);
-                        }
-                        else {
-                            console.log("Invalid attachment");
-                        }
+                            if (response.data.IsSuccess) {
+                                scope.uploadedAttchments.push(response.data.Result);
+                            }
+                            else {
+                                console.log("Invalid attachment");
+                            }
 
-                    }).catch(function (error) {
-                        console.log("Invalid attachment error", error);
-                    });
+                        }).catch(function (error) {
+                            console.log("Invalid attachment error", error);
+                        });
+
+
+
 
 
                 }
@@ -1425,9 +1462,97 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 console.info('onCompleteAll');
             };
 
-            console.info('uploader', uploader);
+            /*com_uploader.onWhenAddingFileFailed = function (item /!*{File|FileLikeObject}*!/, filter, options) {
+             console.info('onWhenAddingFileFailed', item, filter, options);
+             };
+             com_uploader.onAfterAddingFile = function (fileItem) {
+             console.info('onAfterAddingFile', fileItem);
+             fileItem.upload();
+             };
+             com_uploader.onAfterAddingAll = function (addedFileItems) {
+             if (!scope.commentCategory) {
+             com_uploader.clearQueue();
+             new PNotify({
+             title: 'Comment attachment Upload!',
+             text: 'Please Select Attachment Category.',
+             type: 'error',
+             styling: 'bootstrap3'
+             });
+             return;
+             }
+             console.info('onAfterAddingAll', addedFileItems);
+             };
+             com_uploader.onBeforeUploadItem = function (item) {
+             item.formData.push({'fileCategory': scope.commentCategory});
+             console.info('onBeforeUploadItem', item);
+             };
+             com_uploader.onProgressItem = function (fileItem, progress) {
+             console.info('onProgressItem', fileItem, progress);
+             scope.com_uploadProgress=progress;
+             if( scope.com_uploadProgress==100)
+             {
+             scope.showAlert("Attachment","success","Successfully uploaded");
+             /!* setTimeout(function () {
+             scope.uploadProgress=0;
+             }, 500);*!/
+
+             }
+             };
+             com_uploader.onProgressAll = function (progress) {
+             console.info('onProgressAll', progress);
+             };
+             com_uploader.onSuccessItem = function (fileItem, response, status, headers) {
+             console.info('onSuccessItem', fileItem, response, status, headers);
+             };
+             com_uploader.onErrorItem = function (fileItem, response, status, headers) {
+             console.info('onErrorItem', fileItem, response, status, headers);
+             scope.showAlert("Attachment","error","Uploading failed");
+             scope.com_uploadProgress=0;
+             };
+             com_uploader.onCancelItem = function (fileItem, response, status, headers) {
+             console.info('onCancelItem', fileItem, response, status, headers);
+             };
+             com_uploader.onCompleteItem = function (fileItem, response, status, headers) {
+             console.info('onCompleteItem', fileItem, response, status, headers);
+             if (response.IsSuccess) {
+             var attchmentData =
+             {
+             file: fileItem._file.name,
+             url: baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
+             type: fileItem._file.type,
+             size: fileItem._file.size
+             }
 
 
+             ticketService.AddNewAttachmentToTicket(scope.ticket._id, attchmentData).then(function (response) {
+
+             if (response.data.IsSuccess) {
+             scope.uploadedAttchments.push(response.data.Result);
+             }
+             else {
+             console.log("Invalid attachment");
+             }
+
+             }).catch(function (error) {
+             console.log("Invalid attachment error", error);
+             });
+
+
+             }
+             };
+             com_uploader.onCompleteAll = function () {
+             console.info('onCompleteAll');
+             };*/
+
+
+
+
+            scope.showSelectedAlert = function (element,scope) {
+                alert("Selected");
+                console.log(element);
+
+
+            }
 
 
             scope.deleteAttachment = function (attchmntID) {
@@ -1659,67 +1784,67 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.updateTicketEstimatedTime = function () {
 
 
-                    var timeArray= scope.newTicketEstimatedTimeFormat.split(":");
-                    var timeInSeconds=0;
+                var timeArray= scope.newTicketEstimatedTimeFormat.split(":");
+                var timeInSeconds=0;
 
 
-                    for(var i=0;i<timeArray.length;i++)
+                for(var i=0;i<timeArray.length;i++)
+                {
+                    var item = timeArray[i];
+
+                    if(item.indexOf("d")!=-1)
                     {
-                        var item = timeArray[i];
-
-                        if(item.indexOf("d")!=-1)
-                        {
-                            timeInSeconds=timeInSeconds+Number(item.split("d")[0]*24*60*60*1000);
-                        }
-                        if(item.indexOf("h")!=-1)
-                        {
-                            timeInSeconds=timeInSeconds+Number(item.split("h")[0]*60*60*1000);
-                        }
-                        if(item.indexOf("m")!=-1)
-                        {
-                            timeInSeconds=timeInSeconds+Number(item.split("m")[0]*60*1000);
-                        }
-                        if(item.indexOf("s")!=-1)
-                        {
-                            timeInSeconds=timeInSeconds+Number(item.split("s")[0]*1000);
-                        }
-                        if(i==timeArray.length-1)
-                        {
-                            //return timeInSeconds;
-
-                            if(isNaN(timeInSeconds))
-                            {
-                                scope.timeValidateMessage="Invalid Time format";
-                                scope.isTimeEdit=true;
-                                scope.showAlert("Error","error","Invalid Time format");
-                                scope.isValidTime=false;
-                            }
-                            else
-                            {
-                                scope.isTimeEdit=false;
-                                scope.isValidTime=true;
-
-                                ticketService.updateTicketEstimateTime(scope.ticket._id,timeInSeconds).then(function (response) {
-                                    if(response.data.IsSuccess)
-                                    {
-                                        scope.ticket.time_estimation=response.data.Result.time_estimation;
-                                        scope.showAlert("Success","success","Estimated Time Changed");
-                                        scope.TimePanelMaker();
-
-                                    }else
-                                    {
-                                        scope.showAlert("Error","error","Estimated Time updation failed");
-                                        console.log("Estimated Time updation failed");
-                                    }
-                                }, function (error) {
-                                    scope.showAlert("Error","error","Estimated Time updation failed");
-                                    console.log("Estimated Time updation failed",error);
-                                })
-                            }
-
-
-                        }
+                        timeInSeconds=timeInSeconds+Number(item.split("d")[0]*24*60*60*1000);
                     }
+                    if(item.indexOf("h")!=-1)
+                    {
+                        timeInSeconds=timeInSeconds+Number(item.split("h")[0]*60*60*1000);
+                    }
+                    if(item.indexOf("m")!=-1)
+                    {
+                        timeInSeconds=timeInSeconds+Number(item.split("m")[0]*60*1000);
+                    }
+                    if(item.indexOf("s")!=-1)
+                    {
+                        timeInSeconds=timeInSeconds+Number(item.split("s")[0]*1000);
+                    }
+                    if(i==timeArray.length-1)
+                    {
+                        //return timeInSeconds;
+
+                        if(isNaN(timeInSeconds))
+                        {
+                            scope.timeValidateMessage="Invalid Time format";
+                            scope.isTimeEdit=true;
+                            scope.showAlert("Error","error","Invalid Time format");
+                            scope.isValidTime=false;
+                        }
+                        else
+                        {
+                            scope.isTimeEdit=false;
+                            scope.isValidTime=true;
+
+                            ticketService.updateTicketEstimateTime(scope.ticket._id,timeInSeconds).then(function (response) {
+                                if(response.data.IsSuccess)
+                                {
+                                    scope.ticket.time_estimation=response.data.Result.time_estimation;
+                                    scope.showAlert("Success","success","Estimated Time Changed");
+                                    scope.TimePanelMaker();
+
+                                }else
+                                {
+                                    scope.showAlert("Error","error","Estimated Time updation failed");
+                                    console.log("Estimated Time updation failed");
+                                }
+                            }, function (error) {
+                                scope.showAlert("Error","error","Estimated Time updation failed");
+                                console.log("Estimated Time updation failed",error);
+                            })
+                        }
+
+
+                    }
+                }
 
 
 
