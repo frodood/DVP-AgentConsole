@@ -3877,151 +3877,87 @@ div.btn-group.dropdown {
     }
 }
 
-/*My remeider note CSS remnote- */
-/*white-space: pre-wrap;*/
-/*word-wrap: break-word;*/
-.renote-add-wrapper {
-    margin: 45px 23px 25px 0px;
-    min-height: 50px;
-    height: auto;
-    overflow: hidden;
-
+.modal-message-wrapper{
+    width:70%;
 }
 
-.renote-add-wrap {
-    background: rgba(247, 245, 245, 0.21);
-    -webkit-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.27);
-    -moz-box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.27);
-    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.27);
-    position: relative;
-    margin-top: 4px;
-    margin-bottom: 10px;
-}
 
-.renote-input-box {
-    height: 44px;
-    border: 0;
-    background: transparent;
-}
-
-.renote-add-close {
+.notify-img-small {
+    margin: 0 auto;
+    text-align: left;
     position: absolute;
-    cursor: pointer;
-    padding-top: 4px;
-    right: 15px;
-    top: 14px;
+
+}
+.notify-img-small> img {
     border-radius: 50%;
-    height: 25px;
-    width: 25px;
-    overflow: hidden;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.5);
+    width: 50px;
+    height: 50px;
+    overflow:visible;
+    position:relative;
 }
-
-.renote-add-close:hover {
-    color: rgba(0, 0, 0, 0.9);
-}
-
-.renote-add-wrap.new-note {
-    min-height: 150px;
-    padding-top: 20px;
-    height: auto;
-    overflow: hidden;
-}
-
-input[type="text"].take-note-text::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #000 !important;
-    font-size: 20px;
-    font-family: "AvenirNextLTPro-UltLt", Courier, monospace !important;
-}
-
-input[type="text"].take-note-title-text::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #000 !important;
-    font-family: "AvenirNextLTPro-UltLt", Courier, monospace !important;
-    font-weight: bold;
-    font-size: 25px;
-}
-
-.take-note-text {
-    color: #000 !important;
-    font-size: 20px;
-    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
-}
-
-.take-note-title-text {
-    color: #000 !important;
-    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
-    font-weight: bold;
-    font-size: 25px;
-}
-
-.renote-done {
-    text-align: right;
-    padding-right: 5px;
-    cursor: pointer;
-    padding-top: 20px;
-}
-
-ul.renote-color-btn {
-    margin: 0;
-    padding: 0;
-}
-
-ul.renote-color-btn > li {
-    list-style: none;
-    display: inline-block;
-    margin-top: 10px;
+.x_panel_modal {
+    position: relative;
+    width: 100%;
     margin-bottom: 10px;
-    padding-right: 20px;
-}
-
-.note-color-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+    padding: 10px 17px;
     display: inline-block;
-    cursor: pointer;
+    background: #fff;
+    border: 0px solid #E6E9ED;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+    opacity: 1;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    -webkit-transition: all .2s ease;
+    -ms-transition: all .2s ease;
+    transition: all .2s ease;
+    border-radius: 7px;
+}
+.modal-panel
+{
+    height:auto;
+    border-left-width: 2pt;
+    border-color: lightgrey;
+}
+.notify-img-modal {
+    margin: 0 auto;
+    text-align: left;
+    position: absolute;
+    top: 30px;
+    min-height: 50px;
+}
+.notify-img-modal> img {
+    border-radius: 70%;
+    width: 100px;
+    height: 100px;
+    overflow:visible;
+    position:relative;
+    z-index: 0;
+}
+
+.console-notification-modal-wrapper {
+    width: 80%;
+    height: 100px;
     overflow: hidden;
-    text-align: center;
-    padding-top: 6px;
-}
+    padding: 0px 5px 5px 0px;
+    margin-left: 25%;
+    margin-top: 5%;
+    z-index: 0;
 
-.note-color-btn.high,
-.my-note-wrapper.high {
-    background: #da4f49;
 }
-
-.note-color-btn.low,
-.my-note-wrapper.low {
-    background: #8298ae;
+.modal-message-wrapper{
+    width:70%;
 }
-
-.note-color-btn.normal,
-.my-note-wrapper.normal {
-    background: #2d9668;
+.notify-modal-btn-wrap{
+    z-index: 1;
+    margin-right:10px;
 }
-
-.note-color-btn.urgent {
-    background: #15a9fa;
+.notification-modal-time {
+    font-size: 10px;
+    display: inline-block;
+    color: #d7d700;
 }
-
-.note-urgent {
-    background: #15a9fa;
-}
-
-.mynote-wrapper {
-    padding: 0px 15px 0px 15px;
-}
-
-.my-note-wrapper {
-    min-width: 50px;
-    min-height: 100px;
+.modal-content {
     overflow: hidden;
-    padding: 20px 30px 10px 31px;
-    background: #fff8f8;
-    word-wrap: break-word;
-}
-
-.note-color-btn > i {
-    color: #fff;
 }

@@ -26,13 +26,23 @@ var baseUrls = {
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
     'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
-    'dashBordUrl': 'http://dashboard.app.veery.cloud/'
+    'dashBordUrl': 'http://dashboard.app.veery.cloud/',
+    'toDoUrl': 'http://127.0.0.1:3636/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);
 
-agentApp.config(function (scrollableTabsetConfigProvider) {
-    scrollableTabsetConfigProvider.setShowTooltips(true);
+var phoneSetting = {
+    'TransferPhnCode':'*6',
+    'TransferExtCode':'*3',
+    'EtlCode':'#',
+    'SwapCode':'1',
+    'ConferenceCode':'0'
+};
+agentApp.constant('phoneSetting', phoneSetting);
+
+agentApp.config(function(scrollableTabsetConfigProvider){
+    scrollableTabsetConfigProvider.setShowTooltips (true);
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
