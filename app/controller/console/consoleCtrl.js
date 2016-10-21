@@ -529,6 +529,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         showSwap: function () {
             $('#slapCall').addClass('display-block').removeClass('display-none');
+            $('#slapCall').addClass('display-block').removeClass('display-none');
         },
         showConnectedBtn: function () {
             $('#onlinePhoneBtnWrapper').removeClass('display-none');
@@ -968,11 +969,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     //add dashboard inside tab
-
     $scope.addDashBoard = function () {
         $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad", "dashborad");
     };
-    $scope.addDashBoard();
+    //add myquick note inside tab
+    $scope.addMyNote = function () {
+        $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
+    };
+    // $scope.addDashBoard();
+    $scope.addMyNote();
 
 
     var openNewEngagementTab = function (args, index) {
