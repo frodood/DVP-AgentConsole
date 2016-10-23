@@ -804,11 +804,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
 
-
-
-
-
-
                         scope.getTicketLoggedTime(ticketID);
                         scope.loadTicketNextLevel();
                         scope.pickCompanyData(scope.ticket.tenant,scope.ticket.company);
@@ -984,61 +979,103 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
             scope.showCommentDrop=false;
+
+
+
+            scope.showNewComment = function () {
+                scope.isNewComment=!scope.isNewComment;
+            };
+            scope.newComment="   ";
+
             scope.addComment = function (message, mode) {
 
-                var channel = "";
-                var eng_session = "";
-                var reply_session = "";
-                var reply_chnl_from = "";
-                var reply_chnl_to = "";
-
-                if (scope.ticket.engagement_session) {
-                    channel = scope.ticket.engagement_session.channel;
-                    reply_session = scope.ticket.engagement_session._id;
-                    reply_chnl_from = scope.ticket.engagement_session.channel_to;
-                    reply_chnl_to = scope.ticket.engagement_session.channel_from;
-                }
-
-
-                var commentObj =
+                scope.newComment=message;
+                if(scope.uploadedComAttchments.length>0 || scope.newComment)
                 {
-                    "body": message,
-                    "body_type": "text",
-                    "type": "comment",
-                    "public": mode,
-                    "channel": channel,
-                    "engagement_session": eng_session,
-                    "reply_session": reply_session
+                    if(scope.newComment=="")
+                    {
+
+                        scope.newComment="Attachment Comment";
+                    }
+                    var channel = "";
+                    var eng_session = "";
+                    var reply_session = "";
+                    var reply_chnl_from = "";
+                    var reply_chnl_to = "";
+                    var comentAttachmentIds=[];
+
+                    angular.forEach(scope.uploadedComAttchments, function (value) {
+                        comentAttachmentIds.push(value._id);
+                    });
+
+                    if (scope.ticket.engagement_session) {
+                        channel = scope.ticket.engagement_session.channel;
+                        reply_session = scope.ticket.engagement_session._id;
+                        reply_chnl_from = scope.ticket.engagement_session.channel_to;
+                        reply_chnl_to = scope.ticket.engagement_session.channel_from;
+                    }
 
 
-                }
+                    var commentObj =
+                    {
+                        "body": scope.newComment,
+                        "body_type": "text",
+                        "type": "comment",
+                        "public": mode,
+                        "channel": channel,
+                        "engagement_session": eng_session,
+                        "reply_session": reply_session,
+                        "attachments":comentAttachmentIds
 
-                if (mode == "public") {
-                    commentObj["channel_from"] = reply_chnl_from;
-                    commentObj["channel_to"] = reply_chnl_to;
-                }
-
-
-                ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
-                    if (response.data.IsSuccess) {
-                        scope.newComment = '';
-                        response.data.Result.author = profileDataParser.myProfile;
-                        scope.ticket.comments.push(response.data.Result);
-                        console.log("New comment added ", response);
-                        scope.showAlert("New Comment", "success", "completed");
 
                     }
-                    else {
-                        console.log("Error new comment ", response);
+
+                    if (mode == "public") {
+                        commentObj["channel_from"] = reply_chnl_from;
+                        commentObj["channel_to"] = reply_chnl_to;
+                    }
+
+
+                    ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
+
+
+                        if (response.data.IsSuccess) {
+                            scope.newComment = '';
+                            response.data.Result.author = profileDataParser.myProfile;
+                            response.data.Result.attachments=scope.uploadedComAttchments;
+                            scope.ticket.comments.push(response.data.Result);
+                            console.log("New comment added ", response);
+                            scope.showAlert("New Comment", "success", "completed");
+                            scope.uploadedComAttchments=[];
+                            scope.isNewComment=false;
+
+
+
+                        }
+                        else {
+                            console.log("Error new comment ", response);
+                            scope.showAlert("New Comment", "error", "failed");
+                        }
+
+                    }), function (error) {
+                        console.log("Error new comment ", error);
                         scope.showAlert("New Comment", "error", "failed");
-                    }
+                    };
 
-                }), function (error) {
-                    console.log("Error new comment ", error);
-                    scope.showAlert("New Comment", "error", "failed");
-                };
+                }
+                else
+                {
+                    scope.showAlert("Invalid Comment","error","Invalid Comment data");
+                }
+
+
 
             };
+
+            scope.cancelNewComment = function () {
+                scope.isNewComment=false;
+                scope.uploadedComAttchments=[];
+            }
 
             scope.showCommentDropArea = function () {
                 scope.showCommentDrop=!scope.showCommentDrop;
@@ -1327,10 +1364,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             // file upload .........
 
             scope.file = {};
+
             var uploader = scope.uploader = new FileUploader({
                 url: baseUrls.fileService+"FileService/File/Upload",
                 headers: {'Authorization':  authService.GetToken()}
             });
+            /*  var com_uploader = scope.com_uploader = new FileUploader({
+             url: baseUrls.fileService+"FileService/File/Upload",
+             headers: {'Authorization':  authService.GetToken()}
+             });*/
 
             // FILTERS
 
@@ -1340,6 +1382,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     return this.queue.length < 10;
                 }
             });
+            /*com_uploader.filters.push({
+             name: 'customFilter',
+             fn: function (item /!*{File|FileLikeObject}*!/, options) {
+             return this.queue.length < 10;
+             }
+             });*/
 
             /*var com_uploader = scope.uploader = new FileUploader({
              url: baseUrls.fileService+"FileService/File/Upload",
@@ -1360,10 +1408,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             // CALLBACKS
 
+
+
+
             scope.file = {};
             scope.file.Category = "TICKET_ATTACHMENTS";
             scope.uploadProgress=0;
             scope.isTicketAttachment=true;
+            scope.isCommentCompleted=true;
+            scope.isUploading=false;
 
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                 console.info('onWhenAddingFileFailed', item, filter, options);
@@ -1372,13 +1425,13 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 console.info('onAfterAddingFile', fileItem);
                 fileItem.upload();
                 /*if( scope.file.Category=="COMMENT_ATTACHMENTS")
-                {
-                    scope.file.Category="TICKET_ATTACHMENTS";
-                }
-                else
-                {
-                    scope.file.Category="COMMENT_ATTACHMENTS";
-                }*/
+                 {
+                 scope.file.Category="TICKET_ATTACHMENTS";
+                 }
+                 else
+                 {
+                 scope.file.Category="COMMENT_ATTACHMENTS";
+                 }*/
             };
             uploader.onAfterAddingAll = function (addedFileItems) {
 
@@ -1391,6 +1444,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         styling: 'bootstrap3'
                     });
                     return;
+                }
+                if(scope.isNewComment)
+                {
+                    scope.isCommentCompleted=false;
+                    scope.isUploading=true;
                 }
 
 
@@ -1441,16 +1499,33 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     ticketService.AddNewAttachmentToTicket(scope.ticket._id, attchmentData).then(function (response) {
 
-                            if (response.data.IsSuccess) {
-                                scope.uploadedAttchments.push(response.data.Result);
-                            }
-                            else {
-                                console.log("Invalid attachment");
+                        if (response.data.IsSuccess) {
+
+                            scope.uploadedAttchments.push(response.data.Result);
+
+                            if(scope.isNewComment)
+                            {
+                                scope.uploadedComAttchments.push(response.data.Result);
+                                /*if(!scope.newComment)
+                                 {
+                                 scope.newComment= "";
+
+                                 }*/
+
                             }
 
-                        }).catch(function (error) {
-                            console.log("Invalid attachment error", error);
-                        });
+
+
+
+
+                        }
+                        else {
+                            console.log("Invalid attachment");
+                        }
+
+                    }).catch(function (error) {
+                        console.log("Invalid attachment error", error);
+                    });
 
 
 
@@ -1460,99 +1535,21 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             uploader.onCompleteAll = function () {
                 console.info('onCompleteAll');
+                if(scope.isNewComment)
+                {
+                    scope.isCommentCompleted=true;
+                    scope.isUploading=false;
+                }
             };
 
-            /*com_uploader.onWhenAddingFileFailed = function (item /!*{File|FileLikeObject}*!/, filter, options) {
-             console.info('onWhenAddingFileFailed', item, filter, options);
-             };
-             com_uploader.onAfterAddingFile = function (fileItem) {
-             console.info('onAfterAddingFile', fileItem);
-             fileItem.upload();
-             };
-             com_uploader.onAfterAddingAll = function (addedFileItems) {
-             if (!scope.commentCategory) {
-             com_uploader.clearQueue();
-             new PNotify({
-             title: 'Comment attachment Upload!',
-             text: 'Please Select Attachment Category.',
-             type: 'error',
-             styling: 'bootstrap3'
-             });
-             return;
-             }
-             console.info('onAfterAddingAll', addedFileItems);
-             };
-             com_uploader.onBeforeUploadItem = function (item) {
-             item.formData.push({'fileCategory': scope.commentCategory});
-             console.info('onBeforeUploadItem', item);
-             };
-             com_uploader.onProgressItem = function (fileItem, progress) {
-             console.info('onProgressItem', fileItem, progress);
-             scope.com_uploadProgress=progress;
-             if( scope.com_uploadProgress==100)
-             {
-             scope.showAlert("Attachment","success","Successfully uploaded");
-             /!* setTimeout(function () {
-             scope.uploadProgress=0;
-             }, 500);*!/
-
-             }
-             };
-             com_uploader.onProgressAll = function (progress) {
-             console.info('onProgressAll', progress);
-             };
-             com_uploader.onSuccessItem = function (fileItem, response, status, headers) {
-             console.info('onSuccessItem', fileItem, response, status, headers);
-             };
-             com_uploader.onErrorItem = function (fileItem, response, status, headers) {
-             console.info('onErrorItem', fileItem, response, status, headers);
-             scope.showAlert("Attachment","error","Uploading failed");
-             scope.com_uploadProgress=0;
-             };
-             com_uploader.onCancelItem = function (fileItem, response, status, headers) {
-             console.info('onCancelItem', fileItem, response, status, headers);
-             };
-             com_uploader.onCompleteItem = function (fileItem, response, status, headers) {
-             console.info('onCompleteItem', fileItem, response, status, headers);
-             if (response.IsSuccess) {
-             var attchmentData =
-             {
-             file: fileItem._file.name,
-             url: baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
-             type: fileItem._file.type,
-             size: fileItem._file.size
-             }
 
 
-             ticketService.AddNewAttachmentToTicket(scope.ticket._id, attchmentData).then(function (response) {
-
-             if (response.data.IsSuccess) {
-             scope.uploadedAttchments.push(response.data.Result);
-             }
-             else {
-             console.log("Invalid attachment");
-             }
-
-             }).catch(function (error) {
-             console.log("Invalid attachment error", error);
-             });
-
-
-             }
-             };
-             com_uploader.onCompleteAll = function () {
-             console.info('onCompleteAll');
-             };*/
+            scope.uploadedComAttchments=[];
 
 
 
+            scope.isNewComment=false;
 
-            scope.showSelectedAlert = function (element,scope) {
-                alert("Selected");
-                console.log(element);
-
-
-            }
 
 
             scope.deleteAttachment = function (attchmntID) {
@@ -1568,6 +1565,19 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             _id: attchmntID
 
                         })[0]), 1);
+
+                        if(scope.isNewComment)
+                        {
+                            scope.uploadedComAttchments.splice(scope.uploadedComAttchments.indexOf($filter('filter')(scope.uploadedComAttchments, {
+                                _id: attchmntID
+
+                            })[0]), 1);
+                        }
+
+
+
+
+
                     }
                 }), function (error) {
                     console.log(error);
@@ -1851,6 +1861,18 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
 
+            }
+
+
+            scope.checkAttachmentAvailability = function (comment) {
+                if(comment.body=='Attachment Comment' && comment.attachments.length==0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
 
 
