@@ -1,0 +1,102 @@
+<div class="row" ng-controller="myNoteCtrl">
+    <div class="col-lg-12 col-xs-12">
+        <div id="renote-add-wrapper" class="renote-add-wrapper">
+            <div class="col-lg-offset-3 col-lg-6">
+                <div id="addNoteRow" class="renote-add-wrap">
+                    <input id="txtTakeNote"
+                           type="text"
+                           class="form-control renote-input-box take-note-text"
+                           placeholder="Take a note"/>
+                </div>
+
+                <div id="addNoteWindow" class="renote-add-wrap new-note display-none">
+                    <div class="renote-add-close" ng-click="addNewNote.close();">
+                        <i class="ti-close"></i>
+                    </div>
+                    <div class="renote-tet-wrapper">
+                        <input
+                                type="text"
+                                ng-model="note.title"
+                                class="form-control renote-input-box take-note-title-text"
+                                placeholder="Title"/>
+                        <input
+                                type="text"
+                                ng-model="note.note"
+                                class="form-control renote-input-box take-note-text "
+                                placeholder="Take a note"/>
+                    </div>
+
+
+                    <div class="renote-footer">
+                        <div class="col-lg-6">
+                            <ul class="renote-color-btn">
+                                <li>
+                                    <div class="note-color-btn low"
+                                         ng-click="addNewNote.selectColor('low');"
+                                         tooltip-placement="low" uib-tooltip="low">
+                                        <i ng-show="note.priority=='low'"
+                                           class="ti-check"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div tooltip-placement="top" uib-tooltip="normal"
+                                         ng-click="addNewNote.selectColor('normal');"
+                                         class="note-color-btn normal">
+                                        <i ng-show="note.priority=='normal'"
+                                           class="ti-check"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div tooltip-placement="top" uib-tooltip="urgent"
+                                         ng-click="addNewNote.selectColor('urgent');"
+                                         class="note-color-btn urgent">
+                                        <i ng-show="note.priority=='urgent'"
+                                           class="ti-check"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div tooltip-placement="top" uib-tooltip="high"
+                                         ng-click="addNewNote.selectColor('high');"
+                                         class="note-color-btn high">
+                                        <i ng-show="note.priority=='high'"
+                                           class="ti-check"></i>
+                                    </div>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="renote-done" ng-click="addNewNote.done();">
+                                DONE
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="container">
+                    <div class="mynote-wrapper">
+                        <div gridster="gridsterOpts">
+                            <div class="my-note-wrapper"
+                                 gridster-item="note" ng-repeat="note in noteLists">
+                                <div class="row">
+                                    <b>{{note.title}}</b>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    {{note.note}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

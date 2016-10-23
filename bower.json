@@ -51,7 +51,8 @@
     "angular-file-upload": "^2.3.4",
     "angular-download": "^0.0.2",
     "lightbox2": "^2.8.2",
-    "chart.js": "^2.3.0"
+    "chart.js": "^2.3.0",
+    "angular-gridster": "^0.13.15"
   },
   "resolutions": {
     "moment": "^2.14.1",
