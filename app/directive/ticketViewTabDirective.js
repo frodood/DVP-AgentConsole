@@ -985,18 +985,22 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.showNewComment = function () {
                 scope.isNewComment=!scope.isNewComment;
             };
-            scope.newComment="   ";
+            scope.newComment="";
 
             scope.addComment = function (message, mode) {
 
                 scope.newComment=message;
-                if(scope.uploadedComAttchments.length>0 || scope.newComment)
+
+
+
+                if(scope.uploadedComAttchments.length>0 || scope.newComment !="")
                 {
-                    if(scope.newComment=="")
+                    if(scope.newComment=="" && scope.uploadedComAttchments.length>0)
                     {
 
                         scope.newComment="Attachment Comment";
                     }
+
                     var channel = "";
                     var eng_session = "";
                     var reply_session = "";
