@@ -3,7 +3,12 @@
  */
 
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http, $base64, $timeout, $q, jwtHelper, resourceService, baseUrls, dataParser, veeryNotification, authService, userService, tagService, ticketService, mailInboxService, $interval, profileDataParser, loginService, $state, uuid4, notificationService, filterFilter, engagementService,phoneSetting,toDoService,$uibModal) {
+agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
+                                             $base64, $timeout, $q, jwtHelper,
+                                             resourceService, baseUrls, dataParser, veeryNotification, authService,
+                                             userService, tagService, ticketService, mailInboxService, $interval,
+                                             profileDataParser, loginService, $state, uuid4, notificationService,
+                                             filterFilter, engagementService, phoneSetting, toDoService, $uibModal) {
 
 
     $scope.notifications = [];
@@ -169,7 +174,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             //$scope.call.number = $scope.call.number + dtmf;
         },
         makeCall: function (callNumber, tabReference) {
-           phoneFuncion.updateCallStatus('Dialing');
+            phoneFuncion.updateCallStatus('Dialing');
             $scope.veeryPhone.makeAudioCall(callNumber);
 
             //  var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
@@ -198,31 +203,31 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.updateCallStatus('');
         },
         etlCall: function () {
-           var dtmfSet = phoneSetting.EtlCode.split('');
-            angular.forEach(dtmfSet, function(chr) {
+            var dtmfSet = phoneSetting.EtlCode.split('');
+            angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
         },
         swapCall: function () {
-           var dtmfSet = phoneSetting.SwapCode.split('');
-            angular.forEach(dtmfSet, function(chr) {
+            var dtmfSet = phoneSetting.SwapCode.split('');
+            angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
         },
         conferenceCall: function () {
-           var dtmfSet = phoneSetting.ConferenceCode.split('');
-            angular.forEach(dtmfSet, function(chr) {
+            var dtmfSet = phoneSetting.ConferenceCode.split('');
+            angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
         },
         transferCall: function (no) {
             var dtmfSet = no.length <= 5 ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
-            angular.forEach(dtmfSet, function(chr) {
+            angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
             $timeout(function () {
                 dtmfSet = no.split('');
-                angular.forEach(dtmfSet, function(chr) {
+                angular.forEach(dtmfSet, function (chr) {
                     sipSendDTMF(chr);
                 });
             }, 1000);
@@ -498,7 +503,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             /*$('#holdResumeButton').addClass('phone-sm-btn phone-sm-bn-p8').removeClass('veery-phone-icon-1-phone-call-2');*/
         },
         hideHoldButton: function () {
-            $('#holdResumeButton').addClass('display-none ').removeClass('display-block');
+            $('#holdResumeButton').addClass('display-none ').removeClass('display-inline');
         },
         showEndButton: function () {
             $('#endButton').addClass('phone-sm-btn call-ended').removeClass('display-none');
@@ -511,7 +516,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#muteButton').addClass('veery-font-1-mute').removeClass('veery-font-1-muted');
         },
         hideMuteButton: function () {
-            $('#muteButton').addClass('display-none ').removeClass('display-block');
+            $('#muteButton').addClass('display-none ').removeClass('display-inline');
         },
         showSpeakerButton: function () {
             $('#speakerButton').addClass('veery-font-1-microphone').removeClass('veery-font-1-muted display-none');
@@ -523,29 +528,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.call.status = status;
         },
         hideTransfer: function () {
-            $('#transferCall').addClass('display-none').removeClass('display-block');
+            $('#transferCall').addClass('display-none').removeClass('display-inline');
         },
         showTransfer: function () {
-            $('#transferCall').addClass('display-block').removeClass('display-none');
+            $('#transferCall').addClass('display-inline').removeClass('display-none');
         },
         hideSwap: function () {
-            $('#swapCall').addClass('display-none').removeClass('display-block');
+            $('#swapCall').addClass('display-none').removeClass('display-inline');
         },
         showSwap: function () {
-            $('#swapCall').addClass('display-block').removeClass('display-none');
-            $('#slapCall').addClass('display-block').removeClass('display-none');
+            $('#swapCall').addClass('display-inline').removeClass('display-none');
+            $('#slapCall').addClass('display-inline').removeClass('display-none');
         },
         hideEtl: function () {
-            $('#etlCall').addClass('display-none').removeClass('display-block');
+            $('#etlCall').addClass('display-none').removeClass('display-inline');
         },
         showEtl: function () {
-            $('#etlCall').addClass('display-block').removeClass('display-none');
+            $('#etlCall').addClass('display-inline').removeClass('display-none');
         },
         hideConference: function () {
-            $('#conferenceCall').addClass('display-none').removeClass('display-block');
+            $('#conferenceCall').addClass('display-none').removeClass('display-inline');
         },
         showConference: function () {
-            $('#conferenceCall').addClass('display-block').removeClass('display-none');
+            $('#conferenceCall').addClass('display-inline').removeClass('display-none');
         },
         showConnectedBtn: function () {
             $('#onlinePhoneBtnWrapper').removeClass('display-none');
@@ -648,14 +653,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         var senderAvatar;
 
-        if(data.From)
-        {
-            if($filter('filter')($scope.users, {username: data.From}))
-            {
+        if (data.From) {
+            if ($filter('filter')($scope.users, {username: data.From})) {
                 senderAvatar = $filter('filter')($scope.users, {username: data.From})[0].avatar;
             }
-            else if($filter('filter')($scope.userGroups, {name: data.From}))
-            {
+            else if ($filter('filter')($scope.userGroups, {name: data.From})) {
                 senderAvatar = $filter('filter')($scope.userGroups, {username: data.From})[0].avatar;
             }
 
@@ -719,11 +721,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     }
 
 
+    //#myNote
+    $scope.todoRemind = function (data) {
+        $scope.myNoteReminder = data;
+        $scope.myNoteNotiMe.showMe();
+    };
+
+
     var notificationEvent = {
         onAgentFound: $scope.agentFound,
         OnMessageReceived: $scope.OnMessage,
         onAgentDisconnected: $scope.agentDisconnected,
-        onAgentAuthenticated: $scope.agentAuthenticated
+        onAgentAuthenticated: $scope.agentAuthenticated,
+        onToDoRemind: $scope.todoRemind
+
     };
 
     $scope.veeryNotification = function () {
@@ -2008,7 +2019,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-
     var getAllRealTime = function () {
         loadOnlineAgents();
         getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
@@ -2136,15 +2146,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
+    $scope.showMesssageModal = false;
 
-    $scope.showMesssageModal=false;
+    $scope.showNotificationMessage = function (notifyMessage) {
 
-    $scope.showNotificationMessage= function (notifyMessage) {
-
-        $scope.showMesssageModal=true;
+        $scope.showMesssageModal = true;
 
         $scope.showModal(notifyMessage);
-
 
 
         //$scope.showAlert("Message","success",notifyMessage.Message);
@@ -2152,21 +2160,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.discardNotifications = function (notifyMessage) {
-        $scope.notifications.splice($scope.notifications.indexOf(notifyMessage),1);
-        $scope.unredNotifications=$scope.notifications.length;
+        $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
+        $scope.unredNotifications = $scope.notifications.length;
     }
 
     $scope.addToDoList = function (todoMessage) {
-        todoMessage.title=todoMessage.header;
+        todoMessage.title = todoMessage.header;
         toDoService.addNewToDo(todoMessage).then(function (response) {
             $scope.discardNotifications(todoMessage);
-            $scope.showAlert("Added to ToDo","success","Notification successfully added as To Do");
-        },function (error) {
-            $scope.showAlert("Adding failed ","error","Notification is failed to add as To Do");
+            $scope.showAlert("Added to ToDo", "success", "Notification successfully added as To Do");
+        }, function (error) {
+            $scope.showAlert("Adding failed ", "error", "Notification is failed to add as To Do");
         });
     }
 
-    $scope.showModal= function (MessageObj) {
+    $scope.showModal = function (MessageObj) {
         //modal show
         var modalInstance = $uibModal.open({
             animation: true,
@@ -2190,12 +2198,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-
-
-
-
-
-
+    $scope.myNoteNotiMe = function () {
+        var timeoutNotiMe = function () {
+            $timeout(function () {
+                $scope.myNoteNotiMe.hideMe();
+            }, 5000);
+        };
+        return {
+            showMe: function () {
+                $('#myNoteShow').animate({
+                    top: "69"
+                });
+                timeoutNotiMe();
+            },
+            hideMe: function () {
+                $('#myNoteShow').animate({
+                    top: "-92"
+                })
+            }
+        }
+    }();
 
 
 }).directive("mainScroll", function ($window) {
@@ -2212,18 +2234,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 });
 
-agentApp.controller("notificationModalController", function ($scope, $uibModalInstance,MessageObj,DiscardNotifications,AddToDoList) {
+agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
 
 
-    $scope.showMesssageModal=true;
-    $scope.MessageObj=MessageObj;
+    $scope.showMesssageModal = true;
+    $scope.MessageObj = MessageObj;
 
 
-
-    $scope.keepNotification= function () {
+    $scope.keepNotification = function () {
         $uibModalInstance.dismiss('cancel');
     }
-    $scope.discardNotification= function (msgObj) {
+    $scope.discardNotification = function (msgObj) {
         DiscardNotifications(msgObj);
         $uibModalInstance.dismiss('cancel');
     }

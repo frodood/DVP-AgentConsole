@@ -306,11 +306,13 @@
             <!-- /.container-fluid -->
         </nav>
 
+        <!-- My note notification --->
+        <div ng-include="'app/views/myNote/temp/my-note-noti-me.html'"></div>
 
-        <!-- incoming call notification -->
-        <div id="incomingNotification" class="console-phone-wrapper display-none Phone is-animating "
+        <!-- incoming call notification display-none-->
+        <div id="incomingNotification" class="console-phone-wrapper display-none  Phone is-animating "
              id="phoneWidget">
-            <div class="income-call-wrapper ">
+            <div class="income-call-wrapper -ringing ">
                 <div class="income-call-details">
                     <div class="company-details">
                         <small>Company : {{call.CompanyNo}}</small>
@@ -323,6 +325,7 @@
                         <div class="row">
                             <div class="col-md-6 p-left-40">
                                 <div class="anz-btn  ">
+                                    <div class="sonar-wave-green"></div>
                                     <i class="veery-phone-icon-1-call-answer " ng-click="veeryPhone.answerCall();"></i>
                                 </div>
                             </div>
@@ -337,7 +340,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- view ticket -->
         <div ng-include="'app/views/ticket/ticket-inbox.html'"></div>
@@ -409,7 +411,6 @@
                 </uib-tabset>
             </scrollable-tabset>
         </div>
-
     </div>
 
     <div ng-click="goToTopScroller();"
@@ -520,6 +521,10 @@
                     <i class="veery-font-1-pause"></i>
                 </div>
                 <!--  contact list button -->
+                <div id="contactList" class="phone-sm-btn phone-sm-bn-p8">
+                    <i class="veery-font-1-user"></i>
+                </div>
+                <!-- more btn -->
                 <div class="phone-sm-btn phone-sm-bn-p8"
                      ng-click="veeryPhone.showOnlineBtn();">
                     <i class="veery-font-1-more"></i>
@@ -533,12 +538,13 @@
 
                 </div>
                 <!-- call transfer button -->
-                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 " ng-click="veeryPhone.transferCall(call.number);">
-                    <i class="main-icon-2-transfer-8"></i>
+                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 "
+                     ng-click="veeryPhone.transferCall(call.number);">
+                    <i class="main-icon-2-transfer"></i>
                 </div>
                 <!-- call swap button -->
                 <div id="swapCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.swapCall();">
-                    <i class="main-icon-2-transfer"></i>
+                    <i class="main-icon-2-transfer-8"></i>
                 </div>
                 <!-- ETL button -->
                 <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();">
@@ -546,7 +552,7 @@
                 </div>
                 <!-- conference button -->
                 <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();">
-                    <i class="main-icon-2-transfer"></i>
+                    <i class="main-icon-2-stick-man-2"></i>
                 </div>
                 <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();">
                     <i class="ti-close"></i>

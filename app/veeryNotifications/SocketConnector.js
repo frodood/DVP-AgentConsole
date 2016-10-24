@@ -40,8 +40,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
             socket.on('authenticated', function () {
                 isAuthenticated = true;
                 console.log('socket is jwt authenticated');
-                if(notificationEvent.onAgentAuthenticated)
-                {
+                if (notificationEvent.onAgentAuthenticated) {
                     notificationEvent.onAgentAuthenticated();
                 }
                 //document.getElementById("lblNotification").innerHTML = "socket is jwt authenticated";
@@ -99,12 +98,22 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 //var displayMsg = "Company : " + data.Company + "<br> Company No : " + values[5] + "<br> Caller : " + values[3] + "<br> Skill : " + values[6];
                 if (notificationEvent.onAgentFound)
                     notificationEvent.onAgentFound(data);
-                console.log("Agent found data "+data);
+                console.log("Agent found data " + data);
             });
 
             socket.on('agent_disconnected', function (data) {
                 // document.getElementById("lblNotification").innerHTML = data.Message;
                 //Notification.primary({message: data.Message, delay: 5000, closeOnClick: true});
+
+            });
+
+            socket.on('todo_reminder', function (data) {
+                // document.getElementById("lblNotification").innerHTML = data.Message;
+                //Notification.primary({message: data.Message, delay: 5000, closeOnClick: true});
+                if (notificationEvent.onToDoRemind)
+                    notificationEvent.onToDoRemind(data);
+                console.log("onToDoRemind data " + data);
+
 
             });
         } catch (ex) {

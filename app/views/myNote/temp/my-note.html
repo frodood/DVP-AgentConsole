@@ -1,0 +1,63 @@
+<div class="my-note-content">
+
+    <div class="row">
+        <div class="note-title">
+            {{myNote.title}}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="note-desc">
+            {{myNote.note}}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <ul class="note-footer">
+        <li tooltip-placement="low"
+            ng-click="delete()"
+            uib-tooltip="delete">
+            <i class="ti-trash"></i>
+        </li>
+        <li ng-click="remindMe();">
+            <i class="ti-time"></i>
+        </li>
+        <li uib-tooltip="done" ng-if="!myNote.check"
+            ng-click="checkMyNote(myNote)"
+            tooltip-placement="done">
+            <i class="main-icon-2-tap"> </i>
+        </li>
+
+    </ul>
+    <div class="mynote-check-true" ng-if="myNote.check">
+        <i class="ti-check"></i>
+    </div>
+</div>
+
+<div class="my-note-remind-me" ng-show="isMyNote">
+    <div class="renote-add-close" ng-click="closeRemindMe()">
+        <i class="ti-close"></i>
+    </div>
+    <div class="header bold row">
+        Reminder Me
+    </div>
+
+    <div class="remind-body">
+        <!--<div class="date">-->
+        <!--<div class="input-group date datepicker">-->
+        <!--<input type="text" class="form-control" placeholder="pick date">-->
+        <!--<span class="input-group-addon"><span class="fa fa-calendar "></span></span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="date">
+            <p class="input-group">
+                <input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm" ng-model="picker.date"
+                       is-open="picker.open"/>
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="openCalendar($event, 'picker')"><i
+                          class="fa fa-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+    </div>
+</div>

@@ -52,7 +52,9 @@
     "angular-download": "^0.0.2",
     "lightbox2": "^2.8.2",
     "chart.js": "^2.3.0",
-    "angular-gridster": "^0.13.15"
+    "angular-gridster": "^0.13.15",
+    "bootstrap-timepicker": "^0.5.2",
+    "bootstrap-ui-datetime-picker": "^2.4.3"
   },
   "resolutions": {
     "moment": "^2.14.1",

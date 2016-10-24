@@ -326,7 +326,7 @@ body {
     position: fixed;
     width: 250px;
     height: 250px;
-    background: #ffffff;
+    background: transparent;
     right: 10px;
     top: 20%;
     border-radius: 20px 7px;
@@ -345,6 +345,45 @@ body {
     background: -webkit-linear-gradient(top, #0d1c33 0%, #2b4d52 50%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, #0d1c33 0%, #2b4d52 50%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0d1c33', endColorstr='#2b4d52', GradientType=0); /* IE6-9 */
+}
+
+.-ringing {
+    animation: _ringing 600ms infinite;
+    animation-fill-mode: forward;
+    animation-direction: normal;
+    animation-timing-function: linear;
+}
+
+@keyframes _ringing {
+    0% {
+        transform: translate(0, 0);
+    }
+    10% {
+        transform: translate(6px, 0px);
+        transform: rotateZ(2deg);
+    }
+    20% {
+        transform: translate(-6px, 0px);
+        transform: rotateZ(-2deg);
+    }
+    30% {
+        transform: translate(3px, 0px);
+        transform: rotateZ(1deg);
+    }
+    40% {
+        transform: translate(-3px, 0px);
+        transform: rotateZ(-1deg);
+    }
+    50% {
+        transform: translate(2px, 0px);
+        transform: rotateZ(1deg);
+    }
+    60% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
 }
 
 .income-call-details {
@@ -385,6 +424,48 @@ body {
     border-radius: 50%;
     text-align: center;
     padding-top: 13px;
+    cursor: pointer;
+}
+
+/* the 'wave', same shape and size as its parent */
+.sonar-wave-green {
+    position: absolute;
+    top: 12px;
+    left: 53px;
+    width: 35px;
+    height: 35px;
+    border-radius: 9999px;
+    background-color: #08a91c;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/*
+  Animate!
+  NOTE: add browser prefixes where needed.
+*/
+.sonar-wave-green {
+    animation: sonarWave 2s linear infinite;
+}
+
+@keyframes sonar-wave-green {
+    from {
+        opacity: 1;
+    }
+    to {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes chgop {
+    0% {
+        opacity: 1.0
+    }
+    100% {
+        opacity: 0.6
+    }
 }
 
 .hangout-btn {
@@ -406,7 +487,7 @@ body {
 }
 
 .anz-btn {
-    background: rgba(54, 186, 69, 0.2);
+    background: rgb(23, 55, 60);
 }
 
 .hangout-btn {
@@ -633,6 +714,10 @@ body {
 
 .display-block {
     display: block !important;
+}
+
+.display-inline {
+    display: inline-block !important;
 }
 
 .z-index-0 {
@@ -3372,6 +3457,7 @@ tags-input .tags .input {
     text-align: center;
     border: none;
     background: transparent;
+    color: #8298ae !important;
 }
 
 /*new update */
@@ -3755,7 +3841,7 @@ div.btn-group.dropdown {
     overflow: hidden;
     position: fixed;
     height: 0;
-    z-index: 2000;
+    z-index: 100;
     right: 50px;
     bottom: 132px;
     box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
@@ -3877,10 +3963,9 @@ div.btn-group.dropdown {
     }
 }
 
-.modal-message-wrapper{
-    width:70%;
+.modal-message-wrapper {
+    width: 70%;
 }
-
 
 .notify-img-small {
     margin: 0 auto;
@@ -3888,13 +3973,15 @@ div.btn-group.dropdown {
     position: absolute;
 
 }
-.notify-img-small> img {
+
+.notify-img-small > img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    overflow:visible;
-    position:relative;
+    overflow: visible;
+    position: relative;
 }
+
 .x_panel_modal {
     position: relative;
     width: 100%;
@@ -3914,12 +4001,13 @@ div.btn-group.dropdown {
     transition: all .2s ease;
     border-radius: 7px;
 }
-.modal-panel
-{
-    height:auto;
+
+.modal-panel {
+    height: auto;
     border-left-width: 2pt;
     border-color: lightgrey;
 }
+
 .notify-img-modal {
     margin: 0 auto;
     text-align: left;
@@ -3927,12 +4015,13 @@ div.btn-group.dropdown {
     top: 30px;
     min-height: 50px;
 }
-.notify-img-modal> img {
+
+.notify-img-modal > img {
     border-radius: 70%;
     width: 100px;
     height: 100px;
-    overflow:visible;
-    position:relative;
+    overflow: visible;
+    position: relative;
     z-index: 0;
 }
 
@@ -3946,18 +4035,22 @@ div.btn-group.dropdown {
     z-index: 0;
 
 }
-.modal-message-wrapper{
-    width:70%;
+
+.modal-message-wrapper {
+    width: 70%;
 }
-.notify-modal-btn-wrap{
+
+.notify-modal-btn-wrap {
     z-index: 1;
-    margin-right:10px;
+    margin-right: 10px;
 }
+
 .notification-modal-time {
     font-size: 10px;
     display: inline-block;
     color: #d7d700;
 }
+
 .modal-content {
     overflow: hidden;
 }
@@ -4040,6 +4133,19 @@ input[type="text"].take-note-title-text::-webkit-input-placeholder { /* Chrome/O
     font-size: 25px;
 }
 
+.note-title {
+    color: #000 !important;
+    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.note-desc {
+    color: #000 !important;
+    font-size: 18px;
+    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
+}
+
 .renote-done {
     text-align: right;
     padding-right: 5px;
@@ -4073,25 +4179,47 @@ ul.renote-color-btn > li {
 
 .note-color-btn.high,
 .my-note-wrapper.high {
-    background: #da4f49;
+    background: #ffc2be;
 }
+
+/*.my-note-wrapper.high:hover {*/
+/*border: 2px solid #f5857e;*/
+/*}*/
+
+/*.my-note-wrapper.low:hover {*/
+/*border: 2px solid #83c1ff;*/
+/*}*/
+
+/*.my-note-wrapper.urgent:hover {*/
+/*border: 2px solid #e6d858;*/
+/*}*/
+
+/*.my-note-wrapper.normal:hover {*/
+/*border: 2px solid #59b78e;*/
+/*}*/
+
+/*.my-note-wrapper.default-color:hover {*/
+/*border: 2px solid #dfe1e4;*/
+/*}*/
 
 .note-color-btn.low,
 .my-note-wrapper.low {
-    background: #8298ae;
+    background: #add6ff;
 }
 
 .note-color-btn.normal,
 .my-note-wrapper.normal {
-    background: #2d9668;
+    background: #69d8a7;
 }
 
-.note-color-btn.urgent {
-    background: #15a9fa;
+.note-color-btn.urgent,
+.my-note-wrapper.urgent {
+    background: #FFEB3B;
 }
 
-.note-urgent {
-    background: #15a9fa;
+.note-color-btn.default-color,
+.my-note-wrapper.default-color {
+    background: #f6f7f9;
 }
 
 .mynote-wrapper {
@@ -4101,12 +4229,222 @@ ul.renote-color-btn > li {
 .my-note-wrapper {
     min-width: 50px;
     min-height: 100px;
-    overflow: hidden;
-    padding: 20px 30px 10px 31px;
     background: #fff8f8;
     word-wrap: break-word;
 }
 
+.my-note-content {
+    padding: 10px 30px 10px 31px;
+}
+
 .note-color-btn > i {
     color: #fff;
+}
+
+.note-footer {
+    list-style: none;
+    padding: 0px 0px 0px 30px;
+    position: absolute;
+    bottom: 0;
+}
+
+.note-footer > li {
+    display: inline-block;
+}
+
+.note-footer > li > i {
+    padding-right: 13px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none !important;
+}
+
+.my-note-remind-me {
+    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 2px solid #f7f5f5;
+}
+
+.my-note-remind-me > .header {
+    padding: 20px 5px 5px 35px;
+}
+
+.remind-body {
+    text-align: center;
+    padding: 10px;
+}
+
+.remind-body > .date {
+    padding: 2px 10px 10px 10px;
+    margin-bottom: 10px;
+    z-index: 100;
+    height: 150px;
+    width: 100%;
+}
+
+.remind-body > .date > div > .form-control {
+    border: 0px;
+    border-bottom: 1px solid #f7f5f5;
+    background: transparent;
+}
+
+.remind-body > .date > div > span.input-group-addon {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.form-horizontal {
+    width: 500px;
+}
+
+.datetime-picker-dropdown {
+
+}
+
+.datetime-picker-dropdown > li.date-picker-menu div > table .btn-default {
+    border: 0;
+}
+
+.datetime-picker-dropdown > li.time-picker-menu div > table {
+
+}
+
+.mynote-check-true {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 25px;
+    height: 35px;
+    width: 35px;
+    padding-top: 9px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.mynote-check-true > i {
+    color: #000;
+}
+
+.spinner-container {
+    animation: rotate 2s linear infinite;
+    -webkit-animation: rotate 2s linear infinite;
+}
+
+.spinner-container .path {
+    stroke-dasharray: 1, 150; /* 1%, 101% circumference */
+    stroke-dashoffset: 0;
+    stroke: rgba(23, 55, 60, 1);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+    -webkit-animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150; /* 1%, 101% circumference */
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150; /* 70%, 101% circumference */
+        stroke-dashoffset: -35; /* 25% circumference */
+    }
+    100% {
+        stroke-dasharray: 90, 150; /* 70%, 101% circumference */
+        stroke-dashoffset: -124; /* -99% circumference */
+    }
+}
+
+@-webkit-keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150; /* 1%, 101% circumference */
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150; /* 70%, 101% circumference */
+        stroke-dashoffset: -35; /* 25% circumference */
+    }
+    100% {
+        stroke-dasharray: 90, 150; /* 70%, 101% circumference */
+        stroke-dashoffset: -124; /* -99% circumference */
+    }
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        overflow-x: auto;
+    }
+
+    .app-wrapper {
+        width: 600px;
+    }
+}
+
+.loading-note {
+    text-align: center;
+}
+
+.mynote-noti-wrapper {
+    width: 320px;
+    height: 115px;
+    position: absolute;
+    top: -92px;
+    background: #0d9d95;
+    margin: 0 auto;
+    left: 40%;
+    z-index: 10;
+    -webkit-box-shadow: 1px 4px 17px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 4px 17px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 4px 17px -5px rgba(0, 0, 0, 0.75);
+    border-radius: 2px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.mynote-noti-wrapper > .body {
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.mynote-noti-wrapper > .body > .note-notification-icon {
+    margin-bottom: 0px;
+    margin-top: 11px;
+    font-size: 30px;
+    color: #0d1c34;
+}
+
+.mynote-noti-wrapper > .body > h5 {
+    font-size: 20px;
+}
+
+.mynote-noti-wrapper > .body > .note-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    color: #ffffff;
+    font-size: 10px;
+    cursor: pointer;
 }

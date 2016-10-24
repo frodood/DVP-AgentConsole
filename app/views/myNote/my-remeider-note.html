@@ -1,5 +1,7 @@
 <div class="row" ng-controller="myNoteCtrl">
     <div class="col-lg-12 col-xs-12">
+
+
         <div id="renote-add-wrapper" class="renote-add-wrapper">
             <div class="col-lg-offset-3 col-lg-6">
                 <div id="addNoteRow" class="renote-add-wrap">
@@ -26,10 +28,17 @@
                                 placeholder="Take a note"/>
                     </div>
 
-
                     <div class="renote-footer">
                         <div class="col-lg-6">
                             <ul class="renote-color-btn">
+                                <!--<li>-->
+                                <!--<div class="note-color-btn default-color"-->
+                                <!--ng-click="addNewNote.selectColor('default-color');"-->
+                                <!--tooltip-placement="low" uib-tooltip="none">-->
+                                <!--<i ng-show="note.priority=='default-color'"-->
+                                <!--class="ti-check"></i>-->
+                                <!--</div>-->
+                                <!--</li>-->
                                 <li>
                                     <div class="note-color-btn low"
                                          ng-click="addNewNote.selectColor('low');"
@@ -67,7 +76,7 @@
 
                         </div>
                         <div class="col-lg-6">
-                            <div class="renote-done" ng-click="addNewNote.done();">
+                            <div class="renote-done" ng-click="addNewNote.done(note.title,note.priority,note.note);">
                                 DONE
                             </div>
                         </div>
@@ -80,18 +89,23 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="container">
+                <div class="container">'
+                    <!-- loading -->
+                    <div class="loading-note" ng-show="noteLists.length==0">
+                        <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
+                            <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+                        </svg>
+                    </div>
                     <div class="mynote-wrapper">
                         <div gridster="gridsterOpts">
-                            <div class="my-note-wrapper"
-                                 gridster-item="note" ng-repeat="note in noteLists">
-                                <div class="row">
-                                    <b>{{note.title}}</b>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    {{note.note}}
-                                </div>
+                            <div class="my-note-wrapper animated fadeInUp"
+                                 ng-class="{'low':note.priority=='low',
+                                 'high':note.priority=='high',
+                                 'normal':note.priority=='normal',
+                                 'urgent':note.priority=='urgent'}"
+                                 gridster-item="note" ng-repeat="note in noteLists track by $index">
+                                <my-note-edit-directive my-note="note" delete="myNoteDelete($index,note)">
+                                </my-note-edit-directive>
                             </div>
                         </div>
                     </div>
@@ -100,3 +114,4 @@
         </div>
     </div>
 </div>
+
