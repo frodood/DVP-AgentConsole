@@ -1,201 +1,14 @@
 <div class="row">
-    <div class="comment-wrapper">
+
+    <span class="btn  btn-default  btn-block"  ng-click="showNewComment()" ng-show="!isNewComment">New Comment</span>
+    <div class="comment-wrapper" ng-show="isNewComment">
         <div class="col-lg-12">
-            <div class="new-note-wrapper ">
-                <label class="label-green">comment</label> <input type="file" nv-file-select="" onchange="angular.element(this).scope().showSelectedAlert(this)" uploader="uploader" multiple/>
+            <form ><div class="new-note-wrapper ">
+
+
                 <textarea class="form-control" rows="3" ng-model="newComment"></textarea>
                 <div style="height:10px"></div>
-               <!-- <div class="row">
-                    <div class="x_panel">
-                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
-
-                            <div ng-if="uploader.isHTML5" ng-show="showCommentDrop">
-                                <div nv-file-drop="" uploader="uploader">
-                                    <div nv-file-over="" uploader="uploader"
-                                         over-class="another-file-over-class" class="upload-area bold">
-                                        drop zone
-                                    </div>
-                                </div>
-                                <div class=" time-wrapper">
-                                    <uib-progressbar value="uploadProgress" type="warning">
-                                    </uib-progressbar>
-                                </div>
-                            </div>
-
-                            &lt;!&ndash; <div class="form-group" ng-show="uploader.queue.length>0">
-                                 <div class="col-md-12 col-sm-12 col-xs-12" ng-if="uploader.isHTML5">
-                                     <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                                 </div>
-                             </div>
-                             <div class="form-group" ng-show="uploader.queue.length>0">
-                                 <div class="col-md-12 col-sm-12 col-xs-12">
-
-                                     <table class="table table-bordered">
-                                         <thead>
-                                         <tr>
-                                             <th width="50%">Name</th>
-                                             <th ng-show="uploader.isHTML5">Size</th>
-                                             <th ng-show="uploader.isHTML5">Progress</th>
-                                             <th>Status</th>
-                                             <th>Actions</th>
-                                         </tr>
-                                         </thead>
-                                         <tbody>
-                                         <tr ng-repeat="item in uploader.queue">
-                                             <td><strong>{{ item.file.name }}</strong></td>
-                                             <td ng-if="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }}
-                                                 MB
-                                             </td>
-                                             <td ng-if="uploader.isHTML5">
-                                                 <div class="progress" style="margin-bottom: 0;">
-                                                     <div class="progress-bar" role="progressbar"
-                                                          ng-style="{ 'width': item.progress + '%' }"></div>
-                                                 </div>
-                                             </td>
-                                             <td class="text-center">
-                                                 <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                                 <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                     <span ng-if="item.isError"><i
-                                             class="glyphicon glyphicon-remove"></i></span>
-                                             </td>
-                                             <td nowrap>
-                                                 <button type="button" class="btn btn-success btn-xs"
-                                                         ng-click="item.upload()"
-                                                         ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                                     <span class="glyphicon glyphicon-upload"></span> Upload
-                                                 </button>
-                                                 <button type="button" class="btn btn-warning btn-xs"
-                                                         ng-click="item.cancel()"
-                                                         ng-disabled="!item.isUploading">
-                                                     <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                                 </button>
-                                                 <button type="button" class="btn btn-danger btn-xs"
-                                                         ng-click="item.remove()">
-                                                     <span class="glyphicon glyphicon-trash"></span> Remove
-                                                 </button>
-                                             </td>
-                                         </tr>
-
-                                         </tbody>
-                                     </table>
-                                 </div>
-                             </div>
-
-                             <div class="ln_solid" ng-show="uploader.queue.length>0"></div>
-                             <div class="form-group" ng-show="uploader.queue.length>0">
-                                 <label class="col-md-12 col-sm-12 col-xs-12">Queue progress</label>
-
-                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                     <div class="progress right" style="">
-                                         <div class="progress-bar" role="progressbar"
-                                              ng-style="{ 'width': uploader.progress + '%' }"></div>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="form-group" ng-show="uploader.queue.length>0">
-                                 <div layout-gt-sm="row">
-
-                                     <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()"
-                                             ng-disabled="!uploader.getNotUploadedItems().length">
-                                         <span class="glyphicon glyphicon-upload"></span> Upload all
-                                     </button>
-
-                                     <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()"
-                                             ng-disabled="!uploader.isUploading">
-                                         <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                                     </button>
-
-                                     <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()"
-                                             ng-disabled="!uploader.queue.length">
-                                         <span class="glyphicon glyphicon-trash"></span> Remove all
-                                     </button>
-                                 </div>
-                             </div>&ndash;&gt;
-                        </form>
-                    </div>
-
-
-                    <div class="ticket-upload-view" >
-                        <div class="row">
-                            &lt;!&ndash;<div class="col-sm-3" ng-repeat="attchment in uploadedAttchments">
-
-
-                            <div class="attachment-img">
-                                <div class="image view view-first">
-
-                                    <img style="width: 100%; display: block;"
-                                         src="{{attchment.url}}"
-                                         on-error-src="asset/images/noimage.jpg" alt="image"/>
-
-                                    <div class="mask">
-                                        <p>{{attchment.file| limitTo:20}}</p>
-
-                                        <div class="tools tools-bottom">
-                                            <a href="javascript:void(0);"><i class="fa fa-play"
-                                                                             ng-click="playAttachment(attchment)"></i></a>
-                                            <a href="javascript:void(0);"><i class="fa fa-cloud-download"
-                                                                             ng-click="downloadAttachment(attchment)"></i></a>
-                                            <a href="javascript:void(0);"><i class="fa fa-times"
-                                                                             ng-click="deleteAttachment(attchment._id)"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>{{file.DisplayName}}</p>
-
-                                    &lt;!&ndash;<p>{{file.FileCategory.Category}}</p>&ndash;&gt;
-
-                                    <p ng-hide="showDeleteSelection">{{file.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
-
-                                    <input ng-show="showDeleteSelection" type="checkbox" class="flat"
-                                           ng-model="file.delete"
-                                           ng-change="addToDelete(file)">
-
-                                </div>
-                            </div>
-
-                            &lt;!&ndash;<div class="attachment-img">
-                                <img src="assets/img/avatar/defaultProfile.png" ng-src={{attchment.url}}>
-                            </div>
-                            <small>image.png</small>&ndash;&gt;
-                        </div>&ndash;&gt;
-
-                            <div ng-repeat="attchment in uploadedAttchments" class="col-sm-3">
-                                <div class="thumbnail">
-                                    <div class="image view view-first">
-
-                                        <img style="width: 100%; display: block;"
-                                             ng-src="{{attchment.url}}"
-                                             on-error-src="assets/img/noimage.jpg"
-                                             ng-if="isImage(attchment.type)"/>
-                                        <img style="width: 100%; display: block;"
-                                             src="assets/img/noimage.jpg" ng-if="!isImage(attchment.type)"/>
-
-
-                                        <div class="mask">
-                                            <p>{{attchment.file| limitTo:10}}</p>
-
-                                            <div class="tools tools-bottom">
-                                                <a href="javascript:void(0);"><i
-                                                        ng-if="isViewable(attchment.type)" class="fa fa-play"
-                                                        ng-click="playAttachment(attchment)"></i>
-                                                    <i ng-if="isImage(attchment.type)" class="fa fa-expand"
-                                                       ng-click="playAttachment(attchment)"></i></a>
-                                                <a href="javascript:void(0);"><i class="fa fa-cloud-download"
-                                                                                 ng-click="downloadAttachment(attchment)"></i></a>
-                                                <a href="javascript:void(0);"><i class="fa fa-times"
-                                                                                 ng-click="deleteAttachment(attchment._id)"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>-->
                 <div class="row">
                     <div class="col-md-4" style="margin-top: 8px;">
                         <select class="form-control " placeholder=""
@@ -206,18 +19,25 @@
                         </select>
                     </div>
                 </div>
+                <div style="height:10px"></div>
+                <input type="file" nv-file-select="" onchange="" uploader="uploader" multiple/>
+                <span ng-show="isUploading">Uploading ............</span>
+                <div style="height:10px"></div>
+                <div  ng-repeat="currUploads in uploadedComAttchments">
 
+                    <span style="padding-right: 10px"><a href="" ng-click="playAttachment(currUploads)">{{currUploads.file}}</a></span><i class="fa fa-close" ng-click="deleteAttachment(currUploads._id)"> </i>
 
-
+                </div>
 
                 <div class="btn-warp inline-btn  p-top-6 ">
                     <span class="btn  btn-default btn-block "
-                          ng-click="addComment(newComment,this.messageMode)">add</span>
+                          ng-click="addComment(newComment,this.messageMode)" ng-disabled="!isCommentCompleted">add</span>
                 </div>
                 <div class="btn-warp inline-btn  p-top-6 ">
-                    <span class="btn  btn-default btn-close btn-block ">cancel</span>
+                    <span class="btn  btn-default btn-close btn-block " ng-click="cancelNewComment()">cancel</span>
                 </div>
-            </div>
+            </div></form>
+
         </div>
     </div>
 </div>
@@ -259,7 +79,19 @@
                 </div>
             </div>
             <div class="row">
-                {{comment.body}}
+                <div ng-show="!checkAttachmentAvailability(comment)">
+                    Attachments unavailable
+                </div>
+                <div ng-show="checkAttachmentAvailability(comment)">
+                    {{comment.body}}
+                </div>
+            </div>
+            <div class="row">
+                <div ng-if="comment.attachments.length>0"><div style="height: 10px;"></div><div ng-repeat="com_attch in comment.attachments">
+
+                    <a href="" ng-click="playAttachment(com_attch)">{{com_attch.file}}</a>
+
+                </div></div>
             </div>
             <div ng-show="comment.channel==='call'">
                 <a href="javascript:void(0);"><i class="fa fa-play"
