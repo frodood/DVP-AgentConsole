@@ -28,7 +28,7 @@ var baseUrls = {
     'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
-    'toDoUrl': 'http://192.168.5.171:3636/DVP/API/1.0.0.0/'
+    'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

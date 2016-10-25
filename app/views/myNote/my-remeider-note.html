@@ -1,6 +1,5 @@
-<div class="row" ng-controller="myNoteCtrl">
+<div class="row" ng-controller="myNoteCtrl" style="overflow: hidden">
     <div class="col-lg-12 col-xs-12">
-
         <!--<div moment-picker="myDate"> {{ myDate }} </div>-->
         <div id="renote-add-wrapper" class="renote-add-wrapper">
             <div class="col-lg-offset-3 col-lg-6">
@@ -86,25 +85,30 @@
             </div>
         </div>
         <!-- end -->
-
         <div class="row">
             <div class="col-lg-12">
-                <div class="container">'
+                <div class="container">
                     <!-- loading -->
-                    <div class="loading-note" ng-show="noteLists.length==0">
+                    <div id="loadinMyNote" class="loading-note display-none">
                         <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
                             <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
                         </svg>
                     </div>
+
+                    <div id="myNoteEmty" class="my-note-emety " >
+                        Please create todo item
+                    </div>
                     <div class="mynote-wrapper">
                         <div gridster="gridsterOpts">
-                            <div class="my-note-wrapper animated fadeInUp"
+                            <div class="my-note-wrapper"
                                  ng-class="{'low':note.priority=='low',
                                  'high':note.priority=='high',
                                  'normal':note.priority=='normal',
                                  'urgent':note.priority=='urgent'}"
                                  gridster-item="note" ng-repeat="note in noteLists track by $index">
-                                <my-note-edit-directive my-note="note" delete="myNoteDelete($index,note)">
+                                <my-note-edit-directive my-note="note"
+                                                        delete="myNoteDelete($index,note)"
+                                                        reminder="reminderMe.create($index,note)">
                                 </my-note-edit-directive>
                             </div>
                         </div>
@@ -113,5 +117,45 @@
             </div>
         </div>
     </div>
+
+    <!-- Reminder Me  mode -->
+    <div id="reminderMode" class="animated mynote-remind-me-modal display-none">
+        <div class="col-lg-offset-4 col-lg-4 col-md-2 col-xs-2 ">
+            <div class="mynote-reminder-body">
+                <div id="reminderSelect" class="my-note-remind-me ">
+                    <div class="renote-add-close" ng-click="reminderMe.close()">
+                        <i class="ti-close"></i>
+                    </div>
+                    <div class="row header model-reminder-header ">
+                        {{ reminderObj.title }}
+                    </div>
+
+                    <div class="remind-body">
+                        <div class="date">
+                            <div moment-picker="myDate"> {{ myDate }}</div>
+                        </div>
+                    </div>
+
+                    <div class="reminder-footer">
+                        <span class="{{ reminderObj.priority }}"
+                              ng-click="reminderMe.createDueDate()">Reminder Me</span>
+                    </div>
+                </div>
+
+                <div id="reminderLoading" class="display-none my-note-remind-me loading {{ reminderObj.priority }} ">
+                    <div>
+                        <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
+                            <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
 </div>
 
