@@ -8,7 +8,7 @@ var agentApp = angular.module('veeryAgentApp',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize', 'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker'
+        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker','moment-picker'
     ]);
 
 

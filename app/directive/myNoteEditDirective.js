@@ -12,6 +12,10 @@ agentApp.directive("myNoteEditDirective", function (myNoteServices) {
         },
         templateUrl: 'app/views/myNote/temp/my-note.html',
         link: function (scope, element, attributes) {
+
+
+            scope.myDate = new Date();
+
             scope.isMyNote = false;
             scope.reminderMeDate = null;
             scope.remindMe = function () {
