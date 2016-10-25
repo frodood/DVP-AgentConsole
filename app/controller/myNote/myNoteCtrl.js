@@ -71,8 +71,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                         showAlert('Reminder Note', 'success', res.data.CustomMessage);
                     }
                 }, function (err) {
-                    showAlert('Reminder Note', 'success', err.data.CustomMessage);
-                    console.log(err);
+                    console.log(err.data.CustomMessage);
                 });
 
 
@@ -102,7 +101,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                 showAlert('Reminder Note', 'success', res.data.CustomMessage);
             }
         }, function (err) {
-            showAlert('Reminder Note', 'error', err.data.CustomMessage);
+            console.log(err.data.CustomMessage);
         });
     };
     //end
@@ -140,7 +139,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                     }
                     loadedReminder();
                 }, function (err) {
-                    showAlert('Reminder Note', 'error', err.data.CustomMessage);
+                    console.log(err.data.CustomMessage);
                     loadedReminder();
                 });
             }
@@ -166,7 +165,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                         uiFuntions.foundMyNote();
                     }
                 }, function (err) {
-                    showAlert('Reminder Note', 'error', err.data.CustomMessage);
+                    console.log(err.data.CustomMessage);
                     uiFuntions.myNoteNotFound();
                 });
             }

@@ -1,3 +1,60 @@
-<div class="animated view-ticket-wrapper fadeIn display-none">
+<div class="animated view-notification-d-wrapper fadeIn " ng-show="showMesssageModal">
+
+    <div class="container">
+        <div class="col-lg-offset-3 col-lg-7">
+            <div class="notification-details-wrapper">
+
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="notif-image">
+                            <img src="assets/img/avatar/defaultProfile.png"
+                                 ng-src="{{MessageObj.avatar}}"/>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="notif-details-wrapper">
+                            <div class="col-lg-12">
+                                <div ng-slimscroll
+                                     opacity="0.1"
+                                     distance="10px"
+                                     height="100px"
+                                     width="100%"
+                                     ng-mouseover="chatWidgetscrollEnabled = true"
+                                     ng-mouseleave="chatWidgetscrollEnabled = false">
+                                    <div class="header">
+                                        {{MessageObj.header}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="notification-modal-time pull-right">
+                                    <time-ago from-time='{{MessageObj.time}}'
+                                              format='MM/dd/yyyy'></time-ago>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="noti-details-footer">
+                                <ul>
+                                    <li>
+                                        <div ng-click="keepNotification()">Keep</div>
+                                    </li>
+                                    <li>
+                                        <div ng-click="addToTodo(MessageObj)">Add to To-Do</div>
+                                    </li>
+                                    <li>
+                                        <div ng-click="discardNotification(MessageObj)">Discard</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </div>

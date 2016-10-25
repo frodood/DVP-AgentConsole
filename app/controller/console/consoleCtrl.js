@@ -1324,7 +1324,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
         }, function (error) {
             console.log(error);
-            $scope.showError("Error", "Error", "ok", "Timer failed to start ");
+            showAlert("Error", "Error", "ok", "Timer failed to start ");
         });
     };
     $scope.checkTimerOnLogin();
@@ -2158,6 +2158,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.discardNotifications = function (notifyMessage) {
         $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
         $scope.unredNotifications = $scope.notifications.length;
+        $scope.showMesssageModal = false;
     };
 
     $scope.addToDoList = function (todoMessage) {
@@ -2165,32 +2166,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         toDoService.addNewToDo(todoMessage).then(function (response) {
             $scope.discardNotifications(todoMessage);
             $scope.showAlert("Added to ToDo", "success", "Notification successfully added as To Do");
+            $scope.showMesssageModal = false;
         }, function (error) {
             $scope.showAlert("Adding failed ", "error", "Notification is failed to add as To Do");
         });
     };
 
     $scope.showModal = function (MessageObj) {
-        //modal show
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: 'app/views/messageModal.html',
-            controller: 'notificationModalController',
-            size: 'sm',
-            backdrop: 'static',
-            keyboard: false,
-            resolve: {
-                MessageObj: function () {
-                    return MessageObj;
-                },
-                DiscardNotifications: function () {
-                    return $scope.discardNotifications;
-                },
-                AddToDoList: function () {
-                    return $scope.addToDoList;
-                }
-            }
-        });
+        $scope.MessageObj = MessageObj;
+    };
+
+    $scope.keepNotification = function () {
+        $uibModalInstance.dismiss('cancel');
+        $scope.showMesssageModal = false;
+    };
+    $scope.discardNotification = function (msgObj) {
+        DiscardNotifications(msgObj);
+        $uibModalInstance.dismiss('cancel');
+    };
+    $scope.addToTodo = function (MessageData) {
+        AddToDoList(MessageData);
+        $uibModalInstance.dismiss('cancel');
     };
 
 
@@ -2237,17 +2233,7 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
     $scope.MessageObj = MessageObj;
 
 
-    $scope.keepNotification = function () {
-        $uibModalInstance.dismiss('cancel');
-    }
-    $scope.discardNotification = function (msgObj) {
-        DiscardNotifications(msgObj);
-        $uibModalInstance.dismiss('cancel');
-    }
-    $scope.addToTodo = function (MessageData) {
-        AddToDoList(MessageData);
-        $uibModalInstance.dismiss('cancel');
-    }
+
 
 
 });

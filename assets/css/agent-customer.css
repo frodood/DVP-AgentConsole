@@ -4580,6 +4580,86 @@ ul.renote-color-btn > li {
 }
 
 /*notification description*/
+.view-notification-d-wrapper {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+
+.notification-details-wrapper {
+    width: 100%;
+    height: 150px;
+    background: transparent;
+}
+
+.notif-image {
+    text-align: left;
+    padding-top: 26px;
+}
+
+.notif-image > img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 3px solid #45bf55;
+}
+
+.notif-details-wrapper {
+    width: 100%;
+    min-height: 140px;
+    height: auto;
+    border-radius: 7px;
+    /*overflow: hidden;*/
+    position: relative;
+    background: #ffffff;
+    margin-top: 20px;
+    padding: 15px 10px 10px 15px;
+}
+
+.notif-details-wrapper::before {
+    content: "";
+    position: absolute;
+    left: -19px;
+    top: 34px;
+    width: 0;
+    height: 0;
+    border-top: 18px solid transparent;
+    border-right: 22px solid #ffffff;
+    border-bottom: 13px solid transparent;
+    z-index: 1000;
+}
+
+.notif-details-wrapper > div > .header {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.noti-details-footer > ul {
+    list-style: none;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.noti-details-footer > ul > li {
+    display: inline-block;
+    padding-right: 15px;
+    color: #45bf55;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.noti-details-footer > ul > li :hover {
+    color: #fff;
+}
+
+.noti-details-footer {
+    text-align: right;
+    padding-right: 10px;
+}
 
 /*end*/
 
