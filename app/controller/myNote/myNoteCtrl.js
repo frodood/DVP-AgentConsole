@@ -10,6 +10,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
         $('#addNoteWindow').removeClass('display-none');
     });
 
+    $scope.myDate = {};
 
     //sample test layout
     $scope.noteLists = [];

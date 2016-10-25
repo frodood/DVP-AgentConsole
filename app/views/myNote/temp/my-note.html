@@ -50,13 +50,14 @@
         <!--</div>-->
         <!--</div>-->
         <div class="date">
-            <p class="input-group">
+            <div moment-picker="myDate"> {{ myDate }} </div>
+            <!--<p class="input-group">
                 <input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm" ng-model="picker.date"
                        is-open="picker.open"/>
               <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="openCalendar($event, 'picker')"><i
                           class="fa fa-calendar"></i></button>
-              </span>
+              </span>-->
             </p>
         </div>
     </div>
