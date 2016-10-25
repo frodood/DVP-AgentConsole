@@ -577,7 +577,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
 
-            String.prototype.toHHMMSS = function () {
+            String.prototype.toDurationFormat = function () {
 
                 var mill_sec_num = parseInt(this, 10); // don't forget the second param
                 var sec_num = Math.floor(mill_sec_num/1000);
@@ -679,7 +679,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             scope.ticket.collaborators.forEach(function(item){
 
                                 if(item.loggedTime){
-                                    item.loggedTime = item.loggedTime.toString().toHHMMSS();
+                                    item.loggedTime = item.loggedTime.toString().toDurationFormat();
 
 
                                 }
@@ -1761,12 +1761,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.ticketEstimatedPrecentage=100;
                 try
                 {
-                    scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
-                    scope.newTicketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toHHMMSS();
+                    scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toDurationFormat();
+                    scope.newTicketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toDurationFormat();
                     scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
                     scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
-                    scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toHHMMSS();
-                    scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toHHMMSS();
+                    scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toDurationFormat();
+                    scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toDurationFormat();
 
 
                     /*if(scope.ticketLoggedPrecentage>100)
