@@ -307,6 +307,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         },
         unregisterWithArds: function () {
+            sipUnRegister();
             resourceService.UnregisterWithArds(authService.GetResourceId()).then(function (response) {
                 $scope.registerdWithArds = !response;
             }, function (error) {
@@ -2029,6 +2030,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (getAllRealTimeTimer) {
             $timeout.cancel(getAllRealTimeTimer);
         }
+        $scope.veeryPhone.unregisterWithArds();
     });
 
     /* update code damith
@@ -2126,19 +2128,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.counter = 0;
     var callDurationTimeout = {};
     $scope.duations = '';
-    $scope.onTimeout = function () {
-        $scope.counter++;
-        $scope.duations = $scope.counter.toString().toHHMMSS();
-        callDurationTimeout = $timeout($scope.onTimeout, 1000);
-    };
 
 
     $scope.stopCallTime = function () {
-        $timeout.cancel(callDurationTimeout);
+
+        document.getElementById('calltimmer').getElementsByTagName('timer')[0].stop();
     };
     $scope.startCallTime = function () {
-        $scope.counter = 0;
-        callDurationTimeout = $timeout($scope.onTimeout, 1000);
+
+
+        document.getElementById('calltimmer').getElementsByTagName('timer')[0].start();
     };
 
     $scope.goToTopScroller = function () {
@@ -2149,20 +2148,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showMesssageModal = false;
 
     $scope.showNotificationMessage = function (notifyMessage) {
-
         $scope.showMesssageModal = true;
-
         $scope.showModal(notifyMessage);
-
-
         //$scope.showAlert("Message","success",notifyMessage.Message);
-    }
+    };
 
 
     $scope.discardNotifications = function (notifyMessage) {
         $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
         $scope.unredNotifications = $scope.notifications.length;
-    }
+    };
 
     $scope.addToDoList = function (todoMessage) {
         todoMessage.title = todoMessage.header;
@@ -2172,7 +2167,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }, function (error) {
             $scope.showAlert("Adding failed ", "error", "Notification is failed to add as To Do");
         });
-    }
+    };
 
     $scope.showModal = function (MessageObj) {
         //modal show
