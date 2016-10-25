@@ -736,6 +736,7 @@ body {
     width: 100%;
     border-radius: 2px;
     overflow: hidden;
+    position: relative;
 }
 
 /*profile wrapper */
@@ -4179,7 +4180,7 @@ ul.renote-color-btn > li {
 
 .note-color-btn.high,
 .my-note-wrapper.high {
-    background: #ffc2be;
+    background: rgba(255, 143, 135, 1);
 }
 
 /*.my-note-wrapper.high:hover {*/
@@ -4266,7 +4267,6 @@ ul.renote-color-btn > li {
     position: absolute;
     top: 0;
     left: 0;
-    border: 2px solid #f7f5f5;
 }
 
 .my-note-remind-me > .header {
@@ -4282,7 +4282,7 @@ ul.renote-color-btn > li {
     padding: 2px 10px 10px 10px;
     margin-bottom: 10px;
     z-index: 100;
-    height: 150px;
+    height: 60px;
     width: 100%;
 }
 
@@ -4305,7 +4305,7 @@ ul.renote-color-btn > li {
 }
 
 .form-horizontal {
-    width: 500px;
+    /*width: 500px;*/
 }
 
 .datetime-picker-dropdown {
@@ -4407,17 +4407,18 @@ ul.renote-color-btn > li {
 }
 
 .mynote-noti-wrapper {
-    width: 320px;
-    height: 115px;
+    width: 400px;
+    height: 113px;
     position: absolute;
     top: -92px;
+    /*top: 62px;*/
     background: #0d9d95;
     margin: 0 auto;
-    left: 40%;
+    left: 38%;
     z-index: 10;
-    -webkit-box-shadow: 1px 4px 17px -5px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 1px 4px 17px -5px rgba(0, 0, 0, 0.75);
-    box-shadow: 1px 4px 17px -5px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 16px 17px -15px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 16px 17px -15px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 16px 17px -15px rgba(0, 0, 0, 0.75);
     border-radius: 2px;
     overflow: hidden;
     text-align: center;
@@ -4429,15 +4430,24 @@ ul.renote-color-btn > li {
     font-size: 18px;
 }
 
+.mynote-noti-wrapper > .body > .header {
+    text-align: center;
+    color: #ffeb3b;
+    font-size: 18px;
+    margin-top: 10px;
+    text-transform: lowercase;
+}
+
 .mynote-noti-wrapper > .body > .note-notification-icon {
     margin-bottom: 0px;
-    margin-top: 11px;
+    margin-top: 0px;
     font-size: 30px;
-    color: #0d1c34;
+    color: #ffffff;
 }
 
 .mynote-noti-wrapper > .body > h5 {
     font-size: 20px;
+    margin: 0;
 }
 
 .mynote-noti-wrapper > .body > .note-close {
@@ -4448,3 +4458,124 @@ ul.renote-color-btn > li {
     font-size: 10px;
     cursor: pointer;
 }
+
+.mynote-remind-me-modal {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.83);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+
+}
+
+.moment-picker .moment-picker-contents {
+    cursor: pointer;
+    font-size: 25px;
+    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
+}
+
+.mynote-remind-me-modal.low {
+    background: rgba(173, 214, 255, 0.7);
+}
+
+.mynote-remind-me-modal.normal {
+    background: rgba(105, 216, 167, 0.7);
+}
+
+.mynote-remind-me-modal.high {
+    background: rgba(255, 143, 135, 0.7);
+}
+
+.mynote-remind-me-modal.urgent {
+    background: rgba(255, 235, 59, 0.7);
+
+}
+
+.gridster-loaded .gridster-item {
+    -webkit-box-shadow: 0px 3px 17px -4px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 3px 17px -4px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 3px 17px -4px rgba(0, 0, 0, 0.75);
+}
+
+.gridster-loaded .gridster-item:hover {
+    -webkit-box-shadow: 0px 3px 17px -4px rgba(0, 0, 0, 0);
+    -moz-box-shadow: 0px 3px 17px -4px rgba(0, 0, 0, 0);
+    box-shadow: 0px 3px 17px -4px rgba(0, 0, 0, 0);
+}
+
+.mynote-reminder-body {
+    background: #fff;
+    height: 200px;
+    margin-top: 50px;
+    padding: 10px 25px 20px 25px;
+    position: relative;
+    z-index: 95;
+
+}
+
+.model-reminder-header {
+    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
+    font-weight: bold;
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+.reminder-footer {
+    text-align: center;
+}
+
+.reminder-footer > span {
+    padding: 10px 15px 10px 15px;
+    cursor: pointer;
+}
+
+.reminder-footer > span.low {
+    background: rgba(173, 214, 255, 1);
+}
+
+.reminder-footer > span.normal {
+    background: rgba(105, 216, 167, 1);
+}
+
+.reminder-footer > span.high {
+    background: rgba(255, 143, 135, 1);
+}
+
+.reminder-footer > span.urgent {
+    background: rgba(255, 235, 59, 1);
+}
+
+.my-note-remind-me.loading {
+    text-align: center;
+    font-size: 25px;
+    padding-top: 62px;
+}
+
+.my-note-remind-me.loading.low {
+    color: rgba(173, 214, 255, 1);
+}
+
+.my-note-remind-me.loading.high {
+    color: rgba(255, 143, 135, 1);
+}
+
+.my-note-remind-me.loading.urgent {
+    color: rgba(255, 235, 59, 1);
+}
+
+.my-note-remind-me.loading.normal {
+    color: rgba(105, 216, 167, 1);
+}
+
+.my-note-emety {
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    text-transform: capitalize;
+    margin-top: 50px;
+    color: #36ba45;
+
+}
+

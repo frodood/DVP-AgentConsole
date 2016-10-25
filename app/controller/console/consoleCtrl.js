@@ -2202,7 +2202,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var timeoutNotiMe = function () {
             $timeout(function () {
                 $scope.myNoteNotiMe.hideMe();
-            }, 5000);
+            }, 200000);
         };
         return {
             showMe: function () {

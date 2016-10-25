@@ -53,11 +53,25 @@ agentApp.factory("myNoteServices", function ($http, baseUrls, authService) {
         });
     };
 
+    var reminderMyNote = function (note, dueDate) {
+        return $http({
+            method: 'PUT',
+            url: baseUrls.toDoUrl + "ToDo/" + note._id + "/Reminder",
+            data: {"due_at": moment(dueDate)},
+            headers: {
+                'authorization': authService.GetToken()
+            }
+        }).then(function (response) {
+            return response;
+        });
+    };
+
     //return functions
     return {
         GetAllMyToDo: getAllMyToDo,
         CreateMyNote: createMyNote,
         CheckMyNote: checkMyNote,
-        DeleteMyNote:deleteMyNote
+        DeleteMyNote: deleteMyNote,
+        ReminderMyNote: reminderMyNote
     }
 });

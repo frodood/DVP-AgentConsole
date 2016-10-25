@@ -6,7 +6,8 @@
 var agentApp = angular.module('veeryAgentApp',
     ['ngRoute', 'ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
         'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize', 'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
+        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
+        'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker','moment-picker'
     ]);
@@ -27,7 +28,7 @@ var baseUrls = {
     'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
-    'toDoUrl': 'http://192.168.5.171:3636/DVP/API/1.0.0.0/'
+    'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

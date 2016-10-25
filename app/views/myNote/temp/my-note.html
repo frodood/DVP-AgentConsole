@@ -19,7 +19,7 @@
             uib-tooltip="delete">
             <i class="ti-trash"></i>
         </li>
-        <li ng-click="remindMe();">
+        <li ng-click="reminder();" ng-if="!myNote.check" >
             <i class="ti-time"></i>
         </li>
         <li uib-tooltip="done" ng-if="!myNote.check"
@@ -34,31 +34,31 @@
     </div>
 </div>
 
-<div class="my-note-remind-me" ng-show="isMyNote">
-    <div class="renote-add-close" ng-click="closeRemindMe()">
-        <i class="ti-close"></i>
-    </div>
-    <div class="header bold row">
-        Reminder Me
-    </div>
+<!--<div class="my-note-remind-me" ng-show="isMyNote">-->
+    <!--<div class="renote-add-close" ng-click="closeRemindMe()">-->
+        <!--<i class="ti-close"></i>-->
+    <!--</div>-->
+    <!--<div class="header bold row">-->
+        <!--Reminder Me-->
+    <!--</div>-->
 
-    <div class="remind-body">
+    <!--<div class="remind-body">-->
+        <!--&lt;!&ndash;<div class="date">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="input-group date datepicker">&ndash;&gt;-->
+        <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="pick date">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span class="input-group-addon"><span class="fa fa-calendar "></span></span>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
         <!--<div class="date">-->
-        <!--<div class="input-group date datepicker">-->
-        <!--<input type="text" class="form-control" placeholder="pick date">-->
-        <!--<span class="input-group-addon"><span class="fa fa-calendar "></span></span>-->
+            <!--<div moment-picker="myDate"> {{ myDate }} </div>-->
+            <!--&lt;!&ndash;<p class="input-group">-->
+                <!--<input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm" ng-model="picker.date"-->
+                       <!--is-open="picker.open"/>-->
+              <!--<span class="input-group-btn">-->
+                  <!--<button type="button" class="btn btn-default" ng-click="openCalendar($event, 'picker')"><i-->
+                          <!--class="fa fa-calendar"></i></button>-->
+              <!--</span>&ndash;&gt;-->
+            <!--</p>-->
         <!--</div>-->
-        <!--</div>-->
-        <div class="date">
-            <div moment-picker="myDate"> {{ myDate }} </div>
-            <!--<p class="input-group">
-                <input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm" ng-model="picker.date"
-                       is-open="picker.open"/>
-              <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="openCalendar($event, 'picker')"><i
-                          class="fa fa-calendar"></i></button>
-              </span>-->
-            </p>
-        </div>
-    </div>
-</div>
+    <!--</div>-->
+<!--</div>-->

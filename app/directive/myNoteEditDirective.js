@@ -7,8 +7,8 @@ agentApp.directive("myNoteEditDirective", function (myNoteServices) {
         restrict: "EA",
         scope: {
             myNote: "=",
-            delete: '&'
-
+            delete: '&',
+            reminder: '&'
         },
         templateUrl: 'app/views/myNote/temp/my-note.html',
         link: function (scope, element, attributes) {
@@ -18,14 +18,11 @@ agentApp.directive("myNoteEditDirective", function (myNoteServices) {
 
             scope.isMyNote = false;
             scope.reminderMeDate = null;
-            scope.remindMe = function () {
-                console.log('event fire');
-                scope.isMyNote = true;
-            };
 
-            scope.closeRemindMe = function () {
-                scope.isMyNote = false;
-            };
+
+            //scope.closeRemindMe = function () {
+            //    scope.isMyNote = false;
+            //};
 
 
             scope.picker = {
@@ -38,6 +35,10 @@ agentApp.directive("myNoteEditDirective", function (myNoteServices) {
 
             scope.checkMyNote = function (note) {
                 myNoteServices.CheckMyNote(note).then(function (res) {
+                    if (res.data.IsSuccess) {
+                        note.check = true;
+                        showAlert('Reminder Note', 'success', res.data.CustomMessage);
+                    }
 
                 }, function (err) {
 
