@@ -57,7 +57,7 @@ agentApp.factory("myNoteServices", function ($http, baseUrls, authService) {
     return {
         GetAllMyToDo: getAllMyToDo,
         CreateMyNote: createMyNote,
-        CreateMyNote: createMyNote,
-        CheckMyNote: checkMyNote
+        CheckMyNote: checkMyNote,
+        DeleteMyNote:deleteMyNote
     }
 });

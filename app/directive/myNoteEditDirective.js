@@ -23,9 +23,6 @@ agentApp.directive("myNoteEditDirective", function (myNoteServices) {
                 scope.isMyNote = false;
             };
 
-            $('.datepicker').datepicker({
-                autoclose: true
-            });
 
             scope.picker = {
                 date: new Date()
