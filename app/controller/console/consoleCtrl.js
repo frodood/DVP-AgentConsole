@@ -2149,20 +2149,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showMesssageModal = false;
 
     $scope.showNotificationMessage = function (notifyMessage) {
-
         $scope.showMesssageModal = true;
-
         $scope.showModal(notifyMessage);
-
-
         //$scope.showAlert("Message","success",notifyMessage.Message);
-    }
+    };
 
 
     $scope.discardNotifications = function (notifyMessage) {
         $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
         $scope.unredNotifications = $scope.notifications.length;
-    }
+    };
 
     $scope.addToDoList = function (todoMessage) {
         todoMessage.title = todoMessage.header;
@@ -2172,7 +2168,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }, function (error) {
             $scope.showAlert("Adding failed ", "error", "Notification is failed to add as To Do");
         });
-    }
+    };
 
     $scope.showModal = function (MessageObj) {
         //modal show
