@@ -210,9 +210,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     var doughnutChart = document.getElementById("doughnutChart");
     window.myDoughnutChart = new Chart(doughnutChart, {
         type: 'doughnut',
-
         data: $scope.doughnutData,
-
         options: {
             title: {
                 display: false
@@ -226,7 +224,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     fontSize: 15,
                     boxWidth: 50
                 }
-            },
+            }
         }
     });
     doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-left: " +

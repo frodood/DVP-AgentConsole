@@ -155,7 +155,7 @@
                                     <div class="recent-activity" ng-repeat="ticket in recentTickets.tickets">
                                         <div class="col-lg-8">
                                             <div class="pull-left recent-activity-left">
-                                                {{ticket.description}}
+                                                {{ ticket.description | limitTo: 60 }}{{ticket.description.length > 60 ? '...' : ''}}
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
