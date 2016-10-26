@@ -2176,16 +2176,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.keepNotification = function () {
-        $uibModalInstance.dismiss('cancel');
+        //$uibModalInstance.dismiss('cancel');
         $scope.showMesssageModal = false;
     };
     $scope.discardNotification = function (msgObj) {
-        DiscardNotifications(msgObj);
-        $uibModalInstance.dismiss('cancel');
+        $scope.discardNotifications(msgObj);
+        $scope.showMesssageModal = false;
+       // $uibModalInstance.dismiss('cancel');
     };
     $scope.addToTodo = function (MessageData) {
-        AddToDoList(MessageData);
-        $uibModalInstance.dismiss('cancel');
+        $scope.addToDoList(MessageData);
+        $scope.showMesssageModal = false;
+        //$uibModalInstance.dismiss('cancel');
     };
 
 
