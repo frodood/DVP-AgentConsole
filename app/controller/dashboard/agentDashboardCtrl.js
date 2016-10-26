@@ -188,26 +188,52 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     /*productivity*/
     $scope.doughnutData = {
         labels: ["Acw", "Break", "OnCall", "Idle", "Hold"],
+
         datasets: [
             {
                 data: [0, 0, 0, 0, 0],
                 backgroundColor: [
+                    "#2b4d52",
+                    "#36A2EB",
+                    "#1b76ff",
+                    "#2d9668",
+                    "#d90000"
+                ],
+                hoverBackgroundColor: [
+                    "#2b4d52",
+                    "#36A2EB",
+                    "#1b76ff",
+                    "#2d9668",
+                    "#d90000"
+                ],
+                borderWidth: [0, 0, 0, 0, 0],
+            }]
+    };
+    var doughnutChart = document.getElementById("doughnutChart");
+
+    var data = {
+        labels: [
+            "Red",
+            "Blue",
+            "Yellow"
+        ],
+        datasets: [
+            {
+                data: [300, 50, 100],
+                backgroundColor: [
                     "#FF6384",
                     "#36A2EB",
-                    "#FFCE56",
-                    "#42f44e",
-                    "#850bba"
+                    "#FFCE56"
                 ],
                 hoverBackgroundColor: [
                     "#FF6384",
                     "#36A2EB",
-                    "#FFCE56",
-                    "#42f44e",
-                    "#850bba"
+                    "#FFCE56"
                 ]
             }]
     };
-    var doughnutChart = document.getElementById("doughnutChart");
+
+    console.log($scope.doughnutData);
     window.myDoughnutChart = new Chart(doughnutChart, {
         type: 'doughnut',
         data: $scope.doughnutData,
@@ -243,7 +269,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
                 if (response.length === 0)
                     return;
-                $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime), secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
+                $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime),
+                    secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
                 window.myDoughnutChart.update();
 
 
