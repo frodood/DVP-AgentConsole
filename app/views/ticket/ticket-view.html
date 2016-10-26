@@ -6,8 +6,22 @@
         <!-- MODEL HEADER -->
         <div class="model-header">
             <div class="col-md-6">
-                <div class="mode-left-icon  dark float-left">
-                    <i class="main-icon-2-telephone-3" ng-click="playFile(ticket.engagement_session._id)"></i>
+                <div class="mode-left-icon  dark float-left ticket-model"
+                     ng-class="{'api-channel':ticket.channel=='api',
+                  'twitter-channel':ticket.channel=='twitter',
+                  'call-channel':ticket.channel=='call',
+                  'facebook-channel':ticket.channel=='facebook-post',
+                  'sms-channel':ticket.channel=='sms',
+                  'email-channel':ticket.channel=='email'}">
+                    <i class=""
+                       ng-class="{'fa fa-random':ticket.channel=='api',
+                  'fa fa-twitter':ticket.channel=='twitter',
+                   'fa fa-facebook':ticket.channel=='facebook-post',
+                  'fa fa-phone':ticket.channel=='call',
+                  'fa fa-bell-o':ticket.channel=='sms',
+                  'fa fa-bookmark-o':ticket.channel=='new',
+                  'fa fa-envelope-o':ticket.channel=='email'}"
+                       ng-click="playFile(ticket.engagement_session._id)"></i>
                 </div>
                 <div class="model-header-text small bold ">
                     {{ticket.reference}}/{{ticket.tid}}

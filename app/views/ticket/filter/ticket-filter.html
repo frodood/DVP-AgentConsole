@@ -54,11 +54,7 @@
                                 {{view.count}}
                             </div>
                         </div>
-                        <div class="footer-btn">
-                            <div class="btn btn-default btn-block">
-                                CREATE VIEW
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -71,8 +67,10 @@
                         <div ng-show="isProgress">
                             <div class="row ">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="data-state-wrap">
-                                        Loading ......
+                                    <div class="data-state-wrap loading-note">
+                                        <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
+                                            <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+                                        </svg>
                                     </div>
 
                                 </div>
@@ -82,7 +80,7 @@
                         <div ng-show="isNoData">
                             <div class="row ">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="data-state-wrap">
+                                    <div class="data-state-wrap my-note-emety">
                                         No Data
                                     </div>
 
@@ -108,6 +106,7 @@
                   'fa fa-twitter':ticket.channel=='twitter',
                    'fa fa-facebook':ticket.channel=='facebook-post',
                   'fa fa-phone':ticket.channel=='call',
+                  'fa fa-bookmark-o':ticket.channel=='new',
                   'fa fa-bell-o':ticket.channel=='sms',
                   'fa fa-envelope-o':ticket.channel=='email'}"></i>
                                 </div>

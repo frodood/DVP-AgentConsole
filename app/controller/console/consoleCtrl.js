@@ -810,12 +810,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.reCalcScroll();
             });
             $scope.tabSelected(index);
+
         }
         else {
             $scope.tabSelected(index);
         }
-
-
+        $('html, body').animate({scrollTop: 0}, 'fast');
     };
     $scope.isForceFocused = false;
     $scope.currTab = 0;
@@ -2182,7 +2182,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.discardNotification = function (msgObj) {
         $scope.discardNotifications(msgObj);
         $scope.showMesssageModal = false;
-       // $uibModalInstance.dismiss('cancel');
+        // $uibModalInstance.dismiss('cancel');
     };
     $scope.addToTodo = function (MessageData) {
         $scope.addToDoList(MessageData);
@@ -2232,9 +2232,6 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
 
     $scope.showMesssageModal = true;
     $scope.MessageObj = MessageObj;
-
-
-
 
 
 });
