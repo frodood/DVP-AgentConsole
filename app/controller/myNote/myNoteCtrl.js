@@ -197,9 +197,9 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
         maxSizeX: null, // maximum column width of an item
         minSizeY: 1, // minumum row height of an item
         maxSizeY: null, // maximum row height of an item
-        widget_base_dimensions: [140, 50],
+        widget_base_dimensions: [100, 150],
         resizable: {
-            enabled: false
+            enabled: true
         },
         draggable: {
             enabled: true, // whether dragging items is supported
