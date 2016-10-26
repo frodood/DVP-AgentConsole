@@ -606,7 +606,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     days = "0" + days;
                 }
 
-
                 /*return hours + ':' + minutes + ':' + seconds;*/
                 return days+"d:"+hours + "h:" + minutes + "m:"+seconds+"s";
 
