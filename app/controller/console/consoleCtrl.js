@@ -307,6 +307,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         },
         unregisterWithArds: function () {
+            sipUnRegister();
             resourceService.UnregisterWithArds(authService.GetResourceId()).then(function (response) {
                 $scope.registerdWithArds = !response;
             }, function (error) {
@@ -2029,6 +2030,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (getAllRealTimeTimer) {
             $timeout.cancel(getAllRealTimeTimer);
         }
+        $scope.veeryPhone.unregisterWithArds();
     });
 
     /* update code damith
@@ -2126,19 +2128,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.counter = 0;
     var callDurationTimeout = {};
     $scope.duations = '';
-    $scope.onTimeout = function () {
-        $scope.counter++;
-        $scope.duations = $scope.counter.toString().toHHMMSS();
-        callDurationTimeout = $timeout($scope.onTimeout, 1000);
-    };
 
 
     $scope.stopCallTime = function () {
-        $timeout.cancel(callDurationTimeout);
+
+        document.getElementById('calltimmer').getElementsByTagName('timer')[0].stop();
     };
     $scope.startCallTime = function () {
-        $scope.counter = 0;
-        callDurationTimeout = $timeout($scope.onTimeout, 1000);
+
+
+        document.getElementById('calltimmer').getElementsByTagName('timer')[0].start();
     };
 
     $scope.goToTopScroller = function () {
@@ -2156,7 +2155,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         //$scope.showAlert("Message","success",notifyMessage.Message);
-    }
+    };
 
 
     $scope.discardNotifications = function (notifyMessage) {

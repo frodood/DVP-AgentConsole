@@ -441,8 +441,12 @@
                 <div class="dial-action">
                     {{call.status}}
                 </div>
-                <div class="call-duations">
-                    {{duations}}
+                <div class="call-duations" id="calltimmer">
+                    <!--{{duations}}-->
+                    <timer autostart="false" interval="1000"
+                           >{{hhours}}:
+                        {{mminutes}}: {{sseconds}}
+                    </timer>
                 </div>
             </div>
             <!--#KeyPad-->
