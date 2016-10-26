@@ -1017,7 +1017,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
     // $scope.addDashBoard();
-    $scope.addMyNote();
+    $scope.addDashBoard();
 
 
     var openNewEngagementTab = function (args, index) {

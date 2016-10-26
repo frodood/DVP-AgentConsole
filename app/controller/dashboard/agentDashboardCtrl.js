@@ -118,6 +118,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dataset.pointBackgroundColor = 'rgba(14,234,255,0.5)';
         dataset.pointBorderWidth = 1;
     });
+
     var openclose = document.getElementById("openclosecanvas").getContext("2d");
     window.opencloseChart = new Chart(openclose, $scope.createVsOpenConfig);
 
@@ -209,14 +210,27 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     var doughnutChart = document.getElementById("doughnutChart");
     window.myDoughnutChart = new Chart(doughnutChart, {
         type: 'doughnut',
+
         data: $scope.doughnutData,
+
         options: {
             title: {
+                display: false
+            },
+            legend: {
                 display: true,
-                text: "Productivity [hours]"
-            }
+                position: 'bottom',
+                padding: 10,
+                labels: {
+                    fontColor: 'rgb(130, 152, 174)',
+                    fontSize: 15,
+                    boxWidth: 50
+                }
+            },
         }
     });
+    doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-left: " +
+        "67px;margin-top: 15px;");
 
     /* -------------------- Chart Configurations End-----------------------------------------*/
 

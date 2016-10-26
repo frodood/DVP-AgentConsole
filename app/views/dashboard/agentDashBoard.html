@@ -11,91 +11,102 @@
                         <div class="col-lg-5">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="dark-ticker-wrapper">
-                                        <div class="col-lg-12">
-                                            <h5 class="dark-header bold">TICKET</h5>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="dark-ticker-wrap new-ticket">
-                                                <h1 class="bold">{{newTicketCount}}</h1>
-                                                <div class="title ">NEW</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="dark-ticker-wrap close-ticket">
-                                                <h1 class="bold">{{closeTicketCount}}</h1>
-                                                <div class="title">CLOSED</div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="dark-pro-chart-wrap">
                                         <div class="col-lg-12">
-                                            <h5 class="dark-header bold">PRODUCTIVITY</h5>
+                                            <h5 class="dark-header bold">PRODUCTIVITY [hours]</h5>
                                         </div>
                                         <canvas id="doughnutChart" width="400" height="400"></canvas>
                                     </div>
 
-                                    <div class="dark-product-wrapper">
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="Staffed">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title Staffed">Staffed Time</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.OnCallTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title onCall">On Call Time</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.BreakTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title onCall">Break Time</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="dark-product-wrapper">
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="Staffed">{{productivity.IncomingCallCount}}</h1>
-                                                <div class="title Staffed">Incoming Calls</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.MissCallCount}}</h1>
-                                                <div class="title onCall">Miss Call</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.TransferCallCount}}</h1>
-                                                <div class="title onCall">Transfer Call</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
+
+                                </div>
                             </div>
 
                         </div>
-                        <div class="col-lg-7" style="padding-right: 3px;">
-                            <div class="dark-chart-wrapper">
-                                <div class="dark-chart-bg"></div>
-                                <div class="col-lg-12">
-                                    <h5 class="dark-header text-uppercase bold">New vs Closed</h5>
+                        <div class="col-lg-7">
+                            <div class="dark-product-wrapper m-top35">
+                                <div class="col-lg-4">
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="Staffed">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
+                                        <div class="title Staffed">Staffed Time</div>
+                                    </div>
                                 </div>
-                                <canvas style="position: relative;" id="openclosecanvas" width="436px"
-                                        height="200px"></canvas>
-
-                                <div class="col-lg-12 agent-ticket-chart-wrapper">
-                                    <canvas id="deferencecanvas" width="436px" height="100px"></canvas>
+                                <div class="col-lg-4">
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="onCall">{{productivity.OnCallTime| date:'HH:mm:ss'}}</h1>
+                                        <div class="title onCall">On Call Time</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="onCall">{{productivity.BreakTime| date:'HH:mm:ss'}}</h1>
+                                        <div class="title onCall">Break Time</div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="dark-product-wrapper">
+                                <div class="col-lg-4">
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="Staffed">{{productivity.IncomingCallCount}}</h1>
+                                        <div class="title Staffed">Incoming Calls</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="onCall">{{productivity.MissCallCount}}</h1>
+                                        <div class="title onCall">Miss Call</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="onCall">{{productivity.TransferCallCount}}</h1>
+                                        <div class="title onCall">Transfer Call</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <div class="dark-ticker-wrapper">
+                                <div class="col-lg-12">
+                                    <h5 class="dark-header bold">TICKET</h5>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="dark-ticker-wrap new-ticket">
+                                        <h1 class="bold">{{newTicketCount}}</h1>
+                                        <div class="title ">NEW</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="dark-ticker-wrap close-ticket">
+                                        <h1 class="bold">{{closeTicketCount}}</h1>
+                                        <div class="title">CLOSED</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-12" style="padding-right: 3px;">
+                                    <div class="dark-chart-wrapper">
+                                        <div class="col-lg-12">
+                                            <h5 class="dark-header text-uppercase bold">New vs Closed</h5>
+                                        </div>
+                                        <canvas style="position: relative;" id="openclosecanvas" width="436px"
+                                                height="200px"></canvas>
+
+                                        <div class="col-lg-12 agent-ticket-chart-wrapper">
+                                            <canvas id="deferencecanvas" width="436px" height="100px"></canvas>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 

@@ -206,4 +206,8 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
             } // optional callback fired when drag is started,
         }
     };
+
+
+
+
 });

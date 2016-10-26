@@ -69,7 +69,8 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="data-state-wrap loading-note">
                                         <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
-                                            <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+                                            <circle class="path" cx="26px" cy="26px" r="20px" fill="none"
+                                                    stroke-width="4px"/>
                                         </svg>
                                     </div>
 
@@ -89,6 +90,8 @@
                         </div>
 
                         <div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
+
+
                             <div class="profile-ticker-wrap "
                                  ng-class="{'high-boarder':ticket.priority=='high',
                         'normal-boarder':ticket.priority=='normal',
@@ -99,6 +102,7 @@
                   'twitter-channel':ticket.channel=='twitter',
                   'call-channel':ticket.channel=='call',
                   'facebook-channel':ticket.channel=='facebook-post',
+                  'voicemail-channel':ticket.channel=='voicemail',
                   'sms-channel':ticket.channel=='sms',
                   'email-channel':ticket.channel=='email'}">
                                     <i class=""
@@ -107,6 +111,7 @@
                    'fa fa-facebook':ticket.channel=='facebook-post',
                   'fa fa-phone':ticket.channel=='call',
                   'fa fa-bookmark-o':ticket.channel=='new',
+                  'fa fa-volume-control-phone':ticket.channel=='voicemail',
                   'fa fa-bell-o':ticket.channel=='sms',
                   'fa fa-envelope-o':ticket.channel=='email'}"></i>
                                 </div>
@@ -117,11 +122,13 @@
                                             <div class="left-avatar">
                                                 <img class="object-fit_cover" src="assets/img/avatar/default-user.png"
                                                      ng-src="{{ticket.requester.avatar}}">
+
+
                                             </div>
                                         </div>
                                         <div class="col-md-8 ">
                                             <div class="ticker-id bold" ng-click="viewSpecificTicket(ticket)">
-                                                {{ticket.reference}} -
+                                                {{ticket.reference}} -{{ticket.channel}}
                                                 <small class="color-cyan500 text-uppercase">
                                                     <time-ago from-time='{{ ticket.created_at }}'
                                                               format='MM/dd/yyyy'></time-ago>

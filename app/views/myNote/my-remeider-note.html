@@ -20,11 +20,13 @@
                                 ng-model="note.title"
                                 class="form-control renote-input-box take-note-title-text"
                                 placeholder="Title"/>
-                        <input
-                                type="text"
-                                ng-model="note.note"
-                                class="form-control renote-input-box take-note-text "
-                                placeholder="Take a note"/>
+                        <!--<input-->
+                                <!--type="text"-->
+                                <!--ng-model="note.note"-->
+                                <!--class="form-control renote-input-box take-note-text "-->
+                                <!--placeholder="Take a note"/>-->
+                        <textarea id="noteReminder" placeholder="Take a note" ng-model="note.note"
+                                  class="form-control renote-input-box take-note-text note-text-area" ></textarea>
                     </div>
 
                     <div class="renote-footer">
@@ -95,7 +97,7 @@
                         </svg>
                     </div>
 
-                    <div id="myNoteEmty" class="my-note-emety " >
+                    <div id="myNoteEmty" class="my-note-emety ">
                         Please create todo item
                     </div>
                     <div class="mynote-wrapper">
