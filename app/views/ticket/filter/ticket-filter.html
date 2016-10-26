@@ -145,7 +145,7 @@
                                             <div class="ticket-desc">
                                                 <div class="pull-left">
                                                     <div class="ticket-desc">
-                                                        {{ticket.description}}
+                                                        {{ ticket.description | limitTo: 60 }}{{ticket.description.length > 60 ? '...' : ''}}
                                                     </div>
                                                 </div>
                                             </div>
