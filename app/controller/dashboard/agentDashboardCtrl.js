@@ -78,11 +78,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         options: {
             responsive: true,
             title: {
-                display: true,
-
-
+                display: true
             }, tooltips: {
-                mode: 'label',
+                mode: 'label'
             },
             hover: {
                 mode: 'label'
@@ -146,7 +144,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             title: {
                 display: false
             }, tooltips: {
-                mode: 'label',
+                mode: 'label'
             },
             hover: {
                 mode: 'label'

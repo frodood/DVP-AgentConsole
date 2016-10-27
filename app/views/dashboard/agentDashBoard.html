@@ -18,7 +18,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7 top-right-wrapper" >
+                    <div class="col-lg-7 top-right-wrapper">
                         <div class="dark-product-wrapper m-top35">
                             <div class="col-lg-4">
                                 <div class="dark-product-ticker-wrap">
@@ -60,76 +60,78 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-lg-12">
-                        <div class="col-lg-4">
-                            <div class="dark-ticker-wrapper">
-                                <div class="col-lg-12">
-                                    <h5 class="dark-header bold">TICKET</h5>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="dark-ticker-wrap new-ticket">
-                                        <h1 class="bold">{{newTicketCount}}</h1>
-                                        <div class="title ">NEW</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="dark-ticker-wrap close-ticket">
-                                        <h1 class="bold">{{closeTicketCount}}</h1>
-                                        <div class="title">CLOSED</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col-lg-12" style="padding-right: 3px;">
-                                    <div class="dark-chart-wrapper">
-                                        <div class="col-lg-12">
-                                            <h5 class="dark-header text-uppercase bold">New vs Closed</h5>
-                                        </div>
-                                        <canvas style="position: relative;" id="openclosecanvas" width="436px"
-                                                height="200px"></canvas>
-
-                                        <div class="col-lg-12 agent-ticket-chart-wrapper">
-                                            <canvas id="deferencecanvas" width="436px" height="100px"></canvas>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <!-- END -->
 
 
-                    <!-- CALL STATUS -->
-                    <div class="col-lg-12">
-                        <div class="dark-call-status">
+                <!-- TICKET & NEW VS CLOSED -->
+                <div class="row">
+                    <div class="col-lg-4 body-left-wrapper" >
+                        <div class="dark-ticker-wrapper">
                             <div class="col-lg-12">
-                                <h5 class="dark-header">CALL STATUS</h5>
+                                <h5 class="dark-header bold">TICKET</h5>
                             </div>
-                            <div class="col-lg-2" ng-repeat="queue in queueDetails">
-                                <div class="dark-call-status-wrap">
-                                    <div class="header text-center">
-                                        {{queue.QueueName}}
-                                    </div>
-                                    <div class="dark-footer">
-                                        <div class="col-lg-6">
-                                            <div class="dark-footer-wrap">
-                                                <h5 class="count"> {{queue.QueueInfo.CurrentWaiting}}</h5>
-                                                <div class="title">
-                                                    current waiting
-                                                </div>
+
+                            <div class="col-lg-12">
+                                <div class="dark-ticker-wrap new-ticket">
+                                    <h1 class="bold">{{newTicketCount}}</h1>
+                                    <div class="title ">NEW</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="dark-ticker-wrap close-ticket">
+                                    <h1 class="bold">{{closeTicketCount}}</h1>
+                                    <div class="title">CLOSED</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8" style="background: #0c192d;">
+                        <div class="col-lg-12" style="padding-right: 3px;">
+                            <div class="dark-chart-wrapper">
+                                <div class="col-lg-12">
+                                    <h5 class="dark-header text-uppercase bold">New vs Closed</h5>
+                                </div>
+                                <canvas style="position: relative;" id="openclosecanvas" width="436px"
+                                        height="200px"></canvas>
+
+                                <div class="col-lg-12 agent-ticket-chart-wrapper">
+                                    <canvas id="deferencecanvas" width="436px" height="100px"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- END  -->
+
+
+                <!-- CALL STATUS -->
+                <div class="col-lg-12">
+                    <div class="dark-call-status">
+                        <div class="col-lg-12">
+                            <h5 class="dark-header">CALL STATUS</h5>
+                        </div>
+                        <div class="col-lg-2" ng-repeat="queue in queueDetails">
+                            <div class="dark-call-status-wrap">
+                                <div class="header text-center">
+                                    {{queue.QueueName}}
+                                </div>
+                                <div class="dark-footer">
+                                    <div class="col-lg-6">
+                                        <div class="dark-footer-wrap">
+                                            <h5 class="count"> {{queue.QueueInfo.CurrentWaiting}}</h5>
+                                            <div class="title">
+                                                current waiting
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="dark-footer-wrap">
-                                                <h5 class="count"> {{queue.QueueInfo.MaxWaitTime}}</h5>
-                                                <div class="title">
-                                                    max wait
-                                                    time
-                                                </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dark-footer-wrap">
+                                            <h5 class="count"> {{queue.QueueInfo.MaxWaitTime}}</h5>
+                                            <div class="title">
+                                                max wait
+                                                time
                                             </div>
                                         </div>
                                     </div>
@@ -137,54 +139,54 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Recent activity -->
-                    <div class="col-lg-12">
-                        <div class="dark-recent-wrapper">
-                            <div class="col-lg-6">
-                                <h5 class="dark-header">RECENT ACTIVITY - TICKET</h5>
-                                <div class="dark-recent-wrap">
-                                    <div class="recent-activity" ng-repeat="ticket in recentTickets.tickets">
-                                        <div class="col-lg-8">
-                                            <div class="pull-left recent-activity-left">
-                                                {{ ticket.description | limitTo: 60 }}{{ticket.description.length > 60 ?
-                                                '...' : ''}}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="pull-right">
-                                                <div class="dark-footer-wrap recent-activity-right">
-                                                    <h5 class="count" style="cursor: pointer"
-                                                        ng-click="viewTicket(ticket);">
-                                                        {{ticket.reference}}</h5>
-                                                    <h5 class="count "> {{ticket.status}}</h5>
-                                                    <div class="title">
-                                                        <time-ago from-time='{{ ticket.updated_at }}'
-                                                                  format='MM/dd/yyyy'></time-ago>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <h5 class="dark-header">RECENT ACTIVITY - ENGAGEMENT</h5>
-                                <div class="recent-activity" ng-repeat="eng in recentEngagements">
+                <!-- Recent activity -->
+                <div class="col-lg-12">
+                    <div class="dark-recent-wrapper">
+                        <div class="col-lg-6">
+                            <h5 class="dark-header">RECENT ACTIVITY - TICKET</h5>
+                            <div class="dark-recent-wrap">
+                                <div class="recent-activity" ng-repeat="ticket in recentTickets.tickets">
                                     <div class="col-lg-8">
                                         <div class="pull-left recent-activity-left">
-                                            {{eng.channel}}
+                                            {{ ticket.description | limitTo: 60 }}{{ticket.description.length > 60 ?
+                                            '...' : ''}}
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="pull-right">
                                             <div class="dark-footer-wrap recent-activity-right">
-                                                <h5 class="count "> {{eng.direction}}</h5>
-                                                <h5 class="count "> {{eng.channel_from}}</h5>
+                                                <h5 class="count" style="cursor: pointer"
+                                                    ng-click="viewTicket(ticket);">
+                                                    {{ticket.reference}}</h5>
+                                                <h5 class="count "> {{ticket.status}}</h5>
                                                 <div class="title">
-                                                    <time-ago from-time='{{ eng.updated_at }}'
+                                                    <time-ago from-time='{{ ticket.updated_at }}'
                                                               format='MM/dd/yyyy'></time-ago>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h5 class="dark-header">RECENT ACTIVITY - ENGAGEMENT</h5>
+                            <div class="recent-activity" ng-repeat="eng in recentEngagements">
+                                <div class="col-lg-8">
+                                    <div class="pull-left recent-activity-left">
+                                        {{eng.channel}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="pull-right">
+                                        <div class="dark-footer-wrap recent-activity-right">
+                                            <h5 class="count "> {{eng.direction}}</h5>
+                                            <h5 class="count "> {{eng.channel_from}}</h5>
+                                            <div class="title">
+                                                <time-ago from-time='{{ eng.updated_at }}'
+                                                          format='MM/dd/yyyy'></time-ago>
                                             </div>
                                         </div>
                                     </div>
@@ -196,4 +198,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

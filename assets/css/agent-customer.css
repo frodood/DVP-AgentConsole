@@ -2913,6 +2913,7 @@ tags-input .tags .input {
     padding: 30px 16px 31px 16px;
     margin-top: 0px;
     border-radius: 3px;
+    text-align: center;
     /*-webkit-box-shadow: -2px 2px 17px -1px rgba(0, 0, 0, 0.22);*/
     /*-moz-box-shadow: -2px 2px 17px -1px rgba(0, 0, 0, 0.22);*/
     /*box-shadow: -2px 2px 17px -1px rgba(0, 0, 0, 0.22);*/
@@ -3027,9 +3028,16 @@ tags-input .tags .input {
     color: #15a9fa;
     font-size: 7px;
 }
-.top-right-wrapper{
+
+.top-right-wrapper {
     background: #29374e;
     padding-bottom: 79px;
+}
+
+.body-left-wrapper {
+    background: #0c192d;
+    padding-bottom: 142px;
+    text-align: center;
 }
 
 .dark-pro-chart-wrap {
