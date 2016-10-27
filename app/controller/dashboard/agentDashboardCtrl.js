@@ -233,7 +233,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }]
     };
 
-    console.log($scope.doughnutData);
     window.myDoughnutChart = new Chart(doughnutChart, {
         type: 'doughnut',
         data: $scope.doughnutData,
@@ -253,8 +252,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }
     });
-    doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-left: " +
-        "67px;margin-top: 15px;");
+    doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-top: 15px;");
 
     /* -------------------- Chart Configurations End-----------------------------------------*/
 

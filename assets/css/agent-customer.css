@@ -3027,12 +3027,18 @@ tags-input .tags .input {
     color: #15a9fa;
     font-size: 7px;
 }
+.top-right-wrapper{
+    background: #29374e;
+    padding-bottom: 79px;
+}
 
 .dark-pro-chart-wrap {
     width: 100%;
     min-height: 250px;
     height: auto;
-    margin-top: 20px
+    margin-top: 20px;
+    text-align: center;
+    padding-bottom: 20px;
 }
 
 .dark-product-wrapper {
