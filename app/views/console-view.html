@@ -75,7 +75,8 @@
                                                 <i class=" {{notifi.icon}}"></i>
                                             </div>-->
                                             <div class="notify-img-small">
-                                                <img src="assets/img/avatar/default-user.png" ng-src="{{notifi.avatar}}">
+                                                <img src="assets/img/avatar/default-user.png"
+                                                     ng-src="{{notifi.avatar}}">
                                             </div>
                                         </div>
                                         <div class="col-lg-9">
@@ -358,11 +359,11 @@
                                api="scrlTabsApi"
                                tooltip-left-placement="top"
                                id="consoleMainTab">
-                <uib-tabset class="scrollable-tab-overwrite" active="activeTabIndex" id="tab_view">
-                    <uib-tab class="console-main-tab"
+                <uib-tabset class="scrollable-tab-overwrite " active="activeTabIndex" id="tab_view">
+                    <uib-tab class="console-main-tab "
                              index="tab.tabReference" ng-repeat="tab in tabs"
                              select="tabSelected(tab.tabReference)">
-                        <uib-tab-heading>
+                        <uib-tab-heading >
                             <div class="pull-left">{{tab.title}}
                                 <a data-ng-click='closeTab(tab)' class='btn btn-tab-close' href="javascript:">
                                     <span class='ti-close'></span></a>
@@ -400,7 +401,7 @@
                             <div ng-switch-when="mail-inbox">
                                 <div ng-include="'app/views/mail-inbox/inbox-view.html'"></div>
                             </div>
-                            <div ng-switch-when="dashboard">
+                            <div ng-switch-when="dashboard" class="bg-gray-200">
                                 <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
                             </div>
                             <div ng-switch-when="MyNote">
@@ -448,7 +449,7 @@
                 <div class="call-duations" id="calltimmer">
                     <!--{{duations}}-->
                     <timer autostart="false" interval="1000"
-                           >{{hhours}}:
+                    >{{hhours}}:
                         {{mminutes}}: {{sseconds}}
                     </timer>
                 </div>
