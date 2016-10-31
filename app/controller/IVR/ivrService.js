@@ -8,10 +8,7 @@ agentApp.factory("ivrService", function ($http, baseUrls,authService) {
     var getIvrDetailsByEngagementId = function (id) {
         return $http({
             method: 'GET',
-            url: baseUrls.ivrUrl+id,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ivrUrl+id
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;

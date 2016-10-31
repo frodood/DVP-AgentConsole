@@ -164,7 +164,6 @@ agentApp.factory("notificationService", function ($http, baseUrls, authService) 
             method: 'POST',
             url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/Notification/initiate",
             headers: {
-                'authorization': authToken,
                 'Content-Type': 'application/json',
                 'eventname': eventName,
                 'eventuuid': eventUuid
@@ -181,9 +180,6 @@ agentApp.factory("notificationService", function ($http, baseUrls, authService) 
         return $http({
             method: 'POST',
             url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/Notification/Broadcast",
-            headers: {
-                'authorization': authToken
-            },
             data: notificationData
         }).then(function (response) {
             return response;

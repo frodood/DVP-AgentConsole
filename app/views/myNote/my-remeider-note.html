@@ -102,7 +102,8 @@
                     </div>
                     <div class="mynote-wrapper">
                         <div gridster="gridsterOpts">
-                            <div class="my-note-wrapper"
+                            <ul>
+                            <li class="my-note-wrapper"
                                  ng-class="{'low':note.priority=='low',
                                  'high':note.priority=='high',
                                  'normal':note.priority=='normal',
@@ -112,7 +113,8 @@
                                                         delete="myNoteDelete($index,note)"
                                                         reminder="reminderMe.create($index,note)">
                                 </my-note-edit-directive>
-                            </div>
+                            </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

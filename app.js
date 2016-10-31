@@ -9,7 +9,7 @@ var agentApp = angular.module('veeryAgentApp',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker','moment-picker','angular.filter'
+        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker','moment-picker','angular.filter','satellizer'
     ]);
 
 
@@ -48,8 +48,14 @@ agentApp.config(function (scrollableTabsetConfigProvider) {
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
 
-agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
-    function ($httpProvider, $stateProvider, $urlRouterProvider) {
+agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider","$authProvider","gridsterConfig",
+    function ($httpProvider, $stateProvider, $urlRouterProvider,$authProvider) {
+
+
+
+        var authProviderUrl = 'http://localhost:3637/';
+        $authProvider.loginUrl = authProviderUrl+'auth/login';
+        $authProvider.signupUrl = authProviderUrl+'auth/signup';
 
         $urlRouterProvider.otherwise('/login');
         $stateProvider.state("console", {

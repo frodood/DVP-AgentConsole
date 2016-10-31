@@ -12,8 +12,8 @@ agentApp.factory("fileService", function ($http, baseUrls,authService,download) 
             method: "get",
             //data: json, //this is your json data string
             headers: {
-                'Content-type': 'application/json',
-                'authorization': authService.GetToken()
+                'Content-type': 'application/json'
+
             },
             responseType: 'arraybuffer'
         }).success(function (data, status, headers, config) {

@@ -9,9 +9,6 @@ agentApp.factory("toDoService", function ($http, baseUrls,authService) {
         return $http({
             method: 'post',
             url: baseUrls.toDoUrl+"ToDo",
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data:todoData
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {

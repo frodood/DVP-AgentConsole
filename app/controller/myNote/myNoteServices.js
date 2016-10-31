@@ -7,10 +7,7 @@ agentApp.factory("myNoteServices", function ($http, baseUrls, authService) {
     var getAllMyToDo = function (status) {
         return $http({
             method: 'GET',
-            url: baseUrls.toDoUrl + "ToDoList",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.toDoUrl + "ToDoList"
         }).then(function (response) {
             return response;
         });
@@ -20,10 +17,7 @@ agentApp.factory("myNoteServices", function ($http, baseUrls, authService) {
         return $http({
             method: 'POST',
             url: baseUrls.toDoUrl + "ToDo",
-            data: note,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            data: note
         }).then(function (response) {
             return response;
         });
@@ -32,10 +26,7 @@ agentApp.factory("myNoteServices", function ($http, baseUrls, authService) {
     var deleteMyNote = function (note) {
         return $http({
             method: 'DELETE',
-            url: baseUrls.toDoUrl + "ToDo/" + note._id,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.toDoUrl + "ToDo/" + note._id
         }).then(function (response) {
             return response;
         });
@@ -44,10 +35,7 @@ agentApp.factory("myNoteServices", function ($http, baseUrls, authService) {
     var checkMyNote = function (note) {
         return $http({
             method: 'PUT',
-            url: baseUrls.toDoUrl + "ToDo/" + note._id + "/Check",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.toDoUrl + "ToDo/" + note._id + "/Check"
         }).then(function (response) {
             return response;
         });
@@ -57,10 +45,7 @@ agentApp.factory("myNoteServices", function ($http, baseUrls, authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.toDoUrl + "ToDo/" + note._id + "/Reminder",
-            data: {"due_at": moment(dueDate)},
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            data: {"due_at": moment(dueDate)}
         }).then(function (response) {
             return response;
         });

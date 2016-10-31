@@ -8,10 +8,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var breakRequest = function (resourceId, reason) {
         return $http({
             method: 'put',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state/NotAvailable/reason/" + reason,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state/NotAvailable/reason/" + reason
         }).then(function (response) {
             return response.data.IsSuccess;
         });
@@ -21,10 +18,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
         return $http({
             method: 'put',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state/Available/reason/EndBreak",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state/Available/reason/EndBreak"
         }).then(function (response) {
             return response.data.IsSuccess;
         });
@@ -36,9 +30,6 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         return $http({
             method: 'post',
             url: baseUrls.ardsliteserviceUrl,
-            headers: {
-                'authorization':authService.GetToken()
-            },
             data: {
                 "ResourceId": resourceId,
                 "HandlingTypes": [{
@@ -58,9 +49,6 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         return $http({
             method: 'delete',
             url: baseUrls.ardsliteserviceUrl + "/" + resourceId,
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data: {"ResourceId": resourceId, "HandlingTypes": ["CALL"]}
         }).then(function (response) {
             return response.data.IsSuccess;
@@ -72,10 +60,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
         return $http({
             method: 'get',
-            url: baseUrls.userServiceBaseUrl + "Myprofile/veeryformat/veeryaccount",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.userServiceBaseUrl + "Myprofile/veeryformat/veeryaccount"
         }).then(function (response) {
             return response.data;
         });
@@ -85,10 +70,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var getOnlineAgentList = function () {
         return $http({
             method: 'get',
-            url: baseUrls.ardsMonitoringServiceUrl + "/resources",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ardsMonitoringServiceUrl + "/resources"
         }).then(function (response) {
             return response.data;
         });
@@ -99,9 +81,6 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         return $http({
             method: 'put',
             url: baseUrls.ardsliteserviceUrl + "/share",
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data: {
                 "ResourceId": resourceId,
                 "HandlingTypes": [{
@@ -117,10 +96,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var getResourceState = function (resourceId) {
         return $http({
             method: 'get',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state"
         }).then(function (response) {
             return response.data;
         });
@@ -129,10 +105,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var getResource = function (resourceId) {
         return $http({
             method: 'get',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ardsliteserviceUrl + "/" + resourceId
         }).then(function (response) {
             return response.data;
         });

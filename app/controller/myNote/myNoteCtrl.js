@@ -62,7 +62,15 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                 }
                 myNoteServices.CreateMyNote(note).then(function (res) {
                     if (res.data.IsSuccess) {
-                        $scope.noteLists.push(res.data.Result);
+
+                        if(res.data.Result) {
+                            item = res.data.Result;
+                            //item.sizeY = "auto";
+
+
+                            $scope.noteLists.push(item);
+
+                        }
                         if ($scope.noteLists.length == 0) {
                             uiFuntions.myNoteNotFound();
                             return;
@@ -157,7 +165,14 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                 uiFuntions.loadingMyNote();
                 myNoteServices.GetAllMyToDo().then(function (res) {
                     if (res.data.IsSuccess) {
-                        $scope.noteLists = res.data.Result;
+                        $scope.noteLists = res.data.Result.map(function(item){
+
+                            //item.sizex = "";
+                            //item.sizeY= "100";
+
+                            return item;
+
+                        });
                         if ($scope.noteLists.length == 0) {
                             uiFuntions.myNoteNotFound();
                             return;

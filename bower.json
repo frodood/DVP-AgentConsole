@@ -56,7 +56,8 @@
     "bootstrap-timepicker": "^0.5.2",
     "bootstrap-ui-datetime-picker": "^2.4.3",
     "angular-moment-picker": "moment-picker#^0.6.7",
-    "angular-filter": "^0.5.11"
+    "angular-filter": "^0.5.11",
+    "satellizer": "^0.15.5"
   },
   "resolutions": {
     "moment": "^2.14.1",

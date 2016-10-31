@@ -8,10 +8,7 @@ agentApp.factory("tagService", function ($http, baseUrls,authService) {
     var getAllTags = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tags",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ticketUrl+"Tags"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -24,10 +21,7 @@ agentApp.factory("tagService", function ($http, baseUrls,authService) {
     var getTagCategories = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TagCategories",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ticketUrl+"TagCategories"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;

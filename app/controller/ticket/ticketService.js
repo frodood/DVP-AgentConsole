@@ -8,10 +8,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getAllTicketsByRequester = function (requester,page) {
         return $http({
             method: 'get',
-            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/5/"+page,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/5/"+page
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -24,10 +21,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getExternalUserTicketCounts = function (requester) {
         return $http({
             method: 'get',
-            url: baseUrls.ticketUrl+"ExternalUserTicketCounts/"+requester,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ticketUrl+"ExternalUserTicketCounts/"+requester
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -41,9 +35,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'Post',
             url: baseUrls.ticketUrl+"Ticket",
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data:ticket
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -65,10 +56,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/10/"+page+"?status=new",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Tickets/10/"+page+"?status=new"
         }).then(function(response)
         {
             return response;
@@ -79,10 +67,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/10/"+page+"?status=open&status=progressings",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Tickets/10/"+page+"?status=open&status=progressings"
         }).then(function(response)
         {
             return response;
@@ -93,10 +78,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/6/"+page+"?status=parked&status=solved&status=closed",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Tickets/6/"+page+"?status=parked&status=solved&status=closed"
         }).then(function(response)
         {
             return response;
@@ -110,10 +92,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"RecentTickets",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"RecentTickets"
         }).then(function(response)
         {
             return response.data.Result;
@@ -125,10 +104,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyTickets/10/"+page+"?status=new",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"MyTickets/10/"+page+"?status=new"
         }).then(function(response)
         {
             return response;
@@ -139,10 +115,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyTickets/10/"+page+"?status=open&status=progressings",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"MyTickets/10/"+page+"?status=open&status=progressings"
         }).then(function(response)
         {
             return response;
@@ -153,10 +126,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyTickets/6/"+page+"?status=parked&status=solved&status=closed",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"MyTickets/6/"+page+"?status=parked&status=solved&status=closed"
         }).then(function(response)
         {
             return response;
@@ -170,10 +140,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyGroupTickets/10/"+page+"?status=new",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"MyGroupTickets/10/"+page+"?status=new"
         }).then(function(response)
         {
             return response;
@@ -186,9 +153,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+'Ticket/' + ticketId + '/FormSubmission',
-            headers: {
-                'authorization':authToken
-            },
             data: JSON.stringify({form_submission: formSubId})
         }).then(function(response)
         {
@@ -199,10 +163,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyGroupTickets/10/"+page+"?status=open&status=progressings",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"MyGroupTickets/10/"+page+"?status=open&status=progressings"
         }).then(function(response)
         {
             return response;
@@ -213,10 +174,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyGroupTickets/6/"+page+"?status=parked&status=solved&status=closed",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"MyGroupTickets/6/"+page+"?status=parked&status=solved&status=closed"
         }).then(function(response)
         {
             return response;
@@ -229,10 +187,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Details",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Details"
         }).then(function(response)
         {
             return response;
@@ -245,9 +200,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"Ticket/"+ticketID,
-            headers: {
-                'authorization':authToken
-            },
             data:ticketObject
         }).then(function(response)
         {
@@ -259,9 +211,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'put',
             url: baseUrls.ticketUrl+"TicketByReference/"+cusReference+"/Comment",
-            headers: {
-                'authorization':authService.GetToken()
-            },
             data:postData
         }).then(function(response)
         {
@@ -279,9 +228,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'POST',
             url: baseUrls.ticketUrl+"TicketView",
-            headers: {
-                'authorization':authToken
-            },
             data:ticketView
         }).then(function(response)
         {
@@ -294,10 +240,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketView/"+id,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"TicketView/"+id
         }).then(function(response)
         {
             return response;
@@ -309,10 +252,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketView/"+id+"/TicketCount",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"TicketView/"+id+"/TicketCount"
         }).then(function(response)
         {
             if (response.data && response.data.IsSuccess) {
@@ -328,10 +268,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketViews",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"TicketViews"
         }).then(function(response)
         {
             return response.data.Result;
@@ -343,10 +280,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketView/"+id+"/Tickets",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"TicketView/"+id+"/Tickets"
         }).then(function(response)
         {
             return response.data.Result;
@@ -360,9 +294,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Comment",
-            headers: {
-                'authorization':authToken
-            },
             data:commentObject
         }).then(function(response)
         {
@@ -375,10 +306,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/pick",
-            headers: {
-                'authorization':authService.GetToken()
-            }
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/pick"
         }).then(function(response)
         {
             if (response.data && response.data.IsSuccess) {
@@ -396,10 +324,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/AssignUser/"+userId,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/AssignUser/"+userId
         }).then(function(response)
         {
             return response;
@@ -413,10 +338,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/AssignGroup/"+groupId,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/AssignGroup/"+groupId
         }).then(function(response)
         {
             return response;
@@ -429,10 +351,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"/TicketStatusFlow/NextAvailableStatus/"+ticketType+"/"+currentStatus,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"/TicketStatusFlow/NextAvailableStatus/"+ticketType+"/"+currentStatus
         }).then(function(response)
         {
             return response;
@@ -445,9 +364,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Status",
-            headers: {
-                'authorization':authToken
-            },
             data:newStatus
         }).then(function(response)
         {
@@ -461,9 +377,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'POST',
             url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/SubTicket",
-            headers: {
-                'authorization':authToken
-            },
             data:subTicket
         }).then(function(response)
         {
@@ -475,10 +388,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getExternalUserRecentTickets = function (id) {
         return $http({
             method: 'get',
-            url: baseUrls.ticketUrl+"ExternalUserRecentTickets/"+id,
-            headers: {
-                'authorization':authService.GetToken()
-            }
+            url: baseUrls.ticketUrl+"ExternalUserRecentTickets/"+id
         }).then(function(response)
         {
             if (response.data && response.data.IsSuccess) {
@@ -495,10 +405,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"FormProfile",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"FormProfile"
         }).then(function(response)
         {
             return response.data;
@@ -512,10 +419,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"FormSubmission/" + ref,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"FormSubmission/" + ref
         }).then(function(response)
         {
             return response.data;
@@ -530,9 +434,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"FormSubmission/" + refId,
-            headers: {
-                'authorization':authToken
-            },
             data: JSON.stringify(updateValues)
         }).then(function(response)
         {
@@ -548,9 +449,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'POST',
             url: baseUrls.ticketUrl+"FormSubmission",
-            headers: {
-                'authorization':authToken
-            },
             data: JSON.stringify(saveValues)
         }).then(function(response)
         {
@@ -564,9 +462,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'Post',
             url: baseUrls.ticketUrl+"Timer",
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data:reqData
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -582,9 +477,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"MyTimer/start",
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data: reqBody
         }).then(function (response) {
             if(response) {
@@ -600,9 +492,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"MyTimer/"+trackerId+"/pause",
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data:reqBody
         }).then(function (response) {
             if(response) {
@@ -618,9 +507,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"MyTimer/"+trackerId+"/stop",
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data:reqBody
         }).then(function (response) {
             if(response) {
@@ -636,10 +522,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketSearch/"+searchText+"/25/1",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"TicketSearch/"+searchText+"/25/1"
         }).then(function(response)
         {
             return response.data;
@@ -651,10 +534,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketsByField/"+field+"/"+value,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"TicketsByField/"+field+"/"+value
         }).then(function(response)
         {
             return response.data;
@@ -666,10 +546,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/Channel/"+channel+"/25/1",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Tickets/Channel/"+channel+"/25/1"
         }).then(function(response)
         {
             return response.data;
@@ -681,10 +558,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/Group/"+groupId+"/25/1",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Tickets/Group/"+groupId+"/25/1"
         }).then(function(response)
         {
             return response.data;
@@ -696,10 +570,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/Priority/"+priority+"/25/1",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Tickets/Priority/"+priority+"/25/1"
         }).then(function(response)
         {
             return response.data;
@@ -711,10 +582,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/"+status+"/25/1",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Tickets/"+status+"/25/1"
         }).then(function(response)
         {
             return response.data;
@@ -726,10 +594,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/25/1",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/25/1"
         }).then(function(response)
         {
             return response.data;
@@ -743,9 +608,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Attachment",
-            headers: {
-                'authorization':authToken
-            },
             data:attachmentObject
         }).then(function(response)
         {
@@ -760,10 +622,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'DELETE',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Attachment/"+attachmentID,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Attachment/"+attachmentID
         }).then(function(response)
         {
             return response;
@@ -777,10 +636,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId
+
         }).then(function(response)
         {
             return response;
@@ -793,10 +650,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Watch",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Watch"
         }).then(function(response)
         {
             return response;
@@ -809,10 +663,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/StopWatch",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/StopWatch"
         }).then(function(response)
         {
             return response;
@@ -825,10 +676,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Organisation/Name/"+tenant+"/"+company,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.userServiceBaseUrl+"Organisation/Name/"+tenant+"/"+company
         }).then(function(response)
         {
             return response;
@@ -842,9 +690,6 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/EstimatedTime",
-            headers: {
-                'authorization':authToken
-            },
             data:{
                 time_estimation:estimTime
             }
@@ -857,10 +702,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getMyTimer = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyTimer",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.ticketUrl+"MyTimer"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
