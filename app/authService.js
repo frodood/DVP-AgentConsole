@@ -45,8 +45,18 @@ angular.module('authServiceModule', [])
         };
 
         this.GetResourceId = function () {
-            var decodeData = jwtHelper.decodeToken(this.TokenWithoutBearer());
-            return decodeData.context.resourceid;
+            var token = this.TokenWithoutBearer();
+            if(token) {
+                var decodeData = jwtHelper.decodeToken(token);
+                if (decodeData) {
+                    return decodeData.context.resourceid;
+                } else {
+                    return undefined;
+                }
+            }else{
+
+                return undefined;
+            }
         };
 
         this.GetCompanyInfo = function () {
