@@ -1167,11 +1167,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             }
             else {
-                $scope.showError("Error", "Error", "ok", "Timer failed to stop timer ");
+                $scope.showAlert("Tracker", "error", "Timer failed to stop timer ");
             }
         }, function (error) {
             console.log(error);
-            $scope.showError("Error", "Error", "ok", "Timer failed to stop timer ");
+            $scope.showAlert("Tracker", "error", "Timer failed to stop timer ");
         });
     };
 
@@ -1185,11 +1185,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             }
             else {
-                $scope.showError("Error", "Error", "ok", "Timer failed to pause timer ");
+                $scope.showAlert("Tracker", "error", "Timer failed to pause timer ");
             }
         }, function (error) {
             console.log(error);
-            $scope.showError("Error", "Error", "ok", "Timer failed to pause timer ");
+            $scope.showAlert("Tracker", "error", "Timer failed to pause timer ");
         });
         //$interval.pauseTime(_intervalId);
     };
@@ -1217,11 +1217,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 }
                 else {
-                    $scope.showError("Error", "Error", "ok", "Timer failed to resume timer ");
+                    $scope.showAlert("Tracker", "error", "Timer failed to resume timer ");
                 }
             }, function (error) {
                 console.log(error);
-                $scope.showError("Error", "Error", "ok", "Timer failed to resume timer ");
+                $scope.showAlert("Tracker", "error", "Timer failed to resume timer ");
             });
         } else {
 
@@ -1255,11 +1255,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
                     }
                     else {
-                        $scope.showError("Error", "Error", "ok", "Timer failed to start ");
+                        $scope.showAlert("Tracker", "error", "Timer failed to start ");
                     }
                 }, function (error) {
                     console.log(error);
-                    $scope.showError("Error", "Error", "ok", "Timer failed to start ");
+                    $scope.showAlert("Tracker", "error", "Timer failed to start ");
                 });
             }
         }
@@ -1320,12 +1320,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 }, function (error) {
                     console.log(error);
-                    $scope.showError("Error", "Error", "ok", "Timer failed to load ticket details ");
+                    $scope.showAlert("Tracker", "error", "Timer failed to load ticket details");
                 });
             }
         }, function (error) {
             console.log(error);
-            showAlert("Error", "Error", "ok", "Timer failed to start ");
+            $scope.showAlert("Tracker", "error", "Timer failed to start");
         });
     };
     $scope.checkTimerOnLogin();
