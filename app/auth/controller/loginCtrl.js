@@ -4,7 +4,7 @@
 
 agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
                                            loginService,
-                                           config, $base64) {
+                                           config, $base64, $auth) {
     var para = {
         userName: null,
         password: null,
@@ -32,6 +32,7 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
         $('#pwd').removeClass('shake');
         para.userName = $scope.userNme;
         para.password = $scope.pwd;
+        para.scope =  ["all_all", "profile_veeryaccount", "write_ardsresource", "write_notification", "read_myUserProfile", "read_productivity", "profile_veeryaccount", "resourceid"];
 
         if (para.userName == null || para.userName.length == 0) {
             showAlert('Error', 'error', 'Please check user name..');
@@ -48,6 +49,9 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
         //decode clientID
         $scope.isLogin = true;
         $scope.loginFrm.$invalid = true;
+
+        /*
+
         loginService.Login(para, function (result) {
             if (result) {
                 $state.go('console');
@@ -59,7 +63,30 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
                 $scope.loginFrm.$invalid = false;
             }
         });
+*/
+
+        $auth.login(para)
+            .then(function () {
+                $state.go('console');
+            })
+            .catch(function (error) {
+                $('#usersName').addClass('shake');
+                $('#pwd').addClass('shake');
+                showAlert('Error', 'error', 'Please check login details...');
+                $scope.isLogin = false;
+                $scope.loginFrm.$invalid = false;
+            });
+
     }
+
+    $scope.CheckLogin = function () {
+        if ($auth.isAuthenticated()) {
+                $state.go('console');
+        }
+    }
+
+    $scope.CheckLogin();
+
 }).directive('myEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {

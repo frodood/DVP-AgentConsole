@@ -6,87 +6,97 @@
             <div class="dashboard-wrapper">
                 <div id="dashboard-opacity"></div>
 
+
+
                 <div class="row">
-                    <div class="col-lg-12">
+                    <!-- TICKET ANR CLOASE -->
+                    <div class="dark-ticker-wrapper">
                         <div class="col-lg-5">
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="dark-ticker-wrapper">
-                                        <div class="col-lg-12">
-                                            <h5 class="dark-header bold">TICKET</h5>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="dark-ticker-wrap new-ticket">
-                                                <h1 class="bold">{{newTicketCount}}</h1>
-                                                <div class="title ">NEW</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="dark-ticker-wrap close-ticket">
-                                                <h1 class="bold">{{closeTicketCount}}</h1>
-                                                <div class="title">CLOSED</div>
-                                            </div>
-                                        </div>
+                                <div class="col-lg-6">
+                                    <div class="dark-ticker-wrap ">
+                                        <h1 class="bold">{{productivity.IncomingCallCount}}</h1>
+                                        <div class="title Staffed text-uppercase">Incoming Calls</div>
                                     </div>
-
-                                    <div class="dark-pro-chart-wrap">
-                                        <div class="col-lg-12">
-                                            <h5 class="dark-header bold">PRODUCTIVITY</h5>
-                                        </div>
-                                        <canvas id="doughnutChart" width="400" height="400"></canvas>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="dark-ticker-wrap">
+                                        <h1 class="bold">{{productivity.MissCallCount}}</h1>
+                                        <div class="title onCall text-uppercase">Miss Call</div>
                                     </div>
-
-                                    <div class="dark-product-wrapper">
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="Staffed">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title Staffed">Staffed Time</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.OnCallTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title onCall">On Call Time</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.BreakTime| date:'HH:mm:ss'}}</h1>
-                                                <div class="title onCall">Break Time</div>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="dark-ticker-wrap new-ticket new-ticket-widget">
+                                        <h1 class="bold">{{newTicketCount}}</h1>
+                                        <div class="title ">NEW TICKET</div>
                                     </div>
-                                    <div class="dark-product-wrapper">
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="Staffed">{{productivity.IncomingCallCount}}</h1>
-                                                <div class="title Staffed">Incoming Calls</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.MissCallCount}}</h1>
-                                                <div class="title onCall">Miss Call</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="dark-product-ticker-wrap">
-                                                <h1 class="onCall">{{productivity.TransferCallCount}}</h1>
-                                                <div class="title onCall">Transfer Call</div>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="dark-ticker-wrap close-ticket close-ticket-widget">
+                                        <h1 class="bold">{{closeTicketCount}}</h1>
+                                        <div class="title">CLOSED TICKET</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="dark-ticker-wrap close-ticket pending-ticket-widget">
+                                        <h1 class="bold">{{closeTicketCount}}</h1>
+                                        <div class="title">PENDING TICKET</div>
                                     </div>
                                 </div>
 
                             </div>
 
                         </div>
-                        <div class="col-lg-7" style="padding-right: 3px;">
+                    </div>
+
+
+                </div>
+
+                <!--  PRODUCTIVITY -->
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="dark-pro-chart-wrap">
+                                    <div class="col-lg-12">
+                                        <h5 class="dark-header ">PRODUCTIVITY - HOURS </h5>
+                                    </div>
+                                    <canvas id="doughnutChart" width="400" height="400"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 p-0" >
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="Staffed bold">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
+                                        <div class="title Staffed text-uppercase">Staffed Time</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 p-0">
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="onCall bold">{{productivity.OnCallTime| date:'HH:mm:ss'}}</h1>
+                                        <div class="title onCall text-uppercase">On Call Time</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 p-0">
+                                    <div class="dark-product-ticker-wrap">
+                                        <h1 class="break-time bold">{{productivity.BreakTime| date:'HH:mm:ss'}}</h1>
+                                        <div class="title break-time text-uppercase">Break Time</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="col-lg-12">
                             <div class="dark-chart-wrapper">
-                                <div class="dark-chart-bg"></div>
                                 <div class="col-lg-12">
-                                    <h5 class="dark-header text-uppercase bold">New vs Closed</h5>
+                                    <h5 class="dark-header text-uppercase ">New vs Closed</h5>
                                 </div>
                                 <canvas style="position: relative;" id="openclosecanvas" width="436px"
                                         height="200px"></canvas>
@@ -98,35 +108,36 @@
 
                         </div>
                     </div>
+                </div>
+                <!-- END -->
 
 
-                    <!-- CALL STATUS -->
-                    <div class="col-lg-12">
-                        <div class="dark-call-status">
-                            <div class="col-lg-12">
-                                <h5 class="dark-header">CALL STATUS</h5>
-                            </div>
-                            <div class="col-lg-2" ng-repeat="queue in queueDetails">
-                                <div class="dark-call-status-wrap">
-                                    <div class="header text-center">
-                                        {{queue.QueueName}}
-                                    </div>
-                                    <div class="dark-footer">
-                                        <div class="col-lg-6">
-                                            <div class="dark-footer-wrap">
-                                                <h5 class="count"> {{queue.QueueInfo.CurrentWaiting}}</h5>
-                                                <div class="title">
-                                                    current waiting
-                                                </div>
+                <!-- CALL STATUS -->
+                <div class="col-lg-12">
+                    <div class="dark-call-status">
+                        <div class="col-lg-12">
+                            <h5 class="dark-header">CALL STATUS</h5>
+                        </div>
+                        <div class="col-lg-2" ng-repeat="queue in queueDetails">
+                            <div class="dark-call-status-wrap">
+                                <div class="header text-center">
+                                    {{queue.QueueName}}
+                                </div>
+                                <div class="dark-footer">
+                                    <div class="col-lg-6">
+                                        <div class="dark-footer-wrap">
+                                            <h5 class="count"> {{queue.QueueInfo.CurrentWaiting}}</h5>
+                                            <div class="title">
+                                                current waiting
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="dark-footer-wrap">
-                                                <h5 class="count"> {{queue.QueueInfo.MaxWaitTime}}</h5>
-                                                <div class="title">
-                                                    max wait
-                                                    time
-                                                </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dark-footer-wrap">
+                                            <h5 class="count"> {{queue.QueueInfo.MaxWaitTime}}</h5>
+                                            <div class="title">
+                                                max wait
+                                                time
                                             </div>
                                         </div>
                                     </div>
@@ -134,53 +145,54 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Recent activity -->
-                    <div class="col-lg-12">
-                        <div class="dark-recent-wrapper">
-                            <div class="col-lg-6">
-                                <h5 class="dark-header">RECENT ACTIVITY - TICKET</h5>
-                                <div class="dark-recent-wrap">
-                                    <div class="recent-activity" ng-repeat="ticket in recentTickets.tickets">
-                                        <div class="col-lg-8">
-                                            <div class="pull-left recent-activity-left">
-                                                {{ticket.description}}
-                                            </div>
+                <!-- Recent activity -->
+                <div class="col-lg-12">
+                    <div class="dark-recent-wrapper">
+                        <div class="col-lg-6">
+                            <h5 class="dark-header">RECENT ACTIVITY - TICKET</h5>
+                            <div class="dark-recent-wrap">
+                                <div class="recent-activity" ng-repeat="ticket in recentTickets.tickets">
+                                    <div class="col-lg-8">
+                                        <div class="pull-left recent-activity-left">
+                                            {{ ticket.description | limitTo: 60 }}{{ticket.description.length > 60 ?
+                                            '...' : ''}}
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="pull-right">
-                                                <div class="dark-footer-wrap recent-activity-right">
-                                                    <h5 class="count" style="cursor: pointer"
-                                                        ng-click="viewTicket(ticket);">
-                                                        {{ticket.reference}}</h5>
-                                                    <h5 class="count "> {{ticket.status}}</h5>
-                                                    <div class="title">
-                                                        <time-ago from-time='{{ ticket.updated_at }}'
-                                                                  format='MM/dd/yyyy'></time-ago>
-                                                    </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="pull-right">
+                                            <div class="dark-footer-wrap recent-activity-right">
+                                                <h5 class="count" style="cursor: pointer"
+                                                    ng-click="viewTicket(ticket);">
+                                                    {{ticket.reference}}</h5>
+                                                <h5 class="count "> {{ticket.status}}</h5>
+                                                <div class="title">
+                                                    <time-ago from-time='{{ ticket.updated_at }}'
+                                                              format='MM/dd/yyyy'></time-ago>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <h5 class="dark-header">RECENT ACTIVITY - ENGAGEMENT</h5>
-                                <div class="recent-activity" ng-repeat="eng in recentEngagements">
-                                    <div class="col-lg-8">
-                                        <div class="pull-left recent-activity-left">
-                                            {{eng.channel}}
-                                        </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h5 class="dark-header">RECENT ACTIVITY - ENGAGEMENT</h5>
+                            <div class="recent-activity" ng-repeat="eng in recentEngagements">
+                                <div class="col-lg-8">
+                                    <div class="pull-left recent-activity-left">
+                                        {{eng.channel}}
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="pull-right">
-                                            <div class="dark-footer-wrap recent-activity-right">
-                                                <h5 class="count "> {{eng.direction}}</h5>
-                                                <h5 class="count "> {{eng.channel_from}}</h5>
-                                                <div class="title">
-                                                    <time-ago from-time='{{ eng.updated_at }}'
-                                                              format='MM/dd/yyyy'></time-ago>
-                                                </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="pull-right">
+                                        <div class="dark-footer-wrap recent-activity-right">
+                                            <h5 class="count "> {{eng.direction}}</h5>
+                                            <h5 class="count "> {{eng.channel_from}}</h5>
+                                            <div class="title">
+                                                <time-ago from-time='{{ eng.updated_at }}'
+                                                          format='MM/dd/yyyy'></time-ago>
                                             </div>
                                         </div>
                                     </div>
@@ -192,4 +204,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

@@ -25,10 +25,7 @@
 
             return $http({
                 method: 'GET',
-                url: url,
-                headers: {
-                    'authorization': authToken
-                }
+                url: url
             }).then(function(resp)
             {
                 return resp.data;
@@ -48,10 +45,7 @@
 
             return $http({
                 method: 'GET',
-                url: url,
-                headers: {
-                    'authorization': authToken
-                }
+                url: url
             }).then(function(resp)
             {
                 return resp.data;
@@ -71,10 +65,7 @@
 
             return $http({
                 method: 'GET',
-                url: url,
-                headers: {
-                    'authorization': authToken
-                }
+                url: url
             }).then(function(resp)
             {
                 return resp.data;
@@ -94,10 +85,7 @@
 
             return $http({
                 method: 'GET',
-                url: url,
-                headers: {
-                    'authorization': authToken
-                }
+                url: url
             }).then(function(resp)
             {
                 return resp.data;
@@ -113,9 +101,6 @@
             return $http({
                 method: 'POST',
                 url: url,
-                headers: {
-                    'authorization': authToken
-                },
                 data: {
                     messageIds: messageIds
                 }
@@ -133,10 +118,7 @@
 
             return $http({
                 method: 'PUT',
-                url: url,
-                headers: {
-                    'authorization': authToken
-                }
+                url: url
 
             }).then(function(resp)
             {
@@ -152,10 +134,7 @@
 
             return $http({
                 method: 'GET',
-                url: url,
-                headers: {
-                    'authorization': authToken
-                }
+                url: url
 
             }).then(function(resp)
             {

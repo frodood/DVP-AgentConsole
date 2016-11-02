@@ -8,10 +8,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
     var getEngagementIdsByProfile = function (id) {
         return $http({
             method: 'get',
-            url: baseUrls.engagementUrl+"EngagementByProfile/"+id,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.engagementUrl+"EngagementByProfile/"+id
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -24,10 +21,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
     var getEngagementSession = function (id) {
         return $http({
             method: 'get',
-            url: baseUrls.engagementUrl+"Engagement/"+id,
-            headers: {
-                'authorization':authService.GetToken()
-            }
+            url: baseUrls.engagementUrl+"Engagement/"+id
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -46,10 +40,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         return $http({
             method: 'get',
            // params: ids,
-            url: baseUrls.engagementUrl+"Engagement/"+engagementId+"/EngagementSessions"+q,
-            headers: {
-                'authorization':authService.GetToken()
-            }
+            url: baseUrls.engagementUrl+"Engagement/"+engagementId+"/EngagementSessions"+q
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -64,10 +55,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         return $http({
             method: 'get',
            // params: ids,
-            url: baseUrls.engagementUrl+"EngagementSession/"+engagementId+"/Note",
-            headers: {
-                'authorization':authService.GetToken()
-            }
+            url: baseUrls.engagementUrl+"EngagementSession/"+engagementId+"/Note"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -82,10 +70,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         return $http({
             method: 'post',
             data: note,
-            url: baseUrls.engagementUrl+"EngagementSession/"+engagementId+"/Note",
-            headers: {
-                'authorization':authService.GetToken()
-            }
+            url: baseUrls.engagementUrl+"EngagementSession/"+engagementId+"/Note"
         }).then(function (response) {
             if (response.data) {
                 return response.data.IsSuccess;
@@ -100,10 +85,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         return $http({
             method: 'post',
             data: engagementSession,
-            url: baseUrls.engagementUrl+"Engagement/"+userId+"/EngagementSession",
-            headers: {
-                'authorization':authService.GetToken()
-            }
+            url: baseUrls.engagementUrl+"Engagement/"+userId+"/EngagementSession"
         }).then(function (response) {
             if (response.data) {
                 return response.data;
@@ -117,10 +99,7 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'get',
-            url: baseUrls.engagementUrl+"EngagementSessionCount/"+userId,
-            headers: {
-                'authorization':authService.GetToken()
-            }
+            url: baseUrls.engagementUrl+"EngagementSessionCount/"+userId
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;

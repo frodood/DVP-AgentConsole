@@ -5,7 +5,7 @@
     'use strict';
     agentApp.factory('loginService', Service);
 
-    function Service($http, localStorageService, jwtHelper,baseUrls) {
+    function Service($http, $auth,localStorageService, jwtHelper,baseUrls) {
         var service = {};
         service.mynavigations = mynavigations;
         service.Login = Login;
@@ -23,10 +23,18 @@
 
         //get token
         function getToken(appname) {
-            var data = localStorageService.get("@agentConsoleLoginToken");
-            if (data && data.access_token) {
-                if (!jwtHelper.isTokenExpired(data.access_token)) {
-                    return data.access_token;
+            //var data = localStorageService.get("@agentConsoleLoginToken");
+            //if (data && data.access_token) {
+            //    if (!jwtHelper.isTokenExpired(data.access_token)) {
+            //        return data.access_token;
+            //    }
+            //}
+            //return undefined;
+
+            var token = $auth.getToken();
+            if (token ) {
+                if (!jwtHelper.isTokenExpired(token)) {
+                    return token;
                 }
             }
             return undefined;
@@ -45,10 +53,18 @@
 
         //get token decode
         function getTokenDecode() {
-            var data = localStorageService.get("@agentConsoleLoginToken");
-            if (data && data.access_token) {
-                if (!jwtHelper.isTokenExpired(data.access_token)) {
-                    return jwtHelper.decodeToken(data.access_token);
+            //var data = localStorageService.get("@agentConsoleLoginToken");
+            //if (data && data.access_token) {
+            //    if (!jwtHelper.isTokenExpired(data.access_token)) {
+            //        return jwtHelper.decodeToken(data.access_token);
+            //    }
+            //}
+            //return undefined;
+
+            var token = $auth.getToken();
+            if (token) {
+                if (!jwtHelper.isTokenExpired(token)) {
+                    return jwtHelper.decodeToken(token);
                 }
             }
             return undefined;
@@ -58,7 +74,8 @@
         //http://userservice.app.veery.cloud
         //http://192.168.5.103:3636
         function clearCookie(key) {
-            localStorageService.remove(key);
+            //localStorageService.remove(key);
+            $auth.removeToken();
         }
 
         //logoff
@@ -70,7 +87,7 @@
                 }
             }).
             success(function (data, status, headers, config) {
-                clearCookie('@agentConsoleLoginToken');
+                $auth.removeToken();
                 callback(true);
             }).
             error(function (data, status, headers, config) {

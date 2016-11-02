@@ -48,3 +48,39 @@ agentApp.directive("myNoteEditDirective", function (myNoteServices) {
         }
     }
 });
+
+
+
+
+
+
+agentApp.directive("gridsterDynamicHeight", function (myNoteServices){
+
+    var directive = {
+        scope: {
+            item: "=" //gridster item
+        },
+        link: link,
+        restrict: 'A'
+    };
+    return directive;
+
+    function link(scope, element, attrs) {
+
+        scope.$watch(function() {
+
+                return element[0].scrollHeight;
+            },
+            function(newVal, oldVal) {
+
+                var rowHeightOption = 75; // Change this value with your own rowHeight option
+                var height = rowHeightOption * scope.item.sizeY;
+                if(newVal > height){
+
+                    var div = Math.floor(newVal / rowHeightOption);
+                    div++;
+                    scope.item.sizeY = div;
+                }
+            });
+    }
+});

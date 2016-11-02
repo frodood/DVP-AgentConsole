@@ -307,6 +307,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         },
         unregisterWithArds: function () {
+            sipUnRegister();
             resourceService.UnregisterWithArds(authService.GetResourceId()).then(function (response) {
                 $scope.registerdWithArds = !response;
             }, function (error) {
@@ -809,12 +810,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.reCalcScroll();
             });
             $scope.tabSelected(index);
+
         }
         else {
             $scope.tabSelected(index);
         }
-
-
+        $('html, body').animate({scrollTop: 0}, 'fast');
     };
     $scope.isForceFocused = false;
     $scope.currTab = 0;
@@ -1016,7 +1017,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
     // $scope.addDashBoard();
-    $scope.addMyNote();
+    $scope.addDashBoard();
 
 
     var openNewEngagementTab = function (args, index) {
@@ -2029,6 +2030,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (getAllRealTimeTimer) {
             $timeout.cancel(getAllRealTimeTimer);
         }
+        $scope.veeryPhone.unregisterWithArds();
     });
 
     /* update code damith
@@ -2126,19 +2128,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.counter = 0;
     var callDurationTimeout = {};
     $scope.duations = '';
-    $scope.onTimeout = function () {
-        $scope.counter++;
-        $scope.duations = $scope.counter.toString().toHHMMSS();
-        callDurationTimeout = $timeout($scope.onTimeout, 1000);
-    };
 
 
     $scope.stopCallTime = function () {
-        $timeout.cancel(callDurationTimeout);
+
+        document.getElementById('calltimmer').getElementsByTagName('timer')[0].stop();
     };
     $scope.startCallTime = function () {
-        $scope.counter = 0;
-        callDurationTimeout = $timeout($scope.onTimeout, 1000);
+
+
+        document.getElementById('calltimmer').getElementsByTagName('timer')[0].start();
     };
 
     $scope.goToTopScroller = function () {
@@ -2149,52 +2148,46 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showMesssageModal = false;
 
     $scope.showNotificationMessage = function (notifyMessage) {
-
         $scope.showMesssageModal = true;
-
         $scope.showModal(notifyMessage);
-
-
         //$scope.showAlert("Message","success",notifyMessage.Message);
-    }
+    };
 
 
     $scope.discardNotifications = function (notifyMessage) {
         $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
         $scope.unredNotifications = $scope.notifications.length;
-    }
+        $scope.showMesssageModal = false;
+    };
 
     $scope.addToDoList = function (todoMessage) {
         todoMessage.title = todoMessage.header;
         toDoService.addNewToDo(todoMessage).then(function (response) {
             $scope.discardNotifications(todoMessage);
             $scope.showAlert("Added to ToDo", "success", "Notification successfully added as To Do");
+            $scope.showMesssageModal = false;
         }, function (error) {
             $scope.showAlert("Adding failed ", "error", "Notification is failed to add as To Do");
         });
-    }
+    };
 
     $scope.showModal = function (MessageObj) {
-        //modal show
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: 'app/views/messageModal.html',
-            controller: 'notificationModalController',
-            size: 'sm',
-            backdrop: 'static',
-            keyboard: false,
-            resolve: {
-                MessageObj: function () {
-                    return MessageObj;
-                },
-                DiscardNotifications: function () {
-                    return $scope.discardNotifications;
-                },
-                AddToDoList: function () {
-                    return $scope.addToDoList;
-                }
-            }
-        });
+        $scope.MessageObj = MessageObj;
+    };
+
+    $scope.keepNotification = function () {
+        //$uibModalInstance.dismiss('cancel');
+        $scope.showMesssageModal = false;
+    };
+    $scope.discardNotification = function (msgObj) {
+        $scope.discardNotifications(msgObj);
+        $scope.showMesssageModal = false;
+        // $uibModalInstance.dismiss('cancel');
+    };
+    $scope.addToTodo = function (MessageData) {
+        $scope.addToDoList(MessageData);
+        $scope.showMesssageModal = false;
+        //$uibModalInstance.dismiss('cancel');
     };
 
 
@@ -2239,19 +2232,6 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
 
     $scope.showMesssageModal = true;
     $scope.MessageObj = MessageObj;
-
-
-    $scope.keepNotification = function () {
-        $uibModalInstance.dismiss('cancel');
-    }
-    $scope.discardNotification = function (msgObj) {
-        DiscardNotifications(msgObj);
-        $uibModalInstance.dismiss('cancel');
-    }
-    $scope.addToTodo = function (MessageData) {
-        AddToDoList(MessageData);
-        $uibModalInstance.dismiss('cancel');
-    }
 
 
 });

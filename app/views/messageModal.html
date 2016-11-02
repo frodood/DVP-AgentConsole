@@ -1,39 +1,60 @@
-<div class="row" ng-show="showMesssageModal">
+<!--<div class="row" ng-show="showMesssageModal">-->
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel modal-panel">
+    <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+        <!--<div class="x_panel modal-panel">-->
 
-            <div class="notify-img-modal md-col-3">
+            <!--<div class="notify-img-modal md-col-3">-->
 
-                <img src="asset/images/defaultProfile.png"
-                     ng-src="{{MessageObj.avatar}}">
+                <!--<img src="asset/images/defaultProfile.png"-->
+                     <!--ng-src="{{MessageObj.avatar}}">-->
 
-            </div>
-            <div class="notification-modal-time pull-right">
-                <time-ago from-time='{{MessageObj.time}}'
-                          format='MM/dd/yyyy'></time-ago>
-            </div>
-            <div class="row console-notification-modal-wrapper"
-                 ng-slimscroll
-                 opacity="0.1"
-                 distance="10px"
-                 height="100px"
-                 width="100%"
-                 ng-mouseover="chatWidgetscrollEnabled = true"
-                 ng-mouseleave="chatWidgetscrollEnabled = false">
-                <div class="modal-message-wrapper">{{MessageObj.header}}</div>
-            </div>
-            <div style="height:10px"></div>
-        </div>
+            <!--</div>-->
+            <!--<div class="notification-modal-time pull-right">-->
+                <!--<time-ago from-time='{{MessageObj.time}}'-->
+                          <!--format='MM/dd/yyyy'></time-ago>-->
+            <!--</div>-->
+            <!--<div class="row console-notification-modal-wrapper"-->
+                 <!--ng-slimscroll-->
+                 <!--opacity="0.1"-->
+                 <!--distance="10px"-->
+                 <!--height="100px"-->
+                 <!--width="100%"-->
+                 <!--ng-mouseover="chatWidgetscrollEnabled = true"-->
+                 <!--ng-mouseleave="chatWidgetscrollEnabled = false">-->
+                <!--<div class="modal-message-wrapper">{{MessageObj.header}}</div>-->
+            <!--</div>-->
+            <!--<div style="height:10px"></div>-->
+        <!--</div>-->
 
-    </div>
-    <div class=" pull-right row notify-modal-btn-wrap" >
+    <!--</div>-->
+    <!--<div class=" pull-right row notify-modal-btn-wrap" >-->
 
-        <button type="submit" class="btn btn-success" ng-click="keepNotification()">Keep</button>
-        <button type="submit" class="btn btn-success" ng-click="addToTodo(MessageObj)">Add to To-Do</button>
-        <button type="submit" class="btn btn-primary" ng-click="discardNotification(MessageObj)">Discard</button>
+        <!--<button type="submit" class="btn btn-success" ng-click="keepNotification()">Keep</button>-->
+        <!--<button type="submit" class="btn btn-success" ng-click="addToTodo(MessageObj)">Add to To-Do</button>-->
+        <!--<button type="submit" class="btn btn-primary" ng-click="discardNotification(MessageObj)">Discard</button>-->
 
-    </div>
-</div>
+    <!--</div>-->
+<!--</div>-->
 
-</div>
+<!--</div>-->
+
+
+<!--var modalInstance = $uibModal.open({-->
+<!--animation: true,-->
+<!--templateUrl: 'app/views/messageModal.html',-->
+<!--controller: 'notificationModalController',-->
+<!--size: 'sm',-->
+<!--backdrop: 'static',-->
+<!--keyboard: false,-->
+<!--resolve: {-->
+<!--MessageObj: function () {-->
+<!--return MessageObj;-->
+<!--},-->
+<!--DiscardNotifications: function () {-->
+<!--return $scope.discardNotifications;-->
+<!--},-->
+<!--AddToDoList: function () {-->
+<!--return $scope.addToDoList;-->
+<!--}-->
+<!--}-->
+<!--});-->

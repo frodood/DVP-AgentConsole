@@ -65,24 +65,30 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 fill: true,
                 /*lineTension: 0,*/
                 borderDash: [0, 0],
-
+                borderColor: "rgba(0,205,115,1)",
+                backgroundColor: "rgba(0,205,115,0.3)",
+                pointBorderColor: "rgba(0,205,115,1)",
+                pointBackgroundColor: "rgba(0,205,115,0.5)",
+                pointBorderWidth: 1
             }, {
                 label: "Resolved Ticket",
-
                 data: [],
                 fill: true,
                 /* lineTension: 0,*/
-                borderDash: [0, 0]
+                borderDash: [0, 0],
+                borderColor: "rgba(79,147,0,1)",
+                backgroundColor: "rgba(79,147,0,0.5)",
+                pointBorderColor: "rgba(79,147,0,1)",
+                pointBackgroundColor: "rgba(79,147,0,0.5)",
+                pointBorderWidth: 1
             }]
         },
         options: {
             responsive: true,
             title: {
-                display: true,
-
-
+                display: true
             }, tooltips: {
-                mode: 'label',
+                mode: 'label'
             },
             hover: {
                 mode: 'label'
@@ -90,6 +96,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             scales: {
                 xAxes: [{
                     display: true,
+                    gridLines: {
+                        color: "rgba(244,245,244,0.5)",
+                        zeroLineColor: "rgba(244,245,244,1)"
+                    },
                     ticks: {
                         userCallback: function (dataLabel, index) {
                             return ''; //index % 2 === 0 ? dataLabel : '';
@@ -103,6 +113,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 yAxes: [{
                     display: true,
                     beginAtZero: false,
+                    gridLines: {
+                        color: "rgba(244,245,244,0.5)",
+                        zeroLineColor: "rgba(244,245,244,1)"
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Count'
@@ -111,13 +125,14 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }
     };
-    $.each($scope.createVsOpenConfig.data.datasets, function (i, dataset) {
-        dataset.borderColor = 'rgba(14,234,255,1)';
-        dataset.backgroundColor = 'rgba(14,234,255,0.2)';
-        dataset.pointBorderColor = 'rgba(14,234,255,0.2)';
-        dataset.pointBackgroundColor = 'rgba(14,234,255,0.5)';
-        dataset.pointBorderWidth = 1;
-    });
+    //$.each($scope.createVsOpenConfig.data.datasets, function (i, dataset) {
+    //    dataset.borderColor = randomColor(0.4);
+    //    dataset.backgroundColor = randomColor(0.5);
+    //    dataset.pointBorderColor = randomColor(0.7);
+    //    dataset.pointBackgroundColor = randomColor(0.5);
+    //    dataset.pointBorderWidth = 1;
+    //});
+
     var openclose = document.getElementById("openclosecanvas").getContext("2d");
     window.opencloseChart = new Chart(openclose, $scope.createVsOpenConfig);
 
@@ -131,7 +146,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 data: [],
                 fill: true,
                 /*lineTension: 0,*/
-                borderDash: [0, 0]
+                borderDash: [0, 0],
+
             }]
         },
         options: {
@@ -145,7 +161,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             title: {
                 display: false
             }, tooltips: {
-                mode: 'label',
+                mode: 'label'
             },
             hover: {
                 mode: 'label'
@@ -153,6 +169,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             scales: {
                 xAxes: [{
                     display: true,
+                    gridLines: {
+                        color: "rgba(244,245,244,0)",
+                        zeroLineColor: "rgba(244,245,244,1)"
+                    },
                     ticks: {
                         userCallback: function (dataLabel, index) {
                             return index % 3 === 0 ? dataLabel : '';
@@ -166,6 +186,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 yAxes: [{
                     display: true,
                     beginAtZero: false,
+                    gridLines: {
+                        color: "rgba(244,245,244,0)",
+                        zeroLineColor: "rgba(244,245,244,1)"
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Count'
@@ -175,10 +199,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }
     };
     $.each($scope.deferenceConfig.data.datasets, function (i, dataset) {
-        dataset.borderColor = randomColor(0.4);
-        dataset.backgroundColor = randomColor(0.5);
-        dataset.pointBorderColor = randomColor(0.7);
-        dataset.pointBackgroundColor = randomColor(0.5);
+        dataset.borderColor = "rgba(230,82,0,1)";
+        dataset.backgroundColor = "rgba(230,82,0,0.6)";
+        dataset.pointBorderColor = "rgba(74,57,30,1)";
+        dataset.pointBackgroundColor = "rgba(230,82,0,0.5)";
         dataset.pointBorderWidth = 1;
     });
     var deference = document.getElementById("deferencecanvas").getContext("2d");
@@ -187,36 +211,51 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     /*productivity*/
     $scope.doughnutData = {
         labels: ["Acw", "Break", "OnCall", "Idle", "Hold"],
+
         datasets: [
             {
                 data: [0, 0, 0, 0, 0],
                 backgroundColor: [
-                    "#FF6384",
+                    "#2b4d52",
                     "#36A2EB",
-                    "#FFCE56",
-                    "#42f44e",
-                    "#850bba"
+                    "#1b76ff",
+                    "#168039",
+                    "#d90000"
                 ],
                 hoverBackgroundColor: [
-                    "#FF6384",
+                    "#2b4d52",
                     "#36A2EB",
-                    "#FFCE56",
-                    "#42f44e",
-                    "#850bba"
-                ]
+                    "#1b76ff",
+                    "#168039",
+                    "#d90000"
+                ],
+                borderWidth: [0, 0, 0, 0, 0],
             }]
     };
     var doughnutChart = document.getElementById("doughnutChart");
+
+
     window.myDoughnutChart = new Chart(doughnutChart, {
         type: 'doughnut',
         data: $scope.doughnutData,
         options: {
+            responsive: false,
             title: {
+                display: false
+            },
+            legend: {
                 display: true,
-                text: "Productivity [hours]"
+                position: 'bottom',
+                padding: 10,
+                labels: {
+                    fontColor: 'rgb(130, 152, 174)',
+                    fontSize: 15,
+                    boxWidth: 50
+                }
             }
         }
     });
+    doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-top: 15px;");
 
     /* -------------------- Chart Configurations End-----------------------------------------*/
 
@@ -231,7 +270,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
                 if (response.length === 0)
                     return;
-                $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime), secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
+                $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime),
+                    secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
                 window.myDoughnutChart.update();
 
 

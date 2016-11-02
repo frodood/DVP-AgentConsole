@@ -9,10 +9,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
     var getExternalUserProfileByContact = function (category,contact) {
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByContact/"+category+"/"+contact,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByContact/"+category+"/"+contact
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -26,10 +23,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Users",
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.userServiceBaseUrl+"Users"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -43,10 +37,8 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Users",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.userServiceBaseUrl+"Users"
+
         }).then(function(response)
         {
             return response;
@@ -57,10 +49,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"UserGroups",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.userServiceBaseUrl+"UserGroups"
         }).then(function(response)
         {
             return response;
@@ -71,10 +60,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/Search/"+searchText,
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/Search/"+searchText
         }).then(function(response)
         {
             return response.data;
@@ -86,10 +72,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Myprofile",
-            headers: {
-                'authorization':authToken
-            }
+            url: baseUrls.userServiceBaseUrl+"Myprofile"
         }).then(function(response)
         {
             return response;
@@ -102,9 +85,6 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.userServiceBaseUrl+'ExternalUser/' + profileId + '/FormSubmission',
-            headers: {
-                'authorization':authToken
-            },
             data: JSON.stringify({form_submission: formSubId})
         }).then(function(response)
         {
@@ -116,9 +96,6 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         return $http({
             method: 'Post',
             url: baseUrls.userServiceBaseUrl+"ExternalUser",
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data:profile
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -133,9 +110,6 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         return $http({
             method: 'put',
             url: baseUrls.userServiceBaseUrl+"ExternalUser/"+profile._id,
-            headers: {
-                'authorization': authService.GetToken()
-            },
             data:profile
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -152,9 +126,6 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         return $http({
             method: 'PUT',
             url: baseUrls.userServiceBaseUrl+'ExternalUser/' + profileId + '/Contact/'+contactInfo.contact,
-            headers: {
-                'authorization':authToken
-            },
             data: JSON.stringify(contactInfo)
         }).then(function(response)
         {
@@ -165,10 +136,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
     var getExternalUserProfileByField = function (field,value) {
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByField/"+field+"/"+value,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByField/"+field+"/"+value
         }).then(function (response) {
             return response.data;
         });
@@ -177,10 +145,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
     var getExternalUserProfileBySsn = function (ssn) {
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/BySSN/"+ssn,
-            headers: {
-                'authorization': authService.GetToken()
-            }
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/BySSN/"+ssn
         }).then(function (response) {
             return response.data;
         });
