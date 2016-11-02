@@ -149,7 +149,15 @@
                                         Overdue
                                     </div>
                                     <h5>{{ticket.due_at}}</h5>
-                                </li>
+                                </li><li>
+                                <small>Channel</small>
+                                <div class="bg-checkbox red font-white small-details inline-btn"
+                                     ng-show="isOverDue">
+                                    Overdue
+                                </div>
+                                <h5>{{ticket.engagement_session.channel}}</h5>
+                            </li>
+
 
 
                             </ul>
@@ -354,7 +362,7 @@
                                             <div class="image view view-first">
 
                                                 <img style="width: 100%; display: block;"
-                                                     ng-src="{{attchment.url}}"
+                                                     ng-src={{internalFileServiceUrl}}/{{attchment._id}}/{{attchment.file}}"
                                                      on-error-src="assets/img/noimage.jpg"
                                                      ng-if="isImage(attchment.type)"/>
                                                 <img style="width: 100%; display: block;"

@@ -39,6 +39,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.messageMode="public";
 
+
+            scope.internalFileServiceUrl=baseUrls.fileService+"File/Thumbnail/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/";
+
             scope.callToCustomer = function (no) {
                 var newId = scope.ticketDetails.tabReference;
                 scope.ticketDetails.tabReference = newId + "-Call" + no;
@@ -1012,13 +1015,33 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         comentAttachmentIds.push(value._id);
                     });
 
+
+
+
                     if (scope.ticket.engagement_session) {
-                        channel = scope.ticket.engagement_session.channel;
+                        if(scope.ticket.engagement_session.channel!="call")
+                        {
+                            channel = scope.ticket.engagement_session.channel;
+                        }
+
                         reply_session = scope.ticket.engagement_session._id;
                         reply_chnl_from = scope.ticket.engagement_session.channel_to;
                         reply_chnl_to = scope.ticket.engagement_session.channel_from;
                     }
 
+
+                    if(scope.messageMode=="public")
+                    {
+
+                    }
+                    else if(scope.messageMode=="public")
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
 
                     var commentObj =
                     {
