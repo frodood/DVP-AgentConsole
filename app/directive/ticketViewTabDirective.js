@@ -1393,7 +1393,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.file = {};
 
             var uploader = scope.uploader = new FileUploader({
-                url: baseUrls.fileService+"FileService/File/Upload"
+                url: baseUrls.fileService+"FileService/File/Upload",
+                headers: {'Authorization':  authService.GetToken()}
             });
             /*  var com_uploader = scope.com_uploader = new FileUploader({
              url: baseUrls.fileService+"FileService/File/Upload",
