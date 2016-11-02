@@ -71,7 +71,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                         showAlert('Reminder Note', 'success', res.data.CustomMessage);
                     }
                 }, function (err) {
-                    showAlert('Reminder Note', 'success', err.data.CustomMessage);
+                    showAlert('Reminder Note', 'success', 'Error in CreateMyNote');
                     console.log(err);
                 });
 
@@ -102,7 +102,8 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                 showAlert('Reminder Note', 'success', res.data.CustomMessage);
             }
         }, function (err) {
-            showAlert('Reminder Note', 'error', err.data.CustomMessage);
+            console.log(err);
+            showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
         });
     };
     //end
@@ -140,7 +141,8 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                     }
                     loadedReminder();
                 }, function (err) {
-                    showAlert('Reminder Note', 'error', err.data.CustomMessage);
+                    console.log(err);
+                    showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
                     loadedReminder();
                 });
             }
@@ -166,7 +168,8 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                         uiFuntions.foundMyNote();
                     }
                 }, function (err) {
-                    showAlert('Reminder Note', 'error', err.data.CustomMessage);
+                    console.log(err);
+                    showAlert('Reminder Note', 'error', 'Error in GetAllMyToDo');
                     uiFuntions.myNoteNotFound();
                 });
             }
