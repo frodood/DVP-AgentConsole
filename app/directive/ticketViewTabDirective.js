@@ -39,6 +39,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.messageMode="public";
 
+
+            scope.internalThumbFileUrl=baseUrls.fileService+"InternalFileService/File/Thumbnail/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/";
+            scope.FileServiceUrl=baseUrls.fileService+"InternalFileService/File/Download/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/";
+
             scope.callToCustomer = function (no) {
                 var newId = scope.ticketDetails.tabReference;
                 scope.ticketDetails.tabReference = newId + "-Call" + no;
@@ -1012,13 +1016,33 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         comentAttachmentIds.push(value._id);
                     });
 
+
+
+
                     if (scope.ticket.engagement_session) {
-                        channel = scope.ticket.engagement_session.channel;
+                        if(scope.ticket.engagement_session.channel!="call")
+                        {
+                            channel = scope.ticket.engagement_session.channel;
+                        }
+
                         reply_session = scope.ticket.engagement_session._id;
                         reply_chnl_from = scope.ticket.engagement_session.channel_to;
                         reply_chnl_to = scope.ticket.engagement_session.channel_from;
                     }
 
+
+                    if(scope.messageMode=="public")
+                    {
+
+                    }
+                    else if(scope.messageMode=="public")
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
 
                     var commentObj =
                     {
@@ -1370,7 +1394,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.file = {};
 
             var uploader = scope.uploader = new FileUploader({
-                url: baseUrls.fileService+"FileService/File/Upload"
+                url: baseUrls.fileService+"FileService/File/Upload",
+                headers: {'Authorization':  authService.GetToken()}
             });
             /*  var com_uploader = scope.com_uploader = new FileUploader({
              url: baseUrls.fileService+"FileService/File/Upload",
@@ -1495,7 +1520,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     var attchmentData =
                     {
                         file: fileItem._file.name,
-                        url: baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
+                        //url: baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
+                        url: response.Result,
                         type: fileItem._file.type,
                         size: fileItem._file.size
                     }
@@ -1658,7 +1684,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 if(scope.isImage(attachment.type))
                 {
-                    document.getElementById("image-viewer").href=attachment.url;
+
+                    document.getElementById("image-viewer").href=scope.FileServiceUrl+attachment.url+"/SampleAttachment";
 
                     $('#image-viewer').trigger('click');
 
@@ -1670,7 +1697,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     if (videogularAPI && attachment.url) {
                         var info = authService.GetCompanyInfo();
                         /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
-                        var fileToPlay = attachment.url;
+                        //var fileToPlay = attachment.url;
+                        var fileToPlay = scope.FileServiceUrl+attachment.url+"/SampleAttachment";
 
                         var arr = [
                             {

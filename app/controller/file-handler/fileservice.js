@@ -8,7 +8,7 @@ agentApp.factory("fileService", function ($http, baseUrls,authService,download) 
 
     var downloadAttachment = function (attachment) {
         $http({
-            url: attachment.url,
+            url: baseUrls.fileService+"/InternalFileService/File/Download/"+authService.GetCompanyInfo().tenant+"/"+authService.GetCompanyInfo().company+"/"+attachment.url+"/SampleAttachment",
             method: "get",
             //data: json, //this is your json data string
             headers: {
