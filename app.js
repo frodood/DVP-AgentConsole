@@ -53,7 +53,7 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider","$authP
 
 
 
-        var authProviderUrl = 'http://localhost:3637/';
+        var authProviderUrl = 'http://userservice.app.veery.cloud/';
         $authProvider.loginUrl = authProviderUrl+'auth/login';
         $authProvider.signupUrl = authProviderUrl+'auth/signup';
 
