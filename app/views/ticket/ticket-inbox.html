@@ -19,10 +19,12 @@
                             </div>
                             <div class="btn-warp">
                                 <span id="mybtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted"
+                                      ng-class="{'selected-this-btn':ticketList.loadListStatus=='MY'}"
                                       ng-click="switchTickets('MY')">my ticket</span>
                             </div>
                             <div class="btn-warp">
                                 <span id="grpbtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted"
+                                      ng-class="{'selected-this-btn':ticketList.loadListStatus=='GROUP'}"
                                       ng-click="switchTickets('GROUP')">group</span>
                             </div>
                             <div class="btn-warp ">

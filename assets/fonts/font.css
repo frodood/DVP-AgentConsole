@@ -19,6 +19,10 @@
 }
 
 @font-face {
+    font-family: AvenirNextLTPro-UltLtCn;
+    src: url(avenir-next-lt-pro/AvenirNextLTPro-UltLtCn.otf);
+}
+@font-face {
     font-family: AvenirNextLTPro-Heavy;
     src: url(avenir-next-lt-pro/AvenirNextLTPro-HeavyCn.otf);
 }

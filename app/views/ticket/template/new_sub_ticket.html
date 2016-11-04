@@ -33,7 +33,8 @@
                             <form>
                                 <div class="form-group">
                                     <label for="ticketSubject">Subject</label>
-                                    <input  ng-model="newSubTicket.subject"  type="text" class="form-control" id="ticketSubject" placeholder="">
+                                    <input ng-model="newSubTicket.subject" type="text" class="form-control"
+                                           id="ticketSubject" placeholder="">
                                 </div>
 
                                 <div class="form-group">
@@ -42,20 +43,24 @@
                                         <div class="col-xs-7">
                                             <label for="ticketSubject">Priority</label>
                                             <div class="form-inline">
-                                                <div class="bg-checkbox red font-white inline-btn" ng-click="setPriority('urgent');">
-                                                    <i class="main-icon-2-cancel" ></i>
+                                                <div class="bg-checkbox red font-white inline-btn"
+                                                     ng-class="{'selected-this':newSubTicket.priority=='urgent'}"
+                                                     ng-click="setPriority('urgent');">
                                                     urgent
                                                 </div>
-                                                <div class="bg-checkbox red font-white orange" ng-click="setPriority('high');">
-                                                    <i class="main-icon-2-cancel"></i>
+                                                <div class="bg-checkbox red font-white orange"
+                                                     ng-class="{'selected-this':newSubTicket.priority=='high'}"
+                                                     ng-click="setPriority('high');">
                                                     high
                                                 </div>
-                                                <div class="bg-checkbox red font-white teal600"  ng-click="setPriority('normal');">
-                                                    <i class="main-icon-2-cancel"></i>
+                                                <div class="bg-checkbox red font-white teal600"
+                                                     ng-class="{'selected-this':newSubTicket.priority=='normal'}"
+                                                     ng-click="setPriority('normal');">
                                                     normal
                                                 </div>
-                                                <div class="bg-checkbox red font-white gray300" ng-click="setPriority('low');">
-                                                    <i class="main-icon-2-cancel"></i>
+                                                <div class="bg-checkbox red font-white gray300"
+                                                     ng-class="{'selected-this':newSubTicket.priority=='low'}"
+                                                     ng-click="setPriority('low');">
                                                     low
                                                 </div>
                                             </div>
@@ -77,14 +82,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="ticketSubject">Tags</label><button ng-click="loadTags();" >
-                                    Reload
-                                </button>
+                                    <label for="ticketSubject">Tags</label>
+                                    <button ng-click="loadTags();">
+                                        Reload
+                                    </button>
                                     <tags-input ng-model="postTags" display-property="name" placeholder="...">
                                         <auto-complete source="loadPostTags($query)"></auto-complete>
                                     </tags-input>
 
-                                    <tags-input ng-model="newAddTags" placeholder="choose Tags" replace-spaces-with-dashes="false"
+                                    <tags-input ng-model="newAddTags" placeholder="choose Tags"
+                                                replace-spaces-with-dashes="false"
                                                 display-property="name"
                                                 add-from-autocomplete-only="true"
                                                 on-tag-added="onChipAddTag($tag)"
@@ -114,7 +121,8 @@
                                  </div>-->
                                 <div class="form-group">
                                     <label for="ticketSubject">Description</label>
-                                    <textarea ng-model="newSubTicket.description" class="form-control" rows="3"></textarea>
+                                    <textarea ng-model="newSubTicket.description" class="form-control"
+                                              rows="3"></textarea>
                                 </div>
 
                             </form>
