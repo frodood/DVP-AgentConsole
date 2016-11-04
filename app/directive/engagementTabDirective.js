@@ -1561,6 +1561,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                             scope.ticketList = [];
                             scope.recentTicketList = [];
                             scope.currentTicketPage = 1;
+                            scope.currentPage = 1;
                             scope.GetExternalUserProfileByContact();
                         };
                         var searchElement = document.getElementById("commonSearch");
