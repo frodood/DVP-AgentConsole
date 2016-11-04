@@ -793,12 +793,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
     $scope.reloadTickets = function () {
         //$state.reload();
+
         $scope.ticketList.toDo=[];
         $scope.ticketList.inProgress=[];
         $scope.ticketList.done=[];
 
         setToInitiate();
         $scope.ticketList.loadCompleted =true;
+        $scope.ticketList.loadListStatus="MY";
         pickMyToDoList(1);
         pickMyProcessingTickets(1);
         pickMyCompletedTickets(1);
