@@ -109,6 +109,35 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         });
     };
 
+
+    var moveEngagementBetweenProfiles = function (session, operation, from , to) {
+
+        return $http({
+            method: 'put',
+            url: baseUrls.engagementUrl+"EngagementSession/"+session+"/Move/"+operation+"/From/"+from+"/To/"+to
+        }).then(function (response) {
+            if (response.data) {
+                return response.data;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var addIsolatedEngagementSession = function (profileId,session) {
+
+        return $http({
+            method: 'put',
+            url: baseUrls.engagementUrl+"Engagement/"+profileId+"/IsolatedEngagementSession/"+session
+        }).then(function (response) {
+            if (response.data) {
+                return response.data;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
     return {
         GetEngagementIdsByProfile: getEngagementIdsByProfile,
         GetEngagementSession:getEngagementSession,
@@ -116,7 +145,9 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         GetEngagementSessionNote:getEngagementSessionNote,
         AppendNoteToEngagementSession:appendNoteToEngagementSession,
         createEngagementSession: createEngagementSession,
-        EngagementCount:engagementCount
+        EngagementCount:engagementCount,
+        MoveEngagementBetweenProfiles: moveEngagementBetweenProfiles,
+        AddIsolatedEngagementSession: addIsolatedEngagementSession
     }
 });
 
