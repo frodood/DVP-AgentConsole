@@ -799,9 +799,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
         setToInitiate();
         $scope.ticketList.loadCompleted =true;
-        pickToDoList(1);
-        pickProcessingTickets(1);
-        pickCompletedTickets(1);
+        pickMyToDoList(1);
+        pickMyProcessingTickets(1);
+        pickMyCompletedTickets(1);
     }
 
     $rootScope.$on('reloadInbox', function (events, args) {
