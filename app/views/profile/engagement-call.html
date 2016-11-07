@@ -12,7 +12,7 @@
                 <div class="btn-left-icon pull-right p-top-6"
                      ng-click="showNewTicket();">
                     <i class="veery-font-1-add-2"></i>
-                     ticket
+                    ticket
                 </div>
             </div>
         </div>
@@ -375,14 +375,7 @@
                                                         </div>
                                                     </div>
                                                     <!-- end -->
-                                                    <div ng-slimscroll
-                                                         opacity="0.1"
-                                                         distance="5px"
-                                                         height="400px"
-                                                         width="100%"
-                                                         ng-mouseover="chatWidgetscrollEnabled = true"
-                                                         ng-mouseleave="chatWidgetscrollEnabled = false"
-                                                         enabled="{{ chatWidgetscrollEnabled }}">
+                                                    <div>
                                                         <div class="prn2 header-round-icon">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-facebook "></i>
@@ -929,6 +922,42 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end -->
+
+    <!-- Confirm Box -->
+    <div class="confirm-box-wrapper" ng-show="isShowConfirm">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div class="confirm-body">
+                <h5>Are you sure..? Add to Contact</h5>
+                <div class="select-option-wrapper">
+                    <ul>
+                        <li>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> add phone number to contacts
+                                </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> map interaction to profile
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="confirm-btn-wrapper">
+                    <div class="ok-btn">
+                        OK
+                    </div>
+                    <div class="cancel-btn">
+                        CANCEL
+                    </div>
                 </div>
             </div>
         </div>
