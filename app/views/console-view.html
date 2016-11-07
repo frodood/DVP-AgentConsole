@@ -513,28 +513,28 @@
         <div class="isOperationPhone call-operation-wrapper animated flipInX" id="callOperation">
             <div id="phoneBtnWrapper" class="phone-button-wrapper ">
                 <!-- answer button -->
-                <div class="phone-sm-btn answer" id="answerButton"
+                <div class="phone-sm-btn answer" id="answerButton" title="Answer Call"
                      ng-click="veeryPhone.makeAudioCall(call.number);">
                     <i class="veery-phone-icon-1-call-answer"></i>
                 </div>
                 <!-- call end button -->
-                <div class="phone-sm-btn call-ended" id="endButton" ng-click="veeryPhone.endCall();">
+                <div class="phone-sm-btn call-ended" title="End Call" id="endButton" ng-click="veeryPhone.endCall();">
                     <i class="veery-phone-icon-1-call-ended"></i>
                 </div>
-                <!-- dial pad -->
-                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="ShowHideDialpad();">
-                    <i class="veery-font-1-menu-4"></i>
-                </div>
                 <!-- call hold button -->
-                <div class="phone-sm-btn phone-sm-bn-p8" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">
+                <div class="phone-sm-btn phone-sm-bn-p8" title="Hold/Unhold" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">
                     <i class="veery-font-1-pause"></i>
                 </div>
+                <!-- dial pad -->
+                <div class="phone-sm-btn phone-sm-bn-p8" title="Dialpad" ng-click="ShowHideDialpad();">
+                    <i class="veery-font-1-menu-4"></i>
+                </div>
                 <!--  contact list button -->
-                <div id="contactList" class="phone-sm-btn phone-sm-bn-p8">
+                <div id="contactList" class="phone-sm-btn phone-sm-bn-p8" title="Contact List">
                     <i class="veery-font-1-user"></i>
                 </div>
                 <!-- more btn -->
-                <div class="phone-sm-btn phone-sm-bn-p8"
+                <div class="phone-sm-btn phone-sm-bn-p8" title="More"
                      ng-click="veeryPhone.showOnlineBtn();">
                     <i class="veery-font-1-more"></i>
                 </div>
@@ -542,28 +542,29 @@
 
             <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none">
                 <!-- mute/unmiute hold button -->
-                <div class="phone-sm-btn phone-sm-bn-p8" id="speakerButton"
+                <div class="phone-sm-btn phone-sm-bn-p8" id="speakerButton" title="Mute Call"
                      ng-click="veeryPhone.muteCall();">
 
                 </div>
                 <!-- call transfer button -->
-                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 "
+                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 " title="Transfer Call"
                      ng-click="veeryPhone.transferCall(call.number);">
                     <i class="main-icon-2-transfer"></i>
                 </div>
-                <!-- call swap button -->
+                <!--disble till call server implement
+                &lt;!&ndash; call swap button &ndash;&gt;
                 <div id="swapCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.swapCall();">
                     <i class="main-icon-2-transfer-8"></i>
-                </div>
+                </div>-->
                 <!-- ETL button -->
-                <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();">
+                <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();" title="End Transfer Call">
                     <i class="main-icon-2-transfer"></i>
                 </div>
                 <!-- conference button -->
-                <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();">
+                <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();" title="Conference">
                     <i class="main-icon-2-stick-man-2"></i>
                 </div>
-                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();">
+                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();" title="Close">
                     <i class="ti-close"></i>
                 </div>
             </div>

@@ -207,6 +207,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
+            phoneFuncion.showTransfer();
+            phoneFuncion.hideSwap();
+            phoneFuncion.hideEtl();
+            phoneFuncion.hideConference();
         },
         swapCall: function () {
             var dtmfSet = phoneSetting.SwapCode.split('');
@@ -231,6 +235,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     sipSendDTMF(chr);
                 });
             }, 1000);
+            phoneFuncion.hideTransfer();
             phoneFuncion.showSwap();
             phoneFuncion.showEtl();
             phoneFuncion.showConference();
@@ -543,8 +548,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#swapCall').addClass('display-none').removeClass('display-inline');
         },
         showSwap: function () {
-            $('#swapCall').addClass('display-inline').removeClass('display-none');
-            $('#slapCall').addClass('display-inline').removeClass('display-none');
+            /*$('#swapCall').addClass('display-inline').removeClass('display-none');
+            $('#slapCall').addClass('display-inline').removeClass('display-none');*/
         },
         hideEtl: function () {
             $('#etlCall').addClass('display-none').removeClass('display-inline');
@@ -760,7 +765,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.veeryNotification();
         }
 
-    }
+    };
 
 
     /*--------------------------      Notification  ---------------------------------------*/

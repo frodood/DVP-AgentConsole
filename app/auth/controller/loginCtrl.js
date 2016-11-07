@@ -77,13 +77,13 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
                 $scope.loginFrm.$invalid = false;
             });
 
-    }
+    };
 
     $scope.CheckLogin = function () {
         if ($auth.isAuthenticated()) {
                 $state.go('console');
         }
-    }
+    };
 
     $scope.CheckLogin();
 
