@@ -1732,14 +1732,18 @@ div > div >
 .upload-area {
     width: 100%;
     height: 150px;
-    background: #f7f5f5;
+    background: rgba(247, 245, 245, 0.29);
     overflow: hidden;
     position: relative;
     text-align: center;
     color: #8298ae;
     padding-top: 50px;
     border-radius: 2px;
-    border: 1px solid #f7f5f5;
+    border: 3px dotted #f7f5f5;
+    margin-bottom: 10px;
+    font-size: 25px;
+    font-weight: 100;
+    font-family: "AvenirNextLTPro-UltLtCn", Courier, monospace;
 }
 
 .ticker-subticket-wrapper {
@@ -1812,6 +1816,28 @@ div > div >
 
 .ticket-comment-wrapper {
     padding: 30px 5px 5px 0px;
+}
+
+.comment-add-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.comment-add-wrapper {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.comment-add-wrapper > span {
+    font-size: 15px;
+    color: #0d1c34;
+}
+
+.comment-add-wrapper > span:hover {
+    color: #36ba45;
 }
 
 .commenter-img > img {
@@ -2938,16 +2964,17 @@ tags-input .tags .input {
     color: #ffffff !important;;
 }
 
-.close-ticket-widget{
+.close-ticket-widget {
     background: #75ca7c !important;
     border: 2px solid #37a422 !important;
 }
+
 .close-ticket-widget > h1,
 .close-ticket-widget > div {
     color: #ffffff !important;;
 }
 
-.pending-ticket-widget{
+.pending-ticket-widget {
     background: #f09766 !important;
     border: 2px solid #e65200 !important;
 }
@@ -2956,6 +2983,7 @@ tags-input .tags .input {
 .pending-ticket-widget > div {
     color: #ffffff !important;;
 }
+
 .m-top35 {
     margin-top: 75px !important;
 }
@@ -3932,7 +3960,13 @@ div.btn-group.dropdown {
 
 /*ticket view tab selected */
 .selected-this {
-    background: #4f9300;
+    background: #168039;
+}
+
+.selected-this-btn {
+    background: #168039;
+    border-color: #168039;
+    color: #fff;
 }
 
 .bg-checkbox {
@@ -4352,7 +4386,6 @@ ul.renote-color-btn > li {
     padding: 0px 15px 0px 15px;
     floating: true;
 }
-
 
 .my-note-wrapper {
 

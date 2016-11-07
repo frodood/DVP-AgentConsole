@@ -149,7 +149,16 @@
                                         Overdue
                                     </div>
                                     <h5>{{ticket.due_at}}</h5>
-                                </li>
+                                </li><li>
+                                <small>Channel</small>
+                                <div class="bg-checkbox red font-white small-details inline-btn"
+                                     ng-show="isOverDue">
+                                    Overdue
+                                </div>
+                                <h5 ng-if="ticket.engagement_session.channel">{{ticket.engagement_session.channel}}</h5>
+                                <h5 ng-if="!ticket.engagement_session.channel">Other</h5>
+                            </li>
+
 
 
                             </ul>
@@ -179,7 +188,7 @@
                         <!-- ATTACHMENT -->
                         <div class="ticket-dec-wrapper">
                             <div class="details">
-                                <h5 class="bold">ATTACHMENT</h5>
+                                <h5 class="bold">ATTACHMENTS</h5>
                             </div>
 
                             <!--<div ngf-drop ngf-select ng-model="newfile" class="drop-box dropdown-area"
@@ -202,7 +211,7 @@
                                         <div nv-file-drop="" uploader="uploader">
                                             <div nv-file-over="" uploader="uploader"
                                                  over-class="another-file-over-class" class="upload-area bold">
-                                                drop zone
+                                                Choose a file or drag it here.
                                             </div>
                                         </div>
                                         <div class=" time-wrapper">
@@ -306,55 +315,13 @@
 
                             <div class="ticket-upload-view">
                                 <div class="row">
-                                    <!--<div class="col-sm-3" ng-repeat="attchment in uploadedAttchments">
-
-
-                                    <div class="attachment-img">
-                                        <div class="image view view-first">
-
-                                            <img style="width: 100%; display: block;"
-                                                 src="{{attchment.url}}"
-                                                 on-error-src="asset/images/noimage.jpg" alt="image"/>
-
-                                            <div class="mask">
-                                                <p>{{attchment.file| limitTo:20}}</p>
-
-                                                <div class="tools tools-bottom">
-                                                    <a href="javascript:void(0);"><i class="fa fa-play"
-                                                                                     ng-click="playAttachment(attchment)"></i></a>
-                                                    <a href="javascript:void(0);"><i class="fa fa-cloud-download"
-                                                                                     ng-click="downloadAttachment(attchment)"></i></a>
-                                                    <a href="javascript:void(0);"><i class="fa fa-times"
-                                                                                     ng-click="deleteAttachment(attchment._id)"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="caption">
-                                            <p>{{file.DisplayName}}</p>
-
-                                            &lt;!&ndash;<p>{{file.FileCategory.Category}}</p>&ndash;&gt;
-
-                                            <p ng-hide="showDeleteSelection">{{file.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
-
-                                            <input ng-show="showDeleteSelection" type="checkbox" class="flat"
-                                                   ng-model="file.delete"
-                                                   ng-change="addToDelete(file)">
-
-                                        </div>
-                                    </div>
-
-                                    &lt;!&ndash;<div class="attachment-img">
-                                        <img src="assets/img/avatar/defaultProfile.png" ng-src={{attchment.url}}>
-                                    </div>
-                                    <small>image.png</small>&ndash;&gt;
-                                </div>-->
 
                                     <div ng-repeat="attchment in uploadedAttchments" class="col-sm-3">
                                         <div class="thumbnail">
                                             <div class="image view view-first">
 
                                                 <img style="width: 100%; display: block;"
-                                                     ng-src="{{attchment.url}}"
+                                                     ng-src={{internalThumbFileUrl}}/{{attchment.url}}/SampleAttachment"
                                                      on-error-src="assets/img/noimage.jpg"
                                                      ng-if="isImage(attchment.type)"/>
                                                 <img style="width: 100%; display: block;"
@@ -390,7 +357,7 @@
                         <div class="ticker-subticket-wrapper">
                             <div class="details">
                                 <h5 class="bold">SUB TICKET </h5>
-                                <h2 ng-click="clickAddNewTicket()">+</h2>
+                                <h2 class="cursor-pointer" ng-click="clickAddNewTicket()">+</h2>
                             </div>
                             <div ng-show=subTickets.length==0>
                                 No sub-tickets assigned yet

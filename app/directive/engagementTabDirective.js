@@ -1084,6 +1084,30 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
 
+            scope.addIsolatedEngagementSession = function(profileId, sessionId){
+                engagementService.AddIsolatedEngagementSession(profileId, sessionId).then(function (response) {
+                    if (response.IsSuccess) {
+                        console.log(response.CustomMessage);
+                    } else {
+                        scope.showAlert('Engagement', 'error', response.CustomMessage);
+                    }
+                }, function (err) {
+                    scope.showAlert('Engagement', 'error', "Add Isolated Engagement Failed");
+                });
+            };
+
+            scope.moveEngagementBetweenProfiles = function(sessionId, operation, from, to){
+                engagementService.MoveEngagementBetweenProfiles(sessionId, operation, from, to).then(function (response) {
+                    if (response.IsSuccess) {
+                        console.log(response.CustomMessage);
+                    } else {
+                        scope.showAlert('Engagement', 'error', response.CustomMessage);
+                    }
+                }, function (err) {
+                    scope.showAlert('Engagement', 'error', "Move Engagement Between Profiles Failed");
+                });
+            };
+
             /* Load Profile Details for Current Engagement */
 
             scope.GetExternalUserProfileByContact = function () {
@@ -1107,7 +1131,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         }
 
                     });
-
+                    if (scope.channelFrom != "direct") {
+                        if (scope.exProfileId) {
+                            scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                        } else {
+                            scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
+                        }
+                    }
 
                     if (scope.profileDetail.phone && scope.profileDetail.phone != scope.channelFrom) {
                         var setContact = true;
@@ -1400,6 +1430,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.showNewProfile = false;
 
                         scope.GetProfileHistory(response._id);
+                        scope.addIsolatedEngagementSession(response._id, scope.sessionId);
                     }
                     else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
@@ -1522,7 +1553,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.internalControl = scope.searchUsers || {};
                         scope.internalControl.tabReference = scope.tabReference;
                         scope.internalControl.updateProfileTab = function (newProfile) {
+                            if(scope.profileDetail) {
+                                scope.exProfileId = angular.copy(scope.profileDetail._id);
+                            }
                             scope.profileDetail = newProfile;
+                            scope.engagementsList = [];
+                            scope.ticketList = [];
+                            scope.recentTicketList = [];
+                            scope.currentTicketPage = 1;
+                            scope.currentPage = 1;
                             scope.GetExternalUserProfileByContact();
                         };
                         var searchElement = document.getElementById("commonSearch");

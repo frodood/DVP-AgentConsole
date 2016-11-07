@@ -9,7 +9,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
         inProgress: [],
         done: [],
         loadCompleted:false,
-        loadListStatus:"DEFAULT"
+        loadListStatus:"MY"
 
 
     };
@@ -25,8 +25,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
     $scope.userGroupList=[];
     $scope.isDefault=true;
 
+
+
     $("#mybtn").click(function() {
         $(this).toggleClass("active");
+        if($scope.ticketList.loadListStatus=="MY")
+        {
+
+        }
         if($scope.ticketList.loadListStatus=="GROUP")
         {
             $("#grpbtn").toggleClass("active");
@@ -42,16 +48,19 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
     });
 
-
+    $("#mybtn").click();
 // ................. All users and user groups ..............................
     $scope.assigneeList = [];
     var pickAllGroups= function () {
         userService.getUserGroupList().then(function (response) {
             $scope.userGroupList=response.data.Result;
             $scope.ticketList.loadCompleted =true;
-            pickToDoList(1);
+            /*pickToDoList(1);
             pickProcessingTickets(1);
-            pickCompletedTickets(1);
+            pickCompletedTickets(1);*/
+            pickMyToDoList(1);
+            pickMyProcessingTickets(1);
+            pickMyCompletedTickets(1);
 
             if ($scope.userGroupList) {
                 for (var j = 0; j < $scope.userGroupList.length; j++) {
@@ -784,15 +793,17 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
     $scope.reloadTickets = function () {
         //$state.reload();
+
         $scope.ticketList.toDo=[];
         $scope.ticketList.inProgress=[];
         $scope.ticketList.done=[];
 
         setToInitiate();
         $scope.ticketList.loadCompleted =true;
-        pickToDoList(1);
-        pickProcessingTickets(1);
-        pickCompletedTickets(1);
+        $scope.ticketList.loadListStatus="MY";
+        pickMyToDoList(1);
+        pickMyProcessingTickets(1);
+        pickMyCompletedTickets(1);
     }
 
     $rootScope.$on('reloadInbox', function (events, args) {

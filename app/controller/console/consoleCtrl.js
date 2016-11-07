@@ -308,11 +308,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         unregisterWithArds: function () {
             sipUnRegister();
-            resourceService.UnregisterWithArds(authService.GetResourceId()).then(function (response) {
-                $scope.registerdWithArds = !response;
-            }, function (error) {
-                $scope.showAlert("Soft Phone", "error", "Unregister With ARDS Fail");
-            });
+
+            var resid = authService.GetResourceId();
+
+            if( resid != undefined) {
+                resourceService.UnregisterWithArds(resid).then(function (response) {
+                    $scope.registerdWithArds = !response;
+                }, function (error) {
+                    $scope.showAlert("Soft Phone", "error", "Unregister With ARDS Fail");
+                });
+            }
         },
         fullScreen: function (b_fs) {
             bFullScreen = b_fs;
