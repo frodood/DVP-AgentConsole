@@ -1109,8 +1109,39 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
             /* Load Profile Details for Current Engagement */
+            scope.mapProfile = {};
+            scope.mapProfile.isShowConfirm = false;
 
-            scope.isShowConfirm = false;
+            scope.mapProfileAndNumber = function(){
+                scope.mapProfile.isShowConfirm = false;
+                if(scope.mapProfile.mapEngagement){
+                    scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                }
+                if(scope.mapProfile.addNumber){
+                    var contactInfo = {
+                        contact: scope.channelFrom,
+                        type: 'phone',
+                        display: scope.channelFrom
+                    };
+                    userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
+                        if (response.IsSuccess) {
+                            scope.showAlert('Profile Contact', 'success', response.CustomMessage);
+                        } else {
+                            scope.showAlert('Profile Contact', 'error', response.CustomMessage);
+                        }
+                    }, function (err) {
+                        var errMsg = "Update Profile Contacts Failed";
+                        if (err.statusText) {
+                            errMsg = err.statusText;
+                        }
+                        scope.showAlert('Profile Contact', 'error', errMsg);
+                    });
+                }
+            };
+
+            scope.closeProfileAndNumber = function() {
+                scope.mapProfile.isShowConfirm = false;
+            };
 
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
@@ -1133,9 +1164,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         }
 
                     });
+
                     if (scope.channelFrom != "direct") {
                         if (scope.exProfileId) {
-                            scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                            scope.mapProfile.showEngagement = true;
                         } else {
                             scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
                         }
@@ -1156,31 +1188,19 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         }
 
                         if (scope.channelFrom != "direct" && setContact) {
-                            scope.isShowConfirm = true;
+
+                            scope.mapProfile.showNumberd = true;
                             // var r = confirm("Add to Contact");
-                            if (r == true) {
-                                var contactInfo = {
-                                    contact: scope.channelFrom,
-                                    type: category,
-                                    display: scope.channelFrom
-                                };
-                                userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
-                                    if (response.IsSuccess) {
-                                        scope.showAlert('Profile Contact', 'success', response.CustomMessage);
-                                    } else {
-                                        scope.showAlert('Profile Contact', 'error', response.CustomMessage);
-                                    }
-                                }, function (err) {
-                                    var errMsg = "Update Profile Contacts Failed";
-                                    if (err.statusText) {
-                                        errMsg = err.statusText;
-                                    }
-                                    scope.showAlert('Profile Contact', 'error', errMsg);
-                                });
-                            } else {
-                                console.log("You pressed Cancel!");
-                            }
+                            //if (r == true) {
+                            //
+                            //} else {
+                            //    console.log("You pressed Cancel!");
+                            //}
                         }
+                    }
+
+                    if(scope.mapProfile && (scope.mapProfile.showEngagement || scope.mapProfile.showNumberd)){
+                        scope.mapProfile.isShowConfirm = true;
                     }
 
                 } else {

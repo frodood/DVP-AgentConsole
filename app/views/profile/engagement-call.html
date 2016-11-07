@@ -929,30 +929,30 @@
     <!-- end -->
 
     <!-- Confirm Box -->
-    <div class="confirm-box-wrapper" ng-show="isShowConfirm">
+    <div class="confirm-box-wrapper" ng-show="mapProfile.isShowConfirm">
         <div class="col-lg-4 col-lg-offset-4">
             <div class="confirm-body">
                 <h5>Are you sure..? Add to Contact</h5>
                 <div class="select-option-wrapper">
                     <ul>
-                        <li>
+                        <li ng-show="mapProfile.showNumberd">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"> add phone number to contacts
+                                    <input type="checkbox" ng-model="mapProfile.addNumber"> add phone number to contacts
                                 </label>
                             </div>
                         </li>
-                        <li>
+                        <li ng-show="mapProfile.showEngagement">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"> map interaction to profile
+                                    <input type="checkbox" ng-model="mapProfile.mapEngagement"> map interaction to profile
                                 </label>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="confirm-btn-wrapper">
-                    <div class="ok-btn">
+                    <div class="ok-btn" ng-click="mapProfileAndNumber()">
                         OK
                     </div>
                     <div class="cancel-btn">
