@@ -491,7 +491,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 //setTimeout(function () { if (!oSipSessionCall) txtCallStatus.innerHTML = ''; }, 2500);
             }
             catch (ex) {
-                console.error(ex.message)
+                console.log(ex)
             }
         },
         showOnlineBtn: function () {
