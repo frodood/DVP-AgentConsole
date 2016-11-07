@@ -121,6 +121,14 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
         }
     };
 
+    self.SocDisconnect = function () {
+        socket.disconnect();
+    };
+    self.SocReconnect = function () {
+
+        socket.connect();
+    }
+
     return self;
 
 });

@@ -69,6 +69,24 @@
                                             <div class="notification-time ">
                                                 {{todo.type}}
                                             </div>
+                                            <div ng-class="{'api-channel':todo.channel=='api',
+                                                'twitter-channel':todo.channel=='twitter',
+                                                'call-channel':todo.channel=='call',
+                                                'facebook-channel':todo.channel=='facebook-post',
+                                                'voicemail-channel':todo.channel=='voicemail',
+                                                'sms-channel':todo.channel=='sms',
+                                                'email-channel':todo.channel=='email'}">
+                                                <i class=""
+                                                   ng-class="{'fa fa-random':todo.channel=='api',
+                  'fa fa-twitter':todo.channel=='twitter',
+                   'fa fa-facebook':todo.channel=='facebook-post',
+                  'fa fa-phone':todo.channel=='call',
+                  'fa fa-bookmark-o':todo.channel=='new',
+                  'fa fa-volume-control-phone':todo.channel=='voicemail',
+                  'fa fa-bell-o':todo.channel=='sms',
+                  'fa fa-envelope-o':todo.channel=='email'}"></i>
+                                            </div>
+
                                         </div>
                                         <div class="col-lg-6" style="padding-right: 0px;">
                                             <div class="notification-ref link pull-right" ng-click="gotoTicket(todo)">
@@ -120,6 +138,23 @@
                                         <div class="col-lg-6">
                                             <div class="notification-time ">
                                                 {{inprogress.type}}
+                                            </div>
+                                            <div ng-class="{'api-channel':inprogress.channel=='api',
+                                                'twitter-channel':inprogress.channel=='twitter',
+                                                'call-channel':inprogress.channel=='call',
+                                                'facebook-channel':inprogress.channel=='facebook-post',
+                                                'voicemail-channel':inprogress.channel=='voicemail',
+                                                'sms-channel':inprogress.channel=='sms',
+                                                'email-channel':inprogress.channel=='email'}">
+                                                <i class=""
+                                                   ng-class="{'fa fa-random':inprogress.channel=='api',
+                  'fa fa-twitter':inprogress.channel=='twitter',
+                   'fa fa-facebook':inprogress.channel=='facebook-post',
+                  'fa fa-phone':inprogress.channel=='call',
+                  'fa fa-bookmark-o':inprogress.channel=='new',
+                  'fa fa-volume-control-phone':inprogress.channel=='voicemail',
+                  'fa fa-bell-o':inprogress.channel=='sms',
+                  'fa fa-envelope-o':inprogress.channel=='email'}"></i>
                                             </div>
                                         </div>
                                         <div class="col-lg-6" style="padding-right: 0px;">
@@ -174,6 +209,23 @@
                                         <div class="col-lg-6">
                                             <div class="notification-time ">
                                                 {{done.type}}
+                                            </div>
+                                            <div ng-class="{'api-channel':done.channel=='api',
+                                                'twitter-channel':done.channel=='twitter',
+                                                'call-channel':done.channel=='call',
+                                                'facebook-channel':done.channel=='facebook-post',
+                                                'voicemail-channel':done.channel=='voicemail',
+                                                'sms-channel':done.channel=='sms',
+                                                'email-channel':done.channel=='email'}">
+                                                <i class=""
+                                                   ng-class="{'fa fa-random':done.channel=='api',
+                  'fa fa-twitter':done.channel=='twitter',
+                   'fa fa-facebook':done.channel=='facebook-post',
+                  'fa fa-phone':done.channel=='call',
+                  'fa fa-bookmark-o':done.channel=='new',
+                  'fa fa-volume-control-phone':done.channel=='voicemail',
+                  'fa fa-bell-o':done.channel=='sms',
+                  'fa fa-envelope-o':done.channel=='email'}"></i>
                                             </div>
                                         </div>
                                         <div class="col-lg-6" style="padding-right: 0px;">

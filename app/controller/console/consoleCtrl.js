@@ -8,7 +8,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService, $uibModal) {
+                                             filterFilter, engagementService, phoneSetting, toDoService, $uibModal,notificationConnector) {
 
 
     $scope.notifications = [];
@@ -748,6 +748,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.veeryNotification();
+    $scope.socketReconnect = function () {
+        notificationConnector.SocReconnect();
+    }
 
 
     $scope.checkAndRegister = function () {
@@ -757,10 +760,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#regNotification').addClass('display-none').removeClass('display-block');
             $('#regNotificationLoading').addClass('display-block').removeClass('display-none');
             $scope.isLoadingNotifiReg = true;
-            $scope.veeryNotification();
+            $scope.socketReconnect();
         }
 
     }
+
+
+
 
 
     /*--------------------------      Notification  ---------------------------------------*/

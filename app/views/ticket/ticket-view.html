@@ -149,13 +149,11 @@
                                         Overdue
                                     </div>
                                     <h5>{{ticket.due_at}}</h5>
-                                </li><li>
-                                <small>Channel</small>
-                                <div class="bg-checkbox red font-white small-details inline-btn"
-                                     ng-show="isOverDue">
-                                    Overdue
-                                </div>
-                                <h5 ng-if="ticket.engagement_session.channel">{{ticket.engagement_session.channel}}</h5>
+                                </li>
+                                <li>
+                                <small>Channel</small> <a style="margin-left: 10px" href="javascript:void(0);"><i class="fa fa-play" ng-if="ticket.engagement_session.channel=='voicemail' || 'call'" ng-click="playFile(ticket.engagement_session._id)"></i></a>
+
+                                <h5 ng-if="ticket.engagement_session.channel">{{ticket.engagement_session.channel}} </h5>
                                 <h5 ng-if="!ticket.engagement_session.channel">Other</h5>
                             </li>
 
