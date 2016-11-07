@@ -1,42 +1,50 @@
 <div class="row">
-
-    <span class="btn  btn-default  btn-block"  ng-click="showNewComment()" ng-show="!isNewComment">New Comment</span>
+    <div class="comment-add-wrapper">
+        <span class="" ng-click="showNewComment()"
+              ng-show="!isNewComment">
+            <i class="ti-comments"></i>
+             Comment</span>
+    </div>
     <div class="comment-wrapper" ng-show="isNewComment">
         <div class="col-lg-12">
-            <form ><div class="new-note-wrapper ">
+            <form>
+                <div class="new-note-wrapper ">
 
 
-                <textarea class="form-control" rows="3" ng-model="newComment"></textarea>
-                <div style="height:10px"></div>
+                    <textarea class="form-control" rows="3" ng-model="newComment"></textarea>
+                    <div style="height:10px"></div>
 
-                <div class="row">
-                    <div class="col-md-4" style="margin-top: 8px;">
-                        <select class="form-control " placeholder=""
-                                ng-model="messageMode">
-                            <option >public</option>
-                            <option>private</option>
-                            <option>internal</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-4" style="margin-top: 8px;">
+                            <select class="form-control " placeholder=""
+                                    ng-model="messageMode">
+                                <option>public</option>
+                                <option>private</option>
+                                <option>internal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="height:10px"></div>
+                    <input type="file" nv-file-select="" onchange="" uploader="uploader" multiple/>
+                    <span ng-show="isUploading">Uploading ............</span>
+                    <div style="height:10px"></div>
+                    <div ng-repeat="currUploads in uploadedComAttchments">
+
+                        <span style="padding-right: 10px"><a href="" ng-click="playAttachment(currUploads)">{{currUploads.file}}</a></span><i
+                            class="fa fa-close" ng-click="deleteAttachment(currUploads._id)"> </i>
+
+                    </div>
+
+                    <div class="btn-warp inline-btn  p-top-6 ">
+                    <span class="btn  btn-default btn-block "
+                          ng-click="addComment(newComment,this.messageMode)"
+                          ng-disabled="!isCommentCompleted">add</span>
+                    </div>
+                    <div class="btn-warp inline-btn  p-top-6 ">
+                        <span class="btn  btn-default btn-close btn-block " ng-click="cancelNewComment()">cancel</span>
                     </div>
                 </div>
-                <div style="height:10px"></div>
-                <input type="file" nv-file-select="" onchange="" uploader="uploader" multiple/>
-                <span ng-show="isUploading">Uploading ............</span>
-                <div style="height:10px"></div>
-                <div  ng-repeat="currUploads in uploadedComAttchments">
-
-                    <span style="padding-right: 10px"><a href="" ng-click="playAttachment(currUploads)">{{currUploads.file}}</a></span><i class="fa fa-close" ng-click="deleteAttachment(currUploads._id)"> </i>
-
-                </div>
-
-                <div class="btn-warp inline-btn  p-top-6 ">
-                    <span class="btn  btn-default btn-block "
-                          ng-click="addComment(newComment,this.messageMode)" ng-disabled="!isCommentCompleted">add</span>
-                </div>
-                <div class="btn-warp inline-btn  p-top-6 ">
-                    <span class="btn  btn-default btn-close btn-block " ng-click="cancelNewComment()">cancel</span>
-                </div>
-            </div></form>
+            </form>
 
         </div>
     </div>
@@ -87,11 +95,14 @@
                 </div>
             </div>
             <div class="row">
-                <div ng-if="comment.attachments.length>0"><div style="height: 10px;"></div><div ng-repeat="com_attch in comment.attachments">
+                <div ng-if="comment.attachments.length>0">
+                    <div style="height: 10px;"></div>
+                    <div ng-repeat="com_attch in comment.attachments">
 
-                    <a href="" ng-click="playAttachment(com_attch)">{{com_attch.file}}</a>
+                        <a href="" ng-click="playAttachment(com_attch)">{{com_attch.file}}</a>
 
-                </div></div>
+                    </div>
+                </div>
             </div>
             <div ng-show="comment.channel==='call'">
                 <a href="javascript:void(0);"><i class="fa fa-play"

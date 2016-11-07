@@ -207,6 +207,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
+            phoneFuncion.showTransfer();
+            phoneFuncion.hideSwap();
+            phoneFuncion.hideEtl();
+            phoneFuncion.hideConference();
         },
         swapCall: function () {
             var dtmfSet = phoneSetting.SwapCode.split('');
@@ -231,6 +235,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     sipSendDTMF(chr);
                 });
             }, 1000);
+            phoneFuncion.hideTransfer();
             phoneFuncion.showSwap();
             phoneFuncion.showEtl();
             phoneFuncion.showConference();
@@ -486,7 +491,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 //setTimeout(function () { if (!oSipSessionCall) txtCallStatus.innerHTML = ''; }, 2500);
             }
             catch (ex) {
-                console.error(ex.message)
+                console.log(ex)
             }
         },
         showOnlineBtn: function () {
@@ -543,8 +548,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#swapCall').addClass('display-none').removeClass('display-inline');
         },
         showSwap: function () {
-            $('#swapCall').addClass('display-inline').removeClass('display-none');
-            $('#slapCall').addClass('display-inline').removeClass('display-none');
+            /*$('#swapCall').addClass('display-inline').removeClass('display-none');
+            $('#slapCall').addClass('display-inline').removeClass('display-none');*/
         },
         hideEtl: function () {
             $('#etlCall').addClass('display-none').removeClass('display-inline');
@@ -684,7 +689,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             audio.play();
             $scope.notifications.unshift(objMessage);
             $('#notificationAlarm').addClass('animated swing');
-            $scope.unredNotifications = $scope.getCountOfUnredNotifications()
+            $scope.unredNotifications = $scope.getCountOfUnredNotifications();
             setTimeout(function () {
                 $('#notificationAlarm').removeClass('animated swing');
             }, 500);
@@ -718,13 +723,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentDisconnected = function () {
         $scope.isSocketRegistered = false;
         $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
-    }
+    };
     $scope.agentAuthenticated = function () {
         $scope.isSocketRegistered = true;
         $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
         $('#regNotification').addClass('display-block').removeClass('display-none');
         $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
-    }
+    };
 
 
     //#myNote
@@ -763,7 +768,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.socketReconnect();
         }
 
-    }
+    };
 
 
 
