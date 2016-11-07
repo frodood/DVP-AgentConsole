@@ -1084,7 +1084,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
 
-            scope.addIsolatedEngagementSession = function(profileId, sessionId){
+            scope.addIsolatedEngagementSession = function (profileId, sessionId) {
                 engagementService.AddIsolatedEngagementSession(profileId, sessionId).then(function (response) {
                     if (response.IsSuccess) {
                         console.log(response.CustomMessage);
@@ -1096,7 +1096,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 });
             };
 
-            scope.moveEngagementBetweenProfiles = function(sessionId, operation, from, to){
+            scope.moveEngagementBetweenProfiles = function (sessionId, operation, from, to) {
                 engagementService.MoveEngagementBetweenProfiles(sessionId, operation, from, to).then(function (response) {
                     if (response.IsSuccess) {
                         console.log(response.CustomMessage);
@@ -1109,6 +1109,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
             /* Load Profile Details for Current Engagement */
+
+            scope.isShowConfirm = false;
 
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
@@ -1154,7 +1156,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         }
 
                         if (scope.channelFrom != "direct" && setContact) {
-                            var r = confirm("Add to Contact");
+                            scope.isShowConfirm = true;
+                            // var r = confirm("Add to Contact");
                             if (r == true) {
                                 var contactInfo = {
                                     contact: scope.channelFrom,
@@ -1553,7 +1556,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.internalControl = scope.searchUsers || {};
                         scope.internalControl.tabReference = scope.tabReference;
                         scope.internalControl.updateProfileTab = function (newProfile) {
-                            if(scope.profileDetail) {
+                            if (scope.profileDetail) {
                                 scope.exProfileId = angular.copy(scope.profileDetail._id);
                             }
                             scope.profileDetail = newProfile;

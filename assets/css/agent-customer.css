@@ -4845,3 +4845,69 @@ ul.renote-color-btn > li {
     overflow: hidden;
 
 }
+
+/*confirm box*/
+.confirm-box-wrapper {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+}
+
+.confirm-body {
+    position: relative;
+    background: #ffffff;
+    height: 250px;
+    overflow: hidden;
+}
+
+.confirm-body > h5 {
+    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
+    text-align: center;
+    font-size: 25px;
+    padding-top: 35px;
+}
+
+.select-option-wrapper {
+    padding-left: 68px;
+    padding-top: 8px;
+}
+
+.select-option-wrapper > ul {
+    list-style: none;
+}
+
+.select-option-wrapper > ul > li {
+    text-align: left;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+}
+
+.checkbox > label {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif !important;
+    color: #7c7b7b !important;
+}
+
+.confirm-btn-wrapper {
+    text-align: center;
+    font-size: 17px;
+    padding-top: 40px;
+}
+
+.confirm-btn-wrapper > div {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.confirm-btn-wrapper > .ok-btn {
+    font-family: "AvenirNextLTPro-Cn", Courier, monospace;
+    color: #45bf55;
+    padding-right: 18px;
+}
+
+.confirm-btn-wrapper > .cancel-btn {
+    font-family: "AvenirNextLTPro-Cn", Courier, monospace;
+    color: #d90000;
+}
