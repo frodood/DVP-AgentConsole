@@ -679,7 +679,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             audio.play();
             $scope.notifications.unshift(objMessage);
             $('#notificationAlarm').addClass('animated swing');
-            $scope.unredNotifications = $scope.getCountOfUnredNotifications()
+            $scope.unredNotifications = $scope.getCountOfUnredNotifications();
             setTimeout(function () {
                 $('#notificationAlarm').removeClass('animated swing');
             }, 500);
@@ -713,13 +713,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentDisconnected = function () {
         $scope.isSocketRegistered = false;
         $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
-    }
+    };
     $scope.agentAuthenticated = function () {
         $scope.isSocketRegistered = true;
         $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
         $('#regNotification').addClass('display-block').removeClass('display-none');
         $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
-    }
+    };
 
 
     //#myNote
