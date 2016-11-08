@@ -605,6 +605,14 @@ body {
     color: #17373c;
 }
 
+.show-1-btn {
+    width: 62px;
+    border-radius: 46px;
+    height: 38px;
+    background: #ffffff;
+    margin-left: 67px;
+}
+
 /*view ticket*/
 .view-ticket-wrapper {
     width: 100%;
@@ -4253,13 +4261,15 @@ div.btn-group.dropdown {
     overflow: hidden;
 }
 
-input[type="textarea"].take-note-text::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+input[type="textarea"].take-note-text::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     color: #000 !important;
     font-size: 20px;
     font-family: "AvenirNextLTPro-UltLt", Courier, monospace !important;
 }
 
-input[type="text"].take-note-title-text::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+input[type="text"].take-note-title-text::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
     color: #000 !important;
     font-family: "AvenirNextLTPro-UltLt", Courier, monospace !important;
     font-weight: bold;

@@ -11,6 +11,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              filterFilter, engagementService, phoneSetting, toDoService, $uibModal) {
 
 
+    function startRingTone() {
+        try {
+            ringtone.play();
+        }
+        catch (e) {
+        }
+    }
+
+    function stopRingTone() {
+        try {
+            ringtone.pause();
+        }
+        catch (e) {
+        }
+    }
+
     $scope.notifications = [];
     $scope.agentList = [];
 
@@ -161,14 +177,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.profile.server.password = null;
     $scope.profile.server.token = authService.TokenWithoutBearer();
 
+    $scope.countdown = 30;
     $scope.call = {};
     $scope.call.number = "";
     $scope.call.skill = "";
     $scope.call.Company = "";
     $scope.call.CompanyNo = "";
-
+    $scope.isAcw = false;
+    $scope.freeze = false;
 
     $scope.veeryPhone = {
+        
         sipSendDTMF: function (dtmf) {
             sipSendDTMF(dtmf);
             //$scope.call.number = $scope.call.number + dtmf;
@@ -190,7 +209,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         endCall: function () {
             sipHangUp();
-            phoneFuncion.updateCallStatus('');
         },
         answerCall: function () {
             answerCall();
@@ -199,6 +217,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         rejectCall: function () {
             //UIStateChange.inIdleState();
             rejectCall();
+            stopRingbackTone();
+            stopRingTone();
             $scope.ShowIncomeingNotification(false);
             phoneFuncion.updateCallStatus('');
         },
@@ -361,8 +381,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert("Soft Phone", "info", 'Session Progress');
                 }
                 else if (e.toString().toLowerCase() == 'in call') {
+                    stopRingTone();
                     /*UIStateChange.inCallConnectedState();*/
-                    $scope.startCallTime();
                     phoneFuncion.showHoldButton();
                     phoneFuncion.showSpeakerButton();
                     phoneFuncion.showMuteButton();
@@ -371,6 +391,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     phoneFuncion.hideAnswerButton();
                     phoneFuncion.updateCallStatus('In Call');
                     $scope.ShowIncomeingNotification(false);
+                    $scope.startCallTime();
                 }
             }
             catch (ex) {
@@ -382,6 +403,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 $scope.phoneStatus = description;
                 if (description == 'Connected') {
+                    stopRingTone();
                     /*UIStateChange.inIdleState();*/
                     $scope.PhoneOnline();
                     $scope.isRegistor = true;
@@ -404,6 +426,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         uiOnConnectionEvent: function (b_connected, b_connecting) {
             try {
+
                 if (!b_connected && !b_connecting) {
                     $scope.isRegistor = false;
                     $scope.PhoneOffline();
@@ -443,6 +466,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         onIncomingCall: function (sRemoteNumber) {
             try {
+                if($scope.isAcw || $scope.freeze)
+                {
+                    rejectCall();
+                    return;
+                }
+                startRingTone();
                 /*UIStateChange.inIncomingState();*/
                 $scope.call.number = sRemoteNumber;
                 $scope.ShowIncomeingNotification(true);
@@ -462,17 +491,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 console.log("uiCallTerminated");
                 $scope.stopCallTime();
                 $scope.ShowIncomeingNotification(false);
-                phoneFuncion.hideHoldButton();
+
+
+                /*phoneFuncion.hideHoldButton();
                 phoneFuncion.hideMuteButton();
                 phoneFuncion.hideSpeakerButton();
                 phoneFuncion.hideSwap();
                 phoneFuncion.hideEtl();
                 phoneFuncion.hideTransfer();
                 phoneFuncion.hideConference();
-                phoneFuncion.hideConnectedBtn();
-                phoneFuncion.showAnswerButton();
-                phoneFuncion.updateCallStatus('');
 
+                phoneFuncion.updateCallStatus('');*/
+                $scope.veeryPhone.StartAcw();
                 if (window.btnBFCP) window.btnBFCP.disabled = true;
 
 
@@ -488,23 +518,99 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.veeryPhone.uiVideoDisplayEvent(false, false);
                 $scope.veeryPhone.uiVideoDisplayEvent(true, false);
 
+
                 //setTimeout(function () { if (!oSipSessionCall) txtCallStatus.innerHTML = ''; }, 2500);
             }
             catch (ex) {
                 console.error(ex.message)
             }
         },
-        showOnlineBtn: function () {
-            phoneFuncion.showConnectedBtn();
+        showMoreOption: function () {
+            phoneFuncion.showMoreOption();
         },
-        hideOnlineBtn: function () {
-            phoneFuncion.hideConnectedBtn();
+        hideMoreOption: function () {
+            phoneFuncion.hideMoreOption();
+        },
+        StartAcw:function(){
+            phoneFuncion.startAcw();
+        },
+        StopAcw:function(){$scope.isAcw = false;
+            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].stop();
+            $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
+            $('#calltimmer').addClass('call-duations').removeClass('display-none');
+            document.getElementById('callStatus').innerHTML = "idle";
+        },
+        FinishedAcw:function(){$scope.isAcw = false;
+            phoneFuncion.endAcw();
+        },
+        freezeAcw:function(){
+            if($scope.freeze){
+                phoneFuncion.endfreezeBtn();
+            }
+            else{
+                phoneFuncion.freezeBtn();
+            }
         }
     };
 
     var phoneFuncion = {
-        showAnswerButton: function () {
+        hideAllBtn:function(){
+            phoneFuncion.hideAnswerButton();phoneFuncion.hideConference();
+            phoneFuncion.hideMorebtn();
+            phoneFuncion.hideEndButton();
+            phoneFuncion.hideEtl();phoneFuncion.hideHoldButton();
+            phoneFuncion.hideMuteButton();phoneFuncion.hideSpeakerButton();
+            phoneFuncion.hideSwap();phoneFuncion.hideTransfer();
+            phoneFuncion.hideDialPad();phoneFuncion.hideContactList();
+        },
+        idle:function(){
+            phoneFuncion.showAnswerButton();phoneFuncion.showEndButton();
+            phoneFuncion.showDialPad();phoneFuncion.showContactList();
+            phoneFuncion.showMorebtn();
+            $scope.freeze = false;
+            $scope.isAcw = false;
+            $scope.$broadcast('timer-set-countdown', $scope.countdown);
+        },
+        freezeBtn: function () {
+            $scope.freeze = true;
+            $scope.isAcw = false;
+            phoneFuncion.updateCallStatus('Freeze');
+            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].stop();
+            $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
+            $('#calltimmer').addClass('call-duations').removeClass('display-none');
+            $('#freezebtn').addClass('phone-sm-btn ti-time show-1-btn').removeClass('display-none');
+            $scope.startCallTime();
+
+        },
+        endfreezeBtn: function () {
+            $scope.freeze = false;
+            $scope.stopCallTime();
+            phoneFuncion.updateCallStatus('Idle');
+            $('#freezebtn').addClass('phone-sm-btn ti-alarm-clock show-1-btn').removeClass('display-none');
+            phoneFuncion.idle();
+        },
+        startAcw: function () {
+            $scope.isAcw = true;
+            $('#calltimmer').addClass('display-none').removeClass('call-duations');
+            $('#countdownCalltimmer').addClass('call-duations').removeClass('display-none');
+            phoneFuncion.updateCallStatus('ACW');
+            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].start();
+            phoneFuncion.hideAllBtn();
+            $('#freezebtn').addClass('phone-sm-btn ti-alarm-clock show-1-btn').removeClass('display-none');
+        },
+        endAcw: function () {
+            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].stop();
+            $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
+            $('#calltimmer').addClass('call-duations').removeClass('display-none');
+            document.getElementById('callStatus').innerHTML = "idle";
+            $scope.freeze = false;
+            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn ti-alarm-clock show-1-btn');
+            //document.getElementById('freeze').innerHTML = "freeze";
+            phoneFuncion.idle();
+        }
+        ,showAnswerButton: function () {
             $('#answerButton').addClass('phone-sm-btn answer').removeClass('display-none');
+            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn ti-alarm-clock show-1-btn');
         },
         hideAnswerButton: function () {
             $('#answerButton').addClass('display-none ').removeClass('phone-sm-btn answer');
@@ -545,7 +651,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#transferCall').addClass('display-inline').removeClass('display-none');
         },
         hideSwap: function () {
-            $('#swapCall').addClass('display-none').removeClass('display-inline');
+           // $('#swapCall').addClass('display-none').removeClass('display-inline');
         },
         showSwap: function () {
             /*$('#swapCall').addClass('display-inline').removeClass('display-none');
@@ -563,16 +669,41 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         showConference: function () {
             $('#conferenceCall').addClass('display-inline').removeClass('display-none');
         },
-        showConnectedBtn: function () {
+        hideDialPad: function () {
+            $('#dialPad').addClass('display-none').removeClass('veery-font-1-menu-4');
+        },
+        showDialPad: function () {
+            $('#dialPad').addClass('veery-font-1-menu-4').removeClass('display-none');
+        },
+        hideMorebtn: function () {
+            $('#morebtn').addClass('display-none').removeClass('phone-sm-btn phone-sm-bn-p8 veery-font-1-more');
+        },
+        showMorebtn: function () {
+            $('#morebtn').addClass('phone-sm-btn phone-sm-bn-p8 veery-font-1-more').removeClass('display-none');
+        },
+        hideContactList: function () {
+            $('#contactList').addClass('display-none').removeClass('veery-font-1-user');
+        },
+        showContactList: function () {
+            $('#contactList').addClass('veery-font-1-user').removeClass('display-none');
+        },
+        showMoreOption: function () {
             $('#onlinePhoneBtnWrapper').removeClass('display-none');
             $('#phoneBtnWrapper').addClass('display-none');
         },
-        hideConnectedBtn: function () {
+        hideMoreOption: function () {
             $('#phoneBtnWrapper').removeClass('display-none');
             $('#onlinePhoneBtnWrapper').addClass('display-none');
         },
 
-
+        /*showConnectedBtn: function () {
+         //$('#onlinePhoneBtnWrapper').removeClass('display-none');
+         $('#phoneBtnWrapper').addClass('display-none');
+         },
+         hideConnectedBtn: function () {
+         $('#phoneBtnWrapper').removeClass('display-none');
+         // $('#onlinePhoneBtnWrapper').addClass('display-none');
+         },*/
     };
 
     phoneFuncion.hideHoldButton();
@@ -2141,13 +2272,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.stopCallTime = function () {
+        try{
+            document.getElementById('calltimmer').getElementsByTagName('timer')[0].stop();
+        }
+        catch(ex){
 
-        document.getElementById('calltimmer').getElementsByTagName('timer')[0].stop();
+        }
+
     };
     $scope.startCallTime = function () {
+        try{
+            document.getElementById('calltimmer').getElementsByTagName('timer')[0].start();
+        }
+        catch(ex){
 
-
-        document.getElementById('calltimmer').getElementsByTagName('timer')[0].start();
+        }
     };
 
     $scope.goToTopScroller = function () {

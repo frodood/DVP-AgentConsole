@@ -283,21 +283,7 @@ function sipSendDTMF(c) {
     }
 }
 
-function startRingTone() {
-    try {
-        ringtone.play();
-    }
-    catch (e) {
-    }
-}
 
-function stopRingTone() {
-    try {
-        ringtone.pause();
-    }
-    catch (e) {
-    }
-}
 
 function startRingbackTone() {
     try {
@@ -354,7 +340,7 @@ function onSipEventStack(e /*SIPml.Stack.Event*/) {
             UserEvent.uiOnConnectionEvent(false, false);
 
             stopRingbackTone();
-            stopRingTone();
+
 
             //UserEvent.uiVideoDisplayShowHide(false);
             break;
@@ -370,7 +356,7 @@ function onSipEventStack(e /*SIPml.Stack.Event*/) {
                 oSipSessionCall = e.newSession;
                 // start listening for events
                 oSipSessionCall.setConfiguration(oConfigCall);
-                startRingTone();
+
 
                 var sRemoteNumber = (oSipSessionCall.getRemoteFriendlyName() || 'unknown');
                 UserEvent.onIncomingCall(sRemoteNumber);
@@ -423,7 +409,7 @@ function onSipEventSession(e /* SIPml.Session.Event */) {
 
                 if (bConnected) {
                     stopRingbackTone();
-                    stopRingTone();
+
                     UserEvent.onSipEventSession(e.description);
                     if (oNotifICall) {
                         oNotifICall.cancel();
@@ -517,7 +503,7 @@ function onSipEventSession(e /* SIPml.Session.Event */) {
         {
             if (e.session == oSipSessionCall) {
                 stopRingbackTone();
-                stopRingTone();
+
                 UserEvent.notificationEvent("Early media started");
             }
             break;
