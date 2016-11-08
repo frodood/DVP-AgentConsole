@@ -455,9 +455,10 @@
                     </timer>
                 </div>
                 <div class="display-none" id="countdownCalltimmer">
-                    <timer autostart="false" ng-attr-countdown="countdown" finish-callback="veeryPhone.FinishedAcw()"
+                    <timer autostart="false" countdown="countdown" finish-callback="veeryPhone.FinishedAcw()"
                            interval="1000">{{seconds}} second
                     </timer>
+
                 </div>
             </div>
             <!--#KeyPad-->
@@ -505,7 +506,7 @@
                             <input type="button" class="phone-button" value="*" data-values='["*"]'/>
                         </td>
                         <td>
-                            <input type="button" class="phone-button" value="0" data-values='[0, " "]'/>
+                            <input type="button" class="phone-button" value="0" data-values='["0", " "]'/>
                         </td>
                         <td>
                             <input type="button" class="phone-button" value="#" data-values='["#"]'/>
@@ -552,7 +553,7 @@
                 <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-more" ng-click="veeryPhone.showMoreOption();"
                      id="morebtn" title="More"></div>
 
-                <div class="phone-sm-btn ti-alarm-clock show-1-btn display-none" ng-click="veeryPhone.freezeAcw();" id="freezebtn" title="freeze">
+                <div class="phone-sm-btn flaticon-stopwatch-2 show-1-btn display-none" ng-click="veeryPhone.freezeAcw();" id="freezebtn" title="freeze">
                 </div>
 
 <!--

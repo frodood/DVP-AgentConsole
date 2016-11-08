@@ -8,7 +8,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService, $uibModal,notificationConnector) {
+                                             filterFilter, engagementService, phoneSetting, toDoService, $uibModal, notificationConnector) {
 
 
     function startRingTone() {
@@ -34,6 +34,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.status = {
         isopen: false
     };
+
+    $scope.countdown = 100;
+    $scope.GetAcwTime = function () {
+        resourceService.GetAcwTime().then(function (response) {
+           // $scope.countdown = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
+        }, function (err) {
+            $scope.showAlert('Phone', 'error', "Fail To Get ACW Time");
+        });
+    };
+    $scope.GetAcwTime();
 
     /*# console top menu */
     $scope.consoleTopMenu = {
@@ -151,6 +161,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
+    $scope.FreezeAcw = function (callSessionId, endFreeze) {
+        resourceService.FreezeAcw(callSessionId, endFreeze).then(function (response) {
+
+        }, function (err) {
+            $scope.showAlert('Phone', 'error', "Fail Freeze Operation.");
+            console.error(err);
+        });
+    };
+
+
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
@@ -177,17 +197,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.profile.server.password = null;
     $scope.profile.server.token = authService.TokenWithoutBearer();
 
-    $scope.countdown = 30;
+
     $scope.call = {};
     $scope.call.number = "";
     $scope.call.skill = "";
     $scope.call.Company = "";
     $scope.call.CompanyNo = "";
+    $scope.call.sessionId = "";
     $scope.isAcw = false;
     $scope.freeze = false;
 
     $scope.veeryPhone = {
-        
+
         sipSendDTMF: function (dtmf) {
             sipSendDTMF(dtmf);
             //$scope.call.number = $scope.call.number + dtmf;
@@ -291,6 +312,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
              }, function (error) {
              $scope.showAlert("Soft Phone", "error", "Fail To Register With Resource Server.");
              });*/
+            resourceService.MapResourceToVeery($scope.profile.publicIdentity);
         },
         Register: function (password) {
             $scope.PhoneLoading();
@@ -336,7 +358,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             var resid = authService.GetResourceId();
 
-            if( resid != undefined) {
+            if (resid != undefined) {
                 resourceService.UnregisterWithArds(resid).then(function (response) {
                     $scope.registerdWithArds = !response;
                 }, function (error) {
@@ -392,6 +414,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     phoneFuncion.updateCallStatus('In Call');
                     $scope.ShowIncomeingNotification(false);
                     $scope.startCallTime();
+                    $scope.$broadcast('timer-set-countdown', $scope.countdown);
                 }
             }
             catch (ex) {
@@ -466,8 +489,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         onIncomingCall: function (sRemoteNumber) {
             try {
-                if($scope.isAcw || $scope.freeze)
-                {
+                if ($scope.isAcw || $scope.freeze) {
                     rejectCall();
                     return;
                 }
@@ -494,14 +516,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
                 /*phoneFuncion.hideHoldButton();
-                phoneFuncion.hideMuteButton();
-                phoneFuncion.hideSpeakerButton();
-                phoneFuncion.hideSwap();
-                phoneFuncion.hideEtl();
-                phoneFuncion.hideTransfer();
-                phoneFuncion.hideConference();
+                 phoneFuncion.hideMuteButton();
+                 phoneFuncion.hideSpeakerButton();
+                 phoneFuncion.hideSwap();
+                 phoneFuncion.hideEtl();
+                 phoneFuncion.hideTransfer();
+                 phoneFuncion.hideConference();
 
-                phoneFuncion.updateCallStatus('');*/
+                 phoneFuncion.updateCallStatus('');*/
                 $scope.veeryPhone.StartAcw();
                 if (window.btnBFCP) window.btnBFCP.disabled = true;
 
@@ -531,86 +553,95 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         hideMoreOption: function () {
             phoneFuncion.hideMoreOption();
         },
-        StartAcw:function(){
+        StartAcw: function () {
             phoneFuncion.startAcw();
         },
-        StopAcw:function(){$scope.isAcw = false;
-            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].stop();
+        StopAcw: function () {
+            $scope.isAcw = false;
+            $scope.stopCountdownTimmer();
             $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
             $('#calltimmer').addClass('call-duations').removeClass('display-none');
             document.getElementById('callStatus').innerHTML = "idle";
         },
-        FinishedAcw:function(){$scope.isAcw = false;
+        FinishedAcw: function () {
+            $scope.isAcw = false;
             phoneFuncion.endAcw();
         },
-        freezeAcw:function(){
-            if($scope.freeze){
+        freezeAcw: function () {
+            if ($scope.freeze) {
                 phoneFuncion.endfreezeBtn();
             }
-            else{
+            else {
                 phoneFuncion.freezeBtn();
             }
         }
     };
 
     var phoneFuncion = {
-        hideAllBtn:function(){
-            phoneFuncion.hideAnswerButton();phoneFuncion.hideConference();
+        hideAllBtn: function () {
+            phoneFuncion.hideAnswerButton();
+            phoneFuncion.hideConference();
             phoneFuncion.hideMorebtn();
             phoneFuncion.hideEndButton();
-            phoneFuncion.hideEtl();phoneFuncion.hideHoldButton();
-            phoneFuncion.hideMuteButton();phoneFuncion.hideSpeakerButton();
-            phoneFuncion.hideSwap();phoneFuncion.hideTransfer();
-            phoneFuncion.hideDialPad();phoneFuncion.hideContactList();
+            phoneFuncion.hideEtl();
+            phoneFuncion.hideHoldButton();
+            phoneFuncion.hideMuteButton();
+            phoneFuncion.hideSpeakerButton();
+            phoneFuncion.hideSwap();
+            phoneFuncion.hideTransfer();
+            phoneFuncion.hideDialPad();
+            phoneFuncion.hideContactList();
         },
-        idle:function(){
-            phoneFuncion.showAnswerButton();phoneFuncion.showEndButton();
-            phoneFuncion.showDialPad();phoneFuncion.showContactList();
+        idle: function () {
+            phoneFuncion.showAnswerButton();
+            phoneFuncion.showEndButton();
+            phoneFuncion.showDialPad();
+            phoneFuncion.showContactList();
             phoneFuncion.showMorebtn();
             $scope.freeze = false;
             $scope.isAcw = false;
-            $scope.$broadcast('timer-set-countdown', $scope.countdown);
         },
         freezeBtn: function () {
             $scope.freeze = true;
             $scope.isAcw = false;
             phoneFuncion.updateCallStatus('Freeze');
-            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].stop();
+            $scope.stopCountdownTimmer();
             $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
             $('#calltimmer').addClass('call-duations').removeClass('display-none');
-            $('#freezebtn').addClass('phone-sm-btn ti-time show-1-btn').removeClass('display-none');
+            $('#freezebtn').addClass('phone-sm-btn flaticon-stopwatch-1 show-1-btn').removeClass('display-none');
             $scope.startCallTime();
-
+            $scope.FreezeAcw($scope.call.sessionId,true);
         },
         endfreezeBtn: function () {
             $scope.freeze = false;
             $scope.stopCallTime();
             phoneFuncion.updateCallStatus('Idle');
-            $('#freezebtn').addClass('phone-sm-btn ti-alarm-clock show-1-btn').removeClass('display-none');
+            $('#freezebtn').addClass('phone-sm-btn flaticon-stopwatch-2 show-1-btn').removeClass('display-none');
             phoneFuncion.idle();
+            $scope.FreezeAcw($scope.call.sessionId,false);
         },
         startAcw: function () {
             $scope.isAcw = true;
             $('#calltimmer').addClass('display-none').removeClass('call-duations');
             $('#countdownCalltimmer').addClass('call-duations').removeClass('display-none');
             phoneFuncion.updateCallStatus('ACW');
-            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].start();
+            $scope.startCountdownTimmer();
             phoneFuncion.hideAllBtn();
-            $('#freezebtn').addClass('phone-sm-btn ti-alarm-clock show-1-btn').removeClass('display-none');
+            $('#freezebtn').addClass('phone-sm-btn flaticon-stopwatch-2 show-1-btn').removeClass('display-none');
         },
         endAcw: function () {
-            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].stop();
+            $scope.stopCountdownTimmer();
             $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
             $('#calltimmer').addClass('call-duations').removeClass('display-none');
             document.getElementById('callStatus').innerHTML = "idle";
             $scope.freeze = false;
-            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn ti-alarm-clock show-1-btn');
+            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn flaticon-stopwatch-2 show-1-btn');
             //document.getElementById('freeze').innerHTML = "freeze";
             phoneFuncion.idle();
         }
-        ,showAnswerButton: function () {
+        , showAnswerButton: function () {
             $('#answerButton').addClass('phone-sm-btn answer').removeClass('display-none');
-            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn ti-alarm-clock show-1-btn');
+            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn flaticon-stopwatch-2 show-1-btn');
         },
         hideAnswerButton: function () {
             $('#answerButton').addClass('display-none ').removeClass('phone-sm-btn answer');
@@ -651,11 +682,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#transferCall').addClass('display-inline').removeClass('display-none');
         },
         hideSwap: function () {
-           // $('#swapCall').addClass('display-none').removeClass('display-inline');
+            // $('#swapCall').addClass('display-none').removeClass('display-inline');
         },
         showSwap: function () {
             /*$('#swapCall').addClass('display-inline').removeClass('display-none');
-            $('#slapCall').addClass('display-inline').removeClass('display-none');*/
+             $('#slapCall').addClass('display-inline').removeClass('display-none');*/
         },
         hideEtl: function () {
             $('#etlCall').addClass('display-none').removeClass('display-inline');
@@ -732,6 +763,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.$apply();
     });
 
+
     //dont remove this code
     /*var prev, $result = $('#result'),
      counter = 0,
@@ -784,6 +816,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.skill = notifyData.skill;
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
+        $scope.call.sessionId = notifyData.sessionId;
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
     };
@@ -900,9 +933,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
     };
-
-
-
 
 
     /*--------------------------      Notification  ---------------------------------------*/
@@ -1877,26 +1907,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                        if (data.IsSuccess) {
-                            if (data.Result && data.Result.UNREAD) {
-                                $scope.unreadMailCount = data.Result.UNREAD;
-                            }
+                    if (data.IsSuccess) {
+                        if (data.Result && data.Result.UNREAD) {
+                            $scope.unreadMailCount = data.Result.UNREAD;
                         }
-                        else {
-                            var errMsg = data.CustomMessage;
+                    }
+                    else {
+                        var errMsg = data.CustomMessage;
 
-                            if (data.Exception) {
-                                errMsg = data.Exception.Message;
-                            }
-                            console.log(errMsg);
+                        if (data.Exception) {
+                            errMsg = data.Exception.Message;
                         }
+                        console.log(errMsg);
+                    }
 
 
-                    },
-                    function (err) {
-                        console.log(err);
+                },
+                function (err) {
+                    console.log(err);
 
-                    })
+                })
 
         }
         catch (ex) {
@@ -2282,19 +2312,37 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.stopCallTime = function () {
-        try{
+        try {
             document.getElementById('calltimmer').getElementsByTagName('timer')[0].stop();
         }
-        catch(ex){
+        catch (ex) {
 
         }
 
     };
     $scope.startCallTime = function () {
-        try{
+        try {
             document.getElementById('calltimmer').getElementsByTagName('timer')[0].start();
         }
-        catch(ex){
+        catch (ex) {
+
+        }
+    };
+
+    $scope.stopCountdownTimmer = function () {
+        try {
+            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].stop();
+        }
+        catch (ex) {
+
+        }
+
+    };
+    $scope.startCountdownTimmer = function () {
+        try {
+            document.getElementById('countdownCalltimmer').getElementsByTagName('timer')[0].start();
+        }
+        catch (ex) {
 
         }
     };
