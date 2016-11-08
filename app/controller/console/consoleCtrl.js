@@ -1825,11 +1825,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //logOut
     $scope.logOut = function () {
+
+        veeryNotification.disconnectFromServer();
         $scope.veeryPhone.unregisterWithArds();
         loginService.Logoff(function () {
             $state.go('login');
             $timeout.cancel(getAllRealTimeTimer);
         });
+
+
     };
 
 
