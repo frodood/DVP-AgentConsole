@@ -216,17 +216,17 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             {
                 data: [0, 0, 0, 0, 0],
                 backgroundColor: [
-                    "#2b4d52",
-                    "#36A2EB",
-                    "#1b76ff",
-                    "#168039",
+                    "#ffa918",
+                    "#e65200",
+                    "#37dba9",
+                    "#8298ae",
                     "#d90000"
                 ],
                 hoverBackgroundColor: [
-                    "#2b4d52",
+                    "#ffa918",
                     "#36A2EB",
-                    "#1b76ff",
-                    "#168039",
+                    "#37dba9",
+                    "#8298ae",
                     "#d90000"
                 ],
                 borderWidth: [0, 0, 0, 0, 0],
