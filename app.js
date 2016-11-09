@@ -19,7 +19,7 @@ var baseUrls = {
     'authUrl': 'http://userservice.app.veery.cloud/oauth/token',
     'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'notification': 'http://notificationservice.app.veery.cloud',
-    'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/resource',
+    'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',
     'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',//interactions.app.veery.cloud
     'ticketUrl': 'http://localhost:3636/DVP/API/1.0.0.0/',//liteticket.app.veery.cloud
     'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
@@ -28,7 +28,8 @@ var baseUrls = {
     'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
-    'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/'
+    'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);
