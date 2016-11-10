@@ -12,6 +12,30 @@ body {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
 }
 
+.introLoader,
+.introLoading {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.introLoading {
+    background-color: rgba(23, 55, 60, 1);
+}
+
+.gifLoaderInner {
+    position: relative;
+    z-index: 1500;
+    text-align: center;
+    font-size: 25px;
+    color: #fff;
+    margin-top: 22%;
+}
+
 /* #CONSOLE CSS */
 
 .version-beta {
@@ -680,7 +704,7 @@ body {
 
 .model-header-text {
     display: inline-block;
-    font-size: 20px;
+    font-size: 16px;
     padding-left: 15px;
     color: #0d1c33;
     overflow: hidden;
