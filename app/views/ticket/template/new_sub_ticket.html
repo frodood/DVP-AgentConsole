@@ -123,6 +123,18 @@
                                     <textarea ng-model="newSubTicket.description" class="form-control"
                                               rows="3"></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label>Assignee user</label>
+
+                                    <select class="form-control" ng-model="newSubTicket.assignee"
+                                            ng-model-options="{trackBy: '$value'}">
+                                        <option ng-repeat="assignee in assigneeList" value='{{assignee}}'>
+                                            {{assignee.name}}
+                                        </option>
+                                    </select>
+
+
+                                </div>
 
                             </form>
                         </div>
@@ -131,7 +143,7 @@
                             <div class="model-btn-wrapper">
                                 <div class="btn-warp ">
                                 <span class="btn btn-default"
-                                      ng-click="saveTicket(newSubTicket);">Save</span>
+                                      ng-click="saveSubTicket(newSubTicket);">Save</span>
                                 </div>
                             </div>
 
