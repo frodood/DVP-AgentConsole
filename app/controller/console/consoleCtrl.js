@@ -754,7 +754,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.veeryNotification();
     $scope.socketReconnect = function () {
-        notificationConnector.SocReconnect();
+        veeryNotification.reconnectToServer();
     }
 
 

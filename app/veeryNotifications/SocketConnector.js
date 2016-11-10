@@ -179,6 +179,11 @@ notificationMod.factory('veeryNotification', function (notificationConnector, $q
 
 
             notificationConnector.SocDisconnect();
+        },
+        reconnectToServer: function() {
+
+
+            notificationConnector.SocReconnect();
         }
 
     };
