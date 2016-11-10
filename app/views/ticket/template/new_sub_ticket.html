@@ -69,10 +69,9 @@
                                             <div class="form-group">
                                                 <label for="ticketSubject">Type</label>
                                                 <select class="form-control" ng-model="newSubTicket.type">
-                                                    <option>question</option>
-                                                    <option>complain</option>
-                                                    <option>incident</option>
-                                                    <option>action</option>
+                                                    <option ng-repeat="tType in availableTicketTypes" value="{{tType}}>
+                                                        {{tType}}
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>

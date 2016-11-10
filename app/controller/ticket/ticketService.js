@@ -712,6 +712,19 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getAvailableTicketTypes = function () {
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl+"AvailableTicketTypes"
+        }).then(function (response) {
+            if (response.data) {
+                return response.data;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket:saveTicket,
@@ -766,7 +779,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         GetExternalUserTicketCounts:getExternalUserTicketCounts,
         pickCompanyInfo:pickCompanyInfo,
         getMyTimer:getMyTimer,
-updateTicketEstimateTime:updateTicketEstimateTime
+        updateTicketEstimateTime:updateTicketEstimateTime,
+        getAvailableTicketTypes: getAvailableTicketTypes
     }
 });
 

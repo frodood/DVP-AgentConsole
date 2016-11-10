@@ -259,7 +259,7 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                            >Hi,{{loginName}}</a>
+                                    >Hi,{{loginName}}</a>
                             <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
@@ -300,7 +300,7 @@
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
-                            >Logout</a></li>
+                                    >Logout</a></li>
                         </ul>
 
 
@@ -364,7 +364,7 @@
                     <uib-tab class="console-main-tab "
                              index="tab.tabReference" ng-repeat="tab in tabs"
                              select="tabSelected(tab.tabReference)">
-                        <uib-tab-heading >
+                        <uib-tab-heading>
                             <div class="pull-left">{{tab.title}}
                                 <a data-ng-click='closeTab(tab)' class='btn btn-tab-close' href="javascript:">
                                     <span class='ti-close'></span></a>
@@ -444,15 +444,21 @@
                            ng-model="call.number"
                            placeholder="000-00-000">
                 </div>
-                <div class="dial-action">
+                <div class="dial-action" id="callStatus">
                     {{call.status}}
                 </div>
                 <div class="call-duations" id="calltimmer">
                     <!--{{duations}}-->
                     <timer autostart="false" interval="1000"
-                    >{{hhours}}:
+                            >{{hhours}}:
                         {{mminutes}}: {{sseconds}}
                     </timer>
+                </div>
+                <div class="display-none" id="countdownCalltimmer">
+                    <timer autostart="false" countdown="countdown" finish-callback="veeryPhone.FinishedAcw()"
+                           interval="1000">{{seconds}} second
+                    </timer>
+
                 </div>
             </div>
             <!--#KeyPad-->
@@ -500,7 +506,7 @@
                             <input type="button" class="phone-button" value="*" data-values='["*"]'/>
                         </td>
                         <td>
-                            <input type="button" class="phone-button" value="0" data-values='[0, " "]'/>
+                            <input type="button" class="phone-button" value="0" data-values='["0", " "]'/>
                         </td>
                         <td>
                             <input type="button" class="phone-button" value="#" data-values='["#"]'/>
@@ -523,22 +529,66 @@
                     <i class="veery-phone-icon-1-call-ended"></i>
                 </div>
                 <!-- call hold button -->
-                <div class="phone-sm-btn phone-sm-bn-p8" title="Hold/Unhold" id="holdResumeButton" ng-click="veeryPhone.holdResumeCall();">
+                <div class="phone-sm-btn phone-sm-bn-p8" title="Hold/Unhold" id="holdResumeButton"
+                     ng-click="veeryPhone.holdResumeCall();">
                     <i class="veery-font-1-pause"></i>
                 </div>
                 <!-- dial pad -->
-                <div class="phone-sm-btn phone-sm-bn-p8" title="Dialpad" ng-click="ShowHideDialpad();">
-                    <i class="veery-font-1-menu-4"></i>
+                <div id="dialPad" class="phone-sm-btn phone-sm-bn-p8 veery-font-1-menu-4" title="Dialpad"
+                     ng-click="ShowHideDialpad();">
                 </div>
                 <!--  contact list button -->
-                <div id="contactList" class="phone-sm-btn phone-sm-bn-p8" title="Contact List">
-                    <i class="veery-font-1-user"></i>
+                <!-- <div id="contactList" class="phone-sm-btn phone-sm-bn-p8" title="Contact List">
+                     <i class="veery-font-1-user"></i>
+                 </div>-->
+                <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-user" ng-click="veeryPhone.freeze();"
+                     id="contactList" title="Contact List">
+
                 </div>
                 <!-- more btn -->
-                <div class="phone-sm-btn phone-sm-bn-p8" title="More"
+                <!--<div id="morebtn" class="phone-sm-btn phone-sm-bn-p8" title="More"
                      ng-click="veeryPhone.showOnlineBtn();">
                     <i class="veery-font-1-more"></i>
+                </div>-->
+                <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-more" ng-click="veeryPhone.showMoreOption();"
+                     id="morebtn" title="More"></div>
+
+                <div class="phone-sm-btn flaticon-stopwatch-2 show-1-btn display-none" ng-click="veeryPhone.freezeAcw();" id="freezebtn" title="freeze">
                 </div>
+
+<!--
+
+
+                &lt;!&ndash; mute/unmiute hold button &ndash;&gt;
+                <div class="phone-sm-btn phone-sm-bn-p8" id="speakerButton" title="Mute Call"
+                     ng-click="veeryPhone.muteCall();">
+
+                </div>
+                &lt;!&ndash; call transfer button &ndash;&gt;
+                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 " title="Transfer Call"
+                     ng-click="veeryPhone.transferCall(call.number);">
+                    <i class="main-icon-2-transfer"></i>
+                </div>
+                &lt;!&ndash;disble till call server implement
+                &lt;!&ndash; call swap button &ndash;&gt;
+                <div id="swapCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.swapCall();">
+                    <i class="main-icon-2-transfer-8"></i>
+                </div>&ndash;&gt;
+                &lt;!&ndash; ETL button &ndash;&gt;
+                <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();"
+                     title="End Transfer Call">
+                    <i class="main-icon-2-transfer"></i>
+                </div>
+                &lt;!&ndash; conference button &ndash;&gt;
+                <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();"
+                     title="Conference">
+                    <i class="main-icon-2-stick-man-2"></i>
+                </div>
+                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();" title="Close">
+                    <i class="ti-close"></i>
+                </div>
+                <div class="phone-sm-btn ti-alarm-clock" ng-click="veeryPhone.freeze();" id="freeze" title="freeze">
+                </div>-->
             </div>
 
             <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none">
@@ -565,7 +615,7 @@
                 <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();" title="Conference">
                     <i class="main-icon-2-stick-man-2"></i>
                 </div>
-                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();" title="Close">
+                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideMoreOption();" title="Close">
                     <i class="ti-close"></i>
                 </div>
             </div>

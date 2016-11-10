@@ -891,6 +891,24 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             };
 
+            scope.availableTicketTypes = [];
+            scope.getAvailableTicketTypes = function(){
+                ticketService.getAvailableTicketTypes().then(function (response) {
+
+                    if (response && response.IsSuccess) {
+
+                        scope.availableTicketTypes = response.Result;
+                    }
+                    else {
+                        scope.availableTicketTypes = [];
+                    }
+                }, function (error) {
+                    scope.availableTicketTypes = [];
+                });
+            };
+
+            scope.getAvailableTicketTypes();
+
             scope.showCreateTicket = false;
 
 

@@ -8,7 +8,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var breakRequest = function (resourceId, reason) {
         return $http({
             method: 'put',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state/NotAvailable/reason/" + reason
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId + "/state/NotAvailable/reason/" + reason
         }).then(function (response) {
             return response.data.IsSuccess;
         });
@@ -18,7 +18,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
         return $http({
             method: 'put',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state/Available/reason/EndBreak"
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId + "/state/Available/reason/EndBreak"
         }).then(function (response) {
             return response.data.IsSuccess;
         });
@@ -29,7 +29,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
         return $http({
             method: 'post',
-            url: baseUrls.ardsliteserviceUrl,
+            url: baseUrls.ardsliteserviceUrl + "resource",
             data: {
                 "ResourceId": resourceId,
                 "HandlingTypes": [{
@@ -48,7 +48,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
         return $http({
             method: 'delete',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId,
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId,
             data: {"ResourceId": resourceId, "HandlingTypes": ["CALL"]}
         }).then(function (response) {
             return response.data.IsSuccess;
@@ -80,7 +80,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var changeRegisterStatus = function (resourceId, type, contactName) {
         return $http({
             method: 'put',
-            url: baseUrls.ardsliteserviceUrl + "/share",
+            url: baseUrls.ardsliteserviceUrl + "resource/share",
             data: {
                 "ResourceId": resourceId,
                 "HandlingTypes": [{
@@ -96,7 +96,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var getResourceState = function (resourceId) {
         return $http({
             method: 'get',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId + "/state"
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId + "/state"
         }).then(function (response) {
             return response.data;
         });
@@ -105,11 +105,50 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var getResource = function (resourceId) {
         return $http({
             method: 'get',
-            url: baseUrls.ardsliteserviceUrl + "/" + resourceId
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId
         }).then(function (response) {
             return response.data;
         });
     };
+
+    var getAcwTime = function () {
+        return $http({
+            method: 'get',
+            url: baseUrls.ardsliteserviceUrl + "requestmeta/CALLSERVER/CALL"
+        }).then(function (response) {
+            return response.data.Result;
+        });
+    };
+
+    var freezeAcw = function (callSessionId, endFreeze) {
+        return $http({
+            method: 'put',
+            url: baseUrls.ardsliteserviceUrl + "resource/" + authService.GetResourceId() + "/concurrencyslot/session/" + callSessionId,
+            data:{
+                "RequestType": "CALL",
+                "State": endFreeze ?  "Freeze":"EndFreeze",
+                "Reason": "",
+                "OtherInfo": ""
+            }
+        }).then(function (response) {
+            return response.data.Result;
+        });
+    };
+    var mapResourceToVeery = function (publicIdentity) {
+        /*dynamic data = new JObject();
+        data.SipURI = profile.publicIdentity.Replace("sip:", "");
+        data.ResourceId = profile.id;*/
+            return $http({
+                method: 'post',
+                url: baseUrls.monitorrestapi + "MonitorRestAPI/BindResourceToVeeryAccount",
+                data:{
+                    "SipURI": publicIdentity.replace("sip:", ""),
+                    "ResourceId": authService.GetResourceId()
+                }
+            }).then(function (response) {
+                return response.data.Result;
+            });
+        };
 
     return {
         BreakRequest: breakRequest,
@@ -120,7 +159,10 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         getOnlineAgentList: getOnlineAgentList,
         ChangeRegisterStatus: changeRegisterStatus,
         GetResourceState: getResourceState,
-        GetResource: getResource
+        GetResource: getResource,
+        GetAcwTime: getAcwTime,
+        FreezeAcw:freezeAcw,
+        MapResourceToVeery:mapResourceToVeery
     }
 
 });
