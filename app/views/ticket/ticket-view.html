@@ -5,7 +5,7 @@
     <div class="ticket-view-wrapper">
         <!-- MODEL HEADER -->
         <div class="model-header">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="mode-left-icon  dark float-left ticket-model"
                      ng-class="{'api-channel':ticket.channel=='api',
                   'twitter-channel':ticket.channel=='twitter',
@@ -27,12 +27,14 @@
                     {{ticket.reference}}/{{ticket.tid}}
                 </div>
                 <br/>
-                <div class="model-header-text bold">
-                    {{ticket.subject}}
+                <div class="row">
+                    <div class="model-header-text bold">
+                        {{ ticket.subject | limitTo: 80 }}{{ticket.subject.length > 80 ? '...' : ''}}
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-6 col-sm-6 ">
+            <div class="col-md-4 col-sm-4 ">
                 <div class="model-btn-wrapper">
                     <div class="btn-warp" uib-dropdown>
                         <span class="btn btn-default" uib-dropdown-toggle>
@@ -151,12 +153,15 @@
                                     <h5>{{ticket.due_at}}</h5>
                                 </li>
                                 <li>
-                                <small>Channel</small> <a style="margin-left: 10px" href="javascript:void(0);"><i class="fa fa-play" ng-if="ticket.engagement_session.channel=='voicemail' || 'call'" ng-click="playFile(ticket.engagement_session._id)"></i></a>
+                                    <small>Channel</small>
+                                    <a style="margin-left: 10px" href="javascript:void(0);"><i class="fa fa-play"
+                                                                                               ng-if="ticket.engagement_session.channel=='voicemail' || 'call'"
+                                                                                               ng-click="playFile(ticket.engagement_session._id)"></i></a>
 
-                                <h5 ng-if="ticket.engagement_session.channel">{{ticket.engagement_session.channel}} </h5>
-                                <h5 ng-if="!ticket.engagement_session.channel">Other</h5>
-                            </li>
-
+                                    <h5 ng-if="ticket.engagement_session.channel">
+                                        {{ticket.engagement_session.channel}} </h5>
+                                    <h5 ng-if="!ticket.engagement_session.channel">Other</h5>
+                                </li>
 
 
                             </ul>
