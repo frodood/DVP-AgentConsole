@@ -1583,7 +1583,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         } else if (item && item.obj && item.type === "profile") {
             item.obj.tabType = 'userProfile';
             item.obj.index = item.obj._id;
-            $rootScope.$emit('openNewTab', item.obj);
+            //$rootScope.$emit('openNewTab', item.obj);
+            openNewUserProfileTab(item.obj, item.obj.index);
 
             $scope.searchText = "";
         }

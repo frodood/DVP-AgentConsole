@@ -827,11 +827,10 @@
                                                         <select class="form-control" ng-model="ticket.type"
                                                                 name="ticketType"
                                                                 required
-                                                                placeholder="Select">
-                                                            <option>question</option>
-                                                            <option>complain</option>
-                                                            <option>incident</option>
-                                                            <option>action</option>
+                                                                placeholder="Select">availableTicketTypes
+                                                            <option ng-repeat="tType in availableTicketTypes" value="{{tType}}">
+                                                                {{tType}}
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>

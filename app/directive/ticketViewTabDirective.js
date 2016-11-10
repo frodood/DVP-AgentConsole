@@ -1906,7 +1906,23 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
             }
 
+            scope.availableTicketTypes = [];
+            scope.getAvailableTicketTypes = function(){
+                ticketService.getAvailableTicketTypes().then(function (response) {
 
+                    if (response && response.IsSuccess) {
+
+                        scope.availableTicketTypes = response.Result;
+                    }
+                    else {
+                        scope.availableTicketTypes = [];
+                    }
+                }, function (error) {
+                    scope.availableTicketTypes = [];
+                });
+            };
+
+            scope.getAvailableTicketTypes();
 
         }
 
