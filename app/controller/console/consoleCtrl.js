@@ -35,10 +35,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         isopen: false
     };
 
-    $scope.countdown = 100;
+    $scope.countdown = 10;
     $scope.GetAcwTime = function () {
         resourceService.GetAcwTime().then(function (response) {
-           // $scope.countdown = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
+           $scope.countdown = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
         }, function (err) {
             $scope.showAlert('Phone', 'error', "Fail To Get ACW Time");
         });
@@ -608,7 +608,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.stopCountdownTimmer();
             $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
             $('#calltimmer').addClass('call-duations').removeClass('display-none');
-            $('#freezebtn').addClass('phone-sm-btn flaticon-stopwatch-1 show-1-btn').removeClass('display-none');
+            $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
             $scope.startCallTime();
             $scope.FreezeAcw($scope.call.sessionId,true);
         },
@@ -616,7 +616,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.freeze = false;
             $scope.stopCallTime();
             phoneFuncion.updateCallStatus('Idle');
-            $('#freezebtn').addClass('phone-sm-btn flaticon-stopwatch-2 show-1-btn').removeClass('display-none');
+            $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn').removeClass('display-none');
             phoneFuncion.idle();
             $scope.FreezeAcw($scope.call.sessionId,false);
         },
@@ -627,7 +627,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.updateCallStatus('ACW');
             $scope.startCountdownTimmer();
             phoneFuncion.hideAllBtn();
-            $('#freezebtn').addClass('phone-sm-btn flaticon-stopwatch-2 show-1-btn').removeClass('display-none');
+            $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn').removeClass('display-none');
         },
         endAcw: function () {
             $scope.stopCountdownTimmer();
@@ -635,13 +635,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#calltimmer').addClass('call-duations').removeClass('display-none');
             document.getElementById('callStatus').innerHTML = "idle";
             $scope.freeze = false;
-            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn flaticon-stopwatch-2 show-1-btn');
+            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn');
             //document.getElementById('freeze').innerHTML = "freeze";
             phoneFuncion.idle();
         }
         , showAnswerButton: function () {
             $('#answerButton').addClass('phone-sm-btn answer').removeClass('display-none');
-            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn flaticon-stopwatch-2 show-1-btn');
+            $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn');
         },
         hideAnswerButton: function () {
             $('#answerButton').addClass('display-none ').removeClass('phone-sm-btn answer');
