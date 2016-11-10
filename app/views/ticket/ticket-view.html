@@ -151,7 +151,7 @@
                                     <h5>{{ticket.due_at}}</h5>
                                 </li>
                                 <li>
-                                <small>Channel</small> <a style="margin-left: 10px" href="javascript:void(0);"><i class="fa fa-play" ng-if="ticket.engagement_session.channel=='voicemail' || 'call'" ng-click="playFile(ticket.engagement_session._id)"></i></a>
+                                <small>Channel</small> <a style="margin-left: 10px" href="javascript:void(0);"ng-show="ticket.engagement_session && ( ticket.engagement_session.channel=='voicemail' || ticket.engagement_session.channel== 'call')"><i class="fa fa-play"  ng-click="playFile(ticket.engagement_session._id)"></i></a>
 
                                 <h5 ng-if="ticket.engagement_session.channel">{{ticket.engagement_session.channel}} </h5>
                                 <h5 ng-if="!ticket.engagement_session.channel">Other</h5>
