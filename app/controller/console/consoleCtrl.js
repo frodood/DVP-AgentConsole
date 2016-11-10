@@ -2145,10 +2145,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if ($scope.users) {
                     for (var i = 0; i < $scope.users.length; i++) {
                         var user = $scope.users[i];
-                        if(user.resourceid != authService.GetResourceId()){
-                            user.listType = "User";
-
-                            if (user.resourceid) {
+                        user.listType = "User";
+                        if (user.resourceid)
+                        {
+                            if(user.resourceid != authService.GetResourceId()){
                                 var resource = FilterByID(onlineAgents, "ResourceId", user.resourceid);
                                 if (resource) {
                                     user.status = resource.Status.State;
@@ -2162,11 +2162,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                     user.status = "NotAvailable";
                                     offlineAgentList.push(user);
                                 }
-                            } else {
-                                user.status = "NotAvailable";
-                                offlineAgentList.push(user);
                             }
+
+                        } else {
+                            user.status = "NotAvailable";
+                            offlineAgentList.push(user);
                         }
+
 
                     }
 
