@@ -2020,6 +2020,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.naviSelectedUser = selectedUser;
         divModel.model('#sendMessage', 'display-block');
     };
+    $scope.setExtention = function (selectedUser) {
+
+        try{
+            var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
+            if(angular.isArray(concurrencyInfos)){
+                var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
+                $scope.call.number = RefInfo.Extention;
+            }
+            else{
+                $scope.showAlert('Error', 'error', "Fail To Find Extention.");
+            }
+        }
+        catch(ex){
+            $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
+        }
+    };
     $scope.closeMessage = function () {
         divModel.model('#sendMessage', 'display-none');
     };
@@ -2133,34 +2149,40 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     for (var i = 0; i < $scope.users.length; i++) {
                         var user = $scope.users[i];
                         user.listType = "User";
-
-                        if (user.resourceid) {
-                            var resource = FilterByID(onlineAgents, "ResourceId", user.resourceid);
-                            if (resource) {
-                                user.status = resource.Status.State;
-                                if (user.status === "NotAvailable") {
-                                    offlineAgentList.push(user);
+                        if (user.resourceid)
+                        {
+                            if(user.resourceid != authService.GetResourceId()){
+                                var resource = FilterByID(onlineAgents, "ResourceId", user.resourceid);
+                                if (resource) {
+                                    user.status = resource.Status.State;
+                                    user.ConcurrencyInfo = resource.ConcurrencyInfo;
+                                    if (user.status === "NotAvailable") {
+                                        offlineAgentList.push(user);
+                                    } else {
+                                        onlineAgentList.push(user);
+                                    }
                                 } else {
-                                    onlineAgentList.push(user);
+                                    user.status = "NotAvailable";
+                                    offlineAgentList.push(user);
                                 }
-                            } else {
-                                user.status = "NotAvailable";
-                                offlineAgentList.push(user);
                             }
+
                         } else {
                             user.status = "NotAvailable";
                             offlineAgentList.push(user);
                         }
+
+
                     }
 
                     onlineAgentList.sort(function (a, b) {
-                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
                     offlineAgentList.sort(function (a, b) {
-                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
 
@@ -2179,8 +2201,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     }
 
                     userGroupList.sort(function (a, b) {
-                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
 

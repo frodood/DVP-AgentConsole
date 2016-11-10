@@ -3,6 +3,24 @@
  */
 
 
+/**
+ * introLoader - Preloader
+ */
+// $("#introLoader").introLoader({
+//     animation: {
+//         name: 'gifLoader',
+//         options: {
+//             ease: "easeInOutCirc",
+//             style: 'dark bubble',
+//             delayBefore: 500,
+//             delayAfter: 0,
+//             exitTime: 300
+//         }
+//     }
+// });
+
+
+
 function getJSONData(http, file, callback) {
     http.get('assets/json/' + file + '.json').success(function (data) {
         callback(data.d);
@@ -175,6 +193,8 @@ var showAlert = function (title, type, content) {
         }
     });
 };
+
+
 
 
 
