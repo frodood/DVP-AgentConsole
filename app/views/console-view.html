@@ -99,7 +99,7 @@
                                 </div>
                             </ul>
                         </li>
-                       
+
 
                         <form class="form-inline navbar-form navbar-left ">
                             <div class="form-group">
@@ -259,7 +259,7 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                                    >Hi,{{loginName}}</a>
+                            >Hi,{{loginName}}</a>
                             <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
@@ -300,7 +300,7 @@
                             <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
-                                    >Logout</a></li>
+                            >Logout</a></li>
                         </ul>
 
 
@@ -450,7 +450,7 @@
                 <div class="call-duations" id="calltimmer">
                     <!--{{duations}}-->
                     <timer autostart="false" interval="1000"
-                            >{{hhours}}:
+                    >{{hhours}}:
                         {{mminutes}}: {{sseconds}}
                     </timer>
                 </div>
@@ -553,42 +553,43 @@
                 <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-more" ng-click="veeryPhone.showMoreOption();"
                      id="morebtn" title="More"></div>
 
-                <div class="phone-sm-btn flaticon-stopwatch-2 show-1-btn display-none" ng-click="veeryPhone.freezeAcw();" id="freezebtn" title="freeze">
+                <div class="phone-sm-btn veery-font-1-stopwatch-2 show-1-btn display-none"
+                     ng-click="veeryPhone.freezeAcw();" id="freezebtn" title="freeze">
                 </div>
 
-<!--
+                <!--
 
 
-                &lt;!&ndash; mute/unmiute hold button &ndash;&gt;
-                <div class="phone-sm-btn phone-sm-bn-p8" id="speakerButton" title="Mute Call"
-                     ng-click="veeryPhone.muteCall();">
+                                &lt;!&ndash; mute/unmiute hold button &ndash;&gt;
+                                <div class="phone-sm-btn phone-sm-bn-p8" id="speakerButton" title="Mute Call"
+                                     ng-click="veeryPhone.muteCall();">
 
-                </div>
-                &lt;!&ndash; call transfer button &ndash;&gt;
-                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 " title="Transfer Call"
-                     ng-click="veeryPhone.transferCall(call.number);">
-                    <i class="main-icon-2-transfer"></i>
-                </div>
-                &lt;!&ndash;disble till call server implement
-                &lt;!&ndash; call swap button &ndash;&gt;
-                <div id="swapCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.swapCall();">
-                    <i class="main-icon-2-transfer-8"></i>
-                </div>&ndash;&gt;
-                &lt;!&ndash; ETL button &ndash;&gt;
-                <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();"
-                     title="End Transfer Call">
-                    <i class="main-icon-2-transfer"></i>
-                </div>
-                &lt;!&ndash; conference button &ndash;&gt;
-                <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();"
-                     title="Conference">
-                    <i class="main-icon-2-stick-man-2"></i>
-                </div>
-                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();" title="Close">
-                    <i class="ti-close"></i>
-                </div>
-                <div class="phone-sm-btn ti-alarm-clock" ng-click="veeryPhone.freeze();" id="freeze" title="freeze">
-                </div>-->
+                                </div>
+                                &lt;!&ndash; call transfer button &ndash;&gt;
+                                <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 " title="Transfer Call"
+                                     ng-click="veeryPhone.transferCall(call.number);">
+                                    <i class="main-icon-2-transfer"></i>
+                                </div>
+                                &lt;!&ndash;disble till call server implement
+                                &lt;!&ndash; call swap button &ndash;&gt;
+                                <div id="swapCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.swapCall();">
+                                    <i class="main-icon-2-transfer-8"></i>
+                                </div>&ndash;&gt;
+                                &lt;!&ndash; ETL button &ndash;&gt;
+                                <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();"
+                                     title="End Transfer Call">
+                                    <i class="main-icon-2-transfer"></i>
+                                </div>
+                                &lt;!&ndash; conference button &ndash;&gt;
+                                <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();"
+                                     title="Conference">
+                                    <i class="main-icon-2-stick-man-2"></i>
+                                </div>
+                                <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideOnlineBtn();" title="Close">
+                                    <i class="ti-close"></i>
+                                </div>
+                                <div class="phone-sm-btn ti-alarm-clock" ng-click="veeryPhone.freeze();" id="freeze" title="freeze">
+                                </div>-->
             </div>
 
             <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none">
@@ -608,11 +609,13 @@
                     <i class="main-icon-2-transfer-8"></i>
                 </div>-->
                 <!-- ETL button -->
-                <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();" title="End Transfer Call">
+                <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();"
+                     title="End Transfer Call">
                     <i class="main-icon-2-transfer"></i>
                 </div>
                 <!-- conference button -->
-                <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();" title="Conference">
+                <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();"
+                     title="Conference">
                     <i class="main-icon-2-stick-man-2"></i>
                 </div>
                 <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideMoreOption();" title="Close">
