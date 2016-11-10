@@ -2151,13 +2151,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     }
 
                     onlineAgentList.sort(function (a, b) {
-                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
                     offlineAgentList.sort(function (a, b) {
-                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
 
@@ -2176,8 +2176,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     }
 
                     userGroupList.sort(function (a, b) {
-                        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-                        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                        if (a && a.name && b && b.name && a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                         return 0;
                     });
 
