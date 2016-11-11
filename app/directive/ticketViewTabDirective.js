@@ -1232,7 +1232,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.newSubTicket.priority = priority;
             };
 
-            scope.saveTicket = function (subTicket) {
+            scope.saveSubTicket = function (subTicket) {
 
                 if (scope.ticket.channel) {
                     scope.newSubTicket.channel = scope.ticket.channel;
@@ -1246,12 +1246,24 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         return obj.name;
                     });
                 }
+                if(subTicket.assignee)
+                {
+                    subTicket.assignee=JSON.parse(subTicket.assignee);
+                }
 
                 ticketService.AddSubTicket(scope.ticket._id, subTicket).then(function (response) {
 
                     if (response.data.IsSuccess) {
                         scope.showAlert("Sub ticket saving", "success", "Sub ticket saved successfully");
-                        scope.subTickets.push(response.data.Result);
+
+                        scope.assigneeList.filter(function (assigneeObj) {
+                            if(assigneeObj._id==response.data.Result.assignee)
+                            {
+                                response.data.Result.assignee=assigneeObj;
+                                scope.subTickets.push(response.data.Result);
+                            }
+                        })
+
                         scope.showSubCreateTicket = false;
                         console.log("Sub ticket added successfully");
                     }

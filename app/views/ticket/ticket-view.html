@@ -153,13 +153,9 @@
                                     <h5>{{ticket.due_at}}</h5>
                                 </li>
                                 <li>
-                                    <small>Channel</small>
-                                    <a style="margin-left: 10px" href="javascript:void(0);"><i class="fa fa-play"
-                                                                                               ng-if="ticket.engagement_session.channel=='voicemail' || 'call'"
-                                                                                               ng-click="playFile(ticket.engagement_session._id)"></i></a>
+                                    <small>Channel</small> <a style="margin-left: 10px" href="javascript:void(0);"ng-show="ticket.engagement_session && ( ticket.engagement_session.channel=='voicemail' || ticket.engagement_session.channel== 'call')"><i class="fa fa-play"  ng-click="playFile(ticket.engagement_session._id)"></i></a>
 
-                                    <h5 ng-if="ticket.engagement_session.channel">
-                                        {{ticket.engagement_session.channel}} </h5>
+                                    <h5 ng-if="ticket.engagement_session.channel">{{ticket.engagement_session.channel}} </h5>
                                     <h5 ng-if="!ticket.engagement_session.channel">Other</h5>
                                 </li>
 
@@ -380,12 +376,17 @@
                                             <div class="pull-left commenter-img">
                                                 <img src="assets/img/avatar/defaultProfile.png"
                                                      ng-src={{sub.assignee.avatar}}>
-                                                {{sub.assignee.name}}
+                                                {{sub.assignee.username}}
                                             </div>
                                         </a>
+
                                         <div class="bg-checkbox gray300  font-white small-details inline-btn ">
                                             {{sub.status}}
                                         </div>
+                                        <!--<div id="subPrioritylvl" class="bg-checkbox font-white small-details inline-btn"
+                                             ng-class="{'red':sub.priority=='urgent','orange':sub.priority=='high','teal600':sub.priority=='normal','gray300':sub.priority=='low' }">
+                                            {{sub.priority}}
+                                        </div>-->
                                         <div class="bg-checkbox orange font-white small-details  inline-bt  ">
                                             {{sub.type}}
                                         </div>
