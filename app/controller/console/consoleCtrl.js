@@ -38,7 +38,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.countdown = 10;
     $scope.GetAcwTime = function () {
         resourceService.GetAcwTime().then(function (response) {
-           $scope.countdown = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
+            $scope.countdown = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
         }, function (err) {
             $scope.showAlert('Phone', 'error', "Fail To Get ACW Time");
         });
@@ -610,7 +610,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#calltimmer').addClass('call-duations').removeClass('display-none');
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
             $scope.startCallTime();
-            $scope.FreezeAcw($scope.call.sessionId,true);
+            $scope.FreezeAcw($scope.call.sessionId, true);
         },
         endfreezeBtn: function () {
             $scope.freeze = false;
@@ -618,7 +618,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.updateCallStatus('Idle');
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn').removeClass('display-none');
             phoneFuncion.idle();
-            $scope.FreezeAcw($scope.call.sessionId,false);
+            $scope.FreezeAcw($scope.call.sessionId, false);
         },
         startAcw: function () {
             $scope.isAcw = true;
@@ -887,7 +887,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentDisconnected = function () {
         $scope.isSocketRegistered = false;
         $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
-       // $('#regNotification').addClass('display-none').removeClass('display-block');
+        // $('#regNotification').addClass('display-none').removeClass('display-block');
         $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
 
     };
@@ -1911,26 +1911,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                    if (data.IsSuccess) {
-                        if (data.Result && data.Result.UNREAD) {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception) {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    console.log(err);
+                    },
+                    function (err) {
+                        console.log(err);
 
-                })
+                    })
 
         }
         catch (ex) {
@@ -2022,17 +2022,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.setExtention = function (selectedUser) {
 
-        try{
+        try {
             var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
-            if(angular.isArray(concurrencyInfos)){
+            if (angular.isArray(concurrencyInfos)) {
                 var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
                 $scope.call.number = RefInfo.Extention;
             }
-            else{
+            else {
                 $scope.showAlert('Error', 'error', "Fail To Find Extention.");
             }
         }
-        catch(ex){
+        catch (ex) {
             $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
         }
     };
@@ -2149,9 +2149,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     for (var i = 0; i < $scope.users.length; i++) {
                         var user = $scope.users[i];
                         user.listType = "User";
-                        if (user.resourceid)
-                        {
-                            if(user.resourceid != authService.GetResourceId()){
+                        if (user.resourceid) {
+                            if (user.resourceid != authService.GetResourceId()) {
                                 var resource = FilterByID(onlineAgents, "ResourceId", user.resourceid);
                                 if (resource) {
                                     user.status = resource.Status.State;
@@ -2242,9 +2241,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /* update code damith
      ARDS break option */
+    $scope.currentBerekOption = null;
     var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
+            console.log(requestOption);
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
@@ -2254,12 +2255,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $('#userStatus').addClass('offline').removeClass('online');
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('font-color-green bold');
+                    $scope.currentBerekOption = requestOption;
                 }
             }, function (error) {
                 $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
             });
         },
-        endBreakOption: function () {
+        endBreakOption: function (requestOption) {
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
@@ -2270,6 +2272,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 $('#userStatus').addClass('online').removeClass('offline');
                 $('#Available').addClass('font-color-green bold');
+                $scope.currentBerekOption = requestOption;
             });
         }
     }//end
@@ -2300,6 +2303,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetResourceState(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         if (data.Result.State == "Available") {
+                            $scope.currentBerekOption = "Available";
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Available').addClass('font-color-green bold');
                         } else {
@@ -2307,9 +2311,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             switch (data.Result.Reason) {
                                 case 'OfficialBreak' :
                                     $('#OfficialBreak').addClass('font-color-green bold');
+                                    $scope.currentBerekOption = "OfficialBreak";
                                     break;
                                 case 'MealBreak' :
                                     $('#MealBreak').addClass('font-color-green bold');
+                                    $scope.currentBerekOption = "MealBreak";
                                     break;
                             }
                         }
