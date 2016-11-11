@@ -1847,7 +1847,12 @@ div > div >
 }
 
 .ticket-comment-wrapper {
-    padding: 30px 5px 5px 0px;
+    padding: 10px 5px 10px 10px;
+    min-height: 135px;
+    height: auto;
+    background: #fbfbfb;
+    overflow: hidden;
+    margin-bottom: 5px;
 }
 
 .comment-add-wrapper {
@@ -1876,7 +1881,13 @@ div > div >
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    overflow: hidden;
 }
+
+/*.commenter-img {*/
+    /*margin-top: 10px;*/
+    /*margin-bottom: 8px;*/
+/*}
 
 .divider-gray {
     border-bottom: 1px solid #f7f5f5;
