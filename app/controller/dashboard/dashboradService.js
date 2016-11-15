@@ -3,14 +3,14 @@
  */
 
 
-agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
+agentApp.factory("dashboradService", function ($http, baseUrls, authService, $state) {
 
     var getTotalTicketCount = function (status) {
         return $http({
             method: 'GET',
-            url: baseUrls.dashBordUrl+"DashboardEvent/TotalCount/"+status+"/user_"+authService.GetResourceIss()+"/*"
+            url: baseUrls.dashBordUrl + "DashboardEvent/TotalCount/" + status + "/user_" + authService.GetResourceIss() + "/*"
         }).then(function (response) {
-            if (response.status===200) {
+            if (response.status === 200) {
                 return response.data;
             } else {
                 return 0;
@@ -22,7 +22,7 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
     var getCreatedTicketSeries = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.dashBordUrl+"DashboardGraph/NewTicketByUser/30"
+            url: baseUrls.dashBordUrl + "DashboardGraph/NewTicketByUser/30"
         }).then(function (response) {
             if (response.data && response.data.length > 0 && response.data[0].datapoints) {
                 return response.data[0].datapoints;
@@ -37,7 +37,7 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
     var getResolvedTicketSeries = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.dashBordUrl+"DashboardGraph/ClosedTicketByUser/30"
+            url: baseUrls.dashBordUrl + "DashboardGraph/ClosedTicketByUser/30"
         }).then(function (response) {
             if (response.data && response.data.length > 0 && response.data[0].datapoints) {
                 return response.data[0].datapoints;
@@ -51,7 +51,7 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
     var getDeferenceResolvedTicketSeries = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.dashBordUrl+"DashboardGraph/ClosedVsOpenTicketByUser/30"
+            url: baseUrls.dashBordUrl + "DashboardGraph/ClosedVsOpenTicketByUser/30"
         }).then(function (response) {
             if (response.data && response.data.length > 0 && response.data[0].datapoints) {
                 return response.data[0].datapoints;
@@ -66,7 +66,7 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
     var productivityByResourceId = function (id) {
         return $http({
             method: 'get',
-            url: baseUrls.resourceService+id+"/Productivity"
+            url: baseUrls.resourceService + id + "/Productivity"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -79,7 +79,7 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
     var getQueueDetails = function () {
         return $http({
             method: 'get',
-            url: baseUrls.dashBordUrl+"DashboardEvent/QueueDetails"
+            url: baseUrls.dashBordUrl + "DashboardEvent/QueueDetails"
         }).then(function (response) {
             return response.data
         });
@@ -88,7 +88,7 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
     var getNewTicketCountViaChenal = function (chenal) {
         return $http({
             method: 'GET',
-            url: baseUrls.dashBordUrl+"DashboardEvent/TotalCount/NEWTICKET/via_"+chenal+"/*"
+            url: baseUrls.dashBordUrl + "DashboardEvent/TotalCount/NEWTICKET/via_" + chenal + "/*"
         }).then(function (response) {
             if (response.data) {
                 return response.data;
@@ -101,11 +101,11 @@ agentApp.factory("dashboradService", function ($http, baseUrls,authService) {
 
     return {
         ProductivityByResourceId: productivityByResourceId,
-        GetCreatedTicketSeries:getCreatedTicketSeries,
-        GetResolvedTicketSeries:getResolvedTicketSeries,
-        GetTotalTicketCount:getTotalTicketCount,
-        GetDeferenceResolvedTicketSeries:getDeferenceResolvedTicketSeries,
-        GetQueueDetails:getQueueDetails
+        GetCreatedTicketSeries: getCreatedTicketSeries,
+        GetResolvedTicketSeries: getResolvedTicketSeries,
+        GetTotalTicketCount: getTotalTicketCount,
+        GetDeferenceResolvedTicketSeries: getDeferenceResolvedTicketSeries,
+        GetQueueDetails: getQueueDetails
     }
 });
 

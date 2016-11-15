@@ -4,7 +4,6 @@
 
 agentApp.controller('addNewTicketCtrl', function ($scope, $http) {
 
-
         var modalEvent = function () {
             return {
                 ticketModel: function (id, className) {

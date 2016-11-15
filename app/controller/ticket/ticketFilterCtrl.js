@@ -2,11 +2,11 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.controller('ticketFilterCtrl', function ($scope, $http,$rootScope, ticketService) {
+agentApp.controller('ticketFilterCtrl', function ($scope, $http, $rootScope, ticketService, authService, $state) {
 
     /*getJSONData($http, 'filters', function (data) {
-        $scope.views = data;
-    });*/
+     $scope.views = data;
+     });*/
 
     $scope.showAlert = function (tittle, type, msg) {
         new PNotify({
@@ -18,25 +18,26 @@ agentApp.controller('ticketFilterCtrl', function ($scope, $http,$rootScope, tick
         });
     };
 
-    var getTicketViewCount = function (item) {
-item.count = 0;
+    var getTicketViewCount = function (item, e) {
+        item.count = 0;
         ticketService.GetTicketCountByView(item._id).then(function (response) {
             item.count = response;
             //$filter('filter')($scope.views, {_id: item._id},true)[0].count=response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Get View Count", "error", "Fail To Count.")
         });
     };
 
-    $scope.loadTicketViews = function () {
+    $scope.loadTicketViews = function (e) {
         ticketService.GetTicketViews().then(function (response) {
             $scope.views = response;
-            angular.forEach($scope.views,function(item){
+            angular.forEach($scope.views, function (item) {
                 getTicketViewCount(item);
             });
         }, function (err) {
-
-            $scope.showAlert("load Views", "error", "Fail To Load View List.")
+            authService.IsCheckResponse(err);
+            $scope.showAlert("load Views", "error", "Fail To Load View List.");
         });
     };
     $scope.loadTicketViews();
@@ -50,13 +51,14 @@ item.count = 0;
         ticketService.GetTicketsByView(data._id).then(function (response) {
             $scope.isProgress = false;
             $scope.ticketList = response;
-            if(!response || response.length===0){
+            if (!response || response.length === 0) {
                 $scope.isNoData = true;
             }
-            else{
+            else {
                 $scope.isNoData = false;
             }
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.isProgress = false;
             $scope.showAlert("load Tickets", "error", "Fail To Load Tickets List.")
         });
@@ -65,8 +67,8 @@ item.count = 0;
 
     // open tab for specific ticket
     $scope.viewSpecificTicket = function (data) {
-        data.tabType='ticketView';
-        $rootScope.$emit('openNewTab',data);
+        data.tabType = 'ticketView';
+        $rootScope.$emit('openNewTab', data);
     }
 
 });

@@ -2,7 +2,7 @@
  * Created by Damith on 10/20/2016.
  */
 
-agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
+agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) {
 
 
     //####Click take a note
@@ -79,6 +79,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                         showAlert('Reminder Note', 'success', res.data.CustomMessage);
                     }
                 }, function (err) {
+                    authService.IsCheckResponse(err);
                     showAlert('Reminder Note', 'success', 'Error in CreateMyNote');
                     console.log(err);
                 });
@@ -110,6 +111,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                 showAlert('Reminder Note', 'success', res.data.CustomMessage);
             }
         }, function (err) {
+            authService.IsCheckResponse(err);
             console.log(err);
             showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
         });
@@ -149,6 +151,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                     }
                     loadedReminder();
                 }, function (err) {
+                    authService.IsCheckResponse(err);
                     console.log(err);
                     showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
                     loadedReminder();
@@ -183,6 +186,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices) {
                         uiFuntions.foundMyNote();
                     }
                 }, function (err) {
+                    authService.IsCheckResponse(err);
                     console.log(err);
                     showAlert('Reminder Note', 'error', 'Error in GetAllMyToDo');
                     uiFuntions.myNoteNotFound();

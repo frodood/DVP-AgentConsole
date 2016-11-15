@@ -2,13 +2,13 @@
  * Created by Veery Team on 9/8/2016.
  */
 
-agentApp.factory("ticketService", function ($http, baseUrls,authService) {
+agentApp.factory("ticketService", function ($http, baseUrls, authService) {
 
 
-    var getAllTicketsByRequester = function (requester,page) {
+    var getAllTicketsByRequester = function (requester, page) {
         return $http({
             method: 'get',
-            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/5/"+page
+            url: baseUrls.ticketUrl + "Tickets/Requester/" + requester + "/5/" + page
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -21,7 +21,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getExternalUserTicketCounts = function (requester) {
         return $http({
             method: 'get',
-            url: baseUrls.ticketUrl+"ExternalUserTicketCounts/"+requester
+            url: baseUrls.ticketUrl + "ExternalUserTicketCounts/" + requester
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -34,8 +34,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var saveTicket = function (ticket) {
         return $http({
             method: 'Post',
-            url: baseUrls.ticketUrl+"Ticket",
-            data:ticket
+            url: baseUrls.ticketUrl + "Ticket",
+            data: ticket
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data;
@@ -56,127 +56,116 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/10/"+page+"?status=new"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Tickets/10/" + page + "?status=new"
+        }).then(function (response) {
             return response;
         });
     };
 
-    var getOpenTickets= function (page) {
+    var getOpenTickets = function (page) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/10/"+page+"?status=open&status=progressings"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Tickets/10/" + page + "?status=open&status=progressings"
+        }).then(function (response) {
             return response;
         });
     };
 
-    var getClosedTickets= function (page) {
+    var getClosedTickets = function (page) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/6/"+page+"?status=parked&status=solved&status=closed"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Tickets/6/" + page + "?status=parked&status=solved&status=closed"
+        }).then(function (response) {
             return response;
         });
     };
 
     // .........................  get My tickets with status .................................
 
-    var getMyRecentTickets= function () {
+    var getMyRecentTickets = function () {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"RecentTickets"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "RecentTickets"
+        }).then(function (response) {
             return response.data.Result;
         });
     };
 
-    var getMyNewTickets= function (page) {
+    var getMyNewTickets = function (page) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyTickets/10/"+page+"?status=new"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "MyTickets/10/" + page + "?status=new"
+        }).then(function (response) {
             return response;
         });
     };
 
-    var getMyOpenTickets= function (page) {
+    var getMyOpenTickets = function (page) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyTickets/10/"+page+"?status=open&status=progressings"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "MyTickets/10/" + page + "?status=open&status=progressings"
+        }).then(function (response) {
             return response;
         });
     };
 
-    var getMyClosedTickets= function (page) {
+    var getMyClosedTickets = function (page) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyTickets/6/"+page+"?status=parked&status=solved&status=closed"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "MyTickets/6/" + page + "?status=parked&status=solved&status=closed"
+        }).then(function (response) {
             return response;
         });
     };
 
     // .........................  get My group tickets with status .................................
 
-    var getMyGroupTickets= function (page) {
+    var getMyGroupTickets = function (page) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyGroupTickets/10/"+page+"?status=new"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "MyGroupTickets/10/" + page + "?status=new"
+        }).then(function (response) {
             return response;
         });
     };
 
-    var mapFormSubmissionToTicket= function (formSubId, ticketId) {
+    var mapFormSubmissionToTicket = function (formSubId, ticketId) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+'Ticket/' + ticketId + '/FormSubmission',
+            url: baseUrls.ticketUrl + 'Ticket/' + ticketId + '/FormSubmission',
             data: JSON.stringify({form_submission: formSubId})
-        }).then(function(response)
-        {
+        }).then(function (response) {
             return response.data;
         });
     };
-    var getMyGroupOpenTickets= function (page) {
+    var getMyGroupOpenTickets = function (page) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyGroupTickets/10/"+page+"?status=open&status=progressings"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "MyGroupTickets/10/" + page + "?status=open&status=progressings"
+        }).then(function (response) {
             return response;
         });
     };
 
-    var getMyGroupClosedTickets= function (page) {
+    var getMyGroupClosedTickets = function (page) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyGroupTickets/6/"+page+"?status=parked&status=solved&status=closed"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "MyGroupTickets/6/" + page + "?status=parked&status=solved&status=closed"
+        }).then(function (response) {
             return response;
         });
     };
@@ -187,33 +176,30 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Details"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/Details"
+        }).then(function (response) {
             return response;
         });
     };
 
-    var updateTicket = function (ticketID,ticketObject) {
+    var updateTicket = function (ticketID, ticketObject) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketID,
-            data:ticketObject
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID,
+            data: ticketObject
+        }).then(function (response) {
             return response;
         });
     };
 
-    var updateTicketByReference = function (cusReference,postData) {
+    var updateTicketByReference = function (cusReference, postData) {
         return $http({
             method: 'put',
-            url: baseUrls.ticketUrl+"TicketByReference/"+cusReference+"/Comment",
-            data:postData
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "TicketByReference/" + cusReference + "/Comment",
+            data: postData
+        }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
             } else {
@@ -227,10 +213,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'POST',
-            url: baseUrls.ticketUrl+"TicketView",
-            data:ticketView
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "TicketView",
+            data: ticketView
+        }).then(function (response) {
             return response;
         });
     };
@@ -240,9 +225,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketView/"+id
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "TicketView/" + id
+        }).then(function (response) {
             return response;
         });
     };
@@ -252,9 +236,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketView/"+id+"/TicketCount"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "TicketView/" + id + "/TicketCount"
+        }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
             } else {
@@ -268,9 +251,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketViews"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "TicketViews"
+        }).then(function (response) {
             return response.data.Result;
         });
     };
@@ -280,23 +262,21 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketView/"+id+"/Tickets"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets"
+        }).then(function (response) {
             return response.data.Result;
         });
     };
 
-    var AddNewCommentToTicket = function (ticketId,commentObject) {
+    var AddNewCommentToTicket = function (ticketId, commentObject) {
 
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Comment",
-            data:commentObject
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketId + "/Comment",
+            data: commentObject
+        }).then(function (response) {
             return response;
         });
 
@@ -306,9 +286,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/pick"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketId + "/pick"
+        }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
             } else {
@@ -318,68 +297,63 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     };
 
-    var AssignUserToTicket = function (ticketId,userId) {
+    var AssignUserToTicket = function (ticketId, userId) {
 
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/AssignUser/"+userId
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketId + "/AssignUser/" + userId
+        }).then(function (response) {
             return response;
         });
 
     };
 
-    var AssignUserGroupToTicket = function (ticketId,groupId) {
+    var AssignUserGroupToTicket = function (ticketId, groupId) {
 
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/AssignGroup/"+groupId
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketId + "/AssignGroup/" + groupId
+        }).then(function (response) {
             return response;
         });
 
     };
 
-    var getTicketNextLevel= function (ticketType,currentStatus) {
+    var getTicketNextLevel = function (ticketType, currentStatus) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"/TicketStatusFlow/NextAvailableStatus/"+ticketType+"/"+currentStatus
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "/TicketStatusFlow/NextAvailableStatus/" + ticketType + "/" + currentStatus
+        }).then(function (response) {
             return response;
         });
     };
 
-    var updateTicketStatus = function (ticketID,newStatus) {
+    var updateTicketStatus = function (ticketID, newStatus) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/Status",
-            data:newStatus
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/Status",
+            data: newStatus
+        }).then(function (response) {
             return response;
         });
     };
 
-    var AddSubTicket = function (ticketID,subTicket) {
+    var AddSubTicket = function (ticketID, subTicket) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'POST',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/SubTicket",
-            data:subTicket
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/SubTicket",
+            data: subTicket
+        }).then(function (response) {
             return response;
         });
     };
@@ -388,9 +362,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getExternalUserRecentTickets = function (id) {
         return $http({
             method: 'get',
-            url: baseUrls.ticketUrl+"ExternalUserRecentTickets/"+id
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "ExternalUserRecentTickets/" + id
+        }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
             } else {
@@ -405,9 +378,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"FormProfile"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "FormProfile"
+        }).then(function (response) {
             return response.data;
         });
 
@@ -419,9 +391,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"FormSubmission/" + ref
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "FormSubmission/" + ref
+        }).then(function (response) {
             return response.data;
         });
 
@@ -433,10 +404,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"FormSubmission/" + refId,
+            url: baseUrls.ticketUrl + "FormSubmission/" + refId,
             data: JSON.stringify(updateValues)
-        }).then(function(response)
-        {
+        }).then(function (response) {
             return response.data;
         });
 
@@ -448,10 +418,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'POST',
-            url: baseUrls.ticketUrl+"FormSubmission",
+            url: baseUrls.ticketUrl + "FormSubmission",
             data: JSON.stringify(saveValues)
-        }).then(function(response)
-        {
+        }).then(function (response) {
             return response.data;
         });
 
@@ -461,8 +430,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var reqData = {ticket: ticketId};
         return $http({
             method: 'Post',
-            url: baseUrls.ticketUrl+"Timer",
-            data:reqData
+            url: baseUrls.ticketUrl + "Timer",
+            data: reqData
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -476,12 +445,12 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var reqBody = {note: ""};
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"MyTimer/start",
+            url: baseUrls.ticketUrl + "MyTimer/start",
             data: reqBody
         }).then(function (response) {
-            if(response) {
+            if (response) {
                 return response.data.IsSuccess;
-            }else{
+            } else {
                 return undefined;
             }
         });
@@ -491,12 +460,12 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var reqBody = {note: ""};
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"MyTimer/"+trackerId+"/pause",
-            data:reqBody
+            url: baseUrls.ticketUrl + "MyTimer/" + trackerId + "/pause",
+            data: reqBody
         }).then(function (response) {
-            if(response) {
+            if (response) {
                 return response.data.IsSuccess;
-            }else{
+            } else {
                 return undefined;
             }
         });
@@ -506,125 +475,116 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         var reqBody = {note: ""};
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"MyTimer/"+trackerId+"/stop",
-            data:reqBody
+            url: baseUrls.ticketUrl + "MyTimer/" + trackerId + "/stop",
+            data: reqBody
         }).then(function (response) {
-            if(response) {
+            if (response) {
                 return response.data.IsSuccess;
-            }else{
+            } else {
                 return undefined;
             }
         });
     };
 
-    var searchTicket= function (searchText) {
+    var searchTicket = function (searchText) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketSearch/"+searchText+"/25/1"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "TicketSearch/" + searchText + "/25/1"
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var searchTicketByField= function (field, value) {
+    var searchTicketByField = function (field, value) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"TicketsByField/"+field+"/"+value
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "TicketsByField/" + field + "/" + value
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var searchTicketByChannel= function (channel) {
+    var searchTicketByChannel = function (channel) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/Channel/"+channel+"/25/1"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Tickets/Channel/" + channel + "/25/1"
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var searchTicketByGroupId= function (groupId) {
+    var searchTicketByGroupId = function (groupId) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/Group/"+groupId+"/25/1"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Tickets/Group/" + groupId + "/25/1"
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var searchTicketByPriority= function (priority) {
+    var searchTicketByPriority = function (priority) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/Priority/"+priority+"/25/1"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Tickets/Priority/" + priority + "/25/1"
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var searchTicketByStatus= function (status) {
+    var searchTicketByStatus = function (status) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/"+status+"/25/1"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Tickets/" + status + "/25/1"
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var searchTicketByRequester= function (requester) {
+    var searchTicketByRequester = function (requester) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Tickets/Requester/"+requester+"/25/1"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Tickets/Requester/" + requester + "/25/1"
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var AddNewAttachmentToTicket = function (ticketId,attachmentObject) {
+    var AddNewAttachmentToTicket = function (ticketId, attachmentObject) {
 
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Attachment",
-            data:attachmentObject
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketId + "/Attachment",
+            data: attachmentObject
+        }).then(function (response) {
             return response;
         });
 
     };
 
-    var RemoveAttachmentFromTicket = function (ticketId,attachmentID) {
+    var RemoveAttachmentFromTicket = function (ticketId, attachmentID) {
 
         var authToken = authService.GetToken();
 
         return $http({
             method: 'DELETE',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Attachment/"+attachmentID
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketId + "/Attachment/" + attachmentID
+        }).then(function (response) {
             return response;
         });
 
@@ -636,10 +596,9 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"Timers/Ticket/"+ticketId
+            url: baseUrls.ticketUrl + "Timers/Ticket/" + ticketId
 
-        }).then(function(response)
-        {
+        }).then(function (response) {
             return response;
         });
 
@@ -650,9 +609,8 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/Watch"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketId + "/Watch"
+        }).then(function (response) {
             return response;
         });
 
@@ -663,38 +621,35 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketId+"/StopWatch"
-        }).then(function(response)
-        {
+            url: baseUrls.ticketUrl + "Ticket/" + ticketId + "/StopWatch"
+        }).then(function (response) {
             return response;
         });
 
     };
 
-    var pickCompanyInfo = function (tenant,company) {
+    var pickCompanyInfo = function (tenant, company) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Organisation/Name/"+tenant+"/"+company
-        }).then(function(response)
-        {
+            url: baseUrls.userServiceBaseUrl + "Organisation/Name/" + tenant + "/" + company
+        }).then(function (response) {
             return response;
         });
     };
 
 
-    var updateTicketEstimateTime = function (ticketID,estimTime) {
+    var updateTicketEstimateTime = function (ticketID, estimTime) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl+"Ticket/"+ticketID+"/EstimatedTime",
-            data:{
-                time_estimation:estimTime
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/EstimatedTime",
+            data: {
+                time_estimation: estimTime
             }
-        }).then(function(response)
-        {
+        }).then(function (response) {
             return response;
         });
     };
@@ -702,7 +657,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getMyTimer = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"MyTimer"
+            url: baseUrls.ticketUrl + "MyTimer"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -715,7 +670,7 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
     var getAvailableTicketTypes = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl+"AvailableTicketTypes"
+            url: baseUrls.ticketUrl + "AvailableTicketTypes"
         }).then(function (response) {
             if (response.data) {
                 return response.data;
@@ -727,42 +682,42 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
-        SaveTicket:saveTicket,
-        GetResourceIss:getResourceIss,
-        getNewTickets:getNewTickets,
-        getOpenTickets:getOpenTickets,
-        getClosedTickets:getClosedTickets,
-        GetMyRecentTickets:getMyRecentTickets,
-        getMyNewTickets:getMyNewTickets,
-        getMyOpenTickets:getMyOpenTickets,
-        getMyClosedTickets:getMyClosedTickets,
-        getMyGroupTickets:getMyGroupTickets,
-        getMyGroupOpenTickets:getMyGroupOpenTickets,
-        getMyGroupClosedTickets:getMyGroupClosedTickets,
-        getTicket:getTicket,
-        updateTicket:updateTicket,
-        UpdateTicketByReference:updateTicketByReference,
-        CreateTicketView:createTicketView,
-        GetTicketView:getTicketView,
-        GetTicketCountByView:getTicketCountByView,
-        GetTicketViews:getTicketViews,
-        GetTicketsByView:getTicketsByView,
-        AddNewCommentToTicket:AddNewCommentToTicket,
+        SaveTicket: saveTicket,
+        GetResourceIss: getResourceIss,
+        getNewTickets: getNewTickets,
+        getOpenTickets: getOpenTickets,
+        getClosedTickets: getClosedTickets,
+        GetMyRecentTickets: getMyRecentTickets,
+        getMyNewTickets: getMyNewTickets,
+        getMyOpenTickets: getMyOpenTickets,
+        getMyClosedTickets: getMyClosedTickets,
+        getMyGroupTickets: getMyGroupTickets,
+        getMyGroupOpenTickets: getMyGroupOpenTickets,
+        getMyGroupClosedTickets: getMyGroupClosedTickets,
+        getTicket: getTicket,
+        updateTicket: updateTicket,
+        UpdateTicketByReference: updateTicketByReference,
+        CreateTicketView: createTicketView,
+        GetTicketView: getTicketView,
+        GetTicketCountByView: getTicketCountByView,
+        GetTicketViews: getTicketViews,
+        GetTicketsByView: getTicketsByView,
+        AddNewCommentToTicket: AddNewCommentToTicket,
         AssignUserGroupToTicket: AssignUserGroupToTicket,
-        getTicketNextLevel:getTicketNextLevel,
+        getTicketNextLevel: getTicketNextLevel,
         createTimer: createTimer,
         startTimer: startTimer,
         pauseTimer: pauseTimer,
         stopTimer: stopTimer,
         getFormsForCompany: getFormsForCompany,
-        AssignUserToTicket:AssignUserToTicket,
-        updateTicketStatus:updateTicketStatus,
+        AssignUserToTicket: AssignUserToTicket,
+        updateTicketStatus: updateTicketStatus,
         updateFormSubmissionData: updateFormSubmissionData,
-        AddSubTicket:AddSubTicket,
-        GetExternalUserRecentTickets:getExternalUserRecentTickets,
+        AddSubTicket: AddSubTicket,
+        GetExternalUserRecentTickets: getExternalUserRecentTickets,
         createFormSubmissionData: createFormSubmissionData,
         mapFormSubmissionToTicket: mapFormSubmissionToTicket,
-        PickTicket:pickTicket,
+        PickTicket: pickTicket,
         searchTicket: searchTicket,
         searchTicketByField: searchTicketByField,
         searchTicketByChannel: searchTicketByChannel,
@@ -773,13 +728,13 @@ agentApp.factory("ticketService", function ($http, baseUrls,authService) {
         AddNewAttachmentToTicket: AddNewAttachmentToTicket,
         RemoveAttachmentFromTicket: RemoveAttachmentFromTicket,
         getFormSubmissionByRef: getFormSubmissionByRef,
-        PickLoggedTime:PickLoggedTime,
-        WatchTicket:WatchTicket,
-        StopWatchTicket:StopWatchTicket,
-        GetExternalUserTicketCounts:getExternalUserTicketCounts,
-        pickCompanyInfo:pickCompanyInfo,
-        getMyTimer:getMyTimer,
-        updateTicketEstimateTime:updateTicketEstimateTime,
+        PickLoggedTime: PickLoggedTime,
+        WatchTicket: WatchTicket,
+        StopWatchTicket: StopWatchTicket,
+        GetExternalUserTicketCounts: getExternalUserTicketCounts,
+        pickCompanyInfo: pickCompanyInfo,
+        getMyTimer: getMyTimer,
+        updateTicketEstimateTime: updateTicketEstimateTime,
         getAvailableTicketTypes: getAvailableTicketTypes
     }
 });

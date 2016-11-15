@@ -2,7 +2,9 @@
  * Created by Veery Team on 8/19/2016.
  */
 
-agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$state,ticketService,moment,$rootScope,userService,profileDataParser) {
+agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$state,ticketService,moment,$rootScope,userService,
+                                            profileDataParser,authService) {
+
 
     $scope.ticketList = {
         toDo: [],
@@ -79,6 +81,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
             }
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
     };
@@ -108,6 +111,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
             pickAllGroups();
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
     };
@@ -190,6 +194,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
 
@@ -238,6 +243,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
     };
@@ -288,6 +294,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
     };
@@ -342,6 +349,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
 
@@ -392,6 +400,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
     };
@@ -438,6 +447,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
     };
@@ -489,6 +499,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
 
@@ -538,6 +549,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
     };
@@ -583,6 +595,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
 
         }), function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
         }
     };
