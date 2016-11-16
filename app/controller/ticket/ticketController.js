@@ -74,10 +74,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 profileDataParser.assigneeList = $scope.assigneeList;
             }
 
-        }), function (error) {
+        }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
     var pickAllUsers = function () {
@@ -104,10 +104,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
             pickAllGroups();
 
-        }), function (error) {
+        }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 
@@ -175,10 +175,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
             }
 
 
-        }), function (error) {
+        }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
 
     };
 
@@ -218,10 +218,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
             }
 
 
-        }), function (error) {
+        }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 
@@ -264,10 +264,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
             }
 
 
-        }), function (error) {
+        }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 // ................. My Tickets ..............................
