@@ -97,7 +97,6 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
 
     var getMyNewTickets = function (page) {
         var authToken = authService.GetToken();
-
         return $http({
             method: 'GET',
             url: baseUrls.ticketUrl + "MyTickets/10/" + page + "?status=new"

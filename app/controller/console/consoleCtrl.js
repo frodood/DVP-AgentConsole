@@ -2122,6 +2122,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     console.log("send notification success :: " + $scope.notificationMsg.To);
                     $scope.notificationMsg = {};
                 }, function (err) {
+                    authService.IsCheckResponse(err);
                     var errMsg = "Send Notification Failed";
                     if (err.statusText) {
                         errMsg = err.statusText;
@@ -2290,7 +2291,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.currentBerekOption = requestOption;
             });
         }
-    }//end
+    };//end
 
     //change agent Register status
     $scope.changeRegisterStatus = {

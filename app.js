@@ -95,16 +95,11 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
             // get me a login modal!
         }
     });
-
     var decodeToken = loginService.getTokenDecode();
     if (!decodeToken) {
         $state.go('login');
         return
     }
-    console.log(loginService.getToken());
-    console.log(decodeToken.jti);
-
-
 });
 
 

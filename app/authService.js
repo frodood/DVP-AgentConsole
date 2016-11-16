@@ -64,16 +64,11 @@ angular.module('authServiceModule', [])
                 return {"tenant": decodeData.tenant, "company": decodeData.company};
             };
 
-            this.IsAuthenticated = function () {
-                return $auth.isAuthenticated();
-                //  console.log($auth.isAuthenticated());
-            };
-
             this.IsCheckResponse = function (response) {
                 if (response) {
                     if (response.status != '200') {
                         if (response.data) {
-                            if (response.data.message == 'missing_secret') {
+                            if (response.data.message == 'missing_secret' || response.data.message == 'No authorization token was found') {
                                 $auth.removeToken();
                                 $state.reload();
                                 return false;
