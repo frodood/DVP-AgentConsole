@@ -3,7 +3,7 @@
  */
 
 angular.module('authServiceModule', [])
-    .service('authService', function (localStorageService, jwtHelper, $auth, $state) {
+    .service('authService', function (localStorageService, jwtHelper, $auth, $state,$location) {
 
 
             this.GetToken = function () {
@@ -70,6 +70,7 @@ angular.module('authServiceModule', [])
                         if (response.data) {
                             if (response.data.message == 'missing_secret' || response.data.message == 'No authorization token was found') {
                                 $auth.removeToken();
+                                $location.path("/login");
                                 $state.reload();
                                 return false;
                             }

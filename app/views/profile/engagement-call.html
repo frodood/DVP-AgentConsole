@@ -650,6 +650,11 @@
                             <div ng-include="'app/views/ticket/profile-ticket-view.html'"></div>
                         </div>
                     </uib-tab>
+                    <uib-tab heading="Other">
+                        <div class="animated">
+                            <div ng-include="'app/views/other-api-details.html'"></div>
+                        </div>
+                    </uib-tab>
 
                 </uib-tabset>
             </div>
@@ -828,7 +833,8 @@
                                                                 name="ticketType"
                                                                 required
                                                                 placeholder="Select">availableTicketTypes
-                                                            <option ng-repeat="tType in availableTicketTypes" value="{{tType}}">
+                                                            <option ng-repeat="tType in availableTicketTypes"
+                                                                    value="{{tType}}">
                                                                 {{tType}}
                                                             </option>
                                                         </select>
@@ -944,7 +950,8 @@
                         <li ng-show="mapProfile.showEngagement">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="mapProfile.mapEngagement"> map interaction to profile
+                                    <input type="checkbox" ng-model="mapProfile.mapEngagement"> map interaction to
+                                    profile
                                 </label>
                             </div>
                         </li>
