@@ -776,6 +776,4 @@ app.controller('ModalInstanceCtrl', function ($scope, $sce, $uibModalInstance, b
             }
         }
     };
-
-
 });
