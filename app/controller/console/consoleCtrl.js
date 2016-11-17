@@ -138,6 +138,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
 
+
+
+
     };
 
     $scope.PhoneLoading = function () {
@@ -277,6 +280,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 angular.forEach(dtmfSet, function (chr) {
                     sipSendDTMF(chr);
                 });
+                sipSendDTMF('#');
             }, 1000);
             //phoneFuncion.hideTransfer();
             phoneFuncion.showSwap();
@@ -605,6 +609,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.freeze = false;
             $scope.isAcw = false;
             phoneFuncion.updateCallStatus('Idle');
+
+            phoneFuncion.hideConference();
+            phoneFuncion.hideEtl();
+            phoneFuncion.hideTransfer();
+            phoneFuncion.hideSwap();
         },
         freezeBtn: function () {
             $scope.freeze = true;
