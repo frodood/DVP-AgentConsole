@@ -136,19 +136,19 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     };
     var mapResourceToVeery = function (publicIdentity) {
         /*dynamic data = new JObject();
-        data.SipURI = profile.publicIdentity.Replace("sip:", "");
-        data.ResourceId = profile.id;*/
-            return $http({
-                method: 'post',
-                url: baseUrls.monitorrestapi + "MonitorRestAPI/BindResourceToVeeryAccount",
-                data:{
-                    "SipURI": publicIdentity.replace("sip:", ""),
-                    "ResourceId": authService.GetResourceId()
-                }
-            }).then(function (response) {
-                return response.data.Result;
-            });
-        };
+         data.SipURI = profile.publicIdentity.Replace("sip:", "");
+         data.ResourceId = profile.id;*/
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/BindResourceToVeeryAccount",
+            data:{
+                "SipURI": publicIdentity.replace("sip:", ""),
+                "ResourceId": authService.GetResourceId()
+            }
+        }).then(function (response) {
+            return response.data.Result;
+        });
+    };
 
     return {
         BreakRequest: breakRequest,

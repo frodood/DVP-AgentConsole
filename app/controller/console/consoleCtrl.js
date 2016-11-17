@@ -59,11 +59,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         },
         Register: function () {
-            if ($scope.isRegistor) {
+            $scope.veeryPhone.Register('DuoS123');
+            /*if ($scope.isRegistor) {
                 $scope.ShowHidePhone(!$scope.showPhone);
             } else {
                 $scope.veeryPhone.Register('DuoS123');
-            }
+            }*/
         },
         openTicketViews: function () {
             divModel.model('#ticketFilterWrap', 'display-block');
@@ -125,6 +126,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isBtnReg').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isCallOnline').addClass('display-block deactive-menu-icon').removeClass('display-none');
+        phoneFuncion.idle();
         $scope.ShowHidePhone(false);
     };
 
@@ -134,10 +136,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isBtnReg').addClass('display-block active-menu-icon').removeClass('display-none');
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $scope.ShowHidePhone(true);
-        phoneFuncion.hideConference();
-        phoneFuncion.hideEtl();
-        phoneFuncion.hideTransfer();
-        phoneFuncion.hideSwap();
+        phoneFuncion.idle();
+
     };
 
     $scope.PhoneLoading = function () {
@@ -278,7 +278,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     sipSendDTMF(chr);
                 });
             }, 1000);
-            phoneFuncion.hideTransfer();
+            //phoneFuncion.hideTransfer();
             phoneFuncion.showSwap();
             phoneFuncion.showEtl();
             phoneFuncion.showConference();
@@ -417,7 +417,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     phoneFuncion.updateCallStatus('In Call');
                     $scope.ShowIncomeingNotification(false);
                     $scope.startCallTime();
-                    $scope.$broadcast('timer-set-countdown', $scope.countdown);
+
                 }
             }
             catch (ex) {
@@ -458,7 +458,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.PhoneOffline();
                     $scope.showAlert("Soft Phone", "error", "Fail To Register");
                 }
-
+                $scope.isRegistor = false;
                 /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
                  document.getElementById("btnAudioCall").disabled = document.getElementById("btnCall").disabled;
                  document.getElementById("btnHangUp").disabled = !oSipSessionCall;*/
@@ -514,6 +514,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             try {
 
                 console.log("uiCallTerminated");
+                $scope.$broadcast('timer-set-countdown', $scope.countdown);
                 $scope.stopCallTime();
                 $scope.ShowIncomeingNotification(false);
 
@@ -603,6 +604,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.showMorebtn();
             $scope.freeze = false;
             $scope.isAcw = false;
+            phoneFuncion.updateCallStatus('Idle');
         },
         freezeBtn: function () {
             $scope.freeze = true;
@@ -761,7 +763,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $('#phoneDialpad input').click(function () {
         var values = $(this).data('values');
         var chr = values[0];
-        $scope.call.number = $scope.call.number + chr;
+        $scope.call.number = $scope.call.number ? $scope.call.number + chr : chr;
+
         $scope.veeryPhone.sipSendDTMF(chr);
         $scope.$apply();
     });

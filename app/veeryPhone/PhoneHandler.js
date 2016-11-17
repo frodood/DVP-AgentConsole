@@ -333,9 +333,11 @@ function onSipEventStack(e /*SIPml.Stack.Event*/) {
         case 'failed_to_stop':
         {
             var bFailure = (e.type == 'failed_to_start') || (e.type == 'failed_to_stop');
-            oSipStack = null;
+
+            sipUnRegister();
+            /*oSipStack = null;
             oSipSessionRegister = null;
-            oSipSessionCall = null;
+            oSipSessionCall = null;*/
 
             UserEvent.uiOnConnectionEvent(false, false);
 
