@@ -38,8 +38,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.countdown = 10;
     $scope.GetAcwTime = function () {
         resourceService.GetAcwTime().then(function (response) {
-           $scope.countdown = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
+            $scope.countdown = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert('Phone', 'error', "Fail To Get ACW Time");
         });
     };
@@ -165,6 +166,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         resourceService.FreezeAcw(callSessionId, endFreeze).then(function (response) {
 
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert('Phone', 'error', "Fail Freeze Operation.");
             console.error(err);
         });
@@ -349,6 +351,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
                 }
             }, function (error) {
+                authService.IsCheckResponse(error);
                 $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
             });
 
@@ -612,7 +615,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#calltimmer').addClass('call-duations').removeClass('display-none');
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
             $scope.startCallTime();
-            $scope.FreezeAcw($scope.call.sessionId,true);
+            $scope.FreezeAcw($scope.call.sessionId, true);
         },
         endfreezeBtn: function () {
             $scope.freeze = false;
@@ -620,7 +623,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.updateCallStatus('Idle');
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn').removeClass('display-none');
             phoneFuncion.idle();
-            $scope.FreezeAcw($scope.call.sessionId,false);
+            $scope.FreezeAcw($scope.call.sessionId, false);
         },
         startAcw: function () {
             $scope.isAcw = true;
@@ -890,7 +893,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentDisconnected = function () {
         $scope.isSocketRegistered = false;
         $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
-       // $('#regNotification').addClass('display-none').removeClass('display-block');
+        // $('#regNotification').addClass('display-none').removeClass('display-block');
         $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
 
     };
@@ -1054,6 +1057,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         userService.LoadUser().then(function (response) {
             $scope.users = response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Load Users", "error", "Fail To Get User List.")
         });
     };
@@ -1067,6 +1071,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.userGroups = response.data.Result;
             }
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Load User Groups", "error", "Fail To Get User Groups.")
         });
     };
@@ -1078,6 +1083,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         tagService.GetAllTags().then(function (response) {
             $scope.tags = response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Load Tags", "error", "Fail To Get Tag List.")
         });
     };
@@ -1087,6 +1093,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         tagService.GetTagCategories().then(function (response) {
             $scope.tagCategories = response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Load Tags", "error", "Fail To Get Tag List.")
         });
     };
@@ -1171,7 +1178,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
         }, function (err) {
-
+            authService.IsCheckResponse(err);
             var errMsg = "Create Engagement Session Failed";
 
             if (err.statusText) {
@@ -1353,6 +1360,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.showAlert("Tracker", "error", "Timer failed to stop timer ");
             }
         }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
             $scope.showAlert("Tracker", "error", "Timer failed to stop timer ");
         });
@@ -1371,6 +1379,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.showAlert("Tracker", "error", "Timer failed to pause timer ");
             }
         }, function (error) {
+            authService.IsCheckResponse(err);
             console.log(error);
             $scope.showAlert("Tracker", "error", "Timer failed to pause timer ");
         });
@@ -1403,6 +1412,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert("Tracker", "error", "Timer failed to resume timer ");
                 }
             }, function (error) {
+                authService.IsCheckResponse(err);
                 console.log(error);
                 $scope.showAlert("Tracker", "error", "Timer failed to resume timer ");
             });
@@ -1441,6 +1451,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         $scope.showAlert("Tracker", "error", "Timer failed to start ");
                     }
                 }, function (error) {
+                    authService.IsCheckResponse(error);
                     console.log(error);
                     $scope.showAlert("Tracker", "error", "Timer failed to start ");
                 });
@@ -1502,11 +1513,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     }
 
                 }, function (error) {
+                    authService.IsCheckResponse(error);
                     console.log(error);
                     $scope.showAlert("Tracker", "error", "Timer failed to load ticket details");
                 });
             }
         }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
             $scope.showAlert("Tracker", "error", "Timer failed to start");
         });
@@ -1914,26 +1927,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                    if (data.IsSuccess) {
-                        if (data.Result && data.Result.UNREAD) {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception) {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    console.log(err);
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
+                        console.log(err);
 
-                })
+                    })
 
         }
         catch (ex) {
@@ -1959,8 +1973,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 profileDataParser.myProfile = {};
             }
         }, function (error) {
-
-
+            authService.IsCheckResponse(error);
             profileDataParser.myProfile = {};
         });
 
@@ -2025,17 +2038,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.setExtention = function (selectedUser) {
 
-        try{
+        try {
             var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
-            if(angular.isArray(concurrencyInfos)){
+            if (angular.isArray(concurrencyInfos)) {
                 var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
                 $scope.call.number = RefInfo.Extention;
             }
-            else{
+            else {
                 $scope.showAlert('Error', 'error', "Fail To Find Extention.");
             }
         }
-        catch(ex){
+        catch (ex) {
             $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
         }
     };
@@ -2112,6 +2125,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     console.log("send notification success :: " + $scope.notificationMsg.To);
                     $scope.notificationMsg = {};
                 }, function (err) {
+                    authService.IsCheckResponse(err);
                     var errMsg = "Send Notification Failed";
                     if (err.statusText) {
                         errMsg = err.statusText;
@@ -2152,9 +2166,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     for (var i = 0; i < $scope.users.length; i++) {
                         var user = $scope.users[i];
                         user.listType = "User";
-                        if (user.resourceid)
-                        {
-                            if(user.resourceid != authService.GetResourceId()){
+                        if (user.resourceid) {
+                            if (user.resourceid != authService.GetResourceId()) {
                                 var resource = FilterByID(onlineAgents, "ResourceId", user.resourceid);
                                 if (resource) {
                                     user.status = resource.Status.State;
@@ -2221,6 +2234,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.showAlert('Error', 'error', errMsg);
             }
         }, function (err) {
+            authService.IsCheckResponse(err);
             var errMsg = "Error occurred while loading online agents";
             if (err.statusText) {
                 errMsg = err.statusText;
@@ -2245,9 +2259,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /* update code damith
      ARDS break option */
+    $scope.currentBerekOption = null;
     var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
+            console.log(requestOption);
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
@@ -2257,12 +2273,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $('#userStatus').addClass('offline').removeClass('online');
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('font-color-green bold');
+                    $scope.currentBerekOption = requestOption;
                 }
             }, function (error) {
+                authService.IsCheckResponse(error);
                 $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
             });
         },
-        endBreakOption: function () {
+        endBreakOption: function (requestOption) {
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
@@ -2273,9 +2291,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 $('#userStatus').addClass('online').removeClass('offline');
                 $('#Available').addClass('font-color-green bold');
+                $scope.currentBerekOption = requestOption;
             });
         }
-    }//end
+    };//end
 
     //change agent Register status
     $scope.changeRegisterStatus = {
@@ -2291,6 +2310,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     console.log(data);
                 }
             }, function (error) {
+                authService.IsCheckResponse(error);
                 $scope.showAlert("Change Register", "error", "Fail To Register..!");
             });
             //
@@ -2303,6 +2323,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetResourceState(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         if (data.Result.State == "Available") {
+                            $scope.currentBerekOption = "Available";
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Available').addClass('font-color-green bold');
                         } else {
@@ -2310,14 +2331,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             switch (data.Result.Reason) {
                                 case 'OfficialBreak' :
                                     $('#OfficialBreak').addClass('font-color-green bold');
+                                    $scope.currentBerekOption = "OfficialBreak";
                                     break;
                                 case 'MealBreak' :
                                     $('#MealBreak').addClass('font-color-green bold');
+                                    $scope.currentBerekOption = "MealBreak";
                                     break;
                             }
                         }
                     }
                 }, function (error) {
+                    authService.IsCheckResponse(error);
                     $scope.showAlert("Agent State", "error", "Fail To load get current state..");
                 });
             },
@@ -2325,6 +2349,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetResource(authService.GetResourceId()).then(function (data) {
                     console.log(data);
                 }, function (error) {
+                    authService.IsCheckResponse(error);
                     $scope.showAlert("Agent State", "error", "Fail To load get current state..");
                 });
             }
@@ -2403,6 +2428,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.showAlert("Added to ToDo", "success", "Notification successfully added as To Do");
             $scope.showMesssageModal = false;
         }, function (error) {
+            authService.IsCheckResponse(error);
             $scope.showAlert("Adding failed ", "error", "Notification is failed to add as To Do");
         });
     };

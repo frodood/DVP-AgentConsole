@@ -2,47 +2,43 @@
  * Created by Veery Team on 8/19/2016.
  */
 
-agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$state,ticketService,moment,$rootScope,userService,profileDataParser) {
+agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $state, ticketService, moment, $rootScope, userService,
+                                            profileDataParser, authService) {
+
 
     $scope.ticketList = {
         toDo: [],
         inProgress: [],
         done: [],
-        loadCompleted:false,
-        loadListStatus:"MY"
+        loadCompleted: false,
+        loadListStatus: "MY"
 
 
     };
-
-
 
 
     String.prototype.toHH = function () {
 
 
     }
-    $scope.userList=[];
-    $scope.userGroupList=[];
-    $scope.isDefault=true;
+    $scope.userList = [];
+    $scope.userGroupList = [];
+    $scope.isDefault = true;
 
 
-
-    $("#mybtn").click(function() {
+    $("#mybtn").click(function () {
         $(this).toggleClass("active");
-        if($scope.ticketList.loadListStatus=="MY")
-        {
+        if ($scope.ticketList.loadListStatus == "MY") {
 
         }
-        if($scope.ticketList.loadListStatus=="GROUP")
-        {
+        if ($scope.ticketList.loadListStatus == "GROUP") {
             $("#grpbtn").toggleClass("active");
         }
 
     });
-    $("#grpbtn").click(function() {
+    $("#grpbtn").click(function () {
         $(this).toggleClass("active");
-        if($scope.ticketList.loadListStatus=="MY")
-        {
+        if ($scope.ticketList.loadListStatus == "MY") {
             $("#mybtn").toggleClass("active");
         }
 
@@ -51,13 +47,13 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
     $("#mybtn").click();
 // ................. All users and user groups ..............................
     $scope.assigneeList = [];
-    var pickAllGroups= function () {
+    var pickAllGroups = function () {
         userService.getUserGroupList().then(function (response) {
-            $scope.userGroupList=response.data.Result;
-            $scope.ticketList.loadCompleted =true;
+            $scope.userGroupList = response.data.Result;
+            $scope.ticketList.loadCompleted = true;
             /*pickToDoList(1);
-            pickProcessingTickets(1);
-            pickCompletedTickets(1);*/
+             pickProcessingTickets(1);
+             pickCompletedTickets(1);*/
             pickMyToDoList(1);
             pickMyProcessingTickets(1);
             pickMyCompletedTickets(1);
@@ -78,18 +74,19 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                 profileDataParser.assigneeList = $scope.assigneeList;
             }
 
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
     var pickAllUsers = function () {
         $scope.assigneeList = [];
         userService.getUserList().then(function (response) {
-            $scope.userList=response.data.Result;
-            profileDataParser.userList=$scope.userList;
+            $scope.userList = response.data.Result;
+            profileDataParser.userList = $scope.userList;
 
-            if($scope.users) {
+            if ($scope.users) {
                 for (var i = 0; i < $scope.users.length; i++) {
                     var user = $scope.users[i];
                     user.listType = "User";
@@ -107,9 +104,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
             pickAllGroups();
 
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 
@@ -119,21 +117,16 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
         ticketService.getNewTickets(page).then(function (response) {
 
 
-            if(response.data.IsSuccess)
-            {
-                if(response.data.Result.length==0)
-                {
-                    $scope.isNewTicketLoadComplete=true;
+            if (response.data.IsSuccess) {
+                if (response.data.Result.length == 0) {
+                    $scope.isNewTicketLoadComplete = true;
                 }
-                else
-                {
-                    for(var i=0;i<response.data.Result.length;i++)
-                    {
+                else {
+                    for (var i = 0; i < response.data.Result.length; i++) {
 
-                        response.data.Result[i].timeDelay  = moment(response.data.Result[i].updated_at).fromNow();
-                        if(response.data.Result[i].status.length > 20)
-                        {
-                            response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0,20)+"....";
+                        response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                        if (response.data.Result[i].status.length > 20) {
+                            response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
                         }
 
 
@@ -161,11 +154,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                          }*/
 
 
+                        if (i == response.data.Result.length - 1) {
 
-                        if(i==response.data.Result.length-1)
-                        {
-
-                            $scope.ticketList.toDo=$scope.ticketList.toDo.concat(response.data.Result);
+                            $scope.ticketList.toDo = $scope.ticketList.toDo.concat(response.data.Result);
 
 
                         }
@@ -173,38 +164,32 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                 }
 
             }
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loading New tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loading New tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for new tickets");
                 }
 
             }
 
 
-
-
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
 
     };
 
     var pickProcessingTickets = function (page) {
         ticketService.getOpenTickets(page).then(function (response) {
 
-            if(response.data.IsSuccess) {
-                if(response.data.Result.length==0)
-                {
-                    $scope.isOpenTicketLoadComplete=true;
+            if (response.data.IsSuccess) {
+                if (response.data.Result.length == 0) {
+                    $scope.isOpenTicketLoadComplete = true;
                 }
-                else
-                {
+                else {
                     for (var i = 0; i < response.data.Result.length; i++) {
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
@@ -221,14 +206,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                 }
 
             }
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loading open tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loading open tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for open tickets");
                 }
 
@@ -236,10 +218,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
             }
 
 
-
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 
@@ -247,14 +229,12 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
         ticketService.getClosedTickets(page).then(function (response) {
 
 
-            if(response.data.IsSuccess) {
+            if (response.data.IsSuccess) {
 
-                if(response.data.Result.length==0)
-                {
-                    $scope.isCompletedTicketLoadComplete=true;
+                if (response.data.Result.length == 0) {
+                    $scope.isCompletedTicketLoadComplete = true;
                 }
-                else
-                {
+                else {
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
@@ -268,49 +248,41 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
                             $scope.ticketList.done = $scope.ticketList.done.concat(response.data.Result);
                         }
-                    };
+                    }
+                    ;
                 }
 
             }
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loading closed tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loading closed tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for closed tickets");
                 }
 
             }
 
 
-
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 // ................. My Tickets ..............................
 
     var pickMyToDoList = function (page) {
-
         ticketService.getMyNewTickets(page).then(function (response) {
-
-
-            if(response.data.IsSuccess)
-            {
-                if(response.data.Result.length==0)
-                {
-                    $scope.isNewTicketLoadComplete=true;
+            if (response.data.IsSuccess) {
+                if (response.data.Result.length == 0) {
+                    $scope.isNewTicketLoadComplete = true;
                 }
-                else
-                {
+                else {
                     for (var i = 0; i < response.data.Result.length; i++) {
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
-                        response.data.Result[i].submitter.avatar="/assets/img/defaultProfile.png";
+                        response.data.Result[i].submitter.avatar = "/assets/img/defaultProfile.png";
 
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
@@ -325,40 +297,31 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                     }
                 }
             }
-
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loading My new tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loading My new tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for My new tickets");
                 }
 
             }
-
-
-
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
 
     };
 
     var pickMyProcessingTickets = function (page) {
         ticketService.getMyOpenTickets(page).then(function (response) {
-            console.log("My open tickets",response.data.Result);
+            console.log("My open tickets", response.data.Result);
 
-            if(response.data.IsSuccess)
-            {
-                if(response.data.Result.length==0)
-                {
-                    $scope.isOpenTicketLoadComplete=true;
+            if (response.data.IsSuccess) {
+                if (response.data.Result.length == 0) {
+                    $scope.isOpenTicketLoadComplete = true;
                 }
-                else
-                {
+                else {
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
@@ -376,24 +339,21 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                 }
             }
 
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loading  My open tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loading  My open tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for My open tickets");
                 }
 
             }
 
 
-
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 
@@ -401,13 +361,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
         ticketService.getMyClosedTickets(page).then(function (response) {
 
 
-            if(response.data.IsSuccess) {
-                if(response.data.Result.length==0)
-                {
-                    $scope.isCompletedTicketLoadComplete=true;
+            if (response.data.IsSuccess) {
+                if (response.data.Result.length == 0) {
+                    $scope.isCompletedTicketLoadComplete = true;
                 }
-                else
-                {
+                else {
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
@@ -419,27 +377,25 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.done = $scope.ticketList.done.concat(response.data.Result);
                         }
-                    };
+                    }
+                    ;
                 }
             }
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loading  My Closed tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loading  My Closed tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for My Closed tickets");
                 }
 
             }
 
 
-
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
     // ................. My Tickets ..............................
@@ -449,13 +405,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
         ticketService.getMyGroupTickets(page).then(function (response) {
 
 
-            if(response.data.IsSuccess) {
-                if(response.data.Result.length==0)
-                {
-                    $scope.isNewTicketLoadComplete=true;
+            if (response.data.IsSuccess) {
+                if (response.data.Result.length == 0) {
+                    $scope.isNewTicketLoadComplete = true;
                 }
-                else
-                {
+                else {
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
@@ -472,14 +426,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                     }
                 }
             }
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loading   My Group new tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loading   My Group new tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for My Group new tickets");
                 }
 
@@ -487,10 +438,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
             }
 
 
-
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
 
     };
 
@@ -498,13 +449,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
         ticketService.getMyGroupOpenTickets(page).then(function (response) {
 
 
-            if(response.data.IsSuccess) {
-                if(response.data.Result.length==0)
-                {
-                    $scope.isOpenTicketLoadComplete=true;
+            if (response.data.IsSuccess) {
+                if (response.data.Result.length == 0) {
+                    $scope.isOpenTicketLoadComplete = true;
                 }
-                else
-                {
+                else {
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
@@ -514,32 +463,29 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                         }
 
 
-
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.inProgress = $scope.ticketList.inProgress.concat(response.data.Result);
 
                         }
-                    };
+                    }
+                    ;
                 }
             }
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loading My Group open tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loading My Group open tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for My Group open tickets");
                 }
 
             }
 
 
-
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 
@@ -547,13 +493,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
         ticketService.getMyGroupClosedTickets(page).then(function (response) {
 
 
-            if(response.data.IsSuccess) {
-                if(response.data.Result.length==0)
-                {
-                    $scope.isCompletedTicketLoadComplete=true;
+            if (response.data.IsSuccess) {
+                if (response.data.Result.length == 0) {
+                    $scope.isCompletedTicketLoadComplete = true;
                 }
-                else
-                {
+                else {
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
@@ -565,61 +509,56 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.done = $scope.ticketList.done.contact(response.data.Result);
                         }
-                    };
+                    }
+                    ;
                 }
             }
-            else
-            {
-                if(response.data.Exception)
-                {
-                    console.log("Error in loadingMy Group closed tickets "+response.data.Exception);
+            else {
+                if (response.data.Exception) {
+                    console.log("Error in loadingMy Group closed tickets " + response.data.Exception);
                 }
-                else
-                {
+                else {
                     console.log("Empty response for My Group closed tickets");
                 }
 
             }
 
 
-        }), function (error) {
+        }, function (error) {
+            authService.IsCheckResponse(error);
             console.log(error);
-        }
+        });
     };
 
 
 // ....................... Switch between All/My/Group Tickets ...................
     $scope.switchTickets = function (listName) {
 
-        $scope.ticketList.toDo=[];
-        $scope.ticketList.inProgress=[];
-        $scope.ticketList.done=[];
+        $scope.ticketList.toDo = [];
+        $scope.ticketList.inProgress = [];
+        $scope.ticketList.done = [];
 
-        if($scope.ticketList.loadListStatus==listName)
-        {
+        if ($scope.ticketList.loadListStatus == listName) {
 
-            $scope.ticketList.loadListStatus="DEFAULT";
+            $scope.ticketList.loadListStatus = "DEFAULT";
 
             setToInitiate();
             pickToDoList(1);
             pickProcessingTickets(1);
             pickCompletedTickets(1);
         }
-        else
-        {
-            if(listName=="MY")
-            {
+        else {
+            if (listName == "MY") {
 
-                $scope.ticketList.loadListStatus=listName;
+                $scope.ticketList.loadListStatus = listName;
                 setToInitiate();
                 pickMyToDoList(1);
                 pickMyProcessingTickets(1);
                 pickMyCompletedTickets(1);
             }
-            else
-            {
+            else {
 
-                $scope.ticketList.loadListStatus=listName;
+                $scope.ticketList.loadListStatus = listName;
                 setToInitiate();
                 pickGroupToDoList(1);
                 pickGroupProcessingTickets(1);
@@ -630,48 +569,41 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
     };
     var setToInitiate = function () {
-        $scope.NewTicketPage=1;
-        $scope.OpenTicketPage=1;
-        $scope.CompletedTicketPage=1;
-        $scope.isNewTicketLoadComplete=false;
-        $scope.OpenTicketPage=1;
-        $scope.isOpenTicketLoadComplete=false;
-        $scope.CompletedTicketPage=1;
-        $scope.isCompletedTicketLoadComplete=false;
+        $scope.NewTicketPage = 1;
+        $scope.OpenTicketPage = 1;
+        $scope.CompletedTicketPage = 1;
+        $scope.isNewTicketLoadComplete = false;
+        $scope.OpenTicketPage = 1;
+        $scope.isOpenTicketLoadComplete = false;
+        $scope.CompletedTicketPage = 1;
+        $scope.isCompletedTicketLoadComplete = false;
 
     };
     setToInitiate();
     pickAllUsers();
 
 
-
     $scope.showMoreNewTickets = function () {
 
-        if($scope.ticketList.loadListStatus=="DEFAULT")
-        {
-            if(!$scope.isNewTicketLoadComplete)
-            {
-                $scope.NewTicketPage=$scope.NewTicketPage+1;
+        if ($scope.ticketList.loadListStatus == "DEFAULT") {
+            if (!$scope.isNewTicketLoadComplete) {
+                $scope.NewTicketPage = $scope.NewTicketPage + 1;
 
                 pickToDoList($scope.NewTicketPage);
 
             }
 
         }
-        else if($scope.ticketList.loadListStatus=="MY")
-        {
-            if(!$scope.isNewTicketLoadComplete)
-            {
-                $scope.NewTicketPage=$scope.NewTicketPage+1;
+        else if ($scope.ticketList.loadListStatus == "MY") {
+            if (!$scope.isNewTicketLoadComplete) {
+                $scope.NewTicketPage = $scope.NewTicketPage + 1;
 
                 pickMyToDoList($scope.NewTicketPage);
             }
         }
-        else
-        {
-            if(!$scope.isNewTicketLoadComplete)
-            {
-                $scope.NewTicketPage=$scope.NewTicketPage+1;
+        else {
+            if (!$scope.isNewTicketLoadComplete) {
+                $scope.NewTicketPage = $scope.NewTicketPage + 1;
 
                 pickGroupToDoList($scope.NewTicketPage);
             }
@@ -680,31 +612,25 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
     };
     $scope.showMoreOpenTickets = function () {
 
-        if($scope.ticketList.loadListStatus=="DEFAULT")
-        {
-            if(!$scope.isOpenTicketLoadComplete)
-            {
-                $scope.OpenTicketPage=$scope.OpenTicketPage+1;
+        if ($scope.ticketList.loadListStatus == "DEFAULT") {
+            if (!$scope.isOpenTicketLoadComplete) {
+                $scope.OpenTicketPage = $scope.OpenTicketPage + 1;
 
                 pickProcessingTickets($scope.OpenTicketPage);
 
             }
 
         }
-        else if($scope.ticketList.loadListStatus=="MY")
-        {
-            if(!$scope.isOpenTicketLoadComplete)
-            {
-                $scope.OpenTicketPage=$scope.OpenTicketPage+1;
+        else if ($scope.ticketList.loadListStatus == "MY") {
+            if (!$scope.isOpenTicketLoadComplete) {
+                $scope.OpenTicketPage = $scope.OpenTicketPage + 1;
 
                 pickMyProcessingTickets($scope.OpenTicketPage);
             }
         }
-        else
-        {
-            if(!$scope.isOpenTicketLoadComplete)
-            {
-                $scope.OpenTicketPage=$scope.OpenTicketPage+1;
+        else {
+            if (!$scope.isOpenTicketLoadComplete) {
+                $scope.OpenTicketPage = $scope.OpenTicketPage + 1;
 
                 pickGroupCompletedTickets($scope.OpenTicketPage);
             }
@@ -713,31 +639,25 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
     };
     $scope.showMoreCompletedTickets = function () {
 
-        if($scope.ticketList.loadListStatus=="DEFAULT")
-        {
-            if(!$scope.isCompletedTicketLoadComplete)
-            {
-                $scope.CompletedTicketPage=$scope.CompletedTicketPage+1;
+        if ($scope.ticketList.loadListStatus == "DEFAULT") {
+            if (!$scope.isCompletedTicketLoadComplete) {
+                $scope.CompletedTicketPage = $scope.CompletedTicketPage + 1;
 
                 pickCompletedTickets($scope.CompletedTicketPage);
 
             }
 
         }
-        else if($scope.ticketList.loadListStatus=="MY")
-        {
-            if(!$scope.isCompletedTicketLoadComplete)
-            {
-                $scope.CompletedTicketPage=$scope.CompletedTicketPage+1;
+        else if ($scope.ticketList.loadListStatus == "MY") {
+            if (!$scope.isCompletedTicketLoadComplete) {
+                $scope.CompletedTicketPage = $scope.CompletedTicketPage + 1;
 
                 pickMyCompletedTickets($scope.CompletedTicketPage);
             }
         }
-        else
-        {
-            if(!$scope.isCompletedTicketLoadComplete)
-            {
-                $scope.CompletedTicketPage=$scope.CompletedTicketPage+1;
+        else {
+            if (!$scope.isCompletedTicketLoadComplete) {
+                $scope.CompletedTicketPage = $scope.CompletedTicketPage + 1;
 
                 pickGroupCompletedTickets($scope.CompletedTicketPage);
             }
@@ -748,34 +668,31 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
 
     $scope.gotoTicket = function (data) {
 
-        data.tabType='ticketView';
-        data.index=data.reference;
-        $rootScope.$emit('openNewTab',data);
+        data.tabType = 'ticketView';
+        data.index = data.reference;
+        $rootScope.$emit('openNewTab', data);
         $scope.closeTicketInbox();
 
     };
 
     $('#scrltodo').scroll(function () {
-        var raw=$('#scrltodo')[0];
-        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight)*0.9)
-        {
+        var raw = $('#scrltodo')[0];
+        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight) * 0.9) {
             $scope.showMoreNewTickets();
         }
 
     });
     $('#scrlopen').scroll(function () {
-        var raw=$('#scrlopen')[0];
-        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight)*0.9)
-        {
+        var raw = $('#scrlopen')[0];
+        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight) * 0.9) {
             $scope.showMoreOpenTickets();
         }
 
 
     });
     $('#scroldone').scroll(function () {
-        var raw=$('#scroldone')[0];
-        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight)*0.9)
-        {
+        var raw = $('#scroldone')[0];
+        if (raw.scrollTop + raw.offsetHeight >= (raw.scrollHeight) * 0.9) {
             $scope.showMoreCompletedTickets();
         }
 
@@ -783,10 +700,8 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
     });
 
 
-
     $scope.closeTicketInbox = function () {
-        $('#mainTicketWrapper').addClass('display-none').
-            removeClass('display-block fadeIn');
+        $('#mainTicketWrapper').addClass('display-none').removeClass('display-block fadeIn');
 
     };
 
@@ -794,13 +709,13 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
     $scope.reloadTickets = function () {
         //$state.reload();
 
-        $scope.ticketList.toDo=[];
-        $scope.ticketList.inProgress=[];
-        $scope.ticketList.done=[];
+        $scope.ticketList.toDo = [];
+        $scope.ticketList.inProgress = [];
+        $scope.ticketList.done = [];
 
         setToInitiate();
-        $scope.ticketList.loadCompleted =true;
-        $scope.ticketList.loadListStatus="MY";
+        $scope.ticketList.loadCompleted = true;
+        $scope.ticketList.loadListStatus = "MY";
         pickMyToDoList(1);
         pickMyProcessingTickets(1);
         pickMyCompletedTickets(1);
@@ -809,7 +724,6 @@ agentApp.controller('ticketCtrl', function ($scope, $http,$filter,$timeout,$stat
     $rootScope.$on('reloadInbox', function (events, args) {
         $scope.reloadTickets();
     });
-
 
 
 });

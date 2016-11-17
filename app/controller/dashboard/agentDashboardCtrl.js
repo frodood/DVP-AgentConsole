@@ -2,7 +2,8 @@
  * Created by team verry on 9/23/2016.
  */
 
-agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService, ticketService, engagementService, profileDataParser, authService) {
+agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
+                                                    ticketService, engagementService, profileDataParser, authService, $state) {
 
 
     $scope.showAlert = function (tittle, type, msg) {
@@ -286,6 +287,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
 
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
         });
     };
@@ -296,6 +298,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dashboradService.GetTotalTicketCount('NEWTICKET').then(function (response) {
             $scope.newTicketCount = response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.newTicketCount = 0;
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
@@ -307,6 +310,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dashboradService.GetTotalTicketCount('CLOSEDTICKET').then(function (response) {
             $scope.closeTicketCount = response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.closeTicketCount = 0;
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
@@ -322,6 +326,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 window.opencloseChart.update();
             }
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
@@ -336,6 +341,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 window.opencloseChart.update();
             }
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
@@ -350,6 +356,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 window.deferenceChart.update();
             }
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
@@ -360,6 +367,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dashboradService.GetQueueDetails().then(function (response) {
             $scope.queueDetails = response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.queueDetails = [];
             $scope.showAlert("Queue Details", "error", "Fail To Load Queue Details.");
         });
@@ -371,6 +379,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         ticketService.GetMyRecentTickets().then(function (response) {
             $scope.recentTickets = response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Ticket Details", "error", "Fail To Load Ticket Details.");
         });
     };
@@ -381,6 +390,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         engagementService.GetEngagementSessions(1111, profileDataParser.RecentEngagements).then(function (response) {
             $scope.recentEngagements = response;
         }, function (err) {
+            authService.IsCheckResponse(err);
             $scope.showAlert("Engagement Details", "error", "Fail To Load Recent Engagements.");
         });
     };
