@@ -61,10 +61,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         Register: function () {
             $scope.veeryPhone.Register('DuoS123');
             /*if ($scope.isRegistor) {
-                $scope.ShowHidePhone(!$scope.showPhone);
-            } else {
-                $scope.veeryPhone.Register('DuoS123');
-            }*/
+             $scope.ShowHidePhone(!$scope.showPhone);
+             } else {
+             $scope.veeryPhone.Register('DuoS123');
+             }*/
         },
         openTicketViews: function () {
             divModel.model('#ticketFilterWrap', 'display-block');
@@ -137,8 +137,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
-
-
 
 
     };
@@ -2273,6 +2271,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
             console.log(requestOption);
+            $('#loginScreeen').removeClass('display-none').addClass('display-block');
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
@@ -2479,6 +2478,41 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $('#myNoteShow').animate({
                     top: "-92"
                 })
+            }
+        }
+    }();
+
+
+    //#------ Update code Damith
+    // Break screen functions
+    $scope.lockPwd = null;
+    $scope.breakScreen = function () {
+        var param = {
+            userName: $scope.loginName,
+            password: ''
+        };
+        return {
+            unlock: function (pwd) {
+                if (!pwd) {
+                    showAlert('Error', 'error', 'Invalid authentication..');
+                    $('#lockPwd').addClass('shake');
+                    $('#lockPwd').addClass('shake');
+                    return;
+                }
+
+                param.password = pwd;
+                loginService.VerifyPwd(param, function (res) {
+                    if (res) {
+                        $('#loginScreeen').addClass('display-none').removeClass('display-block');
+                        return;
+                    } else {
+                        showAlert('Error', 'error', 'Invalid authentication..');
+                        $('#lockPwd').addClass('shake');
+                        $('#lockPwd').addClass('shake');
+                        $('#loginScreeen').addClass('display-block').removeClass('display-none');
+                        return;
+                    }
+                });
             }
         }
     }();
