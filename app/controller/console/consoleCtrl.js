@@ -771,7 +771,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $('#phoneDialpad input').click(function () {
         var values = $(this).data('values');
-        var chr = values[0];
+        var chr = values[0].toString();
         $scope.call.number = $scope.call.number ? $scope.call.number + chr : chr;
 
         $scope.veeryPhone.sipSendDTMF(chr);
