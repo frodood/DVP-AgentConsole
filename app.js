@@ -16,7 +16,7 @@ var agentApp = angular.module('veeryAgentApp',
 agentApp.constant('moment', moment);
 
 var baseUrls = {
-    'authUrl': 'http://userservice.app.veery.cloud/oauth/token',
+    'authUrl': 'http://userservice.app.veery.cloud/oauth/token',//userservice.app.veery.cloud
     'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'notification': 'http://notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',
@@ -31,6 +31,8 @@ var baseUrls = {
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/'
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
+    'pwdVerifyUrl': 'http://192.168.1.16:3637/auth/verify'
 
 };
 

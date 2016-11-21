@@ -1885,8 +1885,8 @@ div > div >
 }
 
 /*.commenter-img {*/
-    /*margin-top: 10px;*/
-    /*margin-bottom: 8px;*/
+/*margin-top: 10px;*/
+/*margin-bottom: 8px;*/
 /*}
 
 .divider-gray {
@@ -4958,4 +4958,109 @@ ul.renote-color-btn > li {
 .confirm-btn-wrapper > .cancel-btn {
     font-family: "AvenirNextLTPro-Cn", Courier, monospace;
     color: #d90000;
+}
+
+/*lock screen */
+.lock-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(23, 55, 60, 0.98);
+    z-index: 2000;
+    /*-webkit-filter: blur(5px);*/
+    /*-moz-filter: blur(5px);*/
+    /*-o-filter: blur(5px);*/
+    /*-ms-filter: blur(5px);*/
+    /*filter: blur(2px);*/
+}
+
+.blur-bg-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-filter: blur(25px);
+    -moz-filter: blur(25px);
+    -o-filter: blur(25px);
+    -ms-filter: blur(25px);
+    filter: blur(25px);
+}
+
+.blur-bg-img > img {
+    width: 100%;
+}
+
+.lock-body {
+    position: relative;
+    /*width: 250px;*/
+    /*height: auto;*/
+    overflow: hidden;
+    text-align: center;
+    margin: 30% 0;
+    /*background-color: #fff;*/
+    padding: 15px;
+    color: #fff;
+}
+
+.lock-body > h1 {
+    font-family: 'AvenirNextLTPro-UltLt', sans-serif;
+    color: #168039;
+    letter-spacing: 4px;
+    font-size: 50px;
+}
+
+.lock-time-wrapper {
+    font-family: 'AvenirNextLTPro-UltLt', sans-serif;
+    color: #fff;
+    letter-spacing: 4px;
+    font-size: 55px;
+}
+
+.console-profile-img.lg {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+
+}
+
+.console-profile-img.lg > img {
+    width: 120px;
+    height: 120px;
+    /*-webkit-filter: blur(5px);*/
+    /*-moz-filter: blur(5px);*/
+    /*-o-filter: blur(5px);*/
+    /*-ms-filter: blur(5px);*/
+    /*filter: blur(2px);*/
+}
+
+.lock-pwd {
+    margin-top: 8%;
+    font-family: 'AvenirNextLTPro-Cn, sans-serif;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.lock-text {
+    background: transparent;
+    border: 0px;
+    border-bottom: 1px solid #fff;
+    margin: 0 auto;
+    width: 297px;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #156e38 !important;
+    font-size: 20px;
+}
+
+.lock-text:hover {
+    border-bottom: 1px solid #156e38;
+}
+
+.lock-pwd > div > i {
+    margin-top: 20px;
 }
