@@ -29,8 +29,7 @@ var baseUrls = {
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
-    'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/'
+    'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://192.168.1.16:3637/auth/verify'
 
