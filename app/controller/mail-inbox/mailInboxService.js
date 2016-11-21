@@ -4,11 +4,9 @@
 
 (function () {
 
-    var mailInboxService = function ($http, baseUrls, authService) {
+    var mailInboxService = function ($http, baseUrls) {
 
         var getAllInboxMessages = function (profileId, limitCount, skipCount, msgType) {
-            var authToken = authService.GetToken();
-
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/All?limit=' + limitCount;
 
             if (skipCount) {
@@ -28,8 +26,6 @@
         };
 
         var getReadInboxMessages = function (profileId, limitCount, skipCount) {
-            var authToken = authService.GetToken();
-
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Read?limit=' + limitCount;
 
             if (skipCount) {
@@ -45,8 +41,6 @@
         };
 
         var getUnReadInboxMessages = function (profileId, limitCount, skipCount) {
-            var authToken = authService.GetToken();
-
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Unread?limit=' + limitCount;
 
             if (skipCount) {
@@ -62,8 +56,6 @@
         };
 
         var getDeletedInboxMessages = function (profileId, limitCount, skipCount) {
-            var authToken = authService.GetToken();
-
             var url = baseUrls.mailInboxUrl + profileId + '/Messages/Deleted?limit=' + limitCount;
 
             if (skipCount) {
@@ -79,8 +71,6 @@
         };
 
         var deleteInboxMessages = function (profileId, messageIds) {
-            var authToken = authService.GetToken();
-
             var url = baseUrls.mailInboxUrl + profileId + '/RemoveMessages';
 
             return $http({
@@ -95,8 +85,6 @@
         };
 
         var markMessageAsRead = function (profileId, messageId) {
-            var authToken = authService.GetToken();
-
             var url = baseUrls.mailInboxUrl + profileId + '/Message/' + messageId + '/Read';
 
             return $http({
@@ -109,8 +97,6 @@
         };
 
         var getMessageCounters = function (profileId) {
-            var authToken = authService.GetToken();
-
             var url = baseUrls.mailInboxUrl + profileId + '/Counts';
 
             return $http({
