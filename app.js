@@ -10,6 +10,7 @@ var agentApp = angular.module('veeryAgentApp',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer'
+        ,'ui.bootstrap.accordion', 'jsonFormatter'
     ]);
 
 
@@ -21,7 +22,7 @@ var baseUrls = {
     'notification': 'http://notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',
     'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',//interactions.app.veery.cloud
-    'ticketUrl': 'http://192.168.1.16:3636/DVP/API/1.0.0.0/',//liteticket.app.veery.cloud
+    'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/',//liteticket.app.veery.cloud
     'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
@@ -29,7 +30,8 @@ var baseUrls = {
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/'
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
+    'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

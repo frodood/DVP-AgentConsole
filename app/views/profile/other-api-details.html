@@ -1,1 +1,10 @@
-<h1>API</h1>
+<uib-accordion>
+    <div uib-accordion-group class="panel-default" ng-repeat="api in integrationAPIList">
+        <uib-accordion-heading>
+            {{api.name}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': true, 'glyphicon-chevron-right': false}" ng-click="callExternalAPI(api)"></i>
+        </uib-accordion-heading>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <json-formatter open="1" json="api.jsonDataAPI"></json-formatter>
+        </div>
+    </div>
+</uib-accordion>
