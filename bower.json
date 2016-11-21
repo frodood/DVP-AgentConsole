@@ -57,7 +57,9 @@
     "bootstrap-ui-datetime-picker": "^2.4.3",
     "angular-moment-picker": "moment-picker#^0.6.7",
     "angular-filter": "^0.5.11",
-    "satellizer": "^0.15.5"
+    "satellizer": "^0.15.5",
+    "node-cryptojs-aes": "*",
+    "angular-cryptography": "^1.0.1"
   },
   "resolutions": {
     "moment": "^2.14.1",

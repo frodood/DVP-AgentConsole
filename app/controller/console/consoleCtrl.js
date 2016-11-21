@@ -4,7 +4,7 @@
 
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
-                                             $base64, $timeout, $q, jwtHelper,
+                                             $base64, $timeout, $q, $crypto,jwtHelper,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
@@ -343,21 +343,32 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
                 return;
             }
-            resourceService.GetContactVeeryFormat().then(function (response) {
-                if (response.IsSuccess) {
-                    if ($scope.profile.server.password)
-                        $scope.profile.password = $scope.profile.server.password;
-                    $scope.profile.veeryFormat = response.Result;
-                    dataParser.userProfile = $scope.profile;
-                    $scope.veeryPhone.registerWithArds($scope.profile);
-                }
-                else {
-                    $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
-                }
+
+            resourceService.SipUserPassword(values[0]).then(function (reply) {
+                var decrypted = $crypto.decrypt(reply,'DuoS123');
+                $scope.profile.password = decrypted;
+                resourceService.GetContactVeeryFormat().then(function (response) {
+                    if (response.IsSuccess) {
+                        if ($scope.profile.server.password)
+                            $scope.profile.password = $scope.profile.server.password;
+                        $scope.profile.veeryFormat = response.Result;
+                        dataParser.userProfile = $scope.profile;
+                        $scope.veeryPhone.registerWithArds($scope.profile);
+                    }
+                    else {
+                        $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
+                    }
+                }, function (error) {
+                    authService.IsCheckResponse(error);
+                    $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
+                });
+
             }, function (error) {
                 authService.IsCheckResponse(error);
                 $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
             });
+
+
 
         },
         unregisterWithArds: function () {

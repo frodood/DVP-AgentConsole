@@ -9,7 +9,7 @@ var agentApp = angular.module('veeryAgentApp',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer'
+        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer','mdo-angular-cryptography'
     ]);
 
 
@@ -29,7 +29,9 @@ var baseUrls = {
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/'
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
+    'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/'
+
 };
 
 agentApp.constant('baseUrls', baseUrls);
@@ -76,6 +78,10 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$auth
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
+
+agentApp.config(['$cryptoProvider', function($cryptoProvider){
+    $cryptoProvider.setCryptographyKey('1111111111111111');
+}]);
 
 agentApp.constant('config', {
     Auth_API: 'http://userservice.162.243.230.46.xip.io/',
