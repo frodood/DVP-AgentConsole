@@ -117,9 +117,6 @@ function sipRegister() {
     try {
 
 
-        // update debug level to be sure new values will be used if the user haven't updated the page
-        SIPml.setDebugLevel((window.localStorage && window.localStorage.getItem('org.doubango.expert.disable_debug') == "true") ? "error" : "info");
-
         // create SIP stack
         oSipStack = new SIPml.Stack({
                 realm:Profile.server.domain,
