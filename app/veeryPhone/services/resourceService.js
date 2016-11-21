@@ -150,6 +150,15 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
+    var sipUserPassword = function (userName) {
+        return $http({
+            method: 'get',
+            url: baseUrls.sipuserUrl + "SipUser/User/"+userName+"/Password"
+        }).then(function (response) {
+            return response.data.Result;
+        });
+    };
+
     return {
         BreakRequest: breakRequest,
         EndBreakRequest: endBreakRequest,
@@ -162,7 +171,8 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         GetResource: getResource,
         GetAcwTime: getAcwTime,
         FreezeAcw:freezeAcw,
-        MapResourceToVeery:mapResourceToVeery
+        MapResourceToVeery:mapResourceToVeery,
+        SipUserPassword:sipUserPassword
     }
 
 });

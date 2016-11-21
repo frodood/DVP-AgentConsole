@@ -4,7 +4,7 @@
 
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
-                                             $base64, $timeout, $q, jwtHelper,
+                                             $base64, $timeout, $q, $crypto,jwtHelper,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
@@ -61,10 +61,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         Register: function () {
             $scope.veeryPhone.Register('DuoS123');
             /*if ($scope.isRegistor) {
-                $scope.ShowHidePhone(!$scope.showPhone);
-            } else {
-                $scope.veeryPhone.Register('DuoS123');
-            }*/
+             $scope.ShowHidePhone(!$scope.showPhone);
+             } else {
+             $scope.veeryPhone.Register('DuoS123');
+             }*/
         },
         openTicketViews: function () {
             divModel.model('#ticketFilterWrap', 'display-block');
@@ -137,6 +137,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
+
 
     };
 
@@ -277,6 +278,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 angular.forEach(dtmfSet, function (chr) {
                     sipSendDTMF(chr);
                 });
+                sipSendDTMF('#');
             }, 1000);
             //phoneFuncion.hideTransfer();
             phoneFuncion.showSwap();
@@ -339,21 +341,32 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.showAlert("Soft Phone", "error", "Fail to Get Resource Information's.");
                 return;
             }
-            resourceService.GetContactVeeryFormat().then(function (response) {
-                if (response.IsSuccess) {
-                    if ($scope.profile.server.password)
-                        $scope.profile.password = $scope.profile.server.password;
-                    $scope.profile.veeryFormat = response.Result;
-                    dataParser.userProfile = $scope.profile;
-                    $scope.veeryPhone.registerWithArds($scope.profile);
-                }
-                else {
-                    $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
-                }
+
+            resourceService.SipUserPassword(values[0]).then(function (reply) {
+                var decrypted = $crypto.decrypt(reply,'DuoS123');
+                $scope.profile.password = decrypted;
+                resourceService.GetContactVeeryFormat().then(function (response) {
+                    if (response.IsSuccess) {
+                        if ($scope.profile.server.password)
+                            $scope.profile.password = $scope.profile.server.password;
+                        $scope.profile.veeryFormat = response.Result;
+                        dataParser.userProfile = $scope.profile;
+                        $scope.veeryPhone.registerWithArds($scope.profile);
+                    }
+                    else {
+                        $scope.showAlert("Soft Phone", "error", "Fail to Get Contact Details.");
+                    }
+                }, function (error) {
+                    authService.IsCheckResponse(error);
+                    $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
+                });
+
             }, function (error) {
                 authService.IsCheckResponse(error);
                 $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
             });
+
+
 
         },
         unregisterWithArds: function () {
@@ -605,6 +618,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.freeze = false;
             $scope.isAcw = false;
             phoneFuncion.updateCallStatus('Idle');
+
+            phoneFuncion.hideConference();
+            phoneFuncion.hideEtl();
+            phoneFuncion.hideTransfer();
+            phoneFuncion.hideSwap();
         },
         freezeBtn: function () {
             $scope.freeze = true;
@@ -762,7 +780,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $('#phoneDialpad input').click(function () {
         var values = $(this).data('values');
-        var chr = values[0];
+        var chr = values[0].toString();
         $scope.call.number = $scope.call.number ? $scope.call.number + chr : chr;
 
         $scope.veeryPhone.sipSendDTMF(chr);
@@ -2264,6 +2282,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
             console.log(requestOption);
+            $('#loginScreeen').removeClass('display-none').addClass('display-block');
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
@@ -2470,6 +2489,41 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $('#myNoteShow').animate({
                     top: "-92"
                 })
+            }
+        }
+    }();
+
+
+    //#------ Update code Damith
+    // Break screen functions
+    $scope.lockPwd = null;
+    $scope.breakScreen = function () {
+        var param = {
+            userName: $scope.loginName,
+            password: ''
+        };
+        return {
+            unlock: function (pwd) {
+                if (!pwd) {
+                    showAlert('Error', 'error', 'Invalid authentication..');
+                    $('#lockPwd').addClass('shake');
+                    $('#lockPwd').addClass('shake');
+                    return;
+                }
+
+                param.password = pwd;
+                loginService.VerifyPwd(param, function (res) {
+                    if (res) {
+                        $('#loginScreeen').addClass('display-none').removeClass('display-block');
+                        return;
+                    } else {
+                        showAlert('Error', 'error', 'Invalid authentication..');
+                        $('#lockPwd').addClass('shake');
+                        $('#lockPwd').addClass('shake');
+                        $('#loginScreeen').addClass('display-block').removeClass('display-none');
+                        return;
+                    }
+                });
             }
         }
     }();

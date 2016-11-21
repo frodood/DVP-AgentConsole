@@ -527,7 +527,7 @@
                     <i class="veery-phone-icon-1-call-answer"></i>
                 </div>
                 <!-- call end button -->
-                <div class="phone-sm-btn call-ended display-none" title="End Call" id="endButton" ng-click="veeryPhone.endCall();">
+                <div class="phone-sm-btn call-ended" title="End Call" id="endButton" ng-click="veeryPhone.endCall();">
                     <i class="veery-phone-icon-1-call-ended"></i>
                 </div>
                 <!-- call hold button -->
@@ -629,6 +629,10 @@
 
     <!--Notification more information -->
     <div ng-include="'app/views/notification-details.html'"></div>
+
+    <!-- lock screen -->
+    <div ng-include="'app/views/lock-screen.html'"></div>
+
 
 </div>
 
