@@ -5,7 +5,7 @@
     'use strict';
     agentApp.factory('loginService', Service);
 
-    function Service($http, $auth,localStorageService, jwtHelper,baseUrls) {
+    function Service($http, $auth, localStorageService, jwtHelper, baseUrls) {
         var service = {};
         service.mynavigations = mynavigations;
         service.Login = Login;
@@ -13,6 +13,7 @@
         service.getToken = getToken;
         service.getTokenDecode = getTokenDecode;
         service.Logoff = Logoff;
+        service.VerifyPwd = VerifyPwd;
         return service;
         var mynavigations = {};
 
@@ -32,7 +33,7 @@
             //return undefined;
 
             var token = $auth.getToken();
-            if (token ) {
+            if (token) {
                 if (!jwtHelper.isTokenExpired(token)) {
                     return token;
                 }
@@ -81,16 +82,14 @@
         //logoff
         function Logoff(callback) {
             var decodeToken = getTokenDecode();
-            $http.delete(baseUrls.authUrl+'/revoke/' + decodeToken.jti, {
+            $http.delete(baseUrls.authUrl + '/revoke/' + decodeToken.jti, {
                 headers: {
                     Authorization: 'Bearer ' + getToken()
                 }
-            }).
-            success(function (data, status, headers, config) {
+            }).success(function (data, status, headers, config) {
                 $auth.removeToken();
                 callback(true);
-            }).
-            error(function (data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 //login error
                 callback(false);
             });
@@ -109,14 +108,25 @@
                 headers: {
                     Authorization: 'Basic ' + parm.clientID
                 }
-            }).
-            success(function (data, status, headers, config) {
+            }).success(function (data, status, headers, config) {
                 localStorageService.remove("@navigations");
                 clearCookie('@agentConsoleLoginToken');
                 setCookie('@agentConsoleLoginToken', data);
                 callback(true);
-            }).
-            error(function (data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
+                //login error
+                callback(false);
+            });
+        }
+
+
+        function VerifyPwd(pram, callback) {
+            $http.post(baseUrls.pwdVerifyUrl, {
+                userName: pram.userName,
+                password: pram.password,
+            }).success(function (data, status, headers, config) {
+                callback(true);
+            }).error(function (data, status, headers, config) {
                 //login error
                 callback(false);
             });

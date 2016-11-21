@@ -9,14 +9,14 @@ var agentApp = angular.module('veeryAgentApp',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker','moment-picker','angular.filter','satellizer'
+        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer'
     ]);
 
 
 agentApp.constant('moment', moment);
 
 var baseUrls = {
-    'authUrl': 'http://userservice.app.veery.cloud/oauth/token',
+    'authUrl': 'http://userservice.app.veery.cloud/oauth/token',//userservice.app.veery.cloud
     'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'notification': 'http://notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',
@@ -29,7 +29,8 @@ var baseUrls = {
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/'
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
+    'pwdVerifyUrl': 'http://192.168.1.16:3637/auth/verify'
 };
 
 agentApp.constant('baseUrls', baseUrls);
@@ -49,14 +50,13 @@ agentApp.config(function (scrollableTabsetConfigProvider) {
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
 
-agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider","$authProvider","gridsterConfig",
-    function ($httpProvider, $stateProvider, $urlRouterProvider,$authProvider) {
-
+agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$authProvider", "gridsterConfig",
+    function ($httpProvider, $stateProvider, $urlRouterProvider, $authProvider) {
 
 
         var authProviderUrl = 'http://userservice.app.veery.cloud/';
-        $authProvider.loginUrl = authProviderUrl+'auth/login';
-        $authProvider.signupUrl = authProviderUrl+'auth/signup';
+        $authProvider.loginUrl = authProviderUrl + 'auth/login';
+        $authProvider.signupUrl = authProviderUrl + 'auth/signup';
 
         $urlRouterProvider.otherwise('/login');
         $stateProvider.state("console", {
@@ -65,9 +65,6 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider","$authP
             data: {
                 requireLogin: true
             }
-        }).state("console.ticket", {
-            url: "/ticket",
-            templateUrl: "app/views/ticket/ticket-inbox.html"
         }).state('login', {
             url: "/login",
             templateUrl: "app/auth/login.html",
@@ -99,7 +96,11 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
             // get me a login modal!
         }
     });
-
+    var decodeToken = loginService.getTokenDecode();
+    if (!decodeToken) {
+        $state.go('login');
+        return
+    }
 });
 
 

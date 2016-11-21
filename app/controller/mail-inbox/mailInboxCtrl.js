@@ -1,7 +1,7 @@
 /**
  * Created by Veery Team on 9/12/2016.
  */
-agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService, profileDataParser) {
+agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService, profileDataParser, authService) {
 
 
     $scope.showAlert = function (tittle, type, msg) {
@@ -20,19 +20,16 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
         $scope.isSelectedEmail = true;
         $scope.currentDisplayMessage = messageDetails;
 
-        if(!messageDetails.has_read)
-        {
+        if (!messageDetails.has_read) {
             mailInboxService.markMessageAsRead(profileDataParser.myProfile._id, messageDetails._id)
-                .then(function (data)
-                {
-                    if(data.IsSuccess)
-                    {
+                .then(function (data) {
+                    if (data.IsSuccess) {
                         messageDetails.has_read = true;
                     }
 
                 })
-                .catch(function(err)
-                {
+                .catch(function (err) {
+                    //authService.IsCheckResponse(err);
                     $scope.showAlert('Mail Inbox', 'error', 'Failed to set mail status');
 
                 });
@@ -48,46 +45,35 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
 
     $scope.currentFilter = 'INBOX';
 
-    $scope.getNextPage = function()
-    {
+    $scope.getNextPage = function () {
         var nextPageStart = $scope.pageStartCount + 10;
 
-        getCounters(function()
-        {
-            if(nextPageStart < $scope.counters[$scope.currentFilter])
-            {
+        getCounters(function () {
+            if (nextPageStart < $scope.counters[$scope.currentFilter]) {
                 $scope.pageStartCount = nextPageStart;
 
-                if($scope.currentFilter === 'INBOX')
-                {
+                if ($scope.currentFilter === 'INBOX') {
                     getAllInboxMessages();
                 }
-                else if($scope.currentFilter === 'DELETED')
-                {
+                else if ($scope.currentFilter === 'DELETED') {
                     getDeletedMessages();
                 }
-                else if($scope.currentFilter === 'UNREAD')
-                {
+                else if ($scope.currentFilter === 'UNREAD') {
                     getUnreadMessages();
                 }
-                else if($scope.currentFilter === 'READ')
-                {
+                else if ($scope.currentFilter === 'READ') {
                     getReadMessages();
                 }
-                else if($scope.currentFilter === 'FACEBOOK')
-                {
+                else if ($scope.currentFilter === 'FACEBOOK') {
                     getFacebookMessages();
                 }
-                else if($scope.currentFilter === 'TWITTER')
-                {
+                else if ($scope.currentFilter === 'TWITTER') {
                     getTwitterMessages();
                 }
-                else if($scope.currentFilter === 'NOTIFICATION')
-                {
+                else if ($scope.currentFilter === 'NOTIFICATION') {
                     getNotificationMessages();
                 }
-                else if($scope.currentFilter === 'SMS')
-                {
+                else if ($scope.currentFilter === 'SMS') {
                     getSMSMessages();
                 }
             }
@@ -97,10 +83,8 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
 
     };
 
-    $scope.openTab = function()
-    {
-        if($scope.currentDisplayMessage && $scope.currentDisplayMessage.engagement_session)
-        {
+    $scope.openTab = function () {
+        if ($scope.currentDisplayMessage && $scope.currentDisplayMessage.engagement_session) {
             var tabObj = {
                 tabType: 'inbox',
                 data: $scope.currentDisplayMessage.engagement_session,
@@ -111,52 +95,40 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
 
     };
 
-    $scope.getPreviousPage = function()
-    {
+    $scope.getPreviousPage = function () {
         var previousPageStart = $scope.pageStartCount - 10;
 
-        getCounters(function()
-        {
-            if(previousPageStart < $scope.counters[$scope.currentFilter])
-            {
+        getCounters(function () {
+            if (previousPageStart < $scope.counters[$scope.currentFilter]) {
                 $scope.pageStartCount = previousPageStart;
             }
-            else
-            {
+            else {
                 //start from 0
                 $scope.pageStartCount = 0;
             }
 
-            if($scope.currentFilter === 'INBOX')
-            {
+            if ($scope.currentFilter === 'INBOX') {
                 getAllInboxMessages();
             }
-            else if($scope.currentFilter === 'DELETED')
-            {
+            else if ($scope.currentFilter === 'DELETED') {
                 getDeletedMessages();
             }
-            else if($scope.currentFilter === 'UNREAD')
-            {
+            else if ($scope.currentFilter === 'UNREAD') {
                 getUnreadMessages();
             }
-            else if($scope.currentFilter === 'READ')
-            {
+            else if ($scope.currentFilter === 'READ') {
                 getReadMessages();
             }
-            else if($scope.currentFilter === 'FACEBOOK')
-            {
+            else if ($scope.currentFilter === 'FACEBOOK') {
                 getFacebookMessages();
             }
-            else if($scope.currentFilter === 'TWITTER')
-            {
+            else if ($scope.currentFilter === 'TWITTER') {
                 getTwitterMessages();
             }
-            else if($scope.currentFilter === 'NOTIFICATION')
-            {
+            else if ($scope.currentFilter === 'NOTIFICATION') {
                 getNotificationMessages();
             }
-            else if($scope.currentFilter === 'SMS')
-            {
+            else if ($scope.currentFilter === 'SMS') {
                 getSMSMessages();
             }
 
@@ -186,244 +158,197 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
     $scope.markedMessages = [];
     $scope.moment = moment;
 
-    $scope.markMessage = function(message)
-    {
-        if(message.IsMarked)
-        {
+    $scope.markMessage = function (message) {
+        if (message.IsMarked) {
             message.IsMarked = false;
         }
-        else
-        {
+        else {
             message.IsMarked = true;
         }
     };
 
 
-    var getCounters = function(callback){
+    var getCounters = function (callback) {
 
-        try
-        {
+        try {
             mailInboxService.getMessageCounters(profileDataParser.myProfile._id)
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.counters = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.counters = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to retrieve counters');
                         }
+
+                        callback();
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to retrieve counters');
-                    }
 
-                    callback();
-
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to retrieve counters');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to retrieve counters');
         }
 
     };
 
-    $scope.reloadInboxMessages = function()
-    {
+    $scope.reloadInboxMessages = function () {
         $scope.pageStartCount = 0;
 
-        if($scope.isSelectedEmail)
-        {
+        if ($scope.isSelectedEmail) {
             $scope.closeMailDesc();
         }
 
 
-        getCounters(function()
-        {
+        getCounters(function () {
             getAllInboxMessages();
         });
 
 
     };
 
-    $scope.reloadDeletedMessages = function()
-    {
+    $scope.reloadDeletedMessages = function () {
         $scope.pageStartCount = 0;
 
-        if($scope.isSelectedEmail)
-        {
+        if ($scope.isSelectedEmail) {
             $scope.closeMailDesc();
         }
 
-        getCounters(function()
-        {
+        getCounters(function () {
             getDeletedMessages();
         });
 
     };
 
-    $scope.reloadUnreadMessages = function()
-    {
+    $scope.reloadUnreadMessages = function () {
         $scope.pageStartCount = 0;
 
-        if($scope.isSelectedEmail)
-        {
+        if ($scope.isSelectedEmail) {
             $scope.closeMailDesc();
         }
 
-        getCounters(function()
-        {
+        getCounters(function () {
             getUnreadMessages();
         });
 
     };
 
-    $scope.reloadReadMessages = function()
-    {
+    $scope.reloadReadMessages = function () {
         $scope.pageStartCount = 0;
 
-        if($scope.isSelectedEmail)
-        {
+        if ($scope.isSelectedEmail) {
             $scope.closeMailDesc();
         }
 
-        getCounters(function()
-        {
+        getCounters(function () {
             getReadMessages();
         });
 
     };
 
 
-    $scope.reloadFacebookMessages = function()
-    {
+    $scope.reloadFacebookMessages = function () {
         $scope.pageStartCount = 0;
 
-        if($scope.isSelectedEmail)
-        {
+        if ($scope.isSelectedEmail) {
             $scope.closeMailDesc();
         }
 
-        getCounters(function()
-        {
+        getCounters(function () {
             getFacebookMessages();
         });
 
 
     };
 
-    $scope.reloadTwitterMessages = function()
-    {
+    $scope.reloadTwitterMessages = function () {
         $scope.pageStartCount = 0;
 
-        if($scope.isSelectedEmail)
-        {
+        if ($scope.isSelectedEmail) {
             $scope.closeMailDesc();
         }
 
-        getCounters(function()
-        {
+        getCounters(function () {
             getTwitterMessages();
         });
 
 
     };
 
-    $scope.reloadNotificationMessages = function()
-    {
+    $scope.reloadNotificationMessages = function () {
         $scope.pageStartCount = 0;
 
-        if($scope.isSelectedEmail)
-        {
+        if ($scope.isSelectedEmail) {
             $scope.closeMailDesc();
         }
 
-        getCounters(function()
-        {
+        getCounters(function () {
             getNotificationMessages();
         });
 
 
     };
 
-    $scope.reloadSMSMessages = function()
-    {
+    $scope.reloadSMSMessages = function () {
         $scope.pageStartCount = 0;
 
-        if($scope.isSelectedEmail)
-        {
+        if ($scope.isSelectedEmail) {
             $scope.closeMailDesc();
         }
 
-        getCounters(function()
-        {
+        getCounters(function () {
             getSMSMessages();
         });
 
 
     };
 
-    $scope.deleteMultipleMessages = function()
-    {
+    $scope.deleteMultipleMessages = function () {
         //filter out marked messages
         var msgIdArr = [];
 
-        $scope.filteredMailDisplay.forEach(function(msg)
-        {
-            if(msg.IsMarked)
-            {
+        $scope.filteredMailDisplay.forEach(function (msg) {
+            if (msg.IsMarked) {
                 msgIdArr.push(msg._id);
             }
         });
 
-        deleteInboxMessages(msgIdArr, function(err, result)
-        {
-            if(result)
-            {
-                getCounters(function()
-                {
-                    if($scope.currentFilter === 'INBOX')
-                    {
+        deleteInboxMessages(msgIdArr, function (err, result) {
+            if (result) {
+                getCounters(function () {
+                    if ($scope.currentFilter === 'INBOX') {
                         getAllInboxMessages();
                     }
-                    else if($scope.currentFilter === 'DELETED')
-                    {
+                    else if ($scope.currentFilter === 'DELETED') {
                         getDeletedMessages();
                     }
-                    else if($scope.currentFilter === 'UNREAD')
-                    {
+                    else if ($scope.currentFilter === 'UNREAD') {
                         getUnreadMessages();
                     }
-                    else if($scope.currentFilter === 'READ')
-                    {
+                    else if ($scope.currentFilter === 'READ') {
                         getReadMessages();
                     }
-                    else if($scope.currentFilter === 'FACEBOOK')
-                    {
+                    else if ($scope.currentFilter === 'FACEBOOK') {
                         getFacebookMessages();
                     }
-                    else if($scope.currentFilter === 'TWITTER')
-                    {
+                    else if ($scope.currentFilter === 'TWITTER') {
                         getTwitterMessages();
                     }
-                    else if($scope.currentFilter === 'NOTIFICATION')
-                    {
+                    else if ($scope.currentFilter === 'NOTIFICATION') {
                         getNotificationMessages();
                     }
-                    else if($scope.currentFilter === 'SMS')
-                    {
+                    else if ($scope.currentFilter === 'SMS') {
                         getSMSMessages();
                     }
                 });
@@ -434,46 +359,34 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
 
     };
 
-    $scope.deleteInboxMessage = function(messageId)
-    {
+    $scope.deleteInboxMessage = function (messageId) {
         var arr = [];
         arr.push(messageId);
-        deleteInboxMessages(arr, function(err, result)
-        {
-            if(result)
-            {
-                getCounters(function()
-                {
-                    if($scope.currentFilter === 'INBOX')
-                    {
+        deleteInboxMessages(arr, function (err, result) {
+            if (result) {
+                getCounters(function () {
+                    if ($scope.currentFilter === 'INBOX') {
                         getAllInboxMessages();
                     }
-                    else if($scope.currentFilter === 'DELETED')
-                    {
+                    else if ($scope.currentFilter === 'DELETED') {
                         getDeletedMessages();
                     }
-                    else if($scope.currentFilter === 'UNREAD')
-                    {
+                    else if ($scope.currentFilter === 'UNREAD') {
                         getUnreadMessages();
                     }
-                    else if($scope.currentFilter === 'READ')
-                    {
+                    else if ($scope.currentFilter === 'READ') {
                         getReadMessages();
                     }
-                    else if($scope.currentFilter === 'FACEBOOK')
-                    {
+                    else if ($scope.currentFilter === 'FACEBOOK') {
                         getFacebookMessages();
                     }
-                    else if($scope.currentFilter === 'TWITTER')
-                    {
+                    else if ($scope.currentFilter === 'TWITTER') {
                         getTwitterMessages();
                     }
-                    else if($scope.currentFilter === 'NOTIFICATION')
-                    {
+                    else if ($scope.currentFilter === 'NOTIFICATION') {
                         getNotificationMessages();
                     }
-                    else if($scope.currentFilter === 'SMS')
-                    {
+                    else if ($scope.currentFilter === 'SMS') {
                         getSMSMessages();
                     }
                 });
@@ -484,391 +397,329 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
 
     };
 
-    var deleteInboxMessages = function(messageIds, callback)
-    {
-        try
-        {
+    var deleteInboxMessages = function (messageIds, callback) {
+        try {
             mailInboxService.deleteInboxMessages(profileDataParser.myProfile._id, messageIds)
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        callback(null, data.Result);
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
-
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            callback(null, data.Result);
                         }
+                        else {
+                            var errMsg = data.CustomMessage;
+
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to delete message');
+
+                            callback(data.Exception, data.Result);
+                        }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to delete message');
-
-                        callback(data.Exception, data.Result);
-                    }
-
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to delete message');
-                    callback(err, false);
-                })
+                        callback(err, false);
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to delete message');
             callback(ex, false);
 
         }
     };
 
-    var getAllInboxMessages = function()
-    {
+    var getAllInboxMessages = function () {
 
-        try
-        {
+        try {
             $scope.currentFilter = 'INBOX';
             $scope.currentPageCount = $scope.counters.INBOX;
             $scope.filteredMailDisplay = [];
             mailInboxService.getAllInboxMessages(profileDataParser.myProfile._id, 10, $scope.pageStartCount, null)
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.filteredMailDisplay = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.filteredMailDisplay = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                         }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-                    }
 
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
     };
 
-    var getDeletedMessages = function()
-    {
+    var getDeletedMessages = function () {
 
-        try
-        {
+        try {
             $scope.currentFilter = 'DELETED';
             $scope.currentPageCount = $scope.counters.DELETED;
             $scope.filteredMailDisplay = [];
             mailInboxService.getDeletedInboxMessages(profileDataParser.myProfile._id, 10, $scope.pageStartCount)
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.filteredMailDisplay = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.filteredMailDisplay = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                         }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-                    }
 
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
     };
 
-    var getUnreadMessages = function()
-    {
+    var getUnreadMessages = function () {
 
-        try
-        {
+        try {
             $scope.currentFilter = 'UNREAD';
             $scope.currentPageCount = $scope.counters.UNREAD;
             $scope.filteredMailDisplay = [];
             mailInboxService.getUnReadInboxMessages(profileDataParser.myProfile._id, 10, $scope.pageStartCount)
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.filteredMailDisplay = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.filteredMailDisplay = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                         }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-                    }
 
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
     };
 
-    var getReadMessages = function()
-    {
+    var getReadMessages = function () {
 
-        try
-        {
+        try {
             $scope.currentFilter = 'READ';
             $scope.currentPageCount = $scope.counters.READ;
             $scope.filteredMailDisplay = [];
             mailInboxService.getReadInboxMessages(profileDataParser.myProfile._id, 10, $scope.pageStartCount)
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.filteredMailDisplay = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.filteredMailDisplay = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                         }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-                    }
 
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
     };
 
-    var getFacebookMessages = function()
-    {
+    var getFacebookMessages = function () {
 
-        try
-        {
+        try {
             $scope.currentFilter = 'FACEBOOK';
             $scope.currentPageCount = $scope.counters.FACEBOOK;
             $scope.filteredMailDisplay = [];
             mailInboxService.getAllInboxMessages(profileDataParser.myProfile._id, 10, $scope.pageStartCount, 'FACEBOOK')
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.filteredMailDisplay = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.filteredMailDisplay = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                         }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-                    }
 
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
     };
 
-    var getTwitterMessages = function()
-    {
+    var getTwitterMessages = function () {
 
-        try
-        {
+        try {
             $scope.currentFilter = 'TWITTER';
             $scope.currentPageCount = $scope.counters.TWITTER;
             $scope.filteredMailDisplay = [];
             mailInboxService.getAllInboxMessages(profileDataParser.myProfile._id, 10, $scope.pageStartCount, 'TWITTER')
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.filteredMailDisplay = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.filteredMailDisplay = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                         }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-                    }
 
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
     };
 
-    var getNotificationMessages = function()
-    {
+    var getNotificationMessages = function () {
 
-        try
-        {
+        try {
             $scope.currentFilter = 'NOTIFICATION';
             $scope.currentPageCount = $scope.counters.NOTIFICATION;
             $scope.filteredMailDisplay = [];
             mailInboxService.getAllInboxMessages(profileDataParser.myProfile._id, 10, $scope.pageStartCount, 'NOTIFICATION')
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.filteredMailDisplay = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.filteredMailDisplay = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                         }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-                    }
 
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
 
     };
 
-    var getSMSMessages = function()
-    {
+    var getSMSMessages = function () {
 
-        try
-        {
+        try {
             $scope.currentFilter = 'SMS';
             $scope.currentPageCount = $scope.counters.SMS;
             $scope.filteredMailDisplay = [];
             mailInboxService.getAllInboxMessages(profileDataParser.myProfile._id, 10, $scope.pageStartCount, 'SMS')
-                .then(function (data)
-                {
-                    if (data.IsSuccess)
-                    {
-                        if(data.Result)
-                        {
-                            $scope.filteredMailDisplay = data.Result;
+                .then(function (data) {
+                        if (data.IsSuccess) {
+                            if (data.Result) {
+                                $scope.filteredMailDisplay = data.Result;
+                            }
                         }
-                    }
-                    else
-                    {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception)
-                        {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
                         }
+
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
                         $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-                    }
 
-                },
-                function (err) {
-                    $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
-
-                })
+                    })
 
         }
-        catch(ex)
-        {
+        catch (ex) {
             $scope.showAlert('Mail Inbox', 'error', 'Failed to get messages');
 
         }
