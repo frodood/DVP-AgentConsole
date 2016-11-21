@@ -3,8 +3,14 @@
         <uib-accordion-heading>
             {{api.name}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': true, 'glyphicon-chevron-right': false}" ng-click="callExternalAPI(api)"></i>
         </uib-accordion-heading>
-        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="api.integrationAPIStatus === 1">
             <json-formatter open="1" json="api.jsonDataAPI"></json-formatter>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="api.integrationAPIStatus === 2">
+            <h1>Data Not Returned</h1>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="api.integrationAPIStatus === 3">
+            <h1>Error Loading Data</h1>
         </div>
     </div>
 </uib-accordion>

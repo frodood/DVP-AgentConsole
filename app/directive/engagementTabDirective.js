@@ -489,11 +489,36 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 integrationAPIService.getIntegrationAPIData(integrationObj._id, scope.profileDetail)
                     .then(function(data)
                     {
-                        integrationObj.jsonDataAPI = data;
+                        if(data && data.Result)
+                        {
+                            if(data.Result)
+                            {
+                                integrationObj.integrationAPIStatus = 1;
+                            }
+                            else
+                            {
+                                integrationObj.integrationAPIStatus = 2;
+                            }
+                            integrationObj.jsonDataAPI = data.Result;
+                        }
+                        else
+                        {
+                            if(data.Exception)
+                            {
+                                integrationObj.integrationAPIStatus = 3;
+                            }
+                            else
+                            {
+                                integrationObj.integrationAPIStatus = 2;
+                            }
+                            integrationObj.jsonDataAPI = null;
+                        }
+
                     })
                     .catch(function(err)
                     {
-                        integrationObj.jsonDataAPI = {};
+                        integrationObj.jsonDataAPI = null;
+                        integrationObj.integrationAPIStatus = 3;
                         scope.showAlert("External API Data", "error", "Get meta data failed");
                     })
 
