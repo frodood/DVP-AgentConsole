@@ -182,7 +182,54 @@
                             <small class="font-size-15">{{ticket.description}}
                             </small>
                         </div>
+
                         <!-- END DESC -->
+
+                        <div class="ticket-dec-wrapper">
+                            <div class="details">
+                                <h5 class="bold">REQUIRED ATTACHMENTS</h5>
+                            </div>
+
+                            <div class="ticket-upload-view">
+                                <div class="row">
+
+                                    <div ng-repeat="reqTicketSlot in reqTicketSlots" class="col-sm-3">
+                                        <div class="thumbnail">
+                                            <img style="width: 100%; display: block;" alt="" src=""/>
+                                            <!--<div class="image view view-first">
+
+                                                <img style="width: 100%; display: block;"
+                                                     ng-src={{internalThumbFileUrl}}/{{reqTicketSlot.attchment.url}}/SampleAttachment"
+                                                     on-error-src="assets/img/noimage.jpg"
+                                                     ng-if="isImage(reqTicketSlot.attchment.type)"/>
+                                                <img style="width: 100%; display: block;"
+                                                     src="assets/img/noimage.jpg" ng-if="!isImage(reqTicketSlot.attchment.type)"/>
+
+
+                                                <div class="mask">
+                                                    <p>{{reqTicketSlot.name| limitTo:10}}</p>
+
+                                                    <div class="tools tools-bottom">
+                                                        <a href="javascript:void(0);"><i
+                                                                ng-if="isViewable(reqTicketSlot.attchment.type)" class="fa fa-play"
+                                                                ng-click="playAttachment(reqTicketSlot.attchment)"></i>
+                                                            <i ng-if="isImage(reqTicketSlot.attchment.type)" class="fa fa-expand"
+                                                               ng-click="playAttachment(reqTicketSlot.attchment)"></i></a>
+                                                        <a href="javascript:void(0);"><i class="fa fa-cloud-download"
+                                                                                         ng-click="downloadAttachment(reqTicketSlot.attchment)"></i></a>
+                                                        <a href="javascript:void(0);"><i class="fa fa-times"
+                                                                                         ng-click="deleteAttachment(reqTicketSlot.attchment._id)"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
 
                         <!-- ATTACHMENT -->
                         <div class="ticket-dec-wrapper">
@@ -376,7 +423,7 @@
                                             <div class="pull-left commenter-img">
                                                 <img src="assets/img/avatar/defaultProfile.png"
                                                      ng-src={{sub.assignee.avatar}}>
-                                                {{sub.assignee.username}}
+                                                {{sub.assignee.name}}
                                             </div>
                                         </a>
 

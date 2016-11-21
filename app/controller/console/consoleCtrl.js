@@ -888,7 +888,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.isSocketRegistered = false;
         $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
         // $('#regNotification').addClass('display-none').removeClass('display-block');
-        $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
+        //$('#regNotificationLoading').addClass('display-none').removeClass('display-block');
 
     };
     $scope.agentAuthenticated = function () {

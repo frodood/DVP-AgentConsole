@@ -34,6 +34,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.newComment = "";
             scope.ticketNextLevels = [];
 
+
+            scope.reqTicketSlots=[];
+            scope.reqTicketSlots.push(0);
+            scope.reqTicketSlots.push(1);
+
+
             scope.myProfileID=profileDataParser.myProfile._id;
 
 
@@ -731,6 +737,19 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
             scope.contactList = [];
+
+            var fileSlotChecker = function () {
+
+                if(scope.ticket.tags)
+                {
+                    angular.forEach(scope.ticket.tags, function (value) {
+
+                    });
+                }
+            }
+
+
+
             var setContactList = function (ticket) {
                 try {
                     if (ticket.requester) {
@@ -756,6 +775,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
+
+                        fileSlotChecker();
+
                         setContactList(response.data.Result);
                         if (response.data.Result) {
                             scope.currentSubmission = response.data.Result.form_submission;
