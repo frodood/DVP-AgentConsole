@@ -758,12 +758,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 else {
                     if (chip.tags) {
                         if (chip.tags.length > 0) {
-                            if (angular.isObject(chip.tags[0])) {
+                            if (!angular.isObject(chip.tags[0])) {
                                 var tempTags = [];
-                                angular.forEach(chip.tags[0].tags, function (item) {
+                                /*angular.forEach(chip.tags[0], function (item) {
                                     var tags = $filter('filter')(scope.tagList, {_id: item}, true);
                                     tempTags = tempTags.concat(tags);
-                                });
+                                });*/
+                                var tags = $filter('filter')(scope.tagList, {_id: chip.tags[0]}, true);
+                                tempTags = tempTags.concat(tags);
                                 scope.availableTags = tempTags;
                             }
                             else {
