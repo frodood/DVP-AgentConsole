@@ -36,8 +36,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
             scope.reqTicketSlots=[];
-            scope.reqTicketSlots.push(0);
-            scope.reqTicketSlots.push(1);
+
 
 
             scope.myProfileID=profileDataParser.myProfile._id;
@@ -48,6 +47,32 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.internalThumbFileUrl=baseUrls.fileService+"InternalFileService/File/Thumbnail/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/";
             scope.FileServiceUrl=baseUrls.fileService+"InternalFileService/File/Download/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/";
+
+
+
+            scope.file = {};
+
+            var uploader = scope.uploader = new FileUploader({
+                url: baseUrls.fileService+"FileService/File/Upload",
+                headers: {'Authorization':  authService.GetToken()}
+            });
+
+
+            // FILTERS
+
+            uploader.filters.push({
+                name: 'customFilter',
+                fn: function (item /*{File|FileLikeObject}*/, options) {
+                    return this.queue.length < 10;
+                }
+            });
+
+
+
+
+
+
+
 
             scope.callToCustomer = function (no) {
                 var newId = scope.ticketDetails.tabReference;
@@ -616,7 +641,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     days = "0" + days;
                 }
 
-                /*return hours + ':' + minutes + ':' + seconds;*/
+
+
                 return days+"d:"+hours + "h:" + minutes + "m:"+seconds+"s";
 
 
@@ -666,9 +692,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                             scope.logedTimes.forEach(function(item){
-
-                                //console.log(currentIndex);
-
 
 
                                 var result = scope.ticket.collaborators.filter(function( obj ) {
@@ -775,6 +798,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
+
+
 
                         fileSlotChecker();
 
@@ -1485,7 +1510,24 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             uploader.onAfterAddingFile = function (fileItem) {
                 console.info('onAfterAddingFile', fileItem);
-                fileItem.upload();
+
+                if(scope.isNewSlot)
+                {
+                    if(scope.updationSlot.slot.fileType==fileItem._file.type.split("/")[0])
+                    {
+                        fileItem.upload();
+                    }
+                    else
+                    {
+                        scope.showAlert("Upload file for Slot", "error", "Invalid file format detected, Uploading failed");
+                    }
+                }
+                else
+                {
+                    fileItem.upload();
+                }
+
+
                 /*if( scope.file.Category=="COMMENT_ATTACHMENTS")
                  {
                  scope.file.Category="TICKET_ATTACHMENTS";
@@ -1510,6 +1552,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 if(scope.isNewComment)
                 {
                     scope.isCommentCompleted=false;
+                    scope.isUploading=true;
+                }
+                if(scope.isNewSlot)
+                {
                     scope.isUploading=true;
                 }
 
@@ -1560,6 +1606,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         size: fileItem._file.size
                     }
 
+
                     ticketService.AddNewAttachmentToTicket(scope.ticket._id, attchmentData).then(function (response) {
 
                         if (response.data.IsSuccess) {
@@ -1569,16 +1616,49 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             if(scope.isNewComment)
                             {
                                 scope.uploadedComAttchments.push(response.data.Result);
-                                /*if(!scope.newComment)
-                                 {
-                                 scope.newComment= "";
 
-                                 }*/
 
                             }
+                            if(scope.isNewSlot)
+                            {
+                                scope.isNewSlot=false;
+                                scope.isUploading=false;
+
+                                if(scope.updationSlot.slot)
+                                {
+
+                                    ticketService.AddAttachmentToSlot(scope.ticket._id,scope.updationSlot.slot.name,response.data.Result._id).then(function (resSlots) {
+
+                                        if(resSlots.data.IsSuccess)
+                                        {
+                                            for(var i=0;i<scope.ticket.slot_attachment.length;i++)
+                                            {
+                                                if(scope.ticket.slot_attachment[i].slot.name==scope.updationSlot.slot.name)
+                                                {
+                                                    scope.ticket.slot_attachment[i].attachment=attchmentData;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            console.log("Error slot adding")
+                                        }
+
+                                    }, function (errSlots) {
+                                        console.log("Error slot adding" , errSlots);
+                                    });
 
 
 
+
+
+                                }
+                                else{
+                                    console.log("Invalid Slot");
+                                }
+
+                                //
+                            }
 
 
                         }
@@ -1589,6 +1669,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     }).catch(function (error) {
                         console.log("Invalid attachment error", error);
                     });
+
 
 
 
@@ -1697,7 +1778,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 if (videogularAPI && id) {
                     var info = authService.GetCompanyInfo();
-                    //var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';
                     var fileToPlay = baseUrls.fileService +'InternalFileService/File/DownloadLatest/' + info.tenant + '/' + info.company + '/' + id + '.mp3';
 
                     var arr = [
@@ -1730,8 +1810,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 {
                     if (videogularAPI && attachment.url) {
                         var info = authService.GetCompanyInfo();
-                        /*var fileToPlay = 'http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav';*/
-                        //var fileToPlay = attachment.url;
+
                         var fileToPlay = scope.FileServiceUrl+attachment.url+"/SampleAttachment";
 
                         var arr = [
@@ -1789,7 +1868,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.isImage = function (fileType) {
 
-                if(fileType.toString().split("/")[0]=="image")
+
+                if(fileType && fileType.toString().split("/")[0]=="image")
                 {
                     return true;
                 }
@@ -1802,7 +1882,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
             scope.isViewable = function (fileType) {
-                if( fileType.toString().split("/")[0]=="video" || fileType.toString().split("/")[0]=="audio")
+                if( fileType && (fileType.toString().split("/")[0]=="video" || fileType.toString().split("/")[0]=="audio"))
                 {
                     return true;
                 }
@@ -1811,6 +1891,14 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     return false;
                 }
 
+            }
+
+            scope.isNewSlot=false;
+            scope.updationSlot;
+            scope.uploadAttachmentToSlot = function (slot) {
+                $("#commentUploader").click();
+                scope.isNewSlot=true;
+                scope.updationSlot=slot;
             }
 
             /*Audio Player-end*/
@@ -1830,11 +1918,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toDurationFormat();
 
 
-                    /*if(scope.ticketLoggedPrecentage>100)
-                     {
-                     scope.ticketRemainingTimeFormat="00d:00h:00m:00s";
-                     scope.ticketRemainingPrecentage=0;
-                     }*/
+
+
 
                     if(scope.ticketLoggedPrecentage>100)
                     {
@@ -1957,6 +2042,31 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
             scope.getAvailableTicketTypes();
+
+            scope.deleteSlotAttachment = function (slot) {
+                ticketService.DeleteAttachmentFromSlot(scope.ticket._id,slot.slot.name,"TestAttachment").then(function (resDelSlot) {
+
+                    if(resDelSlot.data.IsSuccess)
+                    {
+
+
+                        for(var i=0;i<scope.ticket.slot_attachment.length;i++)
+                        {
+                            if(scope.ticket.slot_attachment[i].slot.name==slot.slot.name)
+                            {
+                                scope.ticket.slot_attachment[i].attachment="";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        scope.showAlert("Delete Slot Attachment","error","Failed to delete slot attachment");
+                    }
+
+                }, function (errDelSlot) {
+                    scope.showAlert("Delete Slot Attachment","error","Failed to delete slot attachment");
+                })
+            }
 
         }
 
