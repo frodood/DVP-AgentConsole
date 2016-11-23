@@ -740,6 +740,36 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     setToDefault();
                     return;
                 }
+
+                if (chip.tags) {
+                    if (chip.tags.length > 0) {
+
+                        var tempTags = [];
+                        angular.forEach(chip.tags, function (item) {
+
+                            if (!angular.isObject(item)) {
+
+                                var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+                                tempTags = tempTags.concat(tags);
+
+                            } else {
+                                tempTags = tempTags.concat(item);
+                            }
+                        });
+                        scope.availableTags = tempTags;
+
+                        return;
+                    }
+                }
+
+
+            };
+
+            /*scope.onChipAddTag = function (chip) {
+                if (!chip.tags || (chip.tags.length === 0)) {
+                    setToDefault();
+                    return;
+                }
                 if (scope.tagSelectRoot === 'root') {
                     scope.tagSelectRoot = 'sub';
                     scope.availableTags = chip.tags;
@@ -758,12 +788,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 else {
                     if (chip.tags) {
                         if (chip.tags.length > 0) {
-                            if (angular.isObject(chip.tags[0])) {
+                            if (!angular.isObject(chip.tags[0])) {
                                 var tempTags = [];
-                                angular.forEach(chip.tags[0].tags, function (item) {
+                                /!*angular.forEach(chip.tags[0], function (item) {
                                     var tags = $filter('filter')(scope.tagList, {_id: item}, true);
                                     tempTags = tempTags.concat(tags);
-                                });
+                                });*!/
+                                var tags = $filter('filter')(scope.tagList, {_id: chip.tags[0]}, true);
+                                tempTags = tempTags.concat(tags);
                                 scope.availableTags = tempTags;
                             }
                             else {
@@ -779,7 +811,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
 
             };
-
+*/
             scope.loadPostTags = function (query) {
                 return scope.postTags;
             };

@@ -1353,7 +1353,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
             scope.tagSelectRoot = 'root';
-            scope.onChipAddTag = function (chip) {
+            /*scope.onChipAddTag = function (chip) {
                 if (!chip.tags || (chip.tags.length === 0)) {
                     setToDefault();
                     return;
@@ -1383,8 +1383,36 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     setToDefault();
                 }
 
-            };
+            };*/
+            scope.onChipAddTag = function (chip) {
+                if (!chip.tags || (chip.tags.length === 0)) {
+                    setToDefault();
+                    return;
+                }
 
+                if (chip.tags) {
+                    if (chip.tags.length > 0) {
+
+                        var tempTags = [];
+                        angular.forEach(chip.tags, function (item) {
+
+                            if (!angular.isObject(item)) {
+
+                                var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+                                tempTags = tempTags.concat(tags);
+
+                            } else {
+                                tempTags = tempTags.concat(item);
+                            }
+                        });
+                        scope.availableTags = tempTags;
+
+                        return;
+                    }
+                }
+
+
+            };
             scope.loadPostTags = function (query) {
                 return scope.postTags;
             };
