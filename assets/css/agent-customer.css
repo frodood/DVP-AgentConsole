@@ -4967,13 +4967,17 @@ ul.renote-color-btn > li {
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(23, 55, 60, 0.98);
+    background-color: rgba(23, 55, 60, 1);
     z-index: 2000;
     /*-webkit-filter: blur(5px);*/
     /*-moz-filter: blur(5px);*/
     /*-o-filter: blur(5px);*/
     /*-ms-filter: blur(5px);*/
     /*filter: blur(2px);*/
+}
+
+.overflow-hidden {
+    overflow: hidden !important;
 }
 
 .blur-bg-img {
