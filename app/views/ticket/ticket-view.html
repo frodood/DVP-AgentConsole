@@ -182,7 +182,71 @@
                             <small class="font-size-15">{{ticket.description}}
                             </small>
                         </div>
+
                         <!-- END DESC -->
+
+                        <div class="ticket-dec-wrapper">
+                            <div class="details">
+                                <h5 class="bold">REQUIRED ATTACHMENTS</h5>
+                            </div>
+                            <!--<input id="fileSlotLoader" type="file" nv-file-select="" onchange="" uploader="uploader"/>-->
+
+                            <!--<input type="file" nv-file-select="" onchange="" uploader="uploader" multiple/>-->
+                            <div class="ticket-upload-view">
+                                <div class="row">
+
+                                    <div ng-repeat="slot in ticket.slot_attachment" class="col-sm-3">
+                                        <div class="thumbnail">
+
+
+                                            <div class="image view view-first">
+
+                                                <img style="width: 100%; display: block;"
+                                                     ng-src={{internalThumbFileUrl}}/{{slot.attachment.url}}/SampleAttachment"
+                                                     on-error-src="assets/img/noimage.jpg"
+                                                     ng-if="isImage(slot.attachment.type)"/>
+                                                <img style="width: 100%; display: block;"
+                                                     src="assets/img/noimage.jpg" ng-if="!isImage(slot.attachment.type)"/>
+
+
+                                                <div class="mask">
+                                                    <p>{{slot.attachment.file| limitTo:10}}</p>
+
+                                                    <div class="tools tools-bottom">
+                                                        <a href="javascript:void(0);"><i
+                                                                ng-if="isViewable(slot.attachment.type)" class="fa fa-play"
+                                                                ng-click="playAttachment(slot.attachment)"></i>
+
+                                                            <i ng-if="isImage(slot.attachment.type)" class="fa fa-expand"
+                                                               ng-click="playAttachment(slot.attachment)"></i>
+
+                                                            <i ng-if="!slot.attachment" class="fa fa-cloud-upload"
+                                                               ng-click="uploadAttachmentToSlot(slot)"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0);"><i ng-if="slot.attachment" class="fa fa-cloud-download"
+                                                                                         ng-click="downloadAttachment(slot.attachment)"></i></a>
+                                                        <a href="javascript:void(0);"><i ng-if="slot.attachment" class="fa fa-times"
+                                                                                         ng-click="deleteSlotAttachment(slot)"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4"> </div>
+                                            <div class="col-sm-4"> {{slot.slot.name}}</div>
+                                            <div class="col-sm-4"> </div>
+
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
 
                         <!-- ATTACHMENT -->
                         <div class="ticket-dec-wrapper">
@@ -376,7 +440,7 @@
                                             <div class="pull-left commenter-img">
                                                 <img src="assets/img/avatar/defaultProfile.png"
                                                      ng-src={{sub.assignee.avatar}}>
-                                                {{sub.assignee.username}}
+                                                {{sub.assignee.name}}
                                             </div>
                                         </a>
 

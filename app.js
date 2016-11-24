@@ -9,14 +9,15 @@ var agentApp = angular.module('veeryAgentApp',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer'
+        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer', 'mdo-angular-cryptography'
+        ,'ui.bootstrap.accordion', 'jsonFormatter'
     ]);
 
 
 agentApp.constant('moment', moment);
 
 var baseUrls = {
-    'authUrl': 'http://userservice.app.veery.cloud/oauth/token',//userservice.app.veery.cloud
+    'authUrl': 'http://userservice.app.veery.cloud/oauth/token',
     'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'notification': 'http://notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',
@@ -30,7 +31,8 @@ var baseUrls = {
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
-    'pwdVerifyUrl': 'http://192.168.5.165:3637/auth/verify'
+    'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
+    'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);
@@ -77,6 +79,10 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$auth
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
+
+agentApp.config(['$cryptoProvider', function($cryptoProvider){
+    $cryptoProvider.setCryptographyKey('1111111111111111');
+}]);
 
 agentApp.constant('config', {
     Auth_API: 'http://userservice.162.243.230.46.xip.io/',

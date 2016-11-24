@@ -679,6 +679,28 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
+    var AddAttachmentToSlot = function (ticketID, slotname,attachmentID) {
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/slot/"+slotname+"/attachment/"+attachmentID,
+
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    var DeleteAttachmentFromSlot = function (ticketID, slotname,attachmentID) {
+
+        return $http({
+            method: 'DELETE',
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/slot/"+slotname+"/attachment/"+attachmentID,
+
+        }).then(function (response) {
+            return response;
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket: saveTicket,
@@ -734,7 +756,9 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         pickCompanyInfo: pickCompanyInfo,
         getMyTimer: getMyTimer,
         updateTicketEstimateTime: updateTicketEstimateTime,
-        getAvailableTicketTypes: getAvailableTicketTypes
+        getAvailableTicketTypes: getAvailableTicketTypes,
+        AddAttachmentToSlot: AddAttachmentToSlot,
+        DeleteAttachmentFromSlot: DeleteAttachmentFromSlot
     }
 });
 

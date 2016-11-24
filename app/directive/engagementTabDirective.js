@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService) {
     return {
         restrict: "EA",
         scope: {
@@ -50,6 +50,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.currentSubmission = null;
             scope.currentForm = null;
             scope.availableTags = scope.tagCategoryList;
+
+            scope.integrationAPIList = [];
 
             /*if(!scope.profileDetail){
              scope.profileDetail = {};
@@ -460,6 +462,68 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
             };
 
+            scope.getIntegrationMetaData = function()
+            {
+                integrationAPIService.getIntegrationURLMetaData('PROFILE')
+                    .then(function(data)
+                    {
+                        if(data.Result)
+                        {
+                            scope.integrationAPIList = data.Result;
+                        }
+                        else
+                        {
+                            scope.integrationAPIList = [];
+                        }
+                    })
+                    .catch(function(err)
+                    {
+                        scope.showAlert("External API Data", "error", "Get meta data failed");
+                    })
+
+            };
+
+            scope.callExternalAPI = function(integrationObj)
+            {
+
+                integrationAPIService.getIntegrationAPIData(integrationObj._id, scope.profileDetail)
+                    .then(function(data)
+                    {
+                        if(data && data.Result)
+                        {
+                            if(data.Result)
+                            {
+                                integrationObj.integrationAPIStatus = 1;
+                            }
+                            else
+                            {
+                                integrationObj.integrationAPIStatus = 2;
+                            }
+                            integrationObj.jsonDataAPI = data.Result;
+                        }
+                        else
+                        {
+                            if(data.Exception)
+                            {
+                                integrationObj.integrationAPIStatus = 3;
+                            }
+                            else
+                            {
+                                integrationObj.integrationAPIStatus = 2;
+                            }
+                            integrationObj.jsonDataAPI = null;
+                        }
+
+                    })
+                    .catch(function(err)
+                    {
+                        integrationObj.jsonDataAPI = null;
+                        integrationObj.integrationAPIStatus = 3;
+                        scope.showAlert("External API Data", "error", "Get meta data failed");
+                    })
+
+            };
+
             var convertToSchemaForm = function (formSubmission, callback) {
 
                 //get forms profile
@@ -676,6 +740,36 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     setToDefault();
                     return;
                 }
+
+                if (chip.tags) {
+                    if (chip.tags.length > 0) {
+
+                        var tempTags = [];
+                        angular.forEach(chip.tags, function (item) {
+
+                            if (!angular.isObject(item)) {
+
+                                var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+                                tempTags = tempTags.concat(tags);
+
+                            } else {
+                                tempTags = tempTags.concat(item);
+                            }
+                        });
+                        scope.availableTags = tempTags;
+
+                        return;
+                    }
+                }
+
+
+            };
+
+            /*scope.onChipAddTag = function (chip) {
+                if (!chip.tags || (chip.tags.length === 0)) {
+                    setToDefault();
+                    return;
+                }
                 if (scope.tagSelectRoot === 'root') {
                     scope.tagSelectRoot = 'sub';
                     scope.availableTags = chip.tags;
@@ -694,12 +788,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 else {
                     if (chip.tags) {
                         if (chip.tags.length > 0) {
-                            if (angular.isObject(chip.tags[0])) {
+                            if (!angular.isObject(chip.tags[0])) {
                                 var tempTags = [];
-                                angular.forEach(chip.tags[0].tags, function (item) {
+                                /!*angular.forEach(chip.tags[0], function (item) {
                                     var tags = $filter('filter')(scope.tagList, {_id: item}, true);
                                     tempTags = tempTags.concat(tags);
-                                });
+                                });*!/
+                                var tags = $filter('filter')(scope.tagList, {_id: chip.tags[0]}, true);
+                                tempTags = tempTags.concat(tags);
                                 scope.availableTags = tempTags;
                             }
                             else {
@@ -715,7 +811,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
 
             };
-
+*/
             scope.loadPostTags = function (query) {
                 return scope.postTags;
             };
@@ -1060,6 +1156,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.currentTicketPage = scope.currentTicketPage + 1;
                 scope.GetAllTicketsByRequester(scope.profileDetail._id, scope.currentTicketPage);
             };
+
+
 
 
             scope.getEnggemntCount = function (id) {
