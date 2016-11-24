@@ -1544,6 +1544,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     if(scope.updationSlot.slot.fileType==fileItem._file.type.split("/")[0])
                     {
                         fileItem.upload();
+                        scope.isSlotUploading=true;
                     }
                     else
                     {
@@ -1651,7 +1652,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             {
                                 scope.isNewSlot=false;
                                 scope.isUploading=false;
-
+                                scope.isSlotUploading=false;
                                 if(scope.updationSlot.slot)
                                 {
 
@@ -1711,6 +1712,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 {
                     scope.isCommentCompleted=true;
                     scope.isUploading=false;
+                }
+
+                if(scope.isNewSlot)
+                {
+                    scope.isSlotUploading=false;
                 }
             };
 
@@ -1923,10 +1929,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.isNewSlot=false;
             scope.updationSlot;
+            scope.isSlotUploading=false;
             scope.uploadAttachmentToSlot = function (slot) {
                 $("#commentUploader").click();
                 scope.isNewSlot=true;
                 scope.updationSlot=slot;
+
             }
 
             /*Audio Player-end*/
