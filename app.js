@@ -31,7 +31,8 @@ var baseUrls = {
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
-    'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/'
+    'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
+    'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/'
 };
 
 agentApp.constant('baseUrls', baseUrls);
