@@ -30,7 +30,7 @@ var baseUrls = {
     'dashBordUrl': 'http://dashboard.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
-    'pwdVerifyUrl': 'http://192.168.1.16:3637/auth/verify'
+    'pwdVerifyUrl': 'http://192.168.5.165:3637/auth/verify'
 };
 
 agentApp.constant('baseUrls', baseUrls);

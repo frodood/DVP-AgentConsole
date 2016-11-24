@@ -2266,12 +2266,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /* update code damith
      ARDS break option */
+    var changeLockScreenView = function () {
+        return {
+            show: function () {
+                $('#loginScreeen').removeClass('display-none').addClass('display-block');
+                $('body').addClass('overflow-hidden');
+
+            },
+            hide: function () {
+                $('#loginScreeen').addClass('display-none').removeClass('display-block');
+                $('body').removeClass('overflow-hidden');
+
+            }
+        }
+
+    }();
+
     $scope.currentBerekOption = null;
     var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
             console.log(requestOption);
             $('#loginScreeen').removeClass('display-none').addClass('display-block');
+            $('body').addClass('overflow-hidden');
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
@@ -2334,16 +2351,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $scope.currentBerekOption = "Available";
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Available').addClass('font-color-green bold');
+                            changeLockScreenView.hide();
+                            return;
                         } else {
                             $('#userStatus').addClass('offline').removeClass('online');
                             switch (data.Result.Reason) {
                                 case 'OfficialBreak' :
                                     $('#OfficialBreak').addClass('font-color-green bold');
                                     $scope.currentBerekOption = "OfficialBreak";
+                                    changeLockScreenView.show();
                                     break;
                                 case 'MealBreak' :
                                     $('#MealBreak').addClass('font-color-green bold');
                                     $scope.currentBerekOption = "MealBreak";
+                                    changeLockScreenView.show();
                                     break;
                             }
                         }
@@ -2486,6 +2507,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //#------ Update code Damith
     // Break screen functions
     $scope.lockPwd = null;
+    $scope.isUnlock = false;
+
     $scope.breakScreen = function () {
         var param = {
             userName: $scope.loginName,
@@ -2501,15 +2524,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
 
                 param.password = pwd;
+                $scope.isUnlock = true;
                 loginService.VerifyPwd(param, function (res) {
                     if (res) {
-                        $('#loginScreeen').addClass('display-none').removeClass('display-block');
+                        $scope.breakOption.endBreakOption();
+                        getCurrentState.breakState();
+                        changeLockScreenView.hide();
+                        $scope.isUnlock = false;
                         return;
                     } else {
                         showAlert('Error', 'error', 'Invalid authentication..');
                         $('#lockPwd').addClass('shake');
                         $('#lockPwd').addClass('shake');
-                        $('#loginScreeen').addClass('display-block').removeClass('display-none');
+                        changeLockScreenView.show();
+                        $scope.isUnlock = false;
                         return;
                     }
                 });
@@ -2539,4 +2567,15 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
     $scope.MessageObj = MessageObj;
 
 
+}).directive('enterUnlockScreen', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.myEnter);
+                });
+                event.preventDefault();
+            }
+        });
+    };
 });
