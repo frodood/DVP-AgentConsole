@@ -4,7 +4,7 @@
 
 
 agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
-                                             $base64, $timeout, $q, $crypto,jwtHelper,
+                                             $base64, $timeout, $q, $crypto, jwtHelper,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
@@ -343,7 +343,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
             resourceService.SipUserPassword(values[0]).then(function (reply) {
-                var decrypted = $crypto.decrypt(reply,'DuoS123');
+                var decrypted = $crypto.decrypt(reply, 'DuoS123');
                 $scope.profile.password = decrypted;
                 resourceService.GetContactVeeryFormat().then(function (response) {
                     if (response.IsSuccess) {
@@ -365,7 +365,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 authService.IsCheckResponse(error);
                 $scope.showAlert("Soft Phone", "error", "Fail to Communicate with servers");
             });
-
 
 
         },
@@ -2324,10 +2323,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             resourceService.EndBreakRequest(authService.GetResourceId()).then(function (data) {
                 if (data) {
                     $scope.showAlert("Available", "success", "Update resource state success.");
+                    $('#userStatus').addClass('online').removeClass('offline');
+                    $('#Available').addClass('font-color-green bold');
+                    $scope.currentBerekOption = requestOption;
+                    // getCurrentState.breakState();
+                    changeLockScreenView.hide();
+                    $scope.isUnlock = false;
+                    return;
                 }
-                $('#userStatus').addClass('online').removeClass('offline');
-                $('#Available').addClass('font-color-green bold');
-                $scope.currentBerekOption = requestOption;
             });
         }
     };//end
@@ -2538,10 +2541,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.isUnlock = true;
                 loginService.VerifyPwd(param, function (res) {
                     if (res) {
-                        $scope.breakOption.endBreakOption();
-                        getCurrentState.breakState();
-                        changeLockScreenView.hide();
-                        $scope.isUnlock = false;
+                        $scope.breakOption.endBreakOption('Available');
                         return;
                     } else {
                         showAlert('Error', 'error', 'Invalid authentication..');
