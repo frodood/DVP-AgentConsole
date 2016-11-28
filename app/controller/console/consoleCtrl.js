@@ -35,10 +35,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         isopen: false
     };
 
-    $scope.countdown = 10;
+    $scope.countdownVal = 10;
     $scope.GetAcwTime = function () {
         resourceService.GetAcwTime().then(function (response) {
-            $scope.countdown = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
+            $scope.countdownVal = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.showAlert('Phone', 'error', "Fail To Get ACW Time");
@@ -230,6 +230,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
             sipCall('call-audio', callNumber);
             phoneFuncion.updateCallStatus('Dialing');
+            $scope.$broadcast('timer-set-countdown');
         },
         endCall: function () {
             sipHangUp();
@@ -517,6 +518,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.hideMuteButton();
                 /*addCallToHistory(sRemoteNumber, 2);*/
                 phoneFuncion.updateCallStatus('Incoming Call');
+
             }
             catch (ex) {
                 console.error(ex.message);
@@ -526,7 +528,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             try {
 
                 console.log("uiCallTerminated");
-                $scope.$broadcast('timer-set-countdown', $scope.countdown);
+                $scope.$broadcast('timer-set-countdown');
                 $scope.stopCallTime();
                 $scope.ShowIncomeingNotification(false);
 
