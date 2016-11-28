@@ -5011,23 +5011,23 @@ ul.renote-color-btn > li {
     font-family: 'AvenirNextLTPro-UltLt', sans-serif;
     color: #168039;
     letter-spacing: 4px;
-    font-size: 50px;
+    font-size: 45px;
 }
 
 .lock-time-wrapper {
     font-family: 'AvenirNextLTPro-UltLt', sans-serif;
     color: #fff;
     letter-spacing: 4px;
-    font-size: 55px;
+    font-size: 35px;
 }
 
 .console-profile-img.lg {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 75px;
+    height: 124px;
+    /* border-radius: 50%; */
     overflow: hidden;
     display: inline-block;
-
+    padding-top: 15px;
 }
 
 .console-profile-img.lg > img {
@@ -5042,7 +5042,7 @@ ul.renote-color-btn > li {
 
 .lock-pwd {
     margin-top: 8%;
-    font-family: 'AvenirNextLTPro-Cn, sans-serif;
+    font-family: 'AvenirNextLTPro-Cn', sans-serif;
     color: #fff;
     font-size: 15px;
     cursor: pointer;
@@ -5068,3 +5068,105 @@ ul.renote-color-btn > li {
 .lock-pwd > div > i {
     margin-top: 20px;
 }
+
+.coffee-cup {
+    margin: 0 auto;
+    text-align: center;
+}
+
+@keyframes wave {
+    0% {
+        opacity: 0;
+        transform: translateY(15px)
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-15px)
+    }
+}
+
+.loader ul {
+    margin: 0 0 10px 0;
+    padding: 0;
+    list-style: none;
+    width: 60px;
+    text-align: center;
+    animation: wave 2.5s infinite linear;
+    animation-fill-mode: forwards;
+}
+
+.loader li {
+    display: inline-block;
+    background: #FAF1D9;
+    height: 30px;
+    width: 9px;
+    border-radius: 0 100%;
+    transform: rotate(12deg);
+}
+
+.cup {
+    background: #164148;
+    width: 60px;
+    height: 54px;
+    border-radius: 0 0 50% 50%;
+    position: relative;
+}
+
+.cup:before {
+    content: "";
+    position: absolute;
+    width: 66px;
+    height: 20px;
+    border-radius: 50%;
+    background: inherit;
+    left: -3px;
+    top: -10px;
+}
+
+.cup:after {
+    content: "";
+    position: absolute;
+    width: 56px;
+    height: 12px;
+    border-radius: 50%;
+    background: #17373c;
+    left: 2px;
+    top: -6px;
+}
+
+.loader span {
+    background: #164148;
+    width: 13px;
+    height: 20px;
+    position: absolute;
+    right: -13px;
+    top: 10px;
+    border-radius: 0 50% 50% 0;
+}
+
+.loader span:before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    background: #17373c;
+    width: 10px;
+    height: 12px;
+    border-radius: 0 50% 50% 0;
+}
+
+.loader span:after {
+    content: "";
+    position: absolute;
+    top: 40px;
+    left: -50px;
+    background: #164148;
+    width: 40px;
+    height: 8px;
+    border-radius: 50%;
+}
+
