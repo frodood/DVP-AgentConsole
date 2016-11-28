@@ -20,7 +20,6 @@
 // });
 
 
-
 function getJSONData(http, file, callback) {
     http.get('assets/json/' + file + '.json').success(function (data) {
         callback(data.d);
@@ -179,7 +178,6 @@ function showMicrophoneOption() {
 }
 
 
-
 var showAlert = function (title, type, content) {
     new PNotify({
         title: title,
@@ -195,7 +193,11 @@ var showAlert = function (title, type, content) {
 };
 
 
-
+window.onload = window.onresize = function () {
+    var height = window.innerHeight;
+    console.log(height);
+    return height + "px";
+}
 
 
 
