@@ -118,7 +118,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
 
             });
         } catch (ex) {
-            console.log("Error In socket.io");
+            console.error("Error In socket.io"+ex);
         }
     };
 
