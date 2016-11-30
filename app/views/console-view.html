@@ -268,13 +268,18 @@
 
                             <li><a class="drop-header">Register</a></li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a
-                                    ng-click="changeRegisterStatus.changeStatus('CALL');"
-                                    href="javascript:void(0);">Call</a></li>
-                            <li class="menuitem" role="menuitem"><a
-                                    ng-click="changeRegisterStatus.changeStatus('TICKET');"
-                                    href="javascript:void(0);">ticket</a></li>
+                            <li ng-if="resourceTaskObj.length==0" class="menuitem text-lowercase menu-data-notfund"
+                                role="menuitem">
+                                <span ng-click="clickRefTask()">Refresh</span> <br>
+                                task not found
+                            </li>
 
+                            <li ng-repeat="obj in resourceTaskObj" class="menuitem text-lowercase" role="menuitem"><a
+                                    ng-class="obj.task==obj.RegTask ?'font-color-green bold':''"
+                                    ng-click="changeRegisterStatus.changeStatus(obj.task);"
+                                    href="javascript:void(0);">
+                                <i ng-show="obj.task==obj.RegTask" class="ti-check"></i>
+                                {{obj.task}}</a></li>
                             <li><a class="drop-header">Break</a></li>
                             <li class="divider"></li>
                             <li class="menuitem" role="menuitem"><a id="Available"

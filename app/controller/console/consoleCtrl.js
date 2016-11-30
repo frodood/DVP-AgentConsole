@@ -2339,11 +2339,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.changeRegisterStatus = {
         changeStatus: function (type) {
             dataParser.userProfile = $scope.profile;
+            //is check current reg resource task
+            for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
+                if ($scope.resourceTaskObj[i].RegTask == type) {
+                    //remove resource sharing
+                    getCurrentState.removeSharing(type,i);
+                    return;
+                }
+            };
+
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {
                 if (res.IsSuccess) {
                     resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result).then(function (data) {
-                        console.log(data);
+                        getCurrentState.getCurrentRegisterTask();
+                        $scope.showAlert("Change Register", "success", "Register resource info success.");
                     })
                 } else {
                     console.log(data);
@@ -2356,6 +2366,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };//end
 
+    $scope.resourceTaskObj = [];
     var getCurrentState = (function () {
         return {
             breakState: function () {
@@ -2395,11 +2406,75 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     authService.IsCheckResponse(error);
                     $scope.showAlert("Agent State", "error", "Fail To load get current state..");
                 });
+            },
+            getResourceTasks: function () {
+                resourceService.GetResourceTasks(authService.GetResourceId()).then(function (data) {
+                    if (data && data.IsSuccess) {
+                        data.Result.forEach(function (value, key) {
+                            if (data.Result[key].ResTask) {
+                                if (data.Result[key].ResTask.ResTaskInfo) {
+                                    if (data.Result[key].ResTask.ResTaskInfo.TaskName) {
+                                        $scope.resourceTaskObj.push({
+                                            'task': data.Result[key].ResTask.ResTaskInfo.TaskName,
+                                            'RegTask': null
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                        getCurrentState.getCurrentRegisterTask();
+                    }
+                }, function (error) {
+                    authService.IsCheckResponse(error);
+                    $scope.showAlert("Agent Task", "error", "Fail To load get resource task list.");
+                });
+            },
+            getCurrentRegisterTask: function () {
+                resourceService.GetCurrentRegisterTask(authService.GetResourceId()).then(function (data) {
+                    if (data && data.IsSuccess) {
+                        if (data.Result) {
+                            if (data.Result.obj.LoginTasks) {
+                                for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
+                                    data.Result.obj.LoginTasks.forEach(function (value, key) {
+                                        if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
+                                            $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
+                                        }
+                                    })
+
+                                }
+                            }
+                        }
+                    }
+                }, function (error) {
+                    authService.IsCheckResponse(error);
+                    $scope.showAlert("Agent Task", "error", "Fail To load get register task.");
+                });
+            },
+            removeSharing: function (type,index) {
+                resourceService.RemoveSharing(authService.GetResourceId(), type).then(function (data) {
+                    if (data && data.IsSuccess) {
+                        $scope.resourceTaskObj[index].RegTask = null;
+                       // getCurrentState.getCurrentRegisterTask();
+                        $scope.showAlert("Agent Task", "success", "Delete resource info success.");
+                    }
+                }, function (error) {
+                    authService.IsCheckResponse(error);
+                    $scope.showAlert("Agent Task", "error", "Fail To remove sharing resource.");
+                });
             }
         }
     })();
+
     getCurrentState.breakState();
     getCurrentState.getResourceState();
+    getCurrentState.getResourceTasks();
+
+
+    $scope.clickRefTask = function () {
+        $scope.resourceTaskObj = [];
+        getCurrentState.getResourceTasks();
+        // getCurrentState.getCurrentRegisterTask();
+    };
 
 
     // Phone Call Timers
