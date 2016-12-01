@@ -901,8 +901,13 @@
 
                                             <select class="form-control" ng-model="ticket.assignee"
                                                     ng-model-options="{trackBy: '$value'}">
-                                                <option ng-repeat="c in users" value='{{c._id}}'>
-                                                    {{c.username}}
+                                                <optgroup label="Users"></optgroup>
+                                                <option ng-repeat="c in assigneeUsers" value='{{c._id}}'>
+                                                    - {{c.username}}
+                                                </option>
+                                                <optgroup label="User Groups"></optgroup>
+                                                <option ng-repeat="group in assigneeGroups" value='{{group._id}}'>
+                                                    - {{group.name}}
                                                 </option>
                                             </select>
 
@@ -915,8 +920,7 @@
                                     <div class="model-btn-wrapper">
                                         <div class="btn-warp ">
                                 <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
-                                      ng-click="saveTicket(ticket);"
-                                >Save</span>
+                                      ng-click="saveTicket(ticket);">Save</span>
                                         </div>
                                     </div>
 

@@ -1074,7 +1074,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.users = [];
     $scope.loadUsers = function () {
         userService.LoadUser().then(function (response) {
+
+            for (var i = 0; i < response.length; i++) {
+                var user = response[i];
+                user.listType = "User";
+            }
+
             $scope.users = response;
+            profileDataParser.assigneeUsers=response;
+
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.showAlert("Load Users", "error", "Fail To Get User List.")
@@ -1087,7 +1095,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.loadUserGroups = function () {
         userService.getUserGroupList().then(function (response) {
             if (response.data && response.data.IsSuccess) {
+
+                for (var j = 0; j < response.data.Result.length; j++) {
+                    var userGroup = response.data.Result[j];
+                    userGroup.listType = "Group";
+                }
+
                 $scope.userGroups = response.data.Result;
+                profileDataParser.assigneeUserGroups=response.data.Result;
             }
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -1946,27 +1961,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                        if (data.IsSuccess) {
-                            if (data.Result && data.Result.UNREAD) {
-                                $scope.unreadMailCount = data.Result.UNREAD;
-                            }
+                    if (data.IsSuccess) {
+                        if (data.Result && data.Result.UNREAD) {
+                            $scope.unreadMailCount = data.Result.UNREAD;
                         }
-                        else {
-                            var errMsg = data.CustomMessage;
+                    }
+                    else {
+                        var errMsg = data.CustomMessage;
 
-                            if (data.Exception) {
-                                errMsg = data.Exception.Message;
-                            }
-                            console.log(errMsg);
+                        if (data.Exception) {
+                            errMsg = data.Exception.Message;
                         }
+                        console.log(errMsg);
+                    }
 
 
-                    },
-                    function (err) {
-                        authService.IsCheckResponse(err);
-                        console.log(err);
+                },
+                function (err) {
+                    authService.IsCheckResponse(err);
+                    console.log(err);
 
-                    })
+                })
 
         }
         catch (ex) {
@@ -2456,7 +2471,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.RemoveSharing(authService.GetResourceId(), type).then(function (data) {
                     if (data && data.IsSuccess) {
                         $scope.resourceTaskObj[index].RegTask = null;
-                       // getCurrentState.getCurrentRegisterTask();
+                        // getCurrentState.getCurrentRegisterTask();
                         $scope.showAlert("Agent Task", "success", "Delete resource info success.");
                     }
                 }, function (error) {

@@ -72,6 +72,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                 $scope.assigneeList = $scope.userGroupList.concat($scope.assigneeList);
                 profileDataParser.assigneeList = $scope.assigneeList;
+
             }
 
         }, function (error) {
@@ -100,6 +101,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                 $scope.assigneeList = $scope.users;
                 profileDataParser.assigneeList = $scope.assigneeList;
+
             }
 
             pickAllGroups();

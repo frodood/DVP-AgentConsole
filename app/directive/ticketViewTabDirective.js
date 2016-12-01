@@ -743,8 +743,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.userList = profileDataParser.userList;
             scope.assigneeList = profileDataParser.assigneeList;
-            scope.userList = profileDataParser.userList;
-            scope.assigneeList = profileDataParser.assigneeList;
+
+
+            scope.assigneeUsers= profileDataParser.assigneeUsers;
+            scope.assigneeGroups=profileDataParser.assigneeUserGroups;
+
 
             scope.loadTicketNextLevel = function () {
                 ticketService.getTicketNextLevel(scope.ticket.type, scope.ticket.status).then(function (response) {
@@ -1295,7 +1298,17 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
                 if(subTicket.assignee)
                 {
+                    /*var subTicketAssignee=JSON.parse(subTicket.assignee);
+                    if(subTicketAssignee.listType == "User")
+                    {
+                        subTicket.assignee=subTicketAssignee;
+                    }
+                    else
+                    {
+                        subTicket.assignee_group=subTicketAssignee
+                    }*/
                     subTicket.assignee=JSON.parse(subTicket.assignee);
+                    subTicket.assignee_group= subTicket.assignee;
                 }
 
                 ticketService.AddSubTicket(scope.ticket._id, subTicket).then(function (response) {
@@ -1303,13 +1316,16 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     if (response.data.IsSuccess) {
                         scope.showAlert("Sub ticket saving", "success", "Sub ticket saved successfully");
 
-                        scope.assigneeList.filter(function (assigneeObj) {
+                        /*scope.assigneeList.filter(function (assigneeObj) {
                             if(assigneeObj._id==response.data.Result.assignee)
                             {
                                 response.data.Result.assignee=assigneeObj;
                                 scope.subTickets.push(response.data.Result);
                             }
-                        })
+                        })*/
+
+                        response.data.Result.assignee=subTicket.assignee;
+                        scope.subTickets.push(response.data.Result);
 
                         scope.showSubCreateTicket = false;
                         console.log("Sub ticket added successfully");
