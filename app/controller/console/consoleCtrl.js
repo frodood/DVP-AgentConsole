@@ -420,6 +420,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 else if (e.toString().toLowerCase() == 'in call') {
                     stopRingTone();
+                    stopRingbackTone();
                     /*UIStateChange.inCallConnectedState();*/
                     phoneFuncion.showHoldButton();
                     phoneFuncion.showSpeakerButton();
