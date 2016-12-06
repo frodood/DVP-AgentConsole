@@ -28,7 +28,7 @@ var baseUrls = {
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
     'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
-    'dashBordUrl': 'http://dashboard.app.veery.cloud/',
+    'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
