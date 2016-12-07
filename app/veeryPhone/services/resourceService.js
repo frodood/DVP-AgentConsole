@@ -47,8 +47,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var unregisterWithArds = function (resourceId) {
         return $http({
             method: 'delete',
-            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId,
-            data: {"ResourceId": resourceId, "HandlingTypes": ["CALL"]}
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId
         }).then(function (response) {
             return response.data.IsSuccess;
         });
