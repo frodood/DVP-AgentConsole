@@ -129,7 +129,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
                 "OtherInfo": ""
             }
         }).then(function (response) {
-            return response.data.Result;
+            return response.data.IsSuccess;
         });
     };
     var mapResourceToVeery = function (publicIdentity) {
