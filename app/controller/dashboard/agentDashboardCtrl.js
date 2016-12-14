@@ -317,6 +317,18 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
     GetResolveTicketCount();
 
+    $scope.ProgressTicketCount = 0;
+    var GetProgressTicketCount = function () {
+        dashboradService.GetTotalTicketCount('PROGRESSINGTICKET').then(function (response) {
+            $scope.ProgressTicketCount = response;
+        }, function (err) {
+            authService.IsCheckResponse(err);
+            $scope.ProgressTicketCount = 0;
+            $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+        });
+    };
+    GetProgressTicketCount();
+
     var GetCreatedicketSeries = function () {
         dashboradService.GetCreatedTicketSeries().then(function (response) {
             if (angular.isArray(response)) {
