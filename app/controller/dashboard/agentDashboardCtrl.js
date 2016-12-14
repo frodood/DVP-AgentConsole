@@ -3,7 +3,7 @@
  */
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
-                                                    ticketService, engagementService, profileDataParser, authService, $state) {
+                                                    ticketService, engagementService, profileDataParser, authService,dashboardRefreshTime, $state) {
 
 
     $scope.showAlert = function (tittle, type, msg) {
@@ -436,6 +436,12 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $timeout.cancel(loadGrapDataTimer);
         }
     });
-    $scope.refreshTime = 1000;
+    $scope.refreshTime = parseInt(dashboardRefreshTime);
+    $scope.dashboardReload = function () {
+        getAllRealTime();
+        loadRecentData();
+        loadGrapData();
+    };
+    $scope.dashboardReload();
 });
 
