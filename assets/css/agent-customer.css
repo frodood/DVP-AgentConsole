@@ -1974,8 +1974,8 @@ div > div >
 
 .nav-search-text {
     width: auto;
-    background: #f7f5f5;
-    border: 0px;
+    background: #f7f5f5 !important;
+    border: 0px !important;
 }
 
 .nav-bottom-icon {

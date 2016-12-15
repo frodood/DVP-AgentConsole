@@ -245,8 +245,7 @@
                         </li>
 
                         <!-- send notification -->
-                        <li class="console-menu-icon m-left-10 m-right-10"
-                            ng-click="openNav()">
+                        <li ng-click="openNav()" class="console-menu-icon m-left-10 m-right-10">
                             <i class="veery-font-1-paper-plane"></i>
                         </li>
 
@@ -462,7 +461,7 @@
                     </timer>
                 </div>
                 <div class="display-none" id="countdownCalltimmer">
-                    <timer autostart="false" countdown="countdownVal"  finish-callback="veeryPhone.FinishedAcw()"
+                    <timer autostart="false" countdown="countdownVal" finish-callback="veeryPhone.FinishedAcw()"
                            interval="1000">{{seconds}} second
                     </timer>
 
