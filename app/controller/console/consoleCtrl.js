@@ -2411,7 +2411,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (data) {
                     $scope.showAlert("Available", "success", "Update resource state success.");
                     $('#userStatus').addClass('online').removeClass('offline');
-                    $('#Available').addClass('font-color-green bold');
+                    $('#Inbound').addClass('font-color-green bold');
                     $scope.currentModeOption = requestOption;
                     // getCurrentState.breakState();
                     //changeLockScreenView.hide();
