@@ -1684,6 +1684,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.GetProfileHistory(profile._id);
 
                         if (scope.profileDetail) {
+                            scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
                             scope.currentSubmission = scope.profileDetail.form_submission;
                             convertToSchemaForm(scope.profileDetail.form_submission, function (schemaDetails) {
                                 if (schemaDetails) {
