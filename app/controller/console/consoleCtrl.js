@@ -8,7 +8,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService, $uibModal, notificationConnector) {
+                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers, $uibModal, notificationConnector) {
 
 
     function startRingTone() {
@@ -335,6 +335,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.profile.server.token = authService.GetToken();
             $scope.profile.server.domain = values[1];
             $scope.profile.server.websocketUrl = "wss://" + values[1] + ":7443";//wss://159.203.160.47:7443
+            $scope.profile.server.ice_servers = turnServers;
             $scope.profile.server.outboundProxy = "";
             $scope.profile.server.enableRtcwebBreaker = false;
             dataParser.userProfile = $scope.profile;
@@ -644,10 +645,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
             phoneFuncion.showfreezeRequest();
             resourceService.FreezeAcw($scope.call.sessionId, true).then(function (response) {
-                phoneFuncion.hidefreezeRequest();
+
                 if (response) {
+                    $('#calltimmer').addClass('call-duations').removeClass('display-none');
+                    $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
+                    $('#freezeRequest').addClass('display-none').removeClass('call-duations');
                     $scope.startCallTime();
                 }
+                else{
+                    phoneFuncion.hidefreezeRequest();
+                }
+                $scope.isFreezeReq = false;
             }, function (err) {
                 authService.IsCheckResponse(err);
                 $scope.showAlert('Phone', 'error', "Fail Freeze Operation.");
