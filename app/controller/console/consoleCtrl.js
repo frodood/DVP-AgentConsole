@@ -2025,21 +2025,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         userService.getMyProfileDetails().then(function (response) {
 
             if (response.data.IsSuccess) {
-
                 profileDataParser.myProfile = response.data.Result;
                 $scope.loginAvatar = profileDataParser.myProfile.avatar;
                 getUnreadMailCounters(profileDataParser.myProfile._id);
             }
             else {
-
                 profileDataParser.myProfile = {};
             }
         }, function (error) {
             authService.IsCheckResponse(error);
             profileDataParser.myProfile = {};
         });
-
-
     };
     $scope.getMyProfile();
 
@@ -2433,8 +2429,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     getCurrentState.removeSharing(type, i);
                     return;
                 }
-            }
-            ;
+            };
 
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {

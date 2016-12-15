@@ -16,11 +16,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
         link: function (scope, element, attributes) {
 
             scope.uploadedAttchments = [];
-            scope.uploadedCommentAttchments=[];
-            scope.timeValidateMessage="";
-            scope.isTimeEdit=false;
+            scope.uploadedCommentAttchments = [];
+            scope.timeValidateMessage = "";
+            scope.isTimeEdit = false;
             scope.userCompanyData = authService.GetCompanyInfo();
-            scope.defaultEstimateTime=0;
+            scope.defaultEstimateTime = 0;
 
             scope.availableTags = scope.tagCategoryList;
             scope.tabReference = scope.tabReference + "-" + "18705056550";
@@ -35,26 +35,24 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.ticketNextLevels = [];
 
 
-            scope.reqTicketSlots=[];
+            scope.reqTicketSlots = [];
 
 
-
-            scope.myProfileID=profileDataParser.myProfile._id;
-
-
-            scope.messageMode="public";
+            scope.myProfileID = profileDataParser.myProfile._id;
 
 
-            scope.internalThumbFileUrl=baseUrls.fileService+"InternalFileService/File/Thumbnail/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/";
-            scope.FileServiceUrl=baseUrls.fileService+"InternalFileService/File/Download/"+scope.userCompanyData.tenant+"/"+scope.userCompanyData.company+"/";
+            scope.messageMode = "public";
 
+
+            scope.internalThumbFileUrl = baseUrls.fileService + "InternalFileService/File/Thumbnail/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/";
+            scope.FileServiceUrl = baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/";
 
 
             scope.file = {};
 
             var uploader = scope.uploader = new FileUploader({
-                url: baseUrls.fileService+"FileService/File/Upload",
-                headers: {'Authorization':  authService.GetToken()}
+                url: baseUrls.fileService + "FileService/File/Upload",
+                headers: {'Authorization': authService.GetToken()}
             });
 
 
@@ -66,12 +64,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     return this.queue.length < 10;
                 }
             });
-
-
-
-
-
-
 
 
             scope.callToCustomer = function (no) {
@@ -606,7 +598,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     });
 
 
-
                 }
 
             };
@@ -615,16 +606,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             String.prototype.toDurationFormat = function () {
 
                 var mill_sec_num = parseInt(this, 10); // don't forget the second param
-                var sec_num = Math.floor(mill_sec_num/1000);
+                var sec_num = Math.floor(mill_sec_num / 1000);
                 var hours = Math.floor(sec_num / 3600);
                 var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
                 var seconds = sec_num - (hours * 3600) - (minutes * 60);
-                var days="";
+                var days = "";
 
-                if(hours>=24)
-                {
-                    days=Math.floor(hours/24);
-                    hours=Math.floor(hours%24);
+                if (hours >= 24) {
+                    days = Math.floor(hours / 24);
+                    hours = Math.floor(hours % 24);
                 }
 
 
@@ -642,8 +632,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
 
 
-
-                return days+"d:"+hours + "h:" + minutes + "m:"+seconds+"s";
+                return days + "d:" + hours + "h:" + minutes + "m:" + seconds + "s";
 
 
             };
@@ -651,56 +640,47 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.subTickets = [];
             scope.relTickets = [];
-            scope.ticketLoggedTime=0;
-            scope.ticketLoggedTimeFormat="";
-            scope.ticketEstimatedTimeFormat="";
-            scope.ticketRemainingTimeFormat="";
-            scope.ticketEstimatedPrecentage=0;
-            scope.ticketLoggedPrecentage=0;
-            scope.ticketRemainingPrecentage=0;
-            scope.collaboratorLoggedTime={};
-            scope.isWatching=false;
-            scope.newTicketEstimatedTimeFormat="";
-
+            scope.ticketLoggedTime = 0;
+            scope.ticketLoggedTimeFormat = "";
+            scope.ticketEstimatedTimeFormat = "";
+            scope.ticketRemainingTimeFormat = "";
+            scope.ticketEstimatedPrecentage = 0;
+            scope.ticketLoggedPrecentage = 0;
+            scope.ticketRemainingPrecentage = 0;
+            scope.collaboratorLoggedTime = {};
+            scope.isWatching = false;
+            scope.newTicketEstimatedTimeFormat = "";
 
 
             scope.getTicketLoggedTime = function (ticketId) {
 
                 ticketService.PickLoggedTime(ticketId).then(function (response) {
 
-                    if(response.data.IsSuccess)
-                    {
-                        if(response.data.Result.length>0)
-                        {
+                    if (response.data.IsSuccess) {
+                        if (response.data.Result.length > 0) {
                             scope.logedTimes = response.data.Result;
-                            for(var i=0;i<response.data.Result.length;i++)
-                            {
-                                scope.ticketLoggedTime=scope.ticketLoggedTime+response.data.Result[i].time;
-                                if(i==response.data.Result.length-1)
-                                {
-                                    if(scope.ticket.time_estimation && Number(scope.ticket.time_estimation)!=0)
-                                    {
+                            for (var i = 0; i < response.data.Result.length; i++) {
+                                scope.ticketLoggedTime = scope.ticketLoggedTime + response.data.Result[i].time;
+                                if (i == response.data.Result.length - 1) {
+                                    if (scope.ticket.time_estimation && Number(scope.ticket.time_estimation) != 0) {
                                         scope.TimePanelMaker();
                                     }
-
-
 
 
                                 }
                             }
 
 
+                            scope.logedTimes.forEach(function (item) {
 
-                            scope.logedTimes.forEach(function(item){
 
-
-                                var result = scope.ticket.collaborators.filter(function( obj ) {
+                                var result = scope.ticket.collaborators.filter(function (obj) {
                                     return obj._id == item.user;
                                 });
 
-                                if(result && result.length> 0) {
+                                if (result && result.length > 0) {
 
-                                    if(!result[0].loggedTime)
+                                    if (!result[0].loggedTime)
                                         result[0].loggedTime = 0;
 
                                     result[0].loggedTime += item.time;
@@ -709,9 +689,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             });
 
 
-                            scope.ticket.collaborators.forEach(function(item){
+                            scope.ticket.collaborators.forEach(function (item) {
 
-                                if(item.loggedTime){
+                                if (item.loggedTime) {
                                     item.loggedTime = item.loggedTime.toString().toDurationFormat();
 
 
@@ -719,15 +699,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             });
 
 
-
                         }
-                        else
-                        {
+                        else {
                             console.log("No logged to this ticket");
                         }
                     }
-                    else
-                    {
+                    else {
                         console.log("Error in looged time picking");
                     }
 
@@ -745,8 +722,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.assigneeList = profileDataParser.assigneeList;
 
 
-            scope.assigneeUsers= profileDataParser.assigneeUsers;
-            scope.assigneeGroups=profileDataParser.assigneeUserGroups;
+            scope.assigneeUsers = profileDataParser.assigneeUsers;
+            scope.assigneeGroups = profileDataParser.assigneeUserGroups;
 
 
             scope.loadTicketNextLevel = function () {
@@ -766,14 +743,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             var fileSlotChecker = function () {
 
-                if(scope.ticket.tags)
-                {
+                if (scope.ticket.tags) {
                     angular.forEach(scope.ticket.tags, function (value) {
 
                     });
                 }
             }
-
 
 
             var setContactList = function (ticket) {
@@ -801,7 +776,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
-
 
 
                         fileSlotChecker();
@@ -844,9 +818,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             scope.uploadedAttchments = scope.ticket.attachments;
                         }
 
-                        if(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id)!=-1)
-                        {
-                            scope.isWatching=true;
+                        if (scope.ticket.watchers.indexOf(profileDataParser.myProfile._id) != -1) {
+                            scope.isWatching = true;
                         }
 
                         scope.ticket.updated_at = moment(scope.ticket.updated_at).local().format("YYYY-MM-DD HH:mm:ss");
@@ -857,10 +830,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         console.log("ticket ", scope.ticket);
 
 
-
                         scope.getTicketLoggedTime(ticketID);
                         scope.loadTicketNextLevel();
-                        scope.pickCompanyData(scope.ticket.tenant,scope.ticket.company);
+                        scope.pickCompanyData(scope.ticket.tenant, scope.ticket.company);
 
 
                     }
@@ -876,18 +848,17 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.loadTicketSummary(scope.ticketID);
 
 
-            scope.pickCompanyData = function (tenant,company) {
-                ticketService.pickCompanyInfo(tenant,company).then(function (response) {
+            scope.pickCompanyData = function (tenant, company) {
+                ticketService.pickCompanyInfo(tenant, company).then(function (response) {
 
 
-                    if(response.data.IsSuccess)
-                    {
+                    if (response.data.IsSuccess) {
 
-                        scope.ticket.companyName=response.data.Result.companyName;
+                        scope.ticket.companyName = response.data.Result.companyName;
                     }
 
                 }, function (error) {
-                    console.log("Error in loading company info",error)
+                    console.log("Error in loading company info", error)
                 });
             }
 
@@ -1032,27 +1003,23 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             };
 
-            scope.showCommentDrop=false;
-
+            scope.showCommentDrop = false;
 
 
             scope.showNewComment = function () {
-                scope.isNewComment=!scope.isNewComment;
+                scope.isNewComment = !scope.isNewComment;
             };
-            scope.newComment="";
+            scope.newComment = "";
 
             scope.addComment = function (message, mode) {
 
-                scope.newComment=message;
+                scope.newComment = message;
 
 
+                if (scope.uploadedComAttchments.length > 0 || scope.newComment != "") {
+                    if (scope.newComment == "" && scope.uploadedComAttchments.length > 0) {
 
-                if(scope.uploadedComAttchments.length>0 || scope.newComment !="")
-                {
-                    if(scope.newComment=="" && scope.uploadedComAttchments.length>0)
-                    {
-
-                        scope.newComment="Attachment Comment";
+                        scope.newComment = "Attachment Comment";
                     }
 
                     var channel = "";
@@ -1060,18 +1027,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     var reply_session = "";
                     var reply_chnl_from = "";
                     var reply_chnl_to = "";
-                    var comentAttachmentIds=[];
+                    var comentAttachmentIds = [];
 
                     angular.forEach(scope.uploadedComAttchments, function (value) {
                         comentAttachmentIds.push(value._id);
                     });
 
 
-
-
                     if (scope.ticket.engagement_session) {
-                        if(scope.ticket.engagement_session.channel!="call")
-                        {
+                        if (scope.ticket.engagement_session.channel != "call") {
                             channel = scope.ticket.engagement_session.channel;
                         }
 
@@ -1081,16 +1045,13 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     }
 
 
-                    if(scope.messageMode=="public")
-                    {
+                    if (scope.messageMode == "public") {
 
                     }
-                    else if(scope.messageMode=="public")
-                    {
+                    else if (scope.messageMode == "public") {
 
                     }
-                    else
-                    {
+                    else {
 
                     }
 
@@ -1103,7 +1064,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         "channel": channel,
                         "engagement_session": eng_session,
                         "reply_session": reply_session,
-                        "attachments":comentAttachmentIds
+                        "attachments": comentAttachmentIds
 
 
                     }
@@ -1120,13 +1081,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         if (response.data.IsSuccess) {
                             scope.newComment = '';
                             response.data.Result.author = profileDataParser.myProfile;
-                            response.data.Result.attachments=scope.uploadedComAttchments;
+                            response.data.Result.attachments = scope.uploadedComAttchments;
                             scope.ticket.comments.push(response.data.Result);
                             console.log("New comment added ", response);
                             scope.showAlert("New Comment", "success", "completed");
-                            scope.uploadedComAttchments=[];
-                            scope.isNewComment=false;
-
+                            scope.uploadedComAttchments = [];
+                            scope.isNewComment = false;
 
 
                         }
@@ -1141,22 +1101,20 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     };
 
                 }
-                else
-                {
-                    scope.showAlert("Invalid Comment","error","Invalid Comment data");
+                else {
+                    scope.showAlert("Invalid Comment", "error", "Invalid Comment data");
                 }
-
 
 
             };
 
             scope.cancelNewComment = function () {
-                scope.isNewComment=false;
-                scope.uploadedComAttchments=[];
+                scope.isNewComment = false;
+                scope.uploadedComAttchments = [];
             }
 
             scope.showCommentDropArea = function () {
-                scope.showCommentDrop=!scope.showCommentDrop;
+                scope.showCommentDrop = !scope.showCommentDrop;
             }
 
 
@@ -1247,7 +1205,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
                     }
                 }, function (error) {
-                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed",error);
+                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed", error);
                 });
             };
 
@@ -1296,19 +1254,18 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         return obj.name;
                     });
                 }
-                if(subTicket.assignee)
-                {
+                if (subTicket.assignee) {
                     /*var subTicketAssignee=JSON.parse(subTicket.assignee);
-                    if(subTicketAssignee.listType == "User")
-                    {
-                        subTicket.assignee=subTicketAssignee;
-                    }
-                    else
-                    {
-                        subTicket.assignee_group=subTicketAssignee
-                    }*/
-                    subTicket.assignee=JSON.parse(subTicket.assignee);
-                    subTicket.assignee_group= subTicket.assignee;
+                     if(subTicketAssignee.listType == "User")
+                     {
+                     subTicket.assignee=subTicketAssignee;
+                     }
+                     else
+                     {
+                     subTicket.assignee_group=subTicketAssignee
+                     }*/
+                    subTicket.assignee = JSON.parse(subTicket.assignee);
+                    subTicket.assignee_group = subTicket.assignee;
                 }
 
                 ticketService.AddSubTicket(scope.ticket._id, subTicket).then(function (response) {
@@ -1317,14 +1274,14 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         scope.showAlert("Sub ticket saving", "success", "Sub ticket saved successfully");
 
                         /*scope.assigneeList.filter(function (assigneeObj) {
-                            if(assigneeObj._id==response.data.Result.assignee)
-                            {
-                                response.data.Result.assignee=assigneeObj;
-                                scope.subTickets.push(response.data.Result);
-                            }
-                        })*/
+                         if(assigneeObj._id==response.data.Result.assignee)
+                         {
+                         response.data.Result.assignee=assigneeObj;
+                         scope.subTickets.push(response.data.Result);
+                         }
+                         })*/
 
-                        response.data.Result.assignee=subTicket.assignee;
+                        response.data.Result.assignee = subTicket.assignee;
                         scope.subTickets.push(response.data.Result);
 
                         scope.showSubCreateTicket = false;
@@ -1370,36 +1327,36 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.tagSelectRoot = 'root';
             /*scope.onChipAddTag = function (chip) {
-                if (!chip.tags || (chip.tags.length === 0)) {
-                    setToDefault();
-                    return;
-                }
-                if (scope.tagSelectRoot === 'root') {
-                    scope.tagSelectRoot = 'sub';
-                    scope.availableTags = chip.tags;
-                }
-                else if (scope.tagSelectRoot === 'sub') {
+             if (!chip.tags || (chip.tags.length === 0)) {
+             setToDefault();
+             return;
+             }
+             if (scope.tagSelectRoot === 'root') {
+             scope.tagSelectRoot = 'sub';
+             scope.availableTags = chip.tags;
+             }
+             else if (scope.tagSelectRoot === 'sub') {
 
-                    var tempTags = [];
-                    angular.forEach(chip.tags, function (item) {
-                        var tags = $filter('filter')(scope.tagList, {_id: item}, true);
-                        tempTags = tempTags.concat(tags);
-                    });
-                    scope.availableTags = tempTags;
-                    scope.tagSelectRoot = 'child';
+             var tempTags = [];
+             angular.forEach(chip.tags, function (item) {
+             var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+             tempTags = tempTags.concat(tags);
+             });
+             scope.availableTags = tempTags;
+             scope.tagSelectRoot = 'child';
 
-                }
-                else {
-                    if (chip.tags) {
-                        if (chip.tags.length > 0) {
-                            scope.availableTags = chip.tags;
-                            return;
-                        }
-                    }
-                    setToDefault();
-                }
+             }
+             else {
+             if (chip.tags) {
+             if (chip.tags.length > 0) {
+             scope.availableTags = chip.tags;
+             return;
+             }
+             }
+             setToDefault();
+             }
 
-            };*/
+             };*/
             scope.onChipAddTag = function (chip) {
                 if (!chip.tags || (chip.tags.length === 0)) {
                     setToDefault();
@@ -1497,8 +1454,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.file = {};
 
             var uploader = scope.uploader = new FileUploader({
-                url: baseUrls.fileService+"FileService/File/Upload",
-                headers: {'Authorization':  authService.GetToken()}
+                url: baseUrls.fileService + "FileService/File/Upload",
+                headers: {'Authorization': authService.GetToken()}
             });
             /*  var com_uploader = scope.com_uploader = new FileUploader({
              url: baseUrls.fileService+"FileService/File/Upload",
@@ -1540,14 +1497,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             // CALLBACKS
 
 
-
-
             scope.file = {};
             scope.file.Category = "TICKET_ATTACHMENTS";
-            scope.uploadProgress=0;
-            scope.isTicketAttachment=true;
-            scope.isCommentCompleted=true;
-            scope.isUploading=false;
+            scope.uploadProgress = 0;
+            scope.isTicketAttachment = true;
+            scope.isCommentCompleted = true;
+            scope.isUploading = false;
 
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                 console.info('onWhenAddingFileFailed', item, filter, options);
@@ -1555,19 +1510,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             uploader.onAfterAddingFile = function (fileItem) {
                 console.info('onAfterAddingFile', fileItem);
 
-                if(scope.isNewSlot)
-                {
-                    if(scope.updationSlot.slot.fileType==fileItem._file.type.split("/")[0])
-                    {
+                if (scope.isNewSlot) {
+                    if (scope.updationSlot.slot.fileType == fileItem._file.type.split("/")[0]) {
                         fileItem.upload();
                     }
-                    else
-                    {
+                    else {
                         scope.showAlert("Upload file for Slot", "error", "Invalid file format detected, Uploading failed");
                     }
                 }
-                else
-                {
+                else {
                     fileItem.upload();
                 }
 
@@ -1593,16 +1544,13 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     });
                     return;
                 }
-                if(scope.isNewComment)
-                {
-                    scope.isCommentCompleted=false;
-                    scope.isUploading=true;
+                if (scope.isNewComment) {
+                    scope.isCommentCompleted = false;
+                    scope.isUploading = true;
                 }
-                if(scope.isNewSlot)
-                {
-                    scope.isUploading=true;
+                if (scope.isNewSlot) {
+                    scope.isUploading = true;
                 }
-
 
 
                 console.info('onAfterAddingAll', addedFileItems);
@@ -1614,10 +1562,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             uploader.onProgressItem = function (fileItem, progress) {
                 console.info('onProgressItem', fileItem, progress);
-                scope.uploadProgress=progress;
-                if( scope.uploadProgress==100)
-                {
-                    scope.showAlert("Attachment","success","Successfully uploaded");
+                scope.uploadProgress = progress;
+                if (scope.uploadProgress == 100) {
+                    scope.showAlert("Attachment", "success", "Successfully uploaded");
                     /* setTimeout(function () {
                      scope.uploadProgress=0;
                      }, 500);*/
@@ -1632,8 +1579,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {
                 console.info('onErrorItem', fileItem, response, status, headers);
-                scope.showAlert("Attachment","error","Uploading failed");
-                scope.uploadProgress=0;
+                scope.showAlert("Attachment", "error", "Uploading failed");
+                scope.uploadProgress = 0;
             };
             uploader.onCancelItem = function (fileItem, response, status, headers) {
                 console.info('onCancelItem', fileItem, response, status, headers);
@@ -1657,47 +1604,37 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                             scope.uploadedAttchments.push(response.data.Result);
 
-                            if(scope.isNewComment)
-                            {
+                            if (scope.isNewComment) {
                                 scope.uploadedComAttchments.push(response.data.Result);
 
 
                             }
-                            if(scope.isNewSlot)
-                            {
-                                scope.isNewSlot=false;
-                                scope.isUploading=false;
+                            if (scope.isNewSlot) {
+                                scope.isNewSlot = false;
+                                scope.isUploading = false;
 
-                                if(scope.updationSlot.slot)
-                                {
+                                if (scope.updationSlot.slot) {
 
-                                    ticketService.AddAttachmentToSlot(scope.ticket._id,scope.updationSlot.slot.name,response.data.Result._id).then(function (resSlots) {
+                                    ticketService.AddAttachmentToSlot(scope.ticket._id, scope.updationSlot.slot.name, response.data.Result._id).then(function (resSlots) {
 
-                                        if(resSlots.data.IsSuccess)
-                                        {
-                                            for(var i=0;i<scope.ticket.slot_attachment.length;i++)
-                                            {
-                                                if(scope.ticket.slot_attachment[i].slot.name==scope.updationSlot.slot.name)
-                                                {
-                                                    scope.ticket.slot_attachment[i].attachment=attchmentData;
+                                        if (resSlots.data.IsSuccess) {
+                                            for (var i = 0; i < scope.ticket.slot_attachment.length; i++) {
+                                                if (scope.ticket.slot_attachment[i].slot.name == scope.updationSlot.slot.name) {
+                                                    scope.ticket.slot_attachment[i].attachment = attchmentData;
                                                 }
                                             }
                                         }
-                                        else
-                                        {
+                                        else {
                                             console.log("Error slot adding")
                                         }
 
                                     }, function (errSlots) {
-                                        console.log("Error slot adding" , errSlots);
+                                        console.log("Error slot adding", errSlots);
                                     });
 
 
-
-
-
                                 }
-                                else{
+                                else {
                                     console.log("Invalid Slot");
                                 }
 
@@ -1715,29 +1652,21 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     });
 
 
-
-
-
-
                 }
             };
             uploader.onCompleteAll = function () {
                 console.info('onCompleteAll');
-                if(scope.isNewComment)
-                {
-                    scope.isCommentCompleted=true;
-                    scope.isUploading=false;
+                if (scope.isNewComment) {
+                    scope.isCommentCompleted = true;
+                    scope.isUploading = false;
                 }
             };
 
 
-
-            scope.uploadedComAttchments=[];
-
+            scope.uploadedComAttchments = [];
 
 
-            scope.isNewComment=false;
-
+            scope.isNewComment = false;
 
 
             scope.deleteAttachment = function (attchmntID) {
@@ -1754,16 +1683,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                         })[0]), 1);
 
-                        if(scope.isNewComment)
-                        {
+                        if (scope.isNewComment) {
                             scope.uploadedComAttchments.splice(scope.uploadedComAttchments.indexOf($filter('filter')(scope.uploadedComAttchments, {
                                 _id: attchmntID
 
                             })[0]), 1);
                         }
-
-
-
 
 
                     }
@@ -1822,7 +1747,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 if (videogularAPI && id) {
                     var info = authService.GetCompanyInfo();
-                    var fileToPlay = baseUrls.fileService +'InternalFileService/File/DownloadLatest/' + info.tenant + '/' + info.company + '/' + id + '.mp3';
+                    var fileToPlay = baseUrls.fileService + 'InternalFileService/File/DownloadLatest/' + info.tenant + '/' + info.company + '/' + id + '.mp3';
 
                     var arr = [
                         {
@@ -1840,22 +1765,19 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
             scope.playAttachment = function (attachment) {
 
-                if(scope.isImage(attachment.type))
-                {
+                if (scope.isImage(attachment.type)) {
 
-                    document.getElementById("image-viewer").href=scope.FileServiceUrl+attachment.url+"/SampleAttachment";
+                    document.getElementById("image-viewer").href = scope.FileServiceUrl + attachment.url + "/SampleAttachment";
 
                     $('#image-viewer').trigger('click');
 
 
-
                 }
-                else
-                {
+                else {
                     if (videogularAPI && attachment.url) {
                         var info = authService.GetCompanyInfo();
 
-                        var fileToPlay = scope.FileServiceUrl+attachment.url+"/SampleAttachment";
+                        var fileToPlay = scope.FileServiceUrl + attachment.url + "/SampleAttachment";
 
                         var arr = [
                             {
@@ -1871,54 +1793,44 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
 
 
-
-
             };
 
 
-            scope.watchTicket = function()
-            {
+            scope.watchTicket = function () {
                 ticketService.WatchTicket(scope.ticket._id).then(function (response) {
-                    if(response.data.IsSuccess)
-                    {
-                        scope.showAlert("Success","success","Ticket is started to watch");
-                        scope.isWatching=true;
-                        if(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id)==-1)
-                        {
+                    if (response.data.IsSuccess) {
+                        scope.showAlert("Success", "success", "Ticket is started to watch");
+                        scope.isWatching = true;
+                        if (scope.ticket.watchers.indexOf(profileDataParser.myProfile._id) == -1) {
                             scope.ticket.watchers.push(profileDataParser.myProfile._id);
                         }
 
                     }
                 }), function (error) {
-                    scope.showAlert("Error","success","Failed to watch this ticket");
+                    scope.showAlert("Error", "success", "Failed to watch this ticket");
                 }
             };
-            scope.stopWatchTicket = function()
-            {
+            scope.stopWatchTicket = function () {
                 ticketService.StopWatchTicket(scope.ticket._id).then(function (response) {
-                    if(response.data.IsSuccess)
-                    {
-                        scope.showAlert("Success","success","Ticket watching stoped");
-                        if(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id)!=-1)
-                        {
-                            scope.ticket.watchers.splice(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id),1);
+                    if (response.data.IsSuccess) {
+                        scope.showAlert("Success", "success", "Ticket watching stoped");
+                        if (scope.ticket.watchers.indexOf(profileDataParser.myProfile._id) != -1) {
+                            scope.ticket.watchers.splice(scope.ticket.watchers.indexOf(profileDataParser.myProfile._id), 1);
                         }
-                        scope.isWatching=false;
+                        scope.isWatching = false;
                     }
                 }), function (error) {
-                    scope.showAlert("Error","success","Failed to stop watching this ticket");
+                    scope.showAlert("Error", "success", "Failed to stop watching this ticket");
                 }
             };
 
             scope.isImage = function (fileType) {
 
 
-                if(fileType && fileType.toString().split("/")[0]=="image")
-                {
+                if (fileType && fileType.toString().split("/")[0] == "image") {
                     return true;
                 }
-                else
-                {
+                else {
                     return false;
                 }
 
@@ -1926,60 +1838,52 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             };
 
             scope.isViewable = function (fileType) {
-                if( fileType && (fileType.toString().split("/")[0]=="video" || fileType.toString().split("/")[0]=="audio"))
-                {
+                if (fileType && (fileType.toString().split("/")[0] == "video" || fileType.toString().split("/")[0] == "audio")) {
                     return true;
                 }
-                else
-                {
+                else {
                     return false;
                 }
 
             }
 
-            scope.isNewSlot=false;
+            scope.isNewSlot = false;
             scope.updationSlot;
             scope.uploadAttachmentToSlot = function (slot) {
                 $("#commentUploader").click();
-                scope.isNewSlot=true;
-                scope.updationSlot=slot;
+                scope.isNewSlot = true;
+                scope.updationSlot = slot;
             }
 
             /*Audio Player-end*/
 
 
             // Estimated time edit
-            scope.isValidTime=true;
+            scope.isValidTime = true;
             scope.TimePanelMaker = function () {
-                scope.ticketEstimatedPrecentage=100;
-                try
-                {
-                    scope.ticketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toDurationFormat();
-                    scope.newTicketEstimatedTimeFormat=scope.ticket.time_estimation.toString().toDurationFormat();
-                    scope.ticketLoggedPrecentage=Math.floor((scope.ticketLoggedTime/scope.ticket.time_estimation)*100);
-                    scope.ticketRemainingPrecentage=Math.floor(((scope.ticket.time_estimation-scope.ticketLoggedTime)/scope.ticket.time_estimation)*100);
-                    scope.ticketLoggedTimeFormat=scope.ticketLoggedTime.toString().toDurationFormat();
-                    scope.ticketRemainingTimeFormat=(scope.ticket.time_estimation-scope.ticketLoggedTime).toString().toDurationFormat();
+                scope.ticketEstimatedPrecentage = 100;
+                try {
+                    scope.ticketEstimatedTimeFormat = scope.ticket.time_estimation.toString().toDurationFormat();
+                    scope.newTicketEstimatedTimeFormat = scope.ticket.time_estimation.toString().toDurationFormat();
+                    scope.ticketLoggedPrecentage = Math.floor((scope.ticketLoggedTime / scope.ticket.time_estimation) * 100);
+                    scope.ticketRemainingPrecentage = Math.floor(((scope.ticket.time_estimation - scope.ticketLoggedTime) / scope.ticket.time_estimation) * 100);
+                    scope.ticketLoggedTimeFormat = scope.ticketLoggedTime.toString().toDurationFormat();
+                    scope.ticketRemainingTimeFormat = (scope.ticket.time_estimation - scope.ticketLoggedTime).toString().toDurationFormat();
 
 
-
-
-
-                    if(scope.ticketLoggedPrecentage>100)
-                    {
-                        scope.ticketRemainingTimeFormat="00d00h00m00s";
+                    if (scope.ticketLoggedPrecentage > 100) {
+                        scope.ticketRemainingTimeFormat = "00d00h00m00s";
                     }
 
-                    console.log("Estimated "+scope.ticketEstimatedTimeFormat);
-                    console.log("Logged "+scope.ticketLoggedTimeFormat);
-                    console.log("Remaining "+scope.ticketRemainingTimeFormat);
-                    scope.isValidTime=true;
+                    console.log("Estimated " + scope.ticketEstimatedTimeFormat);
+                    console.log("Logged " + scope.ticketLoggedTimeFormat);
+                    console.log("Remaining " + scope.ticketRemainingTimeFormat);
+                    scope.isValidTime = true;
                 }
-                catch(ex)
-                {
-                    scope.showAlert("Error","error","Invalid Time format");
-                    scope.timeValidateMessage="Invalid Time format";
-                    scope.isValidTime=false;
+                catch (ex) {
+                    scope.showAlert("Error", "error", "Invalid Time format");
+                    scope.timeValidateMessage = "Invalid Time format";
+                    scope.isValidTime = false;
                 }
 
 
@@ -1988,61 +1892,51 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.updateTicketEstimatedTime = function () {
 
 
-                var timeArray= scope.newTicketEstimatedTimeFormat.split(":");
-                var timeInSeconds=0;
+                var timeArray = scope.newTicketEstimatedTimeFormat.split(":");
+                var timeInSeconds = 0;
 
 
-                for(var i=0;i<timeArray.length;i++)
-                {
+                for (var i = 0; i < timeArray.length; i++) {
                     var item = timeArray[i];
 
-                    if(item.indexOf("d")!=-1)
-                    {
-                        timeInSeconds=timeInSeconds+Number(item.split("d")[0]*24*60*60*1000);
+                    if (item.indexOf("d") != -1) {
+                        timeInSeconds = timeInSeconds + Number(item.split("d")[0] * 24 * 60 * 60 * 1000);
                     }
-                    if(item.indexOf("h")!=-1)
-                    {
-                        timeInSeconds=timeInSeconds+Number(item.split("h")[0]*60*60*1000);
+                    if (item.indexOf("h") != -1) {
+                        timeInSeconds = timeInSeconds + Number(item.split("h")[0] * 60 * 60 * 1000);
                     }
-                    if(item.indexOf("m")!=-1)
-                    {
-                        timeInSeconds=timeInSeconds+Number(item.split("m")[0]*60*1000);
+                    if (item.indexOf("m") != -1) {
+                        timeInSeconds = timeInSeconds + Number(item.split("m")[0] * 60 * 1000);
                     }
-                    if(item.indexOf("s")!=-1)
-                    {
-                        timeInSeconds=timeInSeconds+Number(item.split("s")[0]*1000);
+                    if (item.indexOf("s") != -1) {
+                        timeInSeconds = timeInSeconds + Number(item.split("s")[0] * 1000);
                     }
-                    if(i==timeArray.length-1)
-                    {
+                    if (i == timeArray.length - 1) {
                         //return timeInSeconds;
 
-                        if(isNaN(timeInSeconds))
-                        {
-                            scope.timeValidateMessage="Invalid Time format";
-                            scope.isTimeEdit=true;
-                            scope.showAlert("Error","error","Invalid Time format");
-                            scope.isValidTime=false;
+                        if (isNaN(timeInSeconds)) {
+                            scope.timeValidateMessage = "Invalid Time format";
+                            scope.isTimeEdit = true;
+                            scope.showAlert("Error", "error", "Invalid Time format");
+                            scope.isValidTime = false;
                         }
-                        else
-                        {
-                            scope.isTimeEdit=false;
-                            scope.isValidTime=true;
+                        else {
+                            scope.isTimeEdit = false;
+                            scope.isValidTime = true;
 
-                            ticketService.updateTicketEstimateTime(scope.ticket._id,timeInSeconds).then(function (response) {
-                                if(response.data.IsSuccess)
-                                {
-                                    scope.ticket.time_estimation=response.data.Result.time_estimation;
-                                    scope.showAlert("Success","success","Estimated Time Changed");
+                            ticketService.updateTicketEstimateTime(scope.ticket._id, timeInSeconds).then(function (response) {
+                                if (response.data.IsSuccess) {
+                                    scope.ticket.time_estimation = response.data.Result.time_estimation;
+                                    scope.showAlert("Success", "success", "Estimated Time Changed");
                                     scope.TimePanelMaker();
 
-                                }else
-                                {
-                                    scope.showAlert("Error","error","Estimated Time updation failed");
+                                } else {
+                                    scope.showAlert("Error", "error", "Estimated Time updation failed");
                                     console.log("Estimated Time updation failed");
                                 }
                             }, function (error) {
-                                scope.showAlert("Error","error","Estimated Time updation failed");
-                                console.log("Estimated Time updation failed",error);
+                                scope.showAlert("Error", "error", "Estimated Time updation failed");
+                                console.log("Estimated Time updation failed", error);
                             })
                         }
 
@@ -2051,26 +1945,20 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
 
 
-
-
-
-
             }
 
 
             scope.checkAttachmentAvailability = function (comment) {
-                if(comment.body=='Attachment Comment' && comment.attachments.length==0)
-                {
+                if (comment.body == 'Attachment Comment' && comment.attachments.length == 0) {
                     return false;
                 }
-                else
-                {
+                else {
                     return true;
                 }
             }
 
             scope.availableTicketTypes = [];
-            scope.getAvailableTicketTypes = function(){
+            scope.getAvailableTicketTypes = function () {
                 ticketService.getAvailableTicketTypes().then(function (response) {
 
                     if (response && response.IsSuccess) {
@@ -2088,27 +1976,23 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             scope.getAvailableTicketTypes();
 
             scope.deleteSlotAttachment = function (slot) {
-                ticketService.DeleteAttachmentFromSlot(scope.ticket._id,slot.slot.name,"TestAttachment").then(function (resDelSlot) {
+                ticketService.DeleteAttachmentFromSlot(scope.ticket._id, slot.slot.name, "TestAttachment").then(function (resDelSlot) {
 
-                    if(resDelSlot.data.IsSuccess)
-                    {
+                    if (resDelSlot.data.IsSuccess) {
 
 
-                        for(var i=0;i<scope.ticket.slot_attachment.length;i++)
-                        {
-                            if(scope.ticket.slot_attachment[i].slot.name==slot.slot.name)
-                            {
-                                scope.ticket.slot_attachment[i].attachment="";
+                        for (var i = 0; i < scope.ticket.slot_attachment.length; i++) {
+                            if (scope.ticket.slot_attachment[i].slot.name == slot.slot.name) {
+                                scope.ticket.slot_attachment[i].attachment = "";
                             }
                         }
                     }
-                    else
-                    {
-                        scope.showAlert("Delete Slot Attachment","error","Failed to delete slot attachment");
+                    else {
+                        scope.showAlert("Delete Slot Attachment", "error", "Failed to delete slot attachment");
                     }
 
                 }, function (errDelSlot) {
-                    scope.showAlert("Delete Slot Attachment","error","Failed to delete slot attachment");
+                    scope.showAlert("Delete Slot Attachment", "error", "Failed to delete slot attachment");
                 })
             }
 

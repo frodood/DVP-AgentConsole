@@ -7,8 +7,10 @@
                 <div id="dashboard-opacity"></div>
 
 
-                <div class="btn-warp">
-                    <span id="dashboardReload" class="btn btn-default2 " ng-click="dashboardReload()"> Refresh </span>
+                <div class="btn-warp dashboard-ref pull-right">
+                    <div id="dashboardReload" class="btn-dash-ref" ng-click="dashboardReload()">
+                        Refresh
+                    </div>
                 </div>
                 <div class="row">
                     <!-- TICKET ANR CLOASE -->
@@ -72,7 +74,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-4 p-0" >
+                                <div class="col-lg-4 p-0">
                                     <div class="dark-product-ticker-wrap">
                                         <h1 class="Staffed bold">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
                                         <div class="title Staffed text-uppercase">Staffed Time</div>

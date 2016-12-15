@@ -195,7 +195,7 @@
                                                      ng-src="{{profileDetail.avatar}}">
                                             </div>
                                             <div class="prn2 profile-status bold ">
-                                                {{profileDetail.name}}
+                                                {{profileDetail.title}} {{profileDetail.name}}
                                                 <br/>
                                                 <span>{{channelFrom}}</span>
                                             </div>
@@ -602,6 +602,17 @@
                                                         <small>SSN</small>
                                                         <h5 ng-show="profileDetail.ssn">{{profileDetail.ssn}}</h5>
                                                         <h5 ng-show="!profileDetail.ssn">-</h5>
+                                                    </li>
+                                                    <li>
+                                                        <small>Land Number</small>
+                                                        <h5 ng-show="profileDetail.landnumber">
+                                                            {{profileDetail.landnumber}}</h5>
+                                                        <h5 ng-show="!profileDetail.landnumber">-</h5>
+                                                    </li>
+                                                    <li>
+                                                        <small>Phone</small>
+                                                        <h5 ng-show="profileDetail.phone">{{profileDetail.phone}}</h5>
+                                                        <h5 ng-show="!profileDetail.phone">-</h5>
                                                     </li>
 
 
