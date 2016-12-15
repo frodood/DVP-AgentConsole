@@ -2449,6 +2449,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (res.IsSuccess) {
                     resourceService.ChangeRegisterStatus(authService.GetResourceId(), type, res.Result).then(function (data) {
                         getCurrentState.getCurrentRegisterTask();
+                        getCurrentState.breakState();
                         $scope.showAlert("Change Register", "success", "Register resource info success.");
                     })
                 } else {
@@ -2473,7 +2474,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Available').addClass('font-color-green bold');
                             changeLockScreenView.hide();
-                            return;
                         } else {
                             $('#userStatus').addClass('offline').removeClass('online');
                             switch (data.Result.Reason) {
@@ -2488,6 +2488,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                     changeLockScreenView.show();
                                     break;
                             }
+                        }
+
+
+                        if (data.Result.Mode === "Outbound") {
+                            $('#userStatus').addClass('offline').removeClass('online');
+                            $('#Outbound').addClass('font-color-green bold');
+                            $scope.currentModeOption = "Outbound";
+                            return;
+                        } else{
+                            $('#userStatus').addClass('online').removeClass('offline');
+                            $('#Inbound').addClass('font-color-green bold');
+                            $scope.currentModeOption = "Inbound";
+                            return;
                         }
                     }
                 }, function (error) {
