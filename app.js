@@ -39,6 +39,9 @@ var baseUrls = {
 agentApp.constant('baseUrls', baseUrls);
 
 agentApp.constant('dashboardRefreshTime', 60000);
+agentApp.constant('turnServers', [{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}]);
+//{url:"stun:stun.l.google.com:19302"},{url:"stun:stun.counterpath.net:3478"},{url:"stun:numb.viagenie.ca:3478"}
+//{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}
 
 var phoneSetting = {
     'TransferPhnCode': '*6',
