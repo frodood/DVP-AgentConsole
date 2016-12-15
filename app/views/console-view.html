@@ -299,6 +299,19 @@
                                                                     href="javascript:void(0);">
                                 <i ng-show="currentBerekOption=='MealBreak'" class="ti-check"></i>meal</a>
                             </li>
+                            <li><a class="drop-header">Mode</a></li>
+                            <li class="divider"></li>
+                            <li class="menuitem" role="menuitem"><a id="Inbound"
+                                                                    class=""
+                                                                    ng-click="modeOption.inboundOption('Inbound');"
+                                                                    href="javascript:void(0);">
+                                <i ng-show="currentModeOption=='Inbound'" class="ti-check"></i> inbound</a></li>
+                            <li class="menuitem" role="menuitem"><a id="Outbound"
+                                                                    class=""
+                                                                    ng-click="modeOption.outboundOption('Outbound');"
+                                                                    href="javascript:void(0);">
+                                <i ng-show="currentModeOption=='Outbound'" class="ti-check"></i>outbound</a>
+                            </li>
                             <li class="divider"></li>
                             <li class="menuitem" role="menuitem"><a ng-click="addDashBoard();"
                                                                     href="javascript:void(0)">Dashboard</a></li>

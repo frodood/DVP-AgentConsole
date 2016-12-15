@@ -2365,7 +2365,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
             });
-            resourceService.EndBreakRequest(authService.GetResourceId()).then(function (data) {
+            resourceService.EndBreakRequest(authService.GetResourceId(), 'EndBreak').then(function (data) {
                 if (data) {
                     $scope.showAlert("Available", "success", "Update resource state success.");
                     $('#userStatus').addClass('online').removeClass('offline');
@@ -2375,6 +2375,48 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     changeLockScreenView.hide();
                     $scope.isUnlock = false;
                     return;
+                }
+            });
+        }
+    };//end
+
+
+    $scope.currentModeOption = null;
+    var modeList = ['#Inbound', '#Outbound'];
+    $scope.modeOption = {
+        outboundOption: function (requestOption) {
+            console.log(requestOption);
+            dataParser.userProfile = $scope.profile;
+            modeList.forEach(function (option) {
+                $(option).removeClass('font-color-green bold');
+            });
+            resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
+                if (res) {
+                    $('#userStatus').addClass('offline').removeClass('online');
+                    $scope.showAlert(requestOption, "success", 'update resource state success');
+                    $('#' + requestOption).addClass('font-color-green bold');
+                    $scope.currentModeOption = requestOption;
+                }
+            }, function (error) {
+                authService.IsCheckResponse(error);
+                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+            });
+        },
+        inboundOption: function (requestOption) {
+            dataParser.userProfile = $scope.profile;
+            modeList.forEach(function (option) {
+                $(option).removeClass('font-color-green bold');
+            });
+            resourceService.EndBreakRequest(authService.GetResourceId(), requestOption).then(function (data) {
+                if (data) {
+                    $scope.showAlert("Available", "success", "Update resource state success.");
+                    $('#userStatus').addClass('online').removeClass('offline');
+                    $('#Available').addClass('font-color-green bold');
+                    $scope.currentModeOption = requestOption;
+                    // getCurrentState.breakState();
+                    //changeLockScreenView.hide();
+                    //$scope.isUnlock = false;
+                    //return;
                 }
             });
         }
