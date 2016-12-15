@@ -513,8 +513,8 @@
                                                                     {{recentTicket.reference}}
                                                                 </small>
                                                                 <br>
-                                                                {{ recentTicket.description | limitTo: 25}}
-                                                                {{recentTicket.description.length > 25 ? '...' : ''}}
+                                                                {{ recentTicket.subject | limitTo: 25}}
+                                                                {{recentTicket.subject.length > 25 ? '...' : ''}}
                                                             </div>
                                                             <div class="col-lg-3 p-0">
                                                                 <small class="font-color-yellow">{{recentTicket.status}}

@@ -38,6 +38,8 @@ var baseUrls = {
 
 agentApp.constant('baseUrls', baseUrls);
 
+agentApp.constant('dashboardRefreshTime', 60000);
+
 var phoneSetting = {
     'TransferPhnCode': '*6',
     'TransferExtCode': '*3',

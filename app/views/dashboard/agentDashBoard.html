@@ -7,7 +7,9 @@
                 <div id="dashboard-opacity"></div>
 
 
-
+                <div class="btn-warp">
+                    <span id="dashboardReload" class="btn btn-default2 " ng-click="dashboardReload()"> Refresh </span>
+                </div>
                 <div class="row">
                     <!-- TICKET ANR CLOASE -->
                     <div class="dark-ticker-wrapper">
@@ -43,8 +45,8 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="dark-ticker-wrap close-ticket pending-ticket-widget">
-                                        <h1 class="bold">{{closeTicketCount}}</h1>
-                                        <div class="title">PENDING TICKET</div>
+                                        <h1 class="bold">{{ProgressTicketCount}}</h1>
+                                        <div class="title">PROGRESS TICKET</div>
                                     </div>
                                 </div>
 
