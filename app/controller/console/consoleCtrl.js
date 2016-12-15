@@ -29,7 +29,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.notifications = [];
     $scope.agentList = [];
-
+    $scope.isFreezeReq = false;
 
     $scope.status = {
         isopen: false
@@ -165,11 +165,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.FreezeAcw = function (callSessionId, endFreeze) {
         resourceService.FreezeAcw(callSessionId, endFreeze).then(function (response) {
-
+            response;
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.showAlert('Phone', 'error', "Fail Freeze Operation.");
-            console.error(err);
+            return false;
         });
     };
 
@@ -209,7 +209,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.call.sessionId = "";
     $scope.isAcw = false;
     $scope.freeze = false;
-
+    $scope.inCall = false;
     $scope.veeryPhone = {
 
         sipSendDTMF: function (dtmf) {
@@ -383,6 +383,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
         },
         fullScreen: function (b_fs) {
+            return;
             bFullScreen = b_fs;
             if (tsk_utils_have_webrtc4native() && bFullScreen && videoRemote.webkitSupportsFullscreen) {
                 if (bFullScreen) {
@@ -419,7 +420,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert("Soft Phone", "info", 'Session Progress');
                 }
                 else if (e.toString().toLowerCase() == 'in call') {
+                    $scope.inCall = true;
                     stopRingTone();
+                    stopRingbackTone();
                     /*UIStateChange.inCallConnectedState();*/
                     phoneFuncion.showHoldButton();
                     phoneFuncion.showSpeakerButton();
@@ -481,6 +484,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
         },
         uiVideoDisplayShowHide: function (b_show) {
+            return;
             if (b_show) {
                 document.getElementById("divVideo").style.height = '340px';
                 document.getElementById("divVideo").style.height = navigator.appName == 'Microsoft Internet Explorer' ? '100%' : '340px';
@@ -492,6 +496,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             //btnFullScreen.disabled = !b_show;
         },
         uiVideoDisplayEvent: function (b_local, b_added) {
+            return;
             var o_elt_video = b_local ? videoLocal : videoRemote;
 
             if (b_added) {
@@ -528,6 +533,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             try {
 
                 console.log("uiCallTerminated");
+                $scope.inCall = false;
                 $scope.$broadcast('timer-set-countdown');
                 $scope.stopCallTime();
                 $scope.ShowIncomeingNotification(false);
@@ -549,14 +555,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 stopRingbackTone();
                 stopRingTone();
 
-                //document.getElementById("lblSipStatus").innerHTML = msg;
-                //Notification.info({message: msg, delay: 500, closeOnClick: true});
-                $scope.veeryPhone.uiVideoDisplayShowHide(false);
-                //document.getElementById("divCallOptions").style.opacity = 0;
+                /* //document.getElementById("lblSipStatus").innerHTML = msg;
+                 //Notification.info({message: msg, delay: 500, closeOnClick: true});
+                 $scope.veeryPhone.uiVideoDisplayShowHide(false);
+                 //document.getElementById("divCallOptions").style.opacity = 0;
 
 
-                $scope.veeryPhone.uiVideoDisplayEvent(false, false);
-                $scope.veeryPhone.uiVideoDisplayEvent(true, false);
+                 $scope.veeryPhone.uiVideoDisplayEvent(false, false);
+                 $scope.veeryPhone.uiVideoDisplayEvent(true, false);*/
 
 
                 //setTimeout(function () { if (!oSipSessionCall) txtCallStatus.innerHTML = ''; }, 2500);
@@ -590,10 +596,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.endfreezeBtn();
             }
             else {
+
                 phoneFuncion.freezeBtn();
             }
+            return false;
         }
     };
+
+
 
     var phoneFuncion = {
         hideAllBtn: function () {
@@ -626,17 +636,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideSwap();
         },
         freezeBtn: function () {
+            $scope.isFreezeReq = true;
             $scope.freeze = true;
             $scope.isAcw = false;
             phoneFuncion.updateCallStatus('Freeze');
             $scope.stopCountdownTimmer();
             $('#countdownCalltimmer').addClass('display-none').removeClass('call-duations');
-            $('#calltimmer').addClass('call-duations').removeClass('display-none');
-            $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
-            $scope.startCallTime();
-            $scope.FreezeAcw($scope.call.sessionId, true);
+            phoneFuncion.showfreezeRequest();
+            resourceService.FreezeAcw($scope.call.sessionId, true).then(function (response) {
+                phoneFuncion.hidefreezeRequest();
+                if (response) {
+                    $scope.startCallTime();
+                }
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                $scope.showAlert('Phone', 'error', "Fail Freeze Operation.");
+                phoneFuncion.hidefreezeRequest();
+            });
         },
         endfreezeBtn: function () {
+
             $scope.freeze = false;
             $scope.stopCallTime();
             phoneFuncion.updateCallStatus('Idle');
@@ -750,7 +769,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#phoneBtnWrapper').removeClass('display-none');
             $('#onlinePhoneBtnWrapper').addClass('display-none');
         },
-
+        showfreezeRequest: function () {
+            $('#freezeRequest').addClass('call-duations').removeClass('display-none');
+        },
+        hidefreezeRequest: function () {
+            $scope.isFreezeReq = false;
+            $('#calltimmer').addClass('call-duations').removeClass('display-none');
+            $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
+            $('#freezeRequest').addClass('display-none').removeClass('call-duations');
+            this.idle();
+        }
         /*showConnectedBtn: function () {
          //$('#onlinePhoneBtnWrapper').removeClass('display-none');
          $('#phoneBtnWrapper').addClass('display-none');
@@ -1074,7 +1102,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.users = [];
     $scope.loadUsers = function () {
         userService.LoadUser().then(function (response) {
+
+            for (var i = 0; i < response.length; i++) {
+                var user = response[i];
+                user.listType = "User";
+            }
+
             $scope.users = response;
+            profileDataParser.assigneeUsers = response;
+
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.showAlert("Load Users", "error", "Fail To Get User List.")
@@ -1087,7 +1123,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.loadUserGroups = function () {
         userService.getUserGroupList().then(function (response) {
             if (response.data && response.data.IsSuccess) {
+
+                for (var j = 0; j < response.data.Result.length; j++) {
+                    var userGroup = response.data.Result[j];
+                    userGroup.listType = "Group";
+                }
+
                 $scope.userGroups = response.data.Result;
+                profileDataParser.assigneeUserGroups = response.data.Result;
             }
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -2322,7 +2365,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
             });
-            resourceService.EndBreakRequest(authService.GetResourceId()).then(function (data) {
+            resourceService.EndBreakRequest(authService.GetResourceId(), 'EndBreak').then(function (data) {
                 if (data) {
                     $scope.showAlert("Available", "success", "Update resource state success.");
                     $('#userStatus').addClass('online').removeClass('offline');
@@ -2337,6 +2380,48 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };//end
 
+
+    $scope.currentModeOption = null;
+    var modeList = ['#Inbound', '#Outbound'];
+    $scope.modeOption = {
+        outboundOption: function (requestOption) {
+            console.log(requestOption);
+            dataParser.userProfile = $scope.profile;
+            modeList.forEach(function (option) {
+                $(option).removeClass('font-color-green bold');
+            });
+            resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
+                if (res) {
+                    $('#userStatus').addClass('offline').removeClass('online');
+                    $scope.showAlert(requestOption, "success", 'update resource state success');
+                    $('#' + requestOption).addClass('font-color-green bold');
+                    $scope.currentModeOption = requestOption;
+                }
+            }, function (error) {
+                authService.IsCheckResponse(error);
+                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+            });
+        },
+        inboundOption: function (requestOption) {
+            dataParser.userProfile = $scope.profile;
+            modeList.forEach(function (option) {
+                $(option).removeClass('font-color-green bold');
+            });
+            resourceService.EndBreakRequest(authService.GetResourceId(), requestOption).then(function (data) {
+                if (data) {
+                    $scope.showAlert("Available", "success", "Update resource state success.");
+                    $('#userStatus').addClass('online').removeClass('offline');
+                    $('#Available').addClass('font-color-green bold');
+                    $scope.currentModeOption = requestOption;
+                    // getCurrentState.breakState();
+                    //changeLockScreenView.hide();
+                    //$scope.isUnlock = false;
+                    //return;
+                }
+            });
+        }
+    };//end
+
     //change agent Register status
     $scope.changeRegisterStatus = {
         changeStatus: function (type) {
@@ -2345,10 +2430,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
                 if ($scope.resourceTaskObj[i].RegTask == type) {
                     //remove resource sharing
-                    getCurrentState.removeSharing(type,i);
+                    getCurrentState.removeSharing(type, i);
                     return;
                 }
-            };
+            }
+            ;
 
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {
@@ -2452,11 +2538,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert("Agent Task", "error", "Fail To load get register task.");
                 });
             },
-            removeSharing: function (type,index) {
+            removeSharing: function (type, index) {
                 resourceService.RemoveSharing(authService.GetResourceId(), type).then(function (data) {
                     if (data && data.IsSuccess) {
                         $scope.resourceTaskObj[index].RegTask = null;
-                       // getCurrentState.getCurrentRegisterTask();
+                        // getCurrentState.getCurrentRegisterTask();
                         $scope.showAlert("Agent Task", "success", "Delete resource info success.");
                     }
                 }, function (error) {

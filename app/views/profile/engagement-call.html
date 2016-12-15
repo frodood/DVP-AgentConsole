@@ -160,12 +160,17 @@
                         <div class="col-md-3 col-lg-3 col-sm-12 ">
                             <div class="btn-wrapper">
                                 <div class="btn-warp inline-btn"
+                                     ng-click="createNProfile()">
+                                    <span class="btn  btn-default">New</span>
+                                </div>
+
+                                <div class="btn-warp inline-btn"
                                      ng-click="multipleProfile.editProfile();">
-                                    <span class="btn  btn-default">edit</span>
+                                    <span class="btn  btn-default">Edit</span>
                                 </div>
 
                                 <div class="btn-warp inline-btn" ng-click="multipleProfile.searchProfile();">
-                                    <span class="btn  btn-default">search</span>
+                                    <span class="btn  btn-default">Search</span>
                                 </div>
 
                             </div>
@@ -508,8 +513,8 @@
                                                                     {{recentTicket.reference}}
                                                                 </small>
                                                                 <br>
-                                                                {{ recentTicket.description | limitTo: 25}}
-                                                                {{recentTicket.description.length > 25 ? '...' : ''}}
+                                                                {{ recentTicket.subject | limitTo: 25}}
+                                                                {{recentTicket.subject.length > 25 ? '...' : ''}}
                                                             </div>
                                                             <div class="col-lg-3 p-0">
                                                                 <small class="font-color-yellow">{{recentTicket.status}}
@@ -717,7 +722,7 @@
                                                 </div>
 
                                                 <div class="profile-body">
-                                                    <h5 class="bold">{{p.name}}</h5>
+                                                    <h5 class="bold">{{p.firstname}} {{p.lastname}}</h5>
                                                     <small>{{p.phone}}</small>
                                                     <div class="btn-profile-view"
                                                          ng-click="multipleProfile.openSelectedProfile(p);">
@@ -901,8 +906,13 @@
 
                                             <select class="form-control" ng-model="ticket.assignee"
                                                     ng-model-options="{trackBy: '$value'}">
-                                                <option ng-repeat="c in users" value='{{c._id}}'>
-                                                    {{c.username}}
+                                                <optgroup label="Users"></optgroup>
+                                                <option ng-repeat="c in assigneeUsers" value='{{c._id}}'>
+                                                    - {{c.username}}
+                                                </option>
+                                                <optgroup label="User Groups"></optgroup>
+                                                <option ng-repeat="group in assigneeGroups" value='{{group._id}}'>
+                                                    - {{group.name}}
                                                 </option>
                                             </select>
 
@@ -915,8 +925,7 @@
                                     <div class="model-btn-wrapper">
                                         <div class="btn-warp ">
                                 <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
-                                      ng-click="saveTicket(ticket);"
-                                >Save</span>
+                                      ng-click="saveTicket(ticket);">Save</span>
                                         </div>
                                     </div>
 

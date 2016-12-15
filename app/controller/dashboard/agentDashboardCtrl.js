@@ -3,7 +3,7 @@
  */
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
-                                                    ticketService, engagementService, profileDataParser, authService, $state) {
+                                                    ticketService, engagementService, profileDataParser, authService,dashboardRefreshTime, $state) {
 
 
     $scope.showAlert = function (tittle, type, msg) {
@@ -317,6 +317,18 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
     GetResolveTicketCount();
 
+    $scope.ProgressTicketCount = 0;
+    var GetProgressTicketCount = function () {
+        dashboradService.GetTotalTicketCount('PROGRESSINGTICKET').then(function (response) {
+            $scope.ProgressTicketCount = response;
+        }, function (err) {
+            authService.IsCheckResponse(err);
+            $scope.ProgressTicketCount = 0;
+            $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+        });
+    };
+    GetProgressTicketCount();
+
     var GetCreatedicketSeries = function () {
         dashboradService.GetCreatedTicketSeries().then(function (response) {
             if (angular.isArray(response)) {
@@ -436,6 +448,12 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $timeout.cancel(loadGrapDataTimer);
         }
     });
-    $scope.refreshTime = 1000;
+    $scope.refreshTime = parseInt(dashboardRefreshTime);
+    $scope.dashboardReload = function () {
+        getAllRealTime();
+        loadRecentData();
+        loadGrapData();
+    };
+    $scope.dashboardReload();
 });
 

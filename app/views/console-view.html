@@ -298,6 +298,19 @@
                                                                     href="javascript:void(0);">
                                 <i ng-show="currentBerekOption=='MealBreak'" class="ti-check"></i>meal</a>
                             </li>
+                            <li><a class="drop-header">Mode</a></li>
+                            <li class="divider"></li>
+                            <li class="menuitem" role="menuitem"><a id="Inbound"
+                                                                    class=""
+                                                                    ng-click="modeOption.inboundOption('Inbound');"
+                                                                    href="javascript:void(0);">
+                                <i ng-show="currentModeOption=='Inbound'" class="ti-check"></i> inbound</a></li>
+                            <li class="menuitem" role="menuitem"><a id="Outbound"
+                                                                    class=""
+                                                                    ng-click="modeOption.outboundOption('Outbound');"
+                                                                    href="javascript:void(0);">
+                                <i ng-show="currentModeOption=='Outbound'" class="ti-check"></i>outbound</a>
+                            </li>
                             <li class="divider"></li>
                             <li class="menuitem" role="menuitem"><a ng-click="addDashBoard();"
                                                                     href="javascript:void(0)">Dashboard</a></li>
@@ -462,9 +475,12 @@
                 </div>
                 <div class="display-none" id="countdownCalltimmer">
                     <timer autostart="false" countdown="countdownVal" finish-callback="veeryPhone.FinishedAcw()"
-                           interval="1000">{{seconds}} second
+                           interval="1000">{{seconds}} second <small ng-show="isFreezeReq">Freeze Processing</small>
                     </timer>
 
+                </div>
+                <div class="display-none loading-duration" id="freezeRequest">
+                    Processing Freeze Request
                 </div>
             </div>
             <!--#KeyPad-->
@@ -547,7 +563,7 @@
                 <!-- <div id="contactList" class="phone-sm-btn phone-sm-bn-p8" title="Contact List">
                      <i class="veery-font-1-user"></i>
                  </div>-->
-                <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-user" ng-click="veeryPhone.freeze();"
+                <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-user"
                      id="contactList" title="Contact List">
 
                 </div>
@@ -560,7 +576,7 @@
                      id="morebtn" title="More"></div>
 
                 <div class="phone-sm-btn veery-font-1-stopwatch-2 show-1-btn display-none"
-                     ng-click="veeryPhone.freezeAcw();" id="freezebtn" title="freeze">
+                     ng-click="isFreezeReq || veeryPhone.freezeAcw();" id="freezebtn" title="freeze" ng-disabled="isFreezeReq">
                 </div>
 
                 <!--

@@ -18,7 +18,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
         return $http({
             method: 'put',
-            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId + "/state/Available/reason/EndBreak"
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId + "/state/Available/reason/"+ reason
         }).then(function (response) {
             return response.data.IsSuccess;
         });
@@ -47,8 +47,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var unregisterWithArds = function (resourceId) {
         return $http({
             method: 'delete',
-            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId,
-            data: {"ResourceId": resourceId, "HandlingTypes": ["CALL"]}
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId
         }).then(function (response) {
             return response.data.IsSuccess;
         });
@@ -130,7 +129,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
                 "OtherInfo": ""
             }
         }).then(function (response) {
-            return response.data.Result;
+            return response.data.IsSuccess;
         });
     };
     var mapResourceToVeery = function (publicIdentity) {

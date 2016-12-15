@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService,profileDataParser) {
     return {
         restrict: "EA",
         scope: {
@@ -76,6 +76,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             /* End Initialize default scope*/
 
             /*form submit*/
+
+
+            scope.assigneeUsers= profileDataParser.assigneeUsers;
+            scope.assigneeGroups=profileDataParser.assigneeUserGroups;
 
 
             scope.pickCompanyInfo = function () {
@@ -766,52 +770,52 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
             /*scope.onChipAddTag = function (chip) {
-                if (!chip.tags || (chip.tags.length === 0)) {
-                    setToDefault();
-                    return;
-                }
-                if (scope.tagSelectRoot === 'root') {
-                    scope.tagSelectRoot = 'sub';
-                    scope.availableTags = chip.tags;
-                }
-                else if (scope.tagSelectRoot === 'sub') {
+             if (!chip.tags || (chip.tags.length === 0)) {
+             setToDefault();
+             return;
+             }
+             if (scope.tagSelectRoot === 'root') {
+             scope.tagSelectRoot = 'sub';
+             scope.availableTags = chip.tags;
+             }
+             else if (scope.tagSelectRoot === 'sub') {
 
-                    var tempTags = [];
-                    angular.forEach(chip.tags, function (item) {
-                        var tags = $filter('filter')(scope.tagList, {_id: item}, true);
-                        tempTags = tempTags.concat(tags);
-                    });
-                    scope.availableTags = tempTags;
-                    scope.tagSelectRoot = 'child';
+             var tempTags = [];
+             angular.forEach(chip.tags, function (item) {
+             var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+             tempTags = tempTags.concat(tags);
+             });
+             scope.availableTags = tempTags;
+             scope.tagSelectRoot = 'child';
 
-                }
-                else {
-                    if (chip.tags) {
-                        if (chip.tags.length > 0) {
-                            if (!angular.isObject(chip.tags[0])) {
-                                var tempTags = [];
-                                /!*angular.forEach(chip.tags[0], function (item) {
-                                    var tags = $filter('filter')(scope.tagList, {_id: item}, true);
-                                    tempTags = tempTags.concat(tags);
-                                });*!/
-                                var tags = $filter('filter')(scope.tagList, {_id: chip.tags[0]}, true);
-                                tempTags = tempTags.concat(tags);
-                                scope.availableTags = tempTags;
-                            }
-                            else {
-                                scope.availableTags = chip.tags;
-                            }
-                            if (scope.availableTags.length === 0) {
-                                setToDefault();
-                            }
-                            return;
-                        }
-                    }
-                    setToDefault();
-                }
+             }
+             else {
+             if (chip.tags) {
+             if (chip.tags.length > 0) {
+             if (!angular.isObject(chip.tags[0])) {
+             var tempTags = [];
+             /!*angular.forEach(chip.tags[0], function (item) {
+             var tags = $filter('filter')(scope.tagList, {_id: item}, true);
+             tempTags = tempTags.concat(tags);
+             });*!/
+             var tags = $filter('filter')(scope.tagList, {_id: chip.tags[0]}, true);
+             tempTags = tempTags.concat(tags);
+             scope.availableTags = tempTags;
+             }
+             else {
+             scope.availableTags = chip.tags;
+             }
+             if (scope.availableTags.length === 0) {
+             setToDefault();
+             }
+             return;
+             }
+             }
+             setToDefault();
+             }
 
-            };
-*/
+             };
+             */
             scope.loadPostTags = function (query) {
                 return scope.postTags;
             };
@@ -887,6 +891,19 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 });
             };
 
+            /*scope.userGroups = [];
+            scope.loadUserGroups = function () {
+                userService.getUserGroupList().then(function (response) {
+                    if (response.data && response.data.IsSuccess) {
+                        scope.userGroups = response.data.Result;
+                    }
+                }, function (err) {
+
+                    scope.showAlert("Load User Groups", "error", "Fail To Get User Groups.")
+                });
+            };
+            scope.loadUserGroups();*/
+
 
             function createFilterFor(query) {
                 var lowercaseQuery = angular.lowercase(query);
@@ -957,6 +974,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 ticket.channel = scope.channel;
                 ticket.requester = scope.profileDetail._id;
                 ticket.engagement_session = scope.sessionId;
+
+                ticket.assignee_group=ticket.assignee;
+
                 if (scope.postTags) {
                     ticket.tags = scope.postTags.map(function (obj) {
                         return obj.name;
