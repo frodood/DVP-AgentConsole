@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService,profileDataParser) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser) {
     return {
         restrict: "EA",
         scope: {
@@ -78,8 +78,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             /*form submit*/
 
 
-            scope.assigneeUsers= profileDataParser.assigneeUsers;
-            scope.assigneeGroups=profileDataParser.assigneeUserGroups;
+            scope.assigneeUsers = profileDataParser.assigneeUsers;
+            scope.assigneeGroups = profileDataParser.assigneeUserGroups;
 
 
             scope.pickCompanyInfo = function () {
@@ -466,61 +466,47 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
             };
 
-            scope.getIntegrationMetaData = function()
-            {
+            scope.getIntegrationMetaData = function () {
                 integrationAPIService.getIntegrationURLMetaData('PROFILE')
-                    .then(function(data)
-                    {
-                        if(data.Result)
-                        {
+                    .then(function (data) {
+                        if (data.Result) {
                             scope.integrationAPIList = data.Result;
                         }
-                        else
-                        {
+                        else {
                             scope.integrationAPIList = [];
                         }
                     })
-                    .catch(function(err)
-                    {
+                    .catch(function (err) {
                         scope.showAlert("External API Data", "error", "Get meta data failed");
                     })
 
             };
 
-            scope.callExternalAPI = function(integrationObj)
-            {
+            scope.callExternalAPI = function (integrationObj) {
 
                 integrationAPIService.getIntegrationAPIData(integrationObj._id, scope.profileDetail)
-                    .then(function(data)
-                    {
-                        if(data && data.Result)
-                        {
-                            if(data.Result)
-                            {
+                    .then(function (data) {
+                        if (data && data.Result) {
+                            if (data.Result) {
                                 integrationObj.integrationAPIStatus = 1;
                             }
-                            else
-                            {
+                            else {
                                 integrationObj.integrationAPIStatus = 2;
                             }
                             integrationObj.jsonDataAPI = data.Result;
                         }
-                        else
-                        {
-                            if(data.Exception)
-                            {
+                        else {
+                            if (data.Exception) {
                                 integrationObj.integrationAPIStatus = 3;
                             }
-                            else
-                            {
+                            else {
                                 integrationObj.integrationAPIStatus = 2;
                             }
                             integrationObj.jsonDataAPI = null;
                         }
 
                     })
-                    .catch(function(err)
-                    {
+                    .catch(function (err) {
                         integrationObj.jsonDataAPI = null;
                         integrationObj.integrationAPIStatus = 3;
                         scope.showAlert("External API Data", "error", "Get meta data failed");
@@ -892,17 +878,17 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
             /*scope.userGroups = [];
-            scope.loadUserGroups = function () {
-                userService.getUserGroupList().then(function (response) {
-                    if (response.data && response.data.IsSuccess) {
-                        scope.userGroups = response.data.Result;
-                    }
-                }, function (err) {
+             scope.loadUserGroups = function () {
+             userService.getUserGroupList().then(function (response) {
+             if (response.data && response.data.IsSuccess) {
+             scope.userGroups = response.data.Result;
+             }
+             }, function (err) {
 
-                    scope.showAlert("Load User Groups", "error", "Fail To Get User Groups.")
-                });
-            };
-            scope.loadUserGroups();*/
+             scope.showAlert("Load User Groups", "error", "Fail To Get User Groups.")
+             });
+             };
+             scope.loadUserGroups();*/
 
 
             function createFilterFor(query) {
@@ -975,7 +961,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 ticket.requester = scope.profileDetail._id;
                 ticket.engagement_session = scope.sessionId;
 
-                ticket.assignee_group=ticket.assignee;
+                ticket.assignee_group = ticket.assignee;
 
                 if (scope.postTags) {
                     ticket.tags = scope.postTags.map(function (obj) {
@@ -1008,7 +994,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
             scope.availableTicketTypes = [];
-            scope.getAvailableTicketTypes = function(){
+            scope.getAvailableTicketTypes = function () {
                 ticketService.getAvailableTicketTypes().then(function (response) {
 
                     if (response && response.IsSuccess) {
@@ -1178,8 +1164,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
 
 
-
-
             scope.getEnggemntCount = function (id) {
                 engagementService.EngagementCount(id).then(function (response) {
                     if (response) {
@@ -1248,12 +1232,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.mapProfile = {};
             scope.mapProfile.isShowConfirm = false;
 
-            scope.mapProfileAndNumber = function(){
+            scope.mapProfileAndNumber = function () {
                 scope.mapProfile.isShowConfirm = false;
-                if(scope.mapProfile.mapEngagement){
+                if (scope.mapProfile.mapEngagement) {
                     scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
                 }
-                if(scope.mapProfile.addNumber){
+                if (scope.mapProfile.addNumber) {
                     var contactInfo = {
                         contact: scope.channelFrom,
                         type: 'phone',
@@ -1275,7 +1259,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
             };
 
-            scope.closeProfileAndNumber = function() {
+            scope.closeProfileAndNumber = function () {
                 scope.mapProfile.isShowConfirm = false;
             };
 
@@ -1335,7 +1319,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         }
                     }
 
-                    if(scope.mapProfile && (scope.mapProfile.showEngagement || scope.mapProfile.showNumberd)){
+                    if (scope.mapProfile && (scope.mapProfile.showEngagement || scope.mapProfile.showNumberd)) {
                         scope.mapProfile.isShowConfirm = true;
                     }
 
@@ -1507,6 +1491,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             //use JSON
             scope.countryList = [];
             scope.languages = [];
+            scope.titles = [];
+            scope.gender = ['Male', 'Female'];
 
             //Get all country list
             getJSONData($http, "countryList", function (res) {
@@ -1520,6 +1506,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             getJSONData($http, "customerType", function (res) {
                 scope.customerType = res;
+            });
+
+            //Get all title
+            getJSONData($http, "titles", function (res) {
+                scope.titles = res;
             });
 
             var genDayList = function () {

@@ -42,21 +42,46 @@ agentApp.controller('ticketFilterCtrl', function ($scope, $http, $rootScope, tic
     };
     $scope.loadTicketViews();
 
-    $scope.isProgress = false;
-    $scope.isNoData = false;
-    $scope.clickViewsDetails = function (data) {
+    $scope.currentPage = "1";
+    $scope.pageTotal = "1";
+    $scope.pageSize = "100";
+    $scope.getPageData = function (Paging, page, pageSize, total) {
+
         $scope.isProgress = true;
         $scope.ticketList = [];
         $scope.isNoData = false;
-        ticketService.GetTicketsByView(data._id).then(function (response) {
+        ticketService.GetTicketsByView($scope.filterId,page).then(function (response) {
             $scope.isProgress = false;
             $scope.ticketList = response;
-            if (!response || response.length === 0) {
-                $scope.isNoData = true;
-            }
-            else {
-                $scope.isNoData = false;
-            }
+            $scope.showPaging = true;
+            $scope.isNoData = !response || response.length === 0;
+        }, function (err) {
+            authService.IsCheckResponse(err);
+            $scope.isProgress = false;
+            $scope.showAlert("load Tickets", "error", "Fail To Load Tickets List.")
+        });
+
+    };
+
+
+    $scope.isProgress = false;
+    $scope.isNoData = false;
+    $scope.showPaging = false;
+    $scope.filterId = 0;
+    $scope.clickViewsDetails = function (data) {
+        $scope.pageSize = "100";
+        $scope.pageTotal = data.count;
+        $scope.currentPage = 1;
+        $scope.filterId = data._id;
+
+        $scope.isProgress = true;
+        $scope.ticketList = [];
+        $scope.isNoData = false;
+        ticketService.GetTicketsByView(data._id,$scope.currentPage).then(function (response) {
+            $scope.isProgress = false;
+            $scope.ticketList = response;
+            $scope.showPaging = true;
+            $scope.isNoData = !response || response.length === 0;
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.isProgress = false;

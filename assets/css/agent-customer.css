@@ -2933,6 +2933,23 @@ tags-input .tags .input {
     overflow: hidden;
 }
 
+.dashboard-ref{
+
+}
+
+.btn-dash-ref{
+    color: #36ba45;
+    border: 1px solid;
+    width: 120px;
+    text-align: center;
+    height: 39px;
+    padding-top: 10px;
+    margin-top: -5px;
+    border-radius: 5px;
+    background: #17373c;
+    cursor: pointer;
+}
+
 .bg-white {
     background: #fff !important;
 }
