@@ -10,7 +10,7 @@ var agentApp = angular.module('veeryAgentApp',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer', 'mdo-angular-cryptography'
-        ,'ui.bootstrap.accordion', 'jsonFormatter'
+        ,'ui.bootstrap.accordion', 'jsonFormatter','bw.paging'
     ]);
 
 
@@ -22,7 +22,7 @@ var baseUrls = {
     'notification': 'http://notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.app.veery.cloud
     'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',//interactions.app.veery.cloud
-    'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/',//liteticket.app.veery.cloud
+    'ticketUrl': 'http://localhost:3636/DVP/API/1.0.0.0/',//liteticket.app.veery.cloud
     'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
     'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
@@ -39,6 +39,9 @@ var baseUrls = {
 agentApp.constant('baseUrls', baseUrls);
 
 agentApp.constant('dashboardRefreshTime', 60000);
+agentApp.constant('turnServers', [{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}]);
+//{url:"stun:stun.l.google.com:19302"},{url:"stun:stun.counterpath.net:3478"},{url:"stun:numb.viagenie.ca:3478"}
+//{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}
 
 var phoneSetting = {
     'TransferPhnCode': '*6',

@@ -129,6 +129,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
                 "OtherInfo": ""
             }
         }).then(function (response) {
+            console.log("callSessionId : "+callSessionId +" endFreeze : "+ endFreeze+" response : "+response);
             return response.data.IsSuccess;
         });
     };

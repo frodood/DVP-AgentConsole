@@ -126,7 +126,7 @@ function sipRegister() {
                 display_name: Profile.authorizationName,
                 websocket_proxy_url: Profile.server.websocketUrl,
                 outbound_proxy_url: Profile.server.outboundProxy,
-                ice_servers: [],
+                ice_servers: Profile.server.ice_servers,
                 enable_rtcweb_breaker: false,
                 events_listener: {events: '*', listener: onSipEventStack},
                 enable_early_ims: true, // Must be true unless you're using a real IMS network
