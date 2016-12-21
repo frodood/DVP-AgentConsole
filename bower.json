@@ -61,7 +61,8 @@
     "satellizer": "^0.15.5",
     "json-formatter": "^0.6.0",
     "angular-cryptography": "^1.0.1",
-    "angular-paging": "^2.2.2"
+    "angular-paging": "^2.2.2",
+    "pjTextToSpeech": "pjTextTospeech#^1.0.6"
   },
   "resolutions": {
     "moment": "^2.14.1",

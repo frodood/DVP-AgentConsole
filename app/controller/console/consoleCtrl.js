@@ -8,8 +8,34 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers, $uibModal, notificationConnector) {
+                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers,TTSConfig, TTSAudio, TTS_EVENTS, $uibModal, notificationConnector) {
 
+
+
+    /*TTSConfig.url = 'http://tts.dev/tts-backend/index.php';*/
+    var tts = new TTSAudio();
+
+
+    // triggered after speaking
+    $scope.$on(TTS_EVENTS.SUCCESS, function(){
+        console.info('Successfully done!')
+    });
+
+    $scope.$on(TTS_EVENTS.ERROR, function(){
+        console.info('An unexpected error has occurred');
+    });
+
+    // triggered before speaking
+    $scope.$on(TTS_EVENTS.PENDING, function(text){
+        console.info('Speaking: ' + text);
+    });
+
+    function TextSpeak(text) {
+        tts.speak({
+            text : text,
+            lang : 'en'
+        });
+    }
 
     function startRingTone() {
         try {
@@ -846,7 +872,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         userService.getPhoneConfig().then(function (response) {
             $scope.PhoneConfig = response;
         }, function (error) {
-            authService.IsCheckResponse(error);
+
             console.log(error);
             $scope.showAlert("Phone", "error", "Fail To Get Phone Config.");
         });
@@ -881,6 +907,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /*--------------------------      Notification  ---------------------------------------*/
     $scope.agentFound = function (data) {
+        TextSpeak("you are receiving call")
         var values = data.Message.split("|");
         var notifyData = {
             company: data.Company,
@@ -908,6 +935,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.sessionId = notifyData.sessionId;
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
+
     };
 
 
@@ -2565,14 +2593,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetCurrentRegisterTask(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         if (data.Result) {
-                            if (data.Result.obj.LoginTasks) {
-                                for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
-                                    data.Result.obj.LoginTasks.forEach(function (value, key) {
-                                        if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
-                                            $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
-                                        }
-                                    })
+                            if (data.Result.obj){
+                                if (data.Result.obj.LoginTasks) {
+                                    for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
+                                        data.Result.obj.LoginTasks.forEach(function (value, key) {
+                                            if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
+                                                $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
+                                            }
+                                        })
 
+                                    }
                                 }
                             }
                         }
