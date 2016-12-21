@@ -151,6 +151,27 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getPhoneConfig = function () {
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"Phone/Config"
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
+    var addPhoneConfig = function () {
+        return $http({
+            method: 'POST',
+            url: baseUrls.userServiceBaseUrl+"Phone/Config"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
 
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
@@ -164,7 +185,9 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         UpdateExternalUser:updateExternalUser,
         UpdateExternalUserProfileContact:UpdateExternalUserProfileContact,
         getExternalUserProfileByField:getExternalUserProfileByField,
-        getExternalUserProfileBySsn:getExternalUserProfileBySsn
+        getExternalUserProfileBySsn:getExternalUserProfileBySsn,
+        getPhoneConfig:getPhoneConfig,
+        AddPhoneConfig:addPhoneConfig
     }
 });
 

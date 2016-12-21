@@ -36,6 +36,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     }
 
+
     $scope.notifications = [];
     $scope.agentList = [];
     $scope.isFreezeReq = false;
@@ -523,10 +524,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.hideMuteButton();
                 /*addCallToHistory(sRemoteNumber, 2);*/
                 phoneFuncion.updateCallStatus('Incoming Call');
-
+                $scope.veeryPhone.autoAnswer();
             }
             catch (ex) {
                 console.error(ex.message);
+            }
+        },
+        autoAnswer:function () {
+            try{
+                if($scope.PhoneConfig){
+                    if($scope.PhoneConfig.autoAnswer){
+                        var autoAnswerAfterDelay = function () {
+                          this.answerCall();
+                            $timeout.cancel(autoAnswerTimeTimer);
+                        };
+                        var autoAnswerTimeTimer = $timeout(autoAnswerAfterDelay, $scope.PhoneConfig.autoAnswerDelay);
+                    }
+                }
+            }
+            catch (ex){
+                console.log(ex)
             }
         },
         uiCallTerminated: function (msg) {
@@ -822,6 +839,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.$apply();
     });
 
+    $scope.PhoneConfig = {};
+    var getPhoneConfig = function () {
+        userService.getPhoneConfig().then(function (response) {
+            $scope.PhoneConfig = response;
+        }, function (error) {
+            authService.IsCheckResponse(error);
+            console.log(error);
+            $scope.showAlert("Phone", "error", "Fail To Get Phone Config.");
+        });
+    };
+    getPhoneConfig();
 
     //dont remove this code
     /*var prev, $result = $('#result'),
