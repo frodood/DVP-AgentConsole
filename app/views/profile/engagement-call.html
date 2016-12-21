@@ -495,7 +495,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-9 " style="padding-right: 0px;">
+                                    <!-- recent activity -->
+                                    <div class="col-md-9 " style="padding-right: 0px;"
+                                         ng-if="recentTicketList.length!=0">
+                                        {{recentTicketList}}
                                         <div class="prn2-recent-activity ">
                                             <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <h5 class="text-uppercase header-text-h5 font-color-gray500">Recent

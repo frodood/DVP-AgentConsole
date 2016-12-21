@@ -173,6 +173,8 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
+    
+
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
         LoadUser:loadUser,
