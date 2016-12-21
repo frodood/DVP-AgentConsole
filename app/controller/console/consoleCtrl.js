@@ -8,7 +8,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers, $uibModal, notificationConnector) {
+                                             filterFilter, engagementService, phoneSetting, toDoService, turnServers, $uibModal, notificationConnector) {
+
+   $scope.showAlert = function (title, type, content) {
+        new PNotify({
+            title: title,
+            text: content,
+            type: type,
+            styling: 'bootstrap3'
+        });
+    };
 
 
     function startRingTone() {
@@ -177,16 +186,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
-
-    $scope.showAlert = function (tittle, type, msg) {
-        new PNotify({
-            title: tittle,
-            text: msg,
-            type: type,
-            styling: 'bootstrap3',
-            icon: 'ti-bell'
-        });
-    };
 
     $scope.profile = {};
     $scope.profile.displayName = "";
@@ -605,7 +604,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-
     var phoneFuncion = {
         hideAllBtn: function () {
             phoneFuncion.hideAnswerButton();
@@ -652,7 +650,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $('#freezeRequest').addClass('display-none').removeClass('call-duations');
                     $scope.startCallTime();
                 }
-                else{
+                else {
                     phoneFuncion.hidefreezeRequest();
                 }
                 $scope.isFreezeReq = false;
@@ -2437,7 +2435,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     getCurrentState.removeSharing(type, i);
                     return;
                 }
-            };
+            }
+            ;
 
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {
@@ -2491,7 +2490,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $('#Outbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Outbound";
                             return;
-                        } else{
+                        } else {
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Inbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Inbound";
@@ -2515,6 +2514,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetResourceTasks(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         data.Result.forEach(function (value, key) {
+                            // $scope.resourceTaskObj = [];
                             if (data.Result[key].ResTask) {
                                 if (data.Result[key].ResTask.ResTaskInfo) {
                                     if (data.Result[key].ResTask.ResTaskInfo.TaskName) {
@@ -2633,7 +2633,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showNotificationMessage = function (notifyMessage) {
         $scope.showMesssageModal = true;
         $scope.showModal(notifyMessage);
-        //$scope.showAlert("Message","success",notifyMessage.Message);
+        // $scope.showAlert("Message","success",notifyMessage.Message);
     };
 
 
@@ -2710,7 +2710,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         return {
             unlock: function (pwd) {
                 if (!pwd) {
-                    showAlert('Error', 'error', 'Invalid authentication..');
+                    $scope.showAlert('Error', 'error', 'Invalid authentication..');
                     $('#lockPwd').addClass('shake');
                     $('#lockPwd').addClass('shake');
                     return;
@@ -2723,7 +2723,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         $scope.breakOption.endBreakOption('Available');
                         return;
                     } else {
-                        showAlert('Error', 'error', 'Invalid authentication..');
+                        $scope.showAlert('Error', 'error', 'Invalid authentication..');
                         $('#lockPwd').addClass('shake');
                         $('#lockPwd').addClass('shake');
                         changeLockScreenView.show();
