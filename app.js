@@ -10,7 +10,7 @@ var agentApp = angular.module('veeryAgentApp',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer', 'mdo-angular-cryptography'
-        ,'ui.bootstrap.accordion', 'jsonFormatter','bw.paging','pjTts'
+        ,'ui.bootstrap.accordion', 'jsonFormatter','bw.paging','pubnub.angular.service'
     ]);
 
 

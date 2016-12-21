@@ -8,7 +8,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers,TTSConfig, TTSAudio, TTS_EVENTS, $uibModal, notificationConnector) {
+                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers,Pubnub, $uibModal, notificationConnector) {
+
+
+    $scope.sayIt = function () {
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.textToSpeek));
+    };
+
 
    $scope.showAlert = function (title, type, content) {
         new PNotify({
@@ -19,31 +25,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
-
-    /*TTSConfig.url = 'http://tts.dev/tts-backend/index.php';*/
-    var tts = new TTSAudio();
-
-
-    // triggered after speaking
-    $scope.$on(TTS_EVENTS.SUCCESS, function(){
-        console.info('Successfully done!')
-    });
-
-    $scope.$on(TTS_EVENTS.ERROR, function(){
-        console.info('An unexpected error has occurred');
-    });
-
-    // triggered before speaking
-    $scope.$on(TTS_EVENTS.PENDING, function(text){
-        console.info('Speaking: ' + text);
-    });
-
-    function TextSpeak(text) {
-        tts.speak({
-            text : text,
-            lang : 'en'
-        });
-    }
 
 
     function startRingTone() {
@@ -542,6 +523,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     return;
                 }
                 startRingTone();
+                $scope.sayIt();
                 /*UIStateChange.inIncomingState();*/
                 $scope.call.number = sRemoteNumber;
                 $scope.ShowIncomeingNotification(true);
@@ -877,6 +859,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     getPhoneConfig();
 
+
+
     //dont remove this code
     /*var prev, $result = $('#result'),
      counter = 0,
@@ -904,8 +888,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /*--------------------------Veery Phone---------------------------------------*/
 
     /*--------------------------      Notification  ---------------------------------------*/
+    $scope.textToSpeek = "";
     $scope.agentFound = function (data) {
-        TextSpeak("you are receiving call")
+
+
         var values = data.Message.split("|");
         var notifyData = {
             company: data.Company,
@@ -932,6 +918,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
+        $scope.textToSpeek = "you are receiving "+$scope.call.skill+" call";
         collectSessions(index);
 
     };
