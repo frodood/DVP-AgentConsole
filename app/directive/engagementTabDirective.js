@@ -1790,6 +1790,33 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         break;
                 }
             }//end
+
+            //update code damith
+            scope.isCnfmBoxShow = false;
+
+            var deleteContactObj = {contact: ''}
+            scope.deleteContact = function (contact) {
+                deleteContactObj = {contact: ''};
+                scope.isCnfmBoxShow = true;
+                deleteContactObj.contact = contact;
+            };
+            scope.confimOk = function () {
+                userService.DeleteContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
+                    scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                    scope.profileDetail.contacts.forEach(function (value, key) {
+                        if (scope.profileDetail.contacts[key].contact == deleteContactObj.contact) {
+                            scope.profileDetail.contacts.splice(key, 1);
+                        }
+                    });
+                    scope.isCnfmBoxShow = false;
+
+                }, function (err) {
+                    console.log(err);
+                })
+            };
+            scope.confimCancel = function () {
+                scope.isCnfmBoxShow = false;
+            }
         }
     }
 }).directive("fileread", [function () {
