@@ -8,7 +8,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService, turnServers, $uibModal, notificationConnector) {
+                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers,Pubnub, $uibModal, notificationConnector) {
+
+
+    $scope.sayIt = function () {
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.textToSpeek));
+    };
+
 
    $scope.showAlert = function (title, type, content) {
         new PNotify({
@@ -18,6 +24,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             styling: 'bootstrap3'
         });
     };
+
 
 
     function startRingTone() {
@@ -516,6 +523,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     return;
                 }
                 startRingTone();
+                $scope.sayIt();
                 /*UIStateChange.inIncomingState();*/
                 $scope.call.number = sRemoteNumber;
                 $scope.ShowIncomeingNotification(true);
@@ -844,12 +852,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         userService.getPhoneConfig().then(function (response) {
             $scope.PhoneConfig = response;
         }, function (error) {
-            authService.IsCheckResponse(error);
+
             console.log(error);
             $scope.showAlert("Phone", "error", "Fail To Get Phone Config.");
         });
     };
     getPhoneConfig();
+
+
 
     //dont remove this code
     /*var prev, $result = $('#result'),
@@ -878,7 +888,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /*--------------------------Veery Phone---------------------------------------*/
 
     /*--------------------------      Notification  ---------------------------------------*/
+    $scope.textToSpeek = "";
     $scope.agentFound = function (data) {
+
+
         var values = data.Message.split("|");
         var notifyData = {
             company: data.Company,
@@ -905,7 +918,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
+        $scope.textToSpeek = "you are receiving "+$scope.call.skill+" call";
         collectSessions(index);
+
     };
 
 
@@ -2185,7 +2200,45 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.notificationMsg.From = $scope.loginName;
             $scope.notificationMsg.Direction = "STATELESS";
             if ($scope.naviSelectedUser.listType === "Group") {
-                if ($scope.naviSelectedUser.users) {
+                userService.getGroupMembers($scope.naviSelectedUser._id).then(function (response) {
+                    if(response.IsSuccess)
+                    {
+
+                        if (response.Result) {
+                            var clients = [];
+                            for (var i = 0; i < response.Result.length; i++) {
+                                var gUser = response.Result[i];
+                                if (gUser && gUser.username && gUser.username != $scope.loginName) {
+                                    clients.push(gUser.username);
+                                }
+                            }
+                            $scope.notificationMsg.clients = clients;
+
+                            notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
+                                $scope.notificationMsg = {};
+                                console.log("send notification success :: " + JSON.stringify(clients));
+                            }, function (err) {
+                                var errMsg = "Send Notification Failed";
+                                if (err.statusText) {
+                                    errMsg = err.statusText;
+                                }
+                                $scope.showAlert('Error', 'error', errMsg);
+                            });
+                        } else {
+                            $scope.showAlert('Error', 'error', "Send Notification Failed");
+                        }
+                    }
+                    else
+                    {
+                        console.log("Error in loading Group member list");
+                        $scope.showAlert('Error', 'error', "Send Notification Failed");
+                    }
+                }, function (err) {
+                    console.log("Error in loading Group member list ",err);
+                    $scope.showAlert('Error', 'error', "Send Notification Failed");
+                });
+
+                /*if ($scope.naviSelectedUser.users) {
                     var clients = [];
                     for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
                         var gUser = $scope.naviSelectedUser.users[i];
@@ -2207,7 +2260,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     });
                 } else {
                     $scope.showAlert('Error', 'error', "Send Notification Failed");
-                }
+                }*/
 
             } else {
 
@@ -2565,14 +2618,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetCurrentRegisterTask(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         if (data.Result) {
-                            if (data.Result.obj.LoginTasks) {
-                                for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
-                                    data.Result.obj.LoginTasks.forEach(function (value, key) {
-                                        if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
-                                            $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
-                                        }
-                                    })
+                            if (data.Result.obj){
+                                if (data.Result.obj.LoginTasks) {
+                                    for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
+                                        data.Result.obj.LoginTasks.forEach(function (value, key) {
+                                            if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
+                                                $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
+                                            }
+                                        })
 
+                                    }
                                 }
                             }
                         }

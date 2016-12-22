@@ -1794,26 +1794,54 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             //update code damith
             scope.isCnfmBoxShow = false;
 
-            var deleteContactObj = {contact: ''}
-            scope.deleteContact = function (contact) {
-                deleteContactObj = {contact: ''};
+
+            var deleteContactObj = {};
+
+            scope.deleteSocialContact = function (contact) {
+                deleteContactObj.contact = '';
+                deleteContactObj.status = 0;
                 scope.isCnfmBoxShow = true;
                 deleteContactObj.contact = contact;
+                deleteContactObj.status = 2;
             };
-            scope.confimOk = function () {
-                userService.DeleteContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
-                    scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
-                    scope.profileDetail.contacts.forEach(function (value, key) {
-                        if (scope.profileDetail.contacts[key].contact == deleteContactObj.contact) {
-                            scope.profileDetail.contacts.splice(key, 1);
-                        }
-                    });
-                    scope.isCnfmBoxShow = false;
 
-                }, function (err) {
-                    console.log(err);
-                })
+            scope.deleteContact = function (contact) {
+                deleteContactObj.contact = '';
+                deleteContactObj.status = 0;
+                scope.isCnfmBoxShow = true;
+                deleteContactObj.contact = contact;
+                deleteContactObj.status = 1;
             };
+
+            scope.confimOk = function () {
+                //delete contact
+                if (deleteContactObj.status == 1) {
+                    userService.DeleteContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
+                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.profileDetail.contacts.forEach(function (value, key) {
+                            if (scope.profileDetail.contacts[key].contact == deleteContactObj.contact) {
+                                scope.profileDetail.contacts.splice(key, 1);
+                            }
+                        });
+                        scope.isCnfmBoxShow = false;
+
+                    }, function (err) {
+                        console.log(err);
+                    });
+                }
+
+                //delete social contact details
+                if (deleteContactObj.status == 2) {
+                    userService.DeleteSocialContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
+                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.profileDetail[deleteContactObj.contact] = '';
+                        scope.isCnfmBoxShow = false;
+                    }, function (err) {
+                        console.log(err);
+                    });
+                }
+            };
+
             scope.confimCancel = function () {
                 scope.isCnfmBoxShow = false;
             }

@@ -166,11 +166,31 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
             return response.data;
         });
     };
+    var getGroupMembers = function (groupID) {
 
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl + 'UserGroup/' + groupID + "/members",
+        }).then(function (resp) {
+            return resp.data;
+        })
+    };
     var deleteContact = function (id, contact) {
         return $http({
             method: 'delete',
             url: baseUrls.userServiceBaseUrl + "ExternalUser/" + id + "/Contact/" + contact
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+    var deleteSocialContact = function (id, socialName) {
+        var body = {};
+        body[socialName] = '';
+        return $http({
+            method: 'put',
+            url: baseUrls.userServiceBaseUrl + "ExternalUser/" + id,
+            data: body
         }).then(function (response) {
             return response.data;
         });
@@ -192,7 +212,9 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
         getExternalUserProfileBySsn: getExternalUserProfileBySsn,
         getPhoneConfig: getPhoneConfig,
         AddPhoneConfig: addPhoneConfig,
-        DeleteContact: deleteContact
+        getGroupMembers: getGroupMembers,
+        DeleteContact: deleteContact,
+        DeleteSocialContact: deleteSocialContact
     }
 });
 
