@@ -917,8 +917,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
-        $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         $scope.textToSpeek = "you are receiving "+$scope.call.skill+" call";
+        console.info($scope.textToSpeek);
+        $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
 
     };
