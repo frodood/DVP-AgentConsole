@@ -12,9 +12,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
 
-    $scope.inCall = false;
+    $scope.isReadyToSpeak = false;
     $scope.sayIt = function (text) {
-        if(!$scope.inCall){
+        if(!$scope.isReadyToSpeak){
             window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
         }
     };
@@ -194,7 +194,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
+    var timeReset = function () {
 
+    };
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
@@ -220,6 +222,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.call.sessionId = "";
     $scope.isAcw = false;
     $scope.freeze = false;
+    $scope.inCall = false;
+    var autoAnswerTimeTimer = $timeout(timeReset, 0);
 
     $scope.veeryPhone = {
 
@@ -245,6 +249,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         endCall: function () {
             sipHangUp();
+            $timeout.cancel(autoAnswerTimeTimer);
         },
         answerCall: function () {
             answerCall();
@@ -257,6 +262,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             stopRingTone();
             $scope.ShowIncomeingNotification(false);
             phoneFuncion.updateCallStatus('');
+            $timeout.cancel(autoAnswerTimeTimer);
         },
         etlCall: function () {
             var dtmfSet = phoneSetting.EtlCode.split('');
@@ -548,10 +554,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if($scope.PhoneConfig){
                     if($scope.PhoneConfig.autoAnswer){
                         var autoAnswerAfterDelay = function () {
-                          this.answerCall();
                             $timeout.cancel(autoAnswerTimeTimer);
+                          this.answerCall();
                         };
-                        var autoAnswerTimeTimer = $timeout(autoAnswerAfterDelay, $scope.PhoneConfig.autoAnswerDelay);
+                        autoAnswerTimeTimer = $timeout(autoAnswerAfterDelay, $scope.PhoneConfig.autoAnswerDelay);
                     }
                 }
             }
@@ -657,6 +663,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.showMorebtn();
             $scope.freeze = false;
             $scope.isAcw = false;
+            $scope.isReadyToSpeak = false;
             phoneFuncion.updateCallStatus('Idle');
 
             phoneFuncion.hideConference();
