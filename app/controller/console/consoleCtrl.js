@@ -11,7 +11,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              filterFilter, engagementService, phoneSetting, toDoService,turnServers,Pubnub, $uibModal, notificationConnector) {
 
 
+    $scope.safeApply = function(fn) {
+        var phase = this.$root.$$phase;
+        if(phase == '$apply' || phase == '$digest') {
+            if(fn && (typeof(fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
+
     $scope.sayIt = function () {
+        console.info($scope.textToSpeek);
         window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.textToSpeek));
     };
 
@@ -522,8 +534,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     rejectCall();
                     return;
                 }
-                startRingTone();
+
+                console.info($scope.textToSpeek);
                 $scope.sayIt();
+                startRingTone();
                 /*UIStateChange.inIncomingState();*/
                 $scope.call.number = sRemoteNumber;
                 $scope.ShowIncomeingNotification(true);
@@ -917,7 +931,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
-        $scope.textToSpeek = "you are receiving "+$scope.call.skill+" call";
+
+        $scope.safeApply(function() {
+            $scope.textToSpeek = "you are receiving "+values[6]+" call";
+        });
         console.info($scope.textToSpeek);
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
