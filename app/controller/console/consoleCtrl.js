@@ -11,8 +11,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              filterFilter, engagementService, phoneSetting, toDoService,turnServers,Pubnub, $uibModal, notificationConnector) {
 
 
-    $scope.sayIt = function () {
-        window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.textToSpeek));
+
+    $scope.inCall = false;
+    $scope.sayIt = function (text) {
+        if(!$scope.inCall){
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+        }
     };
 
 
@@ -216,7 +220,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.call.sessionId = "";
     $scope.isAcw = false;
     $scope.freeze = false;
-    $scope.inCall = false;
+
     $scope.veeryPhone = {
 
         sipSendDTMF: function (dtmf) {
@@ -519,11 +523,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onIncomingCall: function (sRemoteNumber) {
             try {
                 if ($scope.isAcw || $scope.freeze) {
+                    console.info("Reject Call...........................");
                     rejectCall();
                     return;
                 }
+
                 startRingTone();
-                $scope.sayIt();
                 /*UIStateChange.inIncomingState();*/
                 $scope.call.number = sRemoteNumber;
                 $scope.ShowIncomeingNotification(true);
@@ -888,7 +893,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /*--------------------------Veery Phone---------------------------------------*/
 
     /*--------------------------      Notification  ---------------------------------------*/
-    $scope.textToSpeek = "";
+
     $scope.agentFound = function (data) {
 
 
@@ -917,8 +922,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
+
+        $scope.sayIt("you are receiving "+values[6]+" call");
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
-        $scope.textToSpeek = "you are receiving "+$scope.call.skill+" call";
         collectSessions(index);
 
     };

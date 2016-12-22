@@ -2708,6 +2708,17 @@ tags-input .tags .input {
     padding-top: 5px;
 }
 
+.prn2 {
+    cursor: pointer;
+}
+
+.prn2:hover {
+    width: 100%;
+    height: auto;
+    background-color: #f7f5f5;
+    padding-left: 5px;
+}
+
 .prn2-layout-header2 {
     padding: 8px 10px 31px 10px;
 }
@@ -2933,11 +2944,11 @@ tags-input .tags .input {
     overflow: hidden;
 }
 
-.dashboard-ref{
+.dashboard-ref {
 
 }
 
-.btn-dash-ref{
+.btn-dash-ref {
     color: #36ba45;
     border: 1px solid;
     width: 120px;
@@ -5208,4 +5219,57 @@ ul.renote-color-btn > li {
 
 .loading-duration {
     color: #ff8c00 !important;
+}
+
+/*confirmation box*/
+
+.box-confirmation-wrapper {
+    position: absolute;
+    z-index: 990;
+    width: 110%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.box-confirmation-wrapper .conf-layout {
+    font-family: 'AvenirNextLTPro-Cn', sans-serif;
+    background: #ffffff;
+    width: 100%;
+    height: 150px;
+    margin-top: 100px;
+    text-align: center;
+    font-size: 25px;
+    padding: 38px 5px 10px 5px;
+    overflow: hidden;
+}
+
+.cnf-btn-wrapper {
+    margin-top: 10px;
+}
+
+.cnf-btn-wrapper > ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cnf-btn-wrapper > ul > li {
+    display: inline-block;
+    font-size: 22px;
+    text-transform: lowercase;
+    font-family: 'AvenirNextLTPro-Cn', sans-serif;
+    cursor: pointer;
+}
+
+.cnf-btn-wrapper > ul > li.ok {
+    color: #d90000;
+    padding-left: 8px;
+
+}
+
+.cnf-btn-wrapper > ul > li.cancel {
+    color: #168039;
+    padding-right: 15px;
+    border-right: 1px solid #168039;
+    line-height: 1;
+
 }
