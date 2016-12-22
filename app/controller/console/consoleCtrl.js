@@ -11,20 +11,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              filterFilter, engagementService, phoneSetting, toDoService,turnServers,Pubnub, $uibModal, notificationConnector) {
 
 
-    $scope.safeApply = function(fn) {
-        var phase = this.$root.$$phase;
-        if(phase == '$apply' || phase == '$digest') {
-            if(fn && (typeof(fn) === 'function')) {
-                fn();
-            }
-        } else {
-            this.$apply(fn);
-        }
-    };
 
-    $scope.sayIt = function () {
-        console.info($scope.textToSpeek);
-        window.speechSynthesis.speak(new SpeechSynthesisUtterance($scope.textToSpeek));
+    $scope.inCall = false;
+    $scope.sayIt = function (text) {
+        if(!$scope.inCall){
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+        }
     };
 
 
@@ -228,7 +220,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.call.sessionId = "";
     $scope.isAcw = false;
     $scope.freeze = false;
-    $scope.inCall = false;
+
     $scope.veeryPhone = {
 
         sipSendDTMF: function (dtmf) {
@@ -531,12 +523,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onIncomingCall: function (sRemoteNumber) {
             try {
                 if ($scope.isAcw || $scope.freeze) {
+                    console.info("Reject Call...........................");
                     rejectCall();
                     return;
                 }
 
-                console.info($scope.textToSpeek);
-                $scope.sayIt();
                 startRingTone();
                 /*UIStateChange.inIncomingState();*/
                 $scope.call.number = sRemoteNumber;
@@ -902,7 +893,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /*--------------------------Veery Phone---------------------------------------*/
 
     /*--------------------------      Notification  ---------------------------------------*/
-    $scope.textToSpeek = "";
+
     $scope.agentFound = function (data) {
 
 
@@ -932,10 +923,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
 
-        $scope.safeApply(function() {
-            $scope.textToSpeek = "you are receiving "+values[6]+" call";
-        });
-        console.info($scope.textToSpeek);
+        $scope.sayIt("you are receiving "+values[6]+" call");
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
 
