@@ -172,7 +172,6 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
             return response.data;
         });
     };
-
     var getGroupMembers = function(groupID)
     {
 
