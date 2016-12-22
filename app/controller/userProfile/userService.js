@@ -173,6 +173,18 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
+    var getGroupMembers = function(groupID)
+    {
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl + 'UserGroup/'+groupID+"/members",
+        }).then(function(resp)
+        {
+            return resp.data;
+        })
+    };
+
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
         LoadUser:loadUser,
@@ -187,7 +199,8 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         getExternalUserProfileByField:getExternalUserProfileByField,
         getExternalUserProfileBySsn:getExternalUserProfileBySsn,
         getPhoneConfig:getPhoneConfig,
-        AddPhoneConfig:addPhoneConfig
+        AddPhoneConfig:addPhoneConfig,
+        getGroupMembers:getGroupMembers
     }
 });
 
