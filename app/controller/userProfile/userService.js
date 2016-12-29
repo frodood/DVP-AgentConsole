@@ -3,13 +3,13 @@
  */
 
 
-agentApp.factory("userService", function ($http, baseUrls,authService) {
+agentApp.factory("userService", function ($http, baseUrls, authService) {
 
 
-    var getExternalUserProfileByContact = function (category,contact) {
+    var getExternalUserProfileByContact = function (category, contact) {
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByContact/"+category+"/"+contact
+            url: baseUrls.userServiceBaseUrl + "ExternalUser/ByContact/" + category + "/" + contact
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -23,7 +23,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Users"
+            url: baseUrls.userServiceBaseUrl + "Users"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -32,62 +32,57 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
             }
         });
     };
-    var getUserList= function () {
+    var getUserList = function () {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Users"
+            url: baseUrls.userServiceBaseUrl + "Users"
 
-        }).then(function(response)
-        {
+        }).then(function (response) {
             return response;
         });
     };
-    var getUserGroupList= function () {
+    var getUserGroupList = function () {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"UserGroups"
-        }).then(function(response)
-        {
+            url: baseUrls.userServiceBaseUrl + "UserGroups"
+        }).then(function (response) {
             return response;
         });
     };
-    var searchExternalUsers= function (searchText) {
+    var searchExternalUsers = function (searchText) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/Search/"+searchText
-        }).then(function(response)
-        {
+            url: baseUrls.userServiceBaseUrl + "ExternalUser/Search/" + searchText
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var getMyProfileDetails= function () {
+    var getMyProfileDetails = function () {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Myprofile"
-        }).then(function(response)
-        {
+            url: baseUrls.userServiceBaseUrl + "Myprofile"
+        }).then(function (response) {
             return response;
         });
     };
 
-    var mapFormSubmissionToProfile= function (formSubId, profileId) {
+    var mapFormSubmissionToProfile = function (formSubId, profileId) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.userServiceBaseUrl+'ExternalUser/' + profileId + '/FormSubmission',
+            url: baseUrls.userServiceBaseUrl + 'ExternalUser/' + profileId + '/FormSubmission',
             data: JSON.stringify({form_submission: formSubId})
-        }).then(function(response)
-        {
+        }).then(function (response) {
             return response.data;
         });
     };
@@ -95,8 +90,8 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
     var createExternalUser = function (profile) {
         return $http({
             method: 'Post',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser",
-            data:profile
+            url: baseUrls.userServiceBaseUrl + "ExternalUser",
+            data: profile
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -109,8 +104,8 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
     var updateExternalUser = function (profile) {
         return $http({
             method: 'put',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/"+profile._id,
-            data:profile
+            url: baseUrls.userServiceBaseUrl + "ExternalUser/" + profile._id,
+            data: profile
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -120,23 +115,22 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         });
     };
 
-    var UpdateExternalUserProfileContact= function (profileId, contactInfo) {
+    var UpdateExternalUserProfileContact = function (profileId, contactInfo) {
         var authToken = authService.GetToken();
 
         return $http({
             method: 'PUT',
-            url: baseUrls.userServiceBaseUrl+'ExternalUser/' + profileId + '/Contact/'+contactInfo.contact,
+            url: baseUrls.userServiceBaseUrl + 'ExternalUser/' + profileId + '/Contact/' + contactInfo.contact,
             data: JSON.stringify(contactInfo)
-        }).then(function(response)
-        {
+        }).then(function (response) {
             return response.data;
         });
     };
 
-    var getExternalUserProfileByField = function (field,value) {
+    var getExternalUserProfileByField = function (field, value) {
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/ByField/"+field+"/"+value
+            url: baseUrls.userServiceBaseUrl + "ExternalUser/ByField/" + field + "/" + value
         }).then(function (response) {
             return response.data;
         });
@@ -145,7 +139,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
     var getExternalUserProfileBySsn = function (ssn) {
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"ExternalUser/BySSN/"+ssn
+            url: baseUrls.userServiceBaseUrl + "ExternalUser/BySSN/" + ssn
         }).then(function (response) {
             return response.data;
         });
@@ -154,7 +148,7 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
     var getPhoneConfig = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.userServiceBaseUrl+"Phone/Config"
+            url: baseUrls.userServiceBaseUrl + "Phone/Config"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -167,27 +161,60 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
     var addPhoneConfig = function () {
         return $http({
             method: 'POST',
-            url: baseUrls.userServiceBaseUrl+"Phone/Config"
+            url: baseUrls.userServiceBaseUrl + "Phone/Config"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+    var getGroupMembers = function (groupID) {
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl + 'UserGroup/' + groupID + "/members",
+        }).then(function (resp) {
+            return resp.data;
+        })
+    };
+    var deleteContact = function (id, contact) {
+        return $http({
+            method: 'delete',
+            url: baseUrls.userServiceBaseUrl + "ExternalUser/" + id + "/Contact/" + contact
         }).then(function (response) {
             return response.data;
         });
     };
 
+    var deleteSocialContact = function (id, socialName) {
+        var body = {};
+        body[socialName] = '';
+        return $http({
+            method: 'put',
+            url: baseUrls.userServiceBaseUrl + "ExternalUser/" + id,
+            data: body
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+
     return {
-        GetExternalUserProfileByContact:getExternalUserProfileByContact,
-        LoadUser:loadUser,
-        getUserList:getUserList,
-        getUserGroupList:getUserGroupList,
-        searchExternalUsers:searchExternalUsers,
-        getMyProfileDetails:getMyProfileDetails,
-        mapFormSubmissionToProfile:mapFormSubmissionToProfile,
-        CreateExternalUser:createExternalUser,
-        UpdateExternalUser:updateExternalUser,
-        UpdateExternalUserProfileContact:UpdateExternalUserProfileContact,
-        getExternalUserProfileByField:getExternalUserProfileByField,
-        getExternalUserProfileBySsn:getExternalUserProfileBySsn,
-        getPhoneConfig:getPhoneConfig,
-        AddPhoneConfig:addPhoneConfig
+        GetExternalUserProfileByContact: getExternalUserProfileByContact,
+        LoadUser: loadUser,
+        getUserList: getUserList,
+        getUserGroupList: getUserGroupList,
+        searchExternalUsers: searchExternalUsers,
+        getMyProfileDetails: getMyProfileDetails,
+        mapFormSubmissionToProfile: mapFormSubmissionToProfile,
+        CreateExternalUser: createExternalUser,
+        UpdateExternalUser: updateExternalUser,
+        UpdateExternalUserProfileContact: UpdateExternalUserProfileContact,
+        getExternalUserProfileByField: getExternalUserProfileByField,
+        getExternalUserProfileBySsn: getExternalUserProfileBySsn,
+        getPhoneConfig: getPhoneConfig,
+        AddPhoneConfig: addPhoneConfig,
+        getGroupMembers: getGroupMembers,
+        DeleteContact: deleteContact,
+        DeleteSocialContact: deleteSocialContact
     }
 });
 

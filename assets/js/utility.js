@@ -183,12 +183,7 @@ var showAlert = function (title, type, content) {
         title: title,
         text: content,
         type: type,
-        styling: 'bootstrap3',
-        animate: {
-            animate: true,
-            in_class: "bounceIn",
-            out_class: "bounceOut"
-        }
+        styling: 'bootstrap3'
     });
 };
 
