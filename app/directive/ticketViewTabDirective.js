@@ -174,7 +174,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                     schema.properties[fieldItem.field].enum.push(enumVal.name);
                                     formObj.titleMap.push(
                                         {
-                                            "value": enumVal.name,
+                                            "value": enumVal.id,
                                             "name": enumVal.name
                                         }
                                     )
@@ -314,7 +314,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                     schema.properties[fieldItem.field].enum.push(enumVal.name);
                                     formObj.titleMap.push(
                                         {
-                                            "value": enumVal.name,
+                                            "value": enumVal.id,
                                             "name": enumVal.name
                                         });
                                 })
