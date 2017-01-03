@@ -50,7 +50,19 @@
                              style="margin-top: 20px;margin-bottom: 14px;">
                             Personal Information
                         </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="col-md-2 col-sm-2 col-xs-2">
+                            <div class="form-group">
+                                <label for="province">Title*</label>
+                                <select class="form-control"
+                                        ng-model="newProfile.title">
+                                    <option ng-repeat="title in titles"
+                                            value="{{title.id}}">
+                                        {{title.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-3">
                             <div class="form-group"
                                  ng-class="{ 'has-error': newProfileForm.newProfilefirstname.$invalid && newProfileForm.newProfilefirstname.$dirty }">
                                 <label class="control-label">First Name*</label>
@@ -59,7 +71,7 @@
                                        placeholder="Enter First Name"/>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
                             <div class="form-group"
                                  ng-class="{ 'has-error': newProfileForm.newProfilelastname.$invalid && newProfileForm.newProfilelastname.$dirty }">
                                 <label class="control-label">Last Name*</label>
@@ -68,11 +80,23 @@
                                        placeholder="Enter Last Name"/>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="col-md-2 col-sm-2 col-xs-2">
+                            <div class="form-group">
+                                <label for="province">Gender*</label>
+                                <select class="form-control"
+                                        ng-model="newProfile.gender">
+                                    <option ng-repeat="gen in gender"
+                                            value="{{gen}}">
+                                        {{gen}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-2">
                             <div class="form-group">
                                 <label>Nick Name</label>
                                 <input type="text" class="form-control" placeholder=""
-                                       ng-model="newProfile.name">
+                                       ng-model="newProfile.name"/>
                             </div>
                         </div>
                     </div>

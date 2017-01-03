@@ -1,5 +1,6 @@
 <div id="main" main-scroll ng-controller="consoleCtrl">
     <div>
+
         <nav id="navBar" class="navbar navbar-default console-nav-bar">
 
             <div class="container-fluid">
@@ -245,8 +246,7 @@
                         </li>
 
                         <!-- send notification -->
-                        <li class="console-menu-icon m-left-10 m-right-10"
-                            ng-click="openNav()">
+                        <li ng-click="openNav()" class="console-menu-icon m-left-10 m-right-10">
                             <i class="veery-font-1-paper-plane"></i>
                         </li>
 
@@ -268,13 +268,18 @@
 
                             <li><a class="drop-header">Register</a></li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a
-                                    ng-click="changeRegisterStatus.changeStatus('CALL');"
-                                    href="javascript:void(0);">Call</a></li>
-                            <li class="menuitem" role="menuitem"><a
-                                    ng-click="changeRegisterStatus.changeStatus('TICKET');"
-                                    href="javascript:void(0);">ticket</a></li>
+                            <li ng-if="resourceTaskObj.length==0" class="menuitem text-lowercase menu-data-notfund"
+                                role="menuitem">
+                                <span ng-click="clickRefTask()">Refresh</span> <br>
+                                task not found
+                            </li>
 
+                            <li ng-repeat="obj in resourceTaskObj" class="menuitem text-lowercase" role="menuitem"><a
+                                    ng-class="obj.task==obj.RegTask ?'font-color-green bold':''"
+                                    ng-click="changeRegisterStatus.changeStatus(obj.task);"
+                                    href="javascript:void(0);">
+                                <i ng-show="obj.task==obj.RegTask" class="ti-check"></i>
+                                {{obj.task}}</a></li>
                             <li><a class="drop-header">Break</a></li>
                             <li class="divider"></li>
                             <li class="menuitem" role="menuitem"><a id="Available"
@@ -294,12 +299,26 @@
                                                                     href="javascript:void(0);">
                                 <i ng-show="currentBerekOption=='MealBreak'" class="ti-check"></i>meal</a>
                             </li>
+                            <li><a class="drop-header">Mode</a></li>
+                            <li class="divider"></li>
+                            <li class="menuitem" role="menuitem"><a id="Inbound"
+                                                                    class=""
+                                                                    ng-click="modeOption.inboundOption('Inbound');"
+                                                                    href="javascript:void(0);">
+                                <i ng-show="currentModeOption=='Inbound'" class="ti-check"></i>inbound</a>
+                            </li>
+                            <li class="menuitem" role="menuitem"><a id="Outbound"
+                                                                    class=""
+                                                                    ng-click="modeOption.outboundOption('Outbound');"
+                                                                    href="javascript:void(0);">
+                                <i ng-show="currentModeOption=='Outbound'" class="ti-check"></i>outbound</a>
+                            </li>
                             <li class="divider"></li>
                             <li class="menuitem" role="menuitem"><a ng-click="addDashBoard();"
                                                                     href="javascript:void(0)">Dashboard</a></li>
                             <li class="menuitem" role="menuitem"><a ng-click="addMyNote();"
                                                                     href="javascript:void(0)">MyNote</a></li>
-                            <li class="menuitem" role="menuitem"><a href="#">Settings</a></li>
+                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
                             >Logout</a></li>
@@ -315,6 +334,7 @@
 
         <!-- My note notification --->
         <div ng-include="'app/views/myNote/temp/my-note-noti-me.html'"></div>
+
 
         <!-- incoming call notification display-none-->
         <div id="incomingNotification" class="console-phone-wrapper display-none  Phone is-animating "
@@ -457,10 +477,13 @@
                     </timer>
                 </div>
                 <div class="display-none" id="countdownCalltimmer">
-                    <timer autostart="false" countdown="countdown" finish-callback="veeryPhone.FinishedAcw()"
-                           interval="1000">{{seconds}} second
+                    <timer autostart="false" countdown="countdownVal" finish-callback="veeryPhone.FinishedAcw()"
+                           interval="1000">{{seconds}} second <small ng-show="isFreezeReq">Freeze Processing</small>
                     </timer>
 
+                </div>
+                <div class="display-none loading-duration" id="freezeRequest">
+                    Processing Freeze Request
                 </div>
             </div>
             <!--#KeyPad-->
@@ -543,7 +566,7 @@
                 <!-- <div id="contactList" class="phone-sm-btn phone-sm-bn-p8" title="Contact List">
                      <i class="veery-font-1-user"></i>
                  </div>-->
-                <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-user" ng-click="veeryPhone.freeze();"
+                <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-user"
                      id="contactList" title="Contact List">
 
                 </div>
@@ -556,7 +579,7 @@
                      id="morebtn" title="More"></div>
 
                 <div class="phone-sm-btn veery-font-1-stopwatch-2 show-1-btn display-none"
-                     ng-click="veeryPhone.freezeAcw();" id="freezebtn" title="freeze">
+                     ng-click="isFreezeReq || veeryPhone.freezeAcw();" id="freezebtn" title="freeze" ng-disabled="isFreezeReq">
                 </div>
 
                 <!--

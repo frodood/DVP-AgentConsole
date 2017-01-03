@@ -128,8 +128,13 @@
 
                                     <select class="form-control" ng-model="newSubTicket.assignee"
                                             ng-model-options="{trackBy: '$value'}">
-                                        <option ng-repeat="assignee in assigneeList" value='{{assignee}}'>
-                                            {{assignee.name}}
+                                        <optgroup label="Users"></optgroup>
+                                        <option ng-repeat="assignee in assigneeUsers" value='{{assignee}}'>
+                                            - {{assignee.name}}
+                                        </option>
+                                        <optgroup label="User Groups"></optgroup>
+                                        <option ng-repeat="group in assigneeGroups" value='{{group}}'>
+                                            - {{group.name}}
                                         </option>
                                     </select>
 
