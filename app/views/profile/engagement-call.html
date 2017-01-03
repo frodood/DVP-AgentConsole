@@ -160,12 +160,17 @@
                         <div class="col-md-3 col-lg-3 col-sm-12 ">
                             <div class="btn-wrapper">
                                 <div class="btn-warp inline-btn"
+                                     ng-click="createNProfile()">
+                                    <span class="btn  btn-default">New</span>
+                                </div>
+
+                                <div class="btn-warp inline-btn"
                                      ng-click="multipleProfile.editProfile();">
-                                    <span class="btn  btn-default">edit</span>
+                                    <span class="btn  btn-default">Edit</span>
                                 </div>
 
                                 <div class="btn-warp inline-btn" ng-click="multipleProfile.searchProfile();">
-                                    <span class="btn  btn-default">search</span>
+                                    <span class="btn  btn-default">Search</span>
                                 </div>
 
                             </div>
@@ -190,7 +195,7 @@
                                                      ng-src="{{profileDetail.avatar}}">
                                             </div>
                                             <div class="prn2 profile-status bold ">
-                                                {{profileDetail.name}}
+                                                {{profileDetail.title}} {{profileDetail.name}}
                                                 <br/>
                                                 <span>{{channelFrom}}</span>
                                             </div>
@@ -376,22 +381,23 @@
                                                     </div>
                                                     <!-- end -->
                                                     <div>
-                                                        <div class="prn2 header-round-icon">
+                                                        <div ng-click="deleteSocialContact('facebook');"
+                                                                class="prn2 header-round-icon"
+                                                                ng-show="profileDetail.facebook">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-facebook "></i>
                                                             </div>
                                                             <div class="prn2-contact text-header">
                                                                 facebook
                                                                 <br/>
-                                                                <small ng-show="profileDetail.facebook">{{
+                                                                <small>{{
                                                                     profileDetail.facebook}}
-                                                                </small>
-                                                                <small ng-show="!profileDetail.facebook">
-                                                                    -
                                                                 </small>
                                                             </div>
                                                         </div>
-                                                        <div class="prn2 header-round-icon">
+                                                        <div class="prn2 header-round-icon"
+                                                             ng-click="deleteSocialContact('twitter');"
+                                                             ng-show="profileDetail.twitter">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-twitter "></i>
                                                             </div>
@@ -401,12 +407,11 @@
                                                                 <small ng-show="profileDetail.twitter">{{
                                                                     profileDetail.twitter}}
                                                                 </small>
-                                                                <small ng-show="!profileDetail.twitter">
-                                                                    -
-                                                                </small>
                                                             </div>
                                                         </div>
-                                                        <div class="prn2 header-round-icon">
+                                                        <div class="prn2 header-round-icon"
+                                                             ng-click="deleteSocialContact('linkedin');"
+                                                             ng-show="profileDetail.linkedin">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-linkedin "></i>
                                                             </div>
@@ -416,12 +421,11 @@
                                                                 <small ng-show="profileDetail.linkedin">{{
                                                                     profileDetail.linkedin}}
                                                                 </small>
-                                                                <small ng-show="!profileDetail.linkedin">
-                                                                    -
-                                                                </small>
                                                             </div>
                                                         </div>
-                                                        <div class="prn2 header-round-icon">
+                                                        <div class="prn2 header-round-icon"
+                                                             ng-click="deleteSocialContact('email');"
+                                                             ng-show="profileDetail.email">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-envelope-o"></i>
                                                             </div>
@@ -431,13 +435,11 @@
                                                                 <small ng-show="profileDetail.email">
                                                                     {{profileDetail.email}}
                                                                 </small>
-                                                                <small ng-show="!profileDetail.email">
-                                                                    -
-                                                                </small>
-
                                                             </div>
                                                         </div>
-                                                        <div class="prn2 header-round-icon">
+                                                        <div class="prn2 header-round-icon"
+                                                             ng-click="deleteSocialContact('skype');"
+                                                             ng-show="profileDetail.skype">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-skype "></i>
                                                             </div>
@@ -447,12 +449,11 @@
                                                                 <small ng-show="profileDetail.skype">
                                                                     {{profileDetail.skype}}
                                                                 </small>
-                                                                <small ng-show="!profileDetail.skype">
-                                                                    -
-                                                                </small>
                                                             </div>
                                                         </div>
-                                                        <div class="prn2 header-round-icon">
+                                                        <div class="prn2 header-round-icon"
+                                                             ng-click="deleteSocialContact('google+');"
+                                                             ng-show="profileDetail.googleplus">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-google-plus "></i>
                                                             </div>
@@ -462,18 +463,16 @@
                                                                 <small ng-show="profileDetail.googleplus">
                                                                     {{profileDetail.googleplus}}
                                                                 </small>
-                                                                <small ng-show="!profileDetail.googleplus">
-                                                                    -
-                                                                </small>
                                                             </div>
                                                         </div>
-                                                        <div class="prn2 header-round-icon"
-                                                             ng-repeat="c in profileDetail.contacts">
+                                                        <div class="prn2 header-round-icon" ng-click="deleteContact(c.contact)"
+                                                             ng-repeat="c in profileDetail.contacts" >
                                                             <div class="icon-left">
                                                                 <i class="fa fa-phone"></i>
                                                                 <!--base on type,need to cheage icon-->
                                                             </div>
-                                                            <div class="prn2-contact text-header ">
+                                                            <div class="prn2-contact text-header "
+                                                                 >
                                                                 {{c.type}}
                                                                 <br/>
                                                                 <small>{{c.contact}}</small>
@@ -490,6 +489,7 @@
                                         </div>
                                     </div>
 
+                                    <!-- recent activity -->
                                     <div class="col-md-9 " style="padding-right: 0px;">
                                         <div class="prn2-recent-activity ">
                                             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -508,8 +508,8 @@
                                                                     {{recentTicket.reference}}
                                                                 </small>
                                                                 <br>
-                                                                {{ recentTicket.description | limitTo: 25}}
-                                                                {{recentTicket.description.length > 25 ? '...' : ''}}
+                                                                {{ recentTicket.subject | limitTo: 25}}
+                                                                {{recentTicket.subject.length > 25 ? '...' : ''}}
                                                             </div>
                                                             <div class="col-lg-3 p-0">
                                                                 <small class="font-color-yellow">{{recentTicket.status}}
@@ -597,6 +597,17 @@
                                                         <small>SSN</small>
                                                         <h5 ng-show="profileDetail.ssn">{{profileDetail.ssn}}</h5>
                                                         <h5 ng-show="!profileDetail.ssn">-</h5>
+                                                    </li>
+                                                    <li>
+                                                        <small>Land Number</small>
+                                                        <h5 ng-show="profileDetail.landnumber">
+                                                            {{profileDetail.landnumber}}</h5>
+                                                        <h5 ng-show="!profileDetail.landnumber">-</h5>
+                                                    </li>
+                                                    <li>
+                                                        <small>Phone</small>
+                                                        <h5 ng-show="profileDetail.phone">{{profileDetail.phone}}</h5>
+                                                        <h5 ng-show="!profileDetail.phone">-</h5>
                                                     </li>
 
 
@@ -717,7 +728,7 @@
                                                 </div>
 
                                                 <div class="profile-body">
-                                                    <h5 class="bold">{{p.name}}</h5>
+                                                    <h5 class="bold">{{p.firstname}} {{p.lastname}}</h5>
                                                     <small>{{p.phone}}</small>
                                                     <div class="btn-profile-view"
                                                          ng-click="multipleProfile.openSelectedProfile(p);">
@@ -901,8 +912,13 @@
 
                                             <select class="form-control" ng-model="ticket.assignee"
                                                     ng-model-options="{trackBy: '$value'}">
-                                                <option ng-repeat="c in users" value='{{c._id}}'>
-                                                    {{c.username}}
+                                                <optgroup label="Users"></optgroup>
+                                                <option ng-repeat="c in assigneeUsers" value='{{c._id}}'>
+                                                    - {{c.username}}
+                                                </option>
+                                                <optgroup label="User Groups"></optgroup>
+                                                <option ng-repeat="group in assigneeGroups" value='{{group._id}}'>
+                                                    - {{group.name}}
                                                 </option>
                                             </select>
 
@@ -915,8 +931,7 @@
                                     <div class="model-btn-wrapper">
                                         <div class="btn-warp ">
                                 <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
-                                      ng-click="saveTicket(ticket);"
-                                >Save</span>
+                                      ng-click="saveTicket(ticket);">Save</span>
                                         </div>
                                     </div>
 
@@ -970,6 +985,25 @@
     </div>
     <!-- end -->
 
+    <!-- contact delete confirmation box -->
+    <div class="box-confirmation-wrapper" ng-show="isCnfmBoxShow">
+        <div class="col-lg-3 col-lg-offset-4">
+            <div class="conf-layout">
+                Are you sure delete contact ?
+
+                <div class="cnf-btn-wrapper">
+                    <ul>
+                        <li class="cancel" ng-click="confimCancel()">Cancel</li>
+                        <li class="ok" ng-click="confimOk()">Ok</li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- end -->
 
 </div>
 

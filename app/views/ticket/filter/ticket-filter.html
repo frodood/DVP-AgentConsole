@@ -176,6 +176,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <paging ng-show="showPaging"
+                                class="small"
+                                page="currentPage"
+                                page-size="pageSize"
+                                total="pageTotal"
+                                show-prev-next="true"
+                                show-first-last="true"
+                                text-next-class="fa fa-angle-right"
+                                text-prev-class="fa fa-angle-left"
+                                text-first-class="fa fa-angle-double-left"
+                                text-last-class="fa fa-angle-double-right"
+                                paging-action="getPageData('Paging Clicked', page, pageSize, total)">
+                        </paging>
                     </div>
                 </div>
             </div>
