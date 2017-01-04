@@ -1268,52 +1268,102 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             direction: "direct",
             has_profile: true
         };
-        engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
-            if (response) {
-                if (response.IsSuccess) {
-                    console.log("Create Engagement Session success :: " + response);
 
-                    var notifyData = {
-                        company: profile.company,
-                        direction: "direct",
-                        channelFrom: "direct",
-                        channelTo: "direct",
-                        channel: "api",
-                        skill: '',
-                        sessionId: engUuid,
-                        userProfile: profile
-                    };
-                    $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
-                    collectSessions(engUuid);
-                } else {
-                    var errMsg1 = "Create Engagement Session Failed";
+        if(profile) {
+            engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
+                if (response) {
+                    if (response.IsSuccess) {
+                        console.log("Create Engagement Session success :: " + response);
 
-                    if (response.CustomMessage) {
+                        var notifyData = {
+                            company: profile.company,
+                            direction: "direct",
+                            channelFrom: "direct",
+                            channelTo: "direct",
+                            channel: "api",
+                            skill: '',
+                            sessionId: engUuid,
+                            userProfile: profile
+                        };
+                        $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
+                        collectSessions(engUuid);
+                    } else {
+                        var errMsg1 = "Create Engagement Session Failed";
 
-                        errMsg1 = response.CustomMessage;
+                        if (response.CustomMessage) {
 
+                            errMsg1 = response.CustomMessage;
+
+                        }
+
+                        $scope.showAlert('Error', 'error', errMsg1);
                     }
-
-                    $scope.showAlert('Error', 'error', errMsg1);
+                } else {
+                    var errMsg = "Engagement Session Undefined";
+                    $scope.showAlert('Error', 'error', errMsg);
                 }
-            } else {
-                var errMsg = "Engagement Session Undefined";
+
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                var errMsg = "Create Engagement Session Failed";
+
+                if (err.statusText) {
+
+                    errMsg = err.statusText;
+
+                }
+
                 $scope.showAlert('Error', 'error', errMsg);
-            }
 
-        }, function (err) {
-            authService.IsCheckResponse(err);
-            var errMsg = "Create Engagement Session Failed";
+            });
+        }else{
+            engagementService.AddEngagementSessionForProfile(engSessionObj).then(function (response) {
+                if (response) {
+                    if (response.IsSuccess) {
+                        console.log("Create Engagement success :: " + response);
 
-            if (err.statusText) {
+                        var notifyData = {
+                            company: authService.GetCompanyInfo().company,
+                            direction: "direct",
+                            channelFrom: "direct",
+                            channelTo: "direct",
+                            channel: "api",
+                            skill: '',
+                            sessionId: engUuid,
+                            userProfile: profile
+                        };
+                        $scope.addTab('Create New Profile', 'Engagement', 'engagement', notifyData, index);
+                        collectSessions(engUuid);
+                    } else {
+                        var errMsg1 = "Create Engagement Session Failed";
 
-                errMsg = err.statusText;
+                        if (response.CustomMessage) {
 
-            }
+                            errMsg1 = response.CustomMessage;
 
-            $scope.showAlert('Error', 'error', errMsg);
+                        }
 
-        });
+                        $scope.showAlert('Error', 'error', errMsg1);
+                    }
+                } else {
+                    var errMsg = "Engagement Session Undefined";
+                    $scope.showAlert('Error', 'error', errMsg);
+                }
+
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                var errMsg = "Create Engagement Session Failed";
+
+                if (err.statusText) {
+
+                    errMsg = err.statusText;
+
+                }
+
+                $scope.showAlert('Error', 'error', errMsg);
+
+            });
+        }
     };
 
 
@@ -1733,6 +1783,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
+    $scope.createNewProfile = function(){
+        openNewUserProfileTab(undefined, 'createNewProfile');
+    };
 
     $scope.searchExternalUsers = {};
 
