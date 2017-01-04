@@ -451,8 +451,8 @@
 
     <!-- WEB PHONE -->
     <!-- phone operation panel  -->
-    <div id="softPhoneDragElem" class="draggable">
-        <div class="isOperationPhone dial-pad-wrapper draggable">
+    <div id="softPhoneDragElem"  class="draggable">
+        <div  class="isOperationPhone dial-pad-wrapper draggable ">
             <div id="pinScreen" class="pin-screen-wrapper display-block" onclick="pinScreen()">
                 <i class="ti-pin-alt"></i>
 
@@ -462,7 +462,13 @@
             </div>
             <div class="phone-screen">
                 <div class="no-action">
-                    <input required type="text" class="phone-dialpad-no" id="number"
+                    <input required type="text"
+                           autocomplete="off"
+                           onfocus="if (this.hasAttribute('readonly'))
+                            {this.removeAttribute('readonly');
+                         // fix for mobile safari to show virtual keyboard
+                            this.blur();this.focus();}"
+                           class="phone-dialpad-no" id="number"
                            ng-model="call.number"
                            placeholder="000-00-000">
                 </div>
@@ -478,7 +484,8 @@
                 </div>
                 <div class="display-none" id="countdownCalltimmer">
                     <timer autostart="false" countdown="countdownVal" finish-callback="veeryPhone.FinishedAcw()"
-                           interval="1000">{{seconds}} second <small ng-show="isFreezeReq">Freeze Processing</small>
+                           interval="1000">{{seconds}} second
+                        <small ng-show="isFreezeReq">Freeze Processing</small>
                     </timer>
 
                 </div>
@@ -579,7 +586,8 @@
                      id="morebtn" title="More"></div>
 
                 <div class="phone-sm-btn veery-font-1-stopwatch-2 show-1-btn display-none"
-                     ng-click="isFreezeReq || veeryPhone.freezeAcw();" id="freezebtn" title="freeze" ng-disabled="isFreezeReq">
+                     ng-click="isFreezeReq || veeryPhone.freezeAcw();" id="freezebtn" title="freeze"
+                     ng-disabled="isFreezeReq">
                 </div>
 
                 <!--
