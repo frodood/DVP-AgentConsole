@@ -413,13 +413,15 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         $rootScope.$emit('openNewTab', data);
     };
 
+
+
+    $scope.refreshTime = parseInt(dashboardRefreshTime);
     var loadGrapData = function () {
         GetDeferenceResolvedTicketSeries();
         GetResolvedTicketSeries();
         GetCreatedicketSeries();
         loadProductivity(authService.GetResourceId());
     };
-    var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
 
     var loadRecentData = function () {
         GetMyRecentEngagements();
@@ -428,13 +430,16 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         GetResolveTicketCount();
         loadProductivity(authService.GetResourceId());
     };
-    var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        getAllRealTimeTimer = $timeout(getAllRealTime, $scope.refreshTime);
+        //getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
     };
-    var getAllRealTimeTimer = $timeout(getAllRealTime, $scope.refreshTime);
+
+
+    var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
+    var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
+    var getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
@@ -447,7 +452,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $timeout.cancel(loadGrapDataTimer);
         }
     });
-    $scope.refreshTime = parseInt(dashboardRefreshTime);
     $scope.dashboardReload = function () {
         getAllRealTime();
         loadRecentData();

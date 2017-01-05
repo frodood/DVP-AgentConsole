@@ -926,12 +926,19 @@
                                         </div>
                                     </form>
 
+                                    <div>
+                                        <div >
+                                            <div>{{oldFormModel}}</div>
+                                        </div>
+
+                                        <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw" ng-submit="onSubmit(customForm)"></form>
+                                    </div>
                                 </div>
                                 <div class="model-footer-wrapper">
                                     <div class="model-btn-wrapper">
                                         <div class="btn-warp ">
                                 <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
-                                      ng-click="saveTicket(ticket);">Save</span>
+                                      ng-click="saveTicket(ticket,customForm);">Save</span>
                                         </div>
                                     </div>
 
