@@ -35,11 +35,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             loadTags: '&',
             profileDetail: "=",
             tabReference: "@",
-            searchUsers: "="
+            searchUsers: "=",
+            schemaResponseNewTicket: "="
         },
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
 
+
+            scope.schemaw = scope.schemaResponseNewTicket.schema;
+            scope.formw = scope.schemaResponseNewTicket.form;
+            scope.modelw = scope.schemaResponseNewTicket.model;
 
             /*Initialize default scope*/
             scope.profileLoadin = true;
@@ -380,7 +385,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         var obj = {
                             fields: arr
                         };
-                        ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function (response) {
+                        ticketService.updateFormSubmissionData(scope.currentSubmission, obj).then(function (response) {
                             scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                         }).catch(function (err) {
@@ -956,7 +961,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.ticket.priority = priority;
             };
 
-            scope.saveTicket = function (ticket) {
+            scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
                 ticket.requester = scope.profileDetail._id;
                 ticket.engagement_session = scope.sessionId;
@@ -981,6 +986,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.recentTicketList.push(response.Result);
                         scope.ticket = {};
                         scope.newAddTags = [];
+
+                        addDynamicDataToTicket(response.Result);
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -990,6 +997,50 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
                 });
 
+
+            };
+
+           var addDynamicDataToTicket = function (ticket) {
+
+               var arr = [];
+
+               for (var key in scope.modelw) {
+                   if (scope.modelw.hasOwnProperty(key)) {
+                       arr.push({
+                           field: key,
+                           value: scope.modelw[key]
+                       });
+
+                   }
+               }
+
+               var obj = {
+                   fields: arr,
+                   reference: ticket._id,
+                   form: scope.currentForm.name
+               };
+               ticketService.createFormSubmissionData(obj).then(function (response) {
+                   //tag submission to ticket
+                   if (response && response.Result) {
+                       ticketService.mapFormSubmissionToTicket(response.Result._id, ticket._id).then(function (responseMap) {
+                           //tag submission to ticket
+
+                           scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
+
+                       }).catch(function (err) {
+                           scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+
+                       });
+                   }
+                   else {
+                       scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+                   }
+
+
+               }).catch(function (err) {
+                   scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+
+               })
 
             };
 
