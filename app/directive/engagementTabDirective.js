@@ -986,8 +986,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.recentTicketList.push(response.Result);
                         scope.ticket = {};
                         scope.newAddTags = [];
-
                         addDynamicDataToTicket(response.Result);
+                        scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -1024,12 +1024,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                    if (response && response.Result) {
                        ticketService.mapFormSubmissionToTicket(response.Result._id, ticket._id).then(function (responseMap) {
                            //tag submission to ticket
-
-                           scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
-
+                           //scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
+console.log('Ticket other data saved successfully');
                        }).catch(function (err) {
-                           scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
-
+                           //scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+                           console.log('Ticket other data save failed');
                        });
                    }
                    else {
