@@ -540,7 +540,7 @@ body {
 .call-operation-wrapper {
     width: 230px;
     height: 60px;
-    position: fixed;
+    /*position: fixed;*/
     bottom: 100px;
     right: 50px;
     background: rgb(198, 206, 205);
@@ -550,6 +550,7 @@ body {
     box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
     transition: all 80ms;
     padding: 12px 0px 5px 15px;
+    margin-top: -23px;
 }
 
 .phone-bg-btn {
@@ -3647,7 +3648,8 @@ tags-input .tags .input {
     position: inherit;
     bottom: 205px;
     right: 102px;
-    margin: 0 auto;
+    margin-top: 82px;
+    margin-left: -19px;
 }
 
 .phone-dialpad {
@@ -3663,7 +3665,8 @@ tags-input .tags .input {
     outline: none;
 }
 
-.phone-dialpad-no {
+.phone-dialpad-no,
+.phone-dialpad-no[disabled], .phone-dialpad-no[readonly] {
     margin-bottom: 0;
     border-radius: 0;
     width: 192px;
@@ -4059,11 +4062,7 @@ div.btn-group.dropdown {
     background-color: rgb(255, 255, 255) !important;
     width: 230px;
     overflow: hidden;
-    position: fixed;
     height: 0;
-    z-index: 100;
-    right: 50px;
-    bottom: 132px;
     box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
     border-radius: 15px 15px 0px 0px;
 }
@@ -4071,10 +4070,10 @@ div.btn-group.dropdown {
 .phone-screen {
     width: 202px;
     height: 66px;
-    background: #17373c;
+    background: transparent;
     position: absolute;
     top: 10px;
-    left: 15px;
+    left: 13px;
     overflow: hidden;
     padding-top: 0px;
     text-transform: capitalize;
@@ -4140,7 +4139,13 @@ div.btn-group.dropdown {
 
 #softPhoneDragElem {
     cursor: move;
-    position: relative;
+    height: 310px;
+    width: 230px;
+    position: fixed;
+    right: 102px;
+    z-index: 1000;
+    bottom: 132px;
+    background: transparent;
     /* important (all position that's not `static`) */
 }
 
@@ -5077,7 +5082,7 @@ ul.renote-color-btn > li {
     text-align: center;
 }
 
-.lock-text {
+.lock-text, .lock-text[disabled], .lock-text[readonly] {
     background: transparent;
     border: 0px;
     border-bottom: 1px solid #fff;

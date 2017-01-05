@@ -1314,10 +1314,19 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.mapProfile.isShowConfirm = false;
             };
 
+            scope.createNProfile = function () {
+                scope.showMultiProfile = false;
+                scope.profileLoadin = false;
+                scope.showNewProfile = true;
+                scope.editProfile = false;
+            };
+
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
                 if (scope.direction === 'inbound' || scope.direction === 'outbound') {
                     category = 'phone';
+                }else if(scope.direction === 'direct'){
+                    category = 'direct';
                 }
 
                 if (scope.profileDetail) {
@@ -1375,34 +1384,52 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     }
 
                 } else {
-                    userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
-                        scope.profileDetails = response;
-                        if (scope.profileDetails) {
-                            if (scope.profileDetails.length == 1) {
-                                scope.profileDetail = scope.profileDetails[0];
-                                scope.GetProfileHistory(scope.profileDetail._id);
-                                scope.profileLoadin = false;
-                                scope.currentSubmission = scope.profileDetails[0].form_submission;
-                                convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
-                                    if (schemaDetails) {
-                                        scope.schema = schemaDetails.schema;
-                                        scope.form = schemaDetails.form;
-                                        scope.model = schemaDetails.model;
-                                    }
+                    if(category === 'direct') {
+                        scope.createNProfile();
+                    }else{
+                        userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                            scope.profileDetails = response;
+                            if (scope.profileDetails) {
+                                if (scope.profileDetails.length == 1) {
+                                    scope.profileDetail = scope.profileDetails[0];
+                                    scope.GetProfileHistory(scope.profileDetail._id);
+                                    scope.profileLoadin = false;
+                                    scope.currentSubmission = scope.profileDetails[0].form_submission;
+                                    convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
+                                        if (schemaDetails) {
+                                            scope.schema = schemaDetails.schema;
+                                            scope.form = schemaDetails.form;
+                                            scope.model = schemaDetails.model;
+                                        }
 
-                                });
+                                    });
 
-                            }
-                            else if (scope.profileDetails.length > 1) {
-                                // show multiple profile selection view
-                                scope.profileLoadin = false;
-                                scope.showMultiProfile = true;
+                                }
+                                else if (scope.profileDetails.length > 1) {
+                                    // show multiple profile selection view
+                                    scope.profileLoadin = false;
+                                    scope.showMultiProfile = true;
+
+                                }
+                                else {
+                                    // show new profile
+                                    scope.profileLoadin = false;
+                                    scope.showMultiProfile = true;
+
+                                    scope.currentSubmission = null;
+                                    convertToSchemaForm(null, function (schemaDetails) {
+                                        if (schemaDetails) {
+                                            scope.schema = schemaDetails.schema;
+                                            scope.form = schemaDetails.form;
+                                            scope.model = schemaDetails.model;
+                                        }
+
+                                    });
+                                }
 
                             }
                             else {
                                 // show new profile
-                                scope.profileLoadin = false;
-                                scope.showMultiProfile = true;
 
                                 scope.currentSubmission = null;
                                 convertToSchemaForm(null, function (schemaDetails) {
@@ -1413,29 +1440,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                     }
 
                                 });
+
+
+                                scope.showMultiProfile = false;
+
                             }
-
-                        }
-                        else {
-                            // show new profile
-
-                            scope.currentSubmission = null;
-                            convertToSchemaForm(null, function (schemaDetails) {
-                                if (schemaDetails) {
-                                    scope.schema = schemaDetails.schema;
-                                    scope.form = schemaDetails.form;
-                                    scope.model = schemaDetails.model;
-                                }
-
-                            });
-
-
-                            scope.showMultiProfile = false;
-
-                        }
-                    }, function (err) {
-                        scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                    });
+                        }, function (err) {
+                            scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                        });
+                    }
                 }
             };
             scope.GetExternalUserProfileByContact();

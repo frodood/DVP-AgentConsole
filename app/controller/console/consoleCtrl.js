@@ -8,19 +8,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers,Pubnub, $uibModal, notificationConnector) {
-
+                                             filterFilter, engagementService, phoneSetting, toDoService, turnServers, Pubnub, $uibModal, notificationConnector) {
 
 
     $scope.isReadyToSpeak = false;
     $scope.sayIt = function (text) {
-        if(!$scope.isReadyToSpeak){
+        if (!$scope.isReadyToSpeak) {
             window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
         }
     };
 
 
-   $scope.showAlert = function (title, type, content) {
+    $scope.showAlert = function (title, type, content) {
         new PNotify({
             title: title,
             text: content,
@@ -28,7 +27,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             styling: 'bootstrap3'
         });
     };
-
 
 
     function startRingTone() {
@@ -51,6 +49,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.notifications = [];
     $scope.agentList = [];
     $scope.isFreezeReq = false;
+
+    $('#softPhoneDragElem').draggable();
 
     $scope.status = {
         isopen: false
@@ -128,7 +128,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 90) {
+        if ($wrapper.height() === 0 || $wrapper.height() === 98) {
             phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
                 if (res) {
                     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
@@ -136,7 +136,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
 
         } else {
-            $wrapper.stop().animate({height: pinHeight}, animateTime);
+
+            $wrapper.stop().animate({height: '98'}, animateTime);
             $('#phoneDialpad').removeClass('display-block').addClass('display-none');
         }
     };
@@ -549,19 +550,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 console.error(ex.message);
             }
         },
-        autoAnswer:function () {
-            try{
-                if($scope.PhoneConfig){
-                    if($scope.PhoneConfig.autoAnswer){
+        autoAnswer: function () {
+            try {
+                if ($scope.PhoneConfig) {
+                    if ($scope.PhoneConfig.autoAnswer) {
                         var autoAnswerAfterDelay = function () {
                             $timeout.cancel(autoAnswerTimeTimer);
-                          this.answerCall();
+                            this.answerCall();
                         };
                         autoAnswerTimeTimer = $timeout(autoAnswerAfterDelay, $scope.PhoneConfig.autoAnswerDelay);
                     }
                 }
             }
-            catch (ex){
+            catch (ex) {
                 console.log(ex)
             }
         },
@@ -872,7 +873,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     getPhoneConfig();
 
 
-
     //dont remove this code
     /*var prev, $result = $('#result'),
      counter = 0,
@@ -930,7 +930,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
 
-        $scope.sayIt("you are receiving "+values[6]+" call");
+        $scope.sayIt("you are receiving " + values[6] + " call");
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
 
@@ -1268,52 +1268,102 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             direction: "direct",
             has_profile: true
         };
-        engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
-            if (response) {
-                if (response.IsSuccess) {
-                    console.log("Create Engagement Session success :: " + response);
 
-                    var notifyData = {
-                        company: profile.company,
-                        direction: "direct",
-                        channelFrom: "direct",
-                        channelTo: "direct",
-                        channel: "api",
-                        skill: '',
-                        sessionId: engUuid,
-                        userProfile: profile
-                    };
-                    $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
-                    collectSessions(engUuid);
-                } else {
-                    var errMsg1 = "Create Engagement Session Failed";
+        if(profile) {
+            engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
+                if (response) {
+                    if (response.IsSuccess) {
+                        console.log("Create Engagement Session success :: " + response);
 
-                    if (response.CustomMessage) {
+                        var notifyData = {
+                            company: profile.company,
+                            direction: "direct",
+                            channelFrom: "direct",
+                            channelTo: "direct",
+                            channel: "api",
+                            skill: '',
+                            sessionId: engUuid,
+                            userProfile: profile
+                        };
+                        $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
+                        collectSessions(engUuid);
+                    } else {
+                        var errMsg1 = "Create Engagement Session Failed";
 
-                        errMsg1 = response.CustomMessage;
+                        if (response.CustomMessage) {
 
+                            errMsg1 = response.CustomMessage;
+
+                        }
+
+                        $scope.showAlert('Error', 'error', errMsg1);
                     }
-
-                    $scope.showAlert('Error', 'error', errMsg1);
+                } else {
+                    var errMsg = "Engagement Session Undefined";
+                    $scope.showAlert('Error', 'error', errMsg);
                 }
-            } else {
-                var errMsg = "Engagement Session Undefined";
+
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                var errMsg = "Create Engagement Session Failed";
+
+                if (err.statusText) {
+
+                    errMsg = err.statusText;
+
+                }
+
                 $scope.showAlert('Error', 'error', errMsg);
-            }
 
-        }, function (err) {
-            authService.IsCheckResponse(err);
-            var errMsg = "Create Engagement Session Failed";
+            });
+        }else{
+            engagementService.AddEngagementSessionForProfile(engSessionObj).then(function (response) {
+                if (response) {
+                    if (response.IsSuccess) {
+                        console.log("Create Engagement success :: " + response);
 
-            if (err.statusText) {
+                        var notifyData = {
+                            company: authService.GetCompanyInfo().company,
+                            direction: "direct",
+                            channelFrom: "direct",
+                            channelTo: "direct",
+                            channel: "api",
+                            skill: '',
+                            sessionId: engUuid,
+                            userProfile: profile
+                        };
+                        $scope.addTab('Create New Profile', 'Engagement', 'engagement', notifyData, index);
+                        collectSessions(engUuid);
+                    } else {
+                        var errMsg1 = "Create Engagement Session Failed";
 
-                errMsg = err.statusText;
+                        if (response.CustomMessage) {
 
-            }
+                            errMsg1 = response.CustomMessage;
 
-            $scope.showAlert('Error', 'error', errMsg);
+                        }
 
-        });
+                        $scope.showAlert('Error', 'error', errMsg1);
+                    }
+                } else {
+                    var errMsg = "Engagement Session Undefined";
+                    $scope.showAlert('Error', 'error', errMsg);
+                }
+
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                var errMsg = "Create Engagement Session Failed";
+
+                if (err.statusText) {
+
+                    errMsg = err.statusText;
+
+                }
+
+                $scope.showAlert('Error', 'error', errMsg);
+
+            });
+        }
     };
 
 
@@ -1733,6 +1783,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
+    $scope.createNewProfile = function(){
+        openNewUserProfileTab(undefined, 'createNewProfile');
+    };
 
     $scope.searchExternalUsers = {};
 
@@ -2214,8 +2267,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.notificationMsg.Direction = "STATELESS";
             if ($scope.naviSelectedUser.listType === "Group") {
                 userService.getGroupMembers($scope.naviSelectedUser._id).then(function (response) {
-                    if(response.IsSuccess)
-                    {
+                    if (response.IsSuccess) {
 
                         if (response.Result) {
                             var clients = [];
@@ -2241,39 +2293,38 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $scope.showAlert('Error', 'error', "Send Notification Failed");
                         }
                     }
-                    else
-                    {
+                    else {
                         console.log("Error in loading Group member list");
                         $scope.showAlert('Error', 'error', "Send Notification Failed");
                     }
                 }, function (err) {
-                    console.log("Error in loading Group member list ",err);
+                    console.log("Error in loading Group member list ", err);
                     $scope.showAlert('Error', 'error', "Send Notification Failed");
                 });
 
                 /*if ($scope.naviSelectedUser.users) {
-                    var clients = [];
-                    for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
-                        var gUser = $scope.naviSelectedUser.users[i];
-                        if (gUser && gUser.username && gUser.username != $scope.loginName) {
-                            clients.push(gUser.username);
-                        }
-                    }
-                    $scope.notificationMsg.clients = clients;
+                 var clients = [];
+                 for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
+                 var gUser = $scope.naviSelectedUser.users[i];
+                 if (gUser && gUser.username && gUser.username != $scope.loginName) {
+                 clients.push(gUser.username);
+                 }
+                 }
+                 $scope.notificationMsg.clients = clients;
 
-                    notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
-                        $scope.notificationMsg = {};
-                        console.log("send notification success :: " + JSON.stringify(clients));
-                    }, function (err) {
-                        var errMsg = "Send Notification Failed";
-                        if (err.statusText) {
-                            errMsg = err.statusText;
-                        }
-                        $scope.showAlert('Error', 'error', errMsg);
-                    });
-                } else {
-                    $scope.showAlert('Error', 'error', "Send Notification Failed");
-                }*/
+                 notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
+                 $scope.notificationMsg = {};
+                 console.log("send notification success :: " + JSON.stringify(clients));
+                 }, function (err) {
+                 var errMsg = "Send Notification Failed";
+                 if (err.statusText) {
+                 errMsg = err.statusText;
+                 }
+                 $scope.showAlert('Error', 'error', errMsg);
+                 });
+                 } else {
+                 $scope.showAlert('Error', 'error', "Send Notification Failed");
+                 }*/
 
             } else {
 
@@ -2631,7 +2682,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetCurrentRegisterTask(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         if (data.Result) {
-                            if (data.Result.obj){
+                            if (data.Result.obj) {
                                 if (data.Result.obj.LoginTasks) {
                                     for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
                                         data.Result.obj.LoginTasks.forEach(function (value, key) {
@@ -2797,7 +2848,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     // Break screen functions
     $scope.lockPwd = null;
     $scope.isUnlock = false;
-
     $scope.breakScreen = function () {
         var param = {
             userName: $scope.loginName,
@@ -2831,6 +2881,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     }();
 
+    //text key event fire
+    $scope.enterUnlockMe = function () {
+        alert('event fire');
+    };
     var buildFormSchema = function (schema, form, fields) {
         fields.forEach(function (fieldItem) {
             if (fieldItem.field) {
@@ -3115,6 +3169,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             scope.$apply();
         });
     };
+}).directive('enterUnlockScreen', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.enterUnlockScreen);
+                });
+                event.preventDefault();
+            }
+        });
+    };
 });
 
 agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
@@ -3124,15 +3189,4 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
     $scope.MessageObj = MessageObj;
 
 
-}).directive('enterUnlockScreen', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            if (event.which === 13) {
-                scope.$apply(function () {
-                    scope.$eval(attrs.myEnter);
-                });
-                event.preventDefault();
-            }
-        });
-    };
-});
+})
