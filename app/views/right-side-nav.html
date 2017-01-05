@@ -7,40 +7,79 @@
     <!--</div>-->
 
     <div class="online-user-wrapper">
-        <div ng-slimscroll
-             opacity="0.1"
-             distance="5px"
-             height="550px"
-             width="100%"
-             ng-mouseover="chatWidgetscrollEnabled = true"
-             ng-mouseleave="chatWidgetscrollEnabled = false"
-             enabled="{{ chatWidgetscrollEnabled }}">
-            <div ng-mouseover="chatOption = true"
-                 ng-mouseleave="chatOption = false"
-                 class="notification-user" ng-repeat="agent in agentList | filterBy: ['username']: searchCriteria">
-                <div ng-if="agent.name" class="user-img">
-                    <img src="asset/images/defaultProfile.png"
-                         ng-src="{{agent.avatar}}">
-                    {{agent.name}}
+
+        <div id="notificationWrapper"
+             slimscroll="{height: '{{windowHeight}}',
+            railVisible: true,
+            color: '#c5c5c5',
+            size: '8px',
+            distance: '5px',
+            railColor: '#fff',
+            railBorderRadius: 10}">
+            <div class="conversation-wrapper">
+                <div class="title">
+                    User Conversation
                 </div>
-                <div ng-if="!agent.name" class="user-img">
-                    <img src="asset/images/defaultProfile.png"
-                         ng-src="{{agent.avatar}}">
-                    {{agent.username}}
+                <div ng-mouseover="chatOption = true"
+                     ng-mouseleave="chatOption = false"
+                     class="notification-user" ng-repeat="agent in agentList | filterBy: ['username']: searchCriteria">
+                    <div ng-if="agent.name" class="user-img">
+                        <img src="assets/img/avatar/defaultProfile.png"
+                             ng-src="{{agent.avatar}}">
+                        {{agent.name}}
+                    </div>
+                    <div ng-if="!agent.name" class="user-img">
+                        <img src="assets/img/avatar/defaultProfile.png"
+                             ng-src="{{agent.avatar}}">
+                        {{agent.username}}
+                    </div>
+                    <div class="notification-details">
+                        <div class="chat-icon" ng-show="chatOption" ng-click="setExtention(agent)">
+                            <i class="main-icon-2-telephone-3"></i>
+                        </div>
+                        <div class="chat-icon" ng-show="chatOption">
+                            <i class="main-icon-2-transfer-8"></i>
+                        </div>
+                        <div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock(agent)">
+                            <i class="main-icon-2-speech-bubble"></i>
+                        </div>
+                        <div class="user-state" style="margin-right: 5px;margin-left: 10px;"
+                             ng-class="agent.status=='NotAvailable'?'offline':'online'"
+                        ></div>
+                    </div>
                 </div>
-                <div class="notification-details">
-                    <div class="chat-icon" ng-show="chatOption" ng-click="setExtention(agent)">
-                        <i class="main-icon-2-telephone-3"></i>
+
+                <!-- user group -->
+                <div class="conversation-wrapper">
+                    <div class="title">
+                        Group Conversation
                     </div>
-                    <div class="chat-icon" ng-show="chatOption">
-                        <i class="main-icon-2-transfer-8"></i>
-                    </div>
-                    <div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock(agent)">
-                        <i class="main-icon-2-speech-bubble"></i>
-                    </div>
-                    <div class="user-state" style="margin-right: 5px;margin-left: 10px;"
-                         ng-class="agent.status=='NotAvailable'?'offline':'online'"
+                    <div ng-mouseover="groupOption = true"
+                         ng-mouseleave="groupOption = false"
+                         class="notification-user" ng-repeat="group in userGroups ">
+
+                        <div ng-if="group.name" class="user-img">
+                            <img src="assets/img/avatar/defaultProfile.png"
+                                 ng-src="{{group.avatar}}">
+                            {{group.name}}
+                        </div>
+                        <div class="notification-details">
+                            <div class="chat-icon" ng-show="groupOption" ng-click="setExtention(group)">
+                                <i class="main-icon-2-telephone-3"></i>
+                            </div>
+                            <div class="chat-icon" ng-show="groupOption">
+                                <i class="main-icon-2-transfer-8"></i>
+                            </div>
+                            <div class="chat-icon" ng-show="groupOption" ng-click="showMessageBlock(group)">
+                                <i class="main-icon-2-speech-bubble"></i>
+                            </div>
+                            <div class="user-state" style="margin-right: 18px;margin-left: 10px;"
+                                 ng-class="group.status=='NotAvailable'?'offline':'online'"
                             ></div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -67,7 +106,7 @@
                         </div>-->
                         <div class="online-user-wrapper notification-user notify-img-large ">
 
-                            <img src="asset/images/defaultProfile.png"
+                            <img src="asset/img/avatar/defaultProfile.png"
                                  ng-src="{{naviSelectedUser.avatar}}">
 
                         </div>
@@ -89,7 +128,8 @@
                     </div>
                     <fieldset>
                         <div class="btn-warp inline-btn pull-right">
-                            <span class="btn btn-default " ng-click="sendNotification()" ng-disabled="!notificationMsg.Message">send</span>
+                        <span class="btn btn-default " ng-click="sendNotification()"
+                              ng-disabled="!notificationMsg.Message">send</span>
                         </div>
                     </fieldset>
 

@@ -148,6 +148,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isBtnReg').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isCallOnline').addClass('display-block deactive-menu-icon').removeClass('display-none');
+        $('#softPhoneDragElem').addClass('display-none ').removeClass('display-block');
         phoneFuncion.idle();
         $scope.ShowHidePhone(false);
     };
@@ -157,6 +158,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isBtnReg').addClass('display-block active-menu-icon').removeClass('display-none');
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
+        $('#softPhoneDragElem').addClass('display-block').removeClass('display-none ');
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
 
@@ -1269,7 +1271,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             has_profile: true
         };
 
-        if(profile) {
+        if (profile) {
             engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
                 if (response) {
                     if (response.IsSuccess) {
@@ -1316,7 +1318,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.showAlert('Error', 'error', errMsg);
 
             });
-        }else{
+        } else {
             engagementService.AddEngagementSessionForProfile(engSessionObj).then(function (response) {
                 if (response) {
                     if (response.IsSuccess) {
@@ -1783,7 +1785,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
-    $scope.createNewProfile = function(){
+    $scope.createNewProfile = function () {
         openNewUserProfileTab(undefined, 'createNewProfile');
     };
 
@@ -2230,7 +2232,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     /* Set the width of the side navigation to 250px */
+    $scope.getViewportHeight = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
+    //Detect Document Height
+    //update code damith
+    window.onload = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
 
+    window.onresize = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
     $scope.isUserListOpen = false;
     $scope.openNav = function () {
 
@@ -2238,6 +2254,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.closeNav();
         }
         else {
+            $scope.getViewportHeight();
             getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
             document.getElementById("mySidenav").style.width = "300px";
             document.getElementById("main").style.marginRight = "285px";
@@ -2431,7 +2448,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         return 0;
                     });
 
-                    $scope.agentList = userGroupList.concat($scope.agentList)
+                   // $scope.agentList = userGroupList.concat($scope.agentList)
+                    $scope.userGroups = userGroupList;
                 }
             }
             else {
