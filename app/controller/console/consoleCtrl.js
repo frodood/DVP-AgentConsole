@@ -2885,6 +2885,277 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.enterUnlockMe = function () {
         alert('event fire');
     };
+    var buildFormSchema = function (schema, form, fields) {
+        fields.forEach(function (fieldItem) {
+            if (fieldItem.field) {
+                var isActive = true;
+                if (fieldItem.active === false) {
+                    isActive = false;
+                }
+                if (fieldItem.type === 'text') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'textarea') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "textarea"
+                    })
+                }
+                else if (fieldItem.type === 'url') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'header') {
+                    var h2Tag = '<h2>' + fieldItem.title + '</h2>';
+                    form.push({
+                        "type": "help",
+                        "helpvalue": h2Tag
+                    });
+                }
+                else if (fieldItem.type === 'radio') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    var formObj = {
+                        "key": fieldItem.field,
+                        "type": "radios-inline",
+                        "titleMap": []
+                    };
+
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        schema.properties[fieldItem.field].enum = [];
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].enum.push(enumVal.name);
+                            formObj.titleMap.push(
+                                {
+                                    "value": enumVal.id,
+                                    "name": enumVal.name
+                                }
+                            )
+                        })
+
+                    }
+
+                    form.push(formObj);
+                }
+                else if (fieldItem.type === 'date') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive,
+                        format: 'date'
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "minDate": "1900-01-01"
+                    })
+                }
+                else if (fieldItem.type === 'number') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'number',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "number"
+                    })
+                }
+                else if (fieldItem.type === 'phone') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        pattern: "^[0-9*#+]+$",
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'boolean' || fieldItem.type === 'checkbox') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'boolean',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "checkbox"
+                    })
+                }
+                else if (fieldItem.type === 'checkboxes') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'array',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive,
+                        items: {
+                            type: "string",
+                            enum: []
+                        }
+                    };
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].items.enum.push(enumVal.name);
+                        })
+
+                    }
+
+                    form.push(fieldItem.field);
+                }
+                else if (fieldItem.type === 'email') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        pattern: "^\\S+@\\S+$",
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'select') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    var formObj = {
+                        "key": fieldItem.field,
+                        "type": "select",
+                        "titleMap": []
+                    };
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        schema.properties[fieldItem.field].enum = [];
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].enum.push(enumVal.name);
+                            formObj.titleMap.push(
+                                {
+                                    "value": enumVal.id,
+                                    "name": enumVal.name
+                                });
+                        })
+
+                    }
+                    form.push(formObj);
+                }
+            }
+        });
+
+        return schema;
+    };
+
+    $scope.schemaResponse = {};
+    $scope.createTicketDynamicFrm = function () {
+            var schema = {
+                type: "object",
+                properties: {}
+            };
+
+            var form = [];
+
+
+            ticketService.getFormsForCompany().then(function (response) {
+                if (response && response.Result && response.Result.ticket_form) {
+                    //compare two forms
+                    buildFormSchema(schema, form, response.Result.ticket_form.fields);
+                    var currentForm = response.Result.ticket_form;
+
+                    /*form.push({
+                        type: "submit",
+                        title: "Save"
+                    });*/
+
+                    $scope.schemaResponse = {
+                        schema: schema,
+                        form: form,
+                        model: {},
+                        currentForm:currentForm
+                    };
+                }
+            }).catch(function (err) {
+                $scope.showAlert('Ticket', 'error', 'Fail To Get Ticket Dynamic form Data');
+            });
+        };
+    $scope.createTicketDynamicFrm();
 
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
