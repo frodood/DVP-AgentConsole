@@ -35,11 +35,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             loadTags: '&',
             profileDetail: "=",
             tabReference: "@",
-            searchUsers: "="
+            searchUsers: "=",
+            schemaResponseNewTicket: "="
         },
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
 
+
+            scope.schemaw = scope.schemaResponseNewTicket.schema;
+            scope.formw = scope.schemaResponseNewTicket.form;
+            scope.modelw = scope.schemaResponseNewTicket.model;
 
             /*Initialize default scope*/
             scope.profileLoadin = true;
@@ -380,7 +385,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         var obj = {
                             fields: arr
                         };
-                        ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function (response) {
+                        ticketService.updateFormSubmissionData(scope.currentSubmission, obj).then(function (response) {
                             scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                         }).catch(function (err) {
@@ -959,7 +964,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.ticket.priority = priority;
             };
 
-            scope.saveTicket = function (ticket) {
+            scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
                 ticket.requester = scope.profileDetail._id;
                 ticket.engagement_session = scope.sessionId;
@@ -984,6 +989,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.recentTicketList.push(response.Result);
                         scope.ticket = {};
                         scope.newAddTags = [];
+                        addDynamicDataToTicket(response.Result);
+                        scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -993,6 +1000,49 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
                 });
 
+
+            };
+
+           var addDynamicDataToTicket = function (ticket) {
+
+               var arr = [];
+
+               for (var key in scope.modelw) {
+                   if (scope.modelw.hasOwnProperty(key)) {
+                       arr.push({
+                           field: key,
+                           value: scope.modelw[key]
+                       });
+
+                   }
+               }
+
+               var obj = {
+                   fields: arr,
+                   reference: ticket._id,
+                   form: scope.currentForm.name
+               };
+               ticketService.createFormSubmissionData(obj).then(function (response) {
+                   //tag submission to ticket
+                   if (response && response.Result) {
+                       ticketService.mapFormSubmissionToTicket(response.Result._id, ticket._id).then(function (responseMap) {
+                           //tag submission to ticket
+                           //scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
+console.log('Ticket other data saved successfully');
+                       }).catch(function (err) {
+                           //scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+                           console.log('Ticket other data save failed');
+                       });
+                   }
+                   else {
+                       scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+                   }
+
+
+               }).catch(function (err) {
+                   scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+
+               })
 
             };
 
@@ -1266,10 +1316,19 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.mapProfile.isShowConfirm = false;
             };
 
+            scope.createNProfile = function () {
+                scope.showMultiProfile = false;
+                scope.profileLoadin = false;
+                scope.showNewProfile = true;
+                scope.editProfile = false;
+            };
+
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
                 if (scope.direction === 'inbound' || scope.direction === 'outbound') {
                     category = 'phone';
+                }else if(scope.direction === 'direct'){
+                    category = 'direct';
                 }
 
                 if (scope.profileDetail) {
@@ -1327,34 +1386,52 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     }
 
                 } else {
-                    userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
-                        scope.profileDetails = response;
-                        if (scope.profileDetails) {
-                            if (scope.profileDetails.length == 1) {
-                                scope.profileDetail = scope.profileDetails[0];
-                                scope.GetProfileHistory(scope.profileDetail._id);
-                                scope.profileLoadin = false;
-                                scope.currentSubmission = scope.profileDetails[0].form_submission;
-                                convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
-                                    if (schemaDetails) {
-                                        scope.schema = schemaDetails.schema;
-                                        scope.form = schemaDetails.form;
-                                        scope.model = schemaDetails.model;
-                                    }
+                    if(category === 'direct') {
+                        scope.createNProfile();
+                    }else{
+                        userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                            scope.profileDetails = response;
+                            if (scope.profileDetails) {
+                                if (scope.profileDetails.length == 1) {
+                                    scope.profileDetail = scope.profileDetails[0];
+                                    scope.GetProfileHistory(scope.profileDetail._id);
+                                    scope.profileLoadin = false;
+                                    scope.currentSubmission = scope.profileDetails[0].form_submission;
+                                    convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
+                                        if (schemaDetails) {
+                                            scope.schema = schemaDetails.schema;
+                                            scope.form = schemaDetails.form;
+                                            scope.model = schemaDetails.model;
+                                        }
 
-                                });
+                                    });
 
-                            }
-                            else if (scope.profileDetails.length > 1) {
-                                // show multiple profile selection view
-                                scope.profileLoadin = false;
-                                scope.showMultiProfile = true;
+                                }
+                                else if (scope.profileDetails.length > 1) {
+                                    // show multiple profile selection view
+                                    scope.profileLoadin = false;
+                                    scope.showMultiProfile = true;
+
+                                }
+                                else {
+                                    // show new profile
+                                    scope.profileLoadin = false;
+                                    scope.showMultiProfile = true;
+
+                                    scope.currentSubmission = null;
+                                    convertToSchemaForm(null, function (schemaDetails) {
+                                        if (schemaDetails) {
+                                            scope.schema = schemaDetails.schema;
+                                            scope.form = schemaDetails.form;
+                                            scope.model = schemaDetails.model;
+                                        }
+
+                                    });
+                                }
 
                             }
                             else {
                                 // show new profile
-                                scope.profileLoadin = false;
-                                scope.showMultiProfile = true;
 
                                 scope.currentSubmission = null;
                                 convertToSchemaForm(null, function (schemaDetails) {
@@ -1365,29 +1442,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                     }
 
                                 });
+
+
+                                scope.showMultiProfile = false;
+
                             }
-
-                        }
-                        else {
-                            // show new profile
-
-                            scope.currentSubmission = null;
-                            convertToSchemaForm(null, function (schemaDetails) {
-                                if (schemaDetails) {
-                                    scope.schema = schemaDetails.schema;
-                                    scope.form = schemaDetails.form;
-                                    scope.model = schemaDetails.model;
-                                }
-
-                            });
-
-
-                            scope.showMultiProfile = false;
-
-                        }
-                    }, function (err) {
-                        scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                    });
+                        }, function (err) {
+                            scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                        });
+                    }
                 }
             };
             scope.GetExternalUserProfileByContact();
@@ -1843,6 +1906,61 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         break;
                 }
             }//end
+
+            //update code damith
+            scope.isCnfmBoxShow = false;
+
+
+            var deleteContactObj = {};
+
+            scope.deleteSocialContact = function (contact) {
+                deleteContactObj.contact = '';
+                deleteContactObj.status = 0;
+                scope.isCnfmBoxShow = true;
+                deleteContactObj.contact = contact;
+                deleteContactObj.status = 2;
+            };
+
+            scope.deleteContact = function (contact) {
+                deleteContactObj.contact = '';
+                deleteContactObj.status = 0;
+                scope.isCnfmBoxShow = true;
+                deleteContactObj.contact = contact;
+                deleteContactObj.status = 1;
+            };
+
+            scope.confimOk = function () {
+                //delete contact
+                if (deleteContactObj.status == 1) {
+                    userService.DeleteContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
+                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.profileDetail.contacts.forEach(function (value, key) {
+                            if (scope.profileDetail.contacts[key].contact == deleteContactObj.contact) {
+                                scope.profileDetail.contacts.splice(key, 1);
+                            }
+                        });
+                        scope.isCnfmBoxShow = false;
+
+                    }, function (err) {
+                        console.log(err);
+                    });
+                }
+
+                //delete social contact details
+                if (deleteContactObj.status == 2) {
+                    userService.DeleteSocialContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
+                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.profileDetail[deleteContactObj.contact] = '';
+                        scope.isCnfmBoxShow = false;
+                    }, function (err) {
+                        console.log(err);
+                    });
+                }
+            };
+
+            scope.confimCancel = function () {
+                scope.isCnfmBoxShow = false;
+            }
         }
     }
 }).directive("fileread", [function () {

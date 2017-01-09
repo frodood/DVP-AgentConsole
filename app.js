@@ -10,7 +10,7 @@ var agentApp = angular.module('veeryAgentApp',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer', 'mdo-angular-cryptography'
-        ,'ui.bootstrap.accordion', 'jsonFormatter','bw.paging'
+        , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll'
     ]);
 
 
@@ -39,7 +39,7 @@ var baseUrls = {
 agentApp.constant('baseUrls', baseUrls);
 
 agentApp.constant('dashboardRefreshTime', 60000);
-agentApp.constant('turnServers', [{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}]);
+agentApp.constant('turnServers', [{url: "stun:stun.l.google.com:19302"}, {url: "stun:stun.counterpath.net:3478"}, {url: "stun:numb.viagenie.ca:3478"}]);
 //{url:"stun:stun.l.google.com:19302"},{url:"stun:stun.counterpath.net:3478"},{url:"stun:numb.viagenie.ca:3478"}
 //{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}
 
@@ -86,7 +86,7 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$auth
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
 
-agentApp.config(['$cryptoProvider', function($cryptoProvider){
+agentApp.config(['$cryptoProvider', function ($cryptoProvider) {
     $cryptoProvider.setCryptographyKey('1111111111111111');
 }]);
 

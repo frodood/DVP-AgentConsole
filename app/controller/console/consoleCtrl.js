@@ -8,7 +8,25 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers, $uibModal, notificationConnector) {
+                                             filterFilter, engagementService, phoneSetting, toDoService, turnServers, Pubnub, $uibModal, notificationConnector) {
+
+
+    $scope.isReadyToSpeak = false;
+    $scope.sayIt = function (text) {
+        if (!$scope.isReadyToSpeak) {
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+        }
+    };
+
+
+    $scope.showAlert = function (title, type, content) {
+        new PNotify({
+            title: title,
+            text: content,
+            type: type,
+            styling: 'bootstrap3'
+        });
+    };
 
 
     function startRingTone() {
@@ -27,9 +45,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     }
 
+
     $scope.notifications = [];
     $scope.agentList = [];
     $scope.isFreezeReq = false;
+
+    $('#softPhoneDragElem').draggable();
 
     $scope.status = {
         isopen: false
@@ -107,7 +128,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 90) {
+        if ($wrapper.height() === 0 || $wrapper.height() === 98) {
             phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
                 if (res) {
                     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
@@ -115,7 +136,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
 
         } else {
-            $wrapper.stop().animate({height: pinHeight}, animateTime);
+
+            $wrapper.stop().animate({height: '98'}, animateTime);
             $('#phoneDialpad').removeClass('display-block').addClass('display-none');
         }
     };
@@ -126,6 +148,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isBtnReg').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isCallOnline').addClass('display-block deactive-menu-icon').removeClass('display-none');
+        $('#softPhoneDragElem').addClass('display-none ').removeClass('display-block');
         phoneFuncion.idle();
         $scope.ShowHidePhone(false);
     };
@@ -135,6 +158,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isBtnReg').addClass('display-block active-menu-icon').removeClass('display-none');
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
+        $('#softPhoneDragElem').addClass('display-block').removeClass('display-none ');
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
 
@@ -173,20 +197,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
+    var timeReset = function () {
 
+    };
     $scope.isRegistor = false;
     $scope.showPhone = false;
     $scope.phoneStatus = "Offline";
-
-    $scope.showAlert = function (tittle, type, msg) {
-        new PNotify({
-            title: tittle,
-            text: msg,
-            type: type,
-            styling: 'bootstrap3',
-            icon: 'ti-bell'
-        });
-    };
 
     $scope.profile = {};
     $scope.profile.displayName = "";
@@ -210,6 +226,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isAcw = false;
     $scope.freeze = false;
     $scope.inCall = false;
+    var autoAnswerTimeTimer = $timeout(timeReset, 0);
+
     $scope.veeryPhone = {
 
         sipSendDTMF: function (dtmf) {
@@ -234,6 +252,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         endCall: function () {
             sipHangUp();
+            $timeout.cancel(autoAnswerTimeTimer);
         },
         answerCall: function () {
             answerCall();
@@ -246,6 +265,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             stopRingTone();
             $scope.ShowIncomeingNotification(false);
             phoneFuncion.updateCallStatus('');
+            $timeout.cancel(autoAnswerTimeTimer);
         },
         etlCall: function () {
             var dtmfSet = phoneSetting.EtlCode.split('');
@@ -512,9 +532,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onIncomingCall: function (sRemoteNumber) {
             try {
                 if ($scope.isAcw || $scope.freeze) {
+                    console.info("Reject Call...........................");
                     rejectCall();
                     return;
                 }
+
                 startRingTone();
                 /*UIStateChange.inIncomingState();*/
                 $scope.call.number = sRemoteNumber;
@@ -524,10 +546,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.hideMuteButton();
                 /*addCallToHistory(sRemoteNumber, 2);*/
                 phoneFuncion.updateCallStatus('Incoming Call');
-
+                $scope.veeryPhone.autoAnswer();
             }
             catch (ex) {
                 console.error(ex.message);
+            }
+        },
+        autoAnswer: function () {
+            try {
+                if ($scope.PhoneConfig) {
+                    if ($scope.PhoneConfig.autoAnswer) {
+                        var autoAnswerAfterDelay = function () {
+                            $timeout.cancel(autoAnswerTimeTimer);
+                            this.answerCall();
+                        };
+                        autoAnswerTimeTimer = $timeout(autoAnswerAfterDelay, $scope.PhoneConfig.autoAnswerDelay);
+                    }
+                }
+            }
+            catch (ex) {
+                console.log(ex)
             }
         },
         uiCallTerminated: function (msg) {
@@ -605,7 +643,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-
     var phoneFuncion = {
         hideAllBtn: function () {
             phoneFuncion.hideAnswerButton();
@@ -629,6 +666,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.showMorebtn();
             $scope.freeze = false;
             $scope.isAcw = false;
+            $scope.isReadyToSpeak = false;
             phoneFuncion.updateCallStatus('Idle');
 
             phoneFuncion.hideConference();
@@ -652,7 +690,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $('#freezeRequest').addClass('display-none').removeClass('call-duations');
                     $scope.startCallTime();
                 }
-                else{
+                else {
                     phoneFuncion.hidefreezeRequest();
                 }
                 $scope.isFreezeReq = false;
@@ -824,6 +862,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.$apply();
     });
 
+    $scope.PhoneConfig = {};
+    var getPhoneConfig = function () {
+        userService.getPhoneConfig().then(function (response) {
+            $scope.PhoneConfig = response;
+        }, function (error) {
+
+            console.log(error);
+            $scope.showAlert("Phone", "error", "Fail To Get Phone Config.");
+        });
+    };
+    getPhoneConfig();
+
 
     //dont remove this code
     /*var prev, $result = $('#result'),
@@ -852,7 +902,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /*--------------------------Veery Phone---------------------------------------*/
 
     /*--------------------------      Notification  ---------------------------------------*/
+
     $scope.agentFound = function (data) {
+
+
         var values = data.Message.split("|");
         var notifyData = {
             company: data.Company,
@@ -878,8 +931,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
+
+        $scope.sayIt("you are receiving " + values[6] + " call");
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
+
     };
 
 
@@ -1214,52 +1270,102 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             direction: "direct",
             has_profile: true
         };
-        engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
-            if (response) {
-                if (response.IsSuccess) {
-                    console.log("Create Engagement Session success :: " + response);
 
-                    var notifyData = {
-                        company: profile.company,
-                        direction: "direct",
-                        channelFrom: "direct",
-                        channelTo: "direct",
-                        channel: "api",
-                        skill: '',
-                        sessionId: engUuid,
-                        userProfile: profile
-                    };
-                    $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
-                    collectSessions(engUuid);
-                } else {
-                    var errMsg1 = "Create Engagement Session Failed";
+        if (profile) {
+            engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
+                if (response) {
+                    if (response.IsSuccess) {
+                        console.log("Create Engagement Session success :: " + response);
 
-                    if (response.CustomMessage) {
+                        var notifyData = {
+                            company: profile.company,
+                            direction: "direct",
+                            channelFrom: "direct",
+                            channelTo: "direct",
+                            channel: "api",
+                            skill: '',
+                            sessionId: engUuid,
+                            userProfile: profile
+                        };
+                        $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
+                        collectSessions(engUuid);
+                    } else {
+                        var errMsg1 = "Create Engagement Session Failed";
 
-                        errMsg1 = response.CustomMessage;
+                        if (response.CustomMessage) {
 
+                            errMsg1 = response.CustomMessage;
+
+                        }
+
+                        $scope.showAlert('Error', 'error', errMsg1);
                     }
-
-                    $scope.showAlert('Error', 'error', errMsg1);
+                } else {
+                    var errMsg = "Engagement Session Undefined";
+                    $scope.showAlert('Error', 'error', errMsg);
                 }
-            } else {
-                var errMsg = "Engagement Session Undefined";
+
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                var errMsg = "Create Engagement Session Failed";
+
+                if (err.statusText) {
+
+                    errMsg = err.statusText;
+
+                }
+
                 $scope.showAlert('Error', 'error', errMsg);
-            }
 
-        }, function (err) {
-            authService.IsCheckResponse(err);
-            var errMsg = "Create Engagement Session Failed";
+            });
+        } else {
+            engagementService.AddEngagementSessionForProfile(engSessionObj).then(function (response) {
+                if (response) {
+                    if (response.IsSuccess) {
+                        console.log("Create Engagement success :: " + response);
 
-            if (err.statusText) {
+                        var notifyData = {
+                            company: authService.GetCompanyInfo().company,
+                            direction: "direct",
+                            channelFrom: "direct",
+                            channelTo: "direct",
+                            channel: "api",
+                            skill: '',
+                            sessionId: engUuid,
+                            userProfile: profile
+                        };
+                        $scope.addTab('Create New Profile', 'Engagement', 'engagement', notifyData, index);
+                        collectSessions(engUuid);
+                    } else {
+                        var errMsg1 = "Create Engagement Session Failed";
 
-                errMsg = err.statusText;
+                        if (response.CustomMessage) {
 
-            }
+                            errMsg1 = response.CustomMessage;
 
-            $scope.showAlert('Error', 'error', errMsg);
+                        }
 
-        });
+                        $scope.showAlert('Error', 'error', errMsg1);
+                    }
+                } else {
+                    var errMsg = "Engagement Session Undefined";
+                    $scope.showAlert('Error', 'error', errMsg);
+                }
+
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                var errMsg = "Create Engagement Session Failed";
+
+                if (err.statusText) {
+
+                    errMsg = err.statusText;
+
+                }
+
+                $scope.showAlert('Error', 'error', errMsg);
+
+            });
+        }
     };
 
 
@@ -1679,6 +1785,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
+    $scope.createNewProfile = function () {
+        openNewUserProfileTab(undefined, 'createNewProfile');
+    };
 
     $scope.searchExternalUsers = {};
 
@@ -2123,7 +2232,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     /* Set the width of the side navigation to 250px */
+    $scope.getViewportHeight = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
+    //Detect Document Height
+    //update code damith
+    window.onload = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
 
+    window.onresize = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
     $scope.isUserListOpen = false;
     $scope.openNav = function () {
 
@@ -2131,6 +2254,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.closeNav();
         }
         else {
+            $scope.getViewportHeight();
             getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
             document.getElementById("mySidenav").style.width = "300px";
             document.getElementById("main").style.marginRight = "285px";
@@ -2159,29 +2283,65 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.notificationMsg.From = $scope.loginName;
             $scope.notificationMsg.Direction = "STATELESS";
             if ($scope.naviSelectedUser.listType === "Group") {
-                if ($scope.naviSelectedUser.users) {
-                    var clients = [];
-                    for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
-                        var gUser = $scope.naviSelectedUser.users[i];
-                        if (gUser && gUser.username && gUser.username != $scope.loginName) {
-                            clients.push(gUser.username);
+                userService.getGroupMembers($scope.naviSelectedUser._id).then(function (response) {
+                    if (response.IsSuccess) {
+
+                        if (response.Result) {
+                            var clients = [];
+                            for (var i = 0; i < response.Result.length; i++) {
+                                var gUser = response.Result[i];
+                                if (gUser && gUser.username && gUser.username != $scope.loginName) {
+                                    clients.push(gUser.username);
+                                }
+                            }
+                            $scope.notificationMsg.clients = clients;
+
+                            notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
+                                $scope.notificationMsg = {};
+                                console.log("send notification success :: " + JSON.stringify(clients));
+                            }, function (err) {
+                                var errMsg = "Send Notification Failed";
+                                if (err.statusText) {
+                                    errMsg = err.statusText;
+                                }
+                                $scope.showAlert('Error', 'error', errMsg);
+                            });
+                        } else {
+                            $scope.showAlert('Error', 'error', "Send Notification Failed");
                         }
                     }
-                    $scope.notificationMsg.clients = clients;
-
-                    notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
-                        $scope.notificationMsg = {};
-                        console.log("send notification success :: " + JSON.stringify(clients));
-                    }, function (err) {
-                        var errMsg = "Send Notification Failed";
-                        if (err.statusText) {
-                            errMsg = err.statusText;
-                        }
-                        $scope.showAlert('Error', 'error', errMsg);
-                    });
-                } else {
+                    else {
+                        console.log("Error in loading Group member list");
+                        $scope.showAlert('Error', 'error', "Send Notification Failed");
+                    }
+                }, function (err) {
+                    console.log("Error in loading Group member list ", err);
                     $scope.showAlert('Error', 'error', "Send Notification Failed");
-                }
+                });
+
+                /*if ($scope.naviSelectedUser.users) {
+                 var clients = [];
+                 for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
+                 var gUser = $scope.naviSelectedUser.users[i];
+                 if (gUser && gUser.username && gUser.username != $scope.loginName) {
+                 clients.push(gUser.username);
+                 }
+                 }
+                 $scope.notificationMsg.clients = clients;
+
+                 notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
+                 $scope.notificationMsg = {};
+                 console.log("send notification success :: " + JSON.stringify(clients));
+                 }, function (err) {
+                 var errMsg = "Send Notification Failed";
+                 if (err.statusText) {
+                 errMsg = err.statusText;
+                 }
+                 $scope.showAlert('Error', 'error', errMsg);
+                 });
+                 } else {
+                 $scope.showAlert('Error', 'error', "Send Notification Failed");
+                 }*/
 
             } else {
 
@@ -2288,7 +2448,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         return 0;
                     });
 
-                    $scope.agentList = userGroupList.concat($scope.agentList)
+                   // $scope.agentList = userGroupList.concat($scope.agentList)
+                    $scope.userGroups = userGroupList;
                 }
             }
             else {
@@ -2437,7 +2598,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     getCurrentState.removeSharing(type, i);
                     return;
                 }
-            };
+            }
+            ;
 
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {
@@ -2491,7 +2653,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $('#Outbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Outbound";
                             return;
-                        } else{
+                        } else {
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Inbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Inbound";
@@ -2515,6 +2677,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetResourceTasks(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         data.Result.forEach(function (value, key) {
+                            // $scope.resourceTaskObj = [];
                             if (data.Result[key].ResTask) {
                                 if (data.Result[key].ResTask.ResTaskInfo) {
                                     if (data.Result[key].ResTask.ResTaskInfo.TaskName) {
@@ -2537,14 +2700,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetCurrentRegisterTask(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         if (data.Result) {
-                            if (data.Result.obj.LoginTasks) {
-                                for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
-                                    data.Result.obj.LoginTasks.forEach(function (value, key) {
-                                        if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
-                                            $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
-                                        }
-                                    })
+                            if (data.Result.obj) {
+                                if (data.Result.obj.LoginTasks) {
+                                    for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
+                                        data.Result.obj.LoginTasks.forEach(function (value, key) {
+                                            if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
+                                                $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
+                                            }
+                                        })
 
+                                    }
                                 }
                             }
                         }
@@ -2633,7 +2798,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showNotificationMessage = function (notifyMessage) {
         $scope.showMesssageModal = true;
         $scope.showModal(notifyMessage);
-        //$scope.showAlert("Message","success",notifyMessage.Message);
+        // $scope.showAlert("Message","success",notifyMessage.Message);
     };
 
 
@@ -2701,7 +2866,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     // Break screen functions
     $scope.lockPwd = null;
     $scope.isUnlock = false;
-
     $scope.breakScreen = function () {
         var param = {
             userName: $scope.loginName,
@@ -2710,7 +2874,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         return {
             unlock: function (pwd) {
                 if (!pwd) {
-                    showAlert('Error', 'error', 'Invalid authentication..');
+                    $scope.showAlert('Error', 'error', 'Invalid authentication..');
                     $('#lockPwd').addClass('shake');
                     $('#lockPwd').addClass('shake');
                     return;
@@ -2723,7 +2887,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         $scope.breakOption.endBreakOption('Available');
                         return;
                     } else {
-                        showAlert('Error', 'error', 'Invalid authentication..');
+                        $scope.showAlert('Error', 'error', 'Invalid authentication..');
                         $('#lockPwd').addClass('shake');
                         $('#lockPwd').addClass('shake');
                         changeLockScreenView.show();
@@ -2735,6 +2899,281 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     }();
 
+    //text key event fire
+    $scope.enterUnlockMe = function () {
+        alert('event fire');
+    };
+    var buildFormSchema = function (schema, form, fields) {
+        fields.forEach(function (fieldItem) {
+            if (fieldItem.field) {
+                var isActive = true;
+                if (fieldItem.active === false) {
+                    isActive = false;
+                }
+                if (fieldItem.type === 'text') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'textarea') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "textarea"
+                    })
+                }
+                else if (fieldItem.type === 'url') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'header') {
+                    var h2Tag = '<h2>' + fieldItem.title + '</h2>';
+                    form.push({
+                        "type": "help",
+                        "helpvalue": h2Tag
+                    });
+                }
+                else if (fieldItem.type === 'radio') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    var formObj = {
+                        "key": fieldItem.field,
+                        "type": "radios-inline",
+                        "titleMap": []
+                    };
+
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        schema.properties[fieldItem.field].enum = [];
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].enum.push(enumVal.name);
+                            formObj.titleMap.push(
+                                {
+                                    "value": enumVal.id,
+                                    "name": enumVal.name
+                                }
+                            )
+                        })
+
+                    }
+
+                    form.push(formObj);
+                }
+                else if (fieldItem.type === 'date') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive,
+                        format: 'date'
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "minDate": "1900-01-01"
+                    })
+                }
+                else if (fieldItem.type === 'number') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'number',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "number"
+                    })
+                }
+                else if (fieldItem.type === 'phone') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        pattern: "^[0-9*#+]+$",
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'boolean' || fieldItem.type === 'checkbox') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'boolean',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "checkbox"
+                    })
+                }
+                else if (fieldItem.type === 'checkboxes') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'array',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive,
+                        items: {
+                            type: "string",
+                            enum: []
+                        }
+                    };
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].items.enum.push(enumVal.name);
+                        })
+
+                    }
+
+                    form.push(fieldItem.field);
+                }
+                else if (fieldItem.type === 'email') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        pattern: "^\\S+@\\S+$",
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'select') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    var formObj = {
+                        "key": fieldItem.field,
+                        "type": "select",
+                        "titleMap": []
+                    };
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        schema.properties[fieldItem.field].enum = [];
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].enum.push(enumVal.name);
+                            formObj.titleMap.push(
+                                {
+                                    "value": enumVal.id,
+                                    "name": enumVal.name
+                                });
+                        })
+
+                    }
+                    form.push(formObj);
+                }
+            }
+        });
+
+        return schema;
+    };
+
+    $scope.schemaResponse = {};
+    $scope.createTicketDynamicFrm = function () {
+            var schema = {
+                type: "object",
+                properties: {}
+            };
+
+            var form = [];
+
+
+            ticketService.getFormsForCompany().then(function (response) {
+                if (response && response.Result && response.Result.ticket_form) {
+                    //compare two forms
+                    buildFormSchema(schema, form, response.Result.ticket_form.fields);
+                    var currentForm = response.Result.ticket_form;
+
+                    /*form.push({
+                        type: "submit",
+                        title: "Save"
+                    });*/
+
+                    $scope.schemaResponse = {
+                        schema: schema,
+                        form: form,
+                        model: {},
+                        currentForm:currentForm
+                    };
+                }
+            }).catch(function (err) {
+                $scope.showAlert('Ticket', 'error', 'Fail To Get Ticket Dynamic form Data');
+            });
+        };
+    $scope.createTicketDynamicFrm();
 
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
@@ -2748,6 +3187,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             scope.$apply();
         });
     };
+}).directive('enterUnlockScreen', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.enterUnlockScreen);
+                });
+                event.preventDefault();
+            }
+        });
+    };
 });
 
 agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
@@ -2757,15 +3207,4 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
     $scope.MessageObj = MessageObj;
 
 
-}).directive('enterUnlockScreen', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            if (event.which === 13) {
-                scope.$apply(function () {
-                    scope.$eval(attrs.myEnter);
-                });
-                event.preventDefault();
-            }
-        });
-    };
-});
+})

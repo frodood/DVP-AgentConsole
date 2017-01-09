@@ -124,24 +124,24 @@ function closeCallTransfer() {
 var pinHeight = 0;
 function pinScreen() {
     pinHeight = 90;
-    $('.dial-pad-wrapper').stop().animate({height: '90'}, 500);
+    $('.dial-pad-wrapper').stop().animate({height: '98'}, 500);
     $('#phoneDialpad').removeClass('display-block').addClass('display-none');
     $('#pinScreen').removeClass('display-block').addClass('display-none');
     $('#removePinScreen').removeClass('display-none').addClass('display-block');
 };
 function removePin() {
     pinHeight = 0;
-    $('.dial-pad-wrapper').stop().animate({height: '0'}, 500);
+    $('.dial-pad-wrapper').stop().animate({height: '310'}, 500);
     $('#pinScreen').removeClass('display-none').addClass('display-block');
     $('#removePinScreen').removeClass('display-block').addClass('display-none');
-    $('#phoneDialpad').removeClass('display-block').addClass('display-none');
+    $('#phoneDialpad').removeClass('display-none').addClass('display-block');
 };
 
 function showDilapad() {
     var $wrapper = $('.dial-pad-wrapper'),
         animateTime = 500,
         height = 310;
-    if ($wrapper.height() === 0 || $wrapper.height() === 90) {
+    if ($wrapper.height() === 0 || $wrapper.height() === 98) {
         phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
             if (res) {
                 $('#phoneDialpad').removeClass('display-none').addClass('display-block');
@@ -149,7 +149,7 @@ function showDilapad() {
         });
 
     } else {
-        $wrapper.stop().animate({height: pinHeight}, animateTime);
+        $wrapper.stop().animate({height: '98'}, animateTime);
         $('#phoneDialpad').removeClass('display-block').addClass('display-none');
     }
 }
@@ -183,12 +183,7 @@ var showAlert = function (title, type, content) {
         title: title,
         text: content,
         type: type,
-        styling: 'bootstrap3',
-        animate: {
-            animate: true,
-            in_class: "bounceIn",
-            out_class: "bounceOut"
-        }
+        styling: 'bootstrap3'
     });
 };
 
@@ -196,7 +191,19 @@ var showAlert = function (title, type, content) {
 window.onload = window.onresize = function () {
     var height = window.innerHeight;
     return height + "px";
-}
+};
+
+// JavaScript
+var jsUpdateSize = function () {
+    // Get the dimensions of the viewport
+    var width = window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+    var height = window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight;
+    return height;
+};
 
 
 
