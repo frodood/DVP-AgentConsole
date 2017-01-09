@@ -965,7 +965,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "read": false,
             "avatar": senderAvatar
         };
-        if (data.TopicKey) {
+        if (data.TopicKey || data.messageType) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
             audio.play();
             $scope.notifications.unshift(objMessage);
@@ -1029,6 +1029,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onAgentDisconnected: $scope.agentDisconnected,
         onAgentAuthenticated: $scope.agentAuthenticated,
         onToDoRemind: $scope.todoRemind
+
 
     };
 
@@ -2290,9 +2291,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             var clients = [];
                             for (var i = 0; i < response.Result.length; i++) {
                                 var gUser = response.Result[i];
-                                if (gUser && gUser.username && gUser.username != $scope.loginName) {
+                                //if (gUser && gUser.username && gUser.username != $scope.loginName) {
                                     clients.push(gUser.username);
-                                }
+                                //}
                             }
                             $scope.notificationMsg.clients = clients;
 
