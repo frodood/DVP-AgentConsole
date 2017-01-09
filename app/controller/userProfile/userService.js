@@ -150,7 +150,14 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
             return response.data;
         });
     };
-
+    var getExternalUserProfileByID = function (ID) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/"+ID
+        }).then(function (response) {
+            return response.data;
+        });
+    };
 
     return {
         GetExternalUserProfileByContact:getExternalUserProfileByContact,
@@ -164,7 +171,8 @@ agentApp.factory("userService", function ($http, baseUrls,authService) {
         UpdateExternalUser:updateExternalUser,
         UpdateExternalUserProfileContact:UpdateExternalUserProfileContact,
         getExternalUserProfileByField:getExternalUserProfileByField,
-        getExternalUserProfileBySsn:getExternalUserProfileBySsn
+        getExternalUserProfileBySsn:getExternalUserProfileBySsn,
+        getExternalUserProfileByID:getExternalUserProfileByID
     }
 });
 

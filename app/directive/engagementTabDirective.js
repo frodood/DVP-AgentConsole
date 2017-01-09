@@ -403,6 +403,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                 if (responseFS.Result) {
                                     ticketService.updateFormSubmissionData(scope.profileDetail._id, obj).then(function (responseUpdate) {
                                         if (responseUpdate.Result) {
+
+
+
                                             userService.mapFormSubmissionToProfile(responseUpdate.Result._id, scope.profileDetail._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
@@ -1572,6 +1575,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
             getYears();
             scope.saveNewProfile = function (profile) {
+                profile.tags=[];
+                scope.cutomerTypes.forEach(function (tag) {
+                    profile.tags.push(tag.cutomerType)
+                })
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
                 userService.CreateExternalUser(profile).then(function (response) {
@@ -1592,13 +1599,35 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             scope.UpdateExternalUser = function (profile) {
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
+                profile.tags=[];
+                scope.cutomerTypes.forEach(function (tag) {
+                    profile.tags.push(tag.cutomerType)
+                });
                 profile.birthday = new Date(collectionDate);
                 userService.UpdateExternalUser(profile).then(function (response) {
                     if (response) {
+                        scope.cutomerTypes=[];
                         scope.showNewProfile = false;
                         scope.editProfile = false;
-                        scope.profileDetail = response;
+
                         scope.showAlert("Profile", "success", "Update Successfully.");
+                        userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
+
+                            if(resUserData.IsSuccess)
+                            {
+                                scope.profileDetail = resUserData.Result;
+                            }
+                            else
+                            {
+                                scope.showAlert("Profile","error","Failed to load updated profile");
+
+                            }
+
+
+                        }, function (errUserData) {
+                            scope.showAlert("Profile","error","Failed to load updated profile");
+                            console.log(errUserData)
+                        });
                     }
                     else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
@@ -1652,17 +1681,41 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                     },
                     editProfile: function () {
-                        scope.newProfile = scope.profileDetail;
-                        var date = moment(scope.profileDetail.birthday);
-                        scope.newProfile.dob = {};
-                        scope.newProfile.dob.day = date.date();
-                        scope.newProfile.dob.month = {
-                            'index': date.month(),
-                            'name': date.month()
-                        };
-                        scope.newProfile.dob.year = date.year();
-                        scope.showNewProfile = true;
-                        scope.editProfile = true;
+
+                        userService.getExternalUserProfileByID(scope.profileDetail._id ).then(function (resNewProfile) {
+
+                            if(resNewProfile.IsSuccess)
+                            {
+                                scope.newProfile = resNewProfile.Result;
+                                for(var i=0;i<scope.newProfile.tags.length;i++)
+                                {
+                                    scope.cutomerTypes[i]={"cutomerType":scope.newProfile.tags[i]};
+                                }
+
+                                var date = moment(scope.profileDetail.birthday);
+                                scope.newProfile.dob = {};
+                                scope.newProfile.dob.day = date.date();
+                                scope.newProfile.dob.month = {
+                                    'index': date.month(),
+                                    'name': date.month()
+                                };
+                                scope.newProfile.dob.year = date.year();
+                                scope.showNewProfile = true;
+                                scope.editProfile = true;
+                            }
+                            else
+                            {
+                                scope.showAlert("Error","error","Error in loading profile details");
+                            }
+                        }, function (errNewProfile) {
+                            scope.showAlert("Error","error","Error in loading profile details");
+                            console.log(errNewProfile);
+                        })
+
+                       // scope.newProfile = scope.profileDetail;
+
+
+
                     },
                     closeProfileSelection: function () {
                         scope.showNewProfile = false;
