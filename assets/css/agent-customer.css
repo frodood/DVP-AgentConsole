@@ -296,6 +296,12 @@ body {
     padding: 5px 2px 0px 4px;
     font-size: 13px;
 }
+.notification-sender {
+    color: #040506 !important;
+    padding: 5px 2px 0px 4px;
+    font-size: 15px;
+    font-weight: bold;
+}
 
 .bold {
     font-family: 'AvenirNextLTPro-Bold', sans-serif;

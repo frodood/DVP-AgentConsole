@@ -963,7 +963,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "icon": "main-icon-2-speech-bubble",
             "time": new Date(),
             "read": false,
-            "avatar": senderAvatar
+            "avatar": senderAvatar,
+            "from":data.From
         };
         if (data.TopicKey || data.messageType) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
