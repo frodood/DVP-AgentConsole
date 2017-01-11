@@ -558,6 +558,29 @@
                     </tbody>
                 </table>
             </div>
+            <!--#ivr-->
+            <div id='divIvrPad' class="phone-ivr-display display-none">
+                <table class="phone-ivr" id="phoneIvrPad">
+                    <tbody>
+                    <tr>
+                        <td>
+                            IVR Name
+                        </td>
+                        <td>
+                            Extension
+                        </td>
+                    </tr>
+                    <tr ng-repeat="ivr in ivrlist" ng-click="setIvrExtension(ivr);">
+                        <td>
+                            {{ivr.ExtensionName}}
+                        </td>
+                        <td>
+                            {{ivr.Extension}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!--PHONE MAIN WRAPPER -->
         <div class="isOperationPhone call-operation-wrapper animated flipInX" id="callOperation">
@@ -660,6 +683,11 @@
                 <!-- conference button -->
                 <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();"
                      title="Conference">
+                    <i class="main-icon-2-stick-man-2"></i>
+                </div>
+                <!-- ivr button -->
+                <div id="transferIvr" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.showIvrPenel();"
+                     title="IVR">
                     <i class="main-icon-2-stick-man-2"></i>
                 </div>
                 <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideMoreOption();" title="Close">

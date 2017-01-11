@@ -5298,3 +5298,25 @@ ul.renote-color-btn > li {
     margin-top: 8px;
 
 }
+
+.phone-ivr-display {
+    position: inherit;
+    bottom: 205px;
+    right: 102px;
+    margin-top: 82px;
+    margin-left: 18px;
+    text-align: center;
+}
+
+.phone-ivr {
+    width: 193px;
+    height: 161px;
+    /*margin: 25px auto;*/
+    border: 1px solid silver;
+    border-radius: 4px;
+    padding: 3px;
+    text-align: center;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    outline: none;
+}
