@@ -220,7 +220,10 @@
 }
 
 .bg-color-Teal700 {
-    background: #2b4d52 !important;
+     background: #2b4d52 !important;
+ }
+.bg-color-UserTags {
+    background: #45bf55 !important;
 }
 
 .bg-color-Teal800 {

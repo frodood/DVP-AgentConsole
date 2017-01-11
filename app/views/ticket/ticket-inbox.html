@@ -130,9 +130,11 @@
                         'urgent-boarder':inprogress.priority=='urgent'}"
                                  ng-repeat="inprogress in ticketList.inProgress">
                                 <div class="col-lg-3">
-                                    <div class="ticket-icon user-list  ">
+                                    <div class="ticket-icon user-list">
                                         <img src="assets/img/avatar/defaultProfile.png"
-                                             ng-src="{{inprogress.assignee.avatar}}">
+                                             ng-src="{{inprogress.assignee.avatar}}" title={{inprogress.assignee.name?inprogress.assignee.name:inprogress.assignee_group.name}}>
+
+
                                     </div>
                                 </div>
                                 <div class="col-lg-9">

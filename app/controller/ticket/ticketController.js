@@ -277,6 +277,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     var pickMyToDoList = function (page) {
         ticketService.getMyNewTickets(page).then(function (response) {
             if (response.data.IsSuccess) {
+                console.log("My New tickets", response.data.Result);
                 if (response.data.Result.length == 0) {
                     $scope.isNewTicketLoadComplete = true;
                 }
@@ -362,7 +363,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     var pickMyCompletedTickets = function (page) {
         ticketService.getMyClosedTickets(page).then(function (response) {
 
-
+            console.log("My Completed tickets", response.data.Result);
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isCompletedTicketLoadComplete = true;
@@ -406,6 +407,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
         ticketService.getMyGroupTickets(page).then(function (response) {
 
+            console.log("My Group New Tickets: "+response.data.Result);
 
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
@@ -450,6 +452,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     var pickGroupProcessingTickets = function (page) {
         ticketService.getMyGroupOpenTickets(page).then(function (response) {
 
+            console.log("My Group Open Tickets: "+response.data.Result);
 
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
@@ -493,7 +496,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
     var pickGroupCompletedTickets = function (page) {
         ticketService.getMyGroupClosedTickets(page).then(function (response) {
-
+            console.log("My Group Completed Tickets: "+response.data.Result);
 
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
@@ -509,7 +512,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                         }
 
                         if (i == response.data.Result.length - 1) {
-                            $scope.ticketList.done = $scope.ticketList.done.contact(response.data.Result);
+                            $scope.ticketList.done = $scope.ticketList.done.concat(response.data.Result);
                         }
                     }
                     ;
