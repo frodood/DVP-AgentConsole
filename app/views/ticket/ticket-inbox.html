@@ -14,24 +14,24 @@
 
                     <div class="col-md-6 col-sm-6 ">
                         <div class="model-btn-wrapper">
-                            <div class="btn-warp">
-                                <span id="rldbtn" class="btn btn-default2 " ng-click="reloadTickets()"> Refresh </span>
-                            </div>
-                            <div class="btn-warp">
-                                <span id="mybtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted"
+                            <fieldset class="btn-warp">
+                                <button id="rldbtn" class="btn btn-default2 " ng-disabled="!(ticketList.doneSt && ticketList.toDoSt && ticketList.inProgressSt)" ng-click="reloadTickets()"> Refresh </button>
+                            </fieldset>
+                            <fieldset class="btn-warp">
+                                <button id="mybtn" class="btn btn-default2" ng-disabled="!(ticketList.doneSt && ticketList.toDoSt && ticketList.inProgressSt)"
                                       ng-class="{'selected-this-btn':ticketList.loadListStatus=='MY'}"
-                                      ng-click="switchTickets('MY')">my ticket</span>
-                            </div>
-                            <div class="btn-warp">
-                                <span id="grpbtn" class="btn btn-default2" ng-disabled="!ticketList.loadCompleted"
+                                      ng-click="switchTickets('MY')">my ticket</button>
+                            </fieldset>
+                            <fieldset class="btn-warp">
+                                <button id="grpbtn" class="btn btn-default2" ng-disabled="!(ticketList.doneSt && ticketList.toDoSt && ticketList.inProgressSt)"
                                       ng-class="{'selected-this-btn':ticketList.loadListStatus=='GROUP'}"
-                                      ng-click="switchTickets('GROUP')">group</span>
-                            </div>
-                            <div class="btn-warp ">
-                                <span class="btn btn-default btn-close"
+                                      ng-click="switchTickets('GROUP')">group</button>
+                            </fieldset>
+                            <fieldset class="btn-warp ">
+                                <button class="btn btn-default btn-close"
                                       ng-click="closeTicketInbox()"
-                                      id="closeTicket">close</span>
-                            </div>
+                                      id="closeTicket">close</button>
+                            </fieldset>
                         </div>
                     </div>
                 </div>

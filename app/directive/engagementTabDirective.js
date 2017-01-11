@@ -1570,14 +1570,41 @@ console.log('Ticket other data saved successfully');
                 scope.languages = res;
             });
 
-            getJSONData($http, "customerType", function (res) {
+            /*getJSONData($http, "customerType", function (res) {
                 scope.customerType = res;
-            });
+            });*/
 
             //Get all title
             getJSONData($http, "titles", function (res) {
                 scope.titles = res;
             });
+
+
+
+            var getCustomerTypes = function () {
+                userService.loadCutomerTags().then(function (response) {
+
+                    if(response.IsSuccess)
+                    {
+                        scope.customerType=response.Result;
+                        scope.customerType.forEach(function (tag) {
+                            tag.cutomerType=tag.name;
+
+                        });
+                    }
+                    else
+                    {
+                        scope.customerType=[];
+                        scope.showAlert("Customer types", "error", "Fail To load Customer types.");
+
+                    }
+                }, function (error) {
+                    scope.customerType=[];
+                    scope.showAlert("Customer types", "error", "Fail To load Customer types.");
+                });
+            };
+
+            getCustomerTypes();
 
             var genDayList = function () {
                 var max = 31;

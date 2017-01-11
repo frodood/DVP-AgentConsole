@@ -204,6 +204,16 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
         });
     };
 
+    var loadCutomerTags = function () {
+
+        return $http({
+            method: 'get',
+            url: baseUrls.userServiceBaseUrl + "CustomerTags"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
 
     return {
         GetExternalUserProfileByContact: getExternalUserProfileByContact,
@@ -223,7 +233,9 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
         AddPhoneConfig: addPhoneConfig,
         getGroupMembers: getGroupMembers,
         DeleteContact: deleteContact,
-        DeleteSocialContact: deleteSocialContact
+        DeleteSocialContact: deleteSocialContact,
+        loadCutomerTags: loadCutomerTags
+
     }
 });
 
