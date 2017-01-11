@@ -61,6 +61,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         resourceService.GetAcwTime().then(function (response) {
             $scope.countdownVal = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
         }, function (err) {
+            $scope.countdownVal = 10;
             authService.IsCheckResponse(err);
             $scope.showAlert('Phone', 'error', "Fail To Get ACW Time");
         });
@@ -114,17 +115,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.ShowHidePhone();
 
-    var showHideDialpad = undefined;
     $scope.ShowHideDialpad = function () {
-        //if (showHideDialpad) {
-        //    // is show phone
-        //    $('#phoneDialpad').addClass('phone-dialpad ').removeClass('display-none');
-        //    showHideDialpad = undefined;
-        //} else {
-        //    //is hide phone
-        //    $('#phoneDialpad').addClass('display-none ').removeClass('display-block');
-        //    showHideDialpad = {};
-        //}
+
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
