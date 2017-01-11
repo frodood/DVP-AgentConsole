@@ -11,7 +11,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
         inProgress: [],
         done: [],
         loadCompleted: false,
-        loadListStatus: "MY"
+        loadListStatus: "MY",
+        toDoSt:false,
+        inProgressSt:false,
+        doneSt:false
 
 
     };
@@ -24,6 +27,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     $scope.userList = [];
     $scope.userGroupList = [];
     $scope.isDefault = true;
+
 
 
     $("#mybtn").click(function () {
@@ -113,6 +117,8 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     };
 
 
+
+
 // ................. All Tickets ..............................
     var pickToDoList = function (page) {
 
@@ -122,6 +128,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isNewTicketLoadComplete = true;
+                    $scope.ticketList.toDoSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -159,6 +166,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                         if (i == response.data.Result.length - 1) {
 
                             $scope.ticketList.toDo = $scope.ticketList.toDo.concat(response.data.Result);
+                            $scope.ticketList.toDoSt=true;
 
 
                         }
@@ -173,13 +181,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     console.log("Empty response for new tickets");
                 }
-
+                $scope.ticketList.toDoSt=true;
             }
 
 
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.toDoSt=true;
         });
 
     };
@@ -190,6 +199,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isOpenTicketLoadComplete = true;
+                    $scope.ticketList.inProgressSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -202,6 +212,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.inProgress = $scope.ticketList.inProgress.concat(response.data.Result);
+                            $scope.ticketList.inProgressSt=true;
 
                         }
                     }
@@ -215,7 +226,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     console.log("Empty response for open tickets");
                 }
-
+                $scope.ticketList.inProgressSt=true;
 
             }
 
@@ -223,6 +234,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.inProgressSt=true;
         });
     };
 
@@ -235,6 +247,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                 if (response.data.Result.length == 0) {
                     $scope.isCompletedTicketLoadComplete = true;
+                    $scope.ticketList.doneSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -249,6 +262,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                         if (i == response.data.Result.length - 1) {
 
                             $scope.ticketList.done = $scope.ticketList.done.concat(response.data.Result);
+                            $scope.ticketList.doneSt=true;
                         }
                     }
                     ;
@@ -262,13 +276,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     console.log("Empty response for closed tickets");
                 }
-
+                $scope.ticketList.doneSt=true;
             }
 
 
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.doneSt=true;
         });
     };
 
@@ -277,8 +292,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     var pickMyToDoList = function (page) {
         ticketService.getMyNewTickets(page).then(function (response) {
             if (response.data.IsSuccess) {
+                console.log("My New tickets", response.data.Result);
                 if (response.data.Result.length == 0) {
                     $scope.isNewTicketLoadComplete = true;
+                    $scope.ticketList.toDoSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -293,6 +310,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.toDo = $scope.ticketList.toDo.concat(response.data.Result);
+                            $scope.ticketList.toDoSt=true;
 
 
                         }
@@ -306,11 +324,12 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     console.log("Empty response for My new tickets");
                 }
-
+                $scope.ticketList.toDoSt=true;
             }
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.toDoSt=true;
         });
 
     };
@@ -322,6 +341,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isOpenTicketLoadComplete = true;
+                    $scope.ticketList.inProgressSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -335,7 +355,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.inProgress = $scope.ticketList.inProgress.concat(response.data.Result);
-
+                            $scope.ticketList.inProgressSt=true;
                         }
                     }
                 }
@@ -348,13 +368,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     console.log("Empty response for My open tickets");
                 }
-
+                $scope.ticketList.inProgressSt=true;
             }
 
 
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.inProgressSt=true;
         });
     };
 
@@ -362,10 +383,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     var pickMyCompletedTickets = function (page) {
         ticketService.getMyClosedTickets(page).then(function (response) {
 
-
+            console.log("My Completed tickets", response.data.Result);
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isCompletedTicketLoadComplete = true;
+                    $scope.ticketList.doneSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -378,6 +400,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.done = $scope.ticketList.done.concat(response.data.Result);
+                            $scope.ticketList.doneSt=true;
                         }
                     }
                     ;
@@ -390,13 +413,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     console.log("Empty response for My Closed tickets");
                 }
-
+                $scope.ticketList.doneSt=true;
             }
 
 
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.doneSt=true;
         });
     };
 
@@ -406,10 +430,12 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
         ticketService.getMyGroupTickets(page).then(function (response) {
 
+            console.log("My Group New Tickets: "+response.data.Result);
 
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isNewTicketLoadComplete = true;
+                    $scope.ticketList.toDoSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -422,7 +448,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.toDo = $scope.ticketList.toDo.concat(response.data.Result);
-
+                            $scope.ticketList.toDoSt=true;
 
                         }
                     }
@@ -436,13 +462,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                     console.log("Empty response for My Group new tickets");
                 }
 
-
+                $scope.ticketList.toDoSt=true;
             }
 
 
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.toDoSt=true;
         });
 
     };
@@ -450,10 +477,12 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     var pickGroupProcessingTickets = function (page) {
         ticketService.getMyGroupOpenTickets(page).then(function (response) {
 
+            console.log("My Group Open Tickets: "+response.data.Result);
 
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isOpenTicketLoadComplete = true;
+                    $scope.ticketList.inProgressSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -467,7 +496,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                         if (i == response.data.Result.length - 1) {
                             $scope.ticketList.inProgress = $scope.ticketList.inProgress.concat(response.data.Result);
-
+                            $scope.ticketList.inProgressSt=true;
                         }
                     }
                     ;
@@ -480,24 +509,26 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     console.log("Empty response for My Group open tickets");
                 }
-
+                $scope.ticketList.inProgressSt=true;
             }
 
 
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.inProgressSt=true;
         });
     };
 
 
     var pickGroupCompletedTickets = function (page) {
         ticketService.getMyGroupClosedTickets(page).then(function (response) {
-
+            console.log("My Group Completed Tickets: "+response.data.Result);
 
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isCompletedTicketLoadComplete = true;
+                    $scope.ticketList.doneSt=true;
                 }
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
@@ -509,7 +540,8 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                         }
 
                         if (i == response.data.Result.length - 1) {
-                            $scope.ticketList.done = $scope.ticketList.done.contact(response.data.Result);
+                            $scope.ticketList.done = $scope.ticketList.done.concat(response.data.Result);
+                            $scope.ticketList.doneSt=true;
                         }
                     }
                     ;
@@ -522,13 +554,14 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     console.log("Empty response for My Group closed tickets");
                 }
-
+                $scope.ticketList.doneSt=true;
             }
 
 
         }, function (error) {
             authService.IsCheckResponse(error);
             console.log(error);
+            $scope.ticketList.doneSt=true;
         });
     };
 
@@ -539,6 +572,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
         $scope.ticketList.toDo = [];
         $scope.ticketList.inProgress = [];
         $scope.ticketList.done = [];
+        $scope.ticketList.doneSt=false;
+        $scope.ticketList.toDoSt=false;
+        $scope.ticketList.inProgressSt=false;
 
         if ($scope.ticketList.loadListStatus == listName) {
 
@@ -579,6 +615,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
         $scope.isOpenTicketLoadComplete = false;
         $scope.CompletedTicketPage = 1;
         $scope.isCompletedTicketLoadComplete = false;
+        $scope.ticketList.doneSt=false;
+        $scope.ticketList.toDoSt=false;
+        $scope.ticketList.inProgressSt=false;
 
     };
     setToInitiate();
@@ -714,6 +753,9 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
         $scope.ticketList.toDo = [];
         $scope.ticketList.inProgress = [];
         $scope.ticketList.done = [];
+        $scope.ticketList.doneSt=false;
+        $scope.ticketList.toDoSt=false;
+        $scope.ticketList.inProgressSt=false;
 
         setToInitiate();
         $scope.ticketList.loadCompleted = true;

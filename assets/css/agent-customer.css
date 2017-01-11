@@ -296,6 +296,12 @@ body {
     padding: 5px 2px 0px 4px;
     font-size: 13px;
 }
+.notification-sender {
+    color: #040506 !important;
+    padding: 5px 2px 0px 4px;
+    font-size: 15px;
+    font-weight: bold;
+}
 
 .bold {
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
@@ -5512,4 +5518,26 @@ ul.renote-color-btn > li {
     border-bottom: 1px solid #f7f7f7;
     margin-top: 8px;
 
+}
+
+.phone-ivr-display {
+    position: inherit;
+    bottom: 205px;
+    right: 102px;
+    margin-top: 82px;
+    margin-left: 18px;
+    text-align: center;
+}
+
+.phone-ivr {
+    width: 193px;
+    height: 161px;
+    /*margin: 25px auto;*/
+    border: 1px solid silver;
+    border-radius: 4px;
+    padding: 3px;
+    text-align: center;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    outline: none;
 }

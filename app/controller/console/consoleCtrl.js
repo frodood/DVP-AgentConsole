@@ -62,6 +62,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         resourceService.GetAcwTime().then(function (response) {
             $scope.countdownVal = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
         }, function (err) {
+            $scope.countdownVal = 10;
             authService.IsCheckResponse(err);
             $scope.showAlert('Phone', 'error', "Fail To Get ACW Time");
         });
@@ -115,17 +116,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.ShowHidePhone();
 
-    var showHideDialpad = undefined;
     $scope.ShowHideDialpad = function () {
-        //if (showHideDialpad) {
-        //    // is show phone
-        //    $('#phoneDialpad').addClass('phone-dialpad ').removeClass('display-none');
-        //    showHideDialpad = undefined;
-        //} else {
-        //    //is hide phone
-        //    $('#phoneDialpad').addClass('display-none ').removeClass('display-block');
-        //    showHideDialpad = {};
-        //}
+
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
@@ -274,6 +266,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 sipSendDTMF(chr);
             });
             phoneFuncion.showTransfer();
+            phoneFuncion.showIvrBtn();
             phoneFuncion.hideSwap();
             phoneFuncion.hideEtl();
             phoneFuncion.hideConference();
@@ -290,8 +283,36 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 sipSendDTMF(chr);
             });
         },
+        showIvrPenel: function () {
+
+            if($('#divIvrPad').hasClass('display-none')){
+                phoneFuncion.showIvrList();
+            }
+            else{
+                phoneFuncion.hideIvrList();
+            }
+
+        },
         transferCall: function (no) {
             var dtmfSet = no.length <= 5 ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
+            angular.forEach(dtmfSet, function (chr) {
+                sipSendDTMF(chr);
+            });
+            $timeout(function () {
+                dtmfSet = no.split('');
+                angular.forEach(dtmfSet, function (chr) {
+                    sipSendDTMF(chr);
+                });
+                sipSendDTMF('#');
+            }, 1000);
+            //phoneFuncion.hideTransfer();
+            phoneFuncion.showSwap();
+            phoneFuncion.showEtl();
+            phoneFuncion.showConference();
+
+        },
+        ivrTransferCall: function (no) {
+            var dtmfSet = phoneSetting.TransferIvrCode.split('') ;
             angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
@@ -451,6 +472,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     phoneFuncion.showMuteButton();
                     phoneFuncion.showEndButton();
                     phoneFuncion.showTransfer();
+                    phoneFuncion.showIvrBtn();
                     phoneFuncion.hideAnswerButton();
                     phoneFuncion.updateCallStatus('In Call');
                     $scope.ShowIncomeingNotification(false);
@@ -656,6 +678,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideSpeakerButton();
             phoneFuncion.hideSwap();
             phoneFuncion.hideTransfer();
+            phoneFuncion.hideIvrBtn();
+            phoneFuncion.hideIvrList();
             phoneFuncion.hideDialPad();
             phoneFuncion.hideContactList();
         },
@@ -672,7 +696,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             phoneFuncion.hideConference();
             phoneFuncion.hideEtl();
-            phoneFuncion.hideTransfer();
+            phoneFuncion.hideTransfer();phoneFuncion.hideIvrList();phoneFuncion.hideIvrBtn();
             phoneFuncion.hideSwap();
         },
         freezeBtn: function () {
@@ -767,9 +791,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         hideTransfer: function () {
             $('#transferCall').addClass('display-none').removeClass('display-inline');
+            phoneFuncion.hideIvrList();
         },
         showTransfer: function () {
             $('#transferCall').addClass('display-inline').removeClass('display-none');
+
+        },
+        showIvrBtn: function () {
+            $('#transferIvr').addClass('display-inline').removeClass('display-none');
+        },
+        hideIvrBtn: function () {
+            $('#transferIvr').addClass('display-none').removeClass('display-inline');
         },
         hideSwap: function () {
             // $('#swapCall').addClass('display-none').removeClass('display-inline');
@@ -789,6 +821,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         showConference: function () {
             $('#conferenceCall').addClass('display-inline').removeClass('display-none');
+            phoneFuncion.hideIvrBtn();
         },
         hideDialPad: function () {
             $('#dialPad').addClass('display-none').removeClass('veery-font-1-menu-4');
@@ -825,7 +858,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
             $('#freezeRequest').addClass('display-none').removeClass('call-duations');
             this.idle();
-        }
+        },
+        showIvrList: function () {
+            $('#divIvrPad').removeClass('display-none');
+            $('#divKeyPad').addClass('display-none');
+        },
+        hideIvrList: function () {
+            $('#divKeyPad').removeClass('display-none');
+            $('#divIvrPad').addClass('display-none');
+        },
+
         /*showConnectedBtn: function () {
          //$('#onlinePhoneBtnWrapper').removeClass('display-none');
          $('#phoneBtnWrapper').addClass('display-none');
@@ -964,9 +1006,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "icon": "main-icon-2-speech-bubble",
             "time": new Date(),
             "read": false,
-            "avatar": senderAvatar
+            "avatar": senderAvatar,
+            "from":data.From
         };
-        if (data.TopicKey) {
+        if (data.TopicKey || data.messageType) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
             audio.play();
             $scope.notifications.unshift(objMessage);
@@ -1030,6 +1073,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onAgentDisconnected: $scope.agentDisconnected,
         onAgentAuthenticated: $scope.agentAuthenticated,
         onToDoRemind: $scope.todoRemind
+
 
     };
 
@@ -2291,9 +2335,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             var clients = [];
                             for (var i = 0; i < response.Result.length; i++) {
                                 var gUser = response.Result[i];
-                                if (gUser && gUser.username && gUser.username != $scope.loginName) {
+                                //if (gUser && gUser.username && gUser.username != $scope.loginName) {
                                     clients.push(gUser.username);
-                                }
+                                //}
                             }
                             $scope.notificationMsg.clients = clients;
 
@@ -3175,6 +3219,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.createTicketDynamicFrm();
+
+    $scope.ivrlist = [];
+    var ivrlist = function () {
+        resourceService.IvrList().then(function (reply) {
+            $scope.ivrlist = reply;
+        }, function (error) {
+            $scope.showAlert("Soft Phone", "error", "Fail to Get IVR List");
+        });
+    };
+    ivrlist();
+
+    $scope.setIvrExtension =function (ivr) {
+        $scope.call.number = ivr.Extension;
+        phoneFuncion.hideIvrBtn();
+        phoneFuncion.hideIvrList();
+        $scope.veeryPhone.ivrTransferCall(ivr.Extension);
+    };
 
     //open setting page
     $scope.openSettingPage = function () {

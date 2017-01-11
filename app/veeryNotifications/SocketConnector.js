@@ -73,6 +73,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
             });
 
             socket.on('message', function (data) {
+                data.messageType="message";
                 if (notificationEvent.OnMessageReceived)
                     notificationEvent.OnMessageReceived(data);
             });
@@ -81,6 +82,9 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 //document.getElementById("lblNotification").innerHTML = data;
                 //Notification.info({message: data, delay: 500, closeOnClick: true});
                 //console.log(data);
+                data.messageType="broadcast";
+                if (notificationEvent.OnMessageReceived)
+                    notificationEvent.OnMessageReceived(data);
             });
 
             socket.on('publish', function (data) {

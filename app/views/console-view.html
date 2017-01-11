@@ -75,20 +75,29 @@
                                                 <i class=" {{notifi.icon}}"></i>
                                                 <i class=" {{notifi.icon}}"></i>
                                             </div>-->
+
                                             <div class="notify-img-small">
                                                 <img src="assets/img/avatar/default-user.png"
                                                      ng-src="{{notifi.avatar}}">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-9">
                                             <div class="row">
-
-                                                <div class="notification-text">
-                                                    {{notifi.header}}
+                                                <div class="notification-sender">
+                                                    {{notifi.from}}
                                                 </div>
+
                                             </div>
                                             <div class="row">
-                                                <div class="notification-time">
+                                                <div class="col-lg-10">
+                                                <div class="notification-text">
+                                                    {{notifi.header | limitTo: 20}}{{notifi.header.length>20 ?'....':''}}
+                                                </div>
+                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="notification-time pull-right">
                                                     <time-ago from-time='{{notifi.time}}'
                                                               format='MM/dd/yyyy'></time-ago>
                                                 </div>
@@ -260,7 +269,7 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                            >Hi,{{loginName}}</a>
+                                    >Hi,{{loginName}}</a>
                             <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
@@ -323,7 +332,7 @@
                                                                     href="javascript:void(0);">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
-                            >Logout</a></li>
+                                    >Logout</a></li>
                         </ul>
 
 
@@ -411,7 +420,7 @@
                                                 tab-reference="{{tab.tabReference}}"
                                                 search-users="searchExternalUsers"
                                                 schema-response-new-ticket="schemaResponse"
-                                >
+                                        >
 
                                 </engagement-tab>
                             </div>
@@ -485,7 +494,7 @@
                 <div class="call-duations" id="calltimmer">
                     <!--{{duations}}-->
                     <timer autostart="false" interval="1000"
-                    >{{hhours}}:
+                            >{{hhours}}:
                         {{mminutes}}: {{sseconds}}
                     </timer>
                 </div>
@@ -549,6 +558,29 @@
                         </td>
                         <td>
                             <input type="button" class="phone-button" value="#" data-values='["#"]'/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--#ivr-->
+            <div id='divIvrPad' class="phone-ivr-display display-none">
+                <table class="phone-ivr" id="phoneIvrPad">
+                    <tbody>
+                    <tr>
+                        <td>
+                            IVR Name
+                        </td>
+                        <td>
+                            Extension
+                        </td>
+                    </tr>
+                    <tr ng-repeat="ivr in ivrlist" ng-click="setIvrExtension(ivr);">
+                        <td>
+                            {{ivr.ExtensionName}}
+                        </td>
+                        <td>
+                            {{ivr.Extension}}
                         </td>
                     </tr>
                     </tbody>
@@ -656,6 +688,11 @@
                 <!-- conference button -->
                 <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.conferenceCall();"
                      title="Conference">
+                    <i class="main-icon-2-stick-man-2"></i>
+                </div>
+                <!-- ivr button -->
+                <div id="transferIvr" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.showIvrPenel();"
+                     title="IVR">
                     <i class="main-icon-2-stick-man-2"></i>
                 </div>
                 <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideMoreOption();" title="Close">

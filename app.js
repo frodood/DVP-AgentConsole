@@ -47,6 +47,7 @@ agentApp.constant('turnServers', [{url: "stun:stun.l.google.com:19302"}, {url: "
 var phoneSetting = {
     'TransferPhnCode': '*6',
     'TransferExtCode': '*3',
+    'TransferIvrCode': '*9',
     'EtlCode': '#',
     'SwapCode': '1',
     'ConferenceCode': '0'

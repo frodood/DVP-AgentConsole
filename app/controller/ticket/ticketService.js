@@ -66,7 +66,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "Tickets/10/" + page + "?status=open&status=progressings"
+            url: baseUrls.ticketUrl + "Tickets/10/" + page + "?status=open&status=progressing"
         }).then(function (response) {
             return response;
         });
@@ -76,7 +76,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "Tickets/6/" + page + "?status=parked&status=solved&status=closed"
+            url: baseUrls.ticketUrl + "Tickets/10/" + page + "?status=parked&status=solved&status=closed"
         }).then(function (response) {
             return response;
         });
@@ -109,7 +109,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "MyTickets/10/" + page + "?status=open&status=progressings"
+            url: baseUrls.ticketUrl + "MyTickets/10/" + page + "?status=open&status=progressing"
         }).then(function (response) {
             return response;
         });
@@ -119,7 +119,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "MyTickets/6/" + page + "?status=parked&status=solved&status=closed"
+            url: baseUrls.ticketUrl + "MyTickets/10/" + page + "?status=parked&status=solved&status=closed"
         }).then(function (response) {
             return response;
         });
@@ -153,7 +153,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "MyGroupTickets/10/" + page + "?status=open&status=progressings"
+            url: baseUrls.ticketUrl + "MyGroupTickets/10/" + page + "?status=open&status=progressing"
         }).then(function (response) {
             return response;
         });
@@ -163,7 +163,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "MyGroupTickets/6/" + page + "?status=parked&status=solved&status=closed"
+            url: baseUrls.ticketUrl + "MyGroupTickets/10/" + page + "?status=parked&status=solved&status=closed"
         }).then(function (response) {
             return response;
         });
