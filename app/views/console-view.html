@@ -128,7 +128,8 @@
                                 <a href="javascript:void(0);" ng-click="createNewProfile()">Create new profile
                                     <i class="veery-font-1-user"></i></a>
                             </li>
-                            <li class="menuitem menuitem-with-icon" role="menuitem" ng-hide="true"><a href="javascript:void(0);">Create
+                            <li class="menuitem menuitem-with-icon" role="menuitem" ng-hide="true"><a
+                                    href="javascript:void(0);">Create
                                 new ticket
                                 <i class="veery-font-1-add-2"></i></a></a></li>
                         </ul>
@@ -318,7 +319,8 @@
                                                                     href="javascript:void(0)">Dashboard</a></li>
                             <li class="menuitem" role="menuitem"><a ng-click="addMyNote();"
                                                                     href="javascript:void(0)">MyNote</a></li>
-                            <li class="menuitem" role="menuitem"><a href="javascript:void(0);">Settings</a></li>
+                            <li class="menuitem" role="menuitem"><a ng-click="openSettingPage();"
+                                                                    href="javascript:void(0);">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
                             >Logout</a></li>
@@ -408,7 +410,7 @@
                                                 profile-detail="tab.notificationData.userProfile"
                                                 tab-reference="{{tab.tabReference}}"
                                                 search-users="searchExternalUsers"
-                                                schema-response-new-ticket = "schemaResponse"
+                                                schema-response-new-ticket="schemaResponse"
                                 >
 
                                 </engagement-tab>
@@ -448,13 +450,16 @@
         TOP
     </div>
 
-    <!-- agent setting -->
-    <div ng-include="'app/views/agent/agentSettings.html'"></div>
+    <!-- agent setting class="display-none" -->
+    <!--  ng-if="isShowSetting==true" -->
+    <div id="settingPage" ng-if="isShowSetting==true">
+        <div ng-include="'app/views/agent/agentSettings.html'"></div>
+    </div>
 
     <!-- WEB PHONE -->
     <!-- phone operation panel  -->
-    <div id="softPhoneDragElem" class="soft-phone-drag-elem" >
-        <div  class="isOperationPhone dial-pad-wrapper draggable ">
+    <div id="softPhoneDragElem" class="soft-phone-drag-elem">
+        <div class="isOperationPhone dial-pad-wrapper draggable ">
             <div id="pinScreen" class="pin-screen-wrapper display-block" onclick="pinScreen()">
                 <i class="ti-pin-alt"></i>
 

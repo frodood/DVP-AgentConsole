@@ -8,7 +8,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService, turnServers, Pubnub, $uibModal, notificationConnector) {
+                                             filterFilter, engagementService, phoneSetting, toDoService, turnServers,
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact) {
 
 
     $scope.isReadyToSpeak = false;
@@ -2448,7 +2449,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         return 0;
                     });
 
-                   // $scope.agentList = userGroupList.concat($scope.agentList)
+                    // $scope.agentList = userGroupList.concat($scope.agentList)
                     $scope.userGroups = userGroupList;
                 }
             }
@@ -3143,37 +3144,43 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.schemaResponse = {};
     $scope.createTicketDynamicFrm = function () {
-            var schema = {
-                type: "object",
-                properties: {}
-            };
-
-            var form = [];
-
-
-            ticketService.getFormsForCompany().then(function (response) {
-                if (response && response.Result && response.Result.ticket_form) {
-                    //compare two forms
-                    buildFormSchema(schema, form, response.Result.ticket_form.fields);
-                    var currentForm = response.Result.ticket_form;
-
-                    /*form.push({
-                        type: "submit",
-                        title: "Save"
-                    });*/
-
-                    $scope.schemaResponse = {
-                        schema: schema,
-                        form: form,
-                        model: {},
-                        currentForm:currentForm
-                    };
-                }
-            }).catch(function (err) {
-                $scope.showAlert('Ticket', 'error', 'Fail To Get Ticket Dynamic form Data');
-            });
+        var schema = {
+            type: "object",
+            properties: {}
         };
+
+        var form = [];
+
+
+        ticketService.getFormsForCompany().then(function (response) {
+            if (response && response.Result && response.Result.ticket_form) {
+                //compare two forms
+                buildFormSchema(schema, form, response.Result.ticket_form.fields);
+                var currentForm = response.Result.ticket_form;
+
+                /*form.push({
+                 type: "submit",
+                 title: "Save"
+                 });*/
+
+                $scope.schemaResponse = {
+                    schema: schema,
+                    form: form,
+                    model: {},
+                    currentForm: currentForm
+                };
+            }
+        }).catch(function (err) {
+            $scope.showAlert('Ticket', 'error', 'Fail To Get Ticket Dynamic form Data');
+        });
+    };
     $scope.createTicketDynamicFrm();
+
+    //open setting page
+    $scope.openSettingPage = function () {
+        agentSettingFact.changeSettingPageStatus(true);
+    };
+
 
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {

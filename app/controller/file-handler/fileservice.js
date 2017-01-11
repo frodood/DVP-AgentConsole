@@ -3,12 +3,12 @@
  */
 
 var fileModule = angular.module("fileServiceModule", ["download"]);
-agentApp.factory("fileService", function ($http, baseUrls,authService,download) {
+agentApp.factory("fileService", function ($http, baseUrls, authService, download) {
 
 
     var downloadAttachment = function (attachment) {
         $http({
-            url: baseUrls.fileService+"/InternalFileService/File/Download/"+authService.GetCompanyInfo().tenant+"/"+authService.GetCompanyInfo().company+"/"+attachment.url+"/SampleAttachment",
+            url: baseUrls.fileService + "/InternalFileService/File/Download/" + authService.GetCompanyInfo().tenant + "/" + authService.GetCompanyInfo().company + "/" + attachment.url + "/SampleAttachment",
             method: "get",
             //data: json, //this is your json data string
             headers: {
@@ -38,11 +38,10 @@ agentApp.factory("fileService", function ($http, baseUrls,authService,download) 
     };
 
 
-
-
-
     return {
-        downloadAttachment: downloadAttachment
+        UploadUrl: baseUrls.fileService + "FileService/File/Upload",
+        downloadAttachment: downloadAttachment,
+        Headers: {'Authorization': authService.GetToken()}
     }
 });
 

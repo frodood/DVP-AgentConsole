@@ -2905,20 +2905,215 @@ tags-input .tags .input {
     position: fixed;
     background: rgba(0, 0, 0, 0.5);
     z-index: 2000;
-    display: none;
     top: 0;
 }
 
 .settings-wrapper {
+    position: relative;
     margin-top: 25px;
     background: #17373c;
     width: 100%;
     height: 600px;
     border-radius: 5px;
+    padding: 30px 30px 20px 30px;
+}
+
+.header-txt-left {
+    color: #36ba45;
+    font-size: 22px;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+}
+
+.ps-header-wpr {
+    width: 100%;
+    min-height: 30px;
+    overflow: hidden;
+}
+
+.header-txt-right {
+    color: #14d0a0;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 5px;
+}
+
+.ps-body-wrp {
+    width: 100%;
+    height: 100%;
+    margin-top: 45px;
+}
+
+.ps-left-menu {
+    width: 100%;
+    min-height: 400px;
+    overflow: hidden;
+    background: #1a3d42;
+}
+
+.ps-image {
+    text-align: center;
+    padding-bottom: 13px;
+    margin: 15px 15px 30px 15px;
+    border-bottom: 1px solid #36ba45;
+}
+
+.ps-image > img {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.ps-p-upload {
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 6px;
+    margin-bottom: 3px;
+}
+
+.ps-p-upload:hover {
+    color: #36ba45;
+}
+
+.ps-p-name {
+    color: #8298ae;
+    min-height: 20px;
+}
+
+.header-txt-right:hover {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+}
+
+.ps-menu {
+    padding-left: 25px;
+    padding-left: 25px;
+    padding-bottom: 25px;
+    cursor: pointer;
+}
+
+.s-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.s-icon > i {
+    color: #14d0a0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.s-icon.selected-menu,
+.s-text.selected-menu {
+    color: #d2c242;
+}
+
+.s-icon.selected-menu > i {
+    color: #d2c242;
+}
+
+.s-text {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.ps-body {
+
+}
+
+.ps-body > .ps-header-wpr {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #36ba45;
+}
+
+.b-header-txt-left {
+    color: #fff;
+    font-size: 18px;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+}
+
+.edit-body {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.radio-inline-wrp {
+
+}
+
+.ps-form-controller {
+    background: transparent;
+    border: 1px solid #8298ae;
+}
+
+input.ps-form-controller[readonly] {
+    background: transparent;
+}
+
+.cropArea-wp {
+    background: transparent;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 100%;
+    height: 350px;
+}
+
+.upload-btn-s {
+    background: #1a3d42;
+    border: 0px;
+    color: #fff;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    min-width: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.upload-btn-s:hover {
+    background: #1a3d42;
+    color: #14d0a0;
+
+}
+
+.crop-upload-btn {
+    width: 100%;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.ps-update-wrapper {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.btn-ps-update {
+    background: #1a3d42;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    min-width: 120px;
+    color: #14d0a0;
+}
+
+.btn-ps-update:hover {
+    background: #36ba45;
+    color: #ffffff;
+}
+
+.ps-update-wrapper > i {
+    color: #36ba45;
+    font-size: 20px;
+}
+
+.disabled-btn {
+    opacity: 0.2 !important;
+    cursor: not-allowed !important;
+}
+
+.button.disabled {
+
 }
 
 /* agent dashboard */
-
 .agent-dashboard-wrapper {
     width: 100%;
     height: 100%;
@@ -3787,6 +3982,31 @@ tags-input .tags .input {
 }
 
 .input-file > input[type=file] {
+    cursor: inherit;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+
+}
+
+.edit-t-input-file {
+    background: transparent;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    min-width: 15px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.edit-t-input-file > input[type=file] {
     cursor: inherit;
     display: block;
     font-size: 999px;
@@ -5276,6 +5496,7 @@ ul.renote-color-btn > li {
     border-right: 1px solid #168039;
     line-height: 1;
 }
+
 .user-state.offline {
     background: #f7f7f7;
 }
