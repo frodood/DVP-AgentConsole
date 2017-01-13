@@ -363,7 +363,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         Register: function (password) {
             $scope.PhoneLoading();
             $scope.phoneStatus = "Registering With Servers";
-
+            $scope.isshowRegistor = false;
 
             var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
 
@@ -515,7 +515,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (!b_connected && !b_connecting) {
                     $scope.isRegistor = false;
                     $scope.PhoneOffline();
+                    if(!$scope.isshowRegistor)
                     $scope.showAlert("Soft Phone", "error", "Fail To Register");
+                    $scope.isshowRegistor = true;
                 }
                 $scope.isRegistor = false;
                 /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
