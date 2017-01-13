@@ -14,6 +14,7 @@
         service.getTokenDecode = getTokenDecode;
         service.Logoff = Logoff;
         service.VerifyPwd = VerifyPwd;
+        service.UpdateMyPwd = UpdateMyPwd;
         return service;
         var mynavigations = {};
 
@@ -129,6 +130,16 @@
             }).error(function (data, status, headers, config) {
                 //login error
                 callback(false);
+            });
+        }
+
+        function UpdateMyPwd(param, callback) {
+            $http.put('http://192.168.0.132:3638/DVP/API/1.0.0.0/Myprofile/Password', param)
+                .success(function (data, status, headers, config) {
+                    callback(true,data);
+                }).error(function (data, status, headers, config) {
+                //login error
+                callback(false,data);
             });
         }
     }

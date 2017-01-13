@@ -11,6 +11,7 @@
 
     <!-- jquery -->
     <link rel="stylesheet" href="assets/js/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
     <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="assets/js/jquery-ui/jquery-1.12.4.js"></script>
     <script src="assets/js/jquery-ui/jquery-ui.js"></script>
@@ -50,7 +51,6 @@
     <script type="text/javascript" src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
 
-
     <!--<script type="text/javascript" src="bower_components/angular-ui-select2/src/select2.js"></script>-->
 
 
@@ -62,8 +62,8 @@
     <!--src="bower_components/angular-owl-carousel/angular-owl-carousel.js"></script>-->
 
     <!-- image  crop details -->
-    <!-- <script type="text/javascript" src="bower_components/ng-img-crop/source/js/init.js"></script>
-     <script type="text/javascript" src="bower_components/ng-img-crop/ng-img-crop.js"></script>-->
+    <!--<script type="text/javascript" src="bower_components/ng-img-crop/source/js/init.js"></script>-->
+    <script type="text/javascript" src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
 
     <!--videogular-->
     <!--<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>-->
@@ -143,6 +143,9 @@
     <script type="text/javascript" src="app/controller/dashboard/agentDashboardCtrl.js"></script>
     <script type="text/javascript" src="app/controller/dashboard/dashboradService.js"></script>
 
+    <!-- agent settings -->
+    <script type="text/javascript" src="app/controller/agent/agentSettingCtrl.js"></script>
+
 
     <!-- ng tags -->
     <script type="text/javascript" src="assets/bower-edit/ng-tags-input/ng-tags-input.js"></script>
@@ -202,13 +205,17 @@
 
 
 <!-- directive -->
-<script src="app/directive/engagementTabDirective.js"></script>
+<script type="text/javascript" src="app/directive/engagementTabDirective.js"></script>
 <!--<script src="app/directive/engagementTabDirectiveUpdate.js"></script>-->
 <!-- directive-newTicketTab- -->
-<script src="app/directive/ticketViewTabDirective.js"></script>
+<script type="text/javascript" src="app/directive/ticketViewTabDirective.js"></script>
 
 <!--- My NOTE -->
-<script src="app/directive/myNoteEditDirective.js"></script>
+<script type="text/javascript" src="app/directive/myNoteEditDirective.js"></script>
+
+<!-- user profile -->
+<script type="text/javascript" src="app/directive/userProfile/agentSettingFact.js"></script>
+<script type="text/javascript" src="app/directive/userProfile/userProfileApiAccess.js"></script>
 
 
 <!-- Softphone Scripts -->

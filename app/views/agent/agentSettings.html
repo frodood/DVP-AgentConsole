@@ -1,9 +1,143 @@
-<div class="agent-settings-wrapper" id="agentSettings">
-    <div class="container">
-        <div class="col-md-offset-1 col-md-10 col-sm-10 col-xs-10 col-lg-10">
-            <div class="settings-wrapper">
+<div ng-controller="agentSettingCtrl">
+    <div class="agent-settings-wrapper" ng-init="inti();" id="agentSettings">
+        <div class="container">
+            <div class="col-md-offset-1 col-xs-offset-1 col-md-10 col-sm-10 col-xs-10 col-lg-10">
+                <div id="settingWrapper" class="settings-wrapper">
+                    <!-- Profile header ps - profile setting -->
+                    <div class="ps-header-wpr">
+                        <div class="row">
+                            <div class="col-lg-10 col-xs-6">
+                                <div class="header-txt-left">
+                                    Profile Setting
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-xs-6">
+                                <div class="header-txt-right" ng-click="closeSettingPage()">
+                                    CLOSE
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- profile setting(ps) body wrapper(wrp) -->
+                    <div class="ps-body-wrp">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="ps-left-menu">
+                                    <!-- profile image -->
+                                    <div class="ps-image">
+                                        <img ng-show="isUploadImg==true"
+                                             src="assets/img/avatar/defaultProfile.png"
+                                             ng-src="{{uploader.queue[0].croppedImage}}"
+                                             alt="profile_img" width="100" height="100"/>
+
+                                        <img ng-show="isUploadImg==false"
+                                             src="assets/img/avatar/defaultProfile.png"
+                                             ng-src="{{CurrentProfile.avatar}}"
+                                             alt="profile_img" width="100" height="100"/>
+                                        <div class="ps-p-upload edit-t-input-file"
+                                             ng-class="menusObj.selectedMenu.selected==true ?'selected-menu':''"
+                                             ng-click="clickMenu()">
+                                            upload
+                                            <input type="file" class="edit-t-input-file"
+                                                   nv-file-select="" uploader="uploader"
+                                                   ng-click="clearQueue()" accept="image/*"/>
+                                        </div>
+                                        <div class="ps-p-name">
+                                            {{CurrentProfile.firstname}} {{CurrentProfile.lastname}}
+                                        </div>
+                                    </div>
+                                    <!-- setting menu -->
+                                    <div class="ps-wrp">
+                                        <div class="ps-menu"
+                                             ng-click="clickMenu(menu)"
+                                             ng-repeat="menu in menusObj.menu | limitTo:4 track by $index ">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="s-icon"
+                                                         ng-class="menu.selected==true ?'selected-menu':''">
+                                                        <i class="{{menu.icon}}"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-10">
+                                                    <div class="s-text"
+                                                         ng-class="menu.selected==true ?'selected-menu':''">
+                                                        {{menu.name}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <!-- profile edit body -->
+                                <div class="ps-body">
+                                    <div class="ps-header-wpr">
+                                        <div class="row">
+                                            <div class="col-lg-10 col-xs-6">
+                                                <div class="b-header-txt-left">
+                                                    {{menusObj.selectedMenu.name}}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-xs-6">
+                                                <div class="b-header-txt-right">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="edit-body">
+                                    <div class="edit-wrp">
+                                        <!-- upload image wrapper -->
+                                        <div class="edit-info "
+                                             ng-if="menusObj.selectedMenu.id=='upload05'">
+                                            <div class="cropArea">
+                                                <div class="crop-text" ng-show="isUploadImg==false">
+                                                    <i class="veery-font-1-upload"></i></br>
+                                                    Upload photo
+                                                </div>
+                                                <div class="cropArea-wp">
+                                                    <img-crop
+                                                            image="uploader.queue[0].image"
+                                                            result-image="uploader.queue[0].croppedImage"
+                                                    </img-crop>
+                                                </div>
+                                            </div>
+                                            <div class="crop-upload-btn" ng-show="isUploadImg==true">
+                                                <button ng-click="uploader.queue[0].upload()"
+                                                        ng-disabled="isUploadDisable || uploader.queue[0].isReady ||
+                                                        uploader.queue[0].isUploading || uploader.queue[0].isSuccess"
+                                                        class="btn  btn-default upload-btn-s">
+                                                    Save
+                                                </button>
+                                                <button class="btn btn-default upload-btn-s"
+                                                        ng-click="cancelUpload();">Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- personal information -->
+                                        <div ng-if="menusObj.selectedMenu.id=='sm01'"
+                                             id="personalInfo"
+                                             class="edit-info">
+                                            <div ng-include="'app/views/agent/template/personalInfoTemp.html'"></div>
+                                        </div>
+                                        <!-- security -->
+                                        <div ng-if="menusObj.selectedMenu.id=='sm02'"
+                                             id="security"
+                                             class="edit-info">
+                                            <div ng-include="'app/views/agent/template/securityTemp.html'"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
