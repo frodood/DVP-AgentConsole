@@ -121,6 +121,29 @@
         };
 
 
+        /*-------- function my profile ------------*/
+        var getMyProfile = function () {
+            return $http({
+                method: 'GET',
+                url: baseUrls.userServiceBaseUrl + 'Myprofile'
+            }).then(function (resp) {
+                return resp.data;
+            })
+        };
+
+        var updateMyProfile = function (profileInfo) {
+            profileInfo.birthday = profileInfo.dob.year + "-" + profileInfo.dob.month + "-" + profileInfo.dob.day;
+            var jsonStr = JSON.stringify(profileInfo);
+            return $http({
+                method: 'PUT',
+                url: baseUrls.userServiceBaseUrl + 'Myprofile',
+                data: jsonStr
+            }).then(function (resp) {
+                return resp.data;
+            })
+        };
+
+
         return {
             getProfileByName: getProfileByName,
             addContactToProfile: addContactToProfile,
@@ -133,7 +156,10 @@
             getUserGroups: getUserGroups,
             removeUserFromGroup: removeUserFromGroup,
             getGroupMembers: getGroupMembers,
-            addMemberToGroup: addMemberToGroup
+            addMemberToGroup: addMemberToGroup,
+            getMyProfile: getMyProfile,
+            updateMyProfile: updateMyProfile,
+            
         };
     };
 

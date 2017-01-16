@@ -296,6 +296,7 @@ body {
     padding: 5px 2px 0px 4px;
     font-size: 13px;
 }
+
 .notification-sender {
     color: #040506 !important;
     padding: 5px 2px 0px 4px;
@@ -3119,6 +3120,11 @@ input.ps-form-controller[readonly] {
 
 }
 
+.ps-sub-title {
+    color: #ffffff;
+    text-align: left;
+}
+
 /* agent dashboard */
 .agent-dashboard-wrapper {
     width: 100%;
@@ -5540,4 +5546,14 @@ ul.renote-color-btn > li {
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     outline: none;
+}
+
+.account-verify {
+    color: #d90000;
+    font-size: 22px;
+}
+
+.account-verified {
+    color: #36ba45;
+    font-size: 22px;
 }
