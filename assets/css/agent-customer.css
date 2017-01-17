@@ -1230,6 +1230,27 @@ ul.info-list-lg > li > h5 {
     margin-bottom: 5px;
 }
 
+tr.ivr-tbl:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.ivr-list {
+    z-index: 1px;
+}
+
+tr.ivr-tbl {
+    z-index: 1;
+    cursor: pointer !important;
+}
+
+tr.ivr-tbl > td {
+    text-align: left;
+}
+
+tr.ivr-tbl:hover {
+    background-color: #d1d1d1 !important;
+}
+
 .new-note-wrapper {
     width: 100%;
     padding-bottom: 45px;

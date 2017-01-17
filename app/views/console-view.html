@@ -91,10 +91,11 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-10">
-                                                <div class="notification-text">
-                                                    {{notifi.header | limitTo: 20}}{{notifi.header.length>20 ?'....':''}}
-                                                </div>
+                                                    <div class="notification-text">
+                                                        {{notifi.header | limitTo: 20}}{{notifi.header.length>20
+                                                        ?'....':''}}
                                                     </div>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="notification-time pull-right">
@@ -269,7 +270,7 @@
 
                         <li class="dropdown console-profile-header ">
                             <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
-                                    >Hi,{{loginName}}</a>
+                            >Hi,{{loginName}}</a>
                             <a class="time">{{timeBaseMsg}}</a>
 
                         </li>
@@ -332,7 +333,7 @@
                                                                     href="javascript:void(0);">Settings</a></li>
                             <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                     ng-click="logOut();"
-                                    >Logout</a></li>
+                            >Logout</a></li>
                         </ul>
 
 
@@ -420,7 +421,7 @@
                                                 tab-reference="{{tab.tabReference}}"
                                                 search-users="searchExternalUsers"
                                                 schema-response-new-ticket="schemaResponse"
-                                        >
+                                >
 
                                 </engagement-tab>
                             </div>
@@ -494,7 +495,7 @@
                 <div class="call-duations" id="calltimmer">
                     <!--{{duations}}-->
                     <timer autostart="false" interval="1000"
-                            >{{hhours}}:
+                    >{{hhours}}:
                         {{mminutes}}: {{sseconds}}
                     </timer>
                 </div>
@@ -564,28 +565,60 @@
                 </table>
             </div>
             <!--#ivr-->
-            <div id='divIvrPad' class="phone-ivr-display display-none">
-                <table class="phone-ivr" id="phoneIvrPad">
-                    <tbody>
-                    <tr>
-                        <td>
-                            IVR Name
-                        </td>
-                        <td>
-                            Extension
-                        </td>
-                    </tr>
-                    <tr ng-repeat="ivr in ivrlist" ng-click="setIvrExtension(ivr);">
-                        <td>
-                            {{ivr.ExtensionName}}
-                        </td>
-                        <td>
-                            {{ivr.Extension}}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+
+            <div id='divIvrPad' class="IVR-wrapper phone-ivr-display ivr-list display-none">
+                <div class="IVR-details-wrap"
+                     slimscroll="{height:'190px',
+                    railVisible: true,
+                    color: '#c5c5c5',
+                    size: '8px',
+                    distance: '5px',
+                    railColor: '#fff',
+                    railBorderRadius: 10}">
+
+                    <div class="ivr-list">
+                        <table class="table" id="phoneIvrPad">
+                            <thead>
+                            <tr>
+                                <td class="text-left text-uppercase">
+                                    <b>IVR Name</b>
+                                </td>
+                                <td class="text-left text-uppercase">
+                                    <b>Extension</b>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="ivr-tbl" ng-repeat="ivr in ivrlist" ng-click="setIvrExtension(ivr);">
+                                <td>
+                                    {{ivr.ExtensionName}}
+                                </td>
+                                <td>
+                                    {{ivr.Extension}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+
+
+            <!--<div id='divIvrPad' class="phone-ivr-display ivr-list display-none">-->
+            <!--<table class="table" id="phoneIvrPad">-->
+            <!--<tbody>-->
+
+            <!--<tr ng-repeat="ivr in ivrlist" ng-click="setIvrExtension(ivr);">-->
+            <!--<td>-->
+            <!--{{ivr.ExtensionName}}-->
+            <!--</td>-->
+            <!--<td>-->
+            <!--{{ivr.Extension}}-->
+            <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+            <!--</table>-->
+            <!--</div>-->
         </div>
         <!--PHONE MAIN WRAPPER -->
         <div class="isOperationPhone call-operation-wrapper animated flipInX" id="callOperation">
