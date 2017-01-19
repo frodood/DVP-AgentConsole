@@ -741,6 +741,15 @@
     <!-- lock screen -->
     <div ng-include="'app/views/lock-screen.html'"></div>
 
+    <!-- chat UI -->
+    <div ng-repeat="user in selectedChatUser track by $index">
+        <chat-tab-directive chat-user="user"
+                            selected-chat-user="selectedChatUser"
+                            login-avatar="loginAvatar"
+                            login-name="loginName">
+        </chat-tab-directive>
+    </div>
+
 
 </div>
 
