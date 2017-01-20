@@ -9,7 +9,7 @@
                      ng-mouseover="viewScroll()"
                      ng-mouseleave="hideScroll()"
                      ng-slimscroll
-                     height="300" width="200%" opacity="0.2" distance="0px"
+                     height="200" width="200%" opacity="0.2" distance="0px"
                      enabled="{{ scrollEnabled }}">
                     <div class="col-md-3 col-sm-3 col-xs-3">
                         <div ng-repeat="(key,value) in sectionArray">
@@ -58,12 +58,12 @@
                  ng-mouseover="viewScroll()"
                  ng-mouseleave="hideScroll()"
                  ng-slimscroll
-                 height="100" width="100%" opacity="0.2" distance="0px"
+                 height="300" width="100%" opacity="0.2" distance="0px"
                  enabled="{{ scrollEnabled }}" >
                 <div ng-repeat="remark in myRemarks">
                     <div>
                         <div>
-                            <span style="font-size: small ; color: red">{{remark.evaluator}} </span><span style="color:white;;">comments about</span> <span style="color: darkorange;">{{remark.section}}</span>
+                            <span style="font-size: small ; color: red">{{remark.evaluator}} </span><span style="color:white;;">commented about</span> <span style="color: darkorange;">{{remark.section}}</span>
 
                             <p style="color: white ; padding-top: 5px">{{remark.remark}}</p>
                         </div>
