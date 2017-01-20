@@ -106,10 +106,11 @@
                                             </div>
                                             <div class="crop-upload-btn" ng-show="isUploadImg==true">
                                                 <button ng-click="uploader.queue[0].upload()"
-                                                        ng-disabled="isUploadDisable || uploader.queue[0].isReady ||
-                                                        uploader.queue[0].isUploading || uploader.queue[0].isSuccess"
+                                                        ng-class="isLoadingRequ==true ?'disabled-btn':''"
                                                         class="btn  btn-default upload-btn-s">
                                                     Save
+                                                    <i id="proPersInfo"
+                                                       class="fa fa-spinner fa-pulse display-none"></i>
                                                 </button>
                                                 <button class="btn btn-default upload-btn-s"
                                                         ng-click="cancelUpload();">Cancel
@@ -128,6 +129,18 @@
                                              id="security"
                                              class="edit-info">
                                             <div ng-include="'app/views/agent/template/securityTemp.html'"></div>
+                                        </div>
+
+                                        <div ng-if="menusObj.selectedMenu.id=='sm03'"
+                                             id="contactInfo"
+                                             class="edit-info">
+                                            <div ng-include="'app/views/agent/template/contactInfoTemp.html'"></div>
+                                        </div>
+
+                                        <div ng-if="menusObj.selectedMenu.id=='sm04'"
+                                             id="consoleConfig"
+                                             class="edit-info">
+                                            <div ng-include="'app/views/agent/template/consoleConfigTemp.html'"></div>
                                         </div>
                                     </div>
                                 </div>

@@ -34,7 +34,8 @@ var baseUrls = {
     'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify'
+    'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
+    'ipMessageURL': 'http://192.168.8.100:3333/'
 };
 
 agentApp.constant('baseUrls', baseUrls);

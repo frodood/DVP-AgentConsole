@@ -1,13 +1,5 @@
 <div id="mySidenav" class="sidenav">
-
-
-    <!--<div class="nav-search-txt">-->
-    <!--<input type="text" class="form-control"-->
-    <!--placeholder="search user or group">-->
-    <!--</div>-->
-
     <div class="online-user-wrapper">
-
         <div id="notificationWrapper"
              slimscroll="{height: '{{windowHeight}}',
             railVisible: true,
@@ -22,16 +14,24 @@
                 </div>
                 <div ng-mouseover="chatOption = true"
                      ng-mouseleave="chatOption = false"
-                     class="notification-user" ng-repeat="agent in agentList | filterBy: ['username']: searchCriteria">
-                    <div ng-if="agent.name" class="user-img">
+                     class="notification-user" ng-repeat="agent in users | filterBy: ['username']: searchCriteria">
+                    <div class="user-img">
                         <img src="assets/img/avatar/defaultProfile.png"
                              ng-src="{{agent.avatar}}">
-                        {{agent.name}}
                     </div>
-                    <div ng-if="!agent.name" class="user-img">
-                        <img src="assets/img/avatar/defaultProfile.png"
-                             ng-src="{{agent.avatar}}">
+                    <div class="cht-notify" ng-if="agent.chatcount">
+                        {{agent.chatcount}}
+                    </div>
+                    <div class="agent-name">
                         {{agent.username}}
+                        <div class="chat-user-status">
+                            <div class="status" ng-class="agent.status"></div>
+                            <small ng-class="agent.status"
+                                   class="status-name">{{agent.status}}
+                            </small>
+
+                        </div>
+
                     </div>
                     <div class="notification-details">
                         <div class="chat-icon" ng-show="chatOption" ng-click="setExtention(agent)">
@@ -40,12 +40,13 @@
                         <div class="chat-icon" ng-show="chatOption">
                             <i class="main-icon-2-transfer-8"></i>
                         </div>
-                        <div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock(agent)">
-                            <i class="main-icon-2-speech-bubble"></i>
+                        <!--<div class="chat-icon" ng-show="chatOption" ng-click="showMessageBlock(agent)">-->
+                        <!--<i class="main-icon-2-speech-bubble"></i>-->
+                        <!--</div>-->
+                        <div class="chat-icon" ng-show="chatOption" ng-click="showTabChatPanel(agent)">
+                            <i class="fa fa-comment"></i>
                         </div>
-                        <div class="user-state" style="margin-right: 5px;margin-left: 10px;"
-                             ng-class="agent.status=='NotAvailable'?'offline':'online'"
-                        ></div>
+
                     </div>
                 </div>
 

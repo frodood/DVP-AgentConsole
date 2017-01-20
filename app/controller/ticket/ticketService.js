@@ -256,11 +256,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
-    var getTicketsByView = function (id,page) {
+    var getTicketsByView = function (id, page) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/100/"+page
+            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/100/" + page
         }).then(function (response) {
             return response.data.Result;
         });
@@ -678,25 +678,46 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
-    var AddAttachmentToSlot = function (ticketID, slotname,attachmentID) {
+    var AddAttachmentToSlot = function (ticketID, slotname, attachmentID) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/slot/"+slotname+"/attachment/"+attachmentID,
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/slot/" + slotname + "/attachment/" + attachmentID,
 
         }).then(function (response) {
             return response;
         });
     };
 
-    var DeleteAttachmentFromSlot = function (ticketID, slotname,attachmentID) {
+    var DeleteAttachmentFromSlot = function (ticketID, slotname, attachmentID) {
 
         return $http({
             method: 'DELETE',
-            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/slot/"+slotname+"/attachment/"+attachmentID,
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/slot/" + slotname + "/attachment/" + attachmentID,
 
         }).then(function (response) {
             return response;
+        });
+    };
+
+    /*------------ config ticker data -----------*/
+    var GetMyTicketConfig = function (callback) {
+        $http.get('http://192.168.0.132:3638/DVP/API/1.0.0.0/MyAppMeta')
+            .success(function (data, status, headers, config) {
+                callback(true, data);
+            }).error(function (data, status, headers, config) {
+            //login error
+            callback(false, data);
+        });
+    };
+
+    var SaveMyTicketConfig = function (param, callback) {
+        $http.put('http://192.168.0.132:3638/DVP/API/1.0.0.0/MyAppMeta', param)
+            .success(function (data, status, headers, config) {
+                callback(true, data);
+            }).error(function (data, status, headers, config) {
+            //login error
+            callback(false, data);
         });
     };
 
@@ -757,7 +778,9 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         updateTicketEstimateTime: updateTicketEstimateTime,
         getAvailableTicketTypes: getAvailableTicketTypes,
         AddAttachmentToSlot: AddAttachmentToSlot,
-        DeleteAttachmentFromSlot: DeleteAttachmentFromSlot
+        DeleteAttachmentFromSlot: DeleteAttachmentFromSlot,
+        GetMyTicketConfig: GetMyTicketConfig,
+        SaveMyTicketConfig: SaveMyTicketConfig
     }
 });
 
