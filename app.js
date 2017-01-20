@@ -11,7 +11,7 @@ var agentApp = angular.module('veeryAgentApp',
         'com.2fdevs.videogular',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer', 'mdo-angular-cryptography'
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop'
+        'ngImgCrop','jkAngularRatingStars'
     ]);
 
 
@@ -35,7 +35,9 @@ var baseUrls = {
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://192.168.8.100:3333/'
+    'ipMessageURL': 'http://192.168.8.100:3333/',
+    'qaModule':'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/'
+
 };
 
 agentApp.constant('baseUrls', baseUrls);
