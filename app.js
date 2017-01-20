@@ -53,7 +53,8 @@ var phoneSetting = {
     'TransferIvrCode': '*9',
     'EtlCode': '#',
     'SwapCode': '1',
-    'ConferenceCode': '0'
+    'ConferenceCode': '0',
+    'ExtNumberLength':5
 };
 agentApp.constant('phoneSetting', phoneSetting);
 
