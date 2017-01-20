@@ -294,7 +294,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         },
         transferCall: function (no) {
-            var dtmfSet = no.length <= 5 ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
+            var dtmfSet = no.length < phoneSetting.ExtNumberLength ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
             angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
@@ -1086,7 +1086,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.veeryNotification();
     $scope.socketReconnect = function () {
         veeryNotification.reconnectToServer();
-    }
+    };
 
 
     $scope.checkAndRegister = function () {
