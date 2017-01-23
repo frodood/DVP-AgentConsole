@@ -131,6 +131,7 @@
             })
         };
 
+
         var updateMyProfile = function (profileInfo) {
             profileInfo.birthday = profileInfo.dob.year + "-" + profileInfo.dob.month + "-" + profileInfo.dob.day;
             var jsonStr = JSON.stringify(profileInfo);
@@ -138,6 +139,15 @@
                 method: 'PUT',
                 url: baseUrls.userServiceBaseUrl + 'Myprofile',
                 data: jsonStr
+            }).then(function (resp) {
+                return resp.data;
+            })
+        };
+
+        var getMyRatings = function (owner) {
+            return $http({
+                method: 'GET',
+                url: baseUrls.qaModule + 'QuestionPaperSubmission/Owner/' + owner + '/Completed/true',
             }).then(function (resp) {
                 return resp.data;
             })
@@ -159,6 +169,7 @@
             addMemberToGroup: addMemberToGroup,
             getMyProfile: getMyProfile,
             updateMyProfile: updateMyProfile,
+            getMyRatings:getMyRatings
             
         };
     };

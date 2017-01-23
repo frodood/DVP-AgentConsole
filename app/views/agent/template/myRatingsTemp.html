@@ -1,0 +1,76 @@
+<form name="ratingFrm">
+    <!-- e contact details -->
+
+    <div class="row">
+        <!-- email -->
+        <div class="col-lg-11">
+            <div class="form-group">
+                <div class="mail_list_column sip-user-wrap"
+                     ng-mouseover="viewScroll()"
+                     ng-mouseleave="hideScroll()"
+                     ng-slimscroll
+                     height="200" width="200%" opacity="0.2" distance="0px"
+                     enabled="{{ scrollEnabled }}">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <div ng-repeat="(key,value) in sectionArray">
+                            <h3 style="color: grey">{{value.name}}</h3>
+                            <span><jk-rating-stars rating="value.value/value.itemCount" max-rating="10" read-only="true"></jk-rating-stars></span>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <!-- <a href="javascript:void(0);"
+                        ng-repeat="(key,value) in sectionArray">
+                         <div>
+                             <div >
+                                 <h3>
+                                     {{value.name}}
+                                     <span><jk-rating-stars rating="value.value/value.itemCount" max-rating="10" read-only="true"></jk-rating-stars></span>
+                                 </h3>
+
+                                 <p class="font-robot">
+                                     ID : {{value.id}}
+                                 </p>
+                             </div>
+                             <div class="left">
+                             </div>
+                         </div>
+
+
+                     </a>-->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div style="border-bottom: groove">
+
+    </div>
+    <div>
+        <div class="col-lg-11">
+            <h3 style="color: white">Remarks</h3>
+            <div class="mail_list_column sip-user-wrap"
+                 ng-mouseover="viewScroll()"
+                 ng-mouseleave="hideScroll()"
+                 ng-slimscroll
+                 height="300" width="100%" opacity="0.2" distance="0px"
+                 enabled="{{ scrollEnabled }}" >
+                <div ng-repeat="remark in myRemarks">
+                    <div>
+                        <div>
+                            <span style="font-size: small ; color: red">{{remark.evaluator}} </span><span style="color:white;;">commented about</span> <span style="color: darkorange;">{{remark.section}}</span>
+
+                            <p style="color: white ; padding-top: 5px">{{remark.remark}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+</form>
