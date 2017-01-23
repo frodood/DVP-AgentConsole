@@ -1489,24 +1489,24 @@ div > div >
 /* #MAIN css */
 ::-webkit-input-placeholder {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    color: #8298ae ;
+    color: #8298ae;
 }
 
 :-moz-placeholder {
     /* Firefox 18- */
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    color: #8298ae ;
+    color: #8298ae;
 }
 
 ::-moz-placeholder {
     /* Firefox 19+ */
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    color: #8298ae ;
+    color: #8298ae;
 }
 
 :-ms-input-placeholder {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    color: #8298ae ;
+    color: #8298ae;
 }
 
 .m-left-10 {
@@ -2034,6 +2034,7 @@ div > div >
     transition: padding-left .2s ease-in;
     margin-bottom: 5px;
     padding-top: 3px;
+    position: relative;
 }
 
 .cht-notify {
@@ -5663,6 +5664,7 @@ ul.renote-color-btn > li {
     overflow: hidden;
     background: #f7f7f7;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+    z-index: 100;
     /* border: 1px solid #0d1c34; */
 }
 
@@ -5684,6 +5686,29 @@ ul.renote-color-btn > li {
     overflow: hidden;
     border-radius: 2px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .20);
+}
+
+.cht-header.rec-new-msg-blink {
+    animation-duration: 1200ms;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    -webkit-animation: blink 1200ms infinite;
+}
+
+.cht-header > .cht-b-name {
+    display: inline-block;
+    float: left;
+}
+
+.cht-header > .cht-close {
+    display: inline-block;
+    float: right;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 4px;
+    font-size: 10px;
+    cursor: pointer;
 }
 
 .snd-msg-wrp {
@@ -5741,10 +5766,10 @@ ul.renote-color-btn > li {
     margin: 0px;
     min-width: 8px;
     overflow: hidden;
-    padding: 3px 9px 3px 9px;
+    padding: 3px 5px 3px 5px;
     border-radius: 2px;
     font-size: 12px;
-    margin-bottom: 2px;
+    margin-bottom: 6px;
     border-radius: 12px;
 }
 
@@ -5756,10 +5781,10 @@ ul.renote-color-btn > li {
 }
 
 .snd-msg > .msg-t {
-    /*//background: #36ba45;*/
-    /*background: #26c584; */
-    background: #36ba45;
-    color: #fff;
+    background: #f1efef;
+    color: #000000;
+    border: 1px solid #d9dee4;
+    margin-left: 5px;
 }
 
 .rec-img {
@@ -5786,6 +5811,7 @@ ul.renote-color-btn > li {
     margin-left: 11px;
     overflow: hidden;
     position: relative;
+    display: inline-block;
 }
 
 .type-wrp > .rec-img {
@@ -5795,6 +5821,31 @@ ul.renote-color-btn > li {
 
 .type-wrp > .ty-ani-body {
     display: inline-block;
+}
+
+.option-c-wrp {
+    display: inline-block;
+    float: right;
+    display: inline-block;
+    float: right;
+    padding-right: 9px;
+}
+
+.opt-c-row-wp {
+    padding-top: 3px;
+    display: inline-block;
+    padding-right: 6px;
+}
+
+.option-c-wrp > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.option-c-wrp > ul > li > i.cht-op-2 {
+    font-size: 17px;
+    color: #d9dee4;
 }
 
 .typing {
@@ -5865,10 +5916,83 @@ ul.renote-color-btn > li {
     color: #dadada !important;
 }
 
-.cht-b-w{
+.cht-b-w {
     margin-top: 30px;
     height: 285px;
     overflow: auto;
     width: auto;
     border-bottom: 1px solid #D9DEE4;
 }
+
+.ch-d-load {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 156px;
+}
+
+.ch-d-load > i {
+    font-size: 20px;
+    color: #e2e5ea;
+}
+
+.msg-status {
+    position: absolute;
+    top: 6px;
+    right: 11px
+}
+
+.msg-status > i {
+    font-size: 8px;
+}
+
+.msg-status > i.fa-check {
+    font-size: 8px;
+}
+
+.msg-status > i.fa-check-circle {
+    font-size: 8px;
+}
+
+.rec-msg > .msg-t {
+    background: #f1efef;
+    color: #000000;
+    border: 1px solid #d9dee4;
+    margin-left: 5px;
+}
+
+.snd-msg > .msg-t.pending {
+    background: #f1efef;
+    color: #000000;
+    border: 1px solid #d9dee4;
+    margin-left: 5px;
+}
+
+.snd-msg > .msg-t.delivered {
+    background: #f1efef;
+    color: #000000;
+    border: 1px solid #d9dee4;
+    margin-left: 5px;
+}
+
+.snd-msg > .msg-t.seen {
+    background: #36ba45;
+    color: #fff;
+    border: 1px solid #36ba45;
+}
+
+@keyframes blink {
+    0% {
+        background: #36ba45;
+    }
+    49% {
+        background: #2b6557;
+    }
+    50% {
+        background: #33906a;
+    }
+    100% {
+        background: #36ba45;
+    }
+}
+
