@@ -1235,7 +1235,7 @@ tr.ivr-tbl:nth-child(even) {
 }
 
 .ivr-list {
-    z-index: 1px;
+    z-index: 1;
 }
 
 tr.ivr-tbl {
@@ -5923,6 +5923,7 @@ ul.renote-color-btn > li {
     overflow: auto;
     width: auto;
     border-bottom: 1px solid #D9DEE4;
+}
 
 
 .ch-d-load {
