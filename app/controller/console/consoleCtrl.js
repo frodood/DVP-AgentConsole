@@ -1216,11 +1216,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.loadUsers = function () {
         userService.LoadUser().then(function (response) {
 
-            for (var i = 0; i < response.length; i++) {
-                var user = response[i];
-                user.listType = "User";
-                user.status = "offline";
-            }
+            // for (var i = 0; i < response.length; i++) {
+            //     //var user = response[i];
+            //     var user = {};
+            //     user.username = response[i].username;
+            //     user.firstname = response[i].firstname;
+            //     user.lastname = response[i].lastname;
+            //     user.avatar = response[i].avatar;
+            //     user.listType = "User";
+            //     user.status = "offline";
+            //     $scope.users.push(user);
+            // }
 
             $scope.users = response;
             profileDataParser.assigneeUsers = response;
@@ -2304,10 +2310,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
     };
     $scope.isUserListOpen = false;
+    $scope.navOpen = false;
     $scope.openNav = function () {
 
         if ($scope.isUserListOpen) {
+            $scope.navOpen = false;
             $scope.closeNav();
+            chatService.SetChatPosition(false);
         }
         else {
             $scope.getViewportHeight();
@@ -2316,9 +2325,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             document.getElementById("main").style.marginRight = "215px";
             chatService.Request('allstatus');
 
+            chatService.SetChatPosition(true);
+
+
         }
 
+
         $scope.isUserListOpen = !$scope.isUserListOpen;
+
+
 
 
         // document.getElementById("navBar").style.marginRight = "300px";
