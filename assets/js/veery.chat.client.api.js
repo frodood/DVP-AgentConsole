@@ -74,6 +74,18 @@ window.SE = function (e) {
 
         });
 
+
+        socket.on('chatstatus', function (data) {
+            console.log("chatstatus");
+            if (callBack.OnChatStatus) {
+                callBack.OnChatStatus(data);
+            }
+
+            // socket.emit('seen',{to: data.to, uuid: data.id});
+
+        });
+        
+
         socket.on('seen', function (data) {
             console.log("seen");
             if (callBack.OnSeen) {
@@ -270,6 +282,10 @@ window.SE = function (e) {
             else if (r === "pendingall") {
                 socket.emit('request', {request: 'pendingall'});
             }
+            else if (r === "chatstatus") {
+                socket.emit('request', {request: 'chatstatus', from: v(e, "from")});
+            }
+                
             else {
                 if (callBack.OnError) {
                     callBack.OnError({method: "viewmessage", message: "Invalid View Type."});
