@@ -1225,6 +1225,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.users = response;
             profileDataParser.assigneeUsers = response;
 
+            chatService.Request('pendingall');
+
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.showAlert("Load Users", "error", "Fail To Get User List.")
@@ -2313,6 +2315,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             document.getElementById("mySidenav").style.width = "230px";
             document.getElementById("main").style.marginRight = "215px";
             chatService.Request('allstatus');
+
         }
 
         $scope.isUserListOpen = !$scope.isUserListOpen;
@@ -3285,6 +3288,32 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     });
 
+    chatService.SubscribePending(function(pendingArr){
+
+
+        if(pendingArr && Array.isArray(pendingArr)){
+
+            pendingArr.forEach(function(item){
+
+                var userx = item._id;
+                var userObj = $scope.users.filter(function (user) {
+                    return userx == user.username;
+                });
+
+
+                if (Array.isArray(userObj)) {
+                    userObj.forEach(function (obj, index) {
+
+                            obj.chatcount = item.messages;
+
+                    });
+                }
+
+            });
+        }
+
+    });
+
     //get online users
     var onlineUser = chatService.onUserStatus();
     console.log(onlineUser);
@@ -3292,6 +3321,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showTabChatPanel = function (chatUser) {
         chatService.SetChatUser(chatUser);
     };
+    
 
 
     $rootScope.$on("updates", function () {

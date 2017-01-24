@@ -116,6 +116,13 @@ window.SE = function (e) {
                 callBack.OnAccept(data);
             }
         });
+
+        socket.on('pending', function (data) {
+            console.log("pending");
+            if (callBack.OnPending) {
+                callBack.OnPending(data);
+            }
+        });
     }
 
     function n(e) {
@@ -152,12 +159,15 @@ window.SE = function (e) {
         var r = v(e, "to"), m = v(e, "message"), t = v(e, "type");
         if (connected) {
             // tell server to execute 'new message' and send along one parameter
-            socket.emit('message', {
+            var msg = {
                 to: r,
                 message: m,
                 type: t,
                 id: uniqueId()
-            });
+            }
+            socket.emit('message', msg);
+            
+            return msg;
         } else {
             if (callBack.OnError) {
                 callBack.OnError({method: "connection", message: "Connection Lost."});
@@ -170,7 +180,7 @@ window.SE = function (e) {
 
         var r = v(e, "to"), k = v(e, "id");
         if (connected) {
-            socket.emit('seen', {to: r, uuid: k});
+            socket.emit('seen', {to: r, id: k});
         }
         else {
             if (callBack.OnError) {
@@ -256,6 +266,9 @@ window.SE = function (e) {
             }
             else if (r === "latestmessages") {
                 socket.emit('request', {request: 'latestmessages', from: v(e, "from")});
+            }
+            else if (r === "pendingall") {
+                socket.emit('request', {request: 'pendingall'});
             }
             else {
                 if (callBack.OnError) {
