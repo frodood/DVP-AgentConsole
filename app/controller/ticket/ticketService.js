@@ -702,7 +702,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
 
     /*------------ config ticker data -----------*/
     var GetMyTicketConfig = function (callback) {
-        $http.get('http://192.168.0.132:3638/DVP/API/1.0.0.0/MyAppMeta')
+        $http.get(baseUrls.userServiceBaseUrl+'MyAppMeta')
             .success(function (data, status, headers, config) {
                 callback(true, data);
             }).error(function (data, status, headers, config) {
@@ -712,7 +712,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     };
 
     var SaveMyTicketConfig = function (param, callback) {
-        $http.put('http://192.168.0.132:3638/DVP/API/1.0.0.0/MyAppMeta', param)
+        $http.put(baseUrls.userServiceBaseUrl+'MyAppMeta', param)
             .success(function (data, status, headers, config) {
                 callback(true, data);
             }).error(function (data, status, headers, config) {
