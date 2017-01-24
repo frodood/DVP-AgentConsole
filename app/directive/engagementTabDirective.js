@@ -964,6 +964,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.ticket.priority = priority;
             };
 
+
+            scope.loadMyAppMetaData = function () {
+                ticketService.GetMyTicketConfig(function (success,data) {
+
+                    if(success)
+                    {
+                        scope.ticket.subject=data.Result.subject;
+                        scope.setPriority(data.Result.priority);
+                        scope.ticket.description=data.Result.description;
+
+                    }
+                });
+
+            }
+
             scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
                 ticket.requester = scope.profileDetail._id;
@@ -1070,6 +1085,10 @@ console.log('Ticket other data saved successfully');
             scope.showNewTicket = function () {
                 if (scope.profileDetail && scope.profileDetail._id) {
                     scope.showCreateTicket = !scope.showCreateTicket;
+                    if(scope.showCreateTicket)
+                    {
+                        scope.loadMyAppMetaData();
+                    }
                 } else {
                     scope.showAlert("Ticket", "error", "Please Create Profile First.")
                 }
