@@ -14,7 +14,9 @@
 
                     <div ng-repeat="(key,value) in sectionArray">
                         <h4 style="color: grey">{{value.name}}</h4>
-                        <span><jk-rating-stars rating="value.value/value.itemCount" max-rating="10" read-only="true"></jk-rating-stars></span>
+                        <span title="Rating : {{value.value/value.itemCount}}"><jk-rating-stars rating="value.value/value.itemCount" max-rating="10" read-only="true"></jk-rating-stars></span>
+
+
 
                     </div>
 
