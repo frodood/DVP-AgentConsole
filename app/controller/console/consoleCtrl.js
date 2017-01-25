@@ -269,7 +269,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
         },
         transferCall: function (no) {
-            var dtmfSet = no.length <= 5 ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
+            var dtmfSet = no.length <= 4 ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
             angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
