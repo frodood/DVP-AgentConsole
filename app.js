@@ -43,6 +43,7 @@ agentApp.constant('turnServers', [{url:"stun:stun.l.google.com:19302"},{url:"stu
 //{url:"stun:stun.l.google.com:19302"},{url:"stun:stun.counterpath.net:3478"},{url:"stun:numb.viagenie.ca:3478"}
 //{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}
 
+
 var phoneSetting = {
     'TransferPhnCode': '*6',
     'TransferExtCode': '*3',
