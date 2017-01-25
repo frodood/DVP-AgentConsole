@@ -11,7 +11,11 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
             url: baseUrls.dashBordUrl + "DashboardEvent/TotalCount/" + status + "/user_" + authService.GetResourceIss() + "/*"
         }).then(function (response) {
             if (response.status === 200) {
-                return response.data;
+                if(response.data.IsSuccess && response.data.Result){
+                    return response.data.Result;
+                }else{
+                    return 0;
+                }
             } else {
                 return 0;
             }
@@ -24,8 +28,12 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
             method: 'GET',
             url: baseUrls.dashBordUrl + "DashboardGraph/NewTicketByUser/30"
         }).then(function (response) {
-            if (response.data && response.data.length > 0 && response.data[0].datapoints) {
-                return response.data[0].datapoints;
+            if (response.data) {
+                if(response.data.IsSuccess && response.data.Result && response.data.Result[0].datapoints){
+                    return response.data.Result[0].datapoints;
+                }else{
+                    return {};
+                }
             } else {
 
                 return {};
@@ -39,8 +47,12 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
             method: 'GET',
             url: baseUrls.dashBordUrl + "DashboardGraph/ClosedTicketByUser/30"
         }).then(function (response) {
-            if (response.data && response.data.length > 0 && response.data[0].datapoints) {
-                return response.data[0].datapoints;
+            if (response.data) {
+                if(response.data.IsSuccess && response.data.Result && response.data.Result[0].datapoints){
+                    return response.data.Result[0].datapoints;
+                }else{
+                    return {};
+                }
             } else {
 
                 return {};
@@ -53,8 +65,12 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
             method: 'GET',
             url: baseUrls.dashBordUrl + "DashboardGraph/ClosedVsOpenTicketByUser/30"
         }).then(function (response) {
-            if (response.data && response.data.length > 0 && response.data[0].datapoints) {
-                return response.data[0].datapoints;
+            if (response.data) {
+                if(response.data.IsSuccess && response.data.Result && response.data.Result[0].datapoints){
+                    return response.data.Result[0].datapoints;
+                }else{
+                    return {};
+                }
             } else {
 
                 return {};
@@ -81,7 +97,11 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
             method: 'get',
             url: baseUrls.dashBordUrl + "DashboardEvent/QueueDetails"
         }).then(function (response) {
-            return response.data
+            if(response.data.IsSuccess && response.data.Result){
+                return response.data.Result;
+            }else{
+                return 0;
+            }
         });
     };
 
@@ -91,7 +111,11 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
             url: baseUrls.dashBordUrl + "DashboardEvent/TotalCount/NEWTICKET/via_" + chenal + "/*"
         }).then(function (response) {
             if (response.data) {
-                return response.data;
+                if(response.data.IsSuccess && response.data.Result){
+                    return response.data.Result;
+                }else{
+                    return 0;
+                }
             } else {
                 return 0;
             }

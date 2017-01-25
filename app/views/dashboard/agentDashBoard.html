@@ -7,7 +7,11 @@
                 <div id="dashboard-opacity"></div>
 
 
-
+                <div class="btn-warp dashboard-ref pull-right">
+                    <div id="dashboardReload" class="btn-dash-ref" ng-click="dashboardReload()">
+                        Refresh
+                    </div>
+                </div>
                 <div class="row">
                     <!-- TICKET ANR CLOASE -->
                     <div class="dark-ticker-wrapper">
@@ -43,8 +47,8 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="dark-ticker-wrap close-ticket pending-ticket-widget">
-                                        <h1 class="bold">{{closeTicketCount}}</h1>
-                                        <div class="title">PENDING TICKET</div>
+                                        <h1 class="bold">{{ProgressTicketCount}}</h1>
+                                        <div class="title">PROGRESS TICKET</div>
                                     </div>
                                 </div>
 
@@ -70,7 +74,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-4 p-0" >
+                                <div class="col-lg-4 p-0">
                                     <div class="dark-product-ticker-wrap">
                                         <h1 class="Staffed bold">{{productivity.StaffedTime| date:'HH:mm:ss'}}</h1>
                                         <div class="title Staffed text-uppercase">Staffed Time</div>

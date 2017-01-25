@@ -18,7 +18,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
         return $http({
             method: 'put',
-            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId + "/state/Available/reason/EndBreak"
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId + "/state/Available/reason/"+ reason
         }).then(function (response) {
             return response.data.IsSuccess;
         });
@@ -45,11 +45,9 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     };
 
     var unregisterWithArds = function (resourceId) {
-
         return $http({
             method: 'delete',
-            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId,
-            data: {"ResourceId": resourceId, "HandlingTypes": ["CALL"]}
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId
         }).then(function (response) {
             return response.data.IsSuccess;
         });
@@ -124,14 +122,15 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         return $http({
             method: 'put',
             url: baseUrls.ardsliteserviceUrl + "resource/" + authService.GetResourceId() + "/concurrencyslot/session/" + callSessionId,
-            data:{
+            data: {
                 "RequestType": "CALL",
-                "State": endFreeze ?  "Freeze":"EndFreeze",
+                "State": endFreeze ? "Freeze" : "EndFreeze",
                 "Reason": "",
                 "OtherInfo": ""
             }
         }).then(function (response) {
-            return response.data.Result;
+            console.log("callSessionId : "+callSessionId +" endFreeze : "+ endFreeze+" response : "+response);
+            return response.data.IsSuccess;
         });
     };
     var mapResourceToVeery = function (publicIdentity) {
@@ -141,7 +140,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         return $http({
             method: 'post',
             url: baseUrls.monitorrestapi + "MonitorRestAPI/BindResourceToVeeryAccount",
-            data:{
+            data: {
                 "SipURI": publicIdentity.replace("sip:", ""),
                 "ResourceId": authService.GetResourceId()
             }
@@ -153,11 +152,39 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     var sipUserPassword = function (userName) {
         return $http({
             method: 'get',
-            url: baseUrls.sipuserUrl + "SipUser/User/"+userName+"/Password"
+            url: baseUrls.sipuserUrl + "SipUser/User/" + userName + "/Password"
         }).then(function (response) {
             return response.data.Result;
         });
     };
+
+    var getResourceTasks = function (resourceId) {
+        return $http({
+            method: 'get',
+            url: baseUrls.resourceService + "Resource/" + resourceId + "/Tasks"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+    var getCurrentRegisterTask = function (resourceId) {
+        return $http({
+            method: 'get',
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
+    var removeSharing = function (resourceId, task) {
+        return $http({
+            method: 'DELETE',
+            url: baseUrls.ardsliteserviceUrl + "resource/" + resourceId + "/removesSharing/" + task
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
 
     return {
         BreakRequest: breakRequest,
@@ -170,9 +197,12 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         GetResourceState: getResourceState,
         GetResource: getResource,
         GetAcwTime: getAcwTime,
-        FreezeAcw:freezeAcw,
-        MapResourceToVeery:mapResourceToVeery,
-        SipUserPassword:sipUserPassword
+        FreezeAcw: freezeAcw,
+        MapResourceToVeery: mapResourceToVeery,
+        SipUserPassword: sipUserPassword,
+        GetResourceTasks: getResourceTasks,
+        GetCurrentRegisterTask: getCurrentRegisterTask,
+        RemoveSharing: removeSharing
     }
 
 });
