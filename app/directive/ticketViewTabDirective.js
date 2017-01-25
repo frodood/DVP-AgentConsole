@@ -880,6 +880,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.clickAddNewTicket = function () {
                 scope.showSubCreateTicket = !scope.showSubCreateTicket;
+                if(scope.showSubCreateTicket)
+                {
+                    scope.loadMyAppMetaData();
+                }
+
             };
 
             scope.editTicketMode = function () {
@@ -1298,6 +1303,21 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
             };
 
+
+
+            scope.loadMyAppMetaData = function () {
+                ticketService.GetMyTicketConfig(function (success,data) {
+
+                    if(success)
+                    {
+                        scope.newSubTicket.subject=data.Result.subject;
+                        scope.setPriority(data.Result.priority);
+                        scope.newSubTicket.description=data.Result.description;
+
+                    }
+                });
+
+            }
 
             // tag selection
 
