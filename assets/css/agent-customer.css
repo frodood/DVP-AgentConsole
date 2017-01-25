@@ -3163,6 +3163,13 @@ input.ps-form-controller[readonly] {
     color: #ffffff;
 }
 
+.btn-ps-update:active {
+    outline: none !important;
+    background: #1a3d42 !important;
+    color: #14d0a0 !important;
+    opacity: 1 !important;
+}
+
 .ps-update-wrapper > i {
     color: #36ba45;
     font-size: 20px;
@@ -5721,10 +5728,12 @@ ul.renote-color-btn > li {
     margin-top: -10px;
 
 }
-.c-last-seen > small{
+
+.c-last-seen > small {
     font-size: 8px;
     padding-left: 1px;
 }
+
 .c-time-ago {
     display: block;
     float: left;
@@ -5869,6 +5878,15 @@ ul.renote-color-btn > li {
     padding-top: 3px;
     display: inline-block;
     padding-right: 6px;
+    cursor: pointer;
+}
+
+.opt-c-row-wp.client {
+    color: #ababab;
+}
+
+.opt-c-row-wp.client:hover {
+    color: #969696;
 }
 
 .option-c-wrp > ul {
@@ -5954,6 +5972,7 @@ ul.renote-color-btn > li {
     margin-top: 36px;
     height: 285px;
     overflow: auto;
+    position: relative;
     width: auto;
     border-bottom: 1px solid #D9DEE4;
 }
@@ -6031,4 +6050,83 @@ ul.renote-color-btn > li {
 }
 
 .jk-rating-stars-container .button .material-icons {
-    font-size: 20px !important; }
+    font-size: 20px !important;
+}
+
+/*client chat */
+.client-acpt {
+    position: absolute;
+    width: 243px;
+    height: 307px;
+    top: 0px;
+    background: rgba(241, 239, 239, 1);
+    z-index: 1;
+    text-align: center;
+}
+
+/*right side nav panel */
+.r-nav-wrapper {
+    position: fixed;
+    width: 50px;
+    height: 150px;
+    right: 0;
+}
+
+.cht-b-w > .cht-img-grp {
+    width: 260px;
+    height: 50px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.cht-img-grp {
+    margin-top: 80px;
+}
+
+.cht-img-grp > .g-rec-img,
+.cht-img-grp > .g-sed-img {
+    display: inline-block;
+    margin-right: -10px;
+}
+
+.cht-img-grp > .g-rec-img {
+    margin-right: -5px;
+}
+
+.cht-img-grp > .g-sed-img {
+    margin-left: -5px;
+}
+
+.g-rec-img > img,
+.g-sed-img > img {
+    border-radius: 50%;
+}
+
+.client-acpt-txt > .ignore,
+.client-acpt-txt > .accept {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.client-acpt-txt > .ignore {
+    color: #d90000;
+    padding-right: 15px;
+}
+
+.client-acpt-txt > .accept {
+    color: #36ba45;
+}
+
+.client-acpt > .cht-body {
+    display: block;
+    color: #ccc;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.client-acpt-txt {
+    margin-top: 50px;
+}
+
