@@ -3148,6 +3148,9 @@ input.ps-form-controller[readonly] {
     width: 100%;
     margin-top: 25px;
 }
+.ps-update-wrapper:active{
+    opacity: 1 !important;
+}
 
 .btn-ps-update {
     background: #1a3d42;
@@ -3162,6 +3165,8 @@ input.ps-form-controller[readonly] {
     background: #36ba45;
     color: #ffffff;
 }
+
+
 
 .ps-update-wrapper > i {
     color: #36ba45;
@@ -6032,3 +6037,41 @@ ul.renote-color-btn > li {
 
 .jk-rating-stars-container .button .material-icons {
     font-size: 20px !important; }
+
+.enable-btn {
+    background: #1a3d42;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    min-width: 120px;
+    color: #14d0a0;
+}
+
+/*password-leg-wrapper*/
+.password-leg-wrapper {
+    min-width: 230px;
+    min-height: 115px;
+    position: absolute;
+    top: 205px;
+    left: 10px;
+    background: #080808;
+    padding: 15px 23px 13px 20px;
+    z-index: 100;
+    border-radius: 10px;
+    overflow:visible;
+}
+
+.password-leg-wrapper > ul > li {
+    list-style: none;
+    text-align: left;
+    padding: 0 0 4px 0;
+}
+
+.password-leg-wrapper > ul > li > i {
+    padding-right: 5px;
+}
+
+.password-leg-wrapper > ul {
+    margin: 0;
+    padding: 0;
+}
