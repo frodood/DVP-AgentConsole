@@ -3165,6 +3165,14 @@ input.ps-form-controller[readonly] {
     background: #36ba45;
     color: #ffffff;
 }
+.btn-ps-update:active {
+    background: #1a3d42;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    min-width: 120px;
+    color: #14d0a0;
+}
 
 
 
