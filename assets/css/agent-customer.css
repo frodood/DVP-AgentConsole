@@ -3175,7 +3175,8 @@ input.ps-form-controller[readonly] {
     color: #ffffff;
 }
 
-.btn-ps-update:active {
+.btn-ps-update:active,
+.btn-ps-update:focus {
     outline: none !important;
     background: #1a3d42 !important;
     color: #14d0a0 !important;
