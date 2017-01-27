@@ -1342,12 +1342,88 @@ console.log('Ticket other data saved successfully');
                 scope.editProfile = false;
             };
 
+
+
+            var loadUserData = function(){
+                if (scope.profileDetails) {
+                    if (scope.profileDetails.length == 1) {
+                        scope.profileDetail = scope.profileDetails[0];
+                        scope.GetProfileHistory(scope.profileDetail._id);
+                        scope.profileLoadin = false;
+                        scope.currentSubmission = scope.profileDetails[0].form_submission;
+                        convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
+                            if (schemaDetails) {
+                                scope.schema = schemaDetails.schema;
+                                scope.form = schemaDetails.form;
+                                scope.model = schemaDetails.model;
+                            }
+
+                        });
+
+                    }
+                    else if (scope.profileDetails.length > 1) {
+                        // show multiple profile selection view
+                        scope.profileLoadin = false;
+                        scope.showMultiProfile = true;
+
+                    }
+                    else {
+                        // show new profile
+                        scope.profileLoadin = false;
+                        scope.showMultiProfile = true;
+
+                        scope.currentSubmission = null;
+                        convertToSchemaForm(null, function (schemaDetails) {
+                            if (schemaDetails) {
+                                scope.schema = schemaDetails.schema;
+                                scope.form = schemaDetails.form;
+                                scope.model = schemaDetails.model;
+                            }
+
+                        });
+                    }
+
+                }
+                else {
+                    // show new profile
+
+                    scope.currentSubmission = null;
+                    convertToSchemaForm(null, function (schemaDetails) {
+                        if (schemaDetails) {
+                            scope.schema = schemaDetails.schema;
+                            scope.form = schemaDetails.form;
+                            scope.model = schemaDetails.model;
+                        }
+
+                    });
+
+
+                    scope.showMultiProfile = false;
+
+                }
+            };
+
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
-                if (scope.direction === 'inbound' || scope.direction === 'outbound') {
-                    category = 'phone';
-                }else if(scope.direction === 'direct'){
-                    category = 'direct';
+
+                switch (scope.channel){
+                    case 'call':
+                        if (scope.direction === 'inbound' || scope.direction === 'outbound') {
+                            category = 'phone';
+                        } else if (scope.direction === 'direct') {
+                            category = 'direct';
+                        }
+                        break;
+
+                    case 'api':
+                        if (scope.direction === 'direct') {
+                            category = 'direct';
+                        }
+                        break;
+
+                    default :
+                        break;
+
                 }
 
                 if (scope.profileDetail) {
@@ -1408,67 +1484,27 @@ console.log('Ticket other data saved successfully');
                     if(category === 'direct') {
                         scope.createNProfile();
                     }else{
-                        userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
-                            scope.profileDetails = response;
-                            if (scope.profileDetails) {
-                                if (scope.profileDetails.length == 1) {
-                                    scope.profileDetail = scope.profileDetails[0];
-                                    scope.GetProfileHistory(scope.profileDetail._id);
-                                    scope.profileLoadin = false;
-                                    scope.currentSubmission = scope.profileDetails[0].form_submission;
-                                    convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
-                                        if (schemaDetails) {
-                                            scope.schema = schemaDetails.schema;
-                                            scope.form = schemaDetails.form;
-                                            scope.model = schemaDetails.model;
-                                        }
-
-                                    });
-
-                                }
-                                else if (scope.profileDetails.length > 1) {
-                                    // show multiple profile selection view
-                                    scope.profileLoadin = false;
-                                    scope.showMultiProfile = true;
-
-                                }
-                                else {
-                                    // show new profile
-                                    scope.profileLoadin = false;
-                                    scope.showMultiProfile = true;
-
-                                    scope.currentSubmission = null;
-                                    convertToSchemaForm(null, function (schemaDetails) {
-                                        if (schemaDetails) {
-                                            scope.schema = schemaDetails.schema;
-                                            scope.form = schemaDetails.form;
-                                            scope.model = schemaDetails.model;
-                                        }
-
-                                    });
+                        if(scope.channel === 'chat'){
+                            userService.getExternalUserProfileByField("firstname", scope.channelFrom).then(function (response) {
+                                if (response && response.IsSuccess) {
+                                    scope.profileDetails = response.Result;
                                 }
 
-                            }
-                            else {
-                                // show new profile
+                                loadUserData();
+                            }, function (err) {
+                                scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                            });
+                        }else {
+                            userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                                scope.profileDetails = response;
 
-                                scope.currentSubmission = null;
-                                convertToSchemaForm(null, function (schemaDetails) {
-                                    if (schemaDetails) {
-                                        scope.schema = schemaDetails.schema;
-                                        scope.form = schemaDetails.form;
-                                        scope.model = schemaDetails.model;
-                                    }
-
-                                });
+                                loadUserData();
 
 
-                                scope.showMultiProfile = false;
-
-                            }
-                        }, function (err) {
-                            scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                        });
+                            }, function (err) {
+                                scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                            });
+                        }
                     }
                 }
             };

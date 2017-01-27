@@ -74,7 +74,6 @@ window.SE = function (e) {
 
         });
 
-
         socket.on('chatstatus', function (data) {
             console.log("chatstatus");
             if (callBack.OnChatStatus) {
@@ -84,7 +83,6 @@ window.SE = function (e) {
             // socket.emit('seen',{to: data.to, uuid: data.id});
 
         });
-        
 
         socket.on('seen', function (data) {
             console.log("seen");
@@ -135,6 +133,48 @@ window.SE = function (e) {
                 callBack.OnPending(data);
             }
         });
+
+        socket.on('agent', function (data) {
+            console.log("agent");
+            if (callBack.OnAgent) {
+                callBack.OnAgent(data);
+            }
+        });
+
+        socket.on('connectionerror', function(data){
+            console.log("connectionerror");
+
+            if(data === "no_agent_found"){
+                setTimeout(function(){
+                    socket.emit('retryagent',{});
+                }, 10000);
+
+            }
+        });
+
+        socket.on('existingclient', function(data){
+            console.log("existingclient");
+            if (callBack.OnExistingclient) {
+                callBack.OnExistingclient(data);
+            }
+        });
+
+        socket.on('sessionend', function(data){
+            console.log("sessionend");
+            if (callBack.OnSessionend) {
+                callBack.OnSessionend(data);
+            }
+        });
+
+        socket.on('left', function(data){
+            console.log("left");
+            if (callBack.OnLeft) {
+                callBack.OnLeft(data);
+            }
+        });
+
+
+
     }
 
     function n(e) {
@@ -176,9 +216,31 @@ window.SE = function (e) {
                 message: m,
                 type: t,
                 id: uniqueId()
-            }
+            };
             socket.emit('message', msg);
             
+            return msg;
+        } else {
+            if (callBack.OnError) {
+                callBack.OnError({method: "connection", message: "Connection Lost."});
+            }
+        }
+    }
+
+    function cm(e) {
+        if (!e)throw g;
+
+        var m = v(e, "message"), t = v(e, "type");
+        if (connected) {
+            // tell server to execute 'new message' and send along one parameter
+            var msg = {
+                to: 'company',
+                message: m,
+                type: t,
+                id: uniqueId()
+            };
+            socket.emit('message', msg);
+
             return msg;
         } else {
             if (callBack.OnError) {
@@ -240,8 +302,11 @@ window.SE = function (e) {
     function c(e) {
         if (!e)throw g;
         var r = v(e, "jti");
+
+        var obj = e;
+        obj.to = r;
         if (connected) {
-            socket.emit('accept', {to: r});
+            socket.emit('accept', obj);
         }
         else {
             if (callBack.OnError) {
@@ -255,6 +320,21 @@ window.SE = function (e) {
         var r = v(e, "presence");
         if (connected) {
             socket.emit('status', {presence: r});
+        }
+        else {
+            if (callBack.OnError) {
+                callBack.OnError({method: "connection", message: "Connection Lost."});
+            }
+        }
+    }
+
+    function se(e) {
+        if (!e)throw g;
+        var r = v(e, "to");
+        if (connected) {
+            socket.emit('sessionend', {
+                to: r
+            });
         }
         else {
             if (callBack.OnError) {
@@ -285,7 +365,6 @@ window.SE = function (e) {
             else if (r === "chatstatus") {
                 socket.emit('request', {request: 'chatstatus', from: v(e, "from")});
             }
-                
             else {
                 if (callBack.OnError) {
                     callBack.OnError({method: "viewmessage", message: "Invalid View Type."});
@@ -308,11 +387,13 @@ window.SE = function (e) {
         "authenticate": n,
         "init": r,
         "sendmessage": m,
+        "sendmessagetocompany": cm,
         "request": vm,
         "seen": s,
         "typing": t,
         "acceptclient": c,
         "disconnect": d,
+        "sessionend": se,
         "status": o,
         'typingstoped': a
     }

@@ -1245,12 +1245,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.loadUserGroups = function () {
         userService.getUserGroupList().then(function (response) {
             if (response.data && response.data.IsSuccess) {
-
                 for (var j = 0; j < response.data.Result.length; j++) {
                     var userGroup = response.data.Result[j];
                     userGroup.listType = "Group";
                 }
-
                 $scope.userGroups = response.data.Result;
                 profileDataParser.assigneeUserGroups = response.data.Result;
 
@@ -2324,7 +2322,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             document.getElementById("mySidenav").style.width = "230px";
             document.getElementById("main").style.marginRight = "215px";
             chatService.Request('allstatus');
-
+            $scope.onlineClientUser = chatService.GetClientUsers();
             chatService.SetChatPosition(true);
 
 
@@ -2332,8 +2330,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         $scope.isUserListOpen = !$scope.isUserListOpen;
-
-
 
 
         // document.getElementById("navBar").style.marginRight = "300px";
@@ -3288,7 +3284,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     });
 
+
+    //show OnExistingclient
     chatService.SubscribeChatAll(function (message) {
+        if(message.who && message.who == 'client'){
+            var userObj = $scope.onlineClientUser.filter(function (item) {
+                return message.from == item.username;
+            });
+            if (Array.isArray(userObj)) {
+                userObj.forEach(function (obj, index) {
+                    if (obj.chatcount) {
+                        obj.chatcount += 1;
+                    } else {
+                        obj.chatcount = 1;
+                    }
+                });
+            }
+        };
+
         var userObj = $scope.users.filter(function (item) {
             return message.from == item.username;
         });
@@ -3303,12 +3316,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     });
 
-    chatService.SubscribePending(function(pendingArr){
+    chatService.SubscribePending(function (pendingArr) {
+        if (pendingArr && Array.isArray(pendingArr)) {
 
-
-        if(pendingArr && Array.isArray(pendingArr)){
-
-            pendingArr.forEach(function(item){
+            pendingArr.forEach(function (item) {
 
                 var userx = item._id;
                 var userObj = $scope.users.filter(function (user) {
@@ -3319,7 +3330,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (Array.isArray(userObj)) {
                     userObj.forEach(function (obj, index) {
 
-                            obj.chatcount = item.messages;
+                        obj.chatcount = item.messages;
 
                     });
                 }
@@ -3336,14 +3347,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showTabChatPanel = function (chatUser) {
         chatService.SetChatUser(chatUser);
     };
-    
-
 
     $rootScope.$on("updates", function () {
         $scope.selectedChatUser = chatService.GetCurrentChatUser();
+        $scope.onlineClientUser = chatService.GetClientUsers();
     });
 
-
+    $scope.chatUserTypeFilter = function (user) {
+        return user.type === 'client'
+    };
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
         scope.isFiexedTab = false;
