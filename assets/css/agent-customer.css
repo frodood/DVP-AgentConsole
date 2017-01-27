@@ -2059,6 +2059,7 @@ div > div >
     padding-top: 2px;
     color: #fff;
     border: 2px solid #f7f5f5;
+    z-index: 1;
 }
 
 .notification-user:hover {
@@ -2076,7 +2077,7 @@ div > div >
     background: #d0d5dc;
     border-radius: 50%;
     margin-right: 6px;
-    padding-top: 5px;
+    padding-top: 3px;
 }
 
 .chat-icon > i {
@@ -2105,7 +2106,7 @@ div > div >
 .notification-user >
 .notification-details {
     /* float: left; */
-    left: 48px;
+    left: 50px;
     /* text-align: right; */
     display: inline-block;
     padding-top: 8px;
@@ -2116,6 +2117,7 @@ div > div >
     /* background: #d6d5d0; */
     width: 100%;
     background: #d9dee4;
+    /*background: transparent;*/
 }
 
 .notification-details >
@@ -3188,6 +3190,7 @@ input.ps-form-controller[readonly] {
     background: #36ba45;
     color: #ffffff;
 }
+
 .btn-ps-update:active {
     background: #1a3d42;
     text-align: center;

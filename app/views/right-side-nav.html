@@ -82,7 +82,7 @@
                         {{agent.chatcount}}
                     </div>
                     <div class="agent-name">
-                        {{agent.username}}
+                        {{agent.firstname}} {{agent.lastname}}
                         <div class="chat-user-status">
                             <div class="status" ng-class="agent.status"></div>
                             <small ng-class="agent.status"
@@ -93,7 +93,7 @@
 
                     </div>
                     <!-- ng-show="chatOption"  ng-click="showMessageBlock(agent)"-->
-                    <div class="notification-details" ng-show="chatOption" >
+                    <div class="notification-details" ng-show="chatOption">
                         <div class="chat-icon animated slideInUp" ng-click="setExtention(agent)">
                             <i class="main-icon-2-telephone-3"></i>
                         </div>
@@ -138,15 +138,15 @@
                         </div>
                     </div>
 
-                    <div class="notification-details">
-                        <div class="chat-icon" ng-show="groupOption" ng-click="setExtention(group)">
+                    <div class="notification-details" ng-show="groupOption">
+                        <div class="chat-icon" ng-click="setExtention(group)">
                             <i class="main-icon-2-telephone-3"></i>
                         </div>
-                        <div class="chat-icon" ng-show="groupOption">
+                        <div class="chat-icon">
                             <i class="main-icon-2-transfer-8"></i>
                         </div>
-                        <div class="chat-icon" ng-show="groupOption" ng-click="showMessageBlock(group)">
-                            <i class="fa-comment"></i>
+                        <div class="chat-icon" ng-click="showMessageBlock(group)">
+                            <i class="fa fa-comment"></i>
                         </div>
                     </div>
                 </div>

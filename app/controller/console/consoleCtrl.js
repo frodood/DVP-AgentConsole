@@ -19,6 +19,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
+    $scope.usercounts = 0;
 
     $scope.showAlert = function (title, type, content) {
         new PNotify({
@@ -1216,22 +1217,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.loadUsers = function () {
         userService.LoadUser().then(function (response) {
 
-            // for (var i = 0; i < response.length; i++) {
-            //     //var user = response[i];
-            //     var user = {};
-            //     user.username = response[i].username;
-            //     user.firstname = response[i].firstname;
-            //     user.lastname = response[i].lastname;
-            //     user.avatar = response[i].avatar;
-            //     user.listType = "User";
-            //     user.status = "offline";
-            //     $scope.users.push(user);
-            // }
+            for (var i = 0; i < response.length; i++) {
+
+                response[i].status = 'offline';
+
+            }
 
             $scope.users = response;
             profileDataParser.assigneeUsers = response;
 
+
+            $scope.userShowDropDown = 0;
+
             chatService.Request('pendingall');
+            chatService.Request('allstatus');
 
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -3278,8 +3277,37 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (Array.isArray(userObj)) {
                     userObj.forEach(function (obj, index) {
                         obj.status = status[key];
+                        obj.statusTime = Date.now();
                     });
                 }
+
+            });
+
+            $scope.users.sort(function (a, b) {
+
+                var i = 0;
+                var j = 0;
+
+
+                if (a.status == 'offline') {
+
+                    i = 1;
+                } else {
+
+                    i = 2;
+                }
+
+                if (b.status == 'offline') {
+
+                    j = 1;
+                } else {
+
+                    j = 2;
+                }
+
+
+                return j - i;
+
             });
         }
     });
@@ -3287,7 +3315,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //show OnExistingclient
     chatService.SubscribeChatAll(function (message) {
-        if(message.who && message.who == 'client'){
+        if (message.who && message.who == 'client') {
             var userObj = $scope.onlineClientUser.filter(function (item) {
                 return message.from == item.username;
             });
@@ -3297,10 +3325,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         obj.chatcount += 1;
                     } else {
                         obj.chatcount = 1;
+
+                       if($scope.usercounts) {
+
+                           $scope.usercounts += 1;
+                       }else{
+
+                           $scope.usercounts = 1;
+                       }
                     }
                 });
             }
-        };
+        }
+        ;
 
         var userObj = $scope.users.filter(function (item) {
             return message.from == item.username;
@@ -3311,6 +3348,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     obj.chatcount += 1;
                 } else {
                     obj.chatcount = 1;
+
+                    if($scope.usercounts) {
+
+                        $scope.usercounts += 1;
+                    }else{
+
+                        $scope.usercounts = 1;
+                    }
                 }
             });
         }
@@ -3332,6 +3377,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         obj.chatcount = item.messages;
 
+                        if(obj.chatcount){
+
+                            $scope.usercounts = 1;
+                        }
+
                     });
                 }
 
@@ -3345,7 +3395,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     console.log(onlineUser);
 
     $scope.showTabChatPanel = function (chatUser) {
+
         chatService.SetChatUser(chatUser);
+
+        if(chatUser.chatcount){
+
+            $scope.usercounts -= 1;
+        }
     };
 
     $rootScope.$on("updates", function () {
