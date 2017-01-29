@@ -213,4 +213,8 @@ var jsUpdatewidth = function () {
 };
 
 
+//phone location details
+// $('#softPhoneDragElem').
+
+
 

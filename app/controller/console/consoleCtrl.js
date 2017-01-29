@@ -52,8 +52,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentList = [];
     $scope.isFreezeReq = false;
 
-    $('#softPhoneDragElem').draggable();
-
+    $('#softPhoneDragElem').draggable(
+        {
+            revert: "invalid",
+            snap: ".draggableContainer",
+            stack: ".soft-phone-drag-elem"
+        }
+    );
+    $('.draggableContainer').droppable();
     $scope.status = {
         isopen: false
     };
@@ -3326,13 +3332,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     } else {
                         obj.chatcount = 1;
 
-                       if($scope.usercounts) {
+                        if ($scope.usercounts) {
 
-                           $scope.usercounts += 1;
-                       }else{
+                            $scope.usercounts += 1;
+                        } else {
 
-                           $scope.usercounts = 1;
-                       }
+                            $scope.usercounts = 1;
+                        }
                     }
                 });
             }
@@ -3349,10 +3355,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 } else {
                     obj.chatcount = 1;
 
-                    if($scope.usercounts) {
+                    if ($scope.usercounts) {
 
                         $scope.usercounts += 1;
-                    }else{
+                    } else {
 
                         $scope.usercounts = 1;
                     }
@@ -3377,7 +3383,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         obj.chatcount = item.messages;
 
-                        if(obj.chatcount){
+                        if (obj.chatcount) {
 
                             $scope.usercounts = 1;
                         }
@@ -3398,7 +3404,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         chatService.SetChatUser(chatUser);
 
-        if(chatUser.chatcount){
+        if (chatUser.chatcount) {
 
             $scope.usercounts -= 1;
         }
