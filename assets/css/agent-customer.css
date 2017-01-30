@@ -1861,6 +1861,10 @@ div > div >
     color: #36ba45 !important;
 }
 
+.color-green {
+    color: #36ba45;
+}
+
 .color-grey500 {
     color: #8298ae !important;
 }
@@ -3244,7 +3248,7 @@ input.ps-form-controller[readonly] {
     border-radius: 0px;
     height: auto;
     /* background: url(../img/bg/bg-dashboard.jpg) no-repeat; */
-    position: relative;
+    /*position: relative;*/
     padding-left: 10px;
     padding-right: 10px;
     /* overflow: hidden; */
@@ -3259,16 +3263,23 @@ input.ps-form-controller[readonly] {
 }
 
 .btn-dash-ref {
-    color: #36ba45;
-    border: 1px solid;
-    width: 120px;
+    color: #f7f7f7;
+    width: 50px;
     text-align: center;
-    height: 39px;
-    padding-top: 10px;
+    height: 50px;
+    padding-top: 12px;
     margin-top: -5px;
-    border-radius: 5px;
-    background: #17373c;
+    border-radius: 50%;
+    background: rgb(54, 104, 111);
     cursor: pointer;
+    position: absolute;
+    top: 245px;
+    left: -9px;
+    z-index: 100;
+}
+
+.btn-dash-ref > i {
+    font-size: 23px;
 }
 
 .bg-white {

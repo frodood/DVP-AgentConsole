@@ -1449,8 +1449,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addMyNote = function () {
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
-    // $scope.addDashBoard();
-    //$scope.addDashBoard();
+    $scope.addDashBoard();
 
 
     var openNewEngagementTab = function (args, index) {
