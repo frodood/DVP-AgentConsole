@@ -116,9 +116,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('.isOperationPhone').addClass('display-block ').removeClass('display-none');
+            $('#softPhone').addClass('display-block ').removeClass('display-none');
         } else {
             //is hide phone
             $('.isOperationPhone').addClass('display-none ').removeClass('display-block');
+            $('#softPhone').addClass('display-none ').removeClass('display-block');
         }
     };
     $scope.ShowHidePhone();
