@@ -35,11 +35,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             loadTags: '&',
             profileDetail: "=",
             tabReference: "@",
-            searchUsers: "="
+            searchUsers: "=",
+            schemaResponseNewTicket: "="
         },
         templateUrl: 'app/views/profile/engagement-call.html',
         link: function (scope, element, attributes) {
 
+
+            scope.schemaw = scope.schemaResponseNewTicket.schema;
+            scope.formw = scope.schemaResponseNewTicket.form;
+            scope.modelw = scope.schemaResponseNewTicket.model;
 
             /*Initialize default scope*/
             scope.profileLoadin = true;
@@ -380,7 +385,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         var obj = {
                             fields: arr
                         };
-                        ticketService.updateFormSubmissionData(scope.currentSubmission.reference, obj).then(function (response) {
+                        ticketService.updateFormSubmissionData(scope.currentSubmission, obj).then(function (response) {
                             scope.showAlert('Profile Other Data', 'success', 'Profile other data saved successfully');
 
                         }).catch(function (err) {
@@ -403,6 +408,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                                 if (responseFS.Result) {
                                     ticketService.updateFormSubmissionData(scope.profileDetail._id, obj).then(function (responseUpdate) {
                                         if (responseUpdate.Result) {
+
+
+
                                             userService.mapFormSubmissionToProfile(responseUpdate.Result._id, scope.profileDetail._id).then(function (responseMap) {
                                                 //tag submission to ticket
 
@@ -956,7 +964,22 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.ticket.priority = priority;
             };
 
-            scope.saveTicket = function (ticket) {
+
+            scope.loadMyAppMetaData = function () {
+                ticketService.GetMyTicketConfig(function (success,data) {
+
+                    if(success)
+                    {
+                        scope.ticket.subject=data.Result.subject;
+                        scope.setPriority(data.Result.priority);
+                        scope.ticket.description=data.Result.description;
+
+                    }
+                });
+
+            }
+
+            scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
                 ticket.requester = scope.profileDetail._id;
                 ticket.engagement_session = scope.sessionId;
@@ -981,6 +1004,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                         scope.recentTicketList.push(response.Result);
                         scope.ticket = {};
                         scope.newAddTags = [];
+                        addDynamicDataToTicket(response.Result);
+                        scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -990,6 +1015,49 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
                 });
 
+
+            };
+
+           var addDynamicDataToTicket = function (ticket) {
+
+               var arr = [];
+
+               for (var key in scope.modelw) {
+                   if (scope.modelw.hasOwnProperty(key)) {
+                       arr.push({
+                           field: key,
+                           value: scope.modelw[key]
+                       });
+
+                   }
+               }
+
+               var obj = {
+                   fields: arr,
+                   reference: ticket._id,
+                   form: scope.currentForm.name
+               };
+               ticketService.createFormSubmissionData(obj).then(function (response) {
+                   //tag submission to ticket
+                   if (response && response.Result) {
+                       ticketService.mapFormSubmissionToTicket(response.Result._id, ticket._id).then(function (responseMap) {
+                           //tag submission to ticket
+                           //scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
+console.log('Ticket other data saved successfully');
+                       }).catch(function (err) {
+                           //scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+                           console.log('Ticket other data save failed');
+                       });
+                   }
+                   else {
+                       scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+                   }
+
+
+               }).catch(function (err) {
+                   scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+
+               })
 
             };
 
@@ -1017,6 +1085,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.showNewTicket = function () {
                 if (scope.profileDetail && scope.profileDetail._id) {
                     scope.showCreateTicket = !scope.showCreateTicket;
+                    if(scope.showCreateTicket)
+                    {
+                        scope.loadMyAppMetaData();
+                    }
                 } else {
                     scope.showAlert("Ticket", "error", "Please Create Profile First.")
                 }
@@ -1263,10 +1335,95 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.mapProfile.isShowConfirm = false;
             };
 
+            scope.createNProfile = function () {
+                scope.showMultiProfile = false;
+                scope.profileLoadin = false;
+                scope.showNewProfile = true;
+                scope.editProfile = false;
+            };
+
+
+
+            var loadUserData = function(){
+                if (scope.profileDetails) {
+                    if (scope.profileDetails.length == 1) {
+                        scope.profileDetail = scope.profileDetails[0];
+                        scope.GetProfileHistory(scope.profileDetail._id);
+                        scope.profileLoadin = false;
+                        scope.currentSubmission = scope.profileDetails[0].form_submission;
+                        convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
+                            if (schemaDetails) {
+                                scope.schema = schemaDetails.schema;
+                                scope.form = schemaDetails.form;
+                                scope.model = schemaDetails.model;
+                            }
+
+                        });
+
+                    }
+                    else if (scope.profileDetails.length > 1) {
+                        // show multiple profile selection view
+                        scope.profileLoadin = false;
+                        scope.showMultiProfile = true;
+
+                    }
+                    else {
+                        // show new profile
+                        scope.profileLoadin = false;
+                        scope.showMultiProfile = true;
+
+                        scope.currentSubmission = null;
+                        convertToSchemaForm(null, function (schemaDetails) {
+                            if (schemaDetails) {
+                                scope.schema = schemaDetails.schema;
+                                scope.form = schemaDetails.form;
+                                scope.model = schemaDetails.model;
+                            }
+
+                        });
+                    }
+
+                }
+                else {
+                    // show new profile
+
+                    scope.currentSubmission = null;
+                    convertToSchemaForm(null, function (schemaDetails) {
+                        if (schemaDetails) {
+                            scope.schema = schemaDetails.schema;
+                            scope.form = schemaDetails.form;
+                            scope.model = schemaDetails.model;
+                        }
+
+                    });
+
+
+                    scope.showMultiProfile = false;
+
+                }
+            };
+
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
-                if (scope.direction === 'inbound' || scope.direction === 'outbound') {
-                    category = 'phone';
+
+                switch (scope.channel){
+                    case 'call':
+                        if (scope.direction === 'inbound' || scope.direction === 'outbound') {
+                            category = 'phone';
+                        } else if (scope.direction === 'direct') {
+                            category = 'direct';
+                        }
+                        break;
+
+                    case 'api':
+                        if (scope.direction === 'direct') {
+                            category = 'direct';
+                        }
+                        break;
+
+                    default :
+                        break;
+
                 }
 
                 if (scope.profileDetail) {
@@ -1324,67 +1481,31 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                     }
 
                 } else {
-                    userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
-                        scope.profileDetails = response;
-                        if (scope.profileDetails) {
-                            if (scope.profileDetails.length == 1) {
-                                scope.profileDetail = scope.profileDetails[0];
-                                scope.GetProfileHistory(scope.profileDetail._id);
-                                scope.profileLoadin = false;
-                                scope.currentSubmission = scope.profileDetails[0].form_submission;
-                                convertToSchemaForm(scope.profileDetails[0].form_submission, function (schemaDetails) {
-                                    if (schemaDetails) {
-                                        scope.schema = schemaDetails.schema;
-                                        scope.form = schemaDetails.form;
-                                        scope.model = schemaDetails.model;
-                                    }
-
-                                });
-
-                            }
-                            else if (scope.profileDetails.length > 1) {
-                                // show multiple profile selection view
-                                scope.profileLoadin = false;
-                                scope.showMultiProfile = true;
-
-                            }
-                            else {
-                                // show new profile
-                                scope.profileLoadin = false;
-                                scope.showMultiProfile = true;
-
-                                scope.currentSubmission = null;
-                                convertToSchemaForm(null, function (schemaDetails) {
-                                    if (schemaDetails) {
-                                        scope.schema = schemaDetails.schema;
-                                        scope.form = schemaDetails.form;
-                                        scope.model = schemaDetails.model;
-                                    }
-
-                                });
-                            }
-
-                        }
-                        else {
-                            // show new profile
-
-                            scope.currentSubmission = null;
-                            convertToSchemaForm(null, function (schemaDetails) {
-                                if (schemaDetails) {
-                                    scope.schema = schemaDetails.schema;
-                                    scope.form = schemaDetails.form;
-                                    scope.model = schemaDetails.model;
+                    if(category === 'direct') {
+                        scope.createNProfile();
+                    }else{
+                        if(scope.channel === 'chat'){
+                            userService.getExternalUserProfileByField("firstname", scope.channelFrom).then(function (response) {
+                                if (response && response.IsSuccess) {
+                                    scope.profileDetails = response.Result;
                                 }
 
+                                loadUserData();
+                            }, function (err) {
+                                scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
                             });
+                        }else {
+                            userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                                scope.profileDetails = response;
+
+                                loadUserData();
 
 
-                            scope.showMultiProfile = false;
-
+                            }, function (err) {
+                                scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                            });
                         }
-                    }, function (err) {
-                        scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                    });
+                    }
                 }
             };
             scope.GetExternalUserProfileByContact();
@@ -1504,14 +1625,41 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.languages = res;
             });
 
-            getJSONData($http, "customerType", function (res) {
+            /*getJSONData($http, "customerType", function (res) {
                 scope.customerType = res;
-            });
+            });*/
 
             //Get all title
             getJSONData($http, "titles", function (res) {
                 scope.titles = res;
             });
+
+
+
+            var getCustomerTypes = function () {
+                userService.loadCutomerTags().then(function (response) {
+
+                    if(response.IsSuccess)
+                    {
+                        scope.customerType=response.Result;
+                        scope.customerType.forEach(function (tag) {
+                            tag.cutomerType=tag.name;
+
+                        });
+                    }
+                    else
+                    {
+                        scope.customerType=[];
+                        scope.showAlert("Customer types", "error", "Fail To load Customer types.");
+
+                    }
+                }, function (error) {
+                    scope.customerType=[];
+                    scope.showAlert("Customer types", "error", "Fail To load Customer types.");
+                });
+            };
+
+            getCustomerTypes();
 
             var genDayList = function () {
                 var max = 31;
@@ -1572,6 +1720,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             };
             getYears();
             scope.saveNewProfile = function (profile) {
+                profile.tags=[];
+                scope.cutomerTypes.forEach(function (tag) {
+                    profile.tags.push(tag.cutomerType)
+                })
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
                 userService.CreateExternalUser(profile).then(function (response) {
@@ -1592,13 +1744,35 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             scope.UpdateExternalUser = function (profile) {
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
+                profile.tags=[];
+                scope.cutomerTypes.forEach(function (tag) {
+                    profile.tags.push(tag.cutomerType)
+                });
                 profile.birthday = new Date(collectionDate);
                 userService.UpdateExternalUser(profile).then(function (response) {
                     if (response) {
+                        scope.cutomerTypes=[];
                         scope.showNewProfile = false;
                         scope.editProfile = false;
-                        scope.profileDetail = response;
+
                         scope.showAlert("Profile", "success", "Update Successfully.");
+                        userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
+
+                            if(resUserData.IsSuccess)
+                            {
+                                scope.profileDetail = resUserData.Result;
+                            }
+                            else
+                            {
+                                scope.showAlert("Profile","error","Failed to load updated profile");
+
+                            }
+
+
+                        }, function (errUserData) {
+                            scope.showAlert("Profile","error","Failed to load updated profile");
+                            console.log(errUserData)
+                        });
                     }
                     else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
@@ -1652,17 +1826,41 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                     },
                     editProfile: function () {
-                        scope.newProfile = scope.profileDetail;
-                        var date = moment(scope.profileDetail.birthday);
-                        scope.newProfile.dob = {};
-                        scope.newProfile.dob.day = date.date();
-                        scope.newProfile.dob.month = {
-                            'index': date.month(),
-                            'name': date.month()
-                        };
-                        scope.newProfile.dob.year = date.year();
-                        scope.showNewProfile = true;
-                        scope.editProfile = true;
+
+                        userService.getExternalUserProfileByID(scope.profileDetail._id ).then(function (resNewProfile) {
+
+                            if(resNewProfile.IsSuccess)
+                            {
+                                scope.newProfile = resNewProfile.Result;
+                                for(var i=0;i<scope.newProfile.tags.length;i++)
+                                {
+                                    scope.cutomerTypes[i]={"cutomerType":scope.newProfile.tags[i]};
+                                }
+
+                                var date = moment(scope.profileDetail.birthday);
+                                scope.newProfile.dob = {};
+                                scope.newProfile.dob.day = date.date();
+                                scope.newProfile.dob.month = {
+                                    'index': date.month(),
+                                    'name': date.month()
+                                };
+                                scope.newProfile.dob.year = date.year();
+                                scope.showNewProfile = true;
+                                scope.editProfile = true;
+                            }
+                            else
+                            {
+                                scope.showAlert("Error","error","Error in loading profile details");
+                            }
+                        }, function (errNewProfile) {
+                            scope.showAlert("Error","error","Error in loading profile details");
+                            console.log(errNewProfile);
+                        })
+
+                       // scope.newProfile = scope.profileDetail;
+
+
+
                     },
                     closeProfileSelection: function () {
                         scope.showNewProfile = false;

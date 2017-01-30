@@ -8,19 +8,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              resourceService, baseUrls, dataParser, veeryNotification, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
-                                             filterFilter, engagementService, phoneSetting, toDoService,turnServers,Pubnub, $uibModal, notificationConnector) {
-
+                                             filterFilter, engagementService, phoneSetting, toDoService, turnServers,
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService) {
 
 
     $scope.isReadyToSpeak = false;
     $scope.sayIt = function (text) {
-        if(!$scope.isReadyToSpeak){
+        if (!$scope.isReadyToSpeak) {
             window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
         }
     };
 
+    $scope.usercounts = 0;
 
-   $scope.showAlert = function (title, type, content) {
+    $scope.showAlert = function (title, type, content) {
         new PNotify({
             title: title,
             text: content,
@@ -28,7 +29,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             styling: 'bootstrap3'
         });
     };
-
 
 
     function startRingTone() {
@@ -52,6 +52,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentList = [];
     $scope.isFreezeReq = false;
 
+    $('#softPhoneDragElem').draggable(
+        {
+            revert: "invalid",
+            snap: ".draggableContainer",
+            stack: ".soft-phone-drag-elem"
+        }
+    );
+    $('.draggableContainer').droppable();
     $scope.status = {
         isopen: false
     };
@@ -61,6 +69,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         resourceService.GetAcwTime().then(function (response) {
             $scope.countdownVal = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
         }, function (err) {
+            $scope.countdownVal = 10;
             authService.IsCheckResponse(err);
             $scope.showAlert('Phone', 'error', "Fail To Get ACW Time");
         });
@@ -107,28 +116,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (value) {
             // is show phone
             $('.isOperationPhone').addClass('display-block ').removeClass('display-none');
+            $('#softPhone').addClass('display-block ').removeClass('display-none');
         } else {
             //is hide phone
             $('.isOperationPhone').addClass('display-none ').removeClass('display-block');
+            $('#softPhone').addClass('display-none ').removeClass('display-block');
         }
     };
     $scope.ShowHidePhone();
 
-    var showHideDialpad = undefined;
     $scope.ShowHideDialpad = function () {
-        //if (showHideDialpad) {
-        //    // is show phone
-        //    $('#phoneDialpad').addClass('phone-dialpad ').removeClass('display-none');
-        //    showHideDialpad = undefined;
-        //} else {
-        //    //is hide phone
-        //    $('#phoneDialpad').addClass('display-none ').removeClass('display-block');
-        //    showHideDialpad = {};
-        //}
+
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 90) {
+        if ($wrapper.height() === 0 || $wrapper.height() === 98) {
             phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
                 if (res) {
                     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
@@ -136,7 +138,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
 
         } else {
-            $wrapper.stop().animate({height: pinHeight}, animateTime);
+
+            $wrapper.stop().animate({height: '98'}, animateTime);
             $('#phoneDialpad').removeClass('display-block').addClass('display-none');
         }
     };
@@ -147,6 +150,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isBtnReg').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isCallOnline').addClass('display-block deactive-menu-icon').removeClass('display-none');
+        $('#softPhoneDragElem').addClass('display-none ').removeClass('display-block');
         phoneFuncion.idle();
         $scope.ShowHidePhone(false);
     };
@@ -156,6 +160,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isBtnReg').addClass('display-block active-menu-icon').removeClass('display-none');
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
+        $('#softPhoneDragElem').addClass('display-block').removeClass('display-none ');
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
 
@@ -270,6 +275,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 sipSendDTMF(chr);
             });
             phoneFuncion.showTransfer();
+            phoneFuncion.showIvrBtn();
             phoneFuncion.hideSwap();
             phoneFuncion.hideEtl();
             phoneFuncion.hideConference();
@@ -286,8 +292,36 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 sipSendDTMF(chr);
             });
         },
+        showIvrPenel: function () {
+
+            if ($('#divIvrPad').hasClass('display-none')) {
+                phoneFuncion.showIvrList();
+            }
+            else {
+                phoneFuncion.hideIvrList();
+            }
+
+        },
         transferCall: function (no) {
-            var dtmfSet = no.length <= 5 ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
+            var dtmfSet = no.length < phoneSetting.ExtNumberLength ? phoneSetting.TransferExtCode.split('') : phoneSetting.TransferPhnCode.split('');
+            angular.forEach(dtmfSet, function (chr) {
+                sipSendDTMF(chr);
+            });
+            $timeout(function () {
+                dtmfSet = no.split('');
+                angular.forEach(dtmfSet, function (chr) {
+                    sipSendDTMF(chr);
+                });
+                sipSendDTMF('#');
+            }, 1000);
+            //phoneFuncion.hideTransfer();
+            phoneFuncion.showSwap();
+            phoneFuncion.showEtl();
+            phoneFuncion.showConference();
+
+        },
+        ivrTransferCall: function (no) {
+            var dtmfSet = phoneSetting.TransferIvrCode.split('');
             angular.forEach(dtmfSet, function (chr) {
                 sipSendDTMF(chr);
             });
@@ -339,7 +373,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         Register: function (password) {
             $scope.PhoneLoading();
             $scope.phoneStatus = "Registering With Servers";
-
+            $scope.isshowRegistor = false;
 
             var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
 
@@ -447,6 +481,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     phoneFuncion.showMuteButton();
                     phoneFuncion.showEndButton();
                     phoneFuncion.showTransfer();
+                    phoneFuncion.showIvrBtn();
                     phoneFuncion.hideAnswerButton();
                     phoneFuncion.updateCallStatus('In Call');
                     $scope.ShowIncomeingNotification(false);
@@ -490,7 +525,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (!b_connected && !b_connecting) {
                     $scope.isRegistor = false;
                     $scope.PhoneOffline();
-                    $scope.showAlert("Soft Phone", "error", "Fail To Register");
+                    if (!$scope.isshowRegistor)
+                        $scope.showAlert("Soft Phone", "error", "Fail To Register");
+                    $scope.isshowRegistor = true;
                 }
                 $scope.isRegistor = false;
                 /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
@@ -549,19 +586,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 console.error(ex.message);
             }
         },
-        autoAnswer:function () {
-            try{
-                if($scope.PhoneConfig){
-                    if($scope.PhoneConfig.autoAnswer){
+        autoAnswer: function () {
+            try {
+                if ($scope.PhoneConfig) {
+                    if ($scope.PhoneConfig.autoAnswer) {
                         var autoAnswerAfterDelay = function () {
                             $timeout.cancel(autoAnswerTimeTimer);
-                          this.answerCall();
+                            this.answerCall();
                         };
                         autoAnswerTimeTimer = $timeout(autoAnswerAfterDelay, $scope.PhoneConfig.autoAnswerDelay);
                     }
                 }
             }
-            catch (ex){
+            catch (ex) {
                 console.log(ex)
             }
         },
@@ -652,6 +689,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideSpeakerButton();
             phoneFuncion.hideSwap();
             phoneFuncion.hideTransfer();
+            phoneFuncion.hideIvrBtn();
+            phoneFuncion.hideIvrList();
             phoneFuncion.hideDialPad();
             phoneFuncion.hideContactList();
         },
@@ -669,6 +708,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideConference();
             phoneFuncion.hideEtl();
             phoneFuncion.hideTransfer();
+            phoneFuncion.hideIvrList();
+            phoneFuncion.hideIvrBtn();
             phoneFuncion.hideSwap();
         },
         freezeBtn: function () {
@@ -763,9 +804,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         hideTransfer: function () {
             $('#transferCall').addClass('display-none').removeClass('display-inline');
+            phoneFuncion.hideIvrList();
         },
         showTransfer: function () {
             $('#transferCall').addClass('display-inline').removeClass('display-none');
+
+        },
+        showIvrBtn: function () {
+            $('#transferIvr').addClass('display-inline').removeClass('display-none');
+        },
+        hideIvrBtn: function () {
+            $('#transferIvr').addClass('display-none').removeClass('display-inline');
         },
         hideSwap: function () {
             // $('#swapCall').addClass('display-none').removeClass('display-inline');
@@ -785,6 +834,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         showConference: function () {
             $('#conferenceCall').addClass('display-inline').removeClass('display-none');
+            phoneFuncion.hideIvrBtn();
         },
         hideDialPad: function () {
             $('#dialPad').addClass('display-none').removeClass('veery-font-1-menu-4');
@@ -821,7 +871,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
             $('#freezeRequest').addClass('display-none').removeClass('call-duations');
             this.idle();
-        }
+        },
+        showIvrList: function () {
+            $('#divIvrPad').removeClass('display-none');
+            $('#divKeyPad').addClass('display-none');
+        },
+        hideIvrList: function () {
+            $('#divKeyPad').removeClass('display-none');
+            $('#divIvrPad').addClass('display-none');
+        },
+
         /*showConnectedBtn: function () {
          //$('#onlinePhoneBtnWrapper').removeClass('display-none');
          $('#phoneBtnWrapper').addClass('display-none');
@@ -870,7 +929,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     getPhoneConfig();
-
 
 
     //dont remove this code
@@ -930,7 +988,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
 
-        $scope.sayIt("you are receiving "+values[6]+" call");
+        $scope.sayIt("you are receiving " + values[6] + " call");
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
 
@@ -961,9 +1019,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "icon": "main-icon-2-speech-bubble",
             "time": new Date(),
             "read": false,
-            "avatar": senderAvatar
+            "avatar": senderAvatar,
+            "from": data.From
         };
-        if (data.TopicKey) {
+        if (data.TopicKey || data.messageType) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
             audio.play();
             $scope.notifications.unshift(objMessage);
@@ -1028,6 +1087,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onAgentAuthenticated: $scope.agentAuthenticated,
         onToDoRemind: $scope.todoRemind
 
+
     };
 
     $scope.veeryNotification = function () {
@@ -1037,7 +1097,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.veeryNotification();
     $scope.socketReconnect = function () {
         veeryNotification.reconnectToServer();
-    }
+    };
 
 
     $scope.checkAndRegister = function () {
@@ -1166,12 +1226,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         userService.LoadUser().then(function (response) {
 
             for (var i = 0; i < response.length; i++) {
-                var user = response[i];
-                user.listType = "User";
+
+                response[i].status = 'offline';
+
             }
 
             $scope.users = response;
             profileDataParser.assigneeUsers = response;
+
+
+            $scope.userShowDropDown = 0;
+
+            chatService.Request('pendingall');
+            chatService.Request('allstatus');
 
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -1185,14 +1252,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.loadUserGroups = function () {
         userService.getUserGroupList().then(function (response) {
             if (response.data && response.data.IsSuccess) {
-
                 for (var j = 0; j < response.data.Result.length; j++) {
                     var userGroup = response.data.Result[j];
                     userGroup.listType = "Group";
                 }
-
                 $scope.userGroups = response.data.Result;
                 profileDataParser.assigneeUserGroups = response.data.Result;
+
+
+                //SE.request()
+                //chatService.
             }
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -1268,52 +1337,102 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             direction: "direct",
             has_profile: true
         };
-        engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
-            if (response) {
-                if (response.IsSuccess) {
-                    console.log("Create Engagement Session success :: " + response);
 
-                    var notifyData = {
-                        company: profile.company,
-                        direction: "direct",
-                        channelFrom: "direct",
-                        channelTo: "direct",
-                        channel: "api",
-                        skill: '',
-                        sessionId: engUuid,
-                        userProfile: profile
-                    };
-                    $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
-                    collectSessions(engUuid);
-                } else {
-                    var errMsg1 = "Create Engagement Session Failed";
+        if (profile) {
+            engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
+                if (response) {
+                    if (response.IsSuccess) {
+                        console.log("Create Engagement Session success :: " + response);
 
-                    if (response.CustomMessage) {
+                        var notifyData = {
+                            company: profile.company,
+                            direction: "direct",
+                            channelFrom: "direct",
+                            channelTo: "direct",
+                            channel: "api",
+                            skill: '',
+                            sessionId: engUuid,
+                            userProfile: profile
+                        };
+                        $scope.addTab('UserProfile ' + profile._id, 'Engagement', 'engagement', notifyData, index);
+                        collectSessions(engUuid);
+                    } else {
+                        var errMsg1 = "Create Engagement Session Failed";
 
-                        errMsg1 = response.CustomMessage;
+                        if (response.CustomMessage) {
 
+                            errMsg1 = response.CustomMessage;
+
+                        }
+
+                        $scope.showAlert('Error', 'error', errMsg1);
                     }
-
-                    $scope.showAlert('Error', 'error', errMsg1);
+                } else {
+                    var errMsg = "Engagement Session Undefined";
+                    $scope.showAlert('Error', 'error', errMsg);
                 }
-            } else {
-                var errMsg = "Engagement Session Undefined";
+
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                var errMsg = "Create Engagement Session Failed";
+
+                if (err.statusText) {
+
+                    errMsg = err.statusText;
+
+                }
+
                 $scope.showAlert('Error', 'error', errMsg);
-            }
 
-        }, function (err) {
-            authService.IsCheckResponse(err);
-            var errMsg = "Create Engagement Session Failed";
+            });
+        } else {
+            engagementService.AddEngagementSessionForProfile(engSessionObj).then(function (response) {
+                if (response) {
+                    if (response.IsSuccess) {
+                        console.log("Create Engagement success :: " + response);
 
-            if (err.statusText) {
+                        var notifyData = {
+                            company: authService.GetCompanyInfo().company,
+                            direction: "direct",
+                            channelFrom: "direct",
+                            channelTo: "direct",
+                            channel: "api",
+                            skill: '',
+                            sessionId: engUuid,
+                            userProfile: profile
+                        };
+                        $scope.addTab('Create New Profile', 'Engagement', 'engagement', notifyData, index);
+                        collectSessions(engUuid);
+                    } else {
+                        var errMsg1 = "Create Engagement Session Failed";
 
-                errMsg = err.statusText;
+                        if (response.CustomMessage) {
 
-            }
+                            errMsg1 = response.CustomMessage;
 
-            $scope.showAlert('Error', 'error', errMsg);
+                        }
 
-        });
+                        $scope.showAlert('Error', 'error', errMsg1);
+                    }
+                } else {
+                    var errMsg = "Engagement Session Undefined";
+                    $scope.showAlert('Error', 'error', errMsg);
+                }
+
+            }, function (err) {
+                authService.IsCheckResponse(err);
+                var errMsg = "Create Engagement Session Failed";
+
+                if (err.statusText) {
+
+                    errMsg = err.statusText;
+
+                }
+
+                $scope.showAlert('Error', 'error', errMsg);
+
+            });
+        }
     };
 
 
@@ -1330,7 +1449,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addMyNote = function () {
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
-    // $scope.addDashBoard();
     $scope.addDashBoard();
 
 
@@ -1733,6 +1851,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
+    $scope.createNewProfile = function () {
+        openNewUserProfileTab(undefined, 'createNewProfile');
+    };
 
     $scope.searchExternalUsers = {};
 
@@ -2177,18 +2298,42 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     /* Set the width of the side navigation to 250px */
+    $scope.getViewportHeight = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
+    //Detect Document Height
+    //update code damith
+    window.onload = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
 
+    window.onresize = function () {
+        $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+    };
     $scope.isUserListOpen = false;
+    $scope.navOpen = false;
     $scope.openNav = function () {
 
         if ($scope.isUserListOpen) {
+            $scope.navOpen = false;
             $scope.closeNav();
+            chatService.SetChatPosition(false);
         }
         else {
-            getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
-            document.getElementById("mySidenav").style.width = "300px";
-            document.getElementById("main").style.marginRight = "285px";
+            $scope.getViewportHeight();
+            //getAllRealTimeTimer = $timeout(getAllRealTime, 1000);
+            document.getElementById("mySidenav").style.width = "230px";
+            document.getElementById("main").style.marginRight = "215px";
+            chatService.Request('allstatus');
+            $scope.onlineClientUser = chatService.GetClientUsers();
+            chatService.SetChatPosition(true);
+
+
         }
+
 
         $scope.isUserListOpen = !$scope.isUserListOpen;
 
@@ -2199,9 +2344,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /* Set the width of the side navigation to 0 */
     $scope.closeNav = function () {
-        if (getAllRealTimeTimer) {
-            $timeout.cancel(getAllRealTimeTimer);
-        }
+
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("main").style.marginRight = "0";
         //  document.getElementById("navBar").style.marginRight = "0";
@@ -2214,16 +2357,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.notificationMsg.Direction = "STATELESS";
             if ($scope.naviSelectedUser.listType === "Group") {
                 userService.getGroupMembers($scope.naviSelectedUser._id).then(function (response) {
-                    if(response.IsSuccess)
-                    {
+                    if (response.IsSuccess) {
 
                         if (response.Result) {
                             var clients = [];
                             for (var i = 0; i < response.Result.length; i++) {
                                 var gUser = response.Result[i];
-                                if (gUser && gUser.username && gUser.username != $scope.loginName) {
-                                    clients.push(gUser.username);
-                                }
+                                //if (gUser && gUser.username && gUser.username != $scope.loginName) {
+                                clients.push(gUser.username);
+                                //}
                             }
                             $scope.notificationMsg.clients = clients;
 
@@ -2241,39 +2383,38 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $scope.showAlert('Error', 'error', "Send Notification Failed");
                         }
                     }
-                    else
-                    {
+                    else {
                         console.log("Error in loading Group member list");
                         $scope.showAlert('Error', 'error', "Send Notification Failed");
                     }
                 }, function (err) {
-                    console.log("Error in loading Group member list ",err);
+                    console.log("Error in loading Group member list ", err);
                     $scope.showAlert('Error', 'error', "Send Notification Failed");
                 });
 
                 /*if ($scope.naviSelectedUser.users) {
-                    var clients = [];
-                    for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
-                        var gUser = $scope.naviSelectedUser.users[i];
-                        if (gUser && gUser.username && gUser.username != $scope.loginName) {
-                            clients.push(gUser.username);
-                        }
-                    }
-                    $scope.notificationMsg.clients = clients;
+                 var clients = [];
+                 for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
+                 var gUser = $scope.naviSelectedUser.users[i];
+                 if (gUser && gUser.username && gUser.username != $scope.loginName) {
+                 clients.push(gUser.username);
+                 }
+                 }
+                 $scope.notificationMsg.clients = clients;
 
-                    notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
-                        $scope.notificationMsg = {};
-                        console.log("send notification success :: " + JSON.stringify(clients));
-                    }, function (err) {
-                        var errMsg = "Send Notification Failed";
-                        if (err.statusText) {
-                            errMsg = err.statusText;
-                        }
-                        $scope.showAlert('Error', 'error', errMsg);
-                    });
-                } else {
-                    $scope.showAlert('Error', 'error', "Send Notification Failed");
-                }*/
+                 notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
+                 $scope.notificationMsg = {};
+                 console.log("send notification success :: " + JSON.stringify(clients));
+                 }, function (err) {
+                 var errMsg = "Send Notification Failed";
+                 if (err.statusText) {
+                 errMsg = err.statusText;
+                 }
+                 $scope.showAlert('Error', 'error', errMsg);
+                 });
+                 } else {
+                 $scope.showAlert('Error', 'error', "Send Notification Failed");
+                 }*/
 
             } else {
 
@@ -2312,7 +2453,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
-    var loadOnlineAgents = function () {
+    $scope.loadOnlineAgents = function () {
         resourceService.getOnlineAgentList().then(function (response) {
             if (response.IsSuccess) {
                 var onlineAgentList = [];
@@ -2380,7 +2521,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         return 0;
                     });
 
-                    $scope.agentList = userGroupList.concat($scope.agentList)
+                    // $scope.agentList = userGroupList.concat($scope.agentList)
+                    $scope.userGroups = userGroupList;
                 }
             }
             else {
@@ -2401,6 +2543,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
+    //$scope.loadOnlineAgents();
 
     var getAllRealTime = function () {
         loadOnlineAgents();
@@ -2631,7 +2774,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 resourceService.GetCurrentRegisterTask(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
                         if (data.Result) {
-                            if (data.Result.obj){
+                            if (data.Result.obj) {
                                 if (data.Result.obj.LoginTasks) {
                                     for (var i = 0; i < $scope.resourceTaskObj.length; i++) {
                                         data.Result.obj.LoginTasks.forEach(function (value, key) {
@@ -2797,7 +2940,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     // Break screen functions
     $scope.lockPwd = null;
     $scope.isUnlock = false;
-
     $scope.breakScreen = function () {
         var param = {
             userName: $scope.loginName,
@@ -2831,7 +2973,452 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     }();
 
+    //text key event fire
+    $scope.enterUnlockMe = function () {
+        alert('event fire');
+    };
+    var buildFormSchema = function (schema, form, fields) {
+        fields.forEach(function (fieldItem) {
+            if (fieldItem.field) {
+                var isActive = true;
+                if (fieldItem.active === false) {
+                    isActive = false;
+                }
+                if (fieldItem.type === 'text') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
 
+                    };
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'textarea') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "textarea"
+                    })
+                }
+                else if (fieldItem.type === 'url') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'header') {
+                    var h2Tag = '<h2>' + fieldItem.title + '</h2>';
+                    form.push({
+                        "type": "help",
+                        "helpvalue": h2Tag
+                    });
+                }
+                else if (fieldItem.type === 'radio') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    var formObj = {
+                        "key": fieldItem.field,
+                        "type": "radios-inline",
+                        "titleMap": []
+                    };
+
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        schema.properties[fieldItem.field].enum = [];
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].enum.push(enumVal.name);
+                            formObj.titleMap.push(
+                                {
+                                    "value": enumVal.id,
+                                    "name": enumVal.name
+                                }
+                            )
+                        })
+
+                    }
+
+                    form.push(formObj);
+                }
+                else if (fieldItem.type === 'date') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive,
+                        format: 'date'
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "minDate": "1900-01-01"
+                    })
+                }
+                else if (fieldItem.type === 'number') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'number',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "number"
+                    })
+                }
+                else if (fieldItem.type === 'phone') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        pattern: "^[0-9*#+]+$",
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'boolean' || fieldItem.type === 'checkbox') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'boolean',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "checkbox"
+                    })
+                }
+                else if (fieldItem.type === 'checkboxes') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'array',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive,
+                        items: {
+                            type: "string",
+                            enum: []
+                        }
+                    };
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].items.enum.push(enumVal.name);
+                        })
+
+                    }
+
+                    form.push(fieldItem.field);
+                }
+                else if (fieldItem.type === 'email') {
+
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        description: fieldItem.description,
+                        pattern: "^\\S+@\\S+$",
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    form.push({
+                        "key": fieldItem.field,
+                        "type": "text"
+                    })
+                }
+                else if (fieldItem.type === 'select') {
+                    schema.properties[fieldItem.field] = {
+                        type: 'string',
+                        title: fieldItem.title,
+                        required: fieldItem.require ? true : false,
+                        readonly: !isActive
+
+                    };
+
+                    var formObj = {
+                        "key": fieldItem.field,
+                        "type": "select",
+                        "titleMap": []
+                    };
+
+                    if (fieldItem.values && fieldItem.values.length > 0) {
+
+                        schema.properties[fieldItem.field].enum = [];
+
+                        fieldItem.values.forEach(function (enumVal) {
+                            schema.properties[fieldItem.field].enum.push(enumVal.name);
+                            formObj.titleMap.push(
+                                {
+                                    "value": enumVal.id,
+                                    "name": enumVal.name
+                                });
+                        })
+
+                    }
+                    form.push(formObj);
+                }
+            }
+        });
+
+        return schema;
+    };
+
+    $scope.schemaResponse = {};
+    $scope.createTicketDynamicFrm = function () {
+        var schema = {
+            type: "object",
+            properties: {}
+        };
+
+        var form = [];
+
+
+        ticketService.getFormsForCompany().then(function (response) {
+            if (response && response.Result && response.Result.ticket_form) {
+                //compare two forms
+                buildFormSchema(schema, form, response.Result.ticket_form.fields);
+                var currentForm = response.Result.ticket_form;
+
+                /*form.push({
+                 type: "submit",
+                 title: "Save"
+                 });*/
+
+                $scope.schemaResponse = {
+                    schema: schema,
+                    form: form,
+                    model: {},
+                    currentForm: currentForm
+                };
+            }
+        }).catch(function (err) {
+            $scope.showAlert('Ticket', 'error', 'Fail To Get Ticket Dynamic form Data');
+        });
+    };
+    $scope.createTicketDynamicFrm();
+
+    $scope.ivrlist = [];
+    var ivrlist = function () {
+        resourceService.IvrList().then(function (reply) {
+            $scope.ivrlist = reply;
+        }, function (error) {
+            $scope.showAlert("Soft Phone", "error", "Fail to Get IVR List");
+        });
+    };
+    ivrlist();
+
+    $scope.setIvrExtension = function (ivr) {
+        $scope.call.number = ivr.Extension;
+        phoneFuncion.hideIvrBtn();
+        phoneFuncion.hideIvrList();
+        $scope.veeryPhone.ivrTransferCall(ivr.Extension);
+    };
+
+    //open setting page
+    $scope.openSettingPage = function () {
+        agentSettingFact.changeSettingPageStatus(true);
+    };
+
+
+    /*--------------- chat services ------------------->
+     /* update code by damith */
+    chatService.connectToChatServer();
+    chatService.SubscribeStatus(function (status) {
+        if (status) {
+            Object.keys(status).forEach(function (key, index) {
+                var userObj = $scope.users.filter(function (item) {
+                    return key == item.username;
+                });
+                if (Array.isArray(userObj)) {
+                    userObj.forEach(function (obj, index) {
+                        obj.status = status[key];
+                        obj.statusTime = Date.now();
+                    });
+                }
+
+            });
+
+            $scope.users.sort(function (a, b) {
+
+                var i = 0;
+                var j = 0;
+
+
+                if (a.status == 'offline') {
+
+                    i = 1;
+                } else {
+
+                    i = 2;
+                }
+
+                if (b.status == 'offline') {
+
+                    j = 1;
+                } else {
+
+                    j = 2;
+                }
+
+
+                return j - i;
+
+            });
+        }
+    });
+
+
+    //show OnExistingclient
+    chatService.SubscribeChatAll(function (message) {
+        if (message.who && message.who == 'client') {
+            var userObj = $scope.onlineClientUser.filter(function (item) {
+                return message.from == item.username;
+            });
+            if (Array.isArray(userObj)) {
+                userObj.forEach(function (obj, index) {
+                    if (obj.chatcount) {
+                        obj.chatcount += 1;
+                    } else {
+                        obj.chatcount = 1;
+
+                        if ($scope.usercounts) {
+
+                            $scope.usercounts += 1;
+                        } else {
+
+                            $scope.usercounts = 1;
+                        }
+                    }
+                });
+            }
+        }
+        ;
+
+        var userObj = $scope.users.filter(function (item) {
+            return message.from == item.username;
+        });
+        if (Array.isArray(userObj)) {
+            userObj.forEach(function (obj, index) {
+                if (obj.chatcount) {
+                    obj.chatcount += 1;
+                } else {
+                    obj.chatcount = 1;
+
+                    if ($scope.usercounts) {
+
+                        $scope.usercounts += 1;
+                    } else {
+
+                        $scope.usercounts = 1;
+                    }
+                }
+            });
+        }
+    });
+
+    chatService.SubscribePending(function (pendingArr) {
+        if (pendingArr && Array.isArray(pendingArr)) {
+
+            pendingArr.forEach(function (item) {
+
+                var userx = item._id;
+                var userObj = $scope.users.filter(function (user) {
+                    return userx == user.username;
+                });
+
+
+                if (Array.isArray(userObj)) {
+                    userObj.forEach(function (obj, index) {
+
+                        obj.chatcount = item.messages;
+
+                        if (obj.chatcount) {
+
+                            $scope.usercounts = 1;
+                        }
+
+                    });
+                }
+
+            });
+        }
+
+    });
+
+    //get online users
+    var onlineUser = chatService.onUserStatus();
+    console.log(onlineUser);
+
+    $scope.showTabChatPanel = function (chatUser) {
+
+        chatService.SetChatUser(chatUser);
+
+        if (chatUser.chatcount) {
+
+            $scope.usercounts -= 1;
+        }
+    };
+
+    $rootScope.$on("updates", function () {
+        $scope.selectedChatUser = chatService.GetCurrentChatUser();
+        $scope.onlineClientUser = chatService.GetClientUsers();
+    });
+
+    $scope.chatUserTypeFilter = function (user) {
+        return user.type === 'client'
+    };
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
         scope.isFiexedTab = false;
@@ -2844,6 +3431,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             scope.$apply();
         });
     };
+}).directive('enterUnlockScreen', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.enterUnlockScreen);
+                });
+                event.preventDefault();
+            }
+        });
+    };
 });
 
 agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
@@ -2853,15 +3451,4 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
     $scope.MessageObj = MessageObj;
 
 
-}).directive('enterUnlockScreen', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            if (event.which === 13) {
-                scope.$apply(function () {
-                    scope.$eval(attrs.myEnter);
-                });
-                event.preventDefault();
-            }
-        });
-    };
-});
+})

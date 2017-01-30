@@ -274,6 +274,7 @@ function sipSendDTMF(c) {
         if (oSipSessionCall.dtmf(c) == 0) {
             try {
                 dtmfTone.play();
+                console.log("DTMF :" +c);
             } catch (e) {
             }
         }
