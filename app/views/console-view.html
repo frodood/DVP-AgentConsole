@@ -27,7 +27,7 @@
                 <ul class="nav navbar-nav m-left-25" uib-dropdown>
 
                     <!-- notification -->
-                    <li class="console-menu-icon m-left-10 m-right-10" id="notificationAlarm"
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6" id="notificationAlarm"
                         ng-click="checkAndRegister()" uib-dropdown
                         uib-dropdown-toggle>
 
@@ -128,7 +128,7 @@
 
 
                 <ul class="nav navbar-nav" uib-dropdown>
-                    <li id="addNewPage" class="console-menu-icon m-left-10" uib-dropdown-toggle><i
+                    <li id="addNewPage" class="console-menu-icon m-left-10 m-top-6" uib-dropdown-toggle><i
                             class="veery-font-1-add"></i></li>
                     <ul class="dropdown-menu console-drop-menu add-new-page" uib-dropdown-menu role="menu"
                         + aria-labelledby="btn-append-to-single-button">
@@ -190,14 +190,14 @@
                     </li>
 
 
-                    <li class="console-menu-icon m-left-10 m-right-10">
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
                         <i class="veery-font-1-notepad" ng-click="addFilterTab();">
                         </i>
 
-                    <li class="console-menu-icon m-left-10 m-right-10"
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                         uib-dropdown uib-dropdown-toggle>
                         <i class="veery-font-1-file-1" ng-click="consoleTopMenu.openTicket()"></i>
-                    <li class="console-menu-icon m-left-10 m-right-10">
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
                         <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none"
                            style="margin-top: 3px;"></i>
                         <i id="isBtnReg" class="main-icon-2-telephone-3" ng-click="consoleTopMenu.Register()"></i>
@@ -205,7 +205,7 @@
                            ng-click="consoleTopMenu.Register()"></i>
                     </li>
 
-                    <li class="console-menu-icon m-left-10 m-right-10" uib-dropdown uib-dropdown-toggle>
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6" uib-dropdown uib-dropdown-toggle>
                         <i class="veery-font-3-mail-5" ng-click="addMailInbox();"></i>
 
                         <div class="console-notification-header">
@@ -257,7 +257,7 @@
                     </li>
 
                     <!-- send notification -->
-                    <li ng-click="openNav()" class="console-menu-icon m-left-10 m-right-10">
+                    <li ng-click="openNav()" class="console-menu-icon m-left-10 m-right-10 m-top-6">
                         <i class="veery-font-1-paper-plane"></i>
                         <div class="console-notification-header bg-orange" ng-show="usercounts !=0">
                             {{usercounts}}
@@ -273,9 +273,9 @@
                     </div>
 
                     <li class="dropdown console-profile-header ">
-                        <a href="#" class="dropdown-toggle login-name" uib-dropdown-toggle
+                        <a href="#" class="dropdown-toggle login-name none-h" uib-dropdown-toggle
                         >Hi,{{loginName}}</a>
-                        <a class="time">{{timeBaseMsg}}</a>
+                        <a class="time none-h">{{timeBaseMsg}}</a>
 
                     </li>
                     <ul class="dropdown-menu console-drop-menu" uib-dropdown-menu role="menu"
@@ -475,7 +475,7 @@
     <!-- WEB PHONE -->
     <!-- phone operation panel  -->
 
-    <div class="draggableContainer">
+    <div class="draggableContainer" item-draggable>
         <div id="softPhone">
             <div id="softPhoneDragElem"
                  class="soft-phone-drag-elem">
@@ -770,6 +770,8 @@
     <!-- chat UI -->
     <div ng-repeat="user in selectedChatUser track by $index">
         <chat-tab-directive chat-user="user"
+                            chat-text="chatText"
+                            get-chat-random-id="getChatRandomId()"
                             selected-chat-user="selectedChatUser"
                             login-avatar="loginAvatar"
                             login-name="loginName">

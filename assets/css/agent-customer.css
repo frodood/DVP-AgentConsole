@@ -47,16 +47,17 @@ body {
 }
 
 .console-profile-img {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     overflow: hidden;
     display: inline-block;
+    margin-top: 4px;
 }
 
 .console-profile-img > img {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
 }
 
 .console-profile-header {
@@ -72,6 +73,7 @@ body {
 .console-profile-header > .time {
     color: #14d0a0 !important;
     font-size: 12px;
+    margin-top: -4px;
 }
 
 .user-state {
@@ -161,8 +163,8 @@ body {
     margin-top: 4px;
     background: rgba(23, 55, 60, 1);
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     padding-top: 5px;
     text-align: center;
 }
@@ -172,7 +174,7 @@ body {
 }
 
 .console-menu-icon > i {
-    font-size: 20px;
+    font-size: 16px;
     color: #97cb04;
     cursor: pointer;
 }
@@ -554,11 +556,11 @@ body {
     /*position: fixed;*/
     bottom: 100px;
     right: 50px;
-    background: rgb(198, 206, 205);
+    background: rgb(217, 222, 228);
     z-index: 2000;
-    border-radius: 15px;
+    border-radius: 0px;
     /*overflow: hidden;*/
-    box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.1);
     transition: all 80ms;
     padding: 12px 0px 5px 15px;
     margin-top: -23px;
@@ -779,6 +781,13 @@ body {
 }
 
 /*main console tab wrapper */
+.ui-tabs-scrollable > .spacer > div:first-child > .tab-content {
+    margin-top: -1px;
+    border-top: 1px solid #d9dee4;
+    border-left: 1px solid #d9dee4;
+    border-bottom: 1px solid #d9dee4;
+}
+
 .console-tab-wrapper {
     padding: 80px 15px 10px 15px;
 }
@@ -1527,6 +1536,10 @@ div > div >
 
 .m-left-25 {
     margin-left: 25px;
+}
+
+.m-top-6 {
+    margin-top: 6px;
 }
 
 .p-left-40 {
@@ -2805,12 +2818,12 @@ tags-input .tags .input {
     cursor: pointer;
 }
 
-.prn2:hover {
-    width: 100%;
-    height: auto;
-    background-color: #f7f5f5;
-    padding-left: 5px;
-}
+/*.prn2:hover {*/
+/*width: 100%;*/
+/*height: auto;*/
+/*background-color: #f7f5f5;*/
+/*padding-left: 5px;*/
+/*}*/
 
 .prn2-layout-header2 {
     padding: 8px 10px 31px 10px;
@@ -4257,7 +4270,7 @@ input.ps-form-controller[readonly] {
 .fix-console-tab > .ui-tabs-scrollable > .spacer > div > ul.nav-tabs {
     position: fixed;
     top: 57px;
-    width: calc(100% - 40px);
+    width: calc(100% - 29px);
     z-index: 100;
     background-color: rgba(255, 255, 255, 0.98);
     -webkit-box-shadow: 6px 7px 16px -14px rgba(0, 0, 0, 0.98);
@@ -4329,6 +4342,11 @@ div.btn-group.dropdown {
 
 .nav > li > a:focus, .nav > li > a:hover {
     background-color: #1a3d42 !important;
+    color: #fff;
+}
+
+.nav > li > a:focus, .nav > li > a.none-h:hover {
+    background-color: #0d1c34 !important;
     color: #fff;
 }
 
@@ -4408,8 +4426,9 @@ div.btn-group.dropdown {
     width: 230px;
     overflow: hidden;
     height: 0;
-    box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 15px 15px 0px 0px;
+    /*box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.1);*/
+    border: 1px solid #d9dee4;
+    /*border-radius: 15px 15px 0px 0px;*/
 }
 
 .phone-screen {
@@ -5915,6 +5934,9 @@ ul.renote-color-btn > li {
     color: #000000;
     border: 1px solid #d9dee4;
     margin-left: 5px;
+    max-width: 217px;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 .rec-img {
@@ -6036,7 +6058,8 @@ ul.renote-color-btn > li {
 .chat-txt {
     background: transparent;
     border: 0px;
-    height: 20px;
+    height: 32px;
+    margin-top: 2px;
 }
 
 .chat-txt::-webkit-input-placeholder { /* Chrome/Opera/Safari */
