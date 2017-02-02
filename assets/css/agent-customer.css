@@ -6124,6 +6124,9 @@ ul.renote-color-btn > li {
     color: #000000;
     border: 1px solid #d9dee4;
     margin-left: 5px;
+    max-width: 217px;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 .snd-msg > .msg-t.pending {
