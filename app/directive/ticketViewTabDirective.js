@@ -1050,16 +1050,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     }
 
 
-                    if (scope.messageMode == "public") {
-
-                    }
-                    else if (scope.messageMode == "public") {
-
-                    }
-                    else {
-
-                    }
-
                     var commentObj =
                     {
                         "body": scope.newComment,
