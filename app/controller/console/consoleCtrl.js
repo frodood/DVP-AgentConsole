@@ -52,14 +52,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentList = [];
     $scope.isFreezeReq = false;
 
-    $('#softPhoneDragElem').draggable(
-        {
-            revert: "invalid",
-            snap: ".draggableContainer",
-            stack: ".soft-phone-drag-elem"
-        }
-    );
+    //
+    $('#softPhoneDragElem').draggable();
     $('.draggableContainer').droppable();
+
     $scope.status = {
         isopen: false
     };
@@ -1449,8 +1445,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addMyNote = function () {
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
-    // $scope.addDashBoard();
-    //$scope.addDashBoard();
+    $scope.addDashBoard();
 
 
     var openNewEngagementTab = function (args, index) {
@@ -3275,6 +3270,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /*--------------- chat services ------------------->
      /* update code by damith */
+    var s4 = function () {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    };
+
+
+    $scope.getChatRandomId = function () {
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    };
+
     chatService.connectToChatServer();
     chatService.SubscribeStatus(function (status) {
         if (status) {
@@ -3444,6 +3451,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 });
+
 
 agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
 
