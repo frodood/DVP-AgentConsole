@@ -12,9 +12,9 @@
                      height="200" opacity="0.2" distance="0px"
                      enabled="{{ scrollEnabled }}">
 
-                    <div ng-repeat="(key,value) in sectionArray">
+                    <div ng-repeat="(key,value) in sectionArray" ng-init="ratingData = RatingResultResolve(value)">
                         <h4 style="color: grey">{{value.name}}</h4>
-                        <span title="Rating : {{value.value/value.itemCount}}"><jk-rating-stars rating="value.value/value.itemCount" max-rating="10" read-only="true"></jk-rating-stars></span>
+                        <span title="Rating : {{value.value/value.itemCount}}"><jk-rating-stars rating="ratingData" max-rating="10" read-only="true"></jk-rating-stars></span>
 
 
 
