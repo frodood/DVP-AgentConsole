@@ -26,7 +26,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             title: title,
             text: content,
             type: type,
-            styling: 'bootstrap3'
+            styling: 'bootstrap3',
         });
     };
 
@@ -53,8 +53,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isFreezeReq = false;
 
     //
-    $('#softPhoneDragElem').draggable();
-    $('.draggableContainer').droppable();
+    $('#softPhoneDragElem').draggable({
+        preventCollision: true,
+        containment: "window",
+        start: function (event, ui) {
+            $(this).hide();
+        },
+        stop: function (event, ui) {
+            $(this).show();
+        }
+    });
+
 
     $scope.status = {
         isopen: false
@@ -139,7 +148,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#phoneDialpad').removeClass('display-block').addClass('display-none');
         }
     };
-    $scope.ShowHideDialpad();
+   // $scope.ShowHideDialpad();
 
     $scope.PhoneOffline = function () {
         //is loading done

@@ -124,7 +124,7 @@ function closeCallTransfer() {
 var pinHeight = 0;
 function pinScreen() {
     pinHeight = 90;
-    $('.dial-pad-wrapper').stop().animate({height: '98'}, 500);
+    $('.dial-pad-wrapper').stop().animate({height: '89'}, 500);
     $('#phoneDialpad').removeClass('display-block').addClass('display-none');
     $('#pinScreen').removeClass('display-block').addClass('display-none');
     $('#removePinScreen').removeClass('display-none').addClass('display-block');
@@ -141,7 +141,7 @@ function showDilapad() {
     var $wrapper = $('.dial-pad-wrapper'),
         animateTime = 500,
         height = 310;
-    if ($wrapper.height() === 0 || $wrapper.height() === 98) {
+    if ($wrapper.height() === 0 || $wrapper.height() === 89) {
         phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
             if (res) {
                 $('#phoneDialpad').removeClass('display-none').addClass('display-block');
@@ -149,7 +149,7 @@ function showDilapad() {
         });
 
     } else {
-        $wrapper.stop().animate({height: '98'}, animateTime);
+        $wrapper.stop().animate({height: '89'}, animateTime);
         $('#phoneDialpad').removeClass('display-block').addClass('display-none');
     }
 }
@@ -179,11 +179,14 @@ function showMicrophoneOption() {
 
 
 var showAlert = function (title, type, content) {
+    var stack_bottomleft = {dir1: "up", dir2: "right", firstpos1: 25, firstpos2: 25};
     new PNotify({
         title: title,
         text: content,
+        addclass: 'stack-bottomleft',
         type: type,
-        styling: 'bootstrap3'
+        styling: 'bootstrap3',
+        stack: stack_bottomleft
     });
 };
 
