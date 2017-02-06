@@ -390,7 +390,8 @@
 
     <!-- tab panel -->
 
-    <div class="console-tab-wrapper ">
+
+    <div class="console-tab-wrapper  ">
         <!--div ng-include="'app/views/console-tab-panel.html'"></div-->
         <scrollable-tabset ng-class="{'fix-console-tab':isFiexedTab==true,
                                          '':isFiexedTab==false}"
@@ -457,34 +458,34 @@
     </div>
 
 
-    <div ng-click="goToTopScroller();"
-         ng-class="{'display-block bounceIn':isFiexedTab==true,
-              'display-none':isFiexedTab==false}" class="quick-scroller bold animated">
-        TOP
-    </div>
 
-    <!-- agent setting class="display-none" -->
-    <!--  ng-if="isShowSetting==true" -->
-    <div id="settingPage" ng-if="isShowSetting==true">
-        <div ng-include="'app/views/agent/agentSettings.html'"></div>
-    </div>
 
-    <!-- WEB PHONE -->
-    <!-- phone operation panel  -->
-
-    <div class="draggableContainer" item-draggable>
+    <!-- soft phone -->
+    <div class="draggableContainer">
         <div id="softPhone">
             <div id="softPhoneDragElem"
-                 class="soft-phone-drag-elem">
+                 class="soft-phone-drag-elem ">
                 <div class="isOperationPhone dial-pad-wrapper draggable ">
-                    <div id="pinScreen" class="pin-screen-wrapper display-block"
-                         onclick="pinScreen()">
-                        <i class="ti-pin-alt"></i>
+                    <ul class="phone-t-menu">
+                        <li>
+                            <div class="pin-screen-wrapper" style="cursor: move;">
+                                <i class="ti-move"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="pinScreen" class="pin-screen-wrapper display-block"
+                                 onclick="pinScreen()">
+                                <i class="ti-angle-up"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="removePinScreen" class="pin-screen-wrapper display-none" onclick="removePin()">
+                                <i class="ti-angle-down"></i>
+                            </div>
+                        </li>
 
-                    </div>
-                    <div id="removePinScreen" class="pin-screen-wrapper display-none" onclick="removePin()">
-                        <i class="ti-pin2"></i>
-                    </div>
+                    </ul>
+
                     <div class="phone-screen">
                         <div class="no-action">
                             <input required type="text"
@@ -497,6 +498,8 @@
                                    ng-model="call.number"
                                    placeholder="000-00-000">
                         </div>
+
+
                         <div class="dial-action" id="callStatus">
                             {{call.status}}
                         </div>
@@ -508,7 +511,8 @@
                             </timer>
                         </div>
                         <div class="display-none" id="countdownCalltimmer">
-                            <timer autostart="false" countdown="countdownVal" finish-callback="veeryPhone.FinishedAcw()"
+                            <timer autostart="false" countdown="countdownVal"
+                                   finish-callback="veeryPhone.FinishedAcw()"
                                    interval="1000">{{seconds}} second
                                 <small ng-show="isFreezeReq">Freeze Processing</small>
                             </timer>
@@ -744,11 +748,13 @@
                             <i class="main-icon-2-stick-man-2"></i>
                         </div>
                         <!-- ivr button -->
-                        <div id="transferIvr" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.showIvrPenel();"
+                        <div id="transferIvr" class="phone-sm-btn phone-sm-bn-p8"
+                             ng-click="veeryPhone.showIvrPenel();"
                              title="IVR">
                             <i class="main-icon-2-stick-man-2"></i>
                         </div>
-                        <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideMoreOption();" title="Close">
+                        <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideMoreOption();"
+                             title="Close">
                             <i class="ti-close"></i>
                         </div>
                     </div>
@@ -756,6 +762,22 @@
             </div>
         </div>
     </div>
+
+
+    <div ng-click="goToTopScroller();"
+         ng-class="{'display-block bounceIn':isFiexedTab==true,
+              'display-none':isFiexedTab==false}" class="quick-scroller bold animated">
+        TOP
+    </div>
+
+    <!-- agent setting class="display-none" -->
+    <!--  ng-if="isShowSetting==true" -->
+    <div id="settingPage" ng-if="isShowSetting==true">
+        <div ng-include="'app/views/agent/agentSettings.html'"></div>
+    </div>
+
+    <!-- WEB PHONE -->
+    <!-- phone operation panel  -->
 
 
     <!--Notification more information -->

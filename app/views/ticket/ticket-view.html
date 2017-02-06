@@ -440,7 +440,7 @@
                                             <div class="pull-left commenter-img">
                                                 <img src="assets/img/avatar/defaultProfile.png"
                                                      ng-src={{sub.assignee.avatar}}>
-                                                {{sub.assignee.name}}
+                                                {{sub.assignee_displayname}}
                                             </div>
                                         </a>
 
@@ -493,7 +493,7 @@
                                             <div class="pull-left commenter-img">
                                                 <img src="assets/img/avatar/defaultProfile.png"
                                                      ng-src={{relticket.assignee.avatar}}>
-                                                {{relticket.assignee.name}}
+                                                {{relticket.assignee_displayname}}
                                             </div>
                                         </a>
                                         <div class="bg-checkbox gray300  font-white small-details inline-btn ">
@@ -534,7 +534,7 @@
                                                         submitter
                                                     </div>
                                                     <div class="notification-text ">
-                                                        {{ticket.submitter.name}}
+                                                        {{ticket.submitter.displayname}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -550,7 +550,7 @@
                                                         requester
                                                     </div>
                                                     <div class="notification-text">
-                                                        {{ticket.requester.name}}
+                                                        {{ticket.requester.displayname}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -591,7 +591,7 @@
                                                                 style="margin-top: 7px;">
                                                             <optgroup label="Users"></optgroup>
                                                             <option ng-repeat="assignee in assigneeUsers"
-                                                                    value="{{assignee}}"> - {{assignee.name}}
+                                                                    value="{{assignee}}"> - {{assignee.displayname}}
                                                             </option>
                                                             <optgroup label="User Groups"></optgroup>
                                                             <option ng-repeat="group in assigneeGroups"
@@ -628,23 +628,24 @@
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold color-green500"
-                                                         ng-show="ticket.assignee.name">
+                                                         ng-show="ticket.assignee_displayname">
                                                         ASSIGNEE
                                                     </div>
                                                     <div class="notification-text" ng-show="ticket.assignee">
-                                                        {{ticket.assignee.name}}
+                                                        {{ticket.assignee_displayname}}
                                                     </div>
-                                                    <a ng-show="ticket.assignee && ticket.assignee._id!=myProfileID"
-                                                       ng-click="setAssigneeAsMe()">Assign to me</a>
+
                                                     <div class="notification-time text-uppercase bold color-green500"
                                                          ng-if="!ticket.assignee.name"
                                                          ng-show="ticket.assignee_group.name">
-                                                        ASSIGNEE GROUP
+                                                         GROUP
                                                     </div>
                                                     <div class="notification-text" ng-if="!ticket.assignee.name"
                                                          ng-show="ticket.assignee_group">
                                                         {{ticket.assignee_group.name}}
                                                     </div>
+                                                    <a ng-show="(ticket.assignee || ticket.assignee_group) && ticket.assignee._id!=myProfileID"
+                                                       ng-click="setAssigneeAsMe()">Assign to me</a>
 
                                                 </div>
 
@@ -671,7 +672,7 @@
                                         <div class="pull-left commenter-img">
                                             <img src="assets/img/avatar/defaultProfile.png"
                                                  ng-src="{{collaborator.avatar}}"/>
-                                            {{collaborator.name}}
+                                            {{collaborator.displayname}}
                                         </div>
                                     </div>
                                     <div class="pull-right">
