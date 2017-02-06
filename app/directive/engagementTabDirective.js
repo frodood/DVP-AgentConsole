@@ -82,6 +82,22 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             /*form submit*/
 
+            scope.setUserTitles = function (userObj) {
+
+                var title="";
+
+
+                if(userObj.firstname && userObj.lastname)
+                {
+                    title=userObj.firstname+" "+ userObj.lastname;
+                }
+                else
+                {
+                    title=userObj.name;
+                }
+
+                return title;
+            }
 
             scope.assigneeUsers = profileDataParser.assigneeUsers;
 
