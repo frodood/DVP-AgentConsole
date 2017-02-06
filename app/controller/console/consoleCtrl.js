@@ -135,7 +135,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 98) {
+        if ($wrapper.height() === 0 || $wrapper.height() === 98|| $wrapper.height() === 96) {
             phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
                 if (res) {
                     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
