@@ -84,6 +84,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
 
             scope.assigneeUsers = profileDataParser.assigneeUsers;
+
+            angular.forEach(scope.assigneeUsers, function (assignee) {
+                assignee.displayname=scope.setUserTitles(assignee);
+            });
+
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
 
 

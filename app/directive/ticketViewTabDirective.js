@@ -438,6 +438,23 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
             };
 
+            scope.setUserTitles = function (userObj) {
+
+                var title="";
+
+
+                if(userObj.firstname && userObj.lastname)
+                {
+                    title=userObj.firstname+" "+ userObj.lastname;
+                }
+                else
+                {
+                    title=userObj.name;
+                }
+
+                return title;
+            }
+
 
             var convertToSchemaForm = function (formSubmission, callback) {
 
@@ -723,6 +740,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
             scope.assigneeUsers = profileDataParser.assigneeUsers;
+
+            angular.forEach(scope.assigneeUsers, function (assignee) {
+                assignee.displayname=scope.setUserTitles(assignee);
+            });
+
+
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
 
 
@@ -770,12 +793,95 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     console.log("Failed to Set Contact No ", ex);
                 }
             };
+
+
+
+
             scope.loadTicketSummary = function (ticketID) {
 
                 ticketService.getTicket(ticketID).then(function (response) {
 
                     if (response.data.IsSuccess) {
                         scope.ticket = response.data.Result;
+
+                        if(scope.ticket.assignee)
+                        {
+                            scope.ticket.assignee_displayname= scope.setUserTitles(scope.ticket.assignee);
+                        }
+                        else if(scope.ticket.assignee_gorup)
+                        {
+                            scope.ticket.assignee_displayname= scope.ticket.assignee_gorup.name;
+                        }
+                        else
+                        {
+                            scope.ticket.assignee_displayname="Unassigned";
+                        }
+
+                        if(scope.ticket.requester)
+                        {
+                            scope.ticket.requester.displayname= scope.setUserTitles(scope.ticket.requester);
+                        }
+                        if(scope.ticket.submitter)
+                        {
+                            scope.ticket.submitter.displayname= scope.setUserTitles(scope.ticket.submitter);
+                        }
+                        if(scope.ticket.collaborators)
+                        {
+                            //scope.ticket.submitter_displayname= scope.setUserTitles(scope.ticket.submitter);
+                            angular.forEach(scope.ticket.collaborators, function (collaborator) {
+                                collaborator.displayname=scope.setUserTitles(collaborator);
+                            });
+                        }
+
+                        if(scope.ticket.comments)
+                        {
+                            //scope.ticket.submitter_displayname= scope.setUserTitles(scope.ticket.submitter);
+                            angular.forEach(scope.ticket.comments, function (comment) {
+                                comment.author.displayname=scope.setUserTitles(comment.author);
+                            });
+                        }
+                        if(scope.ticket.sub_tickets)
+                        {
+                            //scope.ticket.submitter_displayname= scope.setUserTitles(scope.ticket.submitter);
+                            angular.forEach(scope.ticket.sub_tickets, function (subticket) {
+
+                                if(subticket.assignee)
+                                {
+                                    subticket.assignee_displayname= scope.setUserTitles(subticket.assignee);
+                                }
+                                else if(scope.ticket.assignee_gorup)
+                                {
+                                    subticket.assignee_displayname= subticket.assignee_gorup.name;
+                                }
+                                else
+                                {
+                                    subticket.assignee_displayname="Unassigned";
+                                }
+
+                            });
+                        }
+                        if(scope.ticket.related_tickets)
+                        {
+                            //scope.ticket.submitter_displayname= scope.setUserTitles(scope.ticket.submitter);
+                            angular.forEach(scope.ticket.sub_ticketsscope.ticket.related_tickets, function (reltiket) {
+
+                                if(reltiket.assignee)
+                                {
+                                    reltiket.assignee_displayname= scope.setUserTitles(reltiket.assignee);
+                                }
+                                else if(scope.ticket.assignee_gorup)
+                                {
+                                    reltiket.assignee_displayname= reltiket.assignee_gorup.name;
+                                }
+                                else
+                                {
+                                    reltiket.assignee_displayname="Unassigned";
+                                }
+
+                            });
+                        }
+
+
 
 
                         fileSlotChecker();
@@ -1136,6 +1242,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             if (response && response.data.IsSuccess) {
                                 scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
                                 scope.ticket.assignee = assigneeObj;
+                                scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
 
                                 scope.isEditAssignee = false;
                             }
@@ -1152,6 +1259,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
                                 scope.ticket.assignee = undefined;
                                 scope.ticket.assignee_group = assigneeObj;
+                                scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
 
                                 scope.isEditAssignee = false;
 
@@ -1176,7 +1284,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 ticketService.AssignUserToTicket(scope.ticket._id, profileDataParser.myProfile._id).then(function (response) {
                     if (response && response.data.IsSuccess) {
                         scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
+
                         scope.ticket.assignee = profileDataParser.myProfile;
+                        scope.ticket.assignee_displayname= scope.setUserTitles(scope.ticket.assignee);
 
                         scope.isEditAssignee = false;
                     }
@@ -1194,6 +1304,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                         scope.showAlert("Ticket assigning", "success", "Successfully assign.");
                         scope.ticket.assignee = profileDataParser.myProfile;
+                        scope.ticket.assignee_displayname= scope.setUserTitles(scope.ticket.assignee);
 
                     }
                     else {
@@ -1277,6 +1388,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                          })*/
 
                         response.data.Result.assignee = subTicket.assignee;
+
+                        response.data.Result.assignee_displayname = scope.setUserTitles(subTicket.assignee);
                         scope.subTickets.push(response.data.Result);
 
                         scope.showSubCreateTicket = false;
