@@ -2567,6 +2567,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
     /* update code damith
+     lock screen
      ARDS break option */
     var changeLockScreenView = function () {
         return {
@@ -2581,20 +2582,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             }
         }
-
     }();
 
     $scope.currentBerekOption = null;
     var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
-            console.log(requestOption);
             $('#loginScreeen').removeClass('display-none').addClass('display-block');
             $('body').addClass('overflow-hidden');
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
             });
+            $scope.$broadcast('timer-reset');
+            $scope.$broadcast('timer-start');
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res) {
                     $('#userStatus').addClass('offline').removeClass('online');

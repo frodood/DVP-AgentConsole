@@ -360,12 +360,12 @@
                                                                             contact
                                                                             type
                                                                         </option>
-                                                                        <option>Call</option>
-                                                                        <option>Email</option>
+                                                                        <option>call</option>
+                                                                        <option>email</option>
                                                                         <option>sms</option>
-                                                                        <option>Facebook</option>
-                                                                        <option>Twitter</option>
-                                                                        <option>Skype</option>
+                                                                        <option>facebook</option>
+                                                                        <option>twitter</option>
+                                                                        <option>skype</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -384,8 +384,8 @@
                                                     <!-- end -->
                                                     <div>
                                                         <div ng-click="deleteSocialContact('facebook');"
-                                                                class="prn2 header-round-icon"
-                                                                ng-show="profileDetail.facebook">
+                                                             class="prn2 header-round-icon"
+                                                             ng-show="profileDetail.facebook">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-facebook "></i>
                                                             </div>
@@ -467,14 +467,21 @@
                                                                 </small>
                                                             </div>
                                                         </div>
-                                                        <div class="prn2 header-round-icon" ng-click="deleteContact(c.contact)"
-                                                             ng-repeat="c in profileDetail.contacts" >
-                                                            <div class="icon-left">
-                                                                <i class="fa fa-phone"></i>
+                                                        <div class="prn2 header-round-icon"
+                                                             ng-click="deleteContact(c.contact)"
+                                                             ng-repeat="c in profileDetail.contacts">
+                                                            <div class="icon-left" ng-if="c.contact!=''">
+                                                                <i class=""
+                                                                   ng-class="{'fa fa-phone':c.type==' ',
+                                                                'fa fa-twitter':c.type=='twitter',
+                                                                'fa fa-facebook':c.type=='facebook',
+                                                                'fa fa-phone':c.type=='phone',
+                                                                'fa fa-skype':c.type=='skype',
+                                                                'fa fa-bell-o':c.type=='sms',
+                                                                'fa fa-envelope-o':c.type=='email'}"></i>
                                                                 <!--base on type,need to cheage icon-->
                                                             </div>
-                                                            <div class="prn2-contact text-header "
-                                                                 >
+                                                            <div class="prn2-contact text-header" ng-if="c.contact!=''">
                                                                 {{c.type}}
                                                                 <br/>
                                                                 <small>{{c.contact}}</small>
@@ -929,11 +936,12 @@
                                     </form>
 
                                     <div>
-                                        <div >
+                                        <div>
                                             <div>{{oldFormModel}}</div>
                                         </div>
 
-                                        <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw" ng-submit="onSubmit(customForm)"></form>
+                                        <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw"
+                                              ng-submit="onSubmit(customForm)"></form>
                                     </div>
                                 </div>
                                 <div class="model-footer-wrapper">
