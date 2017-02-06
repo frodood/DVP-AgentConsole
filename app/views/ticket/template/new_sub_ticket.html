@@ -130,7 +130,7 @@
                                             ng-model-options="{trackBy: '$value'}">
                                         <optgroup label="Users"></optgroup>
                                         <option ng-repeat="assignee in assigneeUsers" value='{{assignee}}'>
-                                            - {{assignee.username}}
+                                            - {{assignee.displayname}}
                                         </option>
                                         <optgroup label="User Groups"></optgroup>
                                         <option ng-repeat="group in assigneeGroups" value='{{group}}'>

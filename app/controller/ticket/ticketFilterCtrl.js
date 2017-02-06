@@ -18,6 +18,23 @@ agentApp.controller('ticketFilterCtrl', function ($scope, $http, $rootScope, tic
         });
     };
 
+    $scope.setUserTitles = function (userObj) {
+
+        var title="";
+
+
+        if(userObj.firstname && userObj.lastname)
+        {
+            title=userObj.firstname+" "+ userObj.lastname;
+        }
+        else
+        {
+            title=userObj.name;
+        }
+
+        return title;
+    }
+
     var getTicketViewCount = function (item, e) {
         item.count = 0;
         ticketService.GetTicketCountByView(item._id).then(function (response) {
@@ -80,6 +97,27 @@ agentApp.controller('ticketFilterCtrl', function ($scope, $http, $rootScope, tic
         ticketService.GetTicketsByView(data._id,$scope.currentPage).then(function (response) {
             $scope.isProgress = false;
             $scope.ticketList = response;
+
+            angular.forEach($scope.ticketList, function (ticket) {
+
+                if(ticket.submitter)
+                {
+                    ticket.submitter.displayname= $scope.setUserTitles(ticket.submitter);
+                }
+
+                else
+                {
+                   ticket.submitter.displayname="Unassigned";
+                }
+
+                if(ticket.requester)
+                {
+                    ticket.requester.displayname= $scope.setUserTitles(ticket.requester);
+                }
+
+            });
+
+
             $scope.showPaging = true;
             $scope.isNoData = !response || response.length === 0;
         }, function (err) {

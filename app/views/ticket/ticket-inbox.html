@@ -61,7 +61,9 @@
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/defaultProfile.png"
                                              ng-src="{{todo.assignee.avatar}}"
-                                             ng-src="">
+                                             ng-src=""
+                                             title="{{todo.displayname}}">
+
                                     </div>
 
                                 </div>
@@ -131,8 +133,10 @@
                                  ng-repeat="inprogress in ticketList.inProgress">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list">
-                                        <img src="assets/img/avatar/defaultProfile.png"
-                                             ng-src="{{inprogress.assignee.avatar}}" title={{inprogress.assignee.name?inprogress.assignee.name:inprogress.assignee_group.name}}>
+                                        <img id="inprogpic" src="assets/img/avatar/defaultProfile.png"
+                                             ng-src="{{inprogress.assignee.avatar}}" title="{{inprogress.displayname}}">
+                                            <!-- ng-src="{{inprogress.assignee.avatar}}" title={{inprogress.assignee.name?inprogress.assignee.name:inprogress.assignee_group.name}}>-->
+
 
 
                                     </div>
@@ -205,7 +209,8 @@
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/defaultProfile.png"
                                              ng-src="{{done.assignee.avatar}}"
-                                             ng-src="{{done.assignee.avatar}}">
+                                             ng-src="{{done.assignee.avatar}}"
+                                             title="{{done.displayname}}" >
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
