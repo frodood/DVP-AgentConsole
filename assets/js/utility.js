@@ -124,7 +124,7 @@ function closeCallTransfer() {
 var pinHeight = 0;
 function pinScreen() {
     pinHeight = 90;
-    $('.dial-pad-wrapper').stop().animate({height: '89'}, 500);
+    $('.dial-pad-wrapper').stop().animate({height: '90'}, 500);
     $('#phoneDialpad').removeClass('display-block').addClass('display-none');
     $('#pinScreen').removeClass('display-block').addClass('display-none');
     $('#removePinScreen').removeClass('display-none').addClass('display-block');
@@ -136,6 +136,18 @@ function removePin() {
     $('#removePinScreen').removeClass('display-block').addClass('display-none');
     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
 };
+
+function enablePin(){
+    $('#phoneDialpad').removeClass('display-block').addClass('display-none');
+    $('#pinScreen').removeClass('display-block').addClass('display-none');
+    $('#removePinScreen').removeClass('display-none').addClass('display-block');
+}
+
+function disablePin(){
+    $('#pinScreen').removeClass('display-none').addClass('display-block');
+    $('#removePinScreen').removeClass('display-block').addClass('display-none');
+    $('#phoneDialpad').removeClass('display-none').addClass('display-block');
+}
 
 function showDilapad() {
     var $wrapper = $('.dial-pad-wrapper'),
