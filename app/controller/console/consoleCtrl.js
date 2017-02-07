@@ -51,16 +51,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.notifications = [];
     $scope.agentList = [];
     $scope.isFreezeReq = false;
+    $scope.isEnableSoftPhoneDrag = false;
 
     //
     $('#softPhoneDragElem').draggable({
         preventCollision: true,
         containment: "window",
         start: function (event, ui) {
-            $(this).hide();
+            $scope.isEnableSoftPhoneDrag = true;
         },
         stop: function (event, ui) {
-            $(this).show();
         }
     });
 
@@ -2588,10 +2588,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     var breakList = ['#Available'];
 
 
-
-
-
-
     //--------------------------Dynamic Break Type-------------------------------------------------
 
     $scope.dynamicBreakTypes = [];
@@ -2599,12 +2595,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         resourceService.GetActiveDynamicBreakTypes().then(function (data) {
             if (data && data.IsSuccess) {
-                data.Result.forEach(function(bObj){
-                    breakList.push('#'+bObj.BreakType)
+                data.Result.forEach(function (bObj) {
+                    breakList.push('#' + bObj.BreakType)
                 });
                 $scope.dynamicBreakTypes = data.Result;
 
-            }else{
+            } else {
                 $scope.showAlert("Dynamic Break Types", "error", "Fail To load dynamic break types");
             }
         }, function (error) {
@@ -2613,13 +2609,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.getDynamicBreakTypes();
-
-
-
-
-
-
-
 
 
     $scope.breakOption = {
@@ -2760,7 +2749,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 breakTime,
                                 startTime;
 
-                            if(data.Result.Reason && data.Result.StateChangeTime && data.Result.Reason.toLowerCase().indexOf('break') > -1) {
+                            if (data.Result.Reason && data.Result.StateChangeTime && data.Result.Reason.toLowerCase().indexOf('break') > -1) {
                                 timeNow = moment.utc();
                                 breakTime = moment.utc(data.Result.StateChangeTime);
                                 timeDiff = timeNow.diff(breakTime, 'seconds');
@@ -2773,7 +2762,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 //StateChangeTime
                                 if (timeDiff > 0) {
                                     $scope.breakTimeStart = parseInt(startTime.format('x'));
-                                }else{
+                                } else {
                                     $scope.breakTimeStart = moment.utc();
                                 }
                                 document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
