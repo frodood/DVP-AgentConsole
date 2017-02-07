@@ -2741,7 +2741,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };//end
 
-    $scope.resourceTaskObj = []
+    $scope.resourceTaskObj = [];
     $scope.breakTimeStart = 0;
     var getCurrentState = (function () {
         return {
