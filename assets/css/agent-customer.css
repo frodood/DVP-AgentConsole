@@ -4525,12 +4525,11 @@ div.btn-group.dropdown {
 
 .soft-phone-drag-elem {
     /*cursor: move;*/
-    height: 310px;
+    height: auto;
     width: 230px;
     position: fixed;
     left: 55px;
-    z-index: 3000;
-    bottom: 67px;
+        bottom: 67px;
     background: transparent;
     /* important (all position that's not `static`) */
 }
