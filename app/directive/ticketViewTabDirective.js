@@ -1422,16 +1422,14 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
             scope.loadMyAppMetaData = function () {
-                ticketService.GetMyTicketConfig(function (success,data) {
 
-                    if(success)
+                    if(profileDataParser.myTicketMetaData)
                     {
-                        scope.newSubTicket.subject=data.Result.subject;
-                        scope.setPriority(data.Result.priority);
-                        scope.newSubTicket.description=data.Result.description;
+                        scope.newSubTicket.subject=profileDataParser.myTicketMetaData.subject;
+                        scope.setPriority(profileDataParser.myTicketMetaData.priority);
+                        scope.newSubTicket.description=profileDataParser.myTicketMetaData.description;
 
                     }
-                });
 
             }
 

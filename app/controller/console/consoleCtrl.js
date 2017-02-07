@@ -2229,6 +2229,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.getMyProfile();
+    $scope.getMyTicketMetaData = function () {
+
+        ticketService.GetMyTicketConfig(function (success,data) {
+
+            if(success)
+            {
+                profileDataParser.myTicketMetaData=data.Result;
+            }
+        });
+
+    };
+    $scope.getMyTicketMetaData();
 
     $scope.loginName = authService.GetResourceIss();
 

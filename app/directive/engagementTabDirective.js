@@ -998,16 +998,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
 
             scope.loadMyAppMetaData = function () {
-                ticketService.GetMyTicketConfig(function (success,data) {
 
-                    if(success)
-                    {
-                        scope.ticket.subject=data.Result.subject;
-                        scope.setPriority(data.Result.priority);
-                        scope.ticket.description=data.Result.description;
 
-                    }
-                });
+                if(profileDataParser.myTicketMetaData)
+                {
+                    scope.ticket.subject=profileDataParser.myTicketMetaData.subject;
+                    scope.setPriority(profileDataParser.myTicketMetaData.priority);
+                    scope.ticket.description=profileDataParser.myTicketMetaData.description;
+                }
+
 
             }
 
