@@ -194,6 +194,15 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
+    var getActiveDynamicBreakTypes = function () {
+        return $http({
+            method: 'get',
+            url: baseUrls.resourceService + "BreakTypes/Active"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
 
     return {
         BreakRequest: breakRequest,
@@ -212,7 +221,8 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         GetResourceTasks: getResourceTasks,
         GetCurrentRegisterTask: getCurrentRegisterTask,
         RemoveSharing: removeSharing,
-        IvrList:ivrList
+        IvrList:ivrList,
+        GetActiveDynamicBreakTypes: getActiveDynamicBreakTypes
     }
 
 });

@@ -2586,6 +2586,42 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.currentBerekOption = null;
     var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
+
+
+
+
+
+
+    //--------------------------Dynamic Break Type-------------------------------------------------
+
+    $scope.dynamicBreakTypes = [];
+    $scope.getDynamicBreakTypes = function () {
+
+        resourceService.GetActiveDynamicBreakTypes().then(function (data) {
+            if (data && data.IsSuccess) {
+                data.Result.forEach(function(bObj){
+                    breakList.push('#'+bObj.BreakType)
+                });
+                $scope.dynamicBreakTypes = data.Result;
+
+            }else{
+                $scope.showAlert("Dynamic Break Types", "error", "Fail To load dynamic break types");
+            }
+        }, function (error) {
+            authService.IsCheckResponse(error);
+            $scope.showAlert("Dynamic Break Types", "error", "Fail To load dynamic break types");
+        });
+    };
+    $scope.getDynamicBreakTypes();
+
+
+
+
+
+
+
+
+
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
             $('#loginScreeen').removeClass('display-none').addClass('display-block');
