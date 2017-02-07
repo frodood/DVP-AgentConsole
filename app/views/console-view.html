@@ -301,10 +301,11 @@
                             <i ng-show="currentBerekOption=='Available'" class="ti-check"></i> available</a>
                         </li>
 
-                        <li class="menuitem" role="menuitem" ng-repeat="breakType in dynamicBreakTypes"><a id="breakType.BreakType"
-                                                                                                           class=""
-                                                                                                           ng-click="breakOption.changeBreakOption(breakType.BreakType);"
-                                                                                                           href="javascript:void(0);">
+                        <li class="menuitem" role="menuitem" ng-repeat="breakType in dynamicBreakTypes"><a
+                                id="breakType.BreakType"
+                                class=""
+                                ng-click="breakOption.changeBreakOption(breakType.BreakType);"
+                                href="javascript:void(0);">
                             <i ng-show="currentBerekOption==breakType.BreakType" class="ti-check"></i>{{breakType.BreakType}}</a>
                         </li>
 
@@ -467,13 +468,11 @@
     </div>
 
 
-
-
     <!-- soft phone -->
     <div class="draggableContainer">
         <div id="softPhone">
             <div id="softPhoneDragElem"
-                 class="soft-phone-drag-elem ">
+                 class="soft-phone-drag-elem" ng-class="!isEnableSoftPhoneDrag?'soft-b-67':''">
                 <div class="isOperationPhone dial-pad-wrapper draggable ">
                     <ul class="phone-t-menu">
                         <li>

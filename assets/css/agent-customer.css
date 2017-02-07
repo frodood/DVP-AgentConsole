@@ -4529,9 +4529,14 @@ div.btn-group.dropdown {
     width: 230px;
     position: fixed;
     left: 55px;
-        bottom: 67px;
+    z-index: 3000;
+
     background: transparent;
     /* important (all position that's not `static`) */
+}
+
+.soft-b-67 {
+    bottom: 67px;
 }
 
 .droppable {
