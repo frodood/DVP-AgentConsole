@@ -1194,6 +1194,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         if (response.data.IsSuccess) {
                             scope.newComment = '';
                             response.data.Result.author = profileDataParser.myProfile;
+                            response.data.Result.author.displayname = scope.setUserTitles(profileDataParser.myProfile);
                             response.data.Result.attachments = scope.uploadedComAttchments;
                             scope.ticket.comments.push(response.data.Result);
                             console.log("New comment added ", response);

@@ -64,17 +64,17 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
             }
             else
             {
-                if(ticket.firstname)
+                if(ticket.assignee.firstname)
                 {
-                    title=ticket.firstname;
+                    title=ticket.assignee.firstname;
                 }
-                else if(ticket.lastname)
+                else if(ticket.assignee.lastname)
                 {
-                    title=ticket.lastname;
+                    title=ticket.assignee.lastname;
                 }
                 else
                 {
-                    title=ticket.name;
+                    title=ticket.assignee.name;
                 }
             }
 
