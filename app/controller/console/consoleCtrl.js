@@ -2585,7 +2585,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     }();
 
     $scope.currentBerekOption = null;
-    var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
+    var breakList = ['#Available'];
 
 
 
@@ -2759,34 +2759,25 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 timeNow,
                                 breakTime,
                                 startTime;
-                            if (data.Result.Reason && data.Result.StateChangeTime) {
+
+                            if(data.Result.Reason && data.Result.StateChangeTime && data.Result.Reason.toLowerCase().indexOf('break') > -1) {
                                 timeNow = moment.utc();
                                 breakTime = moment.utc(data.Result.StateChangeTime);
                                 timeDiff = timeNow.diff(breakTime, 'seconds');
                                 startTime = timeNow.subtract(timeDiff, 'seconds');
-                            }
 
-                            switch (data.Result.Reason) {
-                                case 'OfficialBreak' :
-                                    $('#OfficialBreak').addClass('font-color-green bold');
-                                    $scope.currentBerekOption = "OfficialBreak";
-                                    //StateChangeTime
-                                    //StateChangeTime
-                                    if (timeDiff > 0) {
-                                        $scope.breakTimeStart = parseInt(startTime.format('x'));
-                                    }
-                                    document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
-                                    changeLockScreenView.show();
-                                    break;
-                                case 'MealBreak' :
-                                    $('#MealBreak').addClass('font-color-green bold');
-                                    $scope.currentBerekOption = "MealBreak";
-                                    if (timeDiff > 0) {
-                                        $scope.breakTimeStart = parseInt(startTime.format('x'));
-                                    }
-                                    document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
-                                    changeLockScreenView.show();
-                                    break;
+                                var cssValue = '#' + data.Result.Reason;
+                                $(cssValue).addClass('font-color-green bold');
+                                $scope.currentBerekOption = data.Result.Reason;
+                                //StateChangeTime
+                                //StateChangeTime
+                                if (timeDiff > 0) {
+                                    $scope.breakTimeStart = parseInt(startTime.format('x'));
+                                }else{
+                                    $scope.breakTimeStart = moment.utc();
+                                }
+                                document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
+                                changeLockScreenView.show();
                             }
                         }
 
