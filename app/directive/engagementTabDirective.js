@@ -1454,6 +1454,7 @@ console.log('Ticket other data saved successfully');
                         break;
 
                     default :
+                        category = scope.channel;
                         break;
 
                 }

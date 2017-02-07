@@ -26,7 +26,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             title: title,
             text: content,
             type: type,
-            styling: 'bootstrap3'
+            styling: 'bootstrap3',
         });
     };
 
@@ -53,8 +53,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isFreezeReq = false;
 
     //
-    $('#softPhoneDragElem').draggable();
-    $('.draggableContainer').droppable();
+    $('#softPhoneDragElem').draggable({
+        preventCollision: true,
+        containment: "window",
+        start: function (event, ui) {
+            $(this).hide();
+        },
+        stop: function (event, ui) {
+            $(this).show();
+        }
+    });
+
 
     $scope.status = {
         isopen: false
@@ -80,6 +89,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 profileDataParser.isInitiateLoad = false;
             }
             else {
+
                 $rootScope.$emit('reloadInbox', true);
             }
 
@@ -126,20 +136,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 98) {
+        if ($wrapper.height() === 0 || $wrapper.height() === 90 || $wrapper.height() === 88) {
             phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
                 if (res) {
                     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
+                    disablePin();
                 }
             });
 
         } else {
 
-            $wrapper.stop().animate({height: '98'}, animateTime);
+            $wrapper.stop().animate({height: '90'}, animateTime);
             $('#phoneDialpad').removeClass('display-block').addClass('display-none');
+            enablePin();
         }
     };
-    $scope.ShowHideDialpad();
+    // $scope.ShowHideDialpad();
 
     $scope.PhoneOffline = function () {
         //is loading done
@@ -2555,6 +2567,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
     /* update code damith
+     lock screen
      ARDS break option */
     var changeLockScreenView = function () {
         return {
@@ -2569,20 +2582,58 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             }
         }
-
     }();
 
     $scope.currentBerekOption = null;
-    var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
+    var breakList = ['#Available'];
+
+
+
+
+
+
+    //--------------------------Dynamic Break Type-------------------------------------------------
+
+    $scope.dynamicBreakTypes = [];
+    $scope.getDynamicBreakTypes = function () {
+
+        resourceService.GetActiveDynamicBreakTypes().then(function (data) {
+            if (data && data.IsSuccess) {
+                data.Result.forEach(function(bObj){
+                    breakList.push('#'+bObj.BreakType)
+                });
+                $scope.dynamicBreakTypes = data.Result;
+
+            }else{
+                $scope.showAlert("Dynamic Break Types", "error", "Fail To load dynamic break types");
+            }
+        }, function (error) {
+            authService.IsCheckResponse(error);
+            $scope.showAlert("Dynamic Break Types", "error", "Fail To load dynamic break types");
+        });
+    };
+    $scope.getDynamicBreakTypes();
+
+
+
+
+
+
+
+
+
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
-            console.log(requestOption);
             $('#loginScreeen').removeClass('display-none').addClass('display-block');
             $('body').addClass('overflow-hidden');
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
             });
+
+            $scope.breakTimeStart = moment.utc();
+            document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
+
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res) {
                     $('#userStatus').addClass('offline').removeClass('online');
@@ -2691,6 +2742,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };//end
 
     $scope.resourceTaskObj = [];
+    $scope.breakTimeStart = 0;
     var getCurrentState = (function () {
         return {
             breakState: function () {
@@ -2703,17 +2755,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             changeLockScreenView.hide();
                         } else {
                             $('#userStatus').addClass('offline').removeClass('online');
-                            switch (data.Result.Reason) {
-                                case 'OfficialBreak' :
-                                    $('#OfficialBreak').addClass('font-color-green bold');
-                                    $scope.currentBerekOption = "OfficialBreak";
-                                    changeLockScreenView.show();
-                                    break;
-                                case 'MealBreak' :
-                                    $('#MealBreak').addClass('font-color-green bold');
-                                    $scope.currentBerekOption = "MealBreak";
-                                    changeLockScreenView.show();
-                                    break;
+                            var timeDiff = 0,
+                                timeNow,
+                                breakTime,
+                                startTime;
+
+                            if(data.Result.Reason && data.Result.StateChangeTime && data.Result.Reason.toLowerCase().indexOf('break') > -1) {
+                                timeNow = moment.utc();
+                                breakTime = moment.utc(data.Result.StateChangeTime);
+                                timeDiff = timeNow.diff(breakTime, 'seconds');
+                                startTime = timeNow.subtract(timeDiff, 'seconds');
+
+                                var cssValue = '#' + data.Result.Reason;
+                                $(cssValue).addClass('font-color-green bold');
+                                $scope.currentBerekOption = data.Result.Reason;
+                                //StateChangeTime
+                                //StateChangeTime
+                                if (timeDiff > 0) {
+                                    $scope.breakTimeStart = parseInt(startTime.format('x'));
+                                }else{
+                                    $scope.breakTimeStart = moment.utc();
+                                }
+                                document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
+                                changeLockScreenView.show();
                             }
                         }
 

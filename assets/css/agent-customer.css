@@ -802,6 +802,10 @@ body {
     position: relative;
 }
 
+.ticket-tab-panle > .tab-content {
+    min-height: 15vh;
+}
+
 /*profile wrapper */
 .profile-left-wrapper {
 }
@@ -4003,9 +4007,9 @@ input.ps-form-controller[readonly] {
 .phone-dialpad-no[disabled], .phone-dialpad-no[readonly] {
     margin-bottom: 0;
     border-radius: 0;
-    width: 192px;
+    width: 140px;
     height: 20px;
-    text-align: center;
+    text-align: left;
     border: none;
     background: transparent;
     color: #8298ae !important;
@@ -4427,19 +4431,19 @@ div.btn-group.dropdown {
     background-color: rgb(255, 255, 255) !important;
     width: 230px;
     overflow: hidden;
-    height: 0;
+    height: 310px;
     /*box-shadow: -1px 3px 23px 0px rgba(0, 0, 0, 0.1);*/
     border: 1px solid #d9dee4;
     /*border-radius: 15px 15px 0px 0px;*/
 }
 
 .phone-screen {
-    width: 202px;
+    width: 229px;
     height: 66px;
     background: transparent;
     position: absolute;
-    top: 10px;
-    left: 13px;
+    /*top: 10px;*/
+    /*left: 13px;*/
     overflow: hidden;
     padding-top: 0px;
     text-transform: capitalize;
@@ -4449,15 +4453,17 @@ div.btn-group.dropdown {
 }
 
 .phone-screen > .no-action {
-    text-align: center;
-    font-size: 16px;
+    font-size: 18px;
     color: #000000;
+    padding-left: 13px;
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
 }
 
 .phone-screen > .dial-action {
-    text-align: center;
     font-size: 13px;
-    color: #4f9300;
+    color: #d9dee4;
+    display: inline-block;
+    padding-left: 16px;
 }
 
 .pin-screen-wrapper {
@@ -4465,8 +4471,7 @@ div.btn-group.dropdown {
     z-index: 1000;
     width: 20px;
     height: 20px;
-    background: rgb(255, 255, 255);
-    position: absolute;
+    background: rgb(247, 245, 245);
     overflow: hidden;
     top: 5px;
     border-radius: 100%;
@@ -4475,6 +4480,20 @@ div.btn-group.dropdown {
     right: 5px;
     color: #36ba45;
     font-size: 12px;
+}
+
+.phone-t-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    right: 11px;
+    z-index: 1;
+    top: 15px;
+}
+
+.phone-t-menu > li {
+    display: inline-block;
 }
 
 /*notification loading color */
@@ -4498,21 +4517,27 @@ div.btn-group.dropdown {
 }
 
 .call-duations {
-    color: #14c67d;
+    color: #d9dee4;
     text-align: center;
-    font-size: 10px;
+    font-size: 12px;
+    display: inline-block;
 }
 
 .soft-phone-drag-elem {
-    cursor: move;
-    height: 310px;
+    /*cursor: move;*/
+    height: auto;
     width: 230px;
     position: fixed;
-    right: 102px;
-    z-index: 1000;
-    bottom: 132px;
+    left: 55px;
+        bottom: 67px;
     background: transparent;
     /* important (all position that's not `static`) */
+}
+
+.droppable {
+    width: 230px;
+    height: 300px;
+    height: inherit;
 }
 
 .draggableContainer {
@@ -4860,7 +4885,7 @@ ul.renote-color-btn > li {
     list-style: none;
     padding: 0px 0px 0px 30px;
     position: absolute;
-    bottom: 0;
+    bottom: 12px;
 }
 
 .note-footer > li {
@@ -5372,7 +5397,7 @@ ul.renote-color-btn > li {
     top: 0;
     left: 0;
     background-color: rgba(23, 55, 60, 1);
-    z-index: 2000;
+    z-index: 3200;
     /*-webkit-filter: blur(5px);*/
     /*-moz-filter: blur(5px);*/
     /*-o-filter: blur(5px);*/
