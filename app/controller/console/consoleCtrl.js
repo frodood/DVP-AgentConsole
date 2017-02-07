@@ -89,6 +89,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 profileDataParser.isInitiateLoad = false;
             }
             else {
+
                 $rootScope.$emit('reloadInbox', true);
             }
 
@@ -135,20 +136,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var $wrapper = $('.dial-pad-wrapper'),
             animateTime = 500,
             height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 98|| $wrapper.height() === 96) {
+        if ($wrapper.height() === 0 || $wrapper.height() === 90 || $wrapper.height() === 88) {
             phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
                 if (res) {
                     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
+                    disablePin();
                 }
             });
 
         } else {
 
-            $wrapper.stop().animate({height: '98'}, animateTime);
+            $wrapper.stop().animate({height: '90'}, animateTime);
             $('#phoneDialpad').removeClass('display-block').addClass('display-none');
+            enablePin();
         }
     };
-   // $scope.ShowHideDialpad();
+    // $scope.ShowHideDialpad();
 
     $scope.PhoneOffline = function () {
         //is loading done
@@ -2564,6 +2567,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
     /* update code damith
+     lock screen
      ARDS break option */
     var changeLockScreenView = function () {
         return {
@@ -2578,20 +2582,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             }
         }
-
     }();
 
     $scope.currentBerekOption = null;
     var breakList = ['#Available', '#OfficialBreak', '#MealBreak'];
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
-            console.log(requestOption);
             $('#loginScreeen').removeClass('display-none').addClass('display-block');
             $('body').addClass('overflow-hidden');
             dataParser.userProfile = $scope.profile;
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
             });
+            $scope.$broadcast('timer-reset');
+            $scope.$broadcast('timer-start');
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res) {
                     $('#userStatus').addClass('offline').removeClass('online');
