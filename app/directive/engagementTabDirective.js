@@ -1031,12 +1031,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                 ticketService.SaveTicket(ticket).then(function (response) {
                     if (response.IsSuccess) {
-                        scope.ticketList.splice(0, 0, response.Result); //scope.ticketList.push(response.Result);
+                        ticket.reference = response.Result.reference;
+                        ticket.id = response.Result._id;
+                        ticket._id = response.Result._id;
+                        ticket.created_at = new Date();
+                        scope.ticketList.splice(0, 0, ticket); //scope.ticketList.push(response.Result);
                         scope.recentTicketList.pop();
-                        scope.recentTicketList.push(response.Result);
+                        scope.recentTicketList.push(ticket);
                         scope.ticket = {};
                         scope.newAddTags = [];
-                        addDynamicDataToTicket(response.Result);
+                        addDynamicDataToTicket(ticket);
                         scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
