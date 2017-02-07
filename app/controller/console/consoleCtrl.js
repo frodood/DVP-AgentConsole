@@ -2594,8 +2594,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             breakList.forEach(function (option) {
                 $(option).removeClass('font-color-green bold');
             });
-            $scope.$broadcast('timer-reset');
-            $scope.$broadcast('timer-start');
+
+            $scope.breakTimeStart = moment.utc();
+            document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
+
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res) {
                     $('#userStatus').addClass('offline').removeClass('online');
@@ -2703,7 +2705,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };//end
 
-    $scope.resourceTaskObj = [];
+    $scope.resourceTaskObj = []
+    $scope.breakTimeStart = 0;
     var getCurrentState = (function () {
         return {
             breakState: function () {
@@ -2716,15 +2719,36 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             changeLockScreenView.hide();
                         } else {
                             $('#userStatus').addClass('offline').removeClass('online');
+                            var timeDiff = 0,
+                                timeNow,
+                                breakTime,
+                                startTime;
+                            if (data.Result.Reason && data.Result.StateChangeTime) {
+                                timeNow = moment.utc();
+                                breakTime = moment.utc(data.Result.StateChangeTime);
+                                timeDiff = timeNow.diff(breakTime, 'seconds');
+                                startTime = timeNow.subtract(timeDiff, 'seconds');
+                            }
+
                             switch (data.Result.Reason) {
                                 case 'OfficialBreak' :
                                     $('#OfficialBreak').addClass('font-color-green bold');
                                     $scope.currentBerekOption = "OfficialBreak";
+                                    //StateChangeTime
+                                    //StateChangeTime
+                                    if (timeDiff > 0) {
+                                        $scope.breakTimeStart = parseInt(startTime.format('x'));
+                                    }
+                                    document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
                                     changeLockScreenView.show();
                                     break;
                                 case 'MealBreak' :
                                     $('#MealBreak').addClass('font-color-green bold');
                                     $scope.currentBerekOption = "MealBreak";
+                                    if (timeDiff > 0) {
+                                        $scope.breakTimeStart = parseInt(startTime.format('x'));
+                                    }
+                                    document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
                                     changeLockScreenView.show();
                                     break;
                             }
