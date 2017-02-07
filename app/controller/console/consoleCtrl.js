@@ -2996,18 +2996,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         };
         return {
             unlock: function (pwd) {
+
                 if (!pwd) {
                     $scope.showAlert('Error', 'error', 'Invalid authentication..');
                     $('#lockPwd').addClass('shake');
                     $('#lockPwd').addClass('shake');
                     return;
                 }
-
                 param.password = pwd;
                 $scope.isUnlock = true;
                 loginService.VerifyPwd(param, function (res) {
                     if (res) {
                         $scope.breakOption.endBreakOption('Available');
+                        $scope.lockPwd = "";
                         return;
                     } else {
                         $scope.showAlert('Error', 'error', 'Invalid authentication..');
@@ -3499,6 +3500,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 scope.$apply(function () {
                     scope.$eval(attrs.enterUnlockScreen);
                 });
+                event.target.value = "";
                 event.preventDefault();
             }
         });
