@@ -1497,7 +1497,7 @@ console.log('Ticket other data saved successfully');
 
                         }
 
-                        if (scope.channelFrom != "direct" && setContact) {
+                        if (scope.channelFrom != "direct" && scope.channel === "call" && setContact) {
 
                             scope.mapProfile.showNumberd = true;
                             // var r = confirm("Add to Contact");
