@@ -449,7 +449,19 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
                 else
                 {
-                    title=userObj.name;
+                    if(userObj.firstname)
+                    {
+                        title=userObj.firstname;
+                    }
+                    else if(userObj.lastname)
+                    {
+                        title=userObj.lastname;
+                    }
+                    else
+                    {
+                        title=userObj.name;
+                    }
+
                 }
 
                 return title;

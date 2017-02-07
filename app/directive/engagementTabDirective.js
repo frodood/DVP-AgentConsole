@@ -93,12 +93,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
                 else
                 {
-                    title=userObj.name;
+                    if(userObj.firstname)
+                    {
+                        title=userObj.firstname;
+                    }
+                    else if(userObj.lastname)
+                    {
+                        title=userObj.lastname;
+                    }
+                    else
+                    {
+                        title=userObj.name;
+                    }
+
                 }
 
                 return title;
             }
-
             scope.assigneeUsers = profileDataParser.assigneeUsers;
 
             angular.forEach(scope.assigneeUsers, function (assignee) {
