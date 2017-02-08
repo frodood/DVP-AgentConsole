@@ -8,7 +8,8 @@ angular.module('veeryAgentApp').factory('profileDataParser', function(){
         myProfile: undefined,
         userList:[],
         RecentEngagements:[],
-        isInitiateLoad:true
+        isInitiateLoad:true,
+        myTicketMetaData:undefined
     }
 });
 
