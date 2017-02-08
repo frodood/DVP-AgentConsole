@@ -1,5 +1,26 @@
 <div id="mySidenav" class="sidenav">
     <div class="online-user-wrapper">
+        <!-- notification send UI -->
+        <div id="uNotifiWrp" class="u-notification-wrp">
+           <div class="u-noti-h">
+               <div class="user-img">
+                   <img src="assets/img/avatar/profileAvatar.png"
+                        ng-src="{{agent.avatar}}">
+               </div>
+               <div class="agent-name">
+                   Jone Don
+                   <div class="chat-user-status">
+                       <div class="status" ng-class="agent.status"></div>
+                       <small ng-class="agent.status"
+                              class="status-name">{{agent.status}}
+                       </small>
+
+                   </div>
+
+               </div>
+           </div>
+        </div>
+
         <div id="notificationWrapper"
              slimscroll="{height: '{{windowHeight}}',
             railVisible: true,
@@ -8,7 +29,6 @@
             distance: '5px',
             railColor: '#fff',
             railBorderRadius: 10}">
-
             <!-- client chat -->
             <div class="conversation-wrapper ">
                 <div class="title">
@@ -71,44 +91,51 @@
                 <div class="title">
                     Agent Conversation
                 </div>
-                <div ng-mouseover="chatOption = true"
-                     ng-mouseleave="chatOption = false"
-                     class="notification-user " ng-repeat="agent in users | filterBy: ['username']: searchCriteria">
-                    <div class="user-img">
-                        <img src="assets/img/avatar/profileAvatar.png"
-                             ng-src="{{agent.avatar}}">
-                    </div>
-                    <div class="cht-notify" ng-if="agent.chatcount">
-                        {{agent.chatcount}}
-                    </div>
-                    <div class="agent-name">
-                        {{agent.firstname}} {{agent.lastname}}
-                        <div class="chat-user-status">
-                            <div class="status" ng-class="agent.status"></div>
-                            <small ng-class="agent.status"
-                                   class="status-name">{{agent.status}}
-                            </small>
+                <div ng-repeat="agent in users | filterBy: ['username']: searchCriteria">
+                    <div ng-mouseover="chatOption = true"
+                         ng-mouseleave="chatOption = false"
+                         class="notification-user">
+                        <div class="user-img">
+                            <img src="assets/img/avatar/profileAvatar.png"
+                                 ng-src="{{agent.avatar}}">
+                        </div>
+                        <div class="cht-notify" ng-if="agent.chatcount">
+                            {{agent.chatcount}}
+                        </div>
+                        <div class="agent-name">
+                            {{agent.firstname}} {{agent.lastname}}
+                            <div class="chat-user-status">
+                                <div class="status" ng-class="agent.status"></div>
+                                <small ng-class="agent.status"
+                                       class="status-name">{{agent.status}}
+                                </small>
+
+                            </div>
 
                         </div>
+                        <!-- ng-show="chatOption"  ng-click="showMessageBlock(agent)"-->
+                        <div class="notification-details" ng-show="chatOption">
+                            <div class="chat-icon animated slideInUp" ng-click="setExtention(agent)">
+                                <i class="main-icon-2-telephone-3"></i>
+                            </div>
+                            <!--<div class="chat-icon animated slideInUp">-->
+                            <!--<i class="main-icon-2-transfer-8"></i>-->
+                            <!--</div>-->
+                            <!--<div class="chat-icon animated slideInUp">-->
+                            <!--<i class="main-icon-2-speech-bubble"></i>-->
+                            <!--</div>-->
+                            <div class="chat-icon animated slideInUp"
+                                 ng-click="showTabChatPanel(agent)">
+                                <i class="fa fa-comment"></i>
+                            </div>
+                            <div class="chat-icon animated slideInUp"
+                                 ng-click="showMessageBlock(agent);">
+                                <i class="fa fa-bell-o"></i>
+                            </div>
 
+                        </div>
                     </div>
-                    <!-- ng-show="chatOption"  ng-click="showMessageBlock(agent)"-->
-                    <div class="notification-details" ng-show="chatOption">
-                        <div class="chat-icon animated slideInUp" ng-click="setExtention(agent)">
-                            <i class="main-icon-2-telephone-3"></i>
-                        </div>
-                        <div class="chat-icon animated slideInUp">
-                            <i class="main-icon-2-transfer-8"></i>
-                        </div>
-                        <!--<div class="chat-icon animated slideInUp">-->
-                        <!--<i class="main-icon-2-speech-bubble"></i>-->
-                        <!--</div>-->
-                        <div class="chat-icon animated slideInUp"
-                             ng-click="showTabChatPanel(agent)">
-                            <i class="fa fa-comment"></i>
-                        </div>
 
-                    </div>
                 </div>
             </div>
 
@@ -142,11 +169,14 @@
                         <div class="chat-icon" ng-click="setExtention(group)">
                             <i class="main-icon-2-telephone-3"></i>
                         </div>
-                        <div class="chat-icon">
-                            <i class="main-icon-2-transfer-8"></i>
-                        </div>
+                        <!--<div class="chat-icon">-->
+                        <!--<i class="main-icon-2-transfer-8"></i>-->
+                        <!--</div>-->
                         <div class="chat-icon" ng-click="showMessageBlock(group)">
                             <i class="fa fa-comment"></i>
+                        </div>
+                        <div class="chat-icon">
+                            <i class="veery-font-1-alarm"></i>
                         </div>
                     </div>
                 </div>

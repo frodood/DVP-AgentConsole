@@ -2282,8 +2282,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     var getAllRealTimeTimer = {};
 
     $scope.showMessageBlock = function (selectedUser) {
-        $scope.naviSelectedUser = selectedUser;
-        divModel.model('#sendMessage', 'display-block');
+        $('#uNotifiWrp').animate({top: '0'});
     };
     $scope.setExtention = function (selectedUser) {
 
@@ -2996,7 +2995,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         };
         return {
             unlock: function (pwd) {
-
                 if (!pwd) {
                     $scope.showAlert('Error', 'error', 'Invalid authentication..');
                     $('#lockPwd').addClass('shake');
@@ -3007,17 +3005,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.isUnlock = true;
                 loginService.VerifyPwd(param, function (res) {
                     if (res) {
+                        document.getElementById("lockPwd").value = "";
                         $scope.breakOption.endBreakOption('Available');
-                        $scope.lockPwd = "";
-                        return;
                     } else {
                         $scope.showAlert('Error', 'error', 'Invalid authentication..');
                         $('#lockPwd').addClass('shake');
                         $('#lockPwd').addClass('shake');
                         changeLockScreenView.show();
-                        $scope.isUnlock = false;
-                        return;
                     }
+                    $scope.isUnlock = false;
+                    return;
                 });
             }
         }
