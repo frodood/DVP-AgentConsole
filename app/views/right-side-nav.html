@@ -2,24 +2,50 @@
     <div class="online-user-wrapper">
         <!-- notification send UI -->
         <div id="uNotifiWrp" class="u-notification-wrp">
-            <div class="u-noti-h">
+            <div class="u-noti-h animated" id="uNotiH ">
                 <div class="user-img">
                     <img src="assets/img/avatar/profileAvatar.png"
-                         ng-src="{{agent.avatar}}">
+                         ng-src="{{naviSelectedUser.avatar}}">
                 </div>
-                <div class="agent-name">
-                    Jone Don
+                <div class="agent-name" ng-if="naviSelectedUser.listType=='Agent'">
+                    {{naviSelectedUser.firstname}} {{naviSelectedUser.lastname}}
                     <div class="chat-user-status">
                         <div class="status" class="offline"
-                             ng-class="agent.status"></div>
+                             ng-class="naviSelectedUser.status"></div>
                         <small
-                               ng-class="agent.status"
-                               class="status-name">online
+                                ng-class="naviSelectedUser.status"
+                                class="status-name">{{naviSelectedUser.status}}
                         </small>
-
                     </div>
-
                 </div>
+                <div class="agent-name" ng-if="naviSelectedUser.listType=='Group'">
+                    {{naviSelectedUser.name}}
+                    <div class="chat-user-status">
+                        <div class="status" class="online"></div>
+                        <small
+                                ng-class="naviSelectedUser.status"
+                                class="status-name">Group
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <!-- body -->
+            <div class="u-body">
+                <textarea ng-model="notificationMsg.Message" class="form-control" rows="6">
+                </textarea>
+            </div>
+            <!-- footer -->
+            <div class="u-noti-footer">
+                <button class="btn btn-sm btn-sm-noti btn-green-op"
+                        ng-disabled="!isSendingNotifi && !notificationMsg.Message"
+                        ng-click="sendNotification()">
+                    <i ng-if="isSendingNotifi" class="fa fa-spinner fa-spin "></i>
+                    Send Notification
+                </button>
+
+                <button class="btn btn-sm btn-sm-noti btn-red-0p"
+                        ng-click="closeNotificationView()">Close
+                </button>
             </div>
         </div>
 
@@ -131,7 +157,7 @@
                                 <i class="fa fa-comment"></i>
                             </div>
                             <div class="chat-icon animated slideInUp"
-                                 ng-click="showMessageBlock(agent);">
+                                 ng-click="showNotificationView(agent,'Agent');">
                                 <i class="fa fa-bell-o"></i>
                             </div>
 
@@ -140,7 +166,6 @@
 
                 </div>
             </div>
-
             <!-- user group -->
             <div class="conversation-wrapper ">
                 <div class="title">
@@ -174,11 +199,12 @@
                         <!--<div class="chat-icon">-->
                         <!--<i class="main-icon-2-transfer-8"></i>-->
                         <!--</div>-->
-                        <div class="chat-icon" ng-click="showMessageBlock(group)">
-                            <i class="fa fa-comment"></i>
-                        </div>
-                        <div class="chat-icon">
-                            <i class="veery-font-1-alarm"></i>
+                        <!--<div class="chat-icon" ng-click="showMessageBlock(group)">-->
+                        <!--<i class="fa fa-comment"></i>-->
+                        <!--</div>-->
+                        <div class="chat-icon animated slideInUp"
+                             ng-click="showNotificationView(group,'Group');">
+                            <i class="fa fa-bell-o"></i>
                         </div>
                     </div>
                 </div>
@@ -196,47 +222,6 @@
             </div>
         </div>
 
-        <div
-                id="sendMessage" class="message-wrapper display-none">
-            <div class="send-notification-wrapper">
-                <div class="wrap">
-                    <div class="people-view full-width">
-                        <!--<div class="user-img">
-                            <img src="assets/img/avatar/oykun.jpg"
-                                 ng-src="{{naviSelectedUser.avatar}}">
-                        </div>-->
-                        <div class="online-user-wrapper notification-user notify-img-large ">
 
-                            <img src="asset/img/avatar/defaultProfile.png"
-                                 ng-src="{{naviSelectedUser.avatar}}">
-
-                        </div>
-                        <div class="row people-view-details">
-                            <div class="notification-text inline-block">
-                                Message to {{naviSelectedUser.name}}
-                            </div>
-                            <div class="notification-text inline-block pull-right message-close"
-                                 ng-click="closeMessage();"
-                                 style="padding-right: 17px;">
-                                CLOSE
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="txtMessage"
-                                  class="form-control" rows="3" ng-model="notificationMsg.Message">
-                        </textarea>
-                    </div>
-                    <fieldset>
-                        <div class="btn-warp inline-btn pull-right">
-                        <span class="btn btn-default " ng-click="sendNotification()"
-                              ng-disabled="!notificationMsg.Message">send</span>
-                        </div>
-                    </fieldset>
-
-
-                </div>
-            </div>
-        </div>
     </div>
 </div>

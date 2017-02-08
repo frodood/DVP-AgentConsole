@@ -2290,11 +2290,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.naviSelectedUser = {};
     $scope.notificationMsg = {};
-    var getAllRealTimeTimer = {};
+    var getAllRealTimeTimer = {}
 
-    $scope.showMessageBlock = function (selectedUser) {
-        $('#uNotifiWrp').animate({top: '0'});
-    };
+
     $scope.setExtention = function (selectedUser) {
 
         try {
@@ -2368,15 +2366,32 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         //  document.getElementById("navBar").style.marginRight = "0";
     };
 
+    $scope.showNotificationView = function (currentUsr, userType) {
+        $scope.naviSelectedUser = {};
+        $scope.naviSelectedUser = currentUsr;
+        $scope.naviSelectedUser.listType = userType;
+        $('#uNotifiWrp').animate({bottom: '34'}, 400, function () {
+            //hedaer animation
+            $('#uNotiH').toggle("slide", {direction: "left"});
+        });
+        if (userType == "Group") {
+            $scope.naviSelectedUser.avatar = "assets/img/avatar/profileAvatar.png";
+        }
+    };
+    $scope.closeNotificationView = function () {
+        $('#uNotifiWrp').animate({bottom: '-245'}, 300);
+    };
+
+    $scope.isSendingNotifi = false;
     $scope.sendNotification = function () {
         if ($scope.naviSelectedUser) {
-
             $scope.notificationMsg.From = $scope.loginName;
             $scope.notificationMsg.Direction = "STATELESS";
+            $scope.isSendingNotifi = true;
             if ($scope.naviSelectedUser.listType === "Group") {
+
                 userService.getGroupMembers($scope.naviSelectedUser._id).then(function (response) {
                     if (response.IsSuccess) {
-
                         if (response.Result) {
                             var clients = [];
                             for (var i = 0; i < response.Result.length; i++) {
@@ -2405,39 +2420,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         console.log("Error in loading Group member list");
                         $scope.showAlert('Error', 'error', "Send Notification Failed");
                     }
+                    $scope.isSendingNotifi = false;
                 }, function (err) {
                     console.log("Error in loading Group member list ", err);
                     $scope.showAlert('Error', 'error', "Send Notification Failed");
                 });
-
-                /*if ($scope.naviSelectedUser.users) {
-                 var clients = [];
-                 for (var i = 0; i < $scope.naviSelectedUser.users.length; i++) {
-                 var gUser = $scope.naviSelectedUser.users[i];
-                 if (gUser && gUser.username && gUser.username != $scope.loginName) {
-                 clients.push(gUser.username);
-                 }
-                 }
-                 $scope.notificationMsg.clients = clients;
-
-                 notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
-                 $scope.notificationMsg = {};
-                 console.log("send notification success :: " + JSON.stringify(clients));
-                 }, function (err) {
-                 var errMsg = "Send Notification Failed";
-                 if (err.statusText) {
-                 errMsg = err.statusText;
-                 }
-                 $scope.showAlert('Error', 'error', errMsg);
-                 });
-                 } else {
-                 $scope.showAlert('Error', 'error', "Send Notification Failed");
-                 }*/
-
             } else {
-
                 $scope.notificationMsg.To = $scope.naviSelectedUser.username;
-
                 notificationService.sendNotification($scope.notificationMsg, "message", "").then(function (response) {
                     console.log("send notification success :: " + $scope.notificationMsg.To);
                     $scope.notificationMsg = {};
@@ -2450,6 +2439,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert('Error', 'error', errMsg);
                 });
             }
+            $scope.isSendingNotifi = false;
 
         } else {
             $scope.showAlert('Error', 'error', "Send Notification Failed");
@@ -2586,8 +2576,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $('body').addClass('overflow-hidden');
                 document.getElementById("lockPwd").value = "";
                 $scope.lockPwd = "";
-
-
             },
             hide: function () {
                 $('#loginScreeen').addClass('display-none').removeClass('display-block');
