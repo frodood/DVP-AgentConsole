@@ -2231,11 +2231,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.getMyProfile();
     $scope.getMyTicketMetaData = function () {
 
-        ticketService.GetMyTicketConfig(function (success,data) {
+        ticketService.GetMyTicketConfig(function (success, data) {
 
-            if(success)
-            {
-                profileDataParser.myTicketMetaData=data.Result;
+            if (success) {
+                profileDataParser.myTicketMetaData = data.Result;
             }
         });
 
@@ -2585,11 +2584,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             show: function () {
                 $('#loginScreeen').removeClass('display-none').addClass('display-block');
                 $('body').addClass('overflow-hidden');
+                document.getElementById("lockPwd").value = "";
+                $scope.lockPwd = "";
+
 
             },
             hide: function () {
                 $('#loginScreeen').addClass('display-none').removeClass('display-block');
                 $('body').removeClass('overflow-hidden');
+                $scope.lockPwd = '';
 
             }
         }
@@ -3006,7 +3009,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             password: ''
         };
         return {
-            unlock: function (pwd) {
+            unlock: function () {
+                var pwd = document.getElementById("lockPwd").value;
                 if (!pwd) {
                     $scope.showAlert('Error', 'error', 'Invalid authentication..');
                     $('#lockPwd').addClass('shake');
@@ -3017,9 +3021,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.isUnlock = true;
                 loginService.VerifyPwd(param, function (res) {
                     if (res) {
+                        $scope.lockPwd = "";
                         document.getElementById("lockPwd").value = "";
                         $scope.breakOption.endBreakOption('Available');
                     } else {
+                        $scope.lockPwd = "";
                         $scope.showAlert('Error', 'error', 'Invalid authentication..');
                         $('#lockPwd').addClass('shake');
                         $('#lockPwd').addClass('shake');

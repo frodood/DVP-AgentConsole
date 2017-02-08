@@ -2,23 +2,25 @@
     <div class="online-user-wrapper">
         <!-- notification send UI -->
         <div id="uNotifiWrp" class="u-notification-wrp">
-           <div class="u-noti-h">
-               <div class="user-img">
-                   <img src="assets/img/avatar/profileAvatar.png"
-                        ng-src="{{agent.avatar}}">
-               </div>
-               <div class="agent-name">
-                   Jone Don
-                   <div class="chat-user-status">
-                       <div class="status" ng-class="agent.status"></div>
-                       <small ng-class="agent.status"
-                              class="status-name">{{agent.status}}
-                       </small>
+            <div class="u-noti-h">
+                <div class="user-img">
+                    <img src="assets/img/avatar/profileAvatar.png"
+                         ng-src="{{agent.avatar}}">
+                </div>
+                <div class="agent-name">
+                    Jone Don
+                    <div class="chat-user-status">
+                        <div class="status" class="offline"
+                             ng-class="agent.status"></div>
+                        <small
+                               ng-class="agent.status"
+                               class="status-name">online
+                        </small>
 
-                   </div>
+                    </div>
 
-               </div>
-           </div>
+                </div>
+            </div>
         </div>
 
         <div id="notificationWrapper"

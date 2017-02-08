@@ -6389,11 +6389,28 @@ ul.renote-color-btn > li {
 }
 
 .u-noti-h {
-
+    width: 100%;
+    margin: 27px auto;
+    min-height: 45px;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    padding-left: 18px;
 }
 
 .u-noti-h > .user-img {
     width: 30px;
     height: 30px;
     overflow: hidden;
+    display: inline-block;
+    float: left;
+    margin-top: 8px;
+}
+
+.user-img > img{
+    width: 30px;
+    height: 30px;
+}
+.u-noti-h > .agent-name {
+    display: inline-block;
 }
