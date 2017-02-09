@@ -2218,6 +2218,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response.data.IsSuccess) {
                 profileDataParser.myProfile = response.data.Result;
                 $scope.loginAvatar = profileDataParser.myProfile.avatar;
+                $scope.firstName = profileDataParser.myProfile.firstname == null ? $scope.loginName : profileDataParser.myProfile.firstname;
                 getUnreadMailCounters(profileDataParser.myProfile._id);
             }
             else {
@@ -2923,7 +2924,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showNotificationMessage = function (notifyMessage) {
         $scope.showMesssageModal = true;
         $scope.showModal(notifyMessage);
-        // $scope.showAlert("Message","success",notifyMessage.Message);
     };
 
 
