@@ -1967,7 +1967,7 @@ div > div >
     bottom: 0;
     right: 0;
     background-color: #ffffff;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     transition: 0.5s;
     z-index: 100;
     /*-webkit-box-shadow: -4px 3px 40px -11px rgba(0, 0, 0, 0.75);*/
@@ -2102,8 +2102,8 @@ div > div >
 }
 
 .chat-icon > i {
-    font-size: 14px;
-    padding-left: 5px;
+    font-size: 16px;
+    padding-left: 6px;
 }
 
 .chat-icon > i:hover {
@@ -6373,3 +6373,76 @@ ul.renote-color-btn > li {
     color: #ebe5d5;
 }
 
+/*user notification message wrapper */
+.u-notification-wrp {
+    position: absolute;
+    width: 100%;
+    height: 250px;
+    bottom: -245px;
+    right: 0;
+    z-index: 100;
+    -webkit-box-shadow: -3px 1px 12px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: -3px 1px 12px -5px rgba(0,0,0,0.75);
+    box-shadow: -3px 1px 12px -5px rgba(0,0,0,0.75);
+    overflow: hidden;
+    /*background: #f7f7f7;*/
+    background: #fff;
+}
+
+.u-noti-h {
+    width: 100%;
+    margin-top: 9px;
+    min-height: 45px;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    padding-left: 13px;
+}
+
+.u-noti-h > .user-img {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+    margin-top: 8px;
+}
+
+.user-img > img {
+    width: 30px;
+    height: 30px;
+}
+
+.u-noti-h > .agent-name {
+    display: inline-block;
+}
+
+.u-noti-footer {
+    bottom: 0;
+    width: 100%;
+    display: block;
+    min-height: 40px;
+    overflow: hidden;
+    padding-left: 10px;
+    /*background: #f7f7f7;*/
+    background: #fff;
+    padding-top: 5px;
+}
+
+.u-body {
+    width: 100%;
+    min-height: 98px;
+    overflow: hidden;
+    padding: 10px 6px 7px 10px;
+
+}
+
+.btn-sm-noti {
+    padding: 3px 10px;
+    font-size: 11px
+}
+
+
+.btn-tran-bg {
+    background: transparent;
+}

@@ -99,6 +99,7 @@
 .color-orange {
     color: #ff8c00 !important;
 }
+
 .color-red {
     color: #ff0c06 !important;
 }
@@ -171,6 +172,18 @@
     color: #ffffff;
 }
 
+.btn-green-op {
+    background: rgba(54, 186, 69, 0.10);
+    color: #36ba45;
+    outline: hidden !important;
+}
+
+.btn-red-0p {
+    background: rgba(217, 0, 0, 0.10);
+    color: #d90000;
+    outline: hidden !important;
+}
+
 .btn-green500 {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     background: #168039;
@@ -220,8 +233,9 @@
 }
 
 .bg-color-Teal700 {
-     background: #2b4d52 !important;
- }
+    background: #2b4d52 !important;
+}
+
 .bg-color-UserTags {
     background: #45bf55 !important;
 }
