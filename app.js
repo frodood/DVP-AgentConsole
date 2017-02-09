@@ -10,7 +10,8 @@ var agentApp = angular.module('veeryAgentApp',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer', 'mdo-angular-cryptography'
-        ,'ui.bootstrap.accordion', 'jsonFormatter','bw.paging','pubnub.angular.service'
+        , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
+        'ngImgCrop','jkAngularRatingStars'
     ]);
 
 
@@ -33,22 +34,27 @@ var baseUrls = {
     'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify'
+    'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
+    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud/',
+    'qaModule':'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/'
+
 };
 
 agentApp.constant('baseUrls', baseUrls);
 
 agentApp.constant('dashboardRefreshTime', 60000);
-agentApp.constant('turnServers', [{url:"stun:stun.l.google.com:19302"},{url:"stun:stun.counterpath.net:3478"},{url:"stun:numb.viagenie.ca:3478"}]);
+agentApp.constant('turnServers', [{url: "stun:stun.l.google.com:19302"}, {url: "stun:stun.counterpath.net:3478"}, {url: "stun:numb.viagenie.ca:3478"}]);
 //{url:"stun:stun.l.google.com:19302"},{url:"stun:stun.counterpath.net:3478"},{url:"stun:numb.viagenie.ca:3478"}
 //{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}
 
 var phoneSetting = {
     'TransferPhnCode': '*6',
     'TransferExtCode': '*3',
+    'TransferIvrCode': '*9',
     'EtlCode': '#',
     'SwapCode': '1',
-    'ConferenceCode': '0'
+    'ConferenceCode': '0',
+    'ExtNumberLength':5
 };
 agentApp.constant('phoneSetting', phoneSetting);
 
@@ -86,7 +92,7 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$auth
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
 
-agentApp.config(['$cryptoProvider', function($cryptoProvider){
+agentApp.config(['$cryptoProvider', function ($cryptoProvider) {
     $cryptoProvider.setCryptographyKey('1111111111111111');
 }]);
 

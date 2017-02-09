@@ -880,6 +880,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.clickAddNewTicket = function () {
                 scope.showSubCreateTicket = !scope.showSubCreateTicket;
+                if(scope.showSubCreateTicket)
+                {
+                    scope.loadMyAppMetaData();
+                }
+
             };
 
             scope.editTicketMode = function () {
@@ -1044,16 +1049,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         reply_chnl_to = scope.ticket.engagement_session.channel_from;
                     }
 
-
-                    if (scope.messageMode == "public") {
-
-                    }
-                    else if (scope.messageMode == "public") {
-
-                    }
-                    else {
-
-                    }
 
                     var commentObj =
                     {
@@ -1298,6 +1293,21 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
             };
 
+
+
+            scope.loadMyAppMetaData = function () {
+                ticketService.GetMyTicketConfig(function (success,data) {
+
+                    if(success)
+                    {
+                        scope.newSubTicket.subject=data.Result.subject;
+                        scope.setPriority(data.Result.priority);
+                        scope.newSubTicket.description=data.Result.description;
+
+                    }
+                });
+
+            }
 
             // tag selection
 

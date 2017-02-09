@@ -223,9 +223,11 @@
                                                         ,{{profileDetail.address.street}},
                                                         {{profileDetail.address.city}}</h5>
                                                 </li>
+
                                                 <li>
+                                                    <small>Special Tags</small>
                                                     <div class="details-wrap">
-                                                        <div class="bg-checkbox bg-color-Teal700 font-white  inline-btn"
+                                                        <div class="bg-checkbox bg-color-UserTags font-white  inline-btn"
                                                              ng-repeat="tag in profileDetail.tags">
                                                             {{tag}}
                                                         </div>
@@ -926,12 +928,19 @@
                                         </div>
                                     </form>
 
+                                    <div>
+                                        <div >
+                                            <div>{{oldFormModel}}</div>
+                                        </div>
+
+                                        <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw" ng-submit="onSubmit(customForm)"></form>
+                                    </div>
                                 </div>
                                 <div class="model-footer-wrapper">
                                     <div class="model-btn-wrapper">
                                         <div class="btn-warp ">
                                 <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default"
-                                      ng-click="saveTicket(ticket);">Save</span>
+                                      ng-click="saveTicket(ticket,customForm);">Save</span>
                                         </div>
                                     </div>
 

@@ -144,6 +144,14 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
             return response.data;
         });
     };
+    var getExternalUserProfileByID = function (ID) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl+"ExternalUser/"+ID
+        }).then(function (response) {
+            return response.data;
+        });
+    };
 
     var getPhoneConfig = function () {
         return $http({
@@ -196,6 +204,16 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
         });
     };
 
+    var loadCutomerTags = function () {
+
+        return $http({
+            method: 'get',
+            url: baseUrls.userServiceBaseUrl + "CustomerTags"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
 
     return {
         GetExternalUserProfileByContact: getExternalUserProfileByContact,
@@ -210,11 +228,14 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
         UpdateExternalUserProfileContact: UpdateExternalUserProfileContact,
         getExternalUserProfileByField: getExternalUserProfileByField,
         getExternalUserProfileBySsn: getExternalUserProfileBySsn,
+ getExternalUserProfileByID:getExternalUserProfileByID,
         getPhoneConfig: getPhoneConfig,
         AddPhoneConfig: addPhoneConfig,
         getGroupMembers: getGroupMembers,
         DeleteContact: deleteContact,
-        DeleteSocialContact: deleteSocialContact
+        DeleteSocialContact: deleteSocialContact,
+        loadCutomerTags: loadCutomerTags
+
     }
 });
 

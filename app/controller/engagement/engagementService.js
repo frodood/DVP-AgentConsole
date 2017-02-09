@@ -95,6 +95,21 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         });
     };
 
+    var addEngagementSessionForProfile = function (engagement) {
+
+        return $http({
+            method: 'post',
+            data: engagement,
+            url: baseUrls.engagementUrl+"EngagementSessionForProfile"
+        }).then(function (response) {
+            if (response.data) {
+                return response.data;
+            } else {
+                return undefined;
+            }
+        });
+    };
+
     var engagementCount = function (userId) {
 
         return $http({
@@ -147,7 +162,8 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         createEngagementSession: createEngagementSession,
         EngagementCount:engagementCount,
         MoveEngagementBetweenProfiles: moveEngagementBetweenProfiles,
-        AddIsolatedEngagementSession: addIsolatedEngagementSession
+        AddIsolatedEngagementSession: addIsolatedEngagementSession,
+        AddEngagementSessionForProfile: addEngagementSessionForProfile
     }
 });
 

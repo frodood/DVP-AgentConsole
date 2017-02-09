@@ -158,6 +158,15 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
+    var ivrList = function () {
+        return $http({
+            method: 'get',
+            url: baseUrls.sipuserUrl + "SipUser/ExtensionsByCategory/IVR"
+        }).then(function (response) {
+            return response.data.Result;
+        });
+    };
+
     var getResourceTasks = function (resourceId) {
         return $http({
             method: 'get',
@@ -202,7 +211,8 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         SipUserPassword: sipUserPassword,
         GetResourceTasks: getResourceTasks,
         GetCurrentRegisterTask: getCurrentRegisterTask,
-        RemoveSharing: removeSharing
+        RemoveSharing: removeSharing,
+        IvrList:ivrList
     }
 
 });

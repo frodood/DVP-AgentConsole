@@ -282,12 +282,12 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 $scope.productivity.MissCallCount = response.MissCallCount;
                 $scope.productivity.TransferCallCount = response.TransferCallCount;
             } else {
-                 $scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
+                 //$scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
             }
 
         }, function (err) {
             authService.IsCheckResponse(err);
-             $scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
+            // $scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
         });
     };
     loadProductivity(authService.GetResourceId());
@@ -299,7 +299,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.newTicketCount = 0;
-             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
     GetOpenTicketCount();
@@ -311,7 +311,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.closeTicketCount = 0;
-             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
     GetResolveTicketCount();
@@ -338,7 +338,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }, function (err) {
             authService.IsCheckResponse(err);
-             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
+             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
     GetCreatedicketSeries();
@@ -353,7 +353,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }, function (err) {
             authService.IsCheckResponse(err);
-             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
+            // $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
     GetResolvedTicketSeries();
@@ -368,7 +368,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }, function (err) {
             authService.IsCheckResponse(err);
-             $scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
+             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
     GetDeferenceResolvedTicketSeries();
@@ -380,7 +380,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.queueDetails = [];
-             $scope.showAlert("Queue Details", "error", "Fail To Load Queue Details.");
+            // $scope.showAlert("Queue Details", "error", "Fail To Load Queue Details.");
         });
     };
     GetQueueDetails();
@@ -391,7 +391,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $scope.recentTickets = response;
         }, function (err) {
             authService.IsCheckResponse(err);
-             $scope.showAlert("Ticket Details", "error", "Fail To Load Ticket Details.");
+            // $scope.showAlert("Ticket Details", "error", "Fail To Load Ticket Details.");
         });
     };
     GetMyRecentTickets();
@@ -402,7 +402,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $scope.recentEngagements = response;
         }, function (err) {
             authService.IsCheckResponse(err);
-             $scope.showAlert("Engagement Details", "error", "Fail To Load Recent Engagements.");
+            // $scope.showAlert("Engagement Details", "error", "Fail To Load Recent Engagements.");
         });
     };
     GetMyRecentEngagements();
@@ -413,13 +413,15 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         $rootScope.$emit('openNewTab', data);
     };
 
+
+
+    $scope.refreshTime = parseInt(dashboardRefreshTime);
     var loadGrapData = function () {
         GetDeferenceResolvedTicketSeries();
         GetResolvedTicketSeries();
         GetCreatedicketSeries();
         loadProductivity(authService.GetResourceId());
     };
-    var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
 
     var loadRecentData = function () {
         GetMyRecentEngagements();
@@ -428,13 +430,16 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         GetResolveTicketCount();
         loadProductivity(authService.GetResourceId());
     };
-    var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        getAllRealTimeTimer = $timeout(getAllRealTime, $scope.refreshTime);
+        //getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
     };
-    var getAllRealTimeTimer = $timeout(getAllRealTime, $scope.refreshTime);
+
+
+    var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
+    var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
+    var getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
@@ -447,7 +452,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $timeout.cancel(loadGrapDataTimer);
         }
     });
-    $scope.refreshTime = parseInt(dashboardRefreshTime);
     $scope.dashboardReload = function () {
         getAllRealTime();
         loadRecentData();
