@@ -36,7 +36,8 @@ var baseUrls = {
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',
+    'ipMessageURL': "http://127.0.0.1:3333",
+        //'http://ipmessagingservice.app.veery.cloud',
     'qaModule':'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/'
 
 };
