@@ -93,12 +93,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
                 else
                 {
-                    title=userObj.name;
+                    if(userObj.firstname)
+                    {
+                        title=userObj.firstname;
+                    }
+                    else if(userObj.lastname)
+                    {
+                        title=userObj.lastname;
+                    }
+                    else
+                    {
+                        title=userObj.name;
+                    }
+
                 }
 
                 return title;
             }
-
             scope.assigneeUsers = profileDataParser.assigneeUsers;
 
             angular.forEach(scope.assigneeUsers, function (assignee) {
@@ -987,16 +998,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
 
             scope.loadMyAppMetaData = function () {
-                ticketService.GetMyTicketConfig(function (success,data) {
 
-                    if(success)
-                    {
-                        scope.ticket.subject=data.Result.subject;
-                        scope.setPriority(data.Result.priority);
-                        scope.ticket.description=data.Result.description;
 
-                    }
-                });
+                if(profileDataParser.myTicketMetaData)
+                {
+                    scope.ticket.subject=profileDataParser.myTicketMetaData.subject;
+                    scope.setPriority(profileDataParser.myTicketMetaData.priority);
+                    scope.ticket.description=profileDataParser.myTicketMetaData.description;
+                }
+
 
             }
 
@@ -1020,12 +1030,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                 ticketService.SaveTicket(ticket).then(function (response) {
                     if (response.IsSuccess) {
-                        scope.ticketList.splice(0, 0, response.Result); //scope.ticketList.push(response.Result);
+                        ticket.reference = response.Result.reference;
+                        ticket.id = response.Result._id;
+                        ticket._id = response.Result._id;
+                        ticket.created_at = new Date();
+                        scope.ticketList.splice(0, 0, ticket); //scope.ticketList.push(response.Result);
                         scope.recentTicketList.pop();
-                        scope.recentTicketList.push(response.Result);
+                        scope.recentTicketList.push(ticket);
                         scope.ticket = {};
                         scope.newAddTags = [];
-                        addDynamicDataToTicket(response.Result);
+                        addDynamicDataToTicket(ticket);
                         scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
@@ -1486,7 +1500,7 @@ console.log('Ticket other data saved successfully');
 
                         }
 
-                        if (scope.channelFrom != "direct" && setContact) {
+                        if (scope.channelFrom != "direct" && scope.channel === "call" && setContact) {
 
                             scope.mapProfile.showNumberd = true;
                             // var r = confirm("Add to Contact");

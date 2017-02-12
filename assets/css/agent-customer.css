@@ -123,8 +123,9 @@ body {
 .console-drop-menu > li > a.drop-header {
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
     font-size: 15px;
-    padding-top: 12px;
+    padding-top: 5px;
     display: inline-block;
+    text-transform: capitalize;
 }
 
 .console-drop-menu > li > a {
@@ -209,7 +210,7 @@ body {
 .console-drop-menu > li.notification-header > span.drop-sub-header {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 13px;
-    padding-top: 12px;
+    padding-top: 6px;
     display: inline-block;
     text-align: right;
     float: right;
@@ -245,9 +246,10 @@ body {
 
 .console-notofication-wrapper {
     width: 100%;
-    height: 350px;
+    height: 300px;
     overflow: hidden;
-    padding: 0px 5px 5px 0px;
+    margin-top: -14px;
+    /*padding: 0px 5px 5px 0px;*/
 
 }
 
@@ -265,11 +267,12 @@ body {
 
 .notification-list {
     display: block;
-    margin-top: 10px;
+    width: 100%;
+    min-height: 47px;
+    background: #fff;
+    margin-top: 5px;
     cursor: pointer;
-    padding: 5px 0px 3px 0px;
-    margin-left: 2px;
-    margin-right: 12px;
+    padding: 5px 5px 5px 13px;
 }
 
 .notification-icon,
@@ -1967,7 +1970,7 @@ div > div >
     bottom: 0;
     right: 0;
     background-color: #ffffff;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     transition: 0.5s;
     z-index: 100;
     /*-webkit-box-shadow: -4px 3px 40px -11px rgba(0, 0, 0, 0.75);*/
@@ -2102,8 +2105,8 @@ div > div >
 }
 
 .chat-icon > i {
-    font-size: 14px;
-    padding-left: 5px;
+    font-size: 16px;
+    padding-left: 6px;
 }
 
 .chat-icon > i:hover {
@@ -4502,18 +4505,46 @@ div.btn-group.dropdown {
 }
 
 .notify-img-small {
-    margin: 0 auto;
-    text-align: left;
-    position: absolute;
+    width: 45px;
+    height: 38px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+}
 
+.noti-detail {
+    display: inline-block;
+    width: 215px;
+}
+
+.noti-detail > h5 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    color: #8298ae;
+}
+
+.noti-detail > h4 {
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+    margin-top: 3px;
+    color: #7a7f7d;
+}
+
+.noti-detail > div {
+    font-size: 10px;
+    color: #cbd0ce;
 }
 
 .notify-img-small > img {
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    overflow: visible;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
     position: relative;
+    border: 2px solid #fff;
 }
 
 .call-duations {
@@ -4525,14 +4556,18 @@ div.btn-group.dropdown {
 
 .soft-phone-drag-elem {
     /*cursor: move;*/
-    height: 310px;
+    height: auto;
     width: 230px;
     position: fixed;
     left: 55px;
     z-index: 3000;
-    bottom: 67px;
+
     background: transparent;
     /* important (all position that's not `static`) */
+}
+
+.soft-b-67 {
+    bottom: 67px;
 }
 
 .droppable {
@@ -4587,21 +4622,6 @@ div.btn-group.dropdown {
 
 .modal-message-wrapper {
     width: 70%;
-}
-
-.notify-img-small {
-    margin: 0 auto;
-    text-align: left;
-    position: absolute;
-
-}
-
-.notify-img-small > img {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    overflow: hidden;
-    position: relative;
 }
 
 .x_panel_modal {
@@ -6369,3 +6389,88 @@ ul.renote-color-btn > li {
     color: #ebe5d5;
 }
 
+/*user notification message wrapper */
+.u-notification-wrp {
+    position: absolute;
+    width: 100%;
+    height: 250px;
+    bottom: -245px;
+    right: 0;
+    z-index: 100;
+    -webkit-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    /*background: #f7f7f7;*/
+    background: #fff;
+}
+
+.u-noti-h {
+    width: 100%;
+    margin-top: 9px;
+    min-height: 45px;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    padding-left: 13px;
+}
+
+.u-noti-h > .user-img {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+    margin-top: 8px;
+}
+
+.user-img > img {
+    width: 30px;
+    height: 30px;
+}
+
+.u-noti-h > .agent-name {
+    display: inline-block;
+}
+
+.u-noti-footer {
+    bottom: 0;
+    width: 100%;
+    display: block;
+    min-height: 40px;
+    overflow: hidden;
+    padding-left: 10px;
+    /*background: #f7f7f7;*/
+    background: #fff;
+    padding-top: 5px;
+}
+
+.u-body {
+    width: 100%;
+    min-height: 98px;
+    overflow: hidden;
+    padding: 10px 6px 7px 10px;
+
+}
+
+.u-body.notification-v {
+    min-height: 155px;
+    overflow: hidden;
+    overflow-x: auto;
+}
+.u-noti-h.b-bottom{
+    border-bottom: 1px solid #a1d700;
+}
+
+.btn-min-w{
+    min-width: 117px;
+}
+
+.btn-sm-noti {
+    padding: 3px 10px;
+    font-size: 11px
+}
+
+.btn-tran-bg {
+    background: transparent;
+}

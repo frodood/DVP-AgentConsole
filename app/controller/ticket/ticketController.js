@@ -64,7 +64,18 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
             }
             else
             {
-                title=ticket.assignee.name;
+                if(ticket.assignee.firstname)
+                {
+                    title=ticket.assignee.firstname;
+                }
+                else if(ticket.assignee.lastname)
+                {
+                    title=ticket.assignee.lastname;
+                }
+                else
+                {
+                    title=ticket.assignee.name;
+                }
             }
 
 

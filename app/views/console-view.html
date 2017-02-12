@@ -25,7 +25,6 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav m-left-25" uib-dropdown>
-
                     <!-- notification -->
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6" id="notificationAlarm"
                         ng-click="checkAndRegister()" uib-dropdown
@@ -37,74 +36,46 @@
                            style="margin-top: 3px;"></i>
 
                         <div class="console-notification-header"
-                             ng-class="{'bg-orange ':unredNotifications!=0}"
-                             ng-show="isSocketRegistered">
+                             ng-if="unredNotifications!=0"
+                             ng-class="{'bg-orange ':unredNotifications!=0}">
                             {{unredNotifications}}
-                            <div class="sonar-wave"
-                                 ng-show="unredNotifications!=0"></div>
+                            <!--<div class="sonar-wave"-->
+                            <!--ng-if="unredNotifications!=0"></div>-->
                         </div>
+                        <div class="clearfix"></div>
+
 
                         <ul class="dropdown-menu console-drop-menu notification-menu-left "
-                            ng-show="isSocketRegistered" uib-dropdown-menu
-                            role="menu"
-                            aria-labelledby="btn-append-to-single-button">
+                            uib-dropdown-menu
+                            role="menu">
                             <li class="notification-header">
                                 <a class="drop-header">Notification
                                     center</a>
                                 <span class="drop-sub-header">new ({{unredNotifications}})</span>
                             </li>
                             <li class="divider"></li>
-                            <div class="console-notofication-wrapper"
-                                 ng-slimscroll
-                                 opacity="0.1"
-                                 distance="10px"
-                                 height="355px"
-                                 width="100%"
-                                 ng-mouseover="chatWidgetscrollEnabled = true"
-                                 ng-mouseleave="chatWidgetscrollEnabled = false"
-                                 enabled="{{ chatWidgetscrollEnabled }}">
+                            <div class="console-notofication-wrapper">
                                 <div class="notification-status" ng-show="unredNotifications==0">
                                     <i class="animated   veery-font-1-alarm"> </i>
                                     </br>
                                     no new notification
                                 </div>
-                                <div class="row notification-list" ng-repeat="notifi in notifications"
-                                     ng-click="showNotificationMessage(notifi)">
-                                    <div class="col-lg-3">
-                                        <!--<div class="notification-icon  ">
-                                            <i class=" {{notifi.icon}}"></i>
-                                            <i class=" {{notifi.icon}}"></i>
-                                        </div>-->
 
-                                        <div class="notify-img-small">
-                                            <img src="assets/img/avatar/default-user.png"
-                                                 ng-src="{{notifi.avatar}}">
-
-                                        </div>
+                                <div class="notification-list" ng-click="showNotificationMessage(notifi)"
+                                     ng-repeat="notifi in notifications">
+                                    <div class="notify-img-small">
+                                        <img src="assets/img/avatar/profileAvatar.png"
+                                             ng-src="{{notifi.avatar}}">
                                     </div>
-                                    <div class="col-lg-9">
-                                        <div class="row">
-                                            <div class="notification-sender">
-                                                {{notifi.from}}
-                                            </div>
+                                    <div class="noti-detail">
+                                        <h5>{{notifi.from}}</h5>
+                                        <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20 ?'....':''}}</h4>
+                                        <div>
+                                            <time-ago from-time='{{notifi.time}}'
+                                                      format='MM/dd/yyyy'></time-ago>
+                                        </div>
 
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-10">
-                                                <div class="notification-text">
-                                                    {{notifi.header | limitTo: 20}}{{notifi.header.length>20
-                                                    ?'....':''}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="notification-time pull-right ">
-                                                <time-ago from-time='{{notifi.time}}'
-                                                          format='MM/dd/yyyy'></time-ago>
-                                            </div>
-                                        </div>
                                     </div>
-
                                 </div>
 
                             </div>
@@ -205,9 +176,9 @@
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6" uib-dropdown uib-dropdown-toggle>
                         <i class="veery-font-3-mail-5" ng-click="addMailInbox();"></i>
 
-                        <div class="console-notification-header">
-                            {{unreadMailCount}}
-                        </div>
+                        <!--<div class="console-notification-header">-->
+                        <!--{{unreadMailCount}}-->
+                        <!--</div>-->
                         <!--<ul class="dropdown-menu console-drop-menu notification-menu" uib-dropdown-menu role="menu"
                             aria-labelledby="btn-append-to-single-button">
                             <li class="notification-header">
@@ -270,8 +241,8 @@
                     </div>
 
                     <li class="dropdown console-profile-header ">
-                        <a href="#" class="dropdown-toggle login-name none-h" uib-dropdown-toggle
-                        >Hi,{{loginName}}</a>
+                        <a href="#"
+                           class="dropdown-toggle login-name none-h" uib-dropdown-toggle>Hi,{{firstName}}</a>
                         <a class="time none-h">{{timeBaseMsg}}</a>
 
                     </li>
@@ -298,8 +269,18 @@
                                                                 class=""
                                                                 ng-click="breakOption.endBreakOption('Available');"
                                                                 href="javascript:void(0);">
-                            <i ng-show="currentBerekOption=='Available'" class="ti-check"></i> available</a></li>
-                        <li class="menuitem" role="menuitem"><a id="OfficialBreak"
+                            <i ng-show="currentBerekOption=='Available'" class="ti-check"></i> available</a>
+                        </li>
+
+                        <li class="menuitem" role="menuitem" ng-repeat="breakType in dynamicBreakTypes"><a
+                                id="breakType.BreakType"
+                                class=""
+                                ng-click="breakOption.changeBreakOption(breakType.BreakType);"
+                                href="javascript:void(0);">
+                            <i ng-show="currentBerekOption==breakType.BreakType" class="ti-check"></i>{{breakType.BreakType}}</a>
+                        </li>
+
+                        <!--<li class="menuitem" role="menuitem"><a id="OfficialBreak"
                                                                 class=""
                                                                 ng-click="breakOption.changeBreakOption('OfficialBreak');"
                                                                 href="javascript:void(0);">
@@ -310,7 +291,7 @@
                                                                 ng-click="breakOption.changeBreakOption('MealBreak');"
                                                                 href="javascript:void(0);">
                             <i ng-show="currentBerekOption=='MealBreak'" class="ti-check"></i>meal</a>
-                        </li>
+                        </li>-->
                         <li><a class="drop-header">Mode</a></li>
                         <li class="divider"></li>
                         <li class="menuitem" role="menuitem"><a id="Inbound"
@@ -458,13 +439,11 @@
     </div>
 
 
-
-
     <!-- soft phone -->
     <div class="draggableContainer">
         <div id="softPhone">
             <div id="softPhoneDragElem"
-                 class="soft-phone-drag-elem ">
+                 class="soft-phone-drag-elem" ng-class="!isEnableSoftPhoneDrag?'soft-b-67':''">
                 <div class="isOperationPhone dial-pad-wrapper draggable ">
                     <ul class="phone-t-menu">
                         <li>
