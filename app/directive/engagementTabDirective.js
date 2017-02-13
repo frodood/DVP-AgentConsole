@@ -1371,6 +1371,9 @@ console.log('Ticket other data saved successfully');
             };
 
             scope.createNProfile = function () {
+                if (scope.profileDetail) {
+                    scope.exProfileId = angular.copy(scope.profileDetail._id);
+                }
                 scope.showMultiProfile = false;
                 scope.profileLoadin = false;
                 scope.showNewProfile = true;
@@ -1768,7 +1771,11 @@ console.log('Ticket other data saved successfully');
                         scope.showNewProfile = false;
 
                         scope.GetProfileHistory(response._id);
-                        scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+                        if(scope.exProfileId) {
+                            scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                        }else {
+                            scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+                        }
                     }
                     else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
@@ -1966,6 +1973,9 @@ console.log('Ticket other data saved successfully');
             //update new function
             // create new profile
             scope.createNProfile = function () {
+                if (scope.profileDetail) {
+                    scope.exProfileId = angular.copy(scope.profileDetail._id);
+                }
                 scope.showMultiProfile = false;
                 scope.profileLoadin = false;
                 scope.showNewProfile = true;
