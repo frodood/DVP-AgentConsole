@@ -1622,7 +1622,7 @@ console.log('Ticket other data saved successfully');
                 "avatar": "",
                 "birthday": "",
                 "gender": "",
-                "firstname": "",
+                "firstname": (scope.channel === "chat")?scope.channelFrom:"",
                 "lastname": "",
                 "locale": 0,
                 "ssn": "",
@@ -1634,7 +1634,7 @@ console.log('Ticket other data saved successfully');
                     "province": "",
                     "country": ""
                 },
-                "phone": scope.channelFrom,
+                "phone": (scope.channel === "call")?scope.channelFrom:"",
                 "email": "",
                 "dob": {
                     "day": 0,
