@@ -861,9 +861,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 {
                                     subticket.assignee_displayname= scope.setUserTitles(subticket.assignee);
                                 }
-                                else if(scope.ticket.assignee_gorup)
+                                else if(subticket.assignee_group)
                                 {
-                                    subticket.assignee_displayname= subticket.assignee_gorup.name;
+                                    subticket.assignee_displayname= subticket.assignee_group.name;
                                 }
                                 else
                                 {
@@ -875,15 +875,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         if(scope.ticket.related_tickets)
                         {
                             //scope.ticket.submitter_displayname= scope.setUserTitles(scope.ticket.submitter);
-                            angular.forEach(scope.ticket.sub_ticketsscope.ticket.related_tickets, function (reltiket) {
+                            angular.forEach(scope.ticket.related_tickets, function (reltiket) {
 
                                 if(reltiket.assignee)
                                 {
                                     reltiket.assignee_displayname= scope.setUserTitles(reltiket.assignee);
                                 }
-                                else if(scope.ticket.assignee_gorup)
+                                else if(reltiket.assignee_group)
                                 {
-                                    reltiket.assignee_displayname= reltiket.assignee_gorup.name;
+                                    reltiket.assignee_displayname= reltiket.assignee_group.name;
                                 }
                                 else
                                 {
@@ -1422,16 +1422,14 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
             scope.loadMyAppMetaData = function () {
-                ticketService.GetMyTicketConfig(function (success,data) {
 
-                    if(success)
+                    if(profileDataParser.myTicketMetaData)
                     {
-                        scope.newSubTicket.subject=data.Result.subject;
-                        scope.setPriority(data.Result.priority);
-                        scope.newSubTicket.description=data.Result.description;
+                        scope.newSubTicket.subject=profileDataParser.myTicketMetaData.subject;
+                        scope.setPriority(profileDataParser.myTicketMetaData.priority);
+                        scope.newSubTicket.description=profileDataParser.myTicketMetaData.description;
 
                     }
-                });
 
             }
 
