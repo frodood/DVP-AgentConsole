@@ -1371,6 +1371,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
             };
 
             scope.createNProfile = function () {
+                if (scope.profileDetail) {
+                    scope.exProfileId = angular.copy(scope.profileDetail._id);
+                }
                 scope.showMultiProfile = false;
                 scope.profileLoadin = false;
                 scope.showNewProfile = true;
@@ -1648,7 +1651,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
                 "avatar": "assets/img/avatar/profileAvatar.png",
                 "birthday": "",
                 "gender": "",
-                "firstname": "",
+                "firstname": (scope.channel === "chat")?scope.channelFrom:"",
                 "lastname": "",
                 "locale": 0,
                 "ssn": "",
@@ -1660,7 +1663,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
                     "province": "",
                     "country": ""
                 },
-                "phone": scope.channelFrom,
+                "phone": (scope.channel === "call")?scope.channelFrom:"",
                 "email": "",
                 "dob": {
                     "day": 0,
@@ -1794,7 +1797,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
                         scope.showNewProfile = false;
 
                         scope.GetProfileHistory(response._id);
-                        scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+                        if(scope.exProfileId) {
+                            scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                        }else {
+                            scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+                        }
                     }
                     else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
@@ -2030,6 +2037,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
             //update new function
             // create new profile
            /* scope.createNProfile = function () {
+                if (scope.profileDetail) {
+                    scope.exProfileId = angular.copy(scope.profileDetail._id);
+                }
                 scope.showMultiProfile = false;
                 scope.profileLoadin = false;
                 scope.showNewProfile = true;
