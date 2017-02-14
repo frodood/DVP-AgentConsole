@@ -17,7 +17,7 @@ agentApp.directive('scrolly', function () {
     };
 });
 
-agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, engagementService, ivrService,
+agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, engagementService, ivrService,
                                               userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser,jwtHelper) {
     return {
         restrict: "EA",
@@ -1784,6 +1784,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
                 }
             };
             getYears();
+
+
             scope.saveNewProfile = function (profile) {
                 profile.tags=[];
                 scope.cutomerTypes.forEach(function (tag) {
@@ -1791,25 +1793,151 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
                 })
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
-                userService.CreateExternalUser(profile).then(function (response) {
-                    if (response) {
-                        scope.profileDetail = response;
-                        scope.showNewProfile = false;
 
-                        scope.GetProfileHistory(response._id);
-                        if(scope.exProfileId) {
-                            scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
-                        }else {
-                            scope.addIsolatedEngagementSession(response._id, scope.sessionId);
-                        }
+
+                userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
+
+                    if(resSSN.IsSuccess && resSSN.Result.length>0)
+                    {
+                        scope.showAlert("Profile", "error", "SSN is already taken");
                     }
-                    else {
-                        scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                    else
+                    {
+                        userService.getExternalUserProfileByField("phone",profile.phone).then(function (resPhone) {
+
+                            if(resPhone.IsSuccess && resPhone.Result.length>0)
+                            {
+                                scope.showAlert("Profile", "error", "Phone number is already taken");
+                            }
+                            else
+                            {
+                                userService.getExternalUserProfileByField("email",profile.email).then(function (resEmail) {
+
+                                    if(resEmail.IsSuccess && resEmail.Result.length>0)
+                                    {
+                                        scope.showAlert("Profile", "error", "Email is already taken");
+                                    }
+                                    else
+                                    {
+                                        userService.CreateExternalUser(profile).then(function (response) {
+                                            if (response) {
+                                                scope.profileDetail = response;
+                                                scope.showNewProfile = false;
+
+                                                scope.GetProfileHistory(response._id);
+                                                if(scope.exProfileId) {
+                                                    scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                                                }else {
+                                                    scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+                                                }
+                                            }
+                                            else {
+                                                scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                                            }
+                                        }, function (err) {
+                                            scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                                        });
+                                    }
+
+                                }, function (errEmail) {
+                                    scope.showAlert("Profile", "error", "Checking Email failed");
+                                });
+
+
+
+                            }
+                        }, function (errPhone) {
+                            scope.showAlert("Profile", "error", "Checking Phone number failed");
+                        })
                     }
-                }, function (err) {
-                    scope.showAlert("Profile", "error", "Fail To Save Profile.");
+
+                }, function (errSSN) {
+                    scope.showAlert("Profile", "error", "Checking SSN failed");
                 });
+
+
+
             };
+
+            scope.CheckExternalUserAvailabilityBySSN = function (ssn,profile)
+            {
+                var deferred = $q.defer();
+
+                userService.getExternalUserProfileBySsn(ssn).then(function (resPhone) {
+
+                    if(resPhone.IsSuccess)
+                    {
+                        if(resPhone.Result.length==0)
+                        {
+                            deferred.resolve(true);
+                        }
+                        else
+                        {
+                            if(profile._id==resPhone.Result[0]._id)
+                            {
+                                deferred.resolve(true);
+                            }
+                            else
+                            {
+                                scope.showAlert("Profile", "error", "SSN is already taken");
+                                deferred.resolve(false);
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        deferred.resolve(true);
+                    }
+
+                }, function (errPhone) {
+
+                    scope.showAlert("Profile", "error", "Error in searching ssn");
+                    deferred.resolve(false);
+                });
+                return deferred.promise;
+            }
+
+            scope.CheckExternalUserAvailabilityByField = function (field,value,profile) {
+
+                var deferred = $q.defer();
+
+                userService.getExternalUserProfileByField(field,value).then(function (resPhone) {
+
+                    if(resPhone.IsSuccess)
+                    {
+                        if(resPhone.Result.length==0)
+                        {
+                            deferred.resolve(true);
+                        }
+                        else
+                        {
+                            if(profile._id==resPhone.Result[0]._id)
+                            {
+                                deferred.resolve(true);
+                            }
+                            else
+                            {
+                                scope.showAlert("Profile", "error", field+" is already taken");
+                                deferred.resolve(false);
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+                        deferred.resolve(true);
+                    }
+
+                }, function (errPhone) {
+
+                    scope.showAlert("Profile", "error", "Error in searching "+field);
+                    deferred.resolve(false);
+                });
+                return deferred.promise;
+            };
+
 
             scope.UpdateExternalUser = function (profile) {
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
@@ -1818,37 +1946,66 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
                     profile.tags.push(tag.cutomerType)
                 });
                 profile.birthday = new Date(collectionDate);
-                userService.UpdateExternalUser(profile).then(function (response) {
-                    if (response) {
-                        scope.cutomerTypes=[];
-                        scope.showNewProfile = false;
-                        scope.editProfile = false;
 
-                        scope.showAlert("Profile", "success", "Update Successfully.");
-                        userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
 
-                            if(resUserData.IsSuccess)
-                            {
-                                scope.profileDetail = resUserData.Result;
+
+
+                $q.all([
+                    scope.CheckExternalUserAvailabilityByField("ssn",profile.ssn,profile),
+                    scope.CheckExternalUserAvailabilityByField("email",profile.email,profile),
+                    scope.CheckExternalUserAvailabilityByField("phone",profile.phone,profile),
+                ]).then(function(value) {
+                    // Success callback where value is an array containing the success values
+
+                    if(value.indexOf(false)==-1)
+                    {
+                        userService.UpdateExternalUser(profile).then(function (response) {
+                            if (response) {
+                                scope.cutomerTypes=[];
+                                scope.showNewProfile = false;
+                                scope.editProfile = false;
+
+                                scope.showAlert("Profile", "success", "Update Successfully.");
+                                userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
+
+                                    if(resUserData.IsSuccess)
+                                    {
+                                        scope.profileDetail = resUserData.Result;
+                                    }
+                                    else
+                                    {
+                                        scope.showAlert("Profile","error","Failed to load updated profile");
+
+                                    }
+
+
+                                }, function (errUserData) {
+                                    scope.showAlert("Profile","error","Failed to load updated profile");
+                                    console.log(errUserData)
+                                });
                             }
-                            else
-                            {
-                                scope.showAlert("Profile","error","Failed to load updated profile");
-
+                            else {
+                                scope.showAlert("Profile", "error", "Fail To Save Profile.");
                             }
-
-
-                        }, function (errUserData) {
-                            scope.showAlert("Profile","error","Failed to load updated profile");
-                            console.log(errUserData)
+                        }, function (err) {
+                            scope.showAlert("Profile", "error", "Fail To Save Profile.");
                         });
                     }
-                    else {
+                    else
+                    {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
                     }
-                }, function (err) {
-                    scope.showAlert("Profile", "error", "Fail To Save Profile.");
+
+
+
+
+                }, function(reason) {
+                    // Error callback where reason is the value of the first rejected promise
+                    alert(value);
                 });
+
+
+
             };
 
             //engagement console
@@ -2036,15 +2193,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal, eng
 
             //update new function
             // create new profile
-           /* scope.createNProfile = function () {
-                if (scope.profileDetail) {
-                    scope.exProfileId = angular.copy(scope.profileDetail._id);
-                }
-                scope.showMultiProfile = false;
-                scope.profileLoadin = false;
-                scope.showNewProfile = true;
-                scope.editProfile = false;
-            };*/
+            /* scope.createNProfile = function () {
+             if (scope.profileDetail) {
+             scope.exProfileId = angular.copy(scope.profileDetail._id);
+             }
+             scope.showMultiProfile = false;
+             scope.profileLoadin = false;
+             scope.showNewProfile = true;
+             scope.editProfile = false;
+             };*/
 
             //engamanet details
             scope.enggemntDetailsCount = [];

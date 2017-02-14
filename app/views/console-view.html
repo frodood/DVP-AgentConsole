@@ -70,6 +70,7 @@
                                     <div class="noti-detail">
                                         <h5>{{notifi.from}}</h5>
                                         <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20 ?'....':''}}</h4>
+
                                         <div>
                                             <time-ago from-time='{{notifi.time}}'
                                                       format='MM/dd/yyyy'></time-ago>
@@ -227,6 +228,7 @@
                     <!-- send notification -->
                     <li ng-click="openNav()" class="console-menu-icon m-left-10 m-right-10 m-top-6">
                         <i class="veery-font-1-paper-plane"></i>
+
                         <div class="console-notification-header bg-orange" ng-show="usercounts !=0">
                             {{usercounts}}
                             <div class="sonar-wave"></div>
@@ -315,7 +317,7 @@
                                                                 href="javascript:void(0);">Settings</a></li>
                         <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                 ng-click="logOut();"
-                        >Logout</a></li>
+                                >Logout</a></li>
                     </ul>
 
 
@@ -369,6 +371,9 @@
     <!-- right side navigation -->
     <div ng-include="'app/views/right-side-nav.html'"></div>
 
+    <!-- left side navigation -->
+    <div ng-include="'app/views/left-side-nav.html'"></div>
+
     <!-- tab panel -->
 
 
@@ -406,7 +411,7 @@
                                             tab-reference="{{tab.tabReference}}"
                                             search-users="searchExternalUsers"
                                             schema-response-new-ticket="schemaResponse"
-                            >
+                                    >
 
                             </engagement-tab>
                         </div>
@@ -485,7 +490,7 @@
                         <div class="call-duations" id="calltimmer">
                             <!--{{duations}}-->
                             <timer autostart="false" interval="1000"
-                            >{{hhours}}:
+                                    >{{hhours}}:
                                 {{mminutes}}: {{sseconds}}
                             </timer>
                         </div>
