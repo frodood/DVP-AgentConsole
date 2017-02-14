@@ -2288,10 +2288,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.setExtention = function (selectedUser) {
 
         try {
-            var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
-            if (angular.isArray(concurrencyInfos)) {
-                var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
-                $scope.call.number = RefInfo.Extention;
+            var extention = selectedUser.veeryaccount.display;
+            if (extention) {
+                $scope.call.number = extention;
             }
             else {
                 $scope.showAlert('Error', 'error', "Fail To Find Extention.");
