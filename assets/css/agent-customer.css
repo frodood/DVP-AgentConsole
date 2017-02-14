@@ -6446,3 +6446,10 @@ ul.renote-color-btn > li {
 .btn-tran-bg {
     background: transparent;
 }
+
+.profileCropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+}

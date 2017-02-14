@@ -36,7 +36,7 @@
                 <div class="col-md-3 col-lg-3 col-sm-12">
                     <div class="profile-image-crop">
                         <div>
-                            <img ng-src="{{cropImageURL}}"
+                            <img ng-src="{{newProfile.avatar}}"
                                  src="assets/img/avatar/profileAvatar.png">
                         </div>
                         <div class="image-edit">
@@ -202,7 +202,7 @@
                                 <div class="form-group">
                                     <label for="country">Country</label>
                                     <select class="select2_single form-control"
-                                            tabindex="-1"
+
                                             aria-hidden="true" id="country"
                                             name="country"
                                             ng-model="newProfile.address.country">
