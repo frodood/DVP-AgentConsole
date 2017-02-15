@@ -2201,27 +2201,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                        if (data.IsSuccess) {
-                            if (data.Result && data.Result.UNREAD) {
-                                $scope.unreadMailCount = data.Result.UNREAD;
-                            }
+                    if (data.IsSuccess) {
+                        if (data.Result && data.Result.UNREAD) {
+                            $scope.unreadMailCount = data.Result.UNREAD;
                         }
-                        else {
-                            var errMsg = data.CustomMessage;
+                    }
+                    else {
+                        var errMsg = data.CustomMessage;
 
-                            if (data.Exception) {
-                                errMsg = data.Exception.Message;
-                            }
-                            console.log(errMsg);
+                        if (data.Exception) {
+                            errMsg = data.Exception.Message;
                         }
+                        console.log(errMsg);
+                    }
 
 
-                    },
-                    function (err) {
-                        authService.IsCheckResponse(err);
-                        console.log(err);
+                },
+                function (err) {
+                    authService.IsCheckResponse(err);
+                    console.log(err);
 
-                    })
+                })
 
         }
         catch (ex) {
@@ -2318,10 +2318,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.setExtention = function (selectedUser) {
 
         try {
-            var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
-            if (angular.isArray(concurrencyInfos)) {
-                var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
-                $scope.call.number = RefInfo.Extention;
+            var extention = selectedUser.veeryaccount.display;
+            if (extention) {
+                $scope.call.number = extention;
             }
             else {
                 $scope.showAlert('Error', 'error', "Fail To Find Extention.");
@@ -3505,6 +3504,30 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.chatUserTypeFilter = function (user) {
         return user.type === 'client'
     };
+
+    //#left navigation
+    $scope.toggleLeftNav = function () {
+        //var $wrapper = $('.left-m-wrp'),
+        //    animateTime = 500,
+        //    height = 310; //-400px
+        //
+        //
+        var leftValue = $("#leftMWrp").css("left");
+        if (leftValue == '0px') {
+            $('.left-m-wrp').animate({
+                left: '-400px'
+            }, 200);
+        } else {
+            $('.left-m-wrp').animate({
+                left: '0'
+            }, 600);
+        }
+    }
+
+    $scope.noticeData =["hello","yoo","test"];
+
+
+
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
         scope.isFiexedTab = false;
