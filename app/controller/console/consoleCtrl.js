@@ -3505,27 +3505,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         return user.type === 'client'
     };
 
-    //#left navigation
-    $scope.toggleLeftNav = function () {
-        //var $wrapper = $('.left-m-wrp'),
-        //    animateTime = 500,
-        //    height = 310; //-400px
-        //
-        //
-        var leftValue = $("#leftMWrp").css("left");
-        if (leftValue == '0px') {
-            $('.left-m-wrp').animate({
-                left: '-400px'
-            }, 200);
-        } else {
-            $('.left-m-wrp').animate({
-                left: '0'
-            }, 600);
-        }
-    }
-
-    $scope.noticeData =["hello","yoo","test"];
-
 
 
 }).directive("mainScroll", function ($window) {

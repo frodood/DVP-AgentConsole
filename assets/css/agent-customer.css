@@ -6513,45 +6513,6 @@ ul.renote-color-btn > li {
     height: 300px;
 }
 
-/*left side navigation */
-.left-m-wrp {
-    width: 400px;
-    height: 100%;
-    position: fixed;
-    left: -400px;
-    top: 0;
-    z-index: 1;
-    background: #fff;
-    transition: 0.5s;
-    border-right: 1px solid #D9DEE4;
-}
-
-.move-wrp {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: #ffffff;
-    z-index: 20;
-    position: absolute;
-    top: 95px;
-    right: -22px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.left-n-card-wrp {
-    width: 100%;
-    min-height: 200px;
-    overflow: hidden;
-    position: relative;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border-top: 1px solid #D9DEE4;
-    border-bottom: 1px solid #D9DEE4;
-}
-
 
 /*phone book */
 .phone-book-wrp {
@@ -6640,7 +6601,7 @@ ul.renote-color-btn > li {
 
 .c-details > .c-no {
     font-size: 11px;
-    color: #35a44f;
+    color: #c1c1c5;
 }
 
 .c-img > img {
