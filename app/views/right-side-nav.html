@@ -119,7 +119,7 @@
                 <div class="title">
                     Agent Conversation
                 </div>
-                <div ng-repeat="agent in users | filterBy: ['username']: searchCriteria">
+                <div ng-repeat="agent in users | filterBy: ['firstname','lastname']: searchCriteria">
                     <div ng-mouseover="chatOption = true"
                          ng-mouseleave="chatOption = false"
                          class="notification-user">
