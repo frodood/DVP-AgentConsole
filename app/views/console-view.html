@@ -441,9 +441,55 @@
 
     <!-- soft phone -->
     <div class="draggableContainer">
+
+
         <div id="softPhone">
             <div id="softPhoneDragElem"
                  class="soft-phone-drag-elem" ng-class="!isEnableSoftPhoneDrag?'soft-b-67':''">
+                <!-- conatact phoen book -->
+                <div id="phoneBook" class="phone-book-wrp ">
+                    <div class="contact-search">
+                        <input type="text" ng-model="contactSearch" class="form-control"
+                               placeholder="search contact"/>
+                    </div>
+                    <!-- data not found -->
+                    <div class="contact-nf-wrp" ng-if="isContactInfo">
+                        <i class="ti-id-badge"></i>
+                        <h5>Contact not found.</h5>
+                    </div>
+
+                    <div class="contact-info-wr"  ng-if="!isContactInfo">
+                        <div class="c-info-details">
+                            <div class="c-img">
+                                <img src="assets/img/avatar/profileAvatar.png"/>
+                            </div>
+                            <div class="c-details">
+                                <div class="c-name">
+                                    Jone Don
+                                </div>
+                                <div class="c-no">
+                                    +97854672652
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-info-details">
+                            <div class="c-img">
+                                <img src="assets/img/avatar/profileAvatar.png"/>
+                            </div>
+                            <div class="c-details">
+                                <div class="c-name">
+                                    Jone Don
+                                </div>
+                                <div class="c-no">
+                                    +97854672652
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
                 <div class="isOperationPhone dial-pad-wrapper draggable ">
                     <ul class="phone-t-menu">
                         <li>
@@ -624,7 +670,7 @@
                      id="callOperation">
                     <div id="phoneBtnWrapper" class="phone-button-wrapper ">
                         <!-- answer button -->
-                        <div class="phone-sm-btn answer" id="answerButton" title="Answer Call"
+                        <div class="phone-sm-btn answer p-anz-btn" id="answerButton" title="Answer Call"
                              ng-click="veeryPhone.makeAudioCall(call.number);">
                             <i class="veery-phone-icon-1-call-answer"></i>
                         </div>
@@ -634,28 +680,28 @@
                             <i class="veery-phone-icon-1-call-ended"></i>
                         </div>
                         <!-- call hold button -->
-                        <div class="phone-sm-btn phone-sm-bn-p8" title="Hold/Unhold" id="holdResumeButton"
+                        <div class="phone-sm-btn " title="Hold/Unhold" id="holdResumeButton"
                              ng-click="veeryPhone.holdResumeCall();">
                             <i class="veery-font-1-pause"></i>
                         </div>
                         <!-- dial pad -->
-                        <div id="dialPad" class="phone-sm-btn phone-sm-bn-p8 veery-font-1-menu-4" title="Dialpad"
+                        <div id="dialPad" class="phone-sm-btn  veery-font-1-menu-4" title="Dialpad"
                              ng-click="ShowHideDialpad();">
                         </div>
                         <!--  contact list button -->
                         <!-- <div id="contactList" class="phone-sm-btn phone-sm-bn-p8" title="Contact List">
                              <i class="veery-font-1-user"></i>
                          </div>-->
-                        <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-user"
+                        <div class="phone-sm-btn  veery-font-1-user"
+                             ng-click="veeryPhone.showPhoneBook();"
                              id="contactList" title="Contact List">
-
                         </div>
                         <!-- more btn -->
                         <!--<div id="morebtn" class="phone-sm-btn phone-sm-bn-p8" title="More"
                              ng-click="veeryPhone.showOnlineBtn();">
                             <i class="veery-font-1-more"></i>
                         </div>-->
-                        <div class="phone-sm-btn phone-sm-bn-p8 veery-font-1-more"
+                        <div class="phone-sm-btn  veery-font-1-more"
                              ng-click="veeryPhone.showMoreOption();"
                              id="morebtn" title="More"></div>
 
@@ -701,12 +747,12 @@
 
                     <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none">
                         <!-- mute/unmiute hold button -->
-                        <div class="phone-sm-btn phone-sm-bn-p8" id="speakerButton" title="Mute Call"
+                        <div class="phone-sm-btn " id="speakerButton" title="Mute Call"
                              ng-click="veeryPhone.muteCall();">
 
                         </div>
                         <!-- call transfer button -->
-                        <div id="transferCall" class="phone-sm-btn phone-sm-bn-p8 " title="Transfer Call"
+                        <div id="transferCall" class="phone-sm-btn  " title="Transfer Call"
                              ng-click="veeryPhone.transferCall(call.number);">
                             <i class="main-icon-2-next"></i>
                         </div>
@@ -716,23 +762,30 @@
                             <i class="main-icon-2-transfer-8"></i>
                         </div>-->
                         <!-- ETL button -->
-                        <div id="etlCall" class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.etlCall();"
+                        <div id="etlCall" class="phone-sm-btn " ng-click="veeryPhone.etlCall();"
                              title="End Transfer Call">
                             <i class="main-icon-2-transfer"></i>
                         </div>
                         <!-- conference button -->
-                        <div id="conferenceCall" class="phone-sm-btn phone-sm-bn-p8"
+                        <div id="conferenceCall" class="phone-sm-btn "
                              ng-click="veeryPhone.conferenceCall();"
                              title="Conference">
                             <i class="main-icon-2-stick-man-2"></i>
                         </div>
                         <!-- ivr button -->
-                        <div id="transferIvr" class="phone-sm-btn phone-sm-bn-p8"
+                        <div id="transferIvr" class="phone-sm-btn "
                              ng-click="veeryPhone.showIvrPenel();"
                              title="IVR">
                             <i class="main-icon-2-stick-man-2"></i>
                         </div>
-                        <div class="phone-sm-btn phone-sm-bn-p8" ng-click="veeryPhone.hideMoreOption();"
+                        <div class="phone-sm-btn p-close-btn " ng-click="veeryPhone.hideMoreOption();"
+                             title="Close">
+                            <i class="ti-close"></i>
+                        </div>
+                    </div>
+
+                    <div id="contactBtnWrp" class="phone-button-wrapper display-none" style="text-align: center;">
+                        <div class="phone-sm-btn p-close-btn " ng-click="veeryPhone.hidePhoneBook();"
                              title="Close">
                             <i class="ti-close"></i>
                         </div>

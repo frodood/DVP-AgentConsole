@@ -153,6 +153,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     // $scope.ShowHideDialpad();
 
+    //update code damith
+    $scope.contactList = function () {
+        $('#phoneBook').animate({
+            left: '0'
+        }, 500);
+    };
+
     $scope.PhoneOffline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
@@ -681,7 +688,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.freezeBtn();
             }
             return false;
-        }
+        }, showPhoneBook: function () {
+            $('#phoneBook').animate({
+                left: '0'
+            }, 500);
+            $('#contactBtnWrp').removeClass('display-none');
+            $('#phoneBtnWrapper').addClass('display-none');
+        },
+        hidePhoneBook: function () {
+            $('#phoneBook').animate({
+                left: '-235'
+            }, 500);
+            $('#contactBtnWrp').addClass('display-none');
+            $('#phoneBtnWrapper').removeClass('display-none');
+        },
     };
 
 
@@ -870,6 +890,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#phoneBtnWrapper').removeClass('display-none');
             $('#onlinePhoneBtnWrapper').addClass('display-none');
         },
+
         showfreezeRequest: function () {
             $('#freezeRequest').addClass('call-duations').removeClass('display-none');
         },
