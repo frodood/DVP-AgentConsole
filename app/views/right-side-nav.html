@@ -173,7 +173,7 @@
                 </div>
                 <div ng-mouseover="groupOption = true"
                      ng-mouseleave="groupOption = false"
-                     class="notification-user" ng-repeat="group in userGroups ">
+                     class="notification-user" ng-repeat="group in userGroups | filterBy: ['name']: searchCriteria">
                     <div ng-if="group.name" class="user-img">
                         <img src="assets/img/avatar/profileAvatar.png"
                              ng-src="{{group.avatar}}">
