@@ -119,7 +119,7 @@
                 <div class="title">
                     Agent Conversation
                 </div>
-                <div ng-repeat="agent in users | filterBy: ['username']: searchCriteria">
+                <div ng-repeat="agent in users | filterBy: ['firstname','lastname']: searchCriteria">
                     <div ng-mouseover="chatOption = true"
                          ng-mouseleave="chatOption = false"
                          class="notification-user">
@@ -173,7 +173,7 @@
                 </div>
                 <div ng-mouseover="groupOption = true"
                      ng-mouseleave="groupOption = false"
-                     class="notification-user" ng-repeat="group in userGroups ">
+                     class="notification-user" ng-repeat="group in userGroups | filterBy: ['name']: searchCriteria">
                     <div ng-if="group.name" class="user-img">
                         <img src="assets/img/avatar/profileAvatar.png"
                              ng-src="{{group.avatar}}">
