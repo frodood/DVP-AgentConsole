@@ -831,7 +831,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                         if(scope.ticket.requester)
                         {
-                            scope.ticket.requester.displayname= scope.setUserTitles(scope.ticket.requester);
+                            scope.ticket.requester_displayname= scope.setUserTitles(scope.ticket.requester);
+                        }
+                        else if(scope.ticket.engagement_session)
+                        {
+                            scope.ticket.requester_displayname=scope.ticket.engagement_session.channel_from;
                         }
                         if(scope.ticket.submitter)
                         {
@@ -1151,6 +1155,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     var reply_chnl_from = "";
                     var reply_chnl_to = "";
                     var comentAttachmentIds = [];
+                    var contactObj={};
 
                     angular.forEach(scope.uploadedComAttchments, function (value) {
                         comentAttachmentIds.push(value._id);
@@ -1165,6 +1170,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         reply_session = scope.ticket.engagement_session._id;
                         reply_chnl_from = scope.ticket.engagement_session.channel_to;
                         reply_chnl_to = scope.ticket.engagement_session.channel_from;
+                        contactObj=scope.ticket.engagement_session.contact;
+
+                        //eng_session=scope.ticket.engagement_session;
                     }
 
 
@@ -1177,7 +1185,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         "channel": channel,
                         "engagement_session": eng_session,
                         "reply_session": reply_session,
-                        "attachments": comentAttachmentIds
+                        "attachments": comentAttachmentIds,
+                        "contact":contactObj
 
 
                     }
@@ -1198,7 +1207,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             response.data.Result.attachments = scope.uploadedComAttchments;
                             scope.ticket.comments.push(response.data.Result);
                             console.log("New comment added ", response);
-                            scope.showAlert("New Comment", "success", "completed");
+                            scope.showAlert("New Comment", "success", "New comment added");
                             scope.uploadedComAttchments = [];
                             scope.isNewComment = false;
 
@@ -1206,12 +1215,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         }
                         else {
                             console.log("Error new comment ", response);
-                            scope.showAlert("New Comment", "error", "failed");
+                            scope.showAlert("New Comment", "error", "Comment adding failed");
                         }
 
                     }), function (error) {
                         console.log("Error new comment ", error);
-                        scope.showAlert("New Comment", "error", "failed");
+                        scope.showAlert("New Comment", "error", "Comment adding failed");
                     };
 
                 }
@@ -1423,13 +1432,13 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.loadMyAppMetaData = function () {
 
-                    if(profileDataParser.myTicketMetaData)
-                    {
-                        scope.newSubTicket.subject=profileDataParser.myTicketMetaData.subject;
-                        scope.setPriority(profileDataParser.myTicketMetaData.priority);
-                        scope.newSubTicket.description=profileDataParser.myTicketMetaData.description;
+                if(profileDataParser.myTicketMetaData)
+                {
+                    scope.newSubTicket.subject=profileDataParser.myTicketMetaData.subject;
+                    scope.setPriority(profileDataParser.myTicketMetaData.priority);
+                    scope.newSubTicket.description=profileDataParser.myTicketMetaData.description;
 
-                    }
+                }
 
             }
 
