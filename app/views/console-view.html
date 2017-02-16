@@ -317,7 +317,7 @@
                                                                 href="javascript:void(0);">Settings</a></li>
                         <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
                                                                 ng-click="logOut();"
-                                >Logout</a></li>
+                        >Logout</a></li>
                     </ul>
 
 
@@ -452,39 +452,32 @@
                                placeholder="search contact"/>
                     </div>
                     <!-- data not found -->
-                    <div class="contact-nf-wrp" ng-if="isContactInfo">
+                    <div class="contact-nf-wrp" ng-hide="contactObj.length">
                         <i class="ti-id-badge"></i>
                         <h5>Contact not found.</h5>
                     </div>
 
-                    <div class="contact-info-wr"  ng-if="!isContactInfo">
-                        <div class="c-info-details">
+                    <div class="contact-info-wr" slimscroll="{height: '225px',
+            railVisible: true,
+            color: '#777',
+            size: '8px',
+            distance: '10px',
+            railColor: '#c1c1c5',
+            railBorderRadius: 10}">
+                        <div class="c-info-details"
+                             ng-repeat="contact in contactObj  | filter:contactSearch  track by $index ">
                             <div class="c-img">
                                 <img src="assets/img/avatar/profileAvatar.png"/>
                             </div>
                             <div class="c-details">
                                 <div class="c-name">
-                                    Jone Don
+                                    {{contact.name}}
                                 </div>
                                 <div class="c-no">
-                                    +97854672652
+                                    {{contact.contactno}}
                                 </div>
                             </div>
                         </div>
-                        <div class="c-info-details">
-                            <div class="c-img">
-                                <img src="assets/img/avatar/profileAvatar.png"/>
-                            </div>
-                            <div class="c-details">
-                                <div class="c-name">
-                                    Jone Don
-                                </div>
-                                <div class="c-no">
-                                    +97854672652
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
@@ -530,7 +523,7 @@
                         <div class="call-duations" id="calltimmer">
                             <!--{{duations}}-->
                             <timer autostart="false" interval="1000"
-                                    >{{hhours}}:
+                            >{{hhours}}:
                                 {{mminutes}}: {{sseconds}}
                             </timer>
                         </div>

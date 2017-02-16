@@ -64,6 +64,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     });
 
+    //soft phone load contact list
+    $scope.contactObj = [];
+    getJSONData($http, 'contactList', function (res) {
+        $scope.contactObj = res;
+    });
+
 
     $scope.status = {
         isopen: false
@@ -2201,27 +2207,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                    if (data.IsSuccess) {
-                        if (data.Result && data.Result.UNREAD) {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception) {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    authService.IsCheckResponse(err);
-                    console.log(err);
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
+                        console.log(err);
 
-                })
+                    })
 
         }
         catch (ex) {
@@ -3504,7 +3510,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.chatUserTypeFilter = function (user) {
         return user.type === 'client'
     };
-
 
 
 }).directive("mainScroll", function ($window) {
