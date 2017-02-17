@@ -452,12 +452,12 @@
                                placeholder="search contact"/>
                     </div>
                     <!-- data not found -->
-                    <div class="contact-nf-wrp" ng-hide="contactObj.length">
+                    <div class="contact-nf-wrp" ng-if="contactObj.length==0">
                         <i class="ti-id-badge"></i>
                         <h5>Contact not found.</h5>
                     </div>
 
-                    <div class="contact-info-wr" slimscroll="{height: '225px',
+                    <div class="contact-info-wr" ng-if="contactObj.length!=0" slimscroll="{height: '225px',
             railVisible: true,
             color: '#777',
             size: '8px',
@@ -474,7 +474,7 @@
                                     {{contact.name}}
                                 </div>
                                 <div class="c-no">
-                                    {{contact.contactno}}
+                                    {{contact.contact}}
                                 </div>
                             </div>
                         </div>

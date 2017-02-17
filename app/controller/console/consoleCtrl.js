@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService) {
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService) {
 
 
     $scope.isReadyToSpeak = false;
@@ -65,10 +65,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
     //soft phone load contact list
-    $scope.contactObj = [];
-    getJSONData($http, 'contactList', function (res) {
-        $scope.contactObj = res;
-    });
 
 
     $scope.status = {
@@ -88,6 +84,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.GetAcwTime();
 
     /*# console top menu */
+    var getALlPhoneContact = function () {
+        $scope.contactObj = [];
+        contactService.getAllContacts().then(function (response) {
+            $scope.contactObj = response.Result;
+        });
+    };
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').removeClass('display-none zoomOut');
@@ -102,6 +104,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         Register: function () {
             $scope.veeryPhone.Register('DuoS123');
+            getALlPhoneContact();
             /*if ($scope.isRegistor) {
              $scope.ShowHidePhone(!$scope.showPhone);
              } else {
