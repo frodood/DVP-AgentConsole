@@ -968,7 +968,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.loadMyAppMetaData = function () {
                 ticketService.GetMyTicketConfig(function (success,data) {
 
-                    if(success && data.Result)
+                    if(success && data && data.Result)
                     {
                         scope.ticket.subject=data.Result.subject;
                         scope.setPriority(data.Result.priority);
