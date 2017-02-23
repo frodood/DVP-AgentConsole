@@ -1475,13 +1475,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.addMailInbox = function () {
-        $scope.addTab('mail-inbox', 'mail-inbox', 'mail-inbox', null, 'mailinbox_agentconsole');
+        $scope.addTab('Mail-Inbox', 'mail-inbox', 'mail-inbox', null, 'mailinbox_agentconsole');
         resizeDiv();
     };
 
     //add dashboard inside tab
     $scope.addDashBoard = function () {
-        $scope.addTab('dashboard', 'dashboard', 'dashboard', "dashborad", "dashborad");
+        $scope.addTab('Dashboard', 'dashboard', 'dashboard', "dashborad", "dashborad");
     };
     //add myquick note inside tab
     $scope.addMyNote = function () {
