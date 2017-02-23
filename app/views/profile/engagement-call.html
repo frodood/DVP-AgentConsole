@@ -867,7 +867,7 @@
                                         <div class="form-group">
                                             <label>Tags</label>
                                             <button ng-click="loadTags();"> Reload</button>
-                                            <tags-input ng-model="postTags" display-property="name" placeholder="...">
+                                            <tags-input ng-model="postTags" display-property="name" placeholder="..." on-tag-removed="onIsolatedTagRemoved()">
                                                 <auto-complete source="loadPostTags($query)"></auto-complete>
                                             </tags-input>
 
@@ -936,9 +936,6 @@
                                     </form>
 
                                     <div>
-                                        <div>
-                                            <div>{{oldFormModel}}</div>
-                                        </div>
 
                                         <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw"
                                               ng-submit="onSubmit(customForm)"></form>

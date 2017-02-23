@@ -467,8 +467,44 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 return title;
             }
 
+            var findFormForCompanyOrTag = function(isolatedTags, callback)
+            {
+                ticketService.getFormByIsolatedTag(isolatedTags).then(function(tagForm)
+                {
+                    if(tagForm.Result && tagForm.Result.length > 0)
+                    {
 
-            var convertToSchemaForm = function (formSubmission, callback) {
+                        callback(null, tagForm.Result[0].dynamicForm);
+                    }
+                    else
+                    {
+                        ticketService.getFormsForCompany().then(function (compForm)
+                        {
+                            if(compForm.Result.ticket_form)
+                            {
+                                callback(null, compForm.Result.ticket_form);
+                            }
+                            else
+                            {
+                                callback(null, null);
+                            }
+
+
+                        }).catch(function(err)
+                        {
+                            callback(err, null);
+                        })
+                    }
+
+
+                }).catch(function(err)
+                {
+                    callback(err, null);
+                })
+            };
+
+
+            var convertToSchemaForm = function (formSubmission, isolatedTags, callback) {
 
                 //get forms profile
 
@@ -483,99 +519,105 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     var model = {};
                     scope.buildModel = true;
 
-                    ticketService.getFormsForCompany().then(function (response) {
-                        if (response && response.Result && response.Result.ticket_form) {
-                            //compare two forms
-                            if (response.Result.ticket_form._id !== formSubmission.form._id) {
-                                scope.currentForm = response.Result.ticket_form;
-                                buildFormSchema(schema, form, response.Result.ticket_form.fields);
-
-                                scope.buildModel = false;
-
-                            }
-                            else {
-                                scope.currentForm = response.Result.ticket_form;
-                                buildFormSchema(schema, form, response.Result.ticket_form.fields);
-                            }
-                        }
-                        else {
+                    findFormForCompanyOrTag(isolatedTags, function(err, ticket_form)
+                    {
+                        if(err)
+                        {
                             scope.currentForm = formSubmission.form;
                             buildFormSchema(schema, form, formSubmission.form.fields);
-                        }
 
-                        form.push({
-                            type: "submit",
-                            title: "Save"
-                        });
+                            form.push({
+                                type: "submit",
+                                title: "Save"
+                            });
 
-                        if (formSubmission.fields && formSubmission.fields.length > 0) {
-                            formSubmission.fields.forEach(function (fieldValueItem) {
-                                if (fieldValueItem.field) {
-                                    model[fieldValueItem.field] = fieldValueItem.value;
+                            if (formSubmission.fields && formSubmission.fields.length > 0) {
+                                formSubmission.fields.forEach(function (fieldValueItem) {
+                                    if (fieldValueItem.field) {
+                                        model[fieldValueItem.field] = fieldValueItem.value;
+                                    }
+
+                                });
+                            }
+
+                            var schemaResponse = {};
+
+                            if (!scope.buildModel) {
+                                scope.oldFormModel = model;
+                                schemaResponse = {
+                                    schema: schema,
+                                    form: form,
+                                    model: {}
+                                }
+                            }
+                            else {
+                                schemaResponse = {
+                                    schema: schema,
+                                    form: form,
+                                    model: model
                                 }
 
+                            }
+
+                            callback(schemaResponse);
+                        }
+                        else
+                        {
+                            if(ticket_form)
+                            {
+                                if (ticket_form._id !== formSubmission.form._id) {
+                                    scope.currentForm = ticket_form;
+                                    buildFormSchema(schema, form, ticket_form.fields);
+
+                                    scope.buildModel = false;
+
+                                }
+                                else {
+                                    scope.currentForm = ticket_form;
+                                    buildFormSchema(schema, form, ticket_form.fields);
+                                }
+                            }
+                            else
+                            {
+                                scope.currentForm = formSubmission.form;
+                                buildFormSchema(schema, form, formSubmission.form.fields);
+                            }
+
+                            form.push({
+                                type: "submit",
+                                title: "Save"
                             });
-                        }
 
-                        var schemaResponse = {};
+                            if (formSubmission.fields && formSubmission.fields.length > 0) {
+                                formSubmission.fields.forEach(function (fieldValueItem) {
+                                    if (fieldValueItem.field) {
+                                        model[fieldValueItem.field] = fieldValueItem.value;
+                                    }
 
-                        if (!scope.buildModel) {
-                            scope.oldFormModel = model;
-                            schemaResponse = {
-                                schema: schema,
-                                form: form,
-                                model: {}
-                            }
-                        }
-                        else {
-                            schemaResponse = {
-                                schema: schema,
-                                form: form,
-                                model: model
+                                });
                             }
 
-                        }
+                            var schemaResponse = {};
 
-                        callback(schemaResponse);
-
-                    }).catch(function (err) {
-                        scope.currentForm = formSubmission.form;
-                        buildFormSchema(schema, form, formSubmission.form.fields);
-
-                        form.push({
-                            type: "submit",
-                            title: "Save"
-                        });
-
-                        if (formSubmission.fields && formSubmission.fields.length > 0) {
-                            formSubmission.fields.forEach(function (fieldValueItem) {
-                                if (fieldValueItem.field) {
-                                    model[fieldValueItem.field] = fieldValueItem.value;
+                            if (!scope.buildModel) {
+                                scope.oldFormModel = model;
+                                schemaResponse = {
+                                    schema: schema,
+                                    form: form,
+                                    model: {}
+                                }
+                            }
+                            else {
+                                schemaResponse = {
+                                    schema: schema,
+                                    form: form,
+                                    model: model
                                 }
 
-                            });
-                        }
-
-                        var schemaResponse = {};
-
-                        if (!scope.buildModel) {
-                            scope.oldFormModel = model;
-                            schemaResponse = {
-                                schema: schema,
-                                form: form,
-                                model: {}
-                            }
-                        }
-                        else {
-                            schemaResponse = {
-                                schema: schema,
-                                form: form,
-                                model: model
                             }
 
+                            callback(schemaResponse);
                         }
-
-                        callback(schemaResponse);
 
                     });
 
@@ -594,9 +636,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     scope.buildModel = true;
 
-                    ticketService.getFormsForCompany().then(function (response) {
-                        if (response && response.Result && response.Result.ticket_form) {
-                            //compare two forms
+                    findFormForCompanyOrTag(isolatedTags, function(err, ticket_form)
+                    {
+                        if(ticket_form)
+                        {
                             buildFormSchema(schema, form, response.Result.ticket_form.fields);
                             scope.currentForm = response.Result.ticket_form;
 
@@ -616,16 +659,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                             callback(schemaResponse);
                         }
-                        else {
+                        else
+                        {
                             callback(null);
                         }
 
-
-                    }).catch(function (err) {
-                        callback(null);
-
                     });
-
 
                 }
 
@@ -960,7 +999,15 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         setContactList(response.data.Result);
                         if (response.data.Result) {
                             scope.currentSubmission = response.data.Result.form_submission;
-                            convertToSchemaForm(response.data.Result.form_submission, function (schemaDetails) {
+
+                            var isolatedTags = [];
+
+                            if(response.data.Result && response.data.Result.tags && response.data.Result.tags.length > 0)
+                            {
+                                isolatedTags = response.data.Result.tags;
+                            }
+
+                            convertToSchemaForm(response.data.Result.form_submission, isolatedTags, function (schemaDetails) {
                                 if (schemaDetails) {
                                     scope.schema = schemaDetails.schema;
                                     scope.form = schemaDetails.form;
