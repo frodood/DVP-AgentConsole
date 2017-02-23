@@ -506,6 +506,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 }
             };
 
+
             scope.getIntegrationMetaData = function () {
                 integrationAPIService.getIntegrationURLMetaData('PROFILE')
                     .then(function (data) {
@@ -868,6 +869,75 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.ticket.selectedTags = [];
             scope.newAddTags = [];
             scope.postTags = [];
+
+            var findFormForCompanyOrTag = function(isolatedTags, callback)
+            {
+                ticketService.getFormByIsolatedTag(isolatedTags).then(function(tagForm)
+                {
+                    if(tagForm.Result && tagForm.Result.length > 0)
+                    {
+
+                        callback(null, tagForm.Result[0].dynamicForm);
+                    }
+                    else
+                    {
+                        ticketService.getFormsForCompany().then(function(compForm)
+                        {
+                            if(compForm.Result.ticket_form)
+                            {
+                                callback(null, compForm.Result.ticket_form);
+                            }
+                            else
+                            {
+                                callback(null, null);
+                            }
+
+                        }).catch(function(err)
+                        {
+                            callback(err, null);
+                        })
+                    }
+
+
+                }).catch(function(err)
+                {
+                    callback(err, null);
+                })
+            };
+
+            scope.onIsolatedTagRemoved = function()
+            {
+                var schema = {
+                    type: "object",
+                    properties: {}
+                };
+
+                var form = [];
+
+                var arrMap = scope.postTags.map(function(item)
+                {
+                    return item.name;
+                })
+
+                findFormForCompanyOrTag(arrMap, function(err, ticket_form)
+                {
+                    if(ticket_form)
+                    {
+                        buildFormSchema(schema, form, ticket_form.fields);
+                        //var currentForm = response.Result.ticket_form;
+
+                        /*form.push({
+                         type: "submit",
+                         title: "Save"
+                         });*/
+
+                        scope.schemaw = schema;
+                        scope.formw = form;
+                        scope.modelw = {};
+                    }
+                });
+            };
+
             var setToDefault = function () {
                 var ticTag = undefined;
                 angular.forEach(scope.newAddTags, function (item) {
@@ -881,6 +951,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 if (ticTag) {
                     scope.postTags.push({name: ticTag});
                     scope.postTags = removeDuplicate(scope.postTags);
+
+                    scope.onIsolatedTagRemoved();
+
                 }
 
                 scope.newAddTags = [];
