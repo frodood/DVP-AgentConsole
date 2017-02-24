@@ -96,14 +96,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.callLogEmpty = true;
     $scope.callLogSessionId = uuid4.generate();
     $scope.addToCallLog = function (number, type) {
-        var calltype = 'MissCall';
+        var calltype = 'Missed Call';
         $scope.callLogEmpty = false;
         if (type) {
             calltype = type;
         }
         else {
             if ($scope.callLog[$scope.callLogSessionId]) {
-                calltype = 'Answer';
+                calltype = 'Answered';
             }
         }
         $scope.callLog[$scope.callLogSessionId] = {
@@ -313,7 +313,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.updateCallStatus('Dialing');
             $scope.$broadcast('timer-set-countdown');
             $scope.callLogSessionId = uuid4.generate();
-            $scope.addToCallLog($scope.call.number, "outbound");
+            $scope.addToCallLog($scope.call.number, "Outbound");
         },
         endCall: function () {
             sipHangUp();
@@ -633,7 +633,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     console.info("Reject Call...........................");
                     rejectCall();
                     $scope.callLogSessionId = uuid4.generate();
-                    $scope.addToCallLog($scope.call.number, 'Reject');
+                    $scope.addToCallLog($scope.call.number, 'Rejected');
                     return;
                 }
 
