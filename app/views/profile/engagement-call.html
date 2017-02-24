@@ -112,16 +112,14 @@
                                                     <th>Class</th>
                                                     <th>Type</th>
                                                     <th>Category</th>
-                                                    <th>Time</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr ng-repeat="ivr in ivrDetails">
+                                                <tr class="ivr-row" ng-repeat="ivr in ivrDetails">
                                                     <th> {{ivr.EventName}}</th>
                                                     <td>{{ivr.EventClass}}</td>
                                                     <td>{{ivr.EventCategory}}</td>
                                                     <td>{{ivr.EventType}}</td>
-                                                    <td>{{ivr.EventTime}}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>
