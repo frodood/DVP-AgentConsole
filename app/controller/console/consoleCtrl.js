@@ -90,6 +90,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.contactObj = response.Result;
         });
     };
+
+
+    $scope.callLog={};
+    $scope.addToCallLog=function(number,type)
+    {
+        var calltype = 'MissCall';
+        if(type){
+            calltype = type;
+        }
+        else{
+            if($scope.callLog[number]){
+                calltype = 'Answer';
+            }
+        }
+        $scope.callLog[number]={'number':number,'calltype':calltype};
+    };
+
     $scope.consoleTopMenu = {
         openTicket: function () {
             $('#mainTicketWrapper').addClass(' display-block fadeIn').removeClass('display-none zoomOut');
@@ -223,6 +240,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
+
+
     var timeReset = function () {
 
     };
@@ -275,6 +294,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sipCall('call-audio', callNumber);
             phoneFuncion.updateCallStatus('Dialing');
             $scope.$broadcast('timer-set-countdown');
+            $scope.addToCallLog($scope.call.number,"outbound");
         },
         endCall: function () {
             sipHangUp();
@@ -511,6 +531,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.ShowIncomeingNotification(false);
                     $scope.startCallTime();
 
+                    $scope.addToCallLog($scope.call.number,undefined);
                 }
             }
             catch (ex) {
@@ -592,6 +613,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if ($scope.isAcw || $scope.freeze) {
                     console.info("Reject Call...........................");
                     rejectCall();
+                    $scope.addToCallLog($scope.call.number,'Reject');
                     return;
                 }
 
@@ -605,6 +627,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 /*addCallToHistory(sRemoteNumber, 2);*/
                 phoneFuncion.updateCallStatus('Incoming Call');
                 $scope.veeryPhone.autoAnswer();
+                $scope.addToCallLog($scope.call.number,undefined);
             }
             catch (ex) {
                 console.error(ex.message);
@@ -710,7 +733,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }, 500);
             $('#contactBtnWrp').addClass('display-none');
             $('#phoneBtnWrapper').removeClass('display-none');
+            this.hideCallLogs();
         },
+        showCallLogs: function () {
+            $('#calllogs').animate({
+                left: '0'
+            }, 500);
+            $('#contactBtnWrp').removeClass('display-none');
+            $('#phoneBtnWrapper').addClass('display-none');
+        },
+        hideCallLogs: function () {
+            $('#calllogs').animate({
+                left: '-235'
+            }, 500);
+            $('#contactBtnWrp').addClass('display-none');
+            $('#phoneBtnWrapper').removeClass('display-none');
+        }
     };
 
 
@@ -3144,7 +3182,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             schema.properties[fieldItem.field].enum.push(enumVal.name);
                             formObj.titleMap.push(
                                 {
-                                    "value": enumVal.id,
+                                    "value": enumVal.name,
                                     "name": enumVal.name
                                 }
                             )
@@ -3283,7 +3321,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             schema.properties[fieldItem.field].enum.push(enumVal.name);
                             formObj.titleMap.push(
                                 {
-                                    "value": enumVal.id,
+                                    "value": enumVal.name,
                                     "name": enumVal.name
                                 });
                         })
