@@ -1081,7 +1081,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 }
 
 
-            }
+            };
 
             scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
@@ -1114,6 +1114,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         scope.newAddTags = [];
                         addDynamicDataToTicket(ticket);
                         scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
+                        scope.postTags = [];
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
