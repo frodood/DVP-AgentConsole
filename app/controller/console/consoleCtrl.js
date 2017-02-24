@@ -3182,7 +3182,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             schema.properties[fieldItem.field].enum.push(enumVal.name);
                             formObj.titleMap.push(
                                 {
-                                    "value": enumVal.id,
+                                    "value": enumVal.name,
                                     "name": enumVal.name
                                 }
                             )
@@ -3321,7 +3321,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             schema.properties[fieldItem.field].enum.push(enumVal.name);
                             formObj.titleMap.push(
                                 {
-                                    "value": enumVal.id,
+                                    "value": enumVal.name,
                                     "name": enumVal.name
                                 });
                         })
