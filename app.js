@@ -39,7 +39,7 @@ var baseUrls = {
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
     'ipMessageURL': 'http://192.168.0.22:8889', //'http://ipmessagingservice.app.veery.cloud',
     'qaModule':'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-    'contactUrl': 'http://localhost:8827/DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
+    'contactUrl': 'http://contacts.app.veery.cloud//DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
 
 };
 
