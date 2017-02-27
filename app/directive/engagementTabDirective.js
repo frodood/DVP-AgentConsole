@@ -1196,6 +1196,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     scope.showCreateTicket = !scope.showCreateTicket;
                     if(scope.showCreateTicket)
                     {
+                        scope.onIsolatedTagRemoved();
                         scope.loadMyAppMetaData();
                     }
                 } else {
