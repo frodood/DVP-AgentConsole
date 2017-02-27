@@ -6645,17 +6645,23 @@ ul.renote-color-btn > li {
     color: #7d7979 !important;
 }
 
-
 .glyphicon.fa.fa-star {
     color: #f0ea13 !important;
     font-size: 25px;
 }
+
 .glyphicon.fa.fa-star-o {
     color: #f0ea13 !important;
     font-size: 25px;
 }
+
 .phone-book-tab > ul {
     border-bottom: 0px solid #ddd;
+}
+
+.phone-book-tab > .tab-content {
+    min-height: 187px;
+    max-height: 250px;
 }
 
 .phone-book-tab > ul > li {
