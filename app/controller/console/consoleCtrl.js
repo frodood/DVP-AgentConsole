@@ -92,19 +92,38 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $scope.callLog={};
-    $scope.addToCallLog=function(number,type)
-    {
-        var calltype = 'MissCall';
-        if(type){
+    $scope.callLog = {};
+    $scope.callLogEmpty = true;
+    $scope.callLogSessionId = uuid4.generate();
+    $scope.addToCallLog = function (number, type) {
+        var calltype = 'Missed Call';
+        $scope.callLogEmpty = false;
+        if (type) {
             calltype = type;
         }
-        else{
-            if($scope.callLog[number]){
-                calltype = 'Answer';
+        else {
+            if ($scope.callLog[$scope.callLogSessionId]) {
+                calltype = 'Answered';
             }
         }
-        $scope.callLog[number]={'number':number,'calltype':calltype};
+        $scope.callLog[$scope.callLogSessionId] = {
+            'number': number,
+            'calltype': calltype,
+            'time': moment().format('LT')
+        };
+    };
+
+    $scope.makeCallHistory = function (caller, type) {
+        //contact.number
+        if (type == "log") {
+            //caller.number
+            $scope.call.number = caller.number;
+        } else {
+            //caller.number
+            $scope.call.number = caller.contact;
+        }
+
+        $scope.veeryPhone.hidePhoneBook();
     };
 
     $scope.consoleTopMenu = {
@@ -241,7 +260,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-
     var timeReset = function () {
 
     };
@@ -294,7 +312,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sipCall('call-audio', callNumber);
             phoneFuncion.updateCallStatus('Dialing');
             $scope.$broadcast('timer-set-countdown');
-            $scope.addToCallLog($scope.call.number,"outbound");
+            $scope.callLogSessionId = uuid4.generate();
+            $scope.addToCallLog($scope.call.number, "Outbound");
         },
         endCall: function () {
             sipHangUp();
@@ -531,7 +550,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.ShowIncomeingNotification(false);
                     $scope.startCallTime();
 
-                    $scope.addToCallLog($scope.call.number,undefined);
+                    $scope.addToCallLog($scope.call.number, undefined);
                 }
             }
             catch (ex) {
@@ -613,7 +632,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if ($scope.isAcw || $scope.freeze) {
                     console.info("Reject Call...........................");
                     rejectCall();
-                    $scope.addToCallLog($scope.call.number,'Reject');
+                    $scope.callLogSessionId = uuid4.generate();
+                    $scope.addToCallLog($scope.call.number, 'Rejected');
                     return;
                 }
 
@@ -627,7 +647,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 /*addCallToHistory(sRemoteNumber, 2);*/
                 phoneFuncion.updateCallStatus('Incoming Call');
                 $scope.veeryPhone.autoAnswer();
-                $scope.addToCallLog($scope.call.number,undefined);
+                $scope.addToCallLog($scope.call.number, undefined);
             }
             catch (ex) {
                 console.error(ex.message);
@@ -736,11 +756,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             this.hideCallLogs();
         },
         showCallLogs: function () {
-            $('#calllogs').animate({
-                left: '0'
-            }, 500);
-            $('#contactBtnWrp').removeClass('display-none');
-            $('#phoneBtnWrapper').addClass('display-none');
+            if (!$scope.isShowLog) {
+                $('#calllogs').animate({
+                    left: '0'
+                }, 500);
+            } else {
+                $('#calllogs').animate({
+                    left: '-235'
+                }, 500);
+            }
+            $scope.isShowLog = !$scope.isShowLog;
         },
         hideCallLogs: function () {
             $('#calllogs').animate({
@@ -750,7 +775,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#phoneBtnWrapper').removeClass('display-none');
         }
     };
-
+    $scope.isShowLog = false;
 
     var phoneFuncion = {
         hideAllBtn: function () {
@@ -786,6 +811,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideIvrList();
             phoneFuncion.hideIvrBtn();
             phoneFuncion.hideSwap();
+            $scope.callLogSessionId = uuid4.generate();
         },
         freezeBtn: function () {
             $scope.isFreezeReq = true;
@@ -1058,13 +1084,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             });
         }
+        else {
+            $scope.sayIt("you are receiving " + values[6] + " call");
+        }
         $scope.call.number = notifyData.channelFrom;
         $scope.call.skill = notifyData.skill;
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
 
-        $scope.sayIt("you are receiving " + values[6] + " call");
+
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
 

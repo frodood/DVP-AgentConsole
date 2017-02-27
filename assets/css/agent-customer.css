@@ -1279,7 +1279,7 @@ tr.ivr-tbl:nth-child(even) {
 }
 
 .ivr-row > .th {
-  font-size: 10px;
+    font-size: 10px;
 }
 
 tr.ivr-tbl {
@@ -6558,15 +6558,14 @@ ul.renote-color-btn > li {
 
 .contact-nf-wrp > i {
     font-size: 72px;
-    color: #f7f5f5;
+    color: #e6e6e6;
 }
 
 .contact-nf-wrp > h5 {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 20px;
-    color: #f7f5f5;
     text-transform: lowercase;
-    color: #f7f5f5;
+    color: #e6e6e6;
 }
 
 .contact-info-wr {
@@ -6622,6 +6621,28 @@ ul.renote-color-btn > li {
     width: 35px;
     height: 35px;
     border-radius: 50%;
+}
+
+.c-icon-wrp {
+    padding-left: 16px;
+}
+
+.c-time {
+    position: absolute;
+    top: 7px;
+    right: 15px;
+    font-size: 8px;
+    color: #c5c5c5;
+}
+
+.MissCall {
+    color: #ec0d0d !important;;
+}
+
+.outboundCall,
+.Answer,
+.Reject {
+    color: #7d7979 !important;
 }
 
 /* fallback  Ratings*/
