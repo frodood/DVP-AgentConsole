@@ -728,10 +728,6 @@
                              ng-click="veeryPhone.showPhoneBook();"
                              id="contactList" title="Contact List">
                         </div>
-                        <div class="phone-sm-btn  veery-font-1-time"
-                             ng-click="veeryPhone.showCallLogs();"
-                             id="showCallLogs" title="Call Logs">
-                        </div>
                         <!-- more btn -->
                         <!--<div id="morebtn" class="phone-sm-btn phone-sm-bn-p8" title="More"
                              ng-click="veeryPhone.showOnlineBtn();">
@@ -782,6 +778,10 @@
                     </div>
 
                     <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none">
+                        <div class="phone-sm-btn  veery-font-1-time"
+                             ng-click="veeryPhone.showCallLogs();"
+                             id="showCallLogs" title="Call Logs">
+                        </div>
                         <!-- mute/unmiute hold button -->
                         <div class="phone-sm-btn " id="speakerButton" title="Mute Call"
                              ng-click="veeryPhone.muteCall();">
