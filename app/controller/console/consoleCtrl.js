@@ -91,8 +91,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
-
-    $scope.callLog = {};
+var i =1;
+    $scope.sessionData = {};
+    $scope.callLog = [];
     $scope.callLogEmpty = true;
     $scope.callLogSessionId = uuid4.generate();
     $scope.addToCallLog = function (number, type) {
@@ -102,15 +103,39 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             calltype = type;
         }
         else {
-            if ($scope.callLog[$scope.callLogSessionId]) {
+            if ($scope.sessionData[$scope.callLogSessionId]) {
                 calltype = 'Answered';
             }
         }
-        $scope.callLog[$scope.callLogSessionId] = {
+
+        $scope.sessionData[$scope.callLogSessionId] = {
             'number': number,
-            'calltype': calltype,
-            'time': moment().format('LT')
+            'calltype': calltype
         };
+
+        $scope.callLog.push({
+            key: $scope.callLogSessionId,
+            count : i++,
+            data: {
+                'number': number,
+                'calltype': calltype,
+                'time': moment().format('LT')
+            }
+        });
+
+
+        /*$scope.colors = [];
+        angular.forEach(occurrences, function(value, key) {
+            $scope.colors.push({
+                color: key,
+                count : value,
+                data: {
+                    'number': value,
+                    'calltype': 'calltype'
+                }
+            });
+        });*/
+
     };
 
     $scope.makeCallHistory = function (caller, type) {

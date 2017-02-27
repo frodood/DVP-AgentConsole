@@ -499,23 +499,23 @@
             distance: '10px',
             railColor: '#c1c1c5',
             railBorderRadius: 10}">
-                        <div class="c-info-details c-icon-wrp" ng-click="makeCallHistory(clog,'log')"
-                             ng-repeat="clog in callLog">
+                        <div class="c-info-details c-icon-wrp" ng-click="makeCallHistory(clog.data,'log')"
+                             ng-repeat="clog in callLog| orderBy:'-count'">
                             <div class="c-img">
-                                <i ng-if="clog.calltype=='Outbound'" class="main-icon-2-telephone-6 outboundCall"></i>
-                                <i ng-if="clog.calltype=='Answered'" class="main-icon-2-telephone-8 Answer"></i>
-                                <i ng-if="clog.calltype=='Rejected'" class="main-icon-2-telephone-5 Reject"></i>
-                                <i ng-if="clog.calltype=='Missed Call'" class="main-icon-2-telephone-7 MissCall"></i>
+                                <i ng-if="clog.data.calltype=='Outbound'" class="main-icon-2-telephone-6 outboundCall"></i>
+                                <i ng-if="clog.data.calltype=='Answered'" class="main-icon-2-telephone-8 Answer"></i>
+                                <i ng-if="clog.data.calltype=='Rejected'" class="main-icon-2-telephone-5 Reject"></i>
+                                <i ng-if="clog.data.calltype=='Missed Call'" class="main-icon-2-telephone-7 MissCall"></i>
                             </div>
                             <div class="c-details">
-                                <div class="c-name " ng-class="clog.calltype=='Missed Call'?'MissCall':''">
-                                    {{clog.calltype}}
+                                <div class="c-name " ng-class="clog.data.calltype=='Missed Call'?'MissCall':''">
+                                    {{clog.data.calltype}}
                                 </div>
-                                <div class="c-no" ng-class="clog.calltype=='Missed Call'?'MissCall':''">
-                                    {{clog.number}}
+                                <div class="c-no" ng-class="clog.data.calltype=='Missed Call'?'MissCall':''">
+                                    {{clog.data.number}}
                                 </div>
-                                <div class="c-time" ng-class="clog.calltype=='Missed Call'?'MissCall':''">
-                                    {{clog.time}}
+                                <div class="c-time" ng-class="clog.data.calltype=='Missed Call'?'MissCall':''">
+                                    {{clog.data.time}}
                                 </div>
                             </div>
                         </div>
