@@ -91,14 +91,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
-var i =1;
+    var i = 1;
     $scope.sessionData = {};
     $scope.callLog = [];
-    $scope.callLogEmpty = true;
+    $scope.callLogEmpty = false;
     $scope.callLogSessionId = uuid4.generate();
     $scope.addToCallLog = function (number, type) {
         var calltype = 'Missed Call';
-        $scope.callLogEmpty = false;
+        $scope.callLogEmpty = true;
         if (type) {
             calltype = type;
         }
@@ -115,7 +115,7 @@ var i =1;
 
         $scope.callLog.push({
             key: $scope.callLogSessionId,
-            count : i++,
+            count: i++,
             data: {
                 'number': number,
                 'calltype': calltype,
@@ -125,16 +125,16 @@ var i =1;
 
 
         /*$scope.colors = [];
-        angular.forEach(occurrences, function(value, key) {
-            $scope.colors.push({
-                color: key,
-                count : value,
-                data: {
-                    'number': value,
-                    'calltype': 'calltype'
-                }
-            });
-        });*/
+         angular.forEach(occurrences, function(value, key) {
+         $scope.colors.push({
+         color: key,
+         count : value,
+         data: {
+         'number': value,
+         'calltype': 'calltype'
+         }
+         });
+         });*/
 
     };
 
@@ -229,6 +229,12 @@ var i =1;
             left: '0'
         }, 500);
     };
+
+    //contact list tab panel
+    $scope.contactTab = [
+        {title: 'Contact', content: 'contact'},
+        {title: 'Recent', content: 'log'}
+    ];
 
     $scope.PhoneOffline = function () {
         //is loading done
@@ -781,21 +787,21 @@ var i =1;
             this.hideCallLogs();
         },
         showCallLogs: function () {
-            if (!$scope.isShowLog) {
-                $('#calllogs').animate({
-                    left: '0'
-                }, 500);
-            } else {
-                $('#calllogs').animate({
-                    left: '-235'
-                }, 500);
-            }
-            $scope.isShowLog = !$scope.isShowLog;
+            // if (!$scope.isShowLog) {
+            //     $('#calllogs').animate({
+            //         left: '0'
+            //     }, 500);
+            // } else {
+            //     $('#calllogs').animate({
+            //         left: '-235'
+            //     }, 500);
+            // }
+            // $scope.isShowLog = !$scope.isShowLog;
         },
         hideCallLogs: function () {
-            $('#calllogs').animate({
-                left: '-235'
-            }, 500);
+            // $('#calllogs').animate({
+            //     left: '-235'
+            // }, 500);
             $('#contactBtnWrp').addClass('display-none');
             $('#phoneBtnWrapper').removeClass('display-none');
         }
