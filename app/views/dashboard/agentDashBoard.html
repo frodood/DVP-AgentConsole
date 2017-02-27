@@ -157,7 +157,8 @@
                         <div class="col-lg-6">
                             <h5 class="dark-header">RECENT ACTIVITY - TICKET</h5>
                             <div class="dark-recent-wrap">
-                                <div class="recent-activity" ng-repeat="ticket in recentTickets.tickets">
+                                <div class="recent-activity"
+                                     ng-repeat="ticket in recentTickets.tickets  | orderBy:'-updated_at'">
                                     <div class="col-lg-8">
                                         <div class="pull-left recent-activity-left">
                                             {{ ticket.description | limitTo: 60 }}{{ticket.description.length > 60 ?
@@ -183,7 +184,8 @@
                         </div>
                         <div class="col-lg-6">
                             <h5 class="dark-header">RECENT ACTIVITY - ENGAGEMENT</h5>
-                            <div class="recent-activity" ng-repeat="eng in recentEngagements">
+                            <div class="recent-activity"
+                                 ng-repeat="eng in recentEngagements | orderBy:'-updated_at'">
                                 <div class="col-lg-8">
                                     <div class="pull-left recent-activity-left">
                                         {{eng.channel}}
