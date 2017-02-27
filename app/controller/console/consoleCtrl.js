@@ -756,11 +756,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             this.hideCallLogs();
         },
         showCallLogs: function () {
-            $('#calllogs').animate({
-                left: '0'
-            }, 500);
-            $('#contactBtnWrp').removeClass('display-none');
-            $('#phoneBtnWrapper').addClass('display-none');
+            if (!$scope.isShowLog) {
+                $('#calllogs').animate({
+                    left: '0'
+                }, 500);
+            } else {
+                $('#calllogs').animate({
+                    left: '-235'
+                }, 500);
+            }
+            $scope.isShowLog = !$scope.isShowLog;
         },
         hideCallLogs: function () {
             $('#calllogs').animate({
@@ -770,7 +775,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#phoneBtnWrapper').removeClass('display-none');
         }
     };
-
+    $scope.isShowLog = false;
 
     var phoneFuncion = {
         hideAllBtn: function () {
@@ -1079,7 +1084,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             });
         }
-        else{
+        else {
             $scope.sayIt("you are receiving " + values[6] + " call");
         }
         $scope.call.number = notifyData.channelFrom;
@@ -1087,7 +1092,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
-
 
 
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
