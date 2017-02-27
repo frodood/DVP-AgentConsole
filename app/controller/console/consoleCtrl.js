@@ -781,11 +781,16 @@ var i =1;
             this.hideCallLogs();
         },
         showCallLogs: function () {
-            $('#calllogs').animate({
-                left: '0'
-            }, 500);
-            $('#contactBtnWrp').removeClass('display-none');
-            $('#phoneBtnWrapper').addClass('display-none');
+            if (!$scope.isShowLog) {
+                $('#calllogs').animate({
+                    left: '0'
+                }, 500);
+            } else {
+                $('#calllogs').animate({
+                    left: '-235'
+                }, 500);
+            }
+            $scope.isShowLog = !$scope.isShowLog;
         },
         hideCallLogs: function () {
             $('#calllogs').animate({
@@ -795,7 +800,7 @@ var i =1;
             $('#phoneBtnWrapper').removeClass('display-none');
         }
     };
-
+    $scope.isShowLog = false;
 
     var phoneFuncion = {
         hideAllBtn: function () {
@@ -1104,7 +1109,7 @@ var i =1;
                 }
             });
         }
-        else{
+        else {
             $scope.sayIt("you are receiving " + values[6] + " call");
         }
         $scope.call.number = notifyData.channelFrom;
@@ -1112,7 +1117,6 @@ var i =1;
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
-
 
 
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
