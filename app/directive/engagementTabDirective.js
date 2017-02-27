@@ -57,6 +57,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.availableTags = scope.tagCategoryList;
 
             scope.integrationAPIList = [];
+            scope.currentTicketForm = null;
 
             /*if(!scope.profileDetail){
              scope.profileDetail = {};
@@ -923,6 +924,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 {
                     if(ticket_form)
                     {
+                        scope.currentTicketForm = ticket_form;
                         buildFormSchema(schema, form, ticket_form.fields);
                         //var currentForm = response.Result.ticket_form;
 
@@ -934,6 +936,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         scope.schemaw = schema;
                         scope.formw = form;
                         scope.modelw = {};
+                    }
+                    else
+                    {
+                        scope.currentTicketForm = null;
                     }
                 });
             };
@@ -1144,7 +1150,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 var obj = {
                     fields: arr,
                     reference: ticket._id,
-                    form: scope.schemaResponseNewTicket.currentForm.name
+                    form: scope.currentTicketForm.name
                 };
                 ticketService.createFormSubmissionData(obj).then(function (response) {
                     //tag submission to ticket
