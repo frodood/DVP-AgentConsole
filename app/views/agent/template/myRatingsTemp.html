@@ -13,8 +13,14 @@
                      enabled="{{ scrollEnabled }}">
 
                     <div ng-repeat="(key,value) in sectionArray" ng-init="ratingData = RatingResultResolve(value)">
-                        <h4 style="color: grey">{{value.name}}</h4>
-                        <span title="Rating : {{ratingData.displayValue}}"><jk-rating-stars rating="ratingData.starValue" max-rating="10" read-only="true"></jk-rating-stars></span>
+                        <h4 style="color: white">{{value.name}}</h4>
+                        <span state-on="'fa fa-star'"
+                              state-off="'fa fa-star-o'" uib-rating ng-model="ratingData.starValue" max="10" read-only="true"
+                              aria-labelledby="default-rating"> </span>
+                        <span
+                              title="Rating : {{ratingData.displayValue}}" ><!--<jk-rating-stars rating="ratingData.starValue" max-rating="10" read-only="true"></jk-rating-stars>-->
+
+                        </span >
 
 
 
