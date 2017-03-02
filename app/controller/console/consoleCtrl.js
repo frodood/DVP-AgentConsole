@@ -2437,6 +2437,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
         }
     };
+    /*$scope.setExtention = function (selectedUser) {
+
+        try {
+            var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
+            if (angular.isArray(concurrencyInfos)) {
+                var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
+                $scope.call.number = RefInfo.Extention;
+            }
+            else {
+                $scope.showAlert('Error', 'error', "Fail To Find Extention.");
+            }
+        }
+        catch (ex) {
+            $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
+        }
+    };*/
     $scope.closeMessage = function () {
         divModel.model('#sendMessage', 'display-none');
     };
