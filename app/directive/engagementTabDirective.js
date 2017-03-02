@@ -1035,7 +1035,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                var obj = {
                    fields: arr,
                    reference: ticket._id,
-                   form: scope.currentForm.name
+                   form: scope.schemaResponseNewTicket.currentForm.name
                };
                ticketService.createFormSubmissionData(obj).then(function (response) {
                    //tag submission to ticket
