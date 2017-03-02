@@ -1149,7 +1149,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     }
                 }
 
-<<<<<<< HEAD
                 var obj = {
                     fields: arr,
                     reference: ticket._id,
@@ -1170,28 +1169,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     else {
                         scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
                     }
-=======
-               var obj = {
-                   fields: arr,
-                   reference: ticket._id,
-                   form: scope.schemaResponseNewTicket.currentForm.name
-               };
-               ticketService.createFormSubmissionData(obj).then(function (response) {
-                   //tag submission to ticket
-                   if (response && response.Result) {
-                       ticketService.mapFormSubmissionToTicket(response.Result._id, ticket._id).then(function (responseMap) {
-                           //tag submission to ticket
-                           //scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
-console.log('Ticket other data saved successfully');
-                       }).catch(function (err) {
-                           //scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
-                           console.log('Ticket other data save failed');
-                       });
-                   }
-                   else {
-                       scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
-                   }
->>>>>>> master
+
 
 
                 }).catch(function (err) {
