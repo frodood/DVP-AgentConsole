@@ -8,7 +8,7 @@
         <div class="animated pulse  login-body">
             <form name="loginFrm" novalidate autocomplete="off">
                 <div class="form-group p-bottom-15">
-                    <label for="usersName">USER NAME</label>
+                    <label for="usersName">USERNAME</label>
                      <span class="inline-block validation-on pull-right"
                            ng-show="loginFrm.userName.$invalid &&
                            !loginFrm.userName.$pristine">
@@ -35,9 +35,9 @@
 
                 </div>
             </form>
-            <div class="forget-pwd">
-                forget password ?
-            </div>
+            <!--<div class="forget-pwd">-->
+                <!--forget password ?-->
+            <!--</div>-->
         </div>
         <div ng-if="!isLogin" ng-click="onClickLogin()" class="login-btn">
             LOGIN

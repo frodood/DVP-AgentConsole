@@ -210,7 +210,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     /*productivity*/
     $scope.doughnutData = {
-        labels: ["Acw", "Break", "OnCall", "Idle", "Hold"],
+        labels: ["ACW", "Break", "OnCall", "Idle", "Hold"],
 
         datasets: [
             {

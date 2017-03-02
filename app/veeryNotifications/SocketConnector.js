@@ -78,6 +78,11 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                     notificationEvent.OnMessageReceived(data);
             });
 
+            socket.on('notice', function (data) {
+                data.messageType="notice";
+                alert("Notice : ",data.Message)
+            });
+
             socket.on('broadcast', function (data) {
                 //document.getElementById("lblNotification").innerHTML = data;
                 //Notification.info({message: data, delay: 500, closeOnClick: true});

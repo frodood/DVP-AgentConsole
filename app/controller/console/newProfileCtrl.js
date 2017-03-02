@@ -12,9 +12,7 @@ agentApp.controller('newProfileCtrl', function ($scope, $http) {
     $scope.myCroppedImage = '';
     $scope.cropImageURL = null;
 
-    $scope.viewCropArea = function () {
-        $scope.isShowCrop = !$scope.isShowCrop;
-    };
+
     $scope.cropImage = function () {
         $scope.cropImageURL = $scope.myCroppedImage;
         $scope.isShowCrop = !$scope.isShowCrop;
