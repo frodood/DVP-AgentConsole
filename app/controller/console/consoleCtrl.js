@@ -1110,7 +1110,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if(values.length > 8){
 
             notifyData.channel = values[8];
-            notifyData.channelFrom = values[4];
+            if(notifyData.channel == 'skype')
+                notifyData.channelFrom = values[4];
 
         }
 
@@ -1126,7 +1127,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         else {
             $scope.sayIt("you are receiving " + values[6] + " call");
         }
-        $scope.call.number = notifyData.channelFrom;
+        //$scope.call.number = notifyData.channelFrom;
         $scope.call.skill = notifyData.skill;
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
