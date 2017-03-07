@@ -2944,6 +2944,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             },
             getResourceState: function () {
                 resourceService.GetResource(authService.GetResourceId()).then(function (data) {
+                    if(data && data.IsSuccess){
+                        if(data.Result && !data.Result.obj){
+                            resourceService.RegisterWithArds(authService.GetResourceId()).then(function (data) {
+                                console.log('registerdWithArds' + data);
+                            }, function (error) {
+                                console.log('Error- registerdWithArds');
+                            });
+                        }
+                    }
+
                     console.log(data);
                 }, function (error) {
                     authService.IsCheckResponse(error);
