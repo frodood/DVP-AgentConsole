@@ -1106,6 +1106,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: values[1]
         };
 
+        //agent_found|c9a0ee97-e3aa-45d2-838d-1aeafc026923|60|3726027252|sukitha.chanaka|99051000278670|ClientSupport|inbound|skype
+        if(values.length > 8){
+
+            notifyData.channel = values[8];
+            notifyData.channelFrom = values[4];
+
+        }
+
         var index = notifyData.sessionId;
         if (notifyData.direction.toLowerCase() === 'outbound') {
             $scope.tabs.filter(function (item) {
