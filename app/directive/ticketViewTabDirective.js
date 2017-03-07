@@ -1242,6 +1242,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
             scope.addComment = function (message, mode) {
 
+                scope.isCommentCompleted=false;
                 scope.newComment = message;
 
 
@@ -1301,8 +1302,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     ticketService.AddNewCommentToTicket(scope.ticket._id, commentObj).then(function (response) {
 
+                        scope.isCommentCompleted=true;
 
                         if (response.data.IsSuccess) {
+
                             scope.newComment = '';
                             response.data.Result.author = profileDataParser.myProfile;
                             response.data.Result.author_avatar = profileDataParser.myProfile.avatar;
@@ -1315,20 +1318,24 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             scope.isNewComment = false;
 
 
+
                         }
                         else {
                             console.log("Error new comment ", response);
                             scope.showAlert("New Comment", "error", "Comment adding failed");
+
                         }
 
                     }), function (error) {
                         console.log("Error new comment ", error);
                         scope.showAlert("New Comment", "error", "Comment adding failed");
+                        scope.isCommentCompleted=true;
                     };
 
                 }
                 else {
                     scope.showAlert("Invalid Comment", "error", "Invalid Comment data");
+                    scope.isCommentCompleted=true;
                 }
 
 
