@@ -20,17 +20,17 @@
                             <fieldset class="btn-warp">
                                 <button id="mybtn" class="btn btn-default2" ng-disabled="!(ticketList.doneSt && ticketList.toDoSt && ticketList.inProgressSt)"
                                       ng-class="{'selected-this-btn':ticketList.loadListStatus=='MY'}"
-                                      ng-click="switchTickets('MY')">my ticket</button>
+                                      ng-click="switchTickets('MY')">My Tickets</button>
                             </fieldset>
                             <fieldset class="btn-warp">
                                 <button id="grpbtn" class="btn btn-default2" ng-disabled="!(ticketList.doneSt && ticketList.toDoSt && ticketList.inProgressSt)"
                                       ng-class="{'selected-this-btn':ticketList.loadListStatus=='GROUP'}"
-                                      ng-click="switchTickets('GROUP')">group</button>
+                                      ng-click="switchTickets('GROUP')">Group</button>
                             </fieldset>
                             <fieldset class="btn-warp ">
                                 <button class="btn btn-default btn-close"
                                       ng-click="closeTicketInbox()"
-                                      id="closeTicket">close</button>
+                                      id="closeTicket">Close</button>
                             </fieldset>
                         </div>
                     </div>
@@ -61,7 +61,9 @@
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/defaultProfile.png"
                                              ng-src="{{todo.assignee.avatar}}"
-                                             ng-src="">
+                                             ng-src=""
+                                             title="{{todo.displayname}}">
+
                                     </div>
 
                                 </div>
@@ -131,8 +133,10 @@
                                  ng-repeat="inprogress in ticketList.inProgress">
                                 <div class="col-lg-3">
                                     <div class="ticket-icon user-list">
-                                        <img src="assets/img/avatar/defaultProfile.png"
-                                             ng-src="{{inprogress.assignee.avatar}}" title={{inprogress.assignee.name?inprogress.assignee.name:inprogress.assignee_group.name}}>
+                                        <img id="inprogpic" src="assets/img/avatar/defaultProfile.png"
+                                             ng-src="{{inprogress.assignee.avatar}}" title="{{inprogress.displayname}}">
+                                            <!-- ng-src="{{inprogress.assignee.avatar}}" title={{inprogress.assignee.name?inprogress.assignee.name:inprogress.assignee_group.name}}>-->
+
 
 
                                     </div>
@@ -205,7 +209,8 @@
                                     <div class="ticket-icon user-list  ">
                                         <img src="assets/img/avatar/defaultProfile.png"
                                              ng-src="{{done.assignee.avatar}}"
-                                             ng-src="{{done.assignee.avatar}}">
+                                             ng-src="{{done.assignee.avatar}}"
+                                             title="{{done.displayname}}" >
                                     </div>
                                 </div>
                                 <div class="col-lg-9">

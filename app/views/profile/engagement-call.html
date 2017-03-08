@@ -112,16 +112,14 @@
                                                     <th>Class</th>
                                                     <th>Type</th>
                                                     <th>Category</th>
-                                                    <th>Time</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr ng-repeat="ivr in ivrDetails">
+                                                <tr class="ivr-row" ng-repeat="ivr in ivrDetails">
                                                     <th> {{ivr.EventName}}</th>
                                                     <td>{{ivr.EventClass}}</td>
                                                     <td>{{ivr.EventCategory}}</td>
                                                     <td>{{ivr.EventType}}</td>
-                                                    <td>{{ivr.EventTime}}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -360,12 +358,12 @@
                                                                             contact
                                                                             type
                                                                         </option>
-                                                                        <option>Call</option>
-                                                                        <option>Email</option>
-                                                                        <option>sms</option>
-                                                                        <option>Facebook</option>
-                                                                        <option>Twitter</option>
-                                                                        <option>Skype</option>
+                                                                        <option>phone</option>
+                                                                        <option>email</option>
+                                                                        <option>facebook</option>
+                                                                        <option>twitter</option>
+                                                                        <option>skype</option>
+                                                                        <option>viber</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -384,8 +382,8 @@
                                                     <!-- end -->
                                                     <div>
                                                         <div ng-click="deleteSocialContact('facebook');"
-                                                                class="prn2 header-round-icon"
-                                                                ng-show="profileDetail.facebook">
+                                                             class="prn2 header-round-icon"
+                                                             ng-show="profileDetail.facebook">
                                                             <div class="icon-left">
                                                                 <i class="fa fa-facebook "></i>
                                                             </div>
@@ -467,14 +465,21 @@
                                                                 </small>
                                                             </div>
                                                         </div>
-                                                        <div class="prn2 header-round-icon" ng-click="deleteContact(c.contact)"
-                                                             ng-repeat="c in profileDetail.contacts" >
-                                                            <div class="icon-left">
-                                                                <i class="fa fa-phone"></i>
+                                                        <div class="prn2 header-round-icon"
+                                                             ng-click="deleteContact(c.contact)"
+                                                             ng-repeat="c in profileDetail.contacts">
+                                                            <div class="icon-left" ng-if="c.contact!=''">
+                                                                <i class=""
+                                                                   ng-class="{'fa fa-phone':c.type==' ',
+                                                                'fa fa-twitter':c.type=='twitter',
+                                                                'fa fa-facebook':c.type=='facebook',
+                                                                'fa fa-phone':c.type=='phone',
+                                                                'fa fa-skype':c.type=='skype',
+                                                                'fa fa-bell-o':c.type=='sms',
+                                                                'fa fa-envelope-o':c.type=='email'}"></i>
                                                                 <!--base on type,need to cheage icon-->
                                                             </div>
-                                                            <div class="prn2-contact text-header "
-                                                                 >
+                                                            <div class="prn2-contact text-header" ng-if="c.contact!=''">
                                                                 {{c.type}}
                                                                 <br/>
                                                                 <small>{{c.contact}}</small>
@@ -860,7 +865,7 @@
                                         <div class="form-group">
                                             <label>Tags</label>
                                             <button ng-click="loadTags();"> Reload</button>
-                                            <tags-input ng-model="postTags" display-property="name" placeholder="...">
+                                            <tags-input ng-model="postTags" display-property="name" placeholder="..." on-tag-removed="onIsolatedTagRemoved()">
                                                 <auto-complete source="loadPostTags($query)"></auto-complete>
                                             </tags-input>
 
@@ -916,7 +921,7 @@
                                                     ng-model-options="{trackBy: '$value'}">
                                                 <optgroup label="Users"></optgroup>
                                                 <option ng-repeat="c in assigneeUsers" value='{{c._id}}'>
-                                                    - {{c.username}}
+                                                    - {{c.displayname}}
                                                 </option>
                                                 <optgroup label="User Groups"></optgroup>
                                                 <option ng-repeat="group in assigneeGroups" value='{{group._id}}'>
@@ -929,11 +934,9 @@
                                     </form>
 
                                     <div>
-                                        <div >
-                                            <div>{{oldFormModel}}</div>
-                                        </div>
 
-                                        <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw" ng-submit="onSubmit(customForm)"></form>
+                                        <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw"
+                                              ng-submit="onSubmit(customForm)"></form>
                                     </div>
                                 </div>
                                 <div class="model-footer-wrapper">

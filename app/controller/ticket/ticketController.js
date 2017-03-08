@@ -51,6 +51,49 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     $("#mybtn").click();
 // ................. All users and user groups ..............................
     $scope.assigneeList = [];
+
+
+    $scope.setUserTitle = function (ticket) {
+
+        var title="";
+        if(ticket.assignee)
+        {
+            if(ticket.assignee.firstname && ticket.assignee.lastname)
+            {
+                title=ticket.assignee.firstname+" "+ ticket.assignee.lastname;
+            }
+            else
+            {
+                if(ticket.assignee.firstname)
+                {
+                    title=ticket.assignee.firstname;
+                }
+                else if(ticket.assignee.lastname)
+                {
+                    title=ticket.assignee.lastname;
+                }
+                else
+                {
+                    title=ticket.assignee.name;
+                }
+            }
+
+
+        }
+        else if(ticket.assignee_group)
+        {
+            title=ticket.assignee_group.name;
+
+        }
+        else
+        {
+            title="Unassigned";
+        }
+
+
+        return title;
+    }
+
     var pickAllGroups = function () {
         userService.getUserGroupList().then(function (response) {
             $scope.userGroupList = response.data.Result;
@@ -134,8 +177,15 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
+
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
+
+
+
+
+
                         }
 
 
@@ -204,9 +254,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                 else {
                     for (var i = 0; i < response.data.Result.length; i++) {
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
 
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
+
                         }
 
 
@@ -253,9 +305,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
 
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
+
                         }
 
 
@@ -302,6 +356,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
                         response.data.Result[i].submitter.avatar = "/assets/img/defaultProfile.png";
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
 
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
@@ -348,8 +403,10 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
 
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
+
                         }
 
 
@@ -393,9 +450,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
 
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
+
                         }
 
                         if (i == response.data.Result.length - 1) {
@@ -441,8 +500,11 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
+
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
+
                         }
 
 
@@ -488,6 +550,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
 
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
@@ -534,6 +597,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
                     for (var i = 0; i < response.data.Result.length; i++) {
 
                         response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
 
                         if (response.data.Result[i].status.length > 20) {
                             response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
@@ -768,6 +832,8 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     $rootScope.$on('reloadInbox', function (events, args) {
         $scope.reloadTickets();
     });
+
+
 
 
 });

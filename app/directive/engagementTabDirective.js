@@ -17,8 +17,8 @@ agentApp.directive('scrolly', function () {
     };
 });
 
-agentApp.directive("engagementTab", function ($filter, $rootScope, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser) {
+agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, engagementService, ivrService,
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser,jwtHelper) {
     return {
         restrict: "EA",
         scope: {
@@ -57,6 +57,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.availableTags = scope.tagCategoryList;
 
             scope.integrationAPIList = [];
+            scope.currentTicketForm = null;
 
             /*if(!scope.profileDetail){
              scope.profileDetail = {};
@@ -82,8 +83,40 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             /*form submit*/
 
+            scope.setUserTitles = function (userObj) {
 
+                var title="";
+
+
+                if(userObj.firstname && userObj.lastname)
+                {
+                    title=userObj.firstname+" "+ userObj.lastname;
+                }
+                else
+                {
+                    if(userObj.firstname)
+                    {
+                        title=userObj.firstname;
+                    }
+                    else if(userObj.lastname)
+                    {
+                        title=userObj.lastname;
+                    }
+                    else
+                    {
+                        title=userObj.name;
+                    }
+
+                }
+
+                return title;
+            }
             scope.assigneeUsers = profileDataParser.assigneeUsers;
+
+            angular.forEach(scope.assigneeUsers, function (assignee) {
+                assignee.displayname=scope.setUserTitles(assignee);
+            });
+
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
 
 
@@ -474,6 +507,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 }
             };
 
+
             scope.getIntegrationMetaData = function () {
                 integrationAPIService.getIntegrationURLMetaData('PROFILE')
                     .then(function (data) {
@@ -836,6 +870,80 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
             scope.ticket.selectedTags = [];
             scope.newAddTags = [];
             scope.postTags = [];
+
+            var findFormForCompanyOrTag = function(isolatedTags, callback)
+            {
+                ticketService.getFormByIsolatedTag(isolatedTags).then(function(tagForm)
+                {
+                    if(tagForm.Result && tagForm.Result.length > 0)
+                    {
+
+                        callback(null, tagForm.Result[0].dynamicForm);
+                    }
+                    else
+                    {
+                        ticketService.getFormsForCompany().then(function(compForm)
+                        {
+                            if(compForm.Result.ticket_form)
+                            {
+                                callback(null, compForm.Result.ticket_form);
+                            }
+                            else
+                            {
+                                callback(null, null);
+                            }
+
+                        }).catch(function(err)
+                        {
+                            callback(err, null);
+                        })
+                    }
+
+
+                }).catch(function(err)
+                {
+                    callback(err, null);
+                })
+            };
+
+            scope.onIsolatedTagRemoved = function()
+            {
+                var schema = {
+                    type: "object",
+                    properties: {}
+                };
+
+                var form = [];
+
+                var arrMap = scope.postTags.map(function(item)
+                {
+                    return item.name;
+                })
+
+                findFormForCompanyOrTag(arrMap, function(err, ticket_form)
+                {
+                    if(ticket_form)
+                    {
+                        scope.currentTicketForm = ticket_form;
+                        buildFormSchema(schema, form, ticket_form.fields);
+                        //var currentForm = response.Result.ticket_form;
+
+                        /*form.push({
+                         type: "submit",
+                         title: "Save"
+                         });*/
+
+                        scope.schemaw = schema;
+                        scope.formw = form;
+                        scope.modelw = {};
+                    }
+                    else
+                    {
+                        scope.currentTicketForm = null;
+                    }
+                });
+            };
+
             var setToDefault = function () {
                 var ticTag = undefined;
                 angular.forEach(scope.newAddTags, function (item) {
@@ -849,6 +957,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 if (ticTag) {
                     scope.postTags.push({name: ticTag});
                     scope.postTags = removeDuplicate(scope.postTags);
+
+                    scope.onIsolatedTagRemoved();
+
                 }
 
                 scope.newAddTags = [];
@@ -964,8 +1075,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 scope.ticket.priority = priority;
             };
 
-
-            scope.loadMyAppMetaData = function () {
+ 	    scope.loadMyAppMetaData = function () {
                 ticketService.GetMyTicketConfig(function (success,data) {
 
                     if(success && data && data.Result)
@@ -978,6 +1088,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
                 });
 
             }
+
+            
 
             scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
@@ -999,13 +1111,18 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
                 ticketService.SaveTicket(ticket).then(function (response) {
                     if (response.IsSuccess) {
-                        scope.ticketList.splice(0, 0, response.Result); //scope.ticketList.push(response.Result);
+                        ticket.reference = response.Result.reference;
+                        ticket.id = response.Result._id;
+                        ticket._id = response.Result._id;
+                        ticket.created_at = new Date();
+                        scope.ticketList.splice(0, 0, ticket); //scope.ticketList.push(response.Result);
                         scope.recentTicketList.pop();
-                        scope.recentTicketList.push(response.Result);
+                        scope.recentTicketList.push(ticket);
                         scope.ticket = {};
                         scope.newAddTags = [];
-                        addDynamicDataToTicket(response.Result);
+                        addDynamicDataToTicket(ticket);
                         scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
+                        scope.postTags = [];
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -1018,46 +1135,47 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, engagementSer
 
             };
 
-           var addDynamicDataToTicket = function (ticket) {
+            var addDynamicDataToTicket = function (ticket) {
 
-               var arr = [];
+                var arr = [];
 
-               for (var key in scope.modelw) {
-                   if (scope.modelw.hasOwnProperty(key)) {
-                       arr.push({
-                           field: key,
-                           value: scope.modelw[key]
-                       });
+                for (var key in scope.modelw) {
+                    if (scope.modelw.hasOwnProperty(key)) {
+                        arr.push({
+                            field: key,
+                            value: scope.modelw[key]
+                        });
 
-                   }
-               }
+                    }
+                }
 
-               var obj = {
-                   fields: arr,
-                   reference: ticket._id,
-                   form: scope.schemaResponseNewTicket.currentForm.name
-               };
-               ticketService.createFormSubmissionData(obj).then(function (response) {
-                   //tag submission to ticket
-                   if (response && response.Result) {
-                       ticketService.mapFormSubmissionToTicket(response.Result._id, ticket._id).then(function (responseMap) {
-                           //tag submission to ticket
-                           //scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
-console.log('Ticket other data saved successfully');
-                       }).catch(function (err) {
-                           //scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
-                           console.log('Ticket other data save failed');
-                       });
-                   }
-                   else {
-                       scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
-                   }
+                var obj = {
+                    fields: arr,
+                    reference: ticket._id,
+                    form: scope.currentTicketForm.name
+                };
+                ticketService.createFormSubmissionData(obj).then(function (response) {
+                    //tag submission to ticket
+                    if (response && response.Result) {
+                        ticketService.mapFormSubmissionToTicket(response.Result._id, ticket._id).then(function (responseMap) {
+                            //tag submission to ticket
+                            //scope.showAlert('Ticket Other Data', 'success', 'Ticket other data saved successfully');
+                            console.log('Ticket other data saved successfully');
+                        }).catch(function (err) {
+                            //scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+                            console.log('Ticket other data save failed');
+                        });
+                    }
+                    else {
+                        scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+                    }
 
 
-               }).catch(function (err) {
-                   scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
-               })
+                }).catch(function (err) {
+                    scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
+
+                })
 
             };
 
@@ -1087,6 +1205,7 @@ console.log('Ticket other data saved successfully');
                     scope.showCreateTicket = !scope.showCreateTicket;
                     if(scope.showCreateTicket)
                     {
+                        scope.onIsolatedTagRemoved();
                         scope.loadMyAppMetaData();
                     }
                 } else {
@@ -1336,10 +1455,39 @@ console.log('Ticket other data saved successfully');
             };
 
             scope.createNProfile = function () {
+                if (scope.profileDetail) {
+                    scope.exProfileId = angular.copy(scope.profileDetail._id);
+                }
                 scope.showMultiProfile = false;
                 scope.profileLoadin = false;
                 scope.showNewProfile = true;
                 scope.editProfile = false;
+                scope.newProfile = {
+                    "title": "",
+                    "name": "",
+                    "avatar": "assets/img/avatar/profileAvatar.png",
+                    "birthday": "",
+                    "gender": "",
+                    "firstname": "",
+                    "lastname": "",
+                    "locale": 0,
+                    "ssn": "",
+                    "address": {
+                        "zipcode": "",
+                        "number": "",
+                        "street": "",
+                        "city": "",
+                        "province": "",
+                        "country": ""
+                    },
+                    "phone": scope.channelFrom,
+                    "email": "",
+                    "dob": {
+                        "day": 0,
+                        "month": 0,
+                        "year": 0
+                    }
+                };
             };
 
 
@@ -1422,6 +1570,7 @@ console.log('Ticket other data saved successfully');
                         break;
 
                     default :
+                        category = scope.channel;
                         break;
 
                 }
@@ -1464,7 +1613,7 @@ console.log('Ticket other data saved successfully');
 
                         }
 
-                        if (scope.channelFrom != "direct" && setContact) {
+                        if (scope.channelFrom != "direct" && scope.channel === "call" && setContact) {
 
                             scope.mapProfile.showNumberd = true;
                             // var r = confirm("Add to Contact");
@@ -1583,10 +1732,10 @@ console.log('Ticket other data saved successfully');
             scope.newProfile = {
                 "title": "",
                 "name": "",
-                "avatar": "",
+                "avatar": "assets/img/avatar/profileAvatar.png",
                 "birthday": "",
                 "gender": "",
-                "firstname": "",
+                "firstname": (scope.channel === "chat")?scope.channelFrom:"",
                 "lastname": "",
                 "locale": 0,
                 "ssn": "",
@@ -1598,7 +1747,7 @@ console.log('Ticket other data saved successfully');
                     "province": "",
                     "country": ""
                 },
-                "phone": scope.channelFrom,
+                "phone": (scope.channel === "call")?scope.channelFrom:"",
                 "email": "",
                 "dob": {
                     "day": 0,
@@ -1626,8 +1775,8 @@ console.log('Ticket other data saved successfully');
             });
 
             /*getJSONData($http, "customerType", function (res) {
-                scope.customerType = res;
-            });*/
+             scope.customerType = res;
+             });*/
 
             //Get all title
             getJSONData($http, "titles", function (res) {
@@ -1719,6 +1868,8 @@ console.log('Ticket other data saved successfully');
                 }
             };
             getYears();
+
+
             scope.saveNewProfile = function (profile) {
                 profile.tags=[];
                 scope.cutomerTypes.forEach(function (tag) {
@@ -1726,21 +1877,151 @@ console.log('Ticket other data saved successfully');
                 })
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
-                userService.CreateExternalUser(profile).then(function (response) {
-                    if (response) {
-                        scope.profileDetail = response;
-                        scope.showNewProfile = false;
 
-                        scope.GetProfileHistory(response._id);
-                        scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+
+                userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
+
+                    if(resSSN.IsSuccess && resSSN.Result.length>0)
+                    {
+                        scope.showAlert("Profile", "error", "SSN is already taken");
                     }
-                    else {
-                        scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                    else
+                    {
+                        userService.getExternalUserProfileByField("phone",profile.phone).then(function (resPhone) {
+
+                            if(resPhone.IsSuccess && resPhone.Result.length>0)
+                            {
+                                scope.showAlert("Profile", "error", "Phone number is already taken");
+                            }
+                            else
+                            {
+                                userService.getExternalUserProfileByField("email",profile.email).then(function (resEmail) {
+
+                                    if(resEmail.IsSuccess && resEmail.Result.length>0)
+                                    {
+                                        scope.showAlert("Profile", "error", "Email is already taken");
+                                    }
+                                    else
+                                    {
+                                        userService.CreateExternalUser(profile).then(function (response) {
+                                            if (response) {
+                                                scope.profileDetail = response;
+                                                scope.showNewProfile = false;
+
+                                                scope.GetProfileHistory(response._id);
+                                                if(scope.exProfileId) {
+                                                    scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                                                }else {
+                                                    scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+                                                }
+                                            }
+                                            else {
+                                                scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                                            }
+                                        }, function (err) {
+                                            scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                                        });
+                                    }
+
+                                }, function (errEmail) {
+                                    scope.showAlert("Profile", "error", "Checking Email failed");
+                                });
+
+
+
+                            }
+                        }, function (errPhone) {
+                            scope.showAlert("Profile", "error", "Checking Phone number failed");
+                        })
                     }
-                }, function (err) {
-                    scope.showAlert("Profile", "error", "Fail To Save Profile.");
+
+                }, function (errSSN) {
+                    scope.showAlert("Profile", "error", "Checking SSN failed");
                 });
+
+
+
             };
+
+            scope.CheckExternalUserAvailabilityBySSN = function (ssn,profile)
+            {
+                var deferred = $q.defer();
+
+                userService.getExternalUserProfileBySsn(ssn).then(function (resPhone) {
+
+                    if(resPhone.IsSuccess)
+                    {
+                        if(resPhone.Result.length==0)
+                        {
+                            deferred.resolve(true);
+                        }
+                        else
+                        {
+                            if(profile._id==resPhone.Result[0]._id)
+                            {
+                                deferred.resolve(true);
+                            }
+                            else
+                            {
+                                scope.showAlert("Profile", "error", "SSN is already taken");
+                                deferred.resolve(false);
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        deferred.resolve(true);
+                    }
+
+                }, function (errPhone) {
+
+                    scope.showAlert("Profile", "error", "Error in searching ssn");
+                    deferred.resolve(false);
+                });
+                return deferred.promise;
+            }
+
+            scope.CheckExternalUserAvailabilityByField = function (field,value,profile) {
+
+                var deferred = $q.defer();
+
+                userService.getExternalUserProfileByField(field,value).then(function (resPhone) {
+
+                    if(resPhone.IsSuccess)
+                    {
+                        if(resPhone.Result.length==0)
+                        {
+                            deferred.resolve(true);
+                        }
+                        else
+                        {
+                            if(profile._id==resPhone.Result[0]._id)
+                            {
+                                deferred.resolve(true);
+                            }
+                            else
+                            {
+                                scope.showAlert("Profile", "error", field+" is already taken");
+                                deferred.resolve(false);
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+                        deferred.resolve(true);
+                    }
+
+                }, function (errPhone) {
+
+                    scope.showAlert("Profile", "error", "Error in searching "+field);
+                    deferred.resolve(false);
+                });
+                return deferred.promise;
+            };
+
 
             scope.UpdateExternalUser = function (profile) {
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
@@ -1749,37 +2030,66 @@ console.log('Ticket other data saved successfully');
                     profile.tags.push(tag.cutomerType)
                 });
                 profile.birthday = new Date(collectionDate);
-                userService.UpdateExternalUser(profile).then(function (response) {
-                    if (response) {
-                        scope.cutomerTypes=[];
-                        scope.showNewProfile = false;
-                        scope.editProfile = false;
 
-                        scope.showAlert("Profile", "success", "Update Successfully.");
-                        userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
 
-                            if(resUserData.IsSuccess)
-                            {
-                                scope.profileDetail = resUserData.Result;
+
+
+                $q.all([
+                    scope.CheckExternalUserAvailabilityByField("ssn",profile.ssn,profile),
+                    scope.CheckExternalUserAvailabilityByField("email",profile.email,profile),
+                    scope.CheckExternalUserAvailabilityByField("phone",profile.phone,profile),
+                ]).then(function(value) {
+                    // Success callback where value is an array containing the success values
+
+                    if(value.indexOf(false)==-1)
+                    {
+                        userService.UpdateExternalUser(profile).then(function (response) {
+                            if (response) {
+                                scope.cutomerTypes=[];
+                                scope.showNewProfile = false;
+                                scope.editProfile = false;
+
+                                scope.showAlert("Profile", "success", "Update Successfully.");
+                                userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
+
+                                    if(resUserData.IsSuccess)
+                                    {
+                                        scope.profileDetail = resUserData.Result;
+                                    }
+                                    else
+                                    {
+                                        scope.showAlert("Profile","error","Failed to load updated profile");
+
+                                    }
+
+
+                                }, function (errUserData) {
+                                    scope.showAlert("Profile","error","Failed to load updated profile");
+                                    console.log(errUserData)
+                                });
                             }
-                            else
-                            {
-                                scope.showAlert("Profile","error","Failed to load updated profile");
-
+                            else {
+                                scope.showAlert("Profile", "error", "Fail To Save Profile.");
                             }
-
-
-                        }, function (errUserData) {
-                            scope.showAlert("Profile","error","Failed to load updated profile");
-                            console.log(errUserData)
+                        }, function (err) {
+                            scope.showAlert("Profile", "error", "Fail To Save Profile.");
                         });
                     }
-                    else {
+                    else
+                    {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
                     }
-                }, function (err) {
-                    scope.showAlert("Profile", "error", "Fail To Save Profile.");
+
+
+
+
+                }, function(reason) {
+                    // Error callback where reason is the value of the first rejected promise
+                    alert(value);
                 });
+
+
+
             };
 
             //engagement console
@@ -1788,9 +2098,44 @@ console.log('Ticket other data saved successfully');
             scope.myImage = '';
             scope.myCroppedImage = '';
             scope.cropImageURL = null;
+            scope.tenant = 0;
+            scope.company = 0;
+            scope.getCompanyTenant = function () {
+                var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
+                console.info(decodeData);
+                scope.company = decodeData.company;
+                scope.tenant = decodeData.tenant;
+            };
+            scope.getCompanyTenant();
+
+            scope.changeAvatarURL = function (fileID) {
+
+                if (fileID) {
+                    scope.newProfile.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
+
+                }
+
+
+            }
+
 
             scope.viewCropArea = function () {
-                scope.isShowCrop = !scope.isShowCrop;
+
+                //modal show
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: './app/views/profile/partials/profile-picture-modal.html',
+                    controller: 'profilePicUploadController',
+                    size: 'lg',
+                    resolve: {
+                        changeUrl: function () {
+                            return scope.changeAvatarURL;
+                        }
+                    }
+                });
+
+
+
             };
             scope.cropImage = function () {
                 scope.cropImageURL = scope.myCroppedImage;
@@ -1831,7 +2176,10 @@ console.log('Ticket other data saved successfully');
 
                             if(resNewProfile.IsSuccess)
                             {
+
                                 scope.newProfile = resNewProfile.Result;
+                                scope.newProfile.avatar=resNewProfile.Result.avatar;
+                                //alert(scope.newProfile.avatar);
                                 for(var i=0;i<scope.newProfile.tags.length;i++)
                                 {
                                     scope.cutomerTypes[i]={"cutomerType":scope.newProfile.tags[i]};
@@ -1841,8 +2189,8 @@ console.log('Ticket other data saved successfully');
                                 scope.newProfile.dob = {};
                                 scope.newProfile.dob.day = date.date();
                                 scope.newProfile.dob.month = {
-                                    'index': date.month(),
-                                    'name': date.month()
+                                    'index': date.month()+1,
+                                    'name': date.month()+1
                                 };
                                 scope.newProfile.dob.year = date.year();
                                 scope.showNewProfile = true;
@@ -1857,7 +2205,7 @@ console.log('Ticket other data saved successfully');
                             console.log(errNewProfile);
                         })
 
-                       // scope.newProfile = scope.profileDetail;
+                        // scope.newProfile = scope.profileDetail;
 
 
 
@@ -1929,12 +2277,15 @@ console.log('Ticket other data saved successfully');
 
             //update new function
             // create new profile
-            scope.createNProfile = function () {
-                scope.showMultiProfile = false;
-                scope.profileLoadin = false;
-                scope.showNewProfile = true;
-                scope.editProfile = false;
-            };
+            /* scope.createNProfile = function () {
+             if (scope.profileDetail) {
+             scope.exProfileId = angular.copy(scope.profileDetail._id);
+             }
+             scope.showMultiProfile = false;
+             scope.profileLoadin = false;
+             scope.showNewProfile = true;
+             scope.editProfile = false;
+             };*/
 
             //engamanet details
             scope.enggemntDetailsCount = [];
@@ -2063,3 +2414,496 @@ console.log('Ticket other data saved successfully');
         }
     }
 }]);
+
+(function () {
+    var app = angular.module("veeryAgentApp");
+
+    var profilePicUploadController = function ($scope, $stateParams, $filter, $uibModalInstance, $base64, $http, FileUploader, fileService, authService, jwtHelper,changeUrl) {
+
+        $scope.showModal = true;
+        $scope.isUploadDisable = true;
+
+        $scope.myImage = '';
+        $scope.myCroppedImage = '';
+
+
+
+
+
+        $scope.myChannel = {
+            // the fields below are all optional
+            videoHeight: 400,
+            videoWidth: 300,
+            video: null // Will reference the video element on success
+        };
+
+        var _video = null,
+            patData = null;
+
+        $scope.patOpts = {x: 0, y: 0, w: 25, h: 25};
+
+        $scope.channel = {};
+
+        $scope.webcamError = false;
+        $scope.onError = function (err) {
+            $scope.$apply(
+                function () {
+                    $scope.webcamError = err;
+                }
+            );
+        };
+        $scope.onSuccess = function () {
+            // The video element contains the captured camera data
+            _video = $scope.myChannel.video;
+            $scope.$apply(function () {
+                $scope.patOpts.w = _video.width;
+                $scope.patOpts.h = _video.height;
+
+            });
+        };
+
+        $scope.snapURI = "";
+
+        $scope.makeSnapshot = function makeSnapshot() {
+            if (_video) {
+                var patCanvas = document.querySelector('#snapshot');
+                if (!patCanvas) return;
+
+                patCanvas.width = _video.width;
+                patCanvas.height = _video.height;
+                var ctxPat = patCanvas.getContext('2d');
+
+                var idata = getVideoData($scope.patOpts.x, $scope.patOpts.y, $scope.patOpts.w, $scope.patOpts.h);
+                ctxPat.putImageData(idata, 0, 0);
+
+
+                $scope.snapURI = patCanvas.toDataURL();
+
+
+                patData = idata;
+
+            }
+        };
+
+        var getVideoData = function getVideoData(x, y, w, h) {
+            var hiddenCanvas = document.createElement('canvas');
+            hiddenCanvas.width = _video.width;
+            hiddenCanvas.height = _video.height;
+            var ctx = hiddenCanvas.getContext('2d');
+            ctx.drawImage(_video, 0, 0, _video.width, _video.height);
+            return ctx.getImageData(x, y, w, h);
+        };
+
+
+        $scope.file = {};
+        $scope.file.Category = "PROFILE_PICTURES";
+        var uploader = $scope.uploader = new FileUploader({
+            url: fileService.UploadUrl,
+            headers: fileService.Headers
+        });
+
+        // FILTERS
+
+        uploader.filters.push({
+            name: 'imageFilter',
+            fn: function (item /*{File|FileLikeObject}*/, options) {
+                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            }
+        });
+
+
+        // CALLBACKS
+
+        uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+            console.info('onWhenAddingFileFailed', item, filter, options);
+        };
+        uploader.onAfterAddingFile = function (item) {
+            console.info('onAfterAddingFile', item);
+
+            if (item.file.type.split("/")[0] == "image") {
+                //fileItem.upload();
+
+
+                item.croppedImage = '';
+
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    $scope.$apply(function () {
+                        item.image = event.target.result;
+                    });
+                };
+                reader.readAsDataURL(item._file);
+                $scope.isUploadDisable = false;
+
+            }
+            else {
+                new PNotify({
+                    title: 'Profile picture upload',
+                    text: 'Invalid File type. Retry',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+            }
+
+        };
+        uploader.onAfterAddingAll = function (addedFileItems) {
+            if (!$scope.file.Category) {
+                uploader.clearQueue();
+                new PNotify({
+                    title: 'File Upload!',
+                    text: 'Invalid File Category.',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return;
+            }
+            console.info('onAfterAddingAll', addedFileItems);
+        };
+        uploader.onBeforeUploadItem = function (item) {
+            console.info('onBeforeUploadItem', item);
+            var blob = dataURItoBlob(item.croppedImage);
+            item._file = blob;
+            item.formData.push({'fileCategory': 'PROFILE_PICTURES'});
+        };
+
+        var dataURItoBlob = function (dataURI) {
+            var binary = atob(dataURI.split(',')[1]);
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var array = [];
+            for (var i = 0; i < binary.length; i++) {
+                array.push(binary.charCodeAt(i));
+            }
+            return new Blob([new Uint8Array(array)], {type: mimeString});
+        };
+
+        uploader.onProgressItem = function (fileItem, progress) {
+            console.info('onProgressItem', fileItem, progress);
+        };
+        uploader.onProgressAll = function (progress) {
+            console.info('onProgressAll', progress);
+        };
+        uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            console.info('onSuccessItem', fileItem, response, status, headers);
+        };
+        uploader.onErrorItem = function (fileItem, response, status, headers) {
+            console.info('onErrorItem', fileItem, response, status, headers);
+        };
+        uploader.onCancelItem = function (fileItem, response, status, headers) {
+            console.info('onCancelItem', fileItem, response, status, headers);
+        };
+        uploader.onCompleteItem = function (fileItem, response, status, headers) {
+            console.info('onCompleteItem', fileItem, response, status, headers);
+            console.log("result ", response.Result);
+            new PNotify({
+                title: 'File Upload!',
+                text: "Picture uploaded successfully",
+                type: 'success',
+                styling: 'bootstrap3'
+            });
+
+            changeUrl(response.Result);
+            $uibModalInstance.dismiss('cancel');
+
+        };
+        uploader.onCompleteAll = function () {
+            console.info('onCompleteAll');
+        };
+
+
+        $scope.clearQueue = function () {
+
+            uploader.clearQueue();
+            $scope.isUploadDisable = true;
+            document.getElementById("cropedArea").src = "";
+        }
+        $scope.showMe = function () {
+            alert("showMe");
+
+
+            var blob = dataURItoBlob($scope.newConverted);
+            var fd = new FormData(document.forms[0]);
+            fd.append("file", blob);
+
+            $http.post(fileService.UploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            }).success(function (response) {
+                changeUrl(response.Result);
+                $uibModalInstance.dismiss('cancel');
+            }).error(function (error) {
+                alert(error);
+                console.log("error")
+            });
+
+
+            /*
+
+
+
+             convertURIToImageData($scope.myCroppedImage).then(function (imageData) {
+             // Here you can use imageData
+             console.log(imageData);
+             });
+             */
+
+            /*var resultImage= new Image($scope.)*/
+        }
+
+
+        $scope.ok = function () {
+
+            $uibModalInstance.close($scope.password);
+        };
+
+        $scope.loginPhone = function () {
+
+            $uibModalInstance.close($scope.password);
+        };
+
+        $scope.closeModal = function () {
+
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.cancel = function () {
+
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        /*var handleFileSelect=function() {
+         var file=evt.currentTarget.files[0];
+         var reader = new FileReader();
+         reader.onload = function (evt) {
+         $scope.$apply(function($scope){
+         $scope.myImage="C:/Users/Pawan/Downloads/MyMan(new).jpg";
+         });
+         };
+         //reader.readAsDataURL(file);
+
+         $scope.myImage="https://avatars1.githubusercontent.com/u/10277006?v=3&s=460";
+
+         };
+         //angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+         handleFileSelect();*/
+
+        var b64ToUint6 = function (nChr) {
+            // convert base64 encoded character to 6-bit integer
+            // from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Base64_encoding_and_decoding
+            return nChr > 64 && nChr < 91 ? nChr - 65
+                : nChr > 96 && nChr < 123 ? nChr - 71
+                : nChr > 47 && nChr < 58 ? nChr + 4
+                : nChr === 43 ? 62 : nChr === 47 ? 63 : 0;
+        }
+
+
+        var base64DecToArr = function (sBase64, nBlocksSize) {
+            // convert base64 encoded string to Uintarray
+            // from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Base64_encoding_and_decoding
+            var sB64Enc = sBase64.replace(/[^A-Za-z0-9\+\/]/g, ""), nInLen = sB64Enc.length,
+                nOutLen = nBlocksSize ? Math.ceil((nInLen * 3 + 1 >> 2) / nBlocksSize) * nBlocksSize : nInLen * 3 + 1 >> 2,
+                taBytes = new Uint8Array(nOutLen);
+
+            for (var nMod3, nMod4, nUint24 = 0, nOutIdx = 0, nInIdx = 0; nInIdx < nInLen; nInIdx++) {
+                nMod4 = nInIdx & 3;
+                nUint24 |= b64ToUint6(sB64Enc.charCodeAt(nInIdx)) << 18 - 6 * nMod4;
+                if (nMod4 === 3 || nInLen - nInIdx === 1) {
+                    for (nMod3 = 0; nMod3 < 3 && nOutIdx < nOutLen; nMod3++, nOutIdx++) {
+                        taBytes[nOutIdx] = nUint24 >>> (16 >>> nMod3 & 24) & 255;
+                    }
+                    nUint24 = 0;
+                }
+            }
+            return taBytes;
+        }
+
+
+        $scope.uploadSnap = function (dataURI) {
+
+
+            var form_elem_name = "mySnap";
+            var image_fmt = '';
+            if (dataURI.match(/^data\:image\/(\w+)/))
+                image_fmt = RegExp.$1;
+            else
+                throw "Cannot locate image format in Data URI";
+
+            var raw_image_data = dataURI.replace(/^data\:image\/\w+\;base64\,/, '');
+            var http = new XMLHttpRequest();
+
+            http.open("POST", fileService.UploadUrl, true);
+            http.setRequestHeader('Authorization', authService.GetToken());
+
+            if (http.upload && http.upload.addEventListener) {
+                http.upload.addEventListener('progress', function (e) {
+                    if (e.lengthComputable) {
+                        var progress = e.loaded / e.total;
+                        // Webcam.dispatch('uploadProgress', progress, e);
+                        console.log("Proressing ", progress);
+                    }
+                }, false);
+            }
+
+            // completion handler
+            var self = this;
+            http.onload = function (text) {
+
+                new PNotify({
+                    title: 'Your Profile picture ',
+                    text: "Picture has been changed successfully",
+                    type: 'success',
+                    styling: 'bootstrap3'
+                });
+
+                changeUrl(JSON.parse(text.currentTarget.response).Result);
+                $uibModalInstance.dismiss('cancel');
+            };
+
+            // create a blob and decode our base64 to binary
+            var blob = new Blob([base64DecToArr(raw_image_data)], {type: 'image/' + image_fmt});
+
+            // stuff into a form, so servers can easily receive it as a standard file upload
+            var form = new FormData();
+            form.append(form_elem_name, blob, form_elem_name + "." + image_fmt.replace(/e/, ''));
+            form.append('fileCategory', 'PROFILE_PICTURES');
+
+            // send data to server
+            http.send(form);
+
+
+            /*var blobSnap=dataURItoBlob(dataURI);
+             var formData = new FormData();
+             var snapFile= new File([""], "snapUploadFile");
+             snapFile.fileCategory='PROFILE_PICTURES';
+             snapFile._file=blobSnap;
+
+             return $http({
+             method: 'POST',
+             url: fileService.UploadUrl,
+             data:snapFile
+             }).then(function(response)
+             {
+             if(response.data.IsSuccess)
+             {
+             new PNotify({
+             title: 'File Upload!',
+             text: "Picture uploaded successfully",
+             type: 'success',
+             styling: 'bootstrap3'
+             });
+
+             changeUrl(response.Result);
+             $uibModalInstance.dismiss('cancel');
+             }
+             });*/
+
+
+        }
+
+
+        /* var dataURItoBlob = function(dataURI) {
+         var binary = atob(dataURI.split(',')[1]);
+         var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+         var array = [];
+         for(var i = 0; i < binary.length; i++) {
+         array.push(binary.charCodeAt(i));
+         }
+         return new Blob([new Uint8Array(array)], {type: mimeString});
+         };*/
+
+
+        var convertURIToImageData = function (URI) {
+            return new Promise(function (resolve, reject) {
+                if (URI == null) return reject();
+                var canvas = document.createElement('canvas'),
+                    context = canvas.getContext('2d'),
+                    image = new Image();
+                image.addEventListener('load', function () {
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                    resolve(context.getImageData(0, 0, canvas.width, canvas.height));
+                }, false);
+                image.src = URI;
+                $scope.newConverted = image.src;
+
+
+                var imageType = (URI.split(";")[0]).split(":")[1];
+                var imagefromat = ((URI.split(";")[0]).split(":")[1]).split("/")[1];
+                var imageName = "newProfilePic." + imagefromat;
+
+                var blob = new Blob([URI], {type: imageType});
+                //var NewCroppedfile = new File([blob], imageName,{type: imageType,lastModified:new Date()});
+                console.log("File date ", blob);
+
+
+                var fd = new FormData();
+                fd.append('file', blob);
+
+                $http.post(fileService.UploadUrl, fd, {
+                    transformRequest: angular.identity,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                }).success(function (response) {
+                    changeUrl(response.Result);
+                    $uibModalInstance.dismiss('cancel');
+                }).error(function (error) {
+                    alert(error);
+                    console.log("error")
+                });
+
+
+                /* $scope.uploadCropped(NewCroppedfile).then(function (response) {
+                 console.log(response);
+                 })*/
+
+
+                /*if( uploader.queue.length>0)
+                 {
+                 uploader.clearQueue();
+                 }
+
+
+                 var newFile= new FileUploader.FileItem(uploader,file);
+                 console.log("new FileData ",newFile);
+                 //uploader.queue.push(newFile);
+                 newFile.progress = 100;
+                 newFile.isUploaded = true;
+                 newFile.isSuccess = true;
+                 uploader.queue.push(newFile);
+                 console.log("New Queue ",uploader.queue);
+
+                 /!*
+                 alert(uploader.queue.length);
+                 angular.forEach(uploader.queue, function (item) {
+                 item.upload();
+                 });
+                 *!/
+                 uploader.queue[0].upload();*/
+
+                //uploader.queue[0].upload();
+                //uploader.uploadItem($scope.newConverted);
+
+            });
+
+            //var URI = "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAABsiqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/iKC3/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/2uLp///////R2uP/dZGs/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/////////////////+3w9P+IoLf/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv///////////+3w9P+tvc3/dZGs/2yKpv9siqb/bIqm/2yKpv9siqb/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH////////////0+Pv/erDR/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB//////////////////////96sNH/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB/02Wwf////////////////+Ft9T/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/E4zV/xOM1f8TjNX/E4zV/yKT2P/T6ff/////////////////4fH6/z+i3f8TjNX/E4zV/xOM1f8TjNX/E4zV/xOM1f8TjNX/E4zV/xOM1f+m1O/////////////////////////////w+Pz/IpPY/xOM1f8TjNX/E4zV/xOM1f8TjNX/E4zV/xOM1f8TjNX////////////T6ff/Tqng/6bU7////////////3u/5/8TjNX/E4zV/xOM1f8TjNX/AIv//wCL//8Ai///AIv/////////////gMX//wCL//8gmv////////////+Axf//AIv//wCL//8Ai///AIv//wCL//8Ai///AIv//wCL///v+P///////+/4//+Axf//z+n/////////////YLf//wCL//8Ai///AIv//wCL//8Ai///AIv//wCL//8Ai///gMX/////////////////////////////z+n//wCL//8Ai///AIv//wCL//8Ai///AHr//wB6//8Aev//AHr//wB6//+Avf//7/f/////////////v97//xCC//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==";
+
+        };
+
+        $scope.uploadCropped = function (file) {
+            return $http({
+                method: 'POST',
+                url: fileService.UploadUrl,
+                data: file
+            }).then(function (response) {
+                return response;
+            });
+
+        }
+    };
+
+    app.controller("profilePicUploadController", profilePicUploadController);
+}());

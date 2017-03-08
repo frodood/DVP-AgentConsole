@@ -383,6 +383,21 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
 
     };
 
+    var getFormByIsolatedTag = function (isolated_tags) {
+
+        var payload = {
+            isolated_tags: isolated_tags
+        };
+
+        return $http({
+            method: 'POST',
+            url: baseUrls.ticketUrl + 'FormMasters/FormsByTags',
+            data: JSON.stringify(payload)
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
     var getFormSubmissionByRef = function (ref) {
 
         var authToken = authService.GetToken();
@@ -780,7 +795,8 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         AddAttachmentToSlot: AddAttachmentToSlot,
         DeleteAttachmentFromSlot: DeleteAttachmentFromSlot,
         GetMyTicketConfig: GetMyTicketConfig,
-        SaveMyTicketConfig: SaveMyTicketConfig
+        SaveMyTicketConfig: SaveMyTicketConfig,
+        getFormByIsolatedTag: getFormByIsolatedTag
     }
 });
 
