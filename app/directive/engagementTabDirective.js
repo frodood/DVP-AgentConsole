@@ -1075,19 +1075,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 scope.ticket.priority = priority;
             };
 
+ 	    scope.loadMyAppMetaData = function () {
+                ticketService.GetMyTicketConfig(function (success,data) {
 
-            scope.loadMyAppMetaData = function () {
+                    if(success && data && data.Result)
+                    {
+                        scope.ticket.subject=data.Result.subject;
+                        scope.setPriority(data.Result.priority);
+                        scope.ticket.description=data.Result.description;
 
+                    }
+                });
 
-                if(profileDataParser.myTicketMetaData)
-                {
-                    scope.ticket.subject=profileDataParser.myTicketMetaData.subject;
-                    scope.setPriority(profileDataParser.myTicketMetaData.priority);
-                    scope.ticket.description=profileDataParser.myTicketMetaData.description;
-                }
+            }
 
-
-            };
+            
 
             scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
@@ -1167,6 +1169,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     else {
                         scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
                     }
+
 
 
                 }).catch(function (err) {

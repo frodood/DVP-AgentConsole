@@ -515,7 +515,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         },
-        unregisterWithArds: function () {
+        unregisterWithArds: function (callback) {
             sipUnRegister();
 
             var resid = authService.GetResourceId();
@@ -523,9 +523,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (resid != undefined) {
                 resourceService.UnregisterWithArds(resid).then(function (response) {
                     $scope.registerdWithArds = !response;
+                    callback('done');
                 }, function (error) {
                     $scope.showAlert("Soft Phone", "error", "Unregister With ARDS Fail");
+                    callback('done');
                 });
+            }else{
+                callback('done');
             }
         },
         fullScreen: function (b_fs) {
@@ -1106,6 +1110,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: values[1]
         };
 
+        //agent_found|c9a0ee97-e3aa-45d2-838d-1aeafc026923|60|3726027252|sukitha.chanaka|99051000278670|ClientSupport|inbound|skype
+        if(values.length > 8){
+
+            notifyData.channel = values[8];
+            if(notifyData.channel == 'skype')
+                notifyData.channelFrom = values[4];
+
+        }
+
         var index = notifyData.sessionId;
         if (notifyData.direction.toLowerCase() === 'outbound') {
             $scope.tabs.filter(function (item) {
@@ -1118,7 +1131,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         else {
             $scope.sayIt("you are receiving " + values[6] + " call");
         }
-        $scope.call.number = notifyData.channelFrom;
+        //$scope.call.number = notifyData.channelFrom;
         $scope.call.skill = notifyData.skill;
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
@@ -2417,11 +2430,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.logOut = function () {
 
         veeryNotification.disconnectFromServer();
-        $scope.veeryPhone.unregisterWithArds();
-        loginService.Logoff(function () {
-            $state.go('login');
-            $timeout.cancel(getAllRealTimeTimer);
+        $scope.veeryPhone.unregisterWithArds(function(done){
+            loginService.Logoff(function () {
+                $state.go('login');
+                $timeout.cancel(getAllRealTimeTimer);
+            });
         });
+        //loginService.Logoff(function () {
+        //    $state.go('login');
+        //    $timeout.cancel(getAllRealTimeTimer);
+        //});
 
 
     };
@@ -2457,6 +2475,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
         }
     };
+    /*$scope.setExtention = function (selectedUser) {
+
+        try {
+            var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
+            if (angular.isArray(concurrencyInfos)) {
+                var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
+                $scope.call.number = RefInfo.Extention;
+            }
+            else {
+                $scope.showAlert('Error', 'error', "Fail To Find Extention.");
+            }
+        }
+        catch (ex) {
+            $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
+        }
+    };*/
     $scope.closeMessage = function () {
         divModel.model('#sendMessage', 'display-none');
     };
@@ -2926,10 +2960,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $('#Outbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Outbound";
                             return;
-                        } else {
+                        } else if (data.Result.Mode === "Inbound"){
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Inbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Inbound";
+                            return;
+                        }else {
+                            $('#userStatus').addClass('offline').removeClass('online');
+                            //$('#Inbound').addClass('font-color-green bold');
+                            $scope.currentModeOption = "Offline";
                             return;
                         }
                     }
@@ -2940,6 +2979,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             },
             getResourceState: function () {
                 resourceService.GetResource(authService.GetResourceId()).then(function (data) {
+                    if(data && data.IsSuccess){
+                        if(data.Result && !data.Result.obj){
+                            resourceService.RegisterWithArds(authService.GetResourceId()).then(function (data) {
+                                console.log('registerdWithArds' + data);
+                            }, function (error) {
+                                console.log('Error- registerdWithArds');
+                            });
+                        }
+                    }
+
                     console.log(data);
                 }, function (error) {
                     authService.IsCheckResponse(error);
