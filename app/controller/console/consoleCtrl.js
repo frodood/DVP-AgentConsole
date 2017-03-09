@@ -1133,6 +1133,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.unredNotifications = 0;
 
+    $scope.OnTicketNoticeReceived = function (data) {
+
+        $scope.OnMessage(data);
+    };
+
     $scope.OnMessage = function (data) {
 
         var senderAvatar;
@@ -1148,6 +1153,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         }
 
+        var regex = /~#tid (.*?) ~/;
+        var tid = regex.exec(data.Message);
+        var regexref = /~#tref (.*?) ~/;
+        var tref = regexref.exec(data.Message);
         var objMessage = {
             "id": data.TopicKey,
             "header": data.Message,
@@ -1158,6 +1167,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "avatar": senderAvatar,
             "from": data.From
         };
+
+        if (Array.isArray(tid) && tid.length > 1) {
+            objMessage['ticket'] = tid[1];
+        }
+
+        if (Array.isArray(tref) && tref.length > 1) {
+            objMessage['ticketref'] = tref[1];
+        }
+
+
         if (data.TopicKey || data.messageType) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
             audio.play();
@@ -2347,6 +2366,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 profileDataParser.myProfile = response.data.Result;
                 $scope.loginAvatar = profileDataParser.myProfile.avatar;
                 $scope.firstName = profileDataParser.myProfile.firstname == null ? $scope.loginName : profileDataParser.myProfile.firstname;
+                $scope.lastName = profileDataParser.myProfile.lastname;
                 getUnreadMailCounters(profileDataParser.myProfile._id);
             }
             else {
@@ -3085,6 +3105,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.showMesssageModal = false;
         // $uibModalInstance.dismiss('cancel');
     };
+
+    $scope.oepnTicketOnNotification = function (MessageObj) {
+
+        $scope.addTab('Ticket - ' + MessageObj.ticketref, 'Ticket - ' + MessageObj.ticket, 'ticketView', {_id: MessageObj.ticket}, MessageObj.ticket);
+        $scope.showMesssageModal = false;
+    };
+
+
     $scope.addToTodo = function (MessageData) {
         $scope.addToDoList(MessageData);
         $scope.showMesssageModal = false;

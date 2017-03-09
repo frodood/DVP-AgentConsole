@@ -9,9 +9,11 @@ var agentApp = angular.module('veeryAgentApp',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer', 'mdo-angular-cryptography'
+        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
+        'angular.filter', 'satellizer', 'mdo-angular-cryptography'
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop','jkAngularRatingStars'
+        'ngImgCrop', 'jkAngularRatingStars',
+        "chart.js"
     ]);
 
 
@@ -38,7 +40,7 @@ var baseUrls = {
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
     'ipMessageURL': 'http://192.168.0.22:8889', //'http://ipmessagingservice.app.veery.cloud',
-    'qaModule':'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
+    'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app.veery.cloud//DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
 
 };
@@ -57,7 +59,7 @@ var phoneSetting = {
     'EtlCode': '#',
     'SwapCode': '1',
     'ConferenceCode': '0',
-    'ExtNumberLength':5
+    'ExtNumberLength': 5
 };
 agentApp.constant('phoneSetting', phoneSetting);
 

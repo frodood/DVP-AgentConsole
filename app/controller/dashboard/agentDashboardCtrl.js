@@ -3,10 +3,10 @@
  */
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
-                                                    ticketService, engagementService, profileDataParser, authService,dashboardRefreshTime, $state) {
+                                                    ticketService, engagementService, profileDataParser, authService, dashboardRefreshTime, $state) {
 
 
-   $scope.showAlert = function (title, type, content) {
+    $scope.showAlert = function (title, type, content) {
         new PNotify({
             title: title,
             text: content,
@@ -133,6 +133,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     //    dataset.pointBorderWidth = 1;
     //});
 
+    var openclose = null;
+
+
     var openclose = document.getElementById("openclosecanvas").getContext("2d");
     window.opencloseChart = new Chart(openclose, $scope.createVsOpenConfig);
 
@@ -211,51 +214,70 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     /*productivity*/
     $scope.doughnutData = {
         labels: ["ACW", "Break", "OnCall", "Idle", "Hold"],
-
         datasets: [
             {
-                data: [0, 0, 0, 0, 0],
-                backgroundColor: [
-                    "#ffa918",
-                    "#e65200",
-                    "#37dba9",
-                    "#8298ae",
-                    "#d90000"
-                ],
-                hoverBackgroundColor: [
-                    "#ffa918",
-                    "#36A2EB",
-                    "#37dba9",
-                    "#8298ae",
-                    "#d90000"
-                ],
-                borderWidth: [0, 0, 0, 0, 0],
+                data: [0, 0, 0, 0, 0]
             }]
     };
-    var doughnutChart = document.getElementById("doughnutChart");
+    // var doughnutChart = document.getElementById("doughnutChart");
+    // ,
+    // backgroundColor: [
+    //     "#45eaca",
+    //     "#ebdfc7",
+    //     "#098a6c",
+    //     "#223448"
+    // ],
+    //     hoverBackgroundColor: [
+    //     "#ffa918",
+    //     "#36A2EB",
+    //     "#37dba9",
+    //     "#8298ae",
+    //     "#d90000"
+    // ],
+    //     borderWidth: [0, 0, 0, 0, 0],
+
+    // window.myDoughnutChart = new Chart(doughnutChart, {
+    //     type: 'doughnut',
+    //     data: $scope.doughnutData,
+    //     options: {
+    //         responsive: false,
+    //         title: {
+    //             display: false
+    //         },
+    //         legend: {
+    //             display: true,
+    //             position: 'bottom',
+    //             padding: 5,
+    //             labels: {
+    //                 fontColor: 'rgb(130, 152, 174)',
+    //                 fontSize: 10,
+    //                 boxWidth: 10
+    //             }
+    //         }
+    //     }
+    // });
+    // doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-top: 15px;");
 
 
-    window.myDoughnutChart = new Chart(doughnutChart, {
+    //update doughnutChar damith
+
+    $scope.options = {
         type: 'doughnut',
-        data: $scope.doughnutData,
-        options: {
-            responsive: false,
-            title: {
-                display: false
-            },
-            legend: {
-                display: true,
-                position: 'bottom',
-                padding: 10,
-                labels: {
-                    fontColor: 'rgb(130, 152, 174)',
-                    fontSize: 15,
-                    boxWidth: 50
-                }
+        responsive: false,
+        legend: {
+            display: true,
+            position: 'bottom',
+            padding: 5,
+            labels: {
+                fontColor: 'rgb(130, 152, 174)',
+                fontSize: 10,
+                boxWidth: 10
             }
+        },
+        title: {
+            display: true
         }
-    });
-    doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-top: 15px;");
+    };
 
     /* -------------------- Chart Configurations End-----------------------------------------*/
 
@@ -272,8 +294,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     return;
                 $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime),
                     secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
-                window.myDoughnutChart.update();
-
+                // window.myDoughnutChart.update();
+                $scope.doughnutObj = {
+                    labels: $scope.doughnutData.labels,
+                    data: $scope.doughnutData.datasets[0].data
+                };
 
                 $scope.productivity.OnCallTime = response.OnCallTime.toString().toHHMMSS();
                 $scope.productivity.StaffedTime = response.StaffedTime.toString().toHHMMSS();
@@ -282,7 +307,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 $scope.productivity.MissCallCount = response.MissCallCount;
                 $scope.productivity.TransferCallCount = response.TransferCallCount;
             } else {
-                 //$scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
+                //$scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
             }
 
         }, function (err) {
@@ -299,10 +324,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.newTicketCount = 0;
-             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+            //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    GetOpenTicketCount();
+    //GetOpenTicketCount();
 
     $scope.closeTicketCount = 0;
     var GetResolveTicketCount = function () {
@@ -311,10 +336,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.closeTicketCount = 0;
-             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+            //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    GetResolveTicketCount();
+    // GetResolveTicketCount();
 
     $scope.ProgressTicketCount = 0;
     var GetProgressTicketCount = function () {
@@ -323,10 +348,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.ProgressTicketCount = 0;
-             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+            $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    GetProgressTicketCount();
+    //GetProgressTicketCount();
 
     var GetCreatedicketSeries = function () {
         dashboradService.GetCreatedTicketSeries().then(function (response) {
@@ -338,7 +363,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }, function (err) {
             authService.IsCheckResponse(err);
-             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
+            //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
     GetCreatedicketSeries();
@@ -368,7 +393,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }, function (err) {
             authService.IsCheckResponse(err);
-             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
+            //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
     GetDeferenceResolvedTicketSeries();
@@ -383,7 +408,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             // $scope.showAlert("Queue Details", "error", "Fail To Load Queue Details.");
         });
     };
-    GetQueueDetails();
+    //GetQueueDetails();
 
     $scope.recentTickets = [];
     var GetMyRecentTickets = function () {
@@ -405,14 +430,13 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             // $scope.showAlert("Engagement Details", "error", "Fail To Load Recent Engagements.");
         });
     };
-    GetMyRecentEngagements();
+    //GetMyRecentEngagements();
 
     $scope.viewTicket = function (data) {
         data.tabType = 'ticketView';
         data.index = data.reference;
         $rootScope.$emit('openNewTab', data);
     };
-
 
 
     $scope.refreshTime = parseInt(dashboardRefreshTime);
@@ -437,9 +461,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
 
 
-    var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
-    var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
-    var getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
+    // var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
+    // var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
+    //var getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
@@ -457,6 +481,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         loadRecentData();
         loadGrapData();
     };
-    $scope.dashboardReload();
-});
+    //$scope.dashboardReload();
+}).config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+        chartColors: ['#223448', '#e7855e', '#ebdfc7', '#098a6c', '#bbd2b6']
+    });
+}]);
 
