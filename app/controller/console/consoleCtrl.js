@@ -515,7 +515,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         },
-        unregisterWithArds: function () {
+        unregisterWithArds: function (callback) {
             sipUnRegister();
 
             var resid = authService.GetResourceId();
@@ -523,9 +523,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (resid != undefined) {
                 resourceService.UnregisterWithArds(resid).then(function (response) {
                     $scope.registerdWithArds = !response;
+                    callback('done');
                 }, function (error) {
                     $scope.showAlert("Soft Phone", "error", "Unregister With ARDS Fail");
+                    callback('done');
                 });
+            }else{
+                callback('done');
             }
         },
         fullScreen: function (b_fs) {
@@ -2406,11 +2410,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.logOut = function () {
 
         veeryNotification.disconnectFromServer();
-        $scope.veeryPhone.unregisterWithArds();
-        loginService.Logoff(function () {
-            $state.go('login');
-            $timeout.cancel(getAllRealTimeTimer);
+        $scope.veeryPhone.unregisterWithArds(function(done){
+            loginService.Logoff(function () {
+                $state.go('login');
+                $timeout.cancel(getAllRealTimeTimer);
+            });
         });
+        //loginService.Logoff(function () {
+        //    $state.go('login');
+        //    $timeout.cancel(getAllRealTimeTimer);
+        //});
 
 
     };
