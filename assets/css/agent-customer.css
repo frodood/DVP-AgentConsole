@@ -4866,8 +4866,10 @@ ul.renote-color-btn > li {
 }
 
 .note-color-btn.high,
+.note-color-wrp.high,
 .my-note-wrapper.high {
-    background: rgba(255, 143, 135, 1);
+    background: rgba(255, 143, 135, 0.29);
+    border: 1px solid #ff8f87;
 }
 
 /*.my-note-wrapper.high:hover {*/
@@ -4891,18 +4893,25 @@ ul.renote-color-btn > li {
 /*}*/
 
 .note-color-btn.low,
+.note-color-wrp.low,
 .my-note-wrapper.low {
-    background: #add6ff;
+    background: rgba(173,214,255,0.2);
+    border: 1px solid #add6ff;
 }
 
 .note-color-btn.normal,
+.note-color-wrp.normal,
 .my-note-wrapper.normal {
     background: #69d8a7;
+    background: rgba(105,216,167,0.2);
+    border: 1px solid #69d8a7;
 }
 
 .note-color-btn.urgent,
+.note-color-wrp.urgent,
 .my-note-wrapper.urgent {
-    background: #FFEB3B;
+    background: rgba(255,235,59,0.2);
+    border: 1px solid #FFEB3B;
 }
 
 .note-color-btn.default-color,
@@ -6726,6 +6735,9 @@ ul.renote-color-btn > li {
     border-radius: 5px;
     background: #fff;
     margin-bottom: 10px;
+    -webkit-box-shadow: 0px 0px 29px -16px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 29px -16px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 29px -16px rgba(0,0,0,0.75);
 }
 
 .sm-card {
@@ -6773,7 +6785,7 @@ ul.renote-color-btn > li {
     color: #223448;
     padding: 15px;
     padding-bottom: 31px;
-    border-bottom: 1px solid #bbd2b6;
+
 }
 
 .c-header.c-text-center {
@@ -7091,6 +7103,7 @@ ul.renote-color-btn > li {
 }
 
 .panel-activity > .c-header,
+.queue-m-wrp > .c-header,
 .left-text-w > .c-header {
     font-family: 'AvenirNextLTPro-Demi', sans-serif;
     font-size: 14px;
@@ -7099,9 +7112,12 @@ ul.renote-color-btn > li {
     color: #223448;
     text-align: left;
     padding: 15px;
-    border-bottom: 1px solid #bbd2b6;
+    /*border-bottom: 1px solid #bbd2b6;*/
     max-height: 50px;
     margin-bottom: 0px;
+    /*-webkit-box-shadow: 6px 7px 25px -16px rgba(0,0,0,0.75);*/
+    /*-moz-box-shadow: 6px 7px 25px -16px rgba(0,0,0,0.75);*/
+    /*box-shadow: 6px 7px 25px -16px rgba(0,0,0,0.75);*/
 }
 
 .c-header > .header-count {
@@ -7112,8 +7128,8 @@ ul.renote-color-btn > li {
     width: 50px;
     font-size: 20px;
     height: 50px;
-    background: rgba(129, 184, 127, 0.23);
-    color: #81b87f;
+    background: rgba(255, 236, 73, 0.1);
+    color: #fff068;
     text-align: center;
     padding-top: 12px;
 }
@@ -7210,6 +7226,7 @@ ul.renote-color-btn > li {
     font-size: 18px;
     text-align: center;
     z-index: 100;
+    color: #e2efe2;
 }
 
 .active-p-body {
@@ -7292,3 +7309,48 @@ ul.renote-color-btn > li {
 }
 
 /*my  note */
+.d-my-note-m-wrp {
+    width: 100%;
+}
+
+.note-color-wrp {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    overflow: hidden;
+    text-align: center;
+
+}
+
+.d-my-note-row {
+    min-height: 50px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    padding: 10px 5px 5px 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid #f7f7f7;
+}
+
+
+/* queue widget */
+.queue-m-wrp{
+    width: 100%;
+    min-height: 350px;
+    max-height: 350px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+    background: transparent;
+    margin-bottom: 10px;
+}
+
+.queue-row{
+    height: 50px;
+    background: #fff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
