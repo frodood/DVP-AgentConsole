@@ -162,7 +162,7 @@ body {
 
 .console-menu-icon {
     margin-top: 4px;
-    background: rgba(23, 55, 60, 1);
+    background: rgba(13, 130, 61, 0.1);
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -2679,7 +2679,7 @@ tags-input .tags .input {
 .time-tracker-wrapper {
     width: 210px;
     height: auto;
-    background: #0d1c34;
+    background: transparent;
     padding: 7px;
     overflow: hidden;
     margin-top: -3px;
@@ -3375,11 +3375,11 @@ input.ps-form-controller[readonly] {
 }
 
 .dark-chart-wrapper {
-    min-height: 325px;
+    min-height: 300px;
     overflow: hidden;
     height: auto;
     width: 100%;
-    padding: 15px 16px 31px 16px;
+    padding: 0px 0px 34px 18px;
     margin-top: 0px;
     border-radius: 3px;
     text-align: center;
@@ -6771,7 +6771,9 @@ ul.renote-color-btn > li {
     width: 100%;
     height: 25px;
     color: #223448;
-
+    padding: 15px;
+    padding-bottom: 31px;
+    border-bottom: 1px solid #bbd2b6;
 }
 
 .c-header.c-text-center {
@@ -7181,19 +7183,19 @@ ul.renote-color-btn > li {
 }
 
 .days {
-    background: rgba(129, 184, 127, 0.3);
-    color: #81b87f;
+    background: rgb(247, 247, 247);
+    color: #000;
     border-radius: 25px;
 }
 
 .ticket-tag {
-    background: rgba(9, 138, 108, 0.3);
+    background: rgba(9, 138, 108, 0.2);
     color: #098a6c;
     border-radius: 25px;
 }
 
 .closed-tag {
-    background: rgba(231, 133, 94, 0.3);
+    background: rgba(231, 133, 94, 0.2);
     color: #e7855e;
     border-radius: 25px;
 }
@@ -7221,3 +7223,72 @@ ul.renote-color-btn > li {
 .owl-dots {
     display: none;
 }
+
+/* dashboard gree ticket chart */
+.t-l-text-wrp {
+    width: 100%;
+    height: 100%;
+    margin-top: 15px;
+}
+
+.g-ticket-chart-wrp {
+    width: 250px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+
+}
+
+.ticket-l-widget {
+    width: 100%;
+    min-height: 80px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    /* background: #ebdfc7; */
+    margin-bottom: 15px;
+    /*border: 1px solid #f7f7f7;*/
+    padding-bottom: 19px;
+    padding-top: 15px;
+    -webkit-box-shadow: 1px 3px 23px -7px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 3px 23px -7px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 5px 18px -13px rgba(0, 0, 0, 0.75);
+
+}
+
+.t-big-text {
+    display: block;
+    width: 100%;
+    height: 25px;
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 42px;
+    margin-bottom: 30px;
+}
+
+/*my rating profile */
+.rating-m-g-wrp {
+    width: 100%;
+    min-height: 30px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 10px;
+}
+
+.rating-header {
+    font-size: 16px;
+    color: #e1e2e1;
+    text-transform: capitalize;
+}
+
+.on.ti-star {
+    font-size: 16px;
+    color: #e7855e;
+}
+
+.off.ti-star {
+    font-size: 16px;
+    color: #e1e2e1;
+
+}
+
+/*my  note */

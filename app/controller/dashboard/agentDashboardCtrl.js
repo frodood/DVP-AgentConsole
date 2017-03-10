@@ -65,10 +65,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 fill: true,
                 /*lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(0,205,115,1)",
-                backgroundColor: "rgba(0,205,115,0.3)",
-                pointBorderColor: "rgba(0,205,115,1)",
-                pointBackgroundColor: "rgba(0,205,115,0.5)",
+                borderColor: "rgba(235,223,119,1)",
+                backgroundColor: "rgba(235,223,119,0.3)",
+                pointBorderColor: "rgba(235,223,119,1)",
+                pointBackgroundColor: "rgba(235,223,119,0.5)",
                 pointBorderWidth: 1
             }, {
                 label: "Resolved Ticket",
@@ -76,10 +76,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 fill: true,
                 /* lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(79,147,0,1)",
-                backgroundColor: "rgba(79,147,0,0.5)",
-                pointBorderColor: "rgba(79,147,0,1)",
-                pointBackgroundColor: "rgba(79,147,0,0.5)",
+                borderColor: "rgba(9,138,108,1)",
+                backgroundColor: "rgba(9,138,108,0.5)",
+                pointBorderColor: "rgba(9,138,108,0,1)",
+                pointBackgroundColor: "rgba(9,138,108,0.5)",
                 pointBorderWidth: 1
             }]
         },
@@ -104,11 +104,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                         userCallback: function (dataLabel, index) {
                             return ''; //index % 2 === 0 ? dataLabel : '';
                         }
-                    },
-                    scaleLabel: {
-                        display: false,
-                        labelString: 'Days'
                     }
+
                 }],
                 yAxes: [{
                     display: true,
@@ -119,7 +116,15 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Count'
+                        labelString: 'COUNT',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontColor: '#ebdfc7',
+                        fontSize: 13
+                    },
+                    ticks: {
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     }
                 }]
             }
@@ -158,7 +163,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             legend: {
                 display: false,
                 labels: {
-                    fontColor: 'rgb(255, 99, 132)'
+                    fontColor: 'red'
                 }
             },
             title: {
@@ -179,11 +184,17 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     ticks: {
                         userCallback: function (dataLabel, index) {
                             return index % 3 === 0 ? dataLabel : '';
-                        }
+                        },
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Days'
+                        labelString: 'DAYS',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontColor: '#ebdfc7',
+                        fontSize: 13
                     }
                 }],
                 yAxes: [{
@@ -192,20 +203,29 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     gridLines: {
                         color: "rgba(244,245,244,0)",
                         zeroLineColor: "rgba(244,245,244,1)"
+
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Count'
+                        labelString: 'COUNT',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontColor: '#ebdfc7',
+                        fontSize: 13
+                    },
+                    ticks: {
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     }
                 }]
             }
         }
     };
     $.each($scope.deferenceConfig.data.datasets, function (i, dataset) {
-        dataset.borderColor = "rgba(230,82,0,1)";
-        dataset.backgroundColor = "rgba(230,82,0,0.6)";
-        dataset.pointBorderColor = "rgba(74,57,30,1)";
-        dataset.pointBackgroundColor = "rgba(230,82,0,0.5)";
+        dataset.borderColor = "rgba(231,133,94,1)";
+        dataset.backgroundColor = "rgba(231,133,94,0.6)";
+        dataset.pointBorderColor = "rgba(231,133,94,1)";
+        dataset.pointBackgroundColor = "rgba(231,133,94,0.5)";
         dataset.pointBorderWidth = 1;
     });
     var deference = document.getElementById("deferencecanvas").getContext("2d");
@@ -482,6 +502,22 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         loadGrapData();
     };
     //$scope.dashboardReload();
+
+    //update code by damith
+    /**** rating ****/
+    $scope.rate = 7;
+    $scope.max = 10;
+    $scope.isReadonly = false;
+
+    $scope.hoveringOver = function (value) {
+        $scope.overStar = value;
+        $scope.percent = 100 * (value / $scope.max);
+    };
+
+    $scope.ratingStates = [
+        {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
+    ];
+
 }).config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
