@@ -3,7 +3,8 @@
  */
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
-                                                    ticketService, engagementService, profileDataParser, authService, dashboardRefreshTime, $state) {
+                                                    ticketService, engagementService, profileDataParser,
+                                                    authService, dashboardRefreshTime, $state, userProfileApiAccess, jwtHelper, profileDataParser) {
 
 
     $scope.showAlert = function (title, type, content) {
@@ -69,7 +70,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 backgroundColor: "rgba(235,223,119,0.3)",
                 pointBorderColor: "rgba(235,223,119,1)",
                 pointBackgroundColor: "rgba(235,223,119,0.5)",
-                pointBorderWidth: 1
+                pointBorderWidth: 1,
+                steppedLine: false
+
+
             }, {
                 label: "Resolved Ticket",
                 data: [],
@@ -80,7 +84,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 backgroundColor: "rgba(9,138,108,0.5)",
                 pointBorderColor: "rgba(9,138,108,0,1)",
                 pointBackgroundColor: "rgba(9,138,108,0.5)",
-                pointBorderWidth: 1
+                pointBorderWidth: 1,
+                steppedLine: false
+
             }]
         },
         options: {
@@ -428,7 +434,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             // $scope.showAlert("Queue Details", "error", "Fail To Load Queue Details.");
         });
     };
-    //GetQueueDetails();
+    GetQueueDetails();
 
     $scope.recentTickets = [];
     var GetMyRecentTickets = function () {
@@ -477,7 +483,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        //getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
+        getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
     };
 
 
@@ -517,6 +523,13 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     $scope.ratingStates = [
         {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
     ];
+
+    $scope.uiBratingValue = "5";
+
+
+
+    //$scope.myProfileId = profile.myProfileId;
+    //$scope.pickMyRatings($scope.myProfileId);
 
 }).config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts

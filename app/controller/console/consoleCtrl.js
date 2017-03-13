@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService) {
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess) {
 
 
     $scope.isReadyToSpeak = false;
@@ -528,7 +528,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert("Soft Phone", "error", "Unregister With ARDS Fail");
                     callback('done');
                 });
-            }else{
+            } else {
                 callback('done');
             }
         },
@@ -1111,10 +1111,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         };
 
         //agent_found|c9a0ee97-e3aa-45d2-838d-1aeafc026923|60|3726027252|sukitha.chanaka|99051000278670|ClientSupport|inbound|skype
-        if(values.length > 8){
+        if (values.length > 8) {
 
             notifyData.channel = values[8];
-            if(notifyData.channel == 'skype')
+            if (notifyData.channel == 'skype')
                 notifyData.channelFrom = values[4];
 
         }
@@ -2370,6 +2370,78 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
+    //update code get my rating =>> dashboard
+    var pickMyRatings = function (owner) {
+        userProfileApiAccess.getMyRatings(owner).then(function (resPapers) {
+            if (resPapers.Result) {
+                $scope.sectionArray = {};
+                $scope.myRemarks = [];
+                angular.forEach(resPapers.Result, function (submissions) {
+                    if (submissions.answers) {
+                        angular.forEach(submissions.answers, function (answer) {
+
+
+                            if (answer.section && answer.question && answer.question.weight > 0 && answer.question.type != 'remark') {
+                                if ($scope.sectionArray[answer.section._id]) {
+                                    var ansValue = $scope.sectionArray[answer.section._id].value;
+                                    var val = (answer.points * answer.question.weight) / 10;
+
+                                    $scope.sectionArray[answer.section._id].value = ansValue + val;
+                                    $scope.sectionArray[answer.section._id].itemCount += 1;
+                                }
+                                else {
+
+                                    $scope.sectionArray[answer.section._id] =
+                                        {
+                                            value: (answer.points * answer.question.weight) / 10,
+                                            itemCount: 1,
+                                            name: answer.section.name,
+                                            id: answer.section._id
+                                        };
+
+                                }
+                            }
+
+                            if (answer.section && answer.question && answer.question.type == 'remark') {
+                                var remarkObj =
+                                    {
+                                        evaluator: submissions.evaluator.name,
+                                        section: answer.section.name,
+                                        remark: answer.remarks,
+                                        avatar:submissions.evaluator.avatar
+                                    };
+                                $scope.myRemarks.push(remarkObj);
+                            }
+
+                        });
+                    }
+
+                });
+                //console.log($scope.sectionArray);
+
+            }
+            else {
+                console.log("Error");
+            }
+
+        }).catch(function (errPapers) {
+
+            console.log(errPapers);
+
+        })
+
+    };
+    $scope.RatingResultResolve = function (item) {
+        var rateObj =
+            {
+                starValue: Math.round(item.value / item.itemCount),
+                displayValue: (item.value / item.itemCount).toFixed(2)
+            };
+
+        return rateObj;
+    };
+
+
     $scope.getMyProfile = function () {
 
 
@@ -2381,6 +2453,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.firstName = profileDataParser.myProfile.firstname == null ? $scope.loginName : profileDataParser.myProfile.firstname;
                 $scope.lastName = profileDataParser.myProfile.lastname;
                 getUnreadMailCounters(profileDataParser.myProfile._id);
+                ///get use resource id
+                //update code damith
+                //get my rating
+                pickMyRatings(profileDataParser.myProfile._id);
+
+
             }
             else {
                 profileDataParser.myProfile = {};
@@ -2430,7 +2508,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.logOut = function () {
 
         veeryNotification.disconnectFromServer();
-        $scope.veeryPhone.unregisterWithArds(function(done){
+        $scope.veeryPhone.unregisterWithArds(function (done) {
             loginService.Logoff(function () {
                 $state.go('login');
                 $timeout.cancel(getAllRealTimeTimer);
@@ -2477,20 +2555,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     /*$scope.setExtention = function (selectedUser) {
 
-        try {
-            var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
-            if (angular.isArray(concurrencyInfos)) {
-                var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
-                $scope.call.number = RefInfo.Extention;
-            }
-            else {
-                $scope.showAlert('Error', 'error', "Fail To Find Extention.");
-            }
-        }
-        catch (ex) {
-            $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
-        }
-    };*/
+     try {
+     var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
+     if (angular.isArray(concurrencyInfos)) {
+     var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
+     $scope.call.number = RefInfo.Extention;
+     }
+     else {
+     $scope.showAlert('Error', 'error', "Fail To Find Extention.");
+     }
+     }
+     catch (ex) {
+     $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
+     }
+     };*/
     $scope.closeMessage = function () {
         divModel.model('#sendMessage', 'display-none');
     };
@@ -2960,12 +3038,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $('#Outbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Outbound";
                             return;
-                        } else if (data.Result.Mode === "Inbound"){
+                        } else if (data.Result.Mode === "Inbound") {
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Inbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Inbound";
                             return;
-                        }else {
+                        } else {
                             $('#userStatus').addClass('offline').removeClass('online');
                             //$('#Inbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Offline";
@@ -2979,8 +3057,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             },
             getResourceState: function () {
                 resourceService.GetResource(authService.GetResourceId()).then(function (data) {
-                    if(data && data.IsSuccess){
-                        if(data.Result && !data.Result.obj){
+                    if (data && data.IsSuccess) {
+                        if (data.Result && !data.Result.obj) {
                             resourceService.RegisterWithArds(authService.GetResourceId()).then(function (data) {
                                 console.log('registerdWithArds' + data);
                             }, function (error) {

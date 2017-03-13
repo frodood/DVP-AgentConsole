@@ -266,3 +266,19 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
 //        }
 //    }
 //});
+
+
+agentApp.filter('secondsToDateTime', [function () {
+    return function (seconds) {
+        if (!seconds) {
+            return new Date(1970, 0, 1).setSeconds(0);
+        }
+        return new Date(1970, 0, 1).setSeconds(seconds);
+    };
+}]);
+
+agentApp.filter('millisecondsToDateTime', [function () {
+    return function (seconds) {
+        return new Date(1970, 0, 1).setMilliseconds(seconds);
+    };
+}]);
