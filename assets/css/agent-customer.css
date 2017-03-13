@@ -7156,14 +7156,14 @@ ul.renote-color-btn > li {
 }
 
 .active-note {
-    font-family: 'AvenirNextLTPro-Regular ', sans-serif;
     width: 100%;
     min-height: 25px;
     position: relative;
     overflow: hidden;
-    font-size: 14px;
+    font-size: 13px;
     color: #8298ae;
     margin-bottom: 2px;
+    padding-bottom: 10px;
 }
 
 .active-btn-wrp {
@@ -7238,12 +7238,15 @@ ul.renote-color-btn > li {
     position: relative;
     margin-bottom: 10px;
 }
-.rating-p-body{
+
+.rating-p-body {
     width: 100%;
+    min-height: 100px;
     overflow: hidden;
     position: relative;
     margin-bottom: 10px;
 }
+
 .owl-dots {
     display: none;
 }
@@ -7493,5 +7496,76 @@ ul.renote-color-btn > li {
     margin-top: 20px;
     padding: 2px;
     color: #efc94c;
+}
+
+/* my note new layout */
+.my-note-header {
+    width: 100%;
+    min-height: 50px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 5px;
+
+}
+
+.note-h-wrp {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 18px;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.note-add-new {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    overflow: hidden;
+    text-align: center;
+    background: rgba(239, 201, 76, 0.36);
+    cursor: pointer;
+    padding-top: 8px;
+    margin-top: 5px;
+}
+
+.note-add-new:hover,
+.note-add-new:focus {
+    background: rgba(239, 201, 76, 1);
+    color: #fff;
+}
+
+.note-add-new > i {
+    font-size: 25px;
+    color: #efc94c;
+}
+
+.note-add-new > i:hover,
+.note-add-new > i:focus {
+    color: #fff;
+}
+
+.note-de-wrp {
+    width: 100%;
+    min-height: 200px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.note-date-wrp{
+    width: 100%;
+    min-height: 120px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    /* border-radius: 5px; */
+    margin-top: 28px;
+    margin-bottom: 10px;
+    /* -webkit-box-shadow: 0px 0px 17px -12px rgba(0,0,0,0.75); */
+    -moz-box-shadow: 0px 0px 17px -12px rgba(0,0,0,0.75);
+    /* box-shadow: 0px 0px 17px -12px rgba(0,0,0,0.75); */
+    border-right: 2px solid #f1b69e;
 }
 
