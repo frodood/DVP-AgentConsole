@@ -4,7 +4,7 @@
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
                                                     ticketService, engagementService, profileDataParser,
-                                                    authService, dashboardRefreshTime, $state, userProfileApiAccess, jwtHelper, profileDataParser) {
+                                                    authService, dashboardRefreshTime, myNoteServices) {
 
 
     $scope.showAlert = function (title, type, content) {
@@ -527,9 +527,255 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     $scope.uiBratingValue = "5";
 
 
-
     //$scope.myProfileId = profile.myProfileId;
     //$scope.pickMyRatings($scope.myProfileId);
+
+    //####### ************************************************* /////
+    //******** UPDATE CODE DAMITH MY NOTE ******//
+    $scope.myDate = {};
+    //sample test layout
+    $scope.noteLists = [];
+    $scope.note = {};
+    $scope.note.priority = 'low';
+    $scope.myDate = moment(new Date());
+    $scope.isLoadinMyNote = false;
+    //UI FUNCTIONS
+    var uiFuntions = function () {
+        return {
+            loadingMyNote: function () {
+                $('#loadinMyNote').removeClass('display-none');
+                $('#myNoteEmty').addClass('display-none');
+            },
+            foundMyNote: function () {
+                $('#loadinMyNote').addClass('display-none');
+                $('#myNoteEmty').addClass('display-none');
+            },
+            myNoteNotFound: function () {
+                $('#loadinMyNote').addClass('display-none');
+                $('#myNoteEmty').removeClass('display-none')
+            }
+        }
+    }();
+
+
+    //get all my notes
+    $scope.myNoteServices = function () {
+        return {
+            getAllNote: function () {
+                //uiFuntions.loadingMyNote();
+                myNoteServices.GetAllMyToDo().then(function (res) {
+                    if (res.data.IsSuccess) {
+                        $scope.noteLists = res.data.Result.map(function (item) {
+
+                            //item.sizex = "";
+                            //item.sizeY= "100";
+                            if (angular.isUndefined(item.due_at)) {
+                                item.dueDate = false;
+                            } else {
+                                item.dueDate = true;
+                            }
+
+                            return item;
+
+                        });
+                        if ($scope.noteLists.length == 0) {
+                            //uiFuntions.myNoteNotFound();
+                            return;
+                        }
+                        uiFuntions.foundMyNote();
+                    }
+                }, function (err) {
+                    authService.IsCheckResponse(err);
+                    console.log(err);
+                    //showAlert('Reminder Note', 'error', 'Error in GetAllMyToDo');
+                    //uiFuntions.myNoteNotFound();
+                });
+            }
+        }
+    }();
+    $scope.myNoteServices.getAllNote();
+
+    //#Delete my note
+    $scope.myNoteDelete = function ($index, note) {
+        myNoteServices.DeleteMyNote(note).then(function (res) {
+            if (res.data.IsSuccess) {
+                //$('#' + note._id).addClass('fadeOutLeft');
+                showAlert('Reminder Note', 'success', 'Delete Todo Successful..');
+                $scope.noteLists.splice($index, 1);
+                if ($scope.noteLists.length == 0) {
+                    //uiFuntions.myNoteNotFound();
+                    return;
+                }
+                //uiFuntions.foundMyNote();
+
+            } else {
+                showAlert('Reminder Note', 'success', res.data.CustomMessage);
+            }
+        }, function (err) {
+            authService.IsCheckResponse(err);
+            console.log(err);
+            showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
+        });
+    };
+    //end
+
+
+    //#Reminder me main functions
+    $scope.reminderMe = function () {
+        var loadingReminder = function () {
+            $('#reminderSelect').addClass('display-none');
+            $('#reminderLoading').removeClass('display-none');
+        };
+        //
+        var loadedReminder = function () {
+            $('#reminderLoading').addClass('display-none');
+            $('#reminderSelect').removeClass('display-none');
+        };
+
+        return {
+            create: function ($index, note) {
+                //$('#reminderMode').removeClass('display-none');
+                //('html, body').animate({scrollTop: 0}, 'fast');
+                $scope.reminderObj = note;
+            },
+            close: function () {
+                $('#dateTimeWrp').addClass('display-none');
+            },
+            createDueDate: function () {
+                loadingReminder();
+                var myDate = $('#dueTimePicker').val();
+                console.log(myDate);
+                myNoteServices.ReminderMyNote($scope.reminderObj, myDate).then(function (res) {
+                    console.log(res);
+                    loadedReminder();
+                    if (res.data.IsSuccess) {
+                        showAlert('Reminder Note', 'success', 'Reminder saved successfully');
+                        $scope.reminderMe.close();
+                        //due_at
+                    } else {
+                        showAlert('Reminder Note', 'error', res.data.CustomMessage);
+                    }
+
+                }, function (err) {
+                    loadedReminder();
+                    authService.IsCheckResponse(err);
+                    console.log(err);
+                    showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
+
+                });
+            },
+            checkMyNote: function (note) {
+                myNoteServices.CheckMyNote(note).then(function (res) {
+                    if (res.data.IsSuccess) {
+                        note.check = true;
+                        showAlert('Reminder Note', 'success', res.data.CustomMessage);
+                    }
+
+                }, function (err) {
+                    console.log(err);
+                });
+            }
+
+
+        }
+
+    }();
+    //end
+
+    //#Addnew note
+    $scope.addNewNote = function () {
+
+        var loadingSave = function () {
+            $('#enableSaveNotebtn').addClass('display-none');
+            $('#loadingSaveNote').removeClass('display-none');
+        };
+        //
+        var loadedSave = function () {
+            $('#loadingSaveNote').addClass('display-none');
+            $('#enableSaveNotebtn').removeClass('display-none');
+        };
+
+        return {
+            close: function () {
+                $('#addNoteWindow').addClass('display-none');
+                $('#addNoteRow').removeClass('display-none');
+            },
+            done: function (title, priority, note) {
+                $scope.note = {};
+                $scope.note.priority = 'default-color';
+                var note = {
+                    title: title,
+                    priority: priority,
+                    note: note
+                };
+                console.log(note);
+                if (note) {
+                    if (!note.title && !note.note) {
+                        showAlert('Reminder Note', 'error', "Filed required..");
+                        return;
+                    }
+                }
+                loadingSave();
+                myNoteServices.CreateMyNote(note).then(function (res) {
+                    loadedSave();
+                    if (res.data.IsSuccess) {
+
+                        if (res.data.Result) {
+                            item = res.data.Result;
+                            item.dueDate = false;
+                            //item.sizeY = "auto";
+
+
+                            $scope.noteLists.push(item);
+
+                        }
+                        if ($scope.noteLists.length == 0) {
+                            //uiFuntions.myNoteNotFound();
+                            return;
+                        }
+                        //uiFuntions.foundMyNote();
+                        showAlert('Reminder Note', 'success', res.data.CustomMessage);
+                    }
+                }, function (err) {
+                    loadedSave();
+                    authService.IsCheckResponse(err);
+                    showAlert('Reminder Note', 'success', 'Error in CreateMyNote');
+                    console.log(err);
+                });
+
+            },
+            selectColor: function (priority) {
+                $scope.note.priority = priority;
+            }
+        }
+    }();
+
+
+    var clientY = 0;
+    $scope.isOpenDueDatetimeView = false;
+    $scope.mouseCoordinate = function ($event) {
+        //if (!$scope.isOpenDueDatetimeView) {
+        $scope.y = $event.clientY;
+        //}
+    };
+
+    $scope.openDueTimeView = function ($event, note) {
+        $scope.isOpenDueDatetimeView = true;
+
+        $('#dateTimeWrp').removeClass('display-none');
+        $scope.reminderObj = note;
+
+        var cX = $event.clientX;
+        var sX = $event.screenX;
+        var cY = $event.clientY;
+        var sY = $event.screenY;
+        $('#dateTimeWrp').css({top: sY - cY});
+    };
+
+    //end
+
+    //**** END MY NOTE *******//
+
 
 }).config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts

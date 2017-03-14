@@ -4749,8 +4749,8 @@ div.btn-group.dropdown {
 }
 
 .renote-input-box {
-    height: 44px;
-    border: 0;
+    height: 40px;
+    border-radius: 5px;
     background: transparent;
 }
 
@@ -4782,7 +4782,7 @@ div.btn-group.dropdown {
 input[type="textarea"].take-note-text::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
     color: #000 !important;
-    font-size: 20px;
+    font-size: 15px;
     font-family: "AvenirNextLTPro-UltLt", Courier, monospace !important;
 }
 
@@ -4791,11 +4791,11 @@ input[type="text"].take-note-title-text::-webkit-input-placeholder {
     color: #000 !important;
     font-family: "AvenirNextLTPro-UltLt", Courier, monospace !important;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 16px;
 }
 
 .renote-tet-wrapper {
-
+    padding: 25px;
 }
 
 .note-text-area {
@@ -4836,9 +4836,9 @@ input[type="text"].take-note-title-text::-webkit-input-placeholder {
 
 .renote-done {
     text-align: right;
-    padding-right: 5px;
+    /* padding-right: 5px; */
     cursor: pointer;
-    padding-top: 20px;
+    padding-top: 3px;
 }
 
 ul.renote-color-btn {
@@ -4849,9 +4849,9 @@ ul.renote-color-btn {
 ul.renote-color-btn > li {
     list-style: none;
     display: inline-block;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     margin-bottom: 10px;
-    padding-right: 20px;
+    padding-right: 5px;
 }
 
 .note-color-btn {
@@ -4868,8 +4868,7 @@ ul.renote-color-btn > li {
 .note-color-btn.high,
 .note-color-wrp.high,
 .my-note-wrapper.high {
-    background: rgba(255, 143, 135, 0.29);
-    border: 1px solid #ff8f87;
+    background: #e7855e;
 }
 
 /*.my-note-wrapper.high:hover {*/
@@ -4895,23 +4894,19 @@ ul.renote-color-btn > li {
 .note-color-btn.low,
 .note-color-wrp.low,
 .my-note-wrapper.low {
-    background: rgba(173, 214, 255, 0.2);
-    border: 1px solid #add6ff;
+    background: #ffa918;
 }
 
 .note-color-btn.normal,
 .note-color-wrp.normal,
 .my-note-wrapper.normal {
-    background: #69d8a7;
-    background: rgba(105, 216, 167, 0.2);
-    border: 1px solid #69d8a7;
+    background: #37dba9;
 }
 
 .note-color-btn.urgent,
 .note-color-wrp.urgent,
 .my-note-wrapper.urgent {
-    background: rgba(255, 235, 59, 0.2);
-    border: 1px solid #FFEB3B;
+    background: #4383c4;
 }
 
 .note-color-btn.default-color,
@@ -7106,6 +7101,7 @@ ul.renote-color-btn > li {
 .rating-main-wrp > .c-header,
 .queue-m-wrp > .c-header,
 .remark-m-wrp > .c-header,
+.c-header-note,
 .left-text-w > .c-header {
     font-family: 'AvenirNextLTPro-Demi', sans-serif;
     font-size: 14px;
@@ -7511,10 +7507,10 @@ ul.renote-color-btn > li {
 }
 
 .note-h-wrp {
-    font-family: 'AvenirNextLTPro-Bold', sans-serif;
     font-size: 18px;
     text-align: center;
     padding-top: 13px;
+    color: #7d849a;
 }
 
 .note-add-new {
@@ -7523,7 +7519,7 @@ ul.renote-color-btn > li {
     border-radius: 50px;
     overflow: hidden;
     text-align: center;
-    background: rgba(239, 201, 76, 0.36);
+    background: #7d849a;
     cursor: pointer;
     padding-top: 8px;
     margin-top: 5px;
@@ -7537,7 +7533,7 @@ ul.renote-color-btn > li {
 
 .note-add-new > i {
     font-size: 25px;
-    color: #efc94c;
+    color: #fff;
 }
 
 .note-add-new > i:hover,
@@ -7547,25 +7543,309 @@ ul.renote-color-btn > li {
 
 .note-de-wrp {
     width: 100%;
-    min-height: 200px;
+    min-height: 65px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+    margin-bottom: 1px;
+}
+
+.note-date-wrp {
+    width: 100%;
+    /*min-height: 70px;*/
+    /*overflow: hidden;*/
+    /*position: relative;*/
+    background: #fff;
+    /* border-radius: 5px; */
+    margin-top: 13px;
+    margin-bottom: 10px;
+    /* -webkit-box-shadow: 0px 0px 17px -12px rgba(0,0,0,0.75); */
+    -moz-box-shadow: 0px 0px 17px -12px rgba(0, 0, 0, 0.75);
+    /* box-shadow: 0px 0px 17px -12spx rgba(0,0,0,0.75); */
+    border-right: 1px solid #e3e8ea;
+}
+
+.note-d-h-1,
+.note-d-h-2,
+.note-d-h-3 {
+    width: 100%;
+    display: block;
+    text-align: center;
+    text-transform: uppercase !important;
+}
+
+.note-d-h-1 {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 15px;
+    color: #7d849a;
+    margin-top: 13px;
+}
+
+.note-d-h-2 {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 16px;
+    color: #7d849a;
+}
+
+.note-d-h-3 {
+    font-size: 12px;
+    color: #bbbbbb;
+}
+
+.note-body-wrp {
+    width: 100%;
+    min-height: 25px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 8px;
+}
+
+.d-note-footer {
+    width: 100%;
+    /* min-height: 20px; */
+    overflow: hidden;
+    position: relative;
+    /* margin-bottom: 10px; */
+    padding-top: 25px;
+}
+
+.d-note-footer > ul {
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.d-note-footer > ul > li {
+    display: inline-block;
+}
+
+.ticket-type {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 3px;
+    border: 2px solid #e3e8ea;
+
+}
+
+.ticket-type.high {
+    background: #e7855e;
+}
+
+.ticket-type.low {
+    background: #ffa918;
+}
+
+.ticket-type.urgent {
+    background: #4383c4;
+}
+
+.ticket-type.normal {
+    background: #37dba9;
+}
+
+.ticket-type-1 {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #e3e8ea;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.d-note-title {
+    color: #8298ae !important;
+    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: capitalize;
+}
+
+.note-body-wrp > .note-body {
+    font-size: 13px;
+    padding-bottom: 8px;
+}
+
+.d-done,
+.d-delete {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 10px;
+    cursor: pointer;
+    font-size: 9px;
+}
+
+.d-done:hover,
+.d-delete:hover {
+    color: #bbbbbb;
+}
+
+.d-done > i {
+    color: #ebdfc7;
+    font-size: 15px;
+    padding-right: 5px;
+}
+
+.d-done {
+    color: #ebdfc7;
+}
+
+.d-delete {
+    color: #e7855e;
+}
+
+.d-delete > i {
+    color: #e7855e;
+    font-size: 15px;
+    padding-right: 5px;
+}
+
+.note-date-wrp.active {
+    border-right: 1px solid #e3e8ea;
+}
+
+.note-date-wrp.active > .note-d-h-1,
+.note-date-wrp.active > .note-d-h-2,
+.note-date-wrp.active > .note-d-h-3 {
+    color: #81b87f;
+
+}
+
+.d-done.active {
+    color: #81b87f;
+}
+
+.d-done.active > i {
+    color: #81b87f;
+}
+
+.note-de-wrp.note-e {
+
+}
+
+.note-de-wrp.note-e > i {
+    text-align: center;
+    width: 100%;
+    padding-top: 25px;
+    font-size: 68px;
+    color: #f6f6f6;
+}
+
+.create-note-wrp {
+    width: 100%;
+    min-height: 215px;
     overflow: hidden;
     position: relative;
     background: #fff;
     border-radius: 5px;
+    margin-bottom: 10px;
+
 }
 
-.note-date-wrp{
+.create_due-at-wrp {
     width: 100%;
-    min-height: 120px;
+    text-align: center;
+    /*padding-top: 1px;*/
+    display: block;
+
+}
+
+.icon-round {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(125, 132, 154, 0.38);
     overflow: hidden;
     position: relative;
-    background: #fff;
-    /* border-radius: 5px; */
-    margin-top: 28px;
-    margin-bottom: 10px;
-    /* -webkit-box-shadow: 0px 0px 17px -12px rgba(0,0,0,0.75); */
-    -moz-box-shadow: 0px 0px 17px -12px rgba(0,0,0,0.75);
-    /* box-shadow: 0px 0px 17px -12px rgba(0,0,0,0.75); */
-    border-right: 2px solid #f1b69e;
+    text-align: center;
+    padding-top: 9px;
+    margin: 0 auto
 }
 
+.icon-round.active{
+    background: rgba(129, 184, 127, 0.27);
+}
+
+.icon-round.active > i {
+    color: #81b87f;
+}
+
+.icon-round > i {
+    font-size: 17px;
+    cursor: pointer;
+    color: #7d849a;
+
+}
+
+.icon-round > i:hover {
+    color: #000;
+}
+
+.cre-due-text {
+    width: 100%;
+    display: block;
+    color: #bbbbbb;
+    /*padding-top: 5px;*/
+    font-size: 12px;
+}
+
+.date-time-wrp {
+    width: 300px;
+    height: 120px;
+    left: 40px;
+    background: #fff;
+    position: absolute;
+    top: 15px;
+    z-index: 1000;
+    border-radius: 5px;
+    padding: 10px 20px;
+    -webkit-box-shadow: 0px 1px 16px -4px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 1px 16px -4px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 1px 16px -4px rgba(0, 0, 0, 0.75);
+}
+
+.note-due-header {
+    font-family: 'AvenirNextLTPro-Demi', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #223448;
+    width: 100%;
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.d-main-wrp-note {
+    width: 100%;
+    min-height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+
+.date-note-btn-wrp {
+    width: 100%;
+    margin-top: 10px;
+
+}
+
+.date-note-btn-wrp > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: right;
+}
+
+.date-note-btn-wrp > ul > li {
+    display: inline-block;
+    padding-right: 10px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.d-note-priority {
+    position: absolute;
+    top: 23px;
+    left: 29px;
+    z-index: 100;
+}

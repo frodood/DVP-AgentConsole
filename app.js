@@ -14,6 +14,7 @@ var agentApp = angular.module('veeryAgentApp',
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
         'ngImgCrop', 'jkAngularRatingStars',
         "chart.js"
+
     ]);
 
 
