@@ -32,7 +32,7 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
         $('#pwd').removeClass('shake');
         para.userName = $scope.userNme;
         para.password = $scope.pwd;
-        para.scope =  ["all_all", "profile_veeryaccount", "write_ardsresource", "write_notification", "read_myUserProfile", "read_productivity", "profile_veeryaccount", "resourceid"];
+        para.scope = ["all_all", "profile_veeryaccount", "write_ardsresource", "write_notification", "read_myUserProfile", "read_productivity", "profile_veeryaccount", "resourceid"];
 
         if (para.userName == null || para.userName.length == 0) {
             showAlert('Error', 'error', 'Please check user name..');
@@ -52,18 +52,18 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
 
         /*
 
-        loginService.Login(para, function (result) {
-            if (result) {
-                $state.go('console');
-            } else {
-                $('#usersName').addClass('shake');
-                $('#pwd').addClass('shake');
-                showAlert('Error', 'error', 'Please check login details...');
-                $scope.isLogin = false;
-                $scope.loginFrm.$invalid = false;
-            }
-        });
-*/
+         loginService.Login(para, function (result) {
+         if (result) {
+         $state.go('console');
+         } else {
+         $('#usersName').addClass('shake');
+         $('#pwd').addClass('shake');
+         showAlert('Error', 'error', 'Please check login details...');
+         $scope.isLogin = false;
+         $scope.loginFrm.$invalid = false;
+         }
+         });
+         */
 
         $auth.login(para)
             .then(function () {
@@ -81,11 +81,17 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
 
     $scope.CheckLogin = function () {
         if ($auth.isAuthenticated()) {
-                $state.go('console');
+            $state.go('console');
         }
     };
 
     $scope.CheckLogin();
+
+
+    //Recover email forget password
+    $scope.onClickRecoverEmail = function () {
+
+    };
 
 }).directive('myEnter', function () {
     return function (scope, element, attrs) {

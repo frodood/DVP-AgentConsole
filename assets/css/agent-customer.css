@@ -2508,6 +2508,31 @@ div > div >
     z-index: 0;
 }
 
+.forget-header{
+    width: 100%;
+    min-height: 10px;
+    overflow: hidden;
+    position: relative;
+    color: #81c98a;
+    margin-bottom: 25px;
+    font-size: 30px;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    text-align: center;
+    text-transform: capitalize;
+    margin-top: 25px;
+}
+
+.forget-pwd-txt {
+    width: 100%;
+    min-height: 10px;
+    overflow: hidden;
+    position: relative;
+    color: #dcdddc;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+}
+
 /*.login-wrapper::after {*/
 /*content: "";*/
 /*background: url(../img/bg/january.jpg);*/
