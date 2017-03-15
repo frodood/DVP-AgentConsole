@@ -2,7 +2,7 @@
 
 
     <!-- Login View -->
-    <div id="login" class="login-wrap  ">
+    <div id="login" class="login-wrap">
         <div class="login-header">
             <img src="assets/img/logo.png">
         </div>
@@ -37,65 +37,40 @@
 
                 </div>
             </form>
-            <div class="forget-pwd">
-                forget password ?
+            <!--<div class="forget-pwd">-->
+            <!--forget password ?-->
+            <!--</div>-->
+
+            <div ng-if="!isLogin" ng-click="onClickLogin()" class="login-btn">
+                LOGIN
             </div>
+            <div ng-if="isLogin" class="loading-btn">
+                please wait..
+            </div>
+
+
         </div>
-        <div ng-if="!isLogin" ng-click="onClickLogin()" class="login-btn">
-            LOGIN
-        </div>
-        <div ng-if="isLogin" class="loading-btn">
-            please wait..
+
+
+        <div class="forget-pwd-wrp">
+            <p>Having trouble signing in?</p>
+            <ul>
+                <li>
+                    <div ng-click="goToRestEmail()"  tooltip-placement="low" uib-tooltip="password reset using email"
+                          class="round-footer-icon-login">
+                        <i class="ti-email"></i>
+                    </div>
+                </li>
+                <li>
+                    <div ng-click="goToRestToken()"  tooltip-placement="low" uib-tooltip="password reset using token"
+                            class="round-footer-icon-login">
+                        <i class="ti-key"></i>
+                    </div>
+                </li>
+            </ul>
+
         </div>
     </div>
 
 
-    <!-- forget password email -->
-    <div ng-class="forgetPassword" class="login-wrap  display-none">
-        <div class="login-header" style="margin-top: 110px;">
-            <!--<img src="assets/img/logo.png">-->
-            <div class="forget-header">
-                Having trouble signing in?
-            </div>
-        </div>
-
-
-        <div class="animated pulse  login-body">
-
-
-            <div class="forget-pwd-txt">
-                Enter any recovery email associated with your account..
-            </div>
-            <form name="recoverEmailForm" novalidate autocomplete="off">
-                <div class="form-group p-bottom-15">
-
-                    <span class="inline-block validation-on pull-right"
-                          ng-show="recoverEmailForm.recoverEmail.$invalid &&
-                           !recoverEmailForm.recoverEmail.$pristine">
-                           required filed
-                     </span>
-                    <input type="email"
-                           class="animated  form-control login-text"
-                           id="email"
-                           ng-model="recoverEmail"
-                           name="recoverEmail"
-                           required>
-                </div>
-            </form>
-
-        </div>
-        <div ng-if="recoverEmail"
-             ng-click="ResetPassword()"
-             class="login-btn">
-            NEXT
-        </div>
-        <!--<div ng-if="!recoverEmail"-->
-             <!--ng-click="onClickRecoverEmail()"-->
-             <!--class="login-btn ">-->
-            <!--BACK TO LOGIN-->
-        <!--</div>-->
-        <div ng-if="isRecoverEmail" class="loading-btn">
-            please wait..
-        </div>
-    </div>
 </div>

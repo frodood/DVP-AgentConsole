@@ -91,19 +91,28 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
     //Recover email forget password
     $scope.ResetPassword = function () {
         loginService.forgetPassword($scope.recoverEmail, function (isSuccess) {
-            if(isSuccess){
+            if (isSuccess) {
                 showAlert('Success', 'success', "Please check email");
                 $state.go('login');
-            }else{
+            } else {
                 showAlert('Error', 'error', "reset failed");
             }
         })
     };
 
 
-    $scope.BackToLogin= function () {
+    $scope.BackToLogin = function () {
         $state.go('login');
     };
+
+    $scope.goToRestEmail = function () {
+        $state.go('reset-password-email');
+    };
+
+    $scope.goToRestToken = function () {
+        $state.go('reset-password-token');
+    };
+
 
 }).directive('myEnter', function () {
     return function (scope, element, attrs) {

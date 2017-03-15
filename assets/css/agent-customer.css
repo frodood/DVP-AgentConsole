@@ -2508,7 +2508,7 @@ div > div >
     z-index: 0;
 }
 
-.forget-header{
+.forget-header {
     width: 100%;
     min-height: 10px;
     overflow: hidden;
@@ -2563,12 +2563,12 @@ div > div >
     margin: 0 auto;
     background: #17373c;
     width: 360px;
-    height: 320px;
+    min-height: 320px;
     -webkit-box-shadow: -3px 6px 40px -7px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: -3px 6px 40px -7px rgba(0, 0, 0, 0.3);
     box-shadow: -3px 6px 40px -7px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    padding: 60px 25px 10px 25px;
+    padding: 60px 25px 21px 25px;
     position: relative;
 }
 
@@ -2585,13 +2585,13 @@ div > div >
     content: "";
     display: block;
     position: absolute;
-    top: 261px;
+    top: 300px;
     margin: auto 0px;
     text-align: center;
-    left: 17px;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-top: 78px solid #17373c;
+    left: 33px;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 30px solid #17373c;
 }
 
 .forget-pwd {
@@ -2602,13 +2602,63 @@ div > div >
     cursor: pointer;
 }
 
-.login-btn {
+.forget-pwd-wrp {
+    width: 100%;
+    min-height: 20px;
+    overflow: hidden;
+    position: relative;
+    color: #3ecd8e;
     text-align: center;
+    padding-top: 10px;
+    margin-top: 50px;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 17px;
+}
+
+.round-footer-icon-login {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    background: rgba(62, 205, 142, 0.1);
+    padding-top: 6px;
+}
+
+.round-footer-icon-login:hover{
+    background: rgba(62, 205, 142, 0.5);
+}
+
+.forget-pwd-wrp > ul {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.forget-pwd-wrp > ul > li {
+    display: inline-block;
+    color: #3ecd8e;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+
+}
+
+.forget-pwd-wrp > ul > li > i {
+   font-size: 18px;
+    color: #3ecd8e;
+}
+
+.login-btn {
     color: #d2c242;
-    margin-left: -225px;
-    margin-top: 25px;
+    margin-left: 5px;
+    margin-top: 31px;
     font-size: 16px;
     cursor: pointer;
+    text-align: left;
 }
 
 .loading-btn {

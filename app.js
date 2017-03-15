@@ -12,7 +12,7 @@ var agentApp = angular.module('veeryAgentApp',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
         'angular.filter', 'satellizer', 'mdo-angular-cryptography'
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop','jkAngularRatingStars','rzModule',"chart.js"
+        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js"
     ]);
 
 
@@ -86,6 +86,24 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$auth
         }).state('login', {
             url: "/login",
             templateUrl: "app/auth/login.html",
+            data: {
+                requireLogin: false
+            }
+        }).state('reset-password-token', {
+            url: "/reset-password-token",
+            templateUrl: "app/auth/password-reset-token.html",
+            data: {
+                requireLogin: false
+            }
+        }).state('reset-password', {
+            url: "/reset-password",
+            templateUrl: "app/auth/password-reset.html",
+            data: {
+                requireLogin: false
+            }
+        }).state('reset-password-email', {
+            url: "/reset-password-email",
+            templateUrl: "app/auth/password-reset-email.html",
             data: {
                 requireLogin: false
             }
