@@ -244,7 +244,7 @@
 
                                         </div>
                                         <i class="fa fa-spinner fa-spin" ng-if="isSlotUploading && (updationSlot.slot.name==slot.slot.name)">
-                                            </i><label ng-if="isSlotUploading && (updationSlot.slot.name==slot.slot.name)">Uploading........</label>
+                                        </i><label ng-if="isSlotUploading && (updationSlot.slot.name==slot.slot.name)">Uploading........</label>
                                     </div>
 
                                 </div>
@@ -642,7 +642,7 @@
                                                     <div class="notification-time text-uppercase bold color-green500"
                                                          ng-if="!ticket.assignee.name"
                                                          ng-show="ticket.assignee_group.name">
-                                                         GROUP
+                                                        GROUP
                                                     </div>
                                                     <div class="notification-text" ng-if="!ticket.assignee.name"
                                                          ng-show="ticket.assignee_group">
@@ -808,6 +808,34 @@
                                         <h6>{{ticketLoggedTimeFormat}}</h6>
                                     </div>
                                 </div>
+                            </div>
+
+
+                        </div>
+                        <!-- END -->
+
+                        <!-- Security Level  -->
+                        <div class="collaborators-wrapper" style="margin-top: 35px;">
+                            <div class="details">
+                                <h5 class="bold"> SECURITY LEVEL
+
+                                </h5>
+
+                            </div>
+                            <div class=" time-wrapper">
+                                <div class="row">
+                                    <rzslider
+                                    rz-slider-model="ticket.security_level"
+                                    rz-slider-options="slider.options"></rzslider>
+
+                                </div>
+                                <div class="model-btn-wrapper">
+                                    <div class="btn-warp ">
+                                <span class="btn btn-default"
+                                      ng-click="updateSecurityLevel();">Save</span>
+                                    </div>
+                                </div>
+
                             </div>
 
 

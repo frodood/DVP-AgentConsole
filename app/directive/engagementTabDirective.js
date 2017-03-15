@@ -119,7 +119,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
 
-
             scope.pickCompanyInfo = function () {
                 var userCompanyData = authService.GetCompanyInfo();
                 ticketService.pickCompanyInfo(userCompanyData.tenant, userCompanyData.company).then(function (response) {
@@ -1075,7 +1074,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 scope.ticket.priority = priority;
             };
 
- 	    scope.loadMyAppMetaData = function () {
+            scope.loadMyAppMetaData = function () {
                 ticketService.GetMyTicketConfig(function (success,data) {
 
                     if(success && data && data.Result)
@@ -1089,7 +1088,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             }
 
-            
+
 
             scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
