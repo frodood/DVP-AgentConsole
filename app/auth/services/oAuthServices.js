@@ -15,6 +15,7 @@
         service.Logoff = Logoff;
         service.VerifyPwd = VerifyPwd;
         service.UpdateMyPwd = UpdateMyPwd;
+        service.forgetPassword = forgetPassword;
         return service;
         var mynavigations = {};
 
@@ -142,6 +143,16 @@
                 callback(false,data);
             });
         }
+
+        //forget password
+        function forgetPassword(email, callback) {
+            $http.post(baseUrls.userServiceBaseUrl + "auth/forget", {email: email}).success(function (data, status, headers, config) {
+                callback(data.IsSuccess);
+
+            }).error(function (data, status, headers, config) {
+                callback(data.IsSuccess);
+            });
+        };
     }
 })();
 

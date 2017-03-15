@@ -82,11 +82,16 @@
             </form>
 
         </div>
-        <div ng-if="!isRecoverEmail"
-             ng-click="onClickRecoverEmail()"
+        <div ng-if="recoverEmail"
+             ng-click="ResetPassword()"
              class="login-btn">
             NEXT
         </div>
+        <!--<div ng-if="!recoverEmail"-->
+             <!--ng-click="onClickRecoverEmail()"-->
+             <!--class="login-btn ">-->
+            <!--BACK TO LOGIN-->
+        <!--</div>-->
         <div ng-if="isRecoverEmail" class="loading-btn">
             please wait..
         </div>
