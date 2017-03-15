@@ -3,10 +3,11 @@
  */
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
-                                                    ticketService, engagementService, profileDataParser, authService,dashboardRefreshTime, $state) {
+                                                    ticketService, engagementService, profileDataParser,
+                                                    authService, dashboardRefreshTime, myNoteServices) {
 
 
-   $scope.showAlert = function (title, type, content) {
+    $scope.showAlert = function (title, type, content) {
         new PNotify({
             title: title,
             text: content,
@@ -65,22 +66,27 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 fill: true,
                 /*lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(0,205,115,1)",
-                backgroundColor: "rgba(0,205,115,0.3)",
-                pointBorderColor: "rgba(0,205,115,1)",
-                pointBackgroundColor: "rgba(0,205,115,0.5)",
-                pointBorderWidth: 1
+                borderColor: "rgba(235,223,119,1)",
+                backgroundColor: "rgba(235,223,119,0.3)",
+                pointBorderColor: "rgba(235,223,119,1)",
+                pointBackgroundColor: "rgba(235,223,119,0.5)",
+                pointBorderWidth: 1,
+                steppedLine: false
+
+
             }, {
                 label: "Resolved Ticket",
                 data: [],
                 fill: true,
                 /* lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(79,147,0,1)",
-                backgroundColor: "rgba(79,147,0,0.5)",
-                pointBorderColor: "rgba(79,147,0,1)",
-                pointBackgroundColor: "rgba(79,147,0,0.5)",
-                pointBorderWidth: 1
+                borderColor: "rgba(9,138,108,1)",
+                backgroundColor: "rgba(9,138,108,0.5)",
+                pointBorderColor: "rgba(9,138,108,0,1)",
+                pointBackgroundColor: "rgba(9,138,108,0.5)",
+                pointBorderWidth: 1,
+                steppedLine: false
+
             }]
         },
         options: {
@@ -104,11 +110,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                         userCallback: function (dataLabel, index) {
                             return ''; //index % 2 === 0 ? dataLabel : '';
                         }
-                    },
-                    scaleLabel: {
-                        display: false,
-                        labelString: 'Days'
                     }
+
                 }],
                 yAxes: [{
                     display: true,
@@ -119,7 +122,15 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Count'
+                        labelString: 'COUNT',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontColor: '#ebdfc7',
+                        fontSize: 13
+                    },
+                    ticks: {
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     }
                 }]
             }
@@ -132,6 +143,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     //    dataset.pointBackgroundColor = randomColor(0.5);
     //    dataset.pointBorderWidth = 1;
     //});
+
+    var openclose = null;
+
 
     var openclose = document.getElementById("openclosecanvas").getContext("2d");
     window.opencloseChart = new Chart(openclose, $scope.createVsOpenConfig);
@@ -155,7 +169,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             legend: {
                 display: false,
                 labels: {
-                    fontColor: 'rgb(255, 99, 132)'
+                    fontColor: 'red'
                 }
             },
             title: {
@@ -176,11 +190,17 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     ticks: {
                         userCallback: function (dataLabel, index) {
                             return index % 3 === 0 ? dataLabel : '';
-                        }
+                        },
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Days'
+                        labelString: 'DAYS',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontColor: '#ebdfc7',
+                        fontSize: 13
                     }
                 }],
                 yAxes: [{
@@ -189,20 +209,29 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     gridLines: {
                         color: "rgba(244,245,244,0)",
                         zeroLineColor: "rgba(244,245,244,1)"
+
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Count'
+                        labelString: 'COUNT',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontColor: '#ebdfc7',
+                        fontSize: 13
+                    },
+                    ticks: {
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     }
                 }]
             }
         }
     };
     $.each($scope.deferenceConfig.data.datasets, function (i, dataset) {
-        dataset.borderColor = "rgba(230,82,0,1)";
-        dataset.backgroundColor = "rgba(230,82,0,0.6)";
-        dataset.pointBorderColor = "rgba(74,57,30,1)";
-        dataset.pointBackgroundColor = "rgba(230,82,0,0.5)";
+        dataset.borderColor = "rgba(231,133,94,1)";
+        dataset.backgroundColor = "rgba(231,133,94,0.6)";
+        dataset.pointBorderColor = "rgba(231,133,94,1)";
+        dataset.pointBackgroundColor = "rgba(231,133,94,0.5)";
         dataset.pointBorderWidth = 1;
     });
     var deference = document.getElementById("deferencecanvas").getContext("2d");
@@ -211,51 +240,70 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     /*productivity*/
     $scope.doughnutData = {
         labels: ["ACW", "Break", "OnCall", "Idle", "Hold"],
-
         datasets: [
             {
-                data: [0, 0, 0, 0, 0],
-                backgroundColor: [
-                    "#ffa918",
-                    "#e65200",
-                    "#37dba9",
-                    "#8298ae",
-                    "#d90000"
-                ],
-                hoverBackgroundColor: [
-                    "#ffa918",
-                    "#36A2EB",
-                    "#37dba9",
-                    "#8298ae",
-                    "#d90000"
-                ],
-                borderWidth: [0, 0, 0, 0, 0],
+                data: [0, 0, 0, 0, 0]
             }]
     };
-    var doughnutChart = document.getElementById("doughnutChart");
+    // var doughnutChart = document.getElementById("doughnutChart");
+    // ,
+    // backgroundColor: [
+    //     "#45eaca",
+    //     "#ebdfc7",
+    //     "#098a6c",
+    //     "#223448"
+    // ],
+    //     hoverBackgroundColor: [
+    //     "#ffa918",
+    //     "#36A2EB",
+    //     "#37dba9",
+    //     "#8298ae",
+    //     "#d90000"
+    // ],
+    //     borderWidth: [0, 0, 0, 0, 0],
+
+    // window.myDoughnutChart = new Chart(doughnutChart, {
+    //     type: 'doughnut',
+    //     data: $scope.doughnutData,
+    //     options: {
+    //         responsive: false,
+    //         title: {
+    //             display: false
+    //         },
+    //         legend: {
+    //             display: true,
+    //             position: 'bottom',
+    //             padding: 5,
+    //             labels: {
+    //                 fontColor: 'rgb(130, 152, 174)',
+    //                 fontSize: 10,
+    //                 boxWidth: 10
+    //             }
+    //         }
+    //     }
+    // });
+    // doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-top: 15px;");
 
 
-    window.myDoughnutChart = new Chart(doughnutChart, {
+    //update doughnutChar damith
+
+    $scope.options = {
         type: 'doughnut',
-        data: $scope.doughnutData,
-        options: {
-            responsive: false,
-            title: {
-                display: false
-            },
-            legend: {
-                display: true,
-                position: 'bottom',
-                padding: 10,
-                labels: {
-                    fontColor: 'rgb(130, 152, 174)',
-                    fontSize: 15,
-                    boxWidth: 50
-                }
+        responsive: false,
+        legend: {
+            display: true,
+            position: 'bottom',
+            padding: 5,
+            labels: {
+                fontColor: 'rgb(130, 152, 174)',
+                fontSize: 10,
+                boxWidth: 10
             }
+        },
+        title: {
+            display: true
         }
-    });
-    doughnutChart.setAttribute("style", "width: 300px;height: 300px;margin-top: 15px;");
+    };
 
     /* -------------------- Chart Configurations End-----------------------------------------*/
 
@@ -272,8 +320,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     return;
                 $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime),
                     secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
-                window.myDoughnutChart.update();
-
+                // window.myDoughnutChart.update();
+                $scope.doughnutObj = {
+                    labels: $scope.doughnutData.labels,
+                    data: $scope.doughnutData.datasets[0].data
+                };
 
                 $scope.productivity.OnCallTime = response.OnCallTime.toString().toHHMMSS();
                 $scope.productivity.StaffedTime = response.StaffedTime.toString().toHHMMSS();
@@ -282,7 +333,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 $scope.productivity.MissCallCount = response.MissCallCount;
                 $scope.productivity.TransferCallCount = response.TransferCallCount;
             } else {
-                 //$scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
+                //$scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
             }
 
         }, function (err) {
@@ -299,10 +350,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.newTicketCount = 0;
-             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+            //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    GetOpenTicketCount();
+    //GetOpenTicketCount();
 
     $scope.closeTicketCount = 0;
     var GetResolveTicketCount = function () {
@@ -311,10 +362,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.closeTicketCount = 0;
-             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+            //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    GetResolveTicketCount();
+    // GetResolveTicketCount();
 
     $scope.ProgressTicketCount = 0;
     var GetProgressTicketCount = function () {
@@ -323,10 +374,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.ProgressTicketCount = 0;
-             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
+            $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    GetProgressTicketCount();
+    //GetProgressTicketCount();
 
     var GetCreatedicketSeries = function () {
         dashboradService.GetCreatedTicketSeries().then(function (response) {
@@ -338,7 +389,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }, function (err) {
             authService.IsCheckResponse(err);
-             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
+            //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
     GetCreatedicketSeries();
@@ -368,7 +419,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }, function (err) {
             authService.IsCheckResponse(err);
-             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
+            //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
     GetDeferenceResolvedTicketSeries();
@@ -405,14 +456,13 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             // $scope.showAlert("Engagement Details", "error", "Fail To Load Recent Engagements.");
         });
     };
-    GetMyRecentEngagements();
+    //GetMyRecentEngagements();
 
     $scope.viewTicket = function (data) {
         data.tabType = 'ticketView';
         data.index = data.reference;
         $rootScope.$emit('openNewTab', data);
     };
-
 
 
     $scope.refreshTime = parseInt(dashboardRefreshTime);
@@ -433,13 +483,13 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        //getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
+        getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
     };
 
 
-    var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
-    var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
-    var getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
+    // var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
+    // var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
+    //var getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
@@ -457,6 +507,280 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         loadRecentData();
         loadGrapData();
     };
-    $scope.dashboardReload();
-});
+    //$scope.dashboardReload();
+
+    //update code by damith
+    /**** rating ****/
+    $scope.rate = 7;
+    $scope.max = 10;
+    $scope.isReadonly = false;
+
+    $scope.hoveringOver = function (value) {
+        $scope.overStar = value;
+        $scope.percent = 100 * (value / $scope.max);
+    };
+
+    $scope.ratingStates = [
+        {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
+    ];
+
+    $scope.uiBratingValue = "5";
+
+
+    //$scope.myProfileId = profile.myProfileId;
+    //$scope.pickMyRatings($scope.myProfileId);
+
+    //####### ************************************************* /////
+    //******** UPDATE CODE DAMITH MY NOTE ******//
+    $scope.myDate = {};
+    //sample test layout
+    $scope.noteLists = [];
+    $scope.note = {};
+    $scope.note.priority = 'low';
+    $scope.myDate = moment(new Date());
+    $scope.isLoadinMyNote = false;
+    //UI FUNCTIONS
+    var uiFuntions = function () {
+        return {
+            loadingMyNote: function () {
+                $('#loadinMyNote').removeClass('display-none');
+                $('#myNoteEmty').addClass('display-none');
+            },
+            foundMyNote: function () {
+                $('#loadinMyNote').addClass('display-none');
+                $('#myNoteEmty').addClass('display-none');
+            },
+            myNoteNotFound: function () {
+                $('#loadinMyNote').addClass('display-none');
+                $('#myNoteEmty').removeClass('display-none')
+            }
+        }
+    }();
+
+
+    //get all my notes
+    $scope.myNoteServices = function () {
+        return {
+            getAllNote: function () {
+                //uiFuntions.loadingMyNote();
+                myNoteServices.GetAllMyToDo().then(function (res) {
+                    if (res.data.IsSuccess) {
+                        $scope.noteLists = res.data.Result.map(function (item) {
+
+                            //item.sizex = "";
+                            //item.sizeY= "100";
+                            if (angular.isUndefined(item.due_at)) {
+                                item.dueDate = false;
+                            } else {
+                                item.dueDate = true;
+                            }
+
+                            return item;
+
+                        });
+                        if ($scope.noteLists.length == 0) {
+                            //uiFuntions.myNoteNotFound();
+                            return;
+                        }
+                        uiFuntions.foundMyNote();
+                    }
+                }, function (err) {
+                    authService.IsCheckResponse(err);
+                    console.log(err);
+                    //showAlert('Reminder Note', 'error', 'Error in GetAllMyToDo');
+                    //uiFuntions.myNoteNotFound();
+                });
+            }
+        }
+    }();
+    $scope.myNoteServices.getAllNote();
+
+    //#Delete my note
+    $scope.myNoteDelete = function ($index, note) {
+        myNoteServices.DeleteMyNote(note).then(function (res) {
+            if (res.data.IsSuccess) {
+                //$('#' + note._id).addClass('fadeOutLeft');
+                showAlert('Reminder Note', 'success', 'Delete Todo Successful..');
+                $scope.noteLists.splice($index, 1);
+                if ($scope.noteLists.length == 0) {
+                    //uiFuntions.myNoteNotFound();
+                    return;
+                }
+                //uiFuntions.foundMyNote();
+
+            } else {
+                showAlert('Reminder Note', 'success', res.data.CustomMessage);
+            }
+        }, function (err) {
+            authService.IsCheckResponse(err);
+            console.log(err);
+            showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
+        });
+    };
+    //end
+
+
+    //#Reminder me main functions
+    $scope.reminderMe = function () {
+        var loadingReminder = function () {
+            $('#reminderSelect').addClass('display-none');
+            $('#reminderLoading').removeClass('display-none');
+        };
+        //
+        var loadedReminder = function () {
+            $('#reminderLoading').addClass('display-none');
+            $('#reminderSelect').removeClass('display-none');
+        };
+
+        return {
+            create: function ($index, note) {
+                //$('#reminderMode').removeClass('display-none');
+                //('html, body').animate({scrollTop: 0}, 'fast');
+                $scope.reminderObj = note;
+            },
+            close: function () {
+                $('#dateTimeWrp').addClass('display-none');
+            },
+            createDueDate: function () {
+                loadingReminder();
+                var myDate = $('#dueTimePicker').val();
+                console.log(myDate);
+                myNoteServices.ReminderMyNote($scope.reminderObj, myDate).then(function (res) {
+                    console.log(res);
+                    loadedReminder();
+                    if (res.data.IsSuccess) {
+                        showAlert('Reminder Note', 'success', 'Reminder saved successfully');
+                        $scope.reminderMe.close();
+                        //due_at
+                    } else {
+                        showAlert('Reminder Note', 'error', res.data.CustomMessage);
+                    }
+
+                }, function (err) {
+                    loadedReminder();
+                    authService.IsCheckResponse(err);
+                    console.log(err);
+                    showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
+
+                });
+            },
+            checkMyNote: function (note) {
+                myNoteServices.CheckMyNote(note).then(function (res) {
+                    if (res.data.IsSuccess) {
+                        note.check = true;
+                        showAlert('Reminder Note', 'success', res.data.CustomMessage);
+                    }
+
+                }, function (err) {
+                    console.log(err);
+                });
+            }
+
+
+        }
+
+    }();
+    //end
+
+    //#Addnew note
+    $scope.addNewNote = function () {
+
+        var loadingSave = function () {
+            $('#enableSaveNotebtn').addClass('display-none');
+            $('#loadingSaveNote').removeClass('display-none');
+        };
+        //
+        var loadedSave = function () {
+            $('#loadingSaveNote').addClass('display-none');
+            $('#enableSaveNotebtn').removeClass('display-none');
+        };
+
+        return {
+            close: function () {
+                $('#addNoteWindow').addClass('display-none');
+                $('#addNoteRow').removeClass('display-none');
+            },
+            done: function (title, priority, note) {
+                $scope.note = {};
+                $scope.note.priority = 'default-color';
+                var note = {
+                    title: title,
+                    priority: priority,
+                    note: note
+                };
+                console.log(note);
+                if (note) {
+                    if (!note.title && !note.note) {
+                        showAlert('Reminder Note', 'error', "Filed required..");
+                        return;
+                    }
+                }
+                loadingSave();
+                myNoteServices.CreateMyNote(note).then(function (res) {
+                    loadedSave();
+                    if (res.data.IsSuccess) {
+
+                        if (res.data.Result) {
+                            item = res.data.Result;
+                            item.dueDate = false;
+                            //item.sizeY = "auto";
+
+
+                            $scope.noteLists.push(item);
+
+                        }
+                        if ($scope.noteLists.length == 0) {
+                            //uiFuntions.myNoteNotFound();
+                            return;
+                        }
+                        //uiFuntions.foundMyNote();
+                        showAlert('Reminder Note', 'success', res.data.CustomMessage);
+                    }
+                }, function (err) {
+                    loadedSave();
+                    authService.IsCheckResponse(err);
+                    showAlert('Reminder Note', 'success', 'Error in CreateMyNote');
+                    console.log(err);
+                });
+
+            },
+            selectColor: function (priority) {
+                $scope.note.priority = priority;
+            }
+        }
+    }();
+
+
+    var clientY = 0;
+    $scope.isOpenDueDatetimeView = false;
+    $scope.mouseCoordinate = function ($event) {
+        //if (!$scope.isOpenDueDatetimeView) {
+        $scope.y = $event.clientY;
+        //}
+    };
+
+    $scope.openDueTimeView = function ($event, note) {
+        $scope.isOpenDueDatetimeView = true;
+
+        $('#dateTimeWrp').removeClass('display-none');
+        $scope.reminderObj = note;
+
+        var cX = $event.clientX;
+        var sX = $event.screenX;
+        var cY = $event.clientY;
+        var sY = $event.screenY;
+        $('#dateTimeWrp').css({top: sY - cY});
+    };
+
+    //end
+
+    //**** END MY NOTE *******//
+
+
+}).config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+        chartColors: ['#223448', '#e7855e', '#ebdfc7', '#098a6c', '#bbd2b6']
+    });
+}]);
 
