@@ -9,7 +9,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess) {
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess,$anchorScroll) {
+
+    // call $anchorScroll()
+    $anchorScroll();
 
 
     $scope.isReadyToSpeak = false;

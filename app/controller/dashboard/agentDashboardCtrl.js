@@ -4,7 +4,12 @@
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
                                                     ticketService, engagementService, profileDataParser,
-                                                    authService, dashboardRefreshTime, myNoteServices) {
+                                                    authService, dashboardRefreshTime, myNoteServices,$anchorScroll) {
+
+
+
+    // call $anchorScroll()
+    $anchorScroll();
 
 
     $scope.showAlert = function (title, type, content) {
@@ -487,9 +492,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
 
 
-    // var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
-    // var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
-    //var getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
+    var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
+    var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
+    var getAllRealTimeTimer = $timeout(getAllRealTime, 30000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
