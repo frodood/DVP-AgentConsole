@@ -6989,6 +6989,98 @@ ul.renote-color-btn > li {
     width: 100%;
     height: 319px;
     overflow: hidden;
+    padding: 10px 15px;
+}
+
+.notice-header {
+    font-family: 'AvenirNextLTPro-UltLt', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.notice-img-wrp {
+    width: 100%;
+    height: 136px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 10px;
+}
+
+.notice-des-wrp {
+    font-family: 'AvenirNextLTPro-UltLt', sans-serif;
+    width: 100%;
+    min-height: 30px;
+    overflow: hidden;
+    position: relative;
+    padding-top: 10px;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.notice-footer {
+    width: 100%;
+    min-height: 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+.notice-footer > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.round-footer-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    /*background: rgba(239, 201, 76, 0.51);*/
+    /* padding: 5px; */
+    /*overflow: hidden;*/
+    position: relative;
+    padding-top: 4px;
+    display: inline-block;
+}
+
+.round-footer-icon > i {
+    color: rgb(9, 138, 108);
+    font-size: 13px;
+    padding-left: 1px;
+}
+
+.round-btn {
+    min-width: 20px;
+    min-height: 20px;
+    padding: 5px 15px 3px 15px;
+    overflow: hidden;
+    position: relative;
+    background: rgb(231, 133, 94);
+    color: #fff;
+    border-radius: 25px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.round-icon-w-text {
+    font-family: ' AvenirNextLTPro-Bold', sans-serif;
+    display: inline-block;
+    font-size: 10px;
+    position: relative;
+    /*color: #098a6c;*/
+}
+
+.notice-footer > ul > li {
+    display: inline-block;
+    min-width: 20px;
+    min-height: 10px;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+    margin: auto;
+}
+
+.notice-img-wrp > img {
+    position: absolute;
 }
 
 .left-img-b {
@@ -7763,7 +7855,7 @@ ul.renote-color-btn > li {
     margin: 0 auto
 }
 
-.icon-round.active{
+.icon-round.active {
     background: rgba(129, 184, 127, 0.27);
 }
 
