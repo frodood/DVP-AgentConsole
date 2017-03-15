@@ -1452,8 +1452,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     var openNewTicketTab = function (ticket, index) {
-        var tabTopic = "Ticket - " + ticket.reference;
-        $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket, index);
+
+
+
+        if( ticket.security_level >= profileDataParser.myProfile.security_level || !ticket.security_level )
+        {
+            var tabTopic = "Ticket - " + ticket.reference;
+            $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket, index);
+
+        }
+
+        else
+        {
+            $scope.showAlert("Error","error","You are tring to access unauthorized ticket");
+        }
+
+
         /*var selectedTabs = $scope.tabs.filter(function (item) {
          return item.notificationData._id == ticket._id;
          });
@@ -2316,27 +2330,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                        if (data.IsSuccess) {
-                            if (data.Result && data.Result.UNREAD) {
-                                $scope.unreadMailCount = data.Result.UNREAD;
-                            }
+                    if (data.IsSuccess) {
+                        if (data.Result && data.Result.UNREAD) {
+                            $scope.unreadMailCount = data.Result.UNREAD;
                         }
-                        else {
-                            var errMsg = data.CustomMessage;
+                    }
+                    else {
+                        var errMsg = data.CustomMessage;
 
-                            if (data.Exception) {
-                                errMsg = data.Exception.Message;
-                            }
-                            console.log(errMsg);
+                        if (data.Exception) {
+                            errMsg = data.Exception.Message;
                         }
+                        console.log(errMsg);
+                    }
 
 
-                    },
-                    function (err) {
-                        authService.IsCheckResponse(err);
-                        console.log(err);
+                },
+                function (err) {
+                    authService.IsCheckResponse(err);
+                    console.log(err);
 
-                    })
+                })
 
         }
         catch (ex) {
@@ -2447,20 +2461,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     /*$scope.setExtention = function (selectedUser) {
 
-        try {
-            var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
-            if (angular.isArray(concurrencyInfos)) {
-                var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
-                $scope.call.number = RefInfo.Extention;
-            }
-            else {
-                $scope.showAlert('Error', 'error', "Fail To Find Extention.");
-            }
-        }
-        catch (ex) {
-            $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
-        }
-    };*/
+     try {
+     var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
+     if (angular.isArray(concurrencyInfos)) {
+     var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
+     $scope.call.number = RefInfo.Extention;
+     }
+     else {
+     $scope.showAlert('Error', 'error', "Fail To Find Extention.");
+     }
+     }
+     catch (ex) {
+     $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
+     }
+     };*/
     $scope.closeMessage = function () {
         divModel.model('#sendMessage', 'display-none');
     };
