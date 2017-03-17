@@ -512,7 +512,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         loadRecentData();
         loadGrapData();
     };
-    //$scope.dashboardReload();
+    $scope.dashboardReload();
 
     //update code by damith
     /**** rating ****/
