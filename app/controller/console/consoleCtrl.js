@@ -2922,11 +2922,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $('#Outbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Outbound";
                             return;
-                        } else {
+                        } else if (data.Result.Mode === "Inbound"){
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Inbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Inbound";
                             return;
+                        } else{
+                          $('#userStatus').addClass('offline').removeClass('online');
+                            $scope.currentModeOption = "Offline";
                         }
                     }
                 }, function (error) {
