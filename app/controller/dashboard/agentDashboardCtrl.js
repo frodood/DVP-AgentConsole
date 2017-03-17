@@ -358,7 +358,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    //GetOpenTicketCount();
+    GetOpenTicketCount();
 
     $scope.closeTicketCount = 0;
     var GetResolveTicketCount = function () {
@@ -370,7 +370,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    // GetResolveTicketCount();
+    GetResolveTicketCount();
 
     $scope.ProgressTicketCount = 0;
     var GetProgressTicketCount = function () {
@@ -382,7 +382,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    //GetProgressTicketCount();
+    GetProgressTicketCount();
 
     var GetCreatedicketSeries = function () {
         dashboradService.GetCreatedTicketSeries().then(function (response) {
@@ -461,7 +461,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             // $scope.showAlert("Engagement Details", "error", "Fail To Load Recent Engagements.");
         });
     };
-    //GetMyRecentEngagements();
+    GetMyRecentEngagements();
 
     $scope.viewTicket = function (data) {
         data.tabType = 'ticketView';
