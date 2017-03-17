@@ -4,7 +4,7 @@
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
                                                     ticketService, engagementService, profileDataParser,
-                                                    authService, dashboardRefreshTime, myNoteServices,$anchorScroll) {
+                                                    authService, dashboardRefreshTime, myNoteServices, $anchorScroll) {
 
 
 
@@ -488,13 +488,13 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
+        getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
     };
 
 
     var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
     var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
-    var getAllRealTimeTimer = $timeout(getAllRealTime, 30000);
+    var getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
@@ -730,8 +730,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                             item.dueDate = false;
                             //item.sizeY = "auto";
 
-
                             $scope.noteLists.push(item);
+                            $scope.note.priority = 'low';
 
                         }
                         if ($scope.noteLists.length == 0) {

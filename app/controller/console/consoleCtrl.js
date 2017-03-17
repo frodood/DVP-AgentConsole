@@ -2448,6 +2448,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         })
 
     };
+
+
+
     $scope.RatingResultResolve = function (item) {
         var rateObj =
             {
