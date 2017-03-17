@@ -2626,7 +2626,7 @@ div > div >
     padding-top: 6px;
 }
 
-.round-footer-icon-login:hover{
+.round-footer-icon-login:hover {
     background: rgba(62, 205, 142, 0.5);
 }
 
@@ -2648,7 +2648,7 @@ div > div >
 }
 
 .forget-pwd-wrp > ul > li > i {
-   font-size: 18px;
+    font-size: 18px;
     color: #3ecd8e;
 }
 
@@ -4943,7 +4943,7 @@ ul.renote-color-btn > li {
 .note-color-btn.high,
 .note-color-wrp.high,
 .my-note-wrapper.high {
-    background: #e7855e;
+    background: #fb5f21;
 }
 
 /*.my-note-wrapper.high:hover {*/
@@ -7353,13 +7353,13 @@ ul.renote-color-btn > li {
 
 .none-click-btn {
     font-family: 'AvenirNextLTPro-Regular ', sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     min-width: 20px;
     max-width: 90px;
     height: 21px;
     overflow: hidden;
     text-align: center;
-    padding: 4px 8px 5px 8px;
+    padding: 4px 4px 5px 5px;
     position: relative
 }
 
@@ -7373,6 +7373,7 @@ ul.renote-color-btn > li {
     background: rgba(9, 138, 108, 0.2);
     color: #098a6c;
     border-radius: 25px;
+    cursor: pointer;
 }
 
 .closed-tag {
@@ -7798,7 +7799,7 @@ ul.renote-color-btn > li {
 }
 
 .ticket-type.high {
-    background: #e7855e;
+    background: #fb5f21;
 }
 
 .ticket-type.low {
@@ -7832,6 +7833,8 @@ ul.renote-color-btn > li {
 .note-body-wrp > .note-body {
     font-size: 13px;
     padding-bottom: 8px;
+    overflow-wrap: normal;
+    overflow-wrap: break-word;
 }
 
 .d-done,
@@ -7923,7 +7926,7 @@ ul.renote-color-btn > li {
     height: 35px;
     border-radius: 50%;
     background: rgba(125, 132, 154, 0.38);
-    overflow: hidden;
+    /*overflow: hidden;*/
     position: relative;
     text-align: center;
     padding-top: 9px;

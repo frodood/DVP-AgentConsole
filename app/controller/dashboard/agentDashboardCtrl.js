@@ -739,7 +739,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                             return;
                         }
                         //uiFuntions.foundMyNote();
-                        showAlert('Reminder Note', 'success', res.data.CustomMessage);
+                        showAlert('Reminder Note', 'success', 'Note Created Successfully.');
                     }
                 }, function (err) {
                     loadedSave();
