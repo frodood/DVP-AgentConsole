@@ -6995,7 +6995,7 @@ ul.renote-color-btn > li {
 
 .left-d-icon {
     position: absolute;
-    top: 21px;
+    top: 25px;
     left: 7%;
 }
 
@@ -7022,7 +7022,7 @@ ul.renote-color-btn > li {
     position: relative;
     margin-left: 29%;
     z-index: 20;
-    padding-top: 15px;
+    padding-top: 20px;
 
 }
 
@@ -7033,7 +7033,7 @@ ul.renote-color-btn > li {
     position: relative;
     display: block;
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    font-size: 28px;
+    font-size: 23px;
     text-align: left;
 }
 
@@ -7051,10 +7051,10 @@ ul.renote-color-btn > li {
 .n-board-wrp {
     position: relative;
     width: 100%;
-    height: 319px;
+    min-height: 319px;
     border-radius: 5px;
     background: #fff;
-    padding: 6px;
+    padding: 0px;
 }
 
 .notice-b-m-wrp {
