@@ -16,6 +16,7 @@
         service.VerifyPwd = VerifyPwd;
         service.UpdateMyPwd = UpdateMyPwd;
         service.forgetPassword = forgetPassword;
+        service.resetPassword =resetPassword;
         return service;
         var mynavigations = {};
 
@@ -84,7 +85,7 @@
         //logoff
         function Logoff(callback) {
             var decodeToken = getTokenDecode();
-            $http.delete(baseUrls.authUrl + '/revoke/' + decodeToken.jti, {
+            $http.delete(baseUrls.authUrl + '/oauth/token/revoke/' + decodeToken.jti, {
                 headers: {
                     Authorization: 'Bearer ' + getToken()
                 }
@@ -101,7 +102,7 @@
         //http://userservice.app.veery.cloud
         //http://192.168.5.103:3636
         function Login(parm, callback) {
-            $http.post(baseUrls.authUrl, {
+            $http.post(baseUrls.authUrl+'/oauth/token', {
                 grant_type: "password",
                 username: parm.userName,
                 password: parm.password,
@@ -146,7 +147,18 @@
 
         //forget password
         function forgetPassword(email, callback) {
-            $http.post(baseUrls.userServiceBaseUrl + "auth/forget", {email: email}).success(function (data, status, headers, config) {
+            $http.post(baseUrls.authUrl + "/auth/forget", {email: email}).success(function (data, status, headers, config) {
+                callback(data.IsSuccess);
+
+            }).error(function (data, status, headers, config) {
+                callback(data.IsSuccess);
+            });
+        };
+
+
+
+        function resetPassword(token, password, callback) {
+            $http.post(baseUrls.authUrl + "/auth/reset/"+token, {password: password}).success(function (data, status, headers, config) {
                 callback(data.IsSuccess);
 
             }).error(function (data, status, headers, config) {

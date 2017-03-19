@@ -11,4 +11,17 @@ agentApp.controller('pwdResetEmailCtrl', function ($rootScope, $scope, $state, $
         $state.go('login');
     };
 
+    $scope.ResetPassword = function () {
+        loginService.forgetPassword($scope.recoverEmail, function (isSuccess) {
+            if (isSuccess) {
+                showAlert('Success', 'success', "Please check email");
+                $state.go('login');
+            } else {
+                showAlert('Error', 'error', "reset failed");
+            }
+        })
+    };
+
+
+
 });
