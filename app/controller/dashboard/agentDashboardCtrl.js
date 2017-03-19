@@ -4,7 +4,7 @@
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
                                                     ticketService, engagementService, profileDataParser,
-                                                    authService, dashboardRefreshTime, myNoteServices,$anchorScroll) {
+                                                    authService, dashboardRefreshTime, myNoteServices, $anchorScroll) {
 
 
 
@@ -358,7 +358,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    //GetOpenTicketCount();
+    GetOpenTicketCount();
 
     $scope.closeTicketCount = 0;
     var GetResolveTicketCount = function () {
@@ -370,7 +370,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    // GetResolveTicketCount();
+    GetResolveTicketCount();
 
     $scope.ProgressTicketCount = 0;
     var GetProgressTicketCount = function () {
@@ -382,7 +382,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $scope.showAlert("Ticket", "error", "Fail To Load Tickets.");
         });
     };
-    //GetProgressTicketCount();
+    GetProgressTicketCount();
 
     var GetCreatedicketSeries = function () {
         dashboradService.GetCreatedTicketSeries().then(function (response) {
@@ -461,7 +461,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             // $scope.showAlert("Engagement Details", "error", "Fail To Load Recent Engagements.");
         });
     };
-    //GetMyRecentEngagements();
+    GetMyRecentEngagements();
 
     $scope.viewTicket = function (data) {
         data.tabType = 'ticketView';
@@ -488,13 +488,13 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        getAllRealTimeTimer = $timeout(getAllRealTime, 60000);
+        getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
     };
 
 
     var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
     var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
-    var getAllRealTimeTimer = $timeout(getAllRealTime, 30000);
+    var getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
@@ -512,7 +512,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         loadRecentData();
         loadGrapData();
     };
-    //$scope.dashboardReload();
+    $scope.dashboardReload();
 
     //update code by damith
     /**** rating ****/
@@ -730,8 +730,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                             item.dueDate = false;
                             //item.sizeY = "auto";
 
-
                             $scope.noteLists.push(item);
+                            $scope.note.priority = 'low';
 
                         }
                         if ($scope.noteLists.length == 0) {
@@ -739,7 +739,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                             return;
                         }
                         //uiFuntions.foundMyNote();
-                        showAlert('Reminder Note', 'success', res.data.CustomMessage);
+                        showAlert('Reminder Note', 'success', 'Note Created Successfully.');
                     }
                 }, function (err) {
                     loadedSave();

@@ -191,14 +191,11 @@ function showMicrophoneOption() {
 
 
 var showAlert = function (title, type, content) {
-    var stack_bottomleft = {dir1: "up", dir2: "right", firstpos1: 25, firstpos2: 25};
     new PNotify({
         title: title,
         text: content,
-        addclass: 'stack-bottomleft',
         type: type,
-        styling: 'bootstrap3',
-        stack: stack_bottomleft
+        styling: 'bootstrap3'
     });
 };
 
