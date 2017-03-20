@@ -6835,7 +6835,7 @@ ul.renote-color-btn > li {
     overflow: hidden;
     min-height: 250px;
     position: relative;
-    margin-top: 15px;
+    margin-top: -1px;
 }
 
 .d-card-bgw-trns {
@@ -7830,7 +7830,7 @@ ul.renote-color-btn > li {
     text-transform: capitalize;
 }
 
-.active-text{
+.active-text {
     text-decoration: line-through;
 }
 
@@ -8022,4 +8022,22 @@ ul.renote-color-btn > li {
     top: 23px;
     left: 29px;
     z-index: 100;
+}
+
+.d-refresh-btn {
+    width: 120px;
+    height: auto;
+    background: #ebdfc7;
+    font-family: 'AvenirNextLTPro-Demi', sans-serif;
+    color: #e7855e;
+    text-align: center;
+    padding: 5px 5px;
+    /*border-radius: 5px;*/
+    margin-bottom: 10px;
+    float: right;
+    cursor: pointer;
+}
+
+.d-refresh-btn:hover {
+    color: #81b87f;
 }

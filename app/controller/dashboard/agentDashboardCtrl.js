@@ -505,14 +505,18 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }
         if (loadGrapDataTimer) {
             $timeout.cancel(loadGrapDataTimer);
-        }if (getAllRealTime) {
+        }
+        if (getAllRealTime) {
             $timeout.cancel(loadGrapDataTimer);
         }
     });
+    $scope.isLoadinDashboard = false;
     $scope.dashboardReload = function () {
+        $scope.isLoadinDashboard = true;
         getAllRealTime();
         loadRecentData();
         loadGrapData();
+        $scope.isLoadinDashboard = false;
     };
     $scope.dashboardReload();
 
