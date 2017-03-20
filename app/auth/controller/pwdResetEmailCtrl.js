@@ -15,7 +15,7 @@ agentApp.controller('pwdResetEmailCtrl', function ($rootScope, $scope, $state, $
         loginService.forgetPassword($scope.recoverEmail, function (isSuccess) {
             if (isSuccess) {
                 showAlert('Success', 'success', "Please check email");
-                $state.go('login');
+                $state.go('reset-password-token');
             } else {
                 showAlert('Error', 'error', "reset failed");
             }
