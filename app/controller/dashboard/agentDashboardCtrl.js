@@ -50,7 +50,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $scope.dataRange.push(currDate.format("DD-MMM"));//$scope.dataRange.push(moment.unix(currDate.clone().toDate()).format("DD-MMM"));
         }
     };
-    enumerateDaysBetweenDates(moment().subtract(1, 'month'), moment().add(1,'days'));
+    enumerateDaysBetweenDates(moment().subtract(1, 'month'), moment().add(1, 'days'));
 
     var randomColorFactor = function () {
         return Math.round(Math.random() * 255);
@@ -71,27 +71,22 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 fill: true,
                 /*lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(235,223,119,1)",
-                backgroundColor: "rgba(235,223,119,0.3)",
-                pointBorderColor: "rgba(235,223,119,1)",
-                pointBackgroundColor: "rgba(235,223,119,0.5)",
-                pointBorderWidth: 1,
-                steppedLine: false
-
-
+                borderColor: "rgba(0,205,115,1)",
+                backgroundColor: "rgba(0,205,115,0.3)",
+                pointBorderColor: "rgba(0,205,115,1)",
+                pointBackgroundColor: "rgba(0,205,115,0.5)",
+                pointBorderWidth: 1
             }, {
                 label: "Resolved Ticket",
                 data: [],
                 fill: true,
                 /* lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(9,138,108,1)",
-                backgroundColor: "rgba(9,138,108,0.5)",
-                pointBorderColor: "rgba(9,138,108,0,1)",
-                pointBackgroundColor: "rgba(9,138,108,0.5)",
-                pointBorderWidth: 1,
-                steppedLine: false
-
+                borderColor: "rgba(79,147,0.1)",
+                backgroundColor: "rgba(79,147,0,0.5)",
+                pointBorderColor: "rgba(79,147,0.1)",
+                pointBackgroundColor: "rgba(79,147,0,0.5)",
+                pointBorderWidth: 1
             }]
         },
         options: {
@@ -115,8 +110,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                         userCallback: function (dataLabel, index) {
                             return ''; //index % 2 === 0 ? dataLabel : '';
                         }
+                    },
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Days'
                     }
-
                 }],
                 yAxes: [{
                     display: true,
@@ -127,27 +125,21 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'COUNT',
-                        fontFamily: 'AvenirNextLTPro-Regular',
-                        fontColor: '#ebdfc7',
-                        fontSize: 13
-                    },
-                    ticks: {
-                        fontColor: '#223448',
-                        fontFamily: 'AvenirNextLTPro-Regular',
-                        fontSize: 10
+                        labelString: 'Count',
+                        fontColor: '#ebdfc7'
                     }
                 }]
             }
         }
     };
-    //$.each($scope.createVsOpenConfig.data.datasets, function (i, dataset) {
-    //    dataset.borderColor = randomColor(0.4);
-    //    dataset.backgroundColor = randomColor(0.5);
-    //    dataset.pointBorderColor = randomColor(0.7);
-    //    dataset.pointBackgroundColor = randomColor(0.5);
-    //    dataset.pointBorderWidth = 1;
-    //});
+
+    // $.each($scope.createVsOpenConfig.data.datasets, function (i, dataset) {
+    //     dataset.borderColor = "rgba(231,133,94,1)";
+    //     dataset.backgroundColor = "rgba(231,133,94,0.6)";
+    //     dataset.pointBorderColor = "rgba(231,133,94,1)";
+    //     dataset.pointBackgroundColor = "rgba(231,133,94,0.5)";
+    //     dataset.pointBorderWidth = 1;
+    // });
 
     var openclose = null;
 
@@ -434,7 +426,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dashboradService.GetQueueDetails().then(function (response) {
             $scope.queueDetails = response;
         }, function (err) {
-            authService.IsCheckResponse(err);
+            if (getAllRealTimeTimer) {
+                $timeout.cancel(getAllRealTimeTimer);
+            }
+            //authService.IsCheckResponse(err);
             $scope.queueDetails = [];
             // $scope.showAlert("Queue Details", "error", "Fail To Load Queue Details.");
         });
@@ -488,14 +483,14 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        //getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
+        getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
     };
 
 
     var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
     var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
     var getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
-    var getQueueDetails = $timeout(getAllRealTime, 5000);
+    //var getQueueDetails = $timeout(getAllRealTime, 5000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
@@ -511,9 +506,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $timeout.cancel(loadGrapDataTimer);
         }
 
-        if(getQueueDetails){
-            $timeout.cancel(getQueueDetails);
-        }
+        // if(getQueueDetails){
+        //     $timeout.cancel(getQueueDetails);ƒ
+        // }
     });
     $scope.isLoadinDashboard = false;
     $scope.dashboardReload = function () {
@@ -775,17 +770,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         //}
     };
 
+
     $scope.openDueTimeView = function ($event, note) {
+        var offset = $("#dateTimeWrp").offset();
         $scope.isOpenDueDatetimeView = true;
-
         $('#dateTimeWrp').removeClass('display-none');
-        $scope.reminderObj = note;
-
-        var cX = $event.clientX;
-        var sX = $event.screenX;
-        var cY = $event.clientY;
-        var sY = $event.screenY;
-        $('#dateTimeWrp').css({top: sY - cY});
     };
 
     //end
@@ -796,7 +785,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 }).config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-        chartColors: ['#223448', '#e7855e','#098a6c', '#137899', '#6c5e8f']
+        chartColors: ['#223448', '#e7855e', '#098a6c', '#137899', '#6c5e8f']
     });
 }]);
 

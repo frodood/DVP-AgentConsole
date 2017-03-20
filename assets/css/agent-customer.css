@@ -6928,7 +6928,11 @@ ul.renote-color-btn > li {
     color: #efc94c;
 }
 
-.c-green-300{
+.c-text-green-200 {
+    color: rgba(0, 205, 115, 1);
+}
+
+.c-green-300 {
     color: #8dd538;
 }
 
@@ -7969,13 +7973,26 @@ ul.renote-color-btn > li {
     font-size: 12px;
 }
 
+.du-date-wrp {
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.91);
+    position: absolute;
+    z-index: 100;
+    text-align: center;
+    margin: 0 auto;
+}
+
 .date-time-wrp {
     width: 300px;
     height: 120px;
+    margin: 0 auto;
     left: 40px;
     background: #fff;
-    position: absolute;
-    top: 15px;
+    position: relative;
+    top: 14%;
     z-index: 1000;
     border-radius: 5px;
     padding: 10px 20px;
