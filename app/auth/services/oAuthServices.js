@@ -147,7 +147,7 @@
 
         //forget password
         function forgetPassword(email, callback) {
-            $http.post(baseUrls.authUrl + "/auth/forget", {email: email}).success(function (data, status, headers, config) {
+            $http.post(baseUrls.authUrl + "/auth/forget/token", {email: email}).success(function (data, status, headers, config) {
                 callback(data.IsSuccess);
 
             }).error(function (data, status, headers, config) {
