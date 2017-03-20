@@ -7008,7 +7008,7 @@ ul.renote-color-btn > li {
 }
 
 .on-call-time {
-    color: #0d823d;
+    color: #BBD2B6;
 }
 
 .break-time {
@@ -7632,7 +7632,9 @@ ul.renote-color-btn > li {
 
 .rating-stat-wrp {
     width: 100%;
-    height: 30px;
+    min-height: 30px;
+    overflow: hidden;
+    position: relative;
     padding-top: 9px;
 }
 
