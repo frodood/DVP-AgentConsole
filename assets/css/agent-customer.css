@@ -6928,6 +6928,10 @@ ul.renote-color-btn > li {
     color: #efc94c;
 }
 
+.c-green-300{
+    color: #8dd538;
+}
+
 .c-text-green {
     color: #098a6c;
 }
@@ -6946,12 +6950,12 @@ ul.renote-color-btn > li {
 
 .c-time-icon {
     position: absolute;
-    right: 9%;
-    top: 4px;
+    top: 21px;
+    right: 16px;
 }
 
 .c-time-icon > i {
-    font-size: 100px;
+    font-size: 60px;
     color: rgb(235, 223, 199);
 }
 
@@ -7004,7 +7008,7 @@ ul.renote-color-btn > li {
 }
 
 .staffed-time {
-    color: #ebdfc7;
+    color: #223448;
 }
 
 .on-call-time {
@@ -7355,7 +7359,6 @@ ul.renote-color-btn > li {
     font-family: 'AvenirNextLTPro-Regular ', sans-serif;
     font-size: 11px;
     min-width: 20px;
-    max-width: 90px;
     height: 21px;
     overflow: hidden;
     text-align: center;
@@ -7632,7 +7635,9 @@ ul.renote-color-btn > li {
 
 .rating-stat-wrp {
     width: 100%;
-    height: 30px;
+    min-height: 30px;
+    overflow: hidden;
+    position: relative;
     padding-top: 9px;
 }
 
@@ -7643,12 +7648,12 @@ ul.renote-color-btn > li {
 }
 
 .on.ti-star {
-    font-size: 18px;
+    font-size: 13px;
     color: #e7855e;
 }
 
 .off.ti-star {
-    font-size: 18px;
+    font-size: 13px;
     color: #e1e2e1;
 
 }
