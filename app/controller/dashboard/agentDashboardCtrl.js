@@ -488,7 +488,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
+        //getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
     };
 
 
@@ -506,11 +506,17 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         if (loadGrapDataTimer) {
             $timeout.cancel(loadGrapDataTimer);
         }
+        if (getAllRealTime) {
+            $timeout.cancel(loadGrapDataTimer);
+        }
     });
+    $scope.isLoadinDashboard = false;
     $scope.dashboardReload = function () {
+        $scope.isLoadinDashboard = true;
         getAllRealTime();
         loadRecentData();
         loadGrapData();
+        $scope.isLoadinDashboard = false;
     };
     $scope.dashboardReload();
 
