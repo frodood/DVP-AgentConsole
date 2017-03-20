@@ -791,7 +791,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 }).config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-        chartColors: ['#223448', '#e7855e','#bbd2b6', '#ebdfc7', '#098a6c']
+        chartColors: ['#223448', '#e7855e','#098a6c', '#137899', '#6c5e8f']
     });
 }]);
 

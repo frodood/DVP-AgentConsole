@@ -6928,6 +6928,10 @@ ul.renote-color-btn > li {
     color: #efc94c;
 }
 
+.c-green-300{
+    color: #8dd538;
+}
+
 .c-text-green {
     color: #098a6c;
 }
@@ -7004,11 +7008,11 @@ ul.renote-color-btn > li {
 }
 
 .staffed-time {
-    color: #ebdfc7;
+    color: #223448;
 }
 
 .on-call-time {
-    color: #BBD2B6;
+    color: #0d823d;
 }
 
 .break-time {
