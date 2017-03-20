@@ -50,7 +50,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             $scope.dataRange.push(currDate.format("DD-MMM"));//$scope.dataRange.push(moment.unix(currDate.clone().toDate()).format("DD-MMM"));
         }
     };
-    enumerateDaysBetweenDates(moment().subtract(1, 'month'), moment());
+    enumerateDaysBetweenDates(moment().subtract(1, 'month'), moment().add(1,'days'));
 
     var randomColorFactor = function () {
         return Math.round(Math.random() * 255);
@@ -495,6 +495,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
     var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
     var getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
+    var getQueueDetails = $timeout(getAllRealTime, 5000);
 
     $scope.$on("$destroy", function () {
         if (getAllRealTimeTimer) {
@@ -508,6 +509,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }
         if (getAllRealTime) {
             $timeout.cancel(loadGrapDataTimer);
+        }
+
+        if(getQueueDetails){
+            $timeout.cancel(getQueueDetails);
         }
     });
     $scope.isLoadinDashboard = false;
