@@ -71,10 +71,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 fill: true,
                 /*lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(0,205,115,1)",
-                backgroundColor: "rgba(0,205,115,0.3)",
-                pointBorderColor: "rgba(0,205,115,1)",
-                pointBackgroundColor: "rgba(0,205,115,0.5)",
+                borderColor: "rgba(14,23,86,1)",
+                backgroundColor: "rgba(14,23,86,0.5)",
+                pointBorderColor: "rgba(14,23,86,1)",
+                pointBackgroundColor: "rgba(14,23,86,1)",
                 pointBorderWidth: 1
             }, {
                 label: "Resolved Ticket",
@@ -82,10 +82,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 fill: true,
                 /* lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(79,147,0.1)",
-                backgroundColor: "rgba(79,147,0,0.5)",
-                pointBorderColor: "rgba(79,147,0.1)",
-                pointBackgroundColor: "rgba(79,147,0,0.5)",
+                borderColor: "rgba(0,205,115,1)",
+                backgroundColor: "rgba(70,205,115,0.5)",
+                pointBorderColor: "rgba(0,205,115,1)",
+                pointBackgroundColor: "rgba(0,205,115,1)",
                 pointBorderWidth: 1
             }]
         },
@@ -125,8 +125,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Count',
-                        fontColor: '#ebdfc7'
+                        labelString: 'COUNT'
                     }
                 }]
             }
@@ -194,10 +193,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'DAYS',
-                        fontFamily: 'AvenirNextLTPro-Regular',
-                        fontColor: '#ebdfc7',
-                        fontSize: 13
+                        labelString: 'DAYS'
+                        // fontFamily: 'AvenirNextLTPro-Regular',
+                        // fontColor: '#ebdfc7',
+                        // fontSize: 13
                     }
                 }],
                 yAxes: [{
@@ -210,10 +209,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'COUNT',
-                        fontFamily: 'AvenirNextLTPro-Regular',
-                        fontColor: '#ebdfc7',
-                        fontSize: 13
+                        labelString: 'COUNT'
+                        // fontFamily: 'AvenirNextLTPro-Regular',
+                        // fontColor: '#ebdfc7',
+                        // fontSize: 13
                     },
                     ticks: {
                         fontColor: '#223448',
@@ -225,10 +224,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }
     };
     $.each($scope.deferenceConfig.data.datasets, function (i, dataset) {
-        dataset.borderColor = "rgba(231,133,94,1)";
-        dataset.backgroundColor = "rgba(231,133,94,0.6)";
-        dataset.pointBorderColor = "rgba(231,133,94,1)";
-        dataset.pointBackgroundColor = "rgba(231,133,94,0.5)";
+        dataset.borderColor = "rgba(13,28,51,1)";
+        dataset.backgroundColor = "rgba(13,28,51,0.6)";
+        dataset.pointBorderColor = "rgba(13,28,51,1)";
+        dataset.pointBackgroundColor = "rgba(13,28,51,1)";
         dataset.pointBorderWidth = 1;
     });
     var deference = document.getElementById("deferencecanvas").getContext("2d");
@@ -650,7 +649,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 $scope.reminderObj = note;
             },
             close: function () {
-                $('#dateTimeWrp').addClass('display-none');
+                $('#dateTimeWrp').addClass('display-none').removeClass('display-block');
             },
             createDueDate: function () {
                 loadingReminder();
@@ -770,11 +769,23 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         //}
     };
 
+    var mouseX;
+    var mouseY;
+    $(document).mousemove(function (e) {
+        mouseX = e.pageX;
+        mouseY = e.pageY;
+    });
+
 
     $scope.openDueTimeView = function ($event, note) {
+        $('#dateTimeWrp').addClass('display-block');
+        var x = $event.clientX;
+        var y = $event.clientY;
+        var coor = "X coords: " + x + ", Y coords: " + y;
         var offset = $("#dateTimeWrp").offset();
-        $scope.isOpenDueDatetimeView = true;
-        $('#dateTimeWrp').removeClass('display-none');
+
+        // $scope.isOpenDueDatetimeView = true;
+        $('#dateTimeWrp').css({'top': mouseY - 200, 'left': mouseX}).fadeIn('slow');
     };
 
     //end
