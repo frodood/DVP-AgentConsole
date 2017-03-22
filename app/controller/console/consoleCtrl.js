@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess,$anchorScroll) {
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -1481,17 +1481,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     var openNewTicketTab = function (ticket, index) {
 
 
-
-        if( ticket.security_level >= profileDataParser.myProfile.security_level || !ticket.security_level )
-        {
+        if (ticket.security_level >= profileDataParser.myProfile.security_level || !ticket.security_level) {
             var tabTopic = "Ticket - " + ticket.reference;
             $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket, index);
 
         }
 
-        else
-        {
-            $scope.showAlert("Error","error","You are tring to access unauthorized ticket");
+        else {
+            $scope.showAlert("Error", "error", "You are tring to access unauthorized ticket");
         }
 
 
@@ -2357,27 +2354,27 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         try {
             mailInboxService.getMessageCounters(profileId)
                 .then(function (data) {
-                    if (data.IsSuccess) {
-                        if (data.Result && data.Result.UNREAD) {
-                            $scope.unreadMailCount = data.Result.UNREAD;
+                        if (data.IsSuccess) {
+                            if (data.Result && data.Result.UNREAD) {
+                                $scope.unreadMailCount = data.Result.UNREAD;
+                            }
                         }
-                    }
-                    else {
-                        var errMsg = data.CustomMessage;
+                        else {
+                            var errMsg = data.CustomMessage;
 
-                        if (data.Exception) {
-                            errMsg = data.Exception.Message;
+                            if (data.Exception) {
+                                errMsg = data.Exception.Message;
+                            }
+                            console.log(errMsg);
                         }
-                        console.log(errMsg);
-                    }
 
 
-                },
-                function (err) {
-                    authService.IsCheckResponse(err);
-                    console.log(err);
+                    },
+                    function (err) {
+                        authService.IsCheckResponse(err);
+                        console.log(err);
 
-                })
+                    })
 
         }
         catch (ex) {
@@ -2388,6 +2385,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     //update code get my rating =>> dashboard
+    $scope.isRatingStatue = false;
     var pickMyRatings = function (owner) {
         userProfileApiAccess.getMyRatings(owner).then(function (resPapers) {
             if (resPapers.Result) {
@@ -2399,6 +2397,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
                             if (answer.section && answer.question && answer.question.weight > 0 && answer.question.type != 'remark') {
+                                $scope.isRatingStatue = true;
                                 if ($scope.sectionArray[answer.section._id]) {
                                     var ansValue = $scope.sectionArray[answer.section._id].value;
                                     var val = (answer.points * answer.question.weight) / 10;
@@ -2419,13 +2418,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 }
                             }
 
+                            console.log($scope.sectionArray);
+
                             if (answer.section && answer.question && answer.question.type == 'remark') {
                                 var remarkObj =
                                     {
                                         evaluator: submissions.evaluator.name,
                                         section: answer.section.name,
                                         remark: answer.remarks,
-                                        avatar:submissions.evaluator.avatar
+                                        avatar: submissions.evaluator.avatar
                                     };
                                 $scope.myRemarks.push(remarkObj);
                             }
@@ -2448,7 +2449,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         })
 
     };
-
 
 
     $scope.RatingResultResolve = function (item) {
