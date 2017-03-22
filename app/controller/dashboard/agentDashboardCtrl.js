@@ -72,7 +72,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 /*lineTension: 0,*/
                 borderDash: [0, 0],
                 borderColor: "rgba(14,23,86,1)",
-                backgroundColor: "rgba(14,23,86,0.5)",
+                backgroundColor: "rgba(14,23,86,0)",
                 pointBorderColor: "rgba(14,23,86,1)",
                 pointBackgroundColor: "rgba(14,23,86,1)",
                 pointBorderWidth: 1
@@ -83,7 +83,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 /* lineTension: 0,*/
                 borderDash: [0, 0],
                 borderColor: "rgba(0,205,115,1)",
-                backgroundColor: "rgba(70,205,115,0.5)",
+                backgroundColor: "rgba(70,205,115,0)",
                 pointBorderColor: "rgba(0,205,115,1)",
                 pointBackgroundColor: "rgba(0,205,115,1)",
                 pointBorderWidth: 1
@@ -223,11 +223,12 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             }
         }
     };
+
     $.each($scope.deferenceConfig.data.datasets, function (i, dataset) {
-        dataset.borderColor = "rgba(13,28,51,1)";
-        dataset.backgroundColor = "rgba(13,28,51,0.6)";
-        dataset.pointBorderColor = "rgba(13,28,51,1)";
-        dataset.pointBackgroundColor = "rgba(13,28,51,1)";
+        dataset.borderColor = "rgba(24,141,242,1)";
+        dataset.backgroundColor = "rgba(24,141,242,0.6)";
+        dataset.pointBorderColor = "rgba(24,141,242,1)";
+        dataset.pointBackgroundColor = "rgba(24,141,242,0.5)";
         dataset.pointBorderWidth = 1;
     });
     var deference = document.getElementById("deferencecanvas").getContext("2d");
