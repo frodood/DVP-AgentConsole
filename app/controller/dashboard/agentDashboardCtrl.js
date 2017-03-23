@@ -784,7 +784,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         var y = $event.clientY;
         var coor = "X coords: " + x + ", Y coords: " + y;
         var offset = $("#dateTimeWrp").offset();
-
+        $scope.reminderObj = note;
         // $scope.isOpenDueDatetimeView = true;
         $('#dateTimeWrp').css({'top': mouseY - 200, 'left': mouseX}).fadeIn('slow');
     };
