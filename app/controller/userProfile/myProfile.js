@@ -9,7 +9,8 @@ angular.module('veeryAgentApp').factory('profileDataParser', function(){
         userList:[],
         RecentEngagements:[],
         isInitiateLoad:true,
-        myTicketMetaData:undefined
+        myTicketMetaData:undefined,
+        mySecurityLevel:0
     }
 });
 

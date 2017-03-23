@@ -32,7 +32,7 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
         $('#pwd').removeClass('shake');
         para.userName = $scope.userNme;
         para.password = $scope.pwd;
-        para.scope =  ["all_all", "profile_veeryaccount", "write_ardsresource", "write_notification", "read_myUserProfile", "read_productivity", "profile_veeryaccount", "resourceid"];
+        para.scope = ["all_all", "profile_veeryaccount", "write_ardsresource", "write_notification", "read_myUserProfile", "read_productivity", "profile_veeryaccount", "resourceid"];
 
         if (para.userName == null || para.userName.length == 0) {
             showAlert('Error', 'error', 'Please check user name..');
@@ -52,18 +52,18 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
 
         /*
 
-        loginService.Login(para, function (result) {
-            if (result) {
-                $state.go('console');
-            } else {
-                $('#usersName').addClass('shake');
-                $('#pwd').addClass('shake');
-                showAlert('Error', 'error', 'Please check login details...');
-                $scope.isLogin = false;
-                $scope.loginFrm.$invalid = false;
-            }
-        });
-*/
+         loginService.Login(para, function (result) {
+         if (result) {
+         $state.go('console');
+         } else {
+         $('#usersName').addClass('shake');
+         $('#pwd').addClass('shake');
+         showAlert('Error', 'error', 'Please check login details...');
+         $scope.isLogin = false;
+         $scope.loginFrm.$invalid = false;
+         }
+         });
+         */
 
         $auth.login(para)
             .then(function () {
@@ -81,11 +81,38 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
 
     $scope.CheckLogin = function () {
         if ($auth.isAuthenticated()) {
-                $state.go('console');
+            $state.go('console');
         }
     };
 
     $scope.CheckLogin();
+
+
+    //Recover email forget password
+    $scope.ResetPassword = function () {
+        loginService.forgetPassword($scope.recoverEmail, function (isSuccess) {
+            if (isSuccess) {
+                showAlert('Success', 'success', "Please check email");
+                $state.go('login');
+            } else {
+                showAlert('Error', 'error', "reset failed");
+            }
+        })
+    };
+
+
+    $scope.BackToLogin = function () {
+        $state.go('login');
+    };
+
+    $scope.goToRestEmail = function () {
+        $state.go('reset-password-email');
+    };
+
+    $scope.goToRestToken = function () {
+        $state.go('reset-password-token');
+    };
+
 
 }).directive('myEnter', function () {
     return function (scope, element, attrs) {

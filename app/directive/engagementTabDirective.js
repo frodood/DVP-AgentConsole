@@ -57,6 +57,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.availableTags = scope.tagCategoryList;
 
             scope.integrationAPIList = [];
+            scope.currentTicketForm = null;
 
             /*if(!scope.profileDetail){
              scope.profileDetail = {};
@@ -117,7 +118,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             });
 
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
-
 
             scope.pickCompanyInfo = function () {
                 var userCompanyData = authService.GetCompanyInfo();
@@ -923,6 +923,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 {
                     if(ticket_form)
                     {
+                        scope.currentTicketForm = ticket_form;
                         buildFormSchema(schema, form, ticket_form.fields);
                         //var currentForm = response.Result.ticket_form;
 
@@ -934,6 +935,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         scope.schemaw = schema;
                         scope.formw = form;
                         scope.modelw = {};
+                    }
+                    else
+                    {
+                        scope.currentTicketForm = null;
                     }
                 });
             };
@@ -1069,19 +1074,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 scope.ticket.priority = priority;
             };
 
-
             scope.loadMyAppMetaData = function () {
+                ticketService.GetMyTicketConfig(function (success,data) {
+
+                    if(success && data && data.Result)
+                    {
+                        scope.ticket.subject=data.Result.subject;
+                        scope.setPriority(data.Result.priority);
+                        scope.ticket.description=data.Result.description;
+
+                    }
+                });
+
+            }
 
 
-                if(profileDataParser.myTicketMetaData)
-                {
-                    scope.ticket.subject=profileDataParser.myTicketMetaData.subject;
-                    scope.setPriority(profileDataParser.myTicketMetaData.priority);
-                    scope.ticket.description=profileDataParser.myTicketMetaData.description;
-                }
-
-
-            };
 
             scope.saveTicket = function (ticket,cusForm) {
                 ticket.channel = scope.channel;
@@ -1144,7 +1151,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 var obj = {
                     fields: arr,
                     reference: ticket._id,
-                    form: scope.schemaResponseNewTicket.currentForm.name
+                    form: scope.currentTicketForm.name
                 };
                 ticketService.createFormSubmissionData(obj).then(function (response) {
                     //tag submission to ticket
@@ -1161,6 +1168,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     else {
                         scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
                     }
+
 
 
                 }).catch(function (err) {

@@ -9,16 +9,17 @@ var agentApp = angular.module('veeryAgentApp',
         'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
         'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
         'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker', 'angular.filter', 'satellizer', 'mdo-angular-cryptography'
+        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
+        'angular.filter', 'satellizer', 'mdo-angular-cryptography'
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop','jkAngularRatingStars'
+        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js"
     ]);
 
 
 agentApp.constant('moment', moment);
 
 var baseUrls = {
-    'authUrl': 'http://userservice.app.veery.cloud/oauth/token',
+    'authUrl': 'http://userservice.app.veery.cloud',//http://userservice.app.veery.cloud
     'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'notification': 'http://notificationservice.app.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.app.veery.cloud
@@ -37,8 +38,8 @@ var baseUrls = {
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://192.168.0.22:8889', //'http://ipmessagingservice.app.veery.cloud',
-    'qaModule':'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
+    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',
+    'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app.veery.cloud//DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
 
 };
@@ -57,7 +58,7 @@ var phoneSetting = {
     'EtlCode': '#',
     'SwapCode': '1',
     'ConferenceCode': '0',
-    'ExtNumberLength':5
+    'ExtNumberLength': 5
 };
 agentApp.constant('phoneSetting', phoneSetting);
 
@@ -85,6 +86,24 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$auth
         }).state('login', {
             url: "/login",
             templateUrl: "app/auth/login.html",
+            data: {
+                requireLogin: false
+            }
+        }).state('reset-password-token', {
+            url: "/reset-password-token",
+            templateUrl: "app/auth/password-reset-token.html",
+            data: {
+                requireLogin: false
+            }
+        }).state('reset-password', {
+            url: "/reset-password",
+            templateUrl: "app/auth/password-reset.html",
+            data: {
+                requireLogin: false
+            }
+        }).state('reset-password-email', {
+            url: "/reset-password-email",
+            templateUrl: "app/auth/password-reset-email.html",
             data: {
                 requireLogin: false
             }
@@ -264,3 +283,19 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
 //        }
 //    }
 //});
+
+
+agentApp.filter('secondsToDateTime', [function () {
+    return function (seconds) {
+        if (!seconds) {
+            return new Date(1970, 0, 1).setSeconds(0);
+        }
+        return new Date(1970, 0, 1).setSeconds(seconds);
+    };
+}]);
+
+agentApp.filter('millisecondsToDateTime', [function () {
+    return function (seconds) {
+        return new Date(1970, 0, 1).setMilliseconds(seconds);
+    };
+}]);

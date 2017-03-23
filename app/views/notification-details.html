@@ -15,6 +15,12 @@
                                 <time-ago from-time='{{MessageObj.time}}'
                                           format='MM/dd/yyyy'></time-ago>
                             </div>
+
+                        </div>
+
+                        <div ng-if="MessageObj['ticket'] != null"
+                             class="ticket-id" ng-click="oepnTicketOnNotification(MessageObj)">
+                            Open ticket
                         </div>
 
                     </div>
@@ -37,8 +43,6 @@
                                 ng-click="discardNotification(MessageObj)">
                             Discard
                         </button>
-
-
                     </div>
                 </div>
             </div>

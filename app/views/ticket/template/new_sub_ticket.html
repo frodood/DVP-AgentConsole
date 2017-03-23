@@ -139,9 +139,15 @@
                                     </select>
 
 
-
+                                    <label for="ticketSubject">Security Level</label>
+                                    <select class="form-control" ng-model="newSubTicket.security_level">
+                                        <option ng-repeat="level in secLevels" value="{{level}}">
+                                            {{level}}
+                                        </option>
+                                    </select>
 
                                 </div>
+
 
                             </form>
                         </div>
