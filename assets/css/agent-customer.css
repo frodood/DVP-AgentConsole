@@ -6879,6 +6879,17 @@ ul.renote-color-btn > li {
 
 }
 
+.c-header-inside-row {
+    font-family: 'AvenirNextLTPro-Demi', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    width: 100%;
+    height: 25px;
+    color: #223448;
+    padding: 15px;
+    padding-bottom: 31px;
+}
+
 .c-header.c-text-center {
     text-align: center;
     padding-top: 35px;
@@ -6953,8 +6964,28 @@ ul.renote-color-btn > li {
     color: rgba(0, 205, 115, 1);
 }
 
+.d1-create-ticket {
+    color: rgba(14,23,86, 1);
+}
+
+.d1-in-progress-ticket {
+    color: #8dd538;
+}
+
+.d1-close-ticket {
+    color: rgba(0,205,115, 1);
+}
+
 .c-green-300 {
     color: #8dd538;
+}
+
+.text-gray{
+    color: #d4d2d5;
+}
+
+.text-black{
+    color: #000000;
 }
 
 .c-text-green {
@@ -7446,8 +7477,19 @@ ul.renote-color-btn > li {
 /* dashboard gree ticket chart */
 .t-l-text-wrp {
     width: 100%;
-    height: 100%;
-    margin-top: 15px;
+    /* padding-bottom: 120px; */
+    min-height: 384px;
+    overflow: hidden;
+    /* margin-top: 15px; */
+    border-left: 1px solid #f7f7f7;
+    /* margin-top: 50px; */
+    /* margin-bottom: 50px; */
+    margin-left: 40px;
+    background: #f7f7f7;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-top: 5%;
+
 }
 
 .g-ticket-chart-wrp {
@@ -7462,26 +7504,31 @@ ul.renote-color-btn > li {
     width: 100%;
     min-height: 80px;
     overflow: hidden;
-    position: relative;
-    text-align: center;
+    /*position: relative;*/
+    padding-left: 15px;
+    /* text-align: center; */
     /* background: #ebdfc7; */
     margin-bottom: 15px;
-    /*border: 1px solid #f7f7f7;*/
+    /* border: 1px solid #f7f7f7; */
     padding-bottom: 19px;
     padding-top: 15px;
-    -webkit-box-shadow: 1px 3px 23px -7px rgba(0, 0, 0, 0.75);
+    /* -webkit-box-shadow: 1px 3px 23px -7px rgba(0, 0, 0, 0.75); */
     -moz-box-shadow: 1px 3px 23px -7px rgba(0, 0, 0, 0.75);
-    box-shadow: -1px 5px 18px -13px rgba(0, 0, 0, 0.75);
+    /* box-shadow: -1px 5px 18px -13px rgba(0, 0, 0, 0.75); */
 
 }
 
 .t-big-text {
     display: block;
     width: 100%;
-    height: 25px;
+    height: 26px;
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    font-size: 42px;
-    margin-bottom: 30px;
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+
+.t-small-text {
+    font-size: 13px;
 }
 
 /*my  note */
@@ -7886,13 +7933,14 @@ ul.renote-color-btn > li {
 }
 
 .d-done > i {
-    color: #ebdfc7;
+    color: rgba(130, 130, 130, 0.39);
     font-size: 15px;
     padding-right: 5px;
 }
 
 .d-done {
-    color: #ebdfc7;
+    color: rgba(130, 130, 130, 0.39);
+
 }
 
 .d-delete {
@@ -8010,11 +8058,11 @@ ul.renote-color-btn > li {
     width: 300px;
     height: 120px;
     margin: 0 auto;
-    left: 40px;
+    left: 40%;
     background: #fff;
-    position: relative;
+    position: absolute;
     top: 14%;
-    z-index: 1000;
+    z-index: 2000;
     border-radius: 5px;
     padding: 10px 20px;
     -webkit-box-shadow: 0px 1px 16px -4px rgba(0, 0, 0, 0.75);
