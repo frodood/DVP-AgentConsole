@@ -1,0 +1,44 @@
+<div class="animated view-notification-d-wrapper fadeIn" ng-if="showNoticeModal">
+    <!-- notification send UI -->
+    <div class="container">
+        <div class="col-lg-offset-3 col-lg-4">
+            <div class="notice-details-wrapper">
+                <div id="uNotifiWrp" class="u-notice-wrp">
+                    <div class="u-noti-h b-bottom animated" id="uNotiH ">
+                        <div class="user-img">
+                            <img src="assets/img/avatar/profileAvatar.png"
+                                 ng-src="{{NoticeObj.senderAvatar}}">
+                        </div>
+                        <div class="agent-name">
+                            {{NoticeObj.senderName}}
+                            <div class="chat-user-status">
+                                <span>{{ NoticeObj.created_at | date : format : timezone}}</span>
+                                <!--<time-ago from-time='{{NoticeObj.created_at}}'
+                                          format='MM/dd/yyyy'></time-ago>-->
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- body -->
+                    <h4 style="padding-left: 10px">{{NoticeObj.title}}</h4>
+
+
+
+                    <div class="u-body notification-v">
+                         <textarea disabled readonly ng-model="NoticeObj.message" class="form-control" rows="6"></textarea>
+
+                    </div>
+                    <div style="padding-top: 2px padding-right: 5px padding-bottom: 1px">
+                        <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w pull-right"
+                                ng-click="hideNoticeDetails()">
+                            Close
+                        </button>
+                    </div>
+
+                    <!-- footer -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
