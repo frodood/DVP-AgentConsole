@@ -4,12 +4,13 @@
 
 agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout,$filter, dashboradService,
                                                     ticketService, engagementService, profileDataParser,
-                                                    authService, dashboardRefreshTime, myNoteServices, $anchorScroll,profileDataParser) {
+                                                    authService, dashboardRefreshTime, myNoteServices, $anchorScroll,profileDataParser,fileService) {
 
 
 
     // call $anchorScroll()
     $anchorScroll();
+
 
     $scope.showNoticeModal=false;
 
@@ -807,7 +808,40 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     });
 
 
-    $scope.internalThumbFileUrl = baseUrls.fileService + "InternalFileService/File/Thumbnail/" + $scope.userCompanyData.tenant + "/" + $scope.userCompanyData.company + "/";
+    $scope.isImage = function (fileType) {
+
+
+        if (fileType && fileType.toString().split("/")[0] == "image") {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+
+    };
+
+
+
+
+    $scope.internalThumbFileUrl = baseUrls.fileService + "InternalFileService/File/Download/" + $scope.userCompanyData.tenant + "/" + $scope.userCompanyData.company + "/";
+    $scope.FileServiceUrl = baseUrls.fileService + "InternalFileService/File/Download/" + $scope.userCompanyData.tenant + "/" + $scope.userCompanyData.company + "/";
+
+    $scope.downloadAttachment = function (attachment) {
+        fileService.downloadAttachment(attachment);
+    };
+
+    $scope.viewImage = function (attachment) {
+        if($scope.isImage(attachment.type))
+        {
+            document.getElementById("image-viewer").href = $scope.FileServiceUrl + attachment.url + "/SampleAttachment";
+
+            $('#image-viewer').trigger('click');
+        }
+
+    }
+
+
 
     $scope.loadNotices = function () {
 
@@ -823,7 +857,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     {
                         angular.forEach(notice.attachments, function (attachment) {
 
-                            attachment.linkData=$scope.internalThumbFileUrl+"/"+attachment.url+"/SampleAttachment";
+                            attachment.linkData=$scope.internalThumbFileUrl+""+attachment.url+"/SampleAttachment";
                             console.log(attachment.linkData);
                         });
                     }
