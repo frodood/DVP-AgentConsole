@@ -14,6 +14,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     // call $anchorScroll()
     $anchorScroll();
 
+    window.onbeforeunload = function (event) {
+        chatService.Status('offline', 'call');
+    };
+
 
     $scope.isReadyToSpeak = false;
     $scope.sayIt = function (text) {
@@ -3723,6 +3727,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (Array.isArray(userObj)) {
                     userObj.forEach(function (obj, index) {
                         obj.status = status[key];
+                        if(!obj.callstatus)
+                        {
+                            obj.callstatus = 'offline';
+                        }
+
+                        if(!obj.callstatusstyle)
+                        {
+                            obj.callstatusstyle = 'call-status-offline';
+                        }
                         obj.statusTime = Date.now();
                     });
                 }
@@ -3767,8 +3780,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 });
                 if (Array.isArray(userObj)) {
                     userObj.forEach(function (obj, index) {
-                        alert(status[key]);
+
                         obj.callstatus = status[key];
+                        obj.callstatusstyle = 'call-status-' + obj.callstatus;
                         obj.callstatusTime = Date.now();
                     });
                 }

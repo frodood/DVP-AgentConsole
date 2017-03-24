@@ -5916,6 +5916,21 @@ ul.renote-color-btn > li {
     font-family: 'AvenirNextLTPro-Bold;', sans-serif
 }
 
+.call-status-available
+{
+    color: green;
+}
+
+.call-status-offline
+{
+    color: darkorange;
+}
+
+.call-status-busy
+{
+    color: red;
+}
+
 .chat-user-status > .status-name.online {
     background: transparent;
     color: #36ba45;
