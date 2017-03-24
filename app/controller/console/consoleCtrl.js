@@ -1298,7 +1298,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "time": new Date(),
             "read": false,
             "avatar": senderAvatar,
-            "from": senderName
+            "from": senderName,
+            "messageType":"notice",
+            "title":data.title
         };
 
 
