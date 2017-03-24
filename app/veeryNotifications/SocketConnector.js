@@ -80,7 +80,11 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
 
             socket.on('notice', function (data) {
                 data.messageType="notice";
-                alert("Notice : ",data.Message)
+
+                if (notificationEvent.OnTicketNoticeReceived)
+                    notificationEvent.OnTicketNoticeReceived(data);
+
+
             });
 
             socket.on('ticket', function (data) {

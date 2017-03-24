@@ -5371,6 +5371,11 @@ ul.renote-color-btn > li {
     height: 150px;
     background: transparent;
 }
+.notice-details-wrapper {
+    width: 100%;
+    height: 250px;
+    background: transparent;
+}
 
 .notif-image {
     text-align: left;
@@ -6529,6 +6534,22 @@ ul.renote-color-btn > li {
     /*background: #f7f7f7;*/
     background: #fff;
 }
+.u-notice-wrp {
+    position: absolute;
+    width: 100%;
+    height: 275px;
+    bottom: -245px;
+    right: 0;
+    z-index: 100;
+    -webkit-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    /*background: #f7f7f7;*/
+    background: #fff;
+}
+
+
 
 .u-noti-h {
     width: 100%;
@@ -7931,6 +7952,7 @@ ul.renote-color-btn > li {
 
 .d-done {
     color: rgba(130, 130, 130, 0.39);
+
 }
 
 .d-delete {
