@@ -5918,12 +5918,12 @@ ul.renote-color-btn > li {
 
 .call-status-available
 {
-    color: green;
+    color: #36ba45;
 }
 
 .call-status-offline
 {
-    color: darkorange;
+    color: #d2c242;
 }
 
 .call-status-busy

@@ -1472,6 +1472,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             for (var i = 0; i < response.length; i++) {
 
                 response[i].status = 'offline';
+                response[i].callstatus = 'offline';
+                response[i].callstatusstyle = 'call-status-offline';
 
             }
 
@@ -3729,15 +3731,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (Array.isArray(userObj)) {
                     userObj.forEach(function (obj, index) {
                         obj.status = status[key];
-                        if(!obj.callstatus)
-                        {
-                            obj.callstatus = 'offline';
-                        }
 
-                        if(!obj.callstatusstyle)
-                        {
-                            obj.callstatusstyle = 'call-status-offline';
-                        }
                         obj.statusTime = Date.now();
                     });
                 }
