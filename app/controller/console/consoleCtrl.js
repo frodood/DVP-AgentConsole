@@ -248,7 +248,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         phoneFuncion.idle();
         $scope.ShowHidePhone(false);
 
-        chatService.Status('offline', 'call');
+
     };
 
     $scope.PhoneOnline = function () {
@@ -260,7 +260,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
 
-        chatService.Status('available', 'call');
+        //chatService.Status('available', 'call');
 
 
     };
@@ -611,7 +611,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.PhoneOnline();
                     $scope.isRegistor = true;
                     $scope.showAlert("Soft Phone", "success", description);
-                    //chatService.Status('available', 'call');
+                    chatService.Status('available', 'call');
                 }
                 else if (description == 'Forbidden') {
                     $scope.showAlert("Soft Phone", "error", description);
@@ -638,7 +638,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         $scope.showAlert("Soft Phone", "error", "Fail To Register");
                     $scope.isshowRegistor = true;
 
-                    //chatService.Status('offline', 'call');
+                    chatService.Status('offline', 'call');
                 }
                 //$scope.isRegistor = false;
                                 /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
@@ -863,7 +863,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideSwap();
             $scope.callLogSessionId = uuid4.generate();
 
-            chatService.Status('available', 'call');
+
         },
         freezeBtn: function () {
             $scope.isFreezeReq = true;
