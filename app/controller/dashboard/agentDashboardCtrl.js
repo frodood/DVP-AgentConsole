@@ -789,7 +789,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         $('#dateTimeWrp').css({'top': mouseY - 200, 'left': mouseX}).fadeIn('slow');
     };
 
-    //end
 
     //**** END MY NOTE *******//
 
