@@ -2137,6 +2137,12 @@ div > div >
     color: #36ba45;
 }
 
+.chat-phone-status{
+    width: 100%;
+    padding-left: 5px;
+    display: inline-block;
+}
+
 .notification-user > .user-img {
     float: left;
     display: inline-block;
@@ -5893,6 +5899,12 @@ ul.renote-color-btn > li {
     border: 1px solid #f7f7f7;
     display: inline-block;
 }
+
+.chat-user-status > .status-call {
+   padding-left: 5px;
+    display: inline-block;
+}
+
 
 .chat-user-status > .status-name {
     display: inline-block;
