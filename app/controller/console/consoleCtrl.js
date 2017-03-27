@@ -14,6 +14,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     // call $anchorScroll()
     $anchorScroll();
 
+    window.onbeforeunload = function (event) {
+        chatService.Status('offline', 'call');
+    };
+
 
     $scope.isReadyToSpeak = false;
     $scope.sayIt = function (text) {
@@ -247,6 +251,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#softPhoneDragElem').addClass('display-none ').removeClass('display-block');
         phoneFuncion.idle();
         $scope.ShowHidePhone(false);
+
+
     };
 
     $scope.PhoneOnline = function () {
@@ -257,6 +263,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#softPhoneDragElem').addClass('display-block').removeClass('display-none ');
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
+
+        //chatService.Status('available', 'call');
 
 
     };
@@ -589,6 +597,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.startCallTime();
 
                     $scope.addToCallLog($scope.call.number, undefined);
+
+                    chatService.Status('busy', 'call');
                 }
             }
             catch (ex) {
@@ -605,6 +615,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.PhoneOnline();
                     $scope.isRegistor = true;
                     $scope.showAlert("Soft Phone", "success", description);
+                    chatService.Status('available', 'call');
                 }
                 else if (description == 'Forbidden') {
                     $scope.showAlert("Soft Phone", "error", description);
@@ -630,9 +641,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (!$scope.isshowRegistor)
                         $scope.showAlert("Soft Phone", "error", "Fail To Register");
                     $scope.isshowRegistor = true;
+
+                    chatService.Status('offline', 'call');
                 }
-                $scope.isRegistor = false;
-                /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
+                //$scope.isRegistor = false;
+                                /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
                  document.getElementById("btnAudioCall").disabled = document.getElementById("btnCall").disabled;
                  document.getElementById("btnHangUp").disabled = !oSipSessionCall;*/
             }
@@ -686,6 +699,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.updateCallStatus('Incoming Call');
                 $scope.veeryPhone.autoAnswer();
                 $scope.addToCallLog($scope.call.number, undefined);
+
             }
             catch (ex) {
                 console.error(ex.message);
@@ -732,6 +746,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 stopRingbackTone();
                 stopRingTone();
+
+                //chatService.Status('available', 'call');
 
                 /* //document.getElementById("lblSipStatus").innerHTML = msg;
                  //Notification.info({message: msg, delay: 500, closeOnClick: true});
@@ -850,6 +866,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideIvrBtn();
             phoneFuncion.hideSwap();
             $scope.callLogSessionId = uuid4.generate();
+
+
         },
         freezeBtn: function () {
             $scope.isFreezeReq = true;
@@ -904,6 +922,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn');
             //document.getElementById('freeze').innerHTML = "freeze";
             phoneFuncion.idle();
+
+            chatService.Status('available', 'call');
         }
         , showAnswerButton: function () {
             $('#answerButton').addClass('phone-sm-btn answer').removeClass('display-none');
@@ -1280,7 +1300,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "time": new Date(),
             "read": false,
             "avatar": senderAvatar,
-            "from": senderName
+            "from": senderName,
+            "messageType":"notice",
+            "title":data.title
         };
 
 
@@ -1452,6 +1474,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             for (var i = 0; i < response.length; i++) {
 
                 response[i].status = 'offline';
+                response[i].callstatus = 'offline';
+                response[i].callstatusstyle = 'call-status-offline';
 
             }
 
@@ -1463,6 +1487,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             chatService.Request('pendingall');
             chatService.Request('allstatus');
+            chatService.Request('allcallstatus');
+
+
+
+
 
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -1484,8 +1513,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 profileDataParser.assigneeUserGroups = response.data.Result;
 
 
-                //SE.request()
-                //chatService.
+
+
             }
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -3704,6 +3733,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (Array.isArray(userObj)) {
                     userObj.forEach(function (obj, index) {
                         obj.status = status[key];
+
                         obj.statusTime = Date.now();
                     });
                 }
@@ -3738,6 +3768,28 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
         }
     });
+
+
+    chatService.SubscribeCallStatus(function (status) {
+        if (status) {
+            Object.keys(status).forEach(function (key, index) {
+                var userObj = $scope.users.filter(function (item) {
+                    return key == item.username;
+                });
+                if (Array.isArray(userObj)) {
+                    userObj.forEach(function (obj, index) {
+
+                        obj.callstatus = status[key];
+                        obj.callstatusstyle = 'call-status-' + obj.callstatus;
+                        obj.callstatusTime = Date.now();
+                    });
+                }
+
+            });
+        }
+    });
+
+
 
 
     //show OnExistingclient

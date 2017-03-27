@@ -53,6 +53,21 @@ window.SE = function (e) {
             }
         });
 
+        socket.on('callstatus', function (data) {
+            console.log("status");
+            if (callBack.OnCallStatus) {
+                callBack.OnCallStatus(data);
+            }
+        });
+
+
+        socket.on('allcallstatus', function (data) {
+            console.log("allcallstatus");
+            if (callBack.OnAllCallStatus) {
+                callBack.OnAllCallStatus(data);
+            }
+        });
+
         socket.on('message', function (data) {
             console.log("message");
             if (callBack.OnMessage) {
@@ -318,8 +333,14 @@ window.SE = function (e) {
     function o(e) {
         if (!e)throw g;
         var r = v(e, "presence");
+        var d = v(e, "presence_type");
         if (connected) {
-            socket.emit('status', {presence: r});
+            if(d){
+                socket.emit('status', {presence: r, presence_type: d});
+            }else{
+                socket.emit('status', {presence: r});
+            }
+
         }
         else {
             if (callBack.OnError) {
@@ -327,6 +348,9 @@ window.SE = function (e) {
             }
         }
     }
+
+
+
 
     function se(e) {
         if (!e)throw g;
@@ -355,6 +379,9 @@ window.SE = function (e) {
             }
             else if (r === "allstatus") {
                 socket.emit('request', {request: 'allstatus'});
+            }
+            else if (r === "allcallstatus") {
+                socket.emit('request', {request: 'allcallstatus'});
             }
             else if (r === "latestmessages") {
                 socket.emit('request', {request: 'latestmessages', from: v(e, "from")});
