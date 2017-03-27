@@ -3,16 +3,20 @@
  */
 
 agentApp.controller('pwdResetEmailCtrl', function ($rootScope, $scope, $state, $http,
-                                           loginService,
-                                           config, $base64, $auth) {
+                                                   loginService,
+                                                   config, $base64, $auth) {
 
 
     $scope.BackToLogin = function () {
         $state.go('login');
     };
 
+    $scope.isLoadingEmail = false;
+    $scope.recoverEmail = null;
     $scope.ResetPassword = function () {
+        $scope.isLoadingEmail = true;
         loginService.forgetPassword($scope.recoverEmail, function (isSuccess) {
+            $scope.isLoadingEmail = false;
             if (isSuccess) {
                 showAlert('Success', 'success', "Please check email");
                 $state.go('reset-password-token');
@@ -21,7 +25,6 @@ agentApp.controller('pwdResetEmailCtrl', function ($rootScope, $scope, $state, $
             }
         })
     };
-
 
 
 });

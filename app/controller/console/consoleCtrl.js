@@ -1249,6 +1249,57 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.myNoteReminder = data;
         $scope.myNoteNotiMe.showMe();
     };
+    $scope.noticeRecieved = function (data) {
+       // $scope.myNoteReminder = data;
+       // $scope.myNoteNotiMe.showMe();
+
+
+        var senderAvatar;
+        var senderName;
+        $rootScope.$emit('noticeReceived', data);
+
+        if (data.from) {
+            if ($filter('filter')($scope.users, {id: data.from})) {
+                senderAvatar = $filter('filter')($scope.users, {username: data.from})[0].avatar;
+                senderName=$filter('filter')($scope.users, {username: data.from})[0].username;
+            }
+            else if ($filter('filter')($scope.userGroups, {name: data.from})) {
+                senderAvatar = $filter('filter')($scope.userGroups, {name: data.from})[0].avatar;
+                senderName=$filter('filter')($scope.userGroups, {name: data.from})[0].name;
+            }
+        }
+        var regex = /~#tid (.*?) ~/;
+        var tid = regex.exec(data.message);
+        var regexref = /~#tref (.*?) ~/;
+        var tref = regexref.exec(data.message);
+        var objMessage = {
+            "id": data.id,
+            "header": data.message,
+            "type": "menu",
+            "icon": "main-icon-2-speech-bubble",
+            "time": new Date(),
+            "read": false,
+            "avatar": senderAvatar,
+            "from": senderName
+        };
+
+
+
+            var audio = new Audio('assets/sounds/notification-1.mp3');
+            audio.play();
+            $scope.notifications.unshift(objMessage);
+            $('#notificationAlarm').addClass('animated swing');
+            $scope.unredNotifications = $scope.getCountOfUnredNotifications();
+            setTimeout(function () {
+                $('#notificationAlarm').removeClass('animated swing');
+            }, 500);
+
+
+
+
+    };
+
+
 
 
     var notificationEvent = {
@@ -1256,7 +1307,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         OnMessageReceived: $scope.OnMessage,
         onAgentDisconnected: $scope.agentDisconnected,
         onAgentAuthenticated: $scope.agentAuthenticated,
-        onToDoRemind: $scope.todoRemind
+        onToDoRemind: $scope.todoRemind,
+        OnTicketNoticeReceived:$scope.noticeRecieved
+
 
 
     };
@@ -2408,12 +2461,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 else {
 
                                     $scope.sectionArray[answer.section._id] =
-                                        {
-                                            value: (answer.points * answer.question.weight) / 10,
-                                            itemCount: 1,
-                                            name: answer.section.name,
-                                            id: answer.section._id
-                                        };
+                                    {
+                                        value: (answer.points * answer.question.weight) / 10,
+                                        itemCount: 1,
+                                        name: answer.section.name,
+                                        id: answer.section._id
+                                    };
 
                                 }
                             }
@@ -2453,10 +2506,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.RatingResultResolve = function (item) {
         var rateObj =
-            {
-                starValue: Math.round(item.value / item.itemCount),
-                displayValue: (item.value / item.itemCount).toFixed(2)
-            };
+        {
+            starValue: Math.round(item.value / item.itemCount),
+            displayValue: (item.value / item.itemCount).toFixed(2)
+        };
 
         return rateObj;
     };

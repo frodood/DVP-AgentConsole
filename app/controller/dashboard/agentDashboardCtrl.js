@@ -2,15 +2,16 @@
  * Created by team verry on 9/23/2016.
  */
 
-agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, dashboradService,
+agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout,$filter, dashboradService,
                                                     ticketService, engagementService, profileDataParser,
-                                                    authService, dashboardRefreshTime, myNoteServices, $anchorScroll) {
+                                                    authService, dashboardRefreshTime, myNoteServices, $anchorScroll,profileDataParser) {
 
 
 
     // call $anchorScroll()
     $anchorScroll();
 
+    $scope.showNoticeModal=false;
 
     $scope.showAlert = function (title, type, content) {
         new PNotify({
@@ -303,6 +304,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
 
     /* -------------------- Chart Configurations End-----------------------------------------*/
+
+
+    $scope.userCompanyData = authService.GetCompanyInfo();
+
 
     function secondToHours(seconds) {
         return (seconds / 3600).toFixed(2);
@@ -791,6 +796,76 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
 
     //**** END MY NOTE *******//
+
+    //**** START NOTICE *******//
+    $scope.NoticeList;
+    $rootScope.$on('noticeReceived', function (events, args)
+    {
+        //$scope.NoticeList.push(args);
+        $scope.loadNotices();
+    });
+
+
+    $scope.internalThumbFileUrl = baseUrls.fileService + "InternalFileService/File/Thumbnail/" + $scope.userCompanyData.tenant + "/" + $scope.userCompanyData.company + "/";
+
+    $scope.loadNotices = function () {
+
+        dashboradService.getStoredNotices().then(function (res) {
+
+            if(res.IsSuccess)
+            {
+
+                $scope.NoticeList=res.Result;
+
+                $scope.NoticeList.map(function (notice) {
+                    if(notice.attachments && notice.attachments.length>0)
+                    {
+                        angular.forEach(notice.attachments, function (attachment) {
+
+                            attachment.linkData=$scope.internalThumbFileUrl+"/"+attachment.url+"/SampleAttachment";
+                            console.log(attachment.linkData);
+                        });
+                    }
+                });
+            }
+            else
+            {
+                $scope.showAlert("Error","error","Failed to load notices");
+            }
+        }, function (err) {
+            $scope.showAlert("Error","error","Error in loading notices");
+        })
+
+    }
+
+    $scope.loadNotices();
+    $scope.NoticeObj={};
+
+
+    $scope.showNotice = function (notice) {
+        $scope.showNoticeModal=true;
+        $scope.NoticeObj = notice;
+
+
+        if (notice.from) {
+            if ($filter('filter')(profileDataParser.assigneeUsers, {_id: notice.from})) {
+                $scope.NoticeObj.senderAvatar = $filter('filter')(profileDataParser.assigneeUsers, {_id: notice.from})[0].avatar;
+                $scope.NoticeObj.senderName=$filter('filter')(profileDataParser.assigneeUsers, {_id: notice.from})[0].username;
+            }
+            else if ($filter('filter')($scope.userGroups, {name: notice.from})) {
+                $scope.NoticeObj.senderAvatar = $filter('filter')(profileDataParser.assigneeUserGroups, {_id: notice.from})[0].avatar;
+                $scope.NoticeObj.senderName=$filter('filter')(profileDataParser.assigneeUserGroups, {_id: notice.from})[0].name;
+            }
+        }
+
+
+    };
+
+    $scope.hideNoticeDetails = function () {
+        $scope.showNoticeModal=false;
+    }
+
+    //**** END NOTICE *******//
 
 
 }).config(['ChartJsProvider', function (ChartJsProvider) {

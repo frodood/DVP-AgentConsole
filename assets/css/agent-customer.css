@@ -5366,6 +5366,12 @@ ul.renote-color-btn > li {
     background: transparent;
 }
 
+.notice-details-wrapper {
+    width: 100%;
+    height: 250px;
+    background: transparent;
+}
+
 .notif-image {
     text-align: left;
     padding-top: 26px;
@@ -6350,6 +6356,21 @@ ul.renote-color-btn > li {
     overflow: visible;
 }
 
+.login-lg-wrapper{
+    min-width: 230px;
+    min-height: 115px;
+    position: absolute;
+    top: 170px;
+    left: 10px;
+    background: #fff;
+    padding: 15px 23px 13px 20px;
+    z-index: 100;
+    border-radius: 10px;
+    overflow: visible;
+    /* Rectangle 3: */
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.11);
+}
+
 .password-leg-wrapper > ul > li {
     list-style: none;
     text-align: left;
@@ -6507,6 +6528,21 @@ ul.renote-color-btn > li {
     position: absolute;
     width: 100%;
     height: 250px;
+    bottom: -245px;
+    right: 0;
+    z-index: 100;
+    -webkit-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    /*background: #f7f7f7;*/
+    background: #fff;
+}
+
+.u-notice-wrp {
+    position: absolute;
+    width: 100%;
+    height: 275px;
     bottom: -245px;
     right: 0;
     z-index: 100;
@@ -6944,7 +6980,7 @@ ul.renote-color-btn > li {
 }
 
 .d1-create-ticket {
-    color: rgba(14,23,86, 1);
+    color: rgba(14, 23, 86, 1);
 }
 
 .d1-in-progress-ticket {
@@ -6952,18 +6988,18 @@ ul.renote-color-btn > li {
 }
 
 .d1-close-ticket {
-    color: rgba(0,205,115, 1);
+    color: rgba(0, 205, 115, 1);
 }
 
 .c-green-300 {
     color: #8dd538;
 }
 
-.text-gray{
+.text-gray {
     color: #d4d2d5;
 }
 
-.text-black{
+.text-black {
     color: #000000;
 }
 
@@ -8110,4 +8146,267 @@ ul.renote-color-btn > li {
 
 .d-refresh-btn:hover {
     color: #81b87f;
+}
+
+/* new login */
+.login-main-wrp {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /*opacity: 0.85;*/
+    /*background-image: linear-gradient(-180deg, #E7855E 0%, #223448 100%);*/
+
+}
+
+.login-wrp {
+    width: 100%;
+    height: 490px;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+    margin-top: 18%;
+    /*border-radius: 5px;*/
+
+}
+
+.login-left-i-wrp {
+    width: 100%;
+    height: 490px;
+    overflow: hidden;
+    background-color: rgba(23, 55, 60, 1);
+    background: url(../img/bg/bg_900x500.jpg) no-repeat;
+    background-position: -10px -10px;
+    /*border-radius: 5px;*/
+}
+
+.login-new-bg {
+    /* left copy: */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.85;
+    background-image: linear-gradient(-180deg, #E7855E 0%, #223448 100%);
+    top: 0;
+    bottom: 0;
+    /*border-radius: 5px;*/
+    z-index: 0;
+    /* left copy: */
+    /* left copy: */
+}
+
+.login-new-body {
+    width: 100%;
+    min-height: 490px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1000;
+
+}
+
+.login-new-logo {
+    width: 100%;
+    min-height: 60px;
+    overflow: hidden;
+    position: relative;
+    margin: 70px auto;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.login-new-logo > img {
+    width: 135px;
+    height: auto;
+    /* logo_130x130yellow: */
+    /*box-shadow: 0 7px 22px 0 rgba(0,0,0,0.50);*/
+}
+
+.login-new-header {
+    /* Welcome: */
+    font-family: Avenir-Heavy;
+    font-size: 26px;
+    color: #FFFFFF;
+    letter-spacing: -0.13px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.50);
+    text-align: center;
+}
+
+.login-new-hedaer-1 {
+    /* Communication and Co: */
+    font-family: AvenirNext-Medium;
+    font-size: 15px;
+    color: #FFFFFF;
+    letter-spacing: -0.11px;
+    text-align: center;
+}
+
+.login-new-hedaer-2 {
+    /* A Voice, Video, Mess: */
+
+    font-family: AvenirNext-Regular;
+    font-size: 12px;
+    color: #000;
+    letter-spacing: -0.11px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.50);
+    text-align: left;
+    margin-top: 10px;
+}
+
+.login-des-list {
+    width: 100%;
+    min-height: 100px;
+
+}
+
+.login-des-list > ul {
+    padding-left: 138px;
+}
+
+.login-des-list > ul > li {
+    color: #fff;
+    font-size: 13px;
+}
+
+.social-links {
+    width: 100%;
+    text-align: center;
+    margin-top: 120px;
+}
+
+.social-links > ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.social-links > ul > li {
+    list-style: none;
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    background: rgba(0, 0, 0, 0.37);
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.social-links > ul > li > a > i {
+    color: #d78b6e;
+    font-size: 17px;
+    padding-top: 9px;
+    margin-right: 8px;
+    margin-left: 5px;
+}
+
+.copy-write,
+.version {
+    color: #fff;
+    text-align: center;
+}
+
+.login-new-hl-wrp {
+    display: inline-block;
+}
+
+.login-new-right-wrp {
+    width: 100%;
+    padding: 75px 25px 20px 25px;
+}
+
+.login-new-hl-wrp {
+    /* Login: */
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 25px;
+    letter-spacing: -0.15px;
+    padding-right: 10px;
+    text-align: left;
+}
+
+.login-new-hl-wrp.selected {
+    color: #74B072;
+}
+
+.login-new-hl-wrp.select {
+    color: #F1F1F1;
+}
+
+.login-new-frm {
+    width: 100%;
+    margin-top: 45px;
+}
+
+.btn-n-sign {
+    /* Rectangle 2: */
+    background: #81B87F;
+    border-radius: 12px;
+    /* SIGN IN: */
+    font-family: AvenirNext-Bold;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: -0.11px;
+    padding: 10px 15px 9px 15px;
+    outline: 0 !important;
+}
+
+.login-txt {
+    /* right: */
+    background: #FFFFFF;
+    border-radius: 5px;
+    height: 45px;
+}
+
+.login-n-footer {
+    margin-top: 25px;
+}
+
+.login-n-forget-pwd {
+    font-family: AvenirNext-Regular;
+    font-size: 15px;
+    color: #c2c2cb;
+    letter-spacing: -0.15px;
+    display: inline-block;
+    float: right;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.login-right-footer {
+    /* Froget Password: */
+    font-family: AvenirNext-Regular;
+    font-size: 13px;
+    color: #7c7c7c;
+    letter-spacing: -0.15px;
+    width: 100%;
+    text-align: center;
+    margin-top: 100px;
+
+}
+
+.login-n-forget-pwd > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+
+.login-n-forget-pwd > ul > li {
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-n-forget-pwd > ul > li:hover {
+    color: #81b87f;
+}
+
+.login-n-forget-pwd.b-l {
+    border-right: 1px solid #81b87f;
+    padding-right: 10px;
+    margin-right: 10px;
 }
