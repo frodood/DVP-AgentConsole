@@ -747,7 +747,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 stopRingbackTone();
                 stopRingTone();
 
-                chatService.Status('available', 'call');
+                //chatService.Status('available', 'call');
 
                 /* //document.getElementById("lblSipStatus").innerHTML = msg;
                  //Notification.info({message: msg, delay: 500, closeOnClick: true});
@@ -922,6 +922,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn');
             //document.getElementById('freeze').innerHTML = "freeze";
             phoneFuncion.idle();
+
+            chatService.Status('available', 'call');
         }
         , showAnswerButton: function () {
             $('#answerButton').addClass('phone-sm-btn answer').removeClass('display-none');
