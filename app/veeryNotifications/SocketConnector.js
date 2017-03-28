@@ -79,8 +79,6 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
             });
 
             socket.on('notice', function (data) {
-                data.messageType = "notice";
-                alert("Notice : ", data.Message)
                 data.messageType="notice";
 
                 if (notificationEvent.OnTicketNoticeReceived)
