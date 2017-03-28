@@ -3015,7 +3015,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     // getCurrentState.breakState();
                     changeLockScreenView.hide();
                     $scope.isUnlock = false;
-                    chatService.Status('available','chat');
+                    chatService.Status('online','chat');
                     return;
                 }
             });
