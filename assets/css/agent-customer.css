@@ -8263,7 +8263,7 @@ ul.renote-color-btn > li {
 
 .login-new-hedaer-1 {
     /* Communication and Co: */
-    font-family: AvenirNext-Medium;
+    font-family: 'AvenirNext-Medium', sans-serif;
     font-size: 15px;
     color: #FFFFFF;
     letter-spacing: -0.11px;
@@ -8272,8 +8272,7 @@ ul.renote-color-btn > li {
 
 .login-new-hedaer-2 {
     /* A Voice, Video, Mess: */
-
-    font-family: AvenirNext-Regular;
+    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 12px;
     color: #000;
     letter-spacing: -0.11px;
@@ -8371,7 +8370,7 @@ ul.renote-color-btn > li {
     background: #81B87F;
     border-radius: 12px;
     /* SIGN IN: */
-    font-family: AvenirNext-Bold;
+    font-family: 'AvenirNext-Bold', sans-serif;
     font-size: 12px;
     color: #FFFFFF;
     letter-spacing: -0.11px;
@@ -8391,7 +8390,7 @@ ul.renote-color-btn > li {
 }
 
 .login-n-forget-pwd {
-    font-family: AvenirNext-Regular;
+    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 15px;
     color: #c2c2cb;
     letter-spacing: -0.15px;
@@ -8403,7 +8402,7 @@ ul.renote-color-btn > li {
 
 .login-right-footer {
     /* Froget Password: */
-    font-family: AvenirNext-Regular;
+    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 13px;
     color: #7c7c7c;
     letter-spacing: -0.15px;
