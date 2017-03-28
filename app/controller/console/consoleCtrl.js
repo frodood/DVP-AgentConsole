@@ -2993,6 +2993,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('font-color-green bold');
                     $scope.currentBerekOption = requestOption;
+
+                    chatService.Status('offline','chat');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
@@ -3013,6 +3015,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     // getCurrentState.breakState();
                     changeLockScreenView.hide();
                     $scope.isUnlock = false;
+                    chatService.Status('available','chat');
                     return;
                 }
             });
