@@ -2137,7 +2137,7 @@ div > div >
     color: #36ba45;
 }
 
-.chat-phone-status{
+.chat-phone-status {
     width: 100%;
     padding-left: 5px;
     display: inline-block;
@@ -5907,28 +5907,24 @@ ul.renote-color-btn > li {
 }
 
 .chat-user-status > .status-call {
-   padding-left: 5px;
+    padding-left: 5px;
     display: inline-block;
 }
-
 
 .chat-user-status > .status-name {
     display: inline-block;
     font-family: 'AvenirNextLTPro-Bold;', sans-serif
 }
 
-.call-status-available
-{
+.call-status-available {
     color: #36ba45;
 }
 
-.call-status-offline
-{
+.call-status-offline {
     color: #d2c242;
 }
 
-.call-status-busy
-{
+.call-status-busy {
     color: red;
 }
 
@@ -6383,7 +6379,7 @@ ul.renote-color-btn > li {
     overflow: visible;
 }
 
-.login-lg-wrapper{
+.login-lg-wrapper {
     min-width: 230px;
     min-height: 115px;
     position: absolute;
@@ -6395,7 +6391,7 @@ ul.renote-color-btn > li {
     border-radius: 10px;
     overflow: visible;
     /* Rectangle 3: */
-    box-shadow: 0 0 5px 0 rgba(0,0,0,0.11);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.11);
 }
 
 .password-leg-wrapper > ul > li {
@@ -8253,7 +8249,7 @@ ul.renote-color-btn > li {
 
 .login-new-header {
     /* Welcome: */
-    font-family: Avenir-Heavy;
+    font-family: 'Avenir-Heavy', sans-serif;
     font-size: 26px;
     color: #FFFFFF;
     letter-spacing: -0.13px;
@@ -8264,7 +8260,7 @@ ul.renote-color-btn > li {
 .login-new-hedaer-1 {
     /* Communication and Co: */
     font-family: 'AvenirNext-Medium', sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     color: #FFFFFF;
     letter-spacing: -0.11px;
     text-align: center;
@@ -8417,14 +8413,21 @@ ul.renote-color-btn > li {
     padding: 0;
     margin: 0;
     text-align: right;
+    margin-top: -5px;
 }
 
 .login-n-forget-pwd > ul > li {
     display: inline-block;
-    padding-right: 5px;
-    padding-left: 5px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border-radius: 50%;
+    padding-right: 7px;
+    padding-left: 0px;
     cursor: pointer;
     font-size: 16px;
+    overflow: hidden;
+    padding-top: 5px;
 }
 
 .login-n-forget-pwd > ul > li:hover {

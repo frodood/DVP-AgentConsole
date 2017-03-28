@@ -1,11 +1,11 @@
 <div class="login-main-wrp" ng-controller="loginCtrl">
     <div class="container">
-        <div class="col-lg-9 col-lg-offset-1">
+        <div class="col-lg-8 col-lg-offset-2">
             <div class="login-wrp">
                 <div class="col-lg-7">
                     <div id="login" class="login-new-right-wrp">
                         <div class="login-new-hl-wrp selected">
-                            Login
+                            Login - Agent Console
                         </div>
                         <div class="login-new-frm">
                             <form name="loginFrm" novalidate autocomplete="off">
@@ -47,19 +47,18 @@
 
                                     <div class="login-n-forget-pwd">
                                         <ul>
-                                            <li ng-click="goToRestEmail();">
-                                                <i tooltip-placement="low"
-                                                   uib-tooltip="password reset using email"
-                                                   class="ti-email"></i>
+                                            <li tooltip-placement="top"
+                                                uib-tooltip="password reset using email" ng-click="goToRestEmail();">
+                                                <i class="ti-email"></i>
                                             </li>
-                                            <li ng-click="goToRestToken();">
-                                                <i class="ti-user" tooltip-placement="low"
-                                                   uib-tooltip="password reset using token"></i>
+                                            <li tooltip-placement="top"
+                                                uib-tooltip="password reset using token" ng-click="goToRestToken();">
+                                                <i class="ti-user"></i>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="login-n-forget-pwd b-l">
-                                        Forget Password ?
+                                        Forget  Password ?
                                     </div>
 
 
