@@ -21,7 +21,7 @@ agentApp.controller('pwdResetEmailCtrl', function ($rootScope, $scope, $state, $
                 showAlert('Success', 'success', "Please check email");
                 $state.go('reset-password-token');
             } else {
-                showAlert('Error', 'error', "reset failed");
+                showAlert('Error', 'error', "Reset Failed");
             }
         })
     };

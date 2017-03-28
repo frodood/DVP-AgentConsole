@@ -95,7 +95,7 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
                 showAlert('Success', 'success', "Please check email");
                 $state.go('login');
             } else {
-                showAlert('Error', 'error', "reset failed");
+                showAlert('Error', 'error', "Reset Failed");
             }
         })
     };
