@@ -73,12 +73,14 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
             });
 
             socket.on('message', function (data) {
-                data.messageType="message";
+                data.messageType = "message";
                 if (notificationEvent.OnMessageReceived)
                     notificationEvent.OnMessageReceived(data);
             });
 
             socket.on('notice', function (data) {
+                data.messageType = "notice";
+                alert("Notice : ", data.Message)
                 data.messageType="notice";
 
                 if (notificationEvent.OnTicketNoticeReceived)
@@ -88,7 +90,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
             });
 
             socket.on('ticket', function (data) {
-                data.messageType="notice";
+                data.messageType = "notice";
                 if (notificationEvent.OnTicketNoticeReceived)
                     notificationEvent.OnTicketNoticeReceived(data);
             });
@@ -97,7 +99,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 //document.getElementById("lblNotification").innerHTML = data;
                 //Notification.info({message: data, delay: 500, closeOnClick: true});
                 //console.log(data);
-                data.messageType="broadcast";
+                data.messageType = "broadcast";
                 if (notificationEvent.OnMessageReceived)
                     notificationEvent.OnMessageReceived(data);
             });
@@ -137,15 +139,14 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
 
             });
         } catch (ex) {
-            console.error("Error In socket.io"+ex);
+            console.error("Error In socket.io" + ex);
         }
     };
 
 
-
     self.SocDisconnect = function () {
 
-        if(socket) {
+        if (socket) {
 
 
             //socket.removeAllListeners();
@@ -194,12 +195,12 @@ notificationMod.factory('veeryNotification', function (notificationConnector, $q
             }
         },
 
-        disconnectFromServer: function() {
+        disconnectFromServer: function () {
 
 
             notificationConnector.SocDisconnect();
         },
-        reconnectToServer: function() {
+        reconnectToServer: function () {
 
 
             notificationConnector.SocReconnect();

@@ -2,26 +2,39 @@
  * Created by damith on 3/15/17.
  */
 agentApp.controller('pwdResetToken', function ($rootScope, $scope, $state, $http,
-                                              loginService,
-                                              config, $base64, $auth) {
+                                               loginService,
+                                               config, $base64, $auth) {
 
 
-    $scope.token = undefined;
-    $scope.password = undefined;
-    $scope.confirmPwd = undefined;
+    $scope.token = null;
+    $scope.password = null;
+    $scope.confirmPwd = null;
 
-    $scope.ResetPassword = function(){
-
+    $scope.isLoadingPwd = false;
+    $scope.ResetPassword = function () {
+        $scope.isLoadingPwd = true;
         loginService.resetPassword($scope.token, $scope.password, function (isSuccess) {
+            $scope.isLoadingPwd = false;
             if (isSuccess) {
-                showAlert('Success', 'success', "Please check email");
+                showAlert('Success', 'success', "Your password has been reset successfully.");
                 $state.go('login');
             } else {
-                showAlert('Error', 'error', "reset failed");
+                showAlert('Error', 'error', "Reset Failed");
             }
         })
 
-    }
+    };
 
+
+    $scope.pwdBox = false;
+
+    $('#password').on('focus', function () {
+        $scope.pwdBox = true;
+    });
+    $('#password').focusout(function () {
+        $scope.pwdBox = false;
+    });
 
 });
+
+

@@ -39,6 +39,7 @@ var baseUrls = {
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
     'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',
+        //'http://ipmessagingservice.app.veery.cloud',
     'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app.veery.cloud//DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
 
@@ -299,3 +300,141 @@ agentApp.filter('millisecondsToDateTime', [function () {
         return new Date(1970, 0, 1).setMilliseconds(seconds);
     };
 }]);
+
+
+
+//Password verification
+agentApp.directive('passwordVerify', function () {
+    return {
+        restrict: 'A', // only activate on element attribute
+        require: 'ngModel', // get a hold of NgModelController
+        link: function (scope, elem, attrs, ngModel) {
+            if (!ngModel) return; // do nothing if no ng-model
+
+            // watch own value and re-validate on change
+            scope.$watch(attrs.ngModel, function () {
+                validate();
+            });
+
+            // observe the other value and re-validate on change
+            attrs.$observe('passwordVerify', function (val) {
+                validate();
+            });
+
+            var validate = function () {
+                // values
+                var val1 = ngModel.$viewValue;
+                var val2 = attrs.passwordVerify;
+                // set validity
+                var status = !val1 || !val2 || val1 === val2;
+                ngModel.$setValidity('passwordVerify', status);
+                // return val1
+            };
+        }
+    }
+});
+
+
+agentApp.directive('passwordStrengthBox', [
+    function () {
+        return {
+            require: 'ngModel',
+            restrict: 'E',
+            scope: {
+                password: '=ngModel',
+                confirm: '=',
+                box: '='
+            },
+
+            link: function (scope, elem, attrs, ctrl) {
+                //password validation
+                scope.isShowBox = false;
+                scope.isPwdValidation = {
+                    minLength: false,
+                    specialChr: false,
+                    digit: false,
+                    capitalLetter: false
+                };
+                scope.$watch('password', function (newVal) {
+                    scope.strength = isSatisfied(newVal && newVal.length >= 8) +
+                        isSatisfied(newVal && /[A-z]/.test(newVal)) +
+                        isSatisfied(newVal && /(?=.*[A-Z])/.test(newVal)) +
+                        isSatisfied(newVal && /(?=.*\W)/.test(newVal)) +
+                        isSatisfied(newVal && /\d/.test(newVal));
+
+                    if (!ctrl || !newVal || scope.strength != 5) {
+                        ctrl.$setValidity('newPassword', false);
+                    } else {
+                        ctrl.$setValidity('newPassword', true);
+                    }
+
+                    //length
+                    if (newVal && newVal.length >= 8) {
+                        scope.isPwdValidation.minLength = true;
+                    } else {
+                        scope.isPwdValidation.minLength = false;
+                    }
+
+                    // Special Character
+                    if (newVal && /(?=.*\W)/.test(newVal)) {
+                        scope.isPwdValidation.specialChr = true;
+                    } else {
+                        scope.isPwdValidation.specialChr = false;
+                    }
+
+                    //digit
+                    if (newVal && /\d/.test(newVal)) {
+                        scope.isPwdValidation.digit = true;
+                    } else {
+                        scope.isPwdValidation.digit = false;
+                    }
+
+                    //capital Letter
+                    if (newVal && /(?=.*[A-Z])/.test(newVal)) {
+                        scope.isPwdValidation.capitalLetter = true;
+                    } else {
+                        scope.isPwdValidation.capitalLetter = false;
+                    }
+
+
+                    //check password confirm validation
+                    // if (scope.confirm) {
+                    //     var origin = scope.confirm;
+                    //     if (origin !== newVal) {
+                    //         ctrl.$setValidity("unique", false);
+                    //     } else {
+                    //         ctrl.$setValidity("unique", true);
+                    //     }
+                    // };
+
+                    function isSatisfied(criteria) {
+                        return criteria ? 1 : 0;
+                    }
+                }, true);
+            },
+            template: '<div ng-if="strength != ' + 5 + ' "' +
+            'ng-show=strength' +
+            ' class="password-leg-wrapper login-lg-wrapper animated fadeIn ">' +
+            '<ul>' +
+            '<li>' +
+            '<i ng-show="isPwdValidation.minLength" class="ti-check color-green"></i>' +
+            '<i ng-show="!isPwdValidation.minLength" class="ti-close color-red"></i>' +
+            ' Min length 8' +
+            '</li>' +
+            '<li><i ng-show="isPwdValidation.specialChr" class="ti-check color-green "></i>' +
+            '<i ng-show="!isPwdValidation.specialChr" class="ti-close color-red"></i>' +
+            ' Special Character' +
+            '</li>' +
+            '<li><i ng-show="isPwdValidation.digit" class="ti-check color-green"></i>' +
+            '<i ng-show="!isPwdValidation.digit" class="ti-close color-red"></i>' +
+            ' Digit' +
+            '</li>' +
+            '<li><i ng-show="isPwdValidation.capitalLetter" class="ti-check color-green"></i>' +
+            '<i ng-show="!isPwdValidation.capitalLetter" class="ti-close color-red"></i>' +
+            ' Capital Letter' +
+            ' </li>' +
+            '</ul>' +
+            '</div>'
+        }
+    }
+]);

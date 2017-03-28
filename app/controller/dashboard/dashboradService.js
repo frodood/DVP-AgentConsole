@@ -126,7 +126,7 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
     var getStoredNotices = function () {
         return $http({
             method: 'GET',
-            url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/Notices"
+            url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/NoticeBoard"
         }).then(function (response) {
             return response.data;
         });

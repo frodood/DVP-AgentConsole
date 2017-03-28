@@ -747,7 +747,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 stopRingbackTone();
                 stopRingTone();
 
-                chatService.Status('available', 'call');
+                //chatService.Status('available', 'call');
 
                 /* //document.getElementById("lblSipStatus").innerHTML = msg;
                  //Notification.info({message: msg, delay: 500, closeOnClick: true});
@@ -922,6 +922,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn');
             //document.getElementById('freeze').innerHTML = "freeze";
             phoneFuncion.idle();
+
+            chatService.Status('available', 'call');
         }
         , showAnswerButton: function () {
             $('#answerButton').addClass('phone-sm-btn answer').removeClass('display-none');
@@ -1472,6 +1474,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             for (var i = 0; i < response.length; i++) {
 
                 response[i].status = 'offline';
+                response[i].callstatus = 'offline';
+                response[i].callstatusstyle = 'call-status-offline';
 
             }
 
@@ -3729,15 +3733,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (Array.isArray(userObj)) {
                     userObj.forEach(function (obj, index) {
                         obj.status = status[key];
-                        if(!obj.callstatus)
-                        {
-                            obj.callstatus = 'offline';
-                        }
 
-                        if(!obj.callstatusstyle)
-                        {
-                            obj.callstatusstyle = 'call-status-offline';
-                        }
                         obj.statusTime = Date.now();
                     });
                 }
