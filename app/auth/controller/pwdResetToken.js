@@ -16,7 +16,7 @@ agentApp.controller('pwdResetToken', function ($rootScope, $scope, $state, $http
         loginService.resetPassword($scope.token, $scope.password, function (isSuccess) {
             $scope.isLoadingPwd = false;
             if (isSuccess) {
-                showAlert('Success', 'success', "Please check email");
+                showAlert('Success', 'success', "Your password has been reset successfully.");
                 $state.go('login');
             } else {
                 showAlert('Error', 'error', "Reset Failed");
