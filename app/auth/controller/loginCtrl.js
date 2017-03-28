@@ -70,11 +70,15 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
                 $state.go('console');
             })
             .catch(function (error) {
+                $scope.isLogin = false;
+                $scope.loginFrm.$invalid = false;
+                if (error.status == 449) {
+                    showAlert('Error', 'error', 'Activate your account before login...');
+                    return;
+                }
                 $('#usersName').addClass('shake');
                 $('#pwd').addClass('shake');
                 showAlert('Error', 'error', 'Please check login details...');
-                $scope.isLogin = false;
-                $scope.loginFrm.$invalid = false;
             });
 
     };
