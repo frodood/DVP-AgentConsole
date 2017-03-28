@@ -903,6 +903,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn').removeClass('display-none');
             phoneFuncion.idle();
             $scope.FreezeAcw($scope.call.sessionId, false);
+            chatService.Status('available', 'call');
         },
         startAcw: function () {
             $scope.isAcw = true;
