@@ -1874,35 +1874,35 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 profile.tags=[];
                 scope.cutomerTypes.forEach(function (tag) {
                     profile.tags.push(tag.cutomerType)
-                })
+                });
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
 
 
-                userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
-
-                    if(resSSN.IsSuccess && resSSN.Result.length>0)
-                    {
-                        scope.showAlert("Profile", "error", "SSN is already taken");
-                    }
-                    else
-                    {
-                        userService.getExternalUserProfileByField("phone",profile.phone).then(function (resPhone) {
-
-                            if(resPhone.IsSuccess && resPhone.Result.length>0)
-                            {
-                                scope.showAlert("Profile", "error", "Phone number is already taken");
-                            }
-                            else
-                            {
-                                userService.getExternalUserProfileByField("email",profile.email).then(function (resEmail) {
-
-                                    if(resEmail.IsSuccess && resEmail.Result.length>0)
-                                    {
-                                        scope.showAlert("Profile", "error", "Email is already taken");
-                                    }
-                                    else
-                                    {
+                //userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
+                //
+                //    if(resSSN.IsSuccess && resSSN.Result.length>0)
+                //    {
+                //        scope.showAlert("Profile", "error", "SSN is already taken");
+                //    }
+                //    else
+                //    {
+                //        userService.getExternalUserProfileByField("phone",profile.phone).then(function (resPhone) {
+                //
+                //            if(resPhone.IsSuccess && resPhone.Result.length>0)
+                //            {
+                //                scope.showAlert("Profile", "error", "Phone number is already taken");
+                //            }
+                //            else
+                //            {
+                //                userService.getExternalUserProfileByField("email",profile.email).then(function (resEmail) {
+                //
+                //                    if(resEmail.IsSuccess && resEmail.Result.length>0)
+                //                    {
+                //                        scope.showAlert("Profile", "error", "Email is already taken");
+                //                    }
+                //                    else
+                //                    {
                                         userService.CreateExternalUser(profile).then(function (response) {
                                             if (response) {
                                                 scope.profileDetail = response;
@@ -1921,23 +1921,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                                         }, function (err) {
                                             scope.showAlert("Profile", "error", "Fail To Save Profile.");
                                         });
-                                    }
-
-                                }, function (errEmail) {
-                                    scope.showAlert("Profile", "error", "Checking Email failed");
-                                });
-
-
-
-                            }
-                        }, function (errPhone) {
-                            scope.showAlert("Profile", "error", "Checking Phone number failed");
-                        })
-                    }
-
-                }, function (errSSN) {
-                    scope.showAlert("Profile", "error", "Checking SSN failed");
-                });
+                //                    }
+                //
+                //                }, function (errEmail) {
+                //                    scope.showAlert("Profile", "error", "Checking Email failed");
+                //                });
+                //
+                //
+                //
+                //            }
+                //        }, function (errPhone) {
+                //            scope.showAlert("Profile", "error", "Checking Phone number failed");
+                //        })
+                //    }
+                //
+                //}, function (errSSN) {
+                //    scope.showAlert("Profile", "error", "Checking SSN failed");
+                //});
 
 
 
@@ -2034,15 +2034,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
 
 
-                $q.all([
-                    scope.CheckExternalUserAvailabilityByField("ssn",profile.ssn,profile),
-                    scope.CheckExternalUserAvailabilityByField("email",profile.email,profile),
-                    scope.CheckExternalUserAvailabilityByField("phone",profile.phone,profile),
-                ]).then(function(value) {
-                    // Success callback where value is an array containing the success values
-
-                    if(value.indexOf(false)==-1)
-                    {
+                //$q.all([
+                //    scope.CheckExternalUserAvailabilityByField("ssn",profile.ssn,profile),
+                //    scope.CheckExternalUserAvailabilityByField("email",profile.email,profile),
+                //    scope.CheckExternalUserAvailabilityByField("phone",profile.phone,profile),
+                //]).then(function(value) {
+                //    // Success callback where value is an array containing the success values
+                //
+                //    if(value.indexOf(false)==-1)
+                //    {
                         userService.UpdateExternalUser(profile).then(function (response) {
                             if (response) {
                                 scope.cutomerTypes=[];
@@ -2074,19 +2074,19 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         }, function (err) {
                             scope.showAlert("Profile", "error", "Fail To Save Profile.");
                         });
-                    }
-                    else
-                    {
-                        scope.showAlert("Profile", "error", "Fail To Save Profile.");
-                    }
-
-
-
-
-                }, function(reason) {
-                    // Error callback where reason is the value of the first rejected promise
-                    alert(value);
-                });
+                //    }
+                //    else
+                //    {
+                //        scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                //    }
+                //
+                //
+                //
+                //
+                //}, function(reason) {
+                //    // Error callback where reason is the value of the first rejected promise
+                //    alert(value);
+                //});
 
 
 
