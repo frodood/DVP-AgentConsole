@@ -6551,7 +6551,7 @@ ul.renote-color-btn > li {
     position: absolute;
     width: 100%;
     height: 275px;
-    bottom: -245px;
+    bottom: -400px;
     right: 0;
     z-index: 100;
     -webkit-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
@@ -7153,6 +7153,18 @@ ul.renote-color-btn > li {
     border-radius: 5px;
     background: #fff;
     padding: 0px;
+}
+
+
+.notice-b-m-outer {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 319px;
+    overflow: hidden;
+    padding: 10px 15px;
+    cursor: pointer;
 }
 
 .notice-b-m-wrp {

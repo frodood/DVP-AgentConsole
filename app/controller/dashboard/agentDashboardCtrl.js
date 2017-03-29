@@ -851,15 +851,21 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
                 $scope.NoticeList=res.Result;
 
-                $scope.NoticeList.map(function (notice) {
+                $scope.NoticeListTemp = $scope.NoticeList.map(function (notice) {
+
                     if(notice.attachments && notice.attachments.length>0)
                     {
                         angular.forEach(notice.attachments, function (attachment) {
 
                             attachment.linkData=$scope.internalThumbFileUrl+""+attachment.url+"/SampleAttachment";
                             console.log(attachment.linkData);
+                            notice.linkData = $scope.internalThumbFileUrl+""+attachment.url+"/SampleAttachment";
                         });
+
+
                     }
+
+                    return notice;
                 });
             }
             else

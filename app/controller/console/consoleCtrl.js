@@ -9,14 +9,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll) {
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window) {
 
     // call $anchorScroll()
     $anchorScroll();
-
-    window.onbeforeunload = function (event) {
+    $scope.onExit = function (event) {
         chatService.Status('offline', 'call');
     };
+
+    $window.onbeforeunload =  $scope.onExit;
+
 
 
     $scope.isReadyToSpeak = false;
@@ -699,6 +701,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.updateCallStatus('Incoming Call');
                 $scope.veeryPhone.autoAnswer();
                 $scope.addToCallLog($scope.call.number, undefined);
+                chatService.Status('busy','call');
 
             }
             catch (ex) {
@@ -903,6 +906,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn').removeClass('display-none');
             phoneFuncion.idle();
             $scope.FreezeAcw($scope.call.sessionId, false);
+            chatService.Status('available', 'call');
         },
         startAcw: function () {
             $scope.isAcw = true;
@@ -2741,7 +2745,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
     $scope.closeNotificationView = function () {
-        $('#uNotifiWrp').animate({bottom: '-245'}, 300);
+        $('#uNotifiWrp').animate({bottom: '-400'}, 300);
     };
 
     $scope.isSendingNotifi = false;
@@ -2993,6 +2997,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('font-color-green bold');
                     $scope.currentBerekOption = requestOption;
+
+                    chatService.Status('offline','chat');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
@@ -3013,6 +3019,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     // getCurrentState.breakState();
                     changeLockScreenView.hide();
                     $scope.isUnlock = false;
+                    chatService.Status('online','chat');
                     return;
                 }
             });
