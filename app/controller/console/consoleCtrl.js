@@ -9,14 +9,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll) {
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window) {
 
     // call $anchorScroll()
     $anchorScroll();
-
-    window.onbeforeunload = function (event) {
+    $scope.onExit = function (event) {
         chatService.Status('offline', 'call');
     };
+
+    $window.onbeforeunload =  $scope.onExit;
+
 
 
     $scope.isReadyToSpeak = false;
@@ -699,6 +701,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.updateCallStatus('Incoming Call');
                 $scope.veeryPhone.autoAnswer();
                 $scope.addToCallLog($scope.call.number, undefined);
+                chatService.Status('busy','call');
 
             }
             catch (ex) {
