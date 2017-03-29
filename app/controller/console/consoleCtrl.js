@@ -2742,7 +2742,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
     $scope.closeNotificationView = function () {
-        $('#uNotifiWrp').animate({bottom: '-245'}, 300);
+        $('#uNotifiWrp').animate({bottom: '-400'}, 300);
     };
 
     $scope.isSendingNotifi = false;
