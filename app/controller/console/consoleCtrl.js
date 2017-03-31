@@ -1254,8 +1254,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.agentDisconnected = function () {
+
         $scope.isSocketRegistered = false;
-        $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
+        if(!$scope.isLogingOut)
+        {
+            $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
+        }
+
         // $('#regNotification').addClass('display-none').removeClass('display-block');
         //$('#regNotificationLoading').addClass('display-none').removeClass('display-block');
 
@@ -2611,9 +2616,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     }
 
     //logOut
+    $scope.isLogingOut = false;
     $scope.logOut = function () {
 
         veeryNotification.disconnectFromServer();
+        $scope.isLogingOut = true;
         $scope.veeryPhone.unregisterWithArds(function (done) {
             loginService.Logoff(function () {
 
