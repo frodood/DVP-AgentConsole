@@ -1345,6 +1345,67 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
+    chatService.SubscribeConnection(function(isConnected){
+
+        if(isConnected){
+            $scope.agentAuthenticated();
+        }else{
+            $scope.agentDisconnected();
+        }
+    });
+
+
+    chatService.SubscribeEvents(function(event, data){
+
+        switch (event){
+
+            case 'agent_connected':
+
+                break;
+
+            case 'agent_disconnected':
+
+                $scope.agentDisconnected(data);
+
+                break;
+
+            case 'agent_found':
+
+                $scope.agentFound(data);
+
+                break;
+
+            case 'agent_rejected':
+
+                break;
+
+            case 'todo_reminder':
+
+                $scope.todoRemind(data);
+
+                break;
+
+            case 'notice':
+
+                $scope.noticeRecieved(data);
+
+                break;
+
+            case 'notice_message':
+
+                $scope.OnMessage(data);
+
+                break;
+
+
+
+
+        }
+
+
+    })
+
+
     $scope.veeryNotification = function () {
         veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, notificationEvent);
     };
@@ -1362,7 +1423,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#regNotification').addClass('display-none').removeClass('display-block');
             $('#regNotificationLoading').addClass('display-block').removeClass('display-none');
             $scope.isLoadingNotifiReg = true;
-            $scope.socketReconnect();
+            //$scope.socketReconnect();
+            SE.reconnect();
         }
 
     };

@@ -1342,22 +1342,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                     if (assigneeObj && scope.ticket) {
-                        if (assigneeObj.listType === "User") {
-                            ticketService.AssignUserToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
-                                if (response && response.data.IsSuccess) {
-                                    scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
-                                    scope.ticket.assignee = assigneeObj;
-                                    scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
+                        if (assigneeObj.listType === "Group") {
 
-                                    scope.isEditAssignee = false;
-                                }
-                                else {
-                                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                                }
-                            }, function (error) {
-                                scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                            });
-                        } else {
+
                             ticketService.AssignUserGroupToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
                                 if (response && response.data.IsSuccess) {
 
@@ -1368,6 +1355,23 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                                     scope.isEditAssignee = false;
 
+                                }
+                                else {
+                                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                                }
+                            }, function (error) {
+                                scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                            });
+
+                        } else {
+
+                            ticketService.AssignUserToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
+                                if (response && response.data.IsSuccess) {
+                                    scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
+                                    scope.ticket.assignee = assigneeObj;
+                                    scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
+
+                                    scope.isEditAssignee = false;
                                 }
                                 else {
                                     scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
