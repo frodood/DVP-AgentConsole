@@ -884,14 +884,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     {
                         ticketService.getFormsForCompany().then(function(compForm)
                         {
-                            if(compForm.Result.ticket_form)
-                            {
-                                callback(null, compForm.Result.ticket_form);
-                            }
-                            else
-                            {
-                                callback(null, null);
-                            }
+                            
+                              if(compForm.Result)
+                              {
+                                    if(compForm.Result.ticket_form)
+                                    {
+                                        callback(null, compForm.Result.ticket_form);
+                                    }
+                                    else
+                                    {
+                                        callback(null, null);
+                                    }
+                              }else{
+                                  
+                                  callback(null, null);
+                              }
 
                         }).catch(function(err)
                         {
@@ -1151,9 +1158,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
                 var obj = {
                     fields: arr,
-                    reference: ticket._id,
-                    form: scope.currentTicketForm.name
+                    reference: ticket._id
                 };
+                
+                if(scope.currentTicketForm){
+                    
+                    obj.form = scope.currentTicketForm.name
+                }
+                
                 ticketService.createFormSubmissionData(obj).then(function (response) {
                     //tag submission to ticket
                     if (response && response.Result) {
