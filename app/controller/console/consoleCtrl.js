@@ -2616,8 +2616,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         veeryNotification.disconnectFromServer();
         $scope.veeryPhone.unregisterWithArds(function (done) {
             loginService.Logoff(function () {
-                $state.go('login');
+
                 $timeout.cancel(getAllRealTimeTimer);
+
+                SE.disconnect();
+                $state.go('login');
+
             });
         });
         //loginService.Logoff(function () {

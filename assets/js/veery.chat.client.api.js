@@ -215,6 +215,7 @@ window.SE = function (e) {
 
     function d() {
         connected = false;
+        socket.disconnect();
         socket = {};
         callBack = {};
         console.log("Disconnected.");
