@@ -216,7 +216,7 @@ window.SE = function (e) {
 
             data.messageType = "broadcast";
             if (callBack.OnEvent)
-                callBack.OnEvent('broadcast',data);
+                callBack.OnEvent('notice_message',data);
         });
 
         socket.on('agent_connected', function (data) {

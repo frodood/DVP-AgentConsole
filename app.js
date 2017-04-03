@@ -12,7 +12,7 @@ var agentApp = angular.module('veeryAgentApp',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
         'angular.filter', 'satellizer', 'mdo-angular-cryptography'
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel'
+        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel', 'ngEmbed','ngEmojiPicker','ui.bootstrap.popover'
     ]);
 
 
