@@ -9,7 +9,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4, notificationService,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService) {
+                                             Pubnub, $uibModal, notificationConnector, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window) {
+
+    // call $anchorScroll()
+    $anchorScroll();
+    $scope.onExit = function (event) {
+        chatService.Status('offline', 'call');
+    };
+
+    $window.onbeforeunload =  $scope.onExit;
+
 
 
     $scope.isReadyToSpeak = false;
@@ -244,6 +253,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#softPhoneDragElem').addClass('display-none ').removeClass('display-block');
         phoneFuncion.idle();
         $scope.ShowHidePhone(false);
+
+
     };
 
     $scope.PhoneOnline = function () {
@@ -254,6 +265,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#softPhoneDragElem').addClass('display-block').removeClass('display-none ');
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
+
+        //chatService.Status('available', 'call');
 
 
     };
@@ -515,7 +528,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         },
-        unregisterWithArds: function () {
+        unregisterWithArds: function (callback) {
             sipUnRegister();
 
             var resid = authService.GetResourceId();
@@ -523,9 +536,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (resid != undefined) {
                 resourceService.UnregisterWithArds(resid).then(function (response) {
                     $scope.registerdWithArds = !response;
+                    callback('done');
                 }, function (error) {
                     $scope.showAlert("Soft Phone", "error", "Unregister With ARDS Fail");
+                    callback('done');
                 });
+            } else {
+                callback('done');
             }
         },
         fullScreen: function (b_fs) {
@@ -582,6 +599,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.startCallTime();
 
                     $scope.addToCallLog($scope.call.number, undefined);
+
+                    chatService.Status('busy', 'call');
                 }
             }
             catch (ex) {
@@ -598,6 +617,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.PhoneOnline();
                     $scope.isRegistor = true;
                     $scope.showAlert("Soft Phone", "success", description);
+                    chatService.Status('available', 'call');
                 }
                 else if (description == 'Forbidden') {
                     $scope.showAlert("Soft Phone", "error", description);
@@ -623,9 +643,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (!$scope.isshowRegistor)
                         $scope.showAlert("Soft Phone", "error", "Fail To Register");
                     $scope.isshowRegistor = true;
+
+                    chatService.Status('offline', 'call');
                 }
-                $scope.isRegistor = false;
-                /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
+                //$scope.isRegistor = false;
+                                /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
                  document.getElementById("btnAudioCall").disabled = document.getElementById("btnCall").disabled;
                  document.getElementById("btnHangUp").disabled = !oSipSessionCall;*/
             }
@@ -679,6 +701,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.updateCallStatus('Incoming Call');
                 $scope.veeryPhone.autoAnswer();
                 $scope.addToCallLog($scope.call.number, undefined);
+                chatService.Status('busy','call');
+
             }
             catch (ex) {
                 console.error(ex.message);
@@ -725,6 +749,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 stopRingbackTone();
                 stopRingTone();
+
+                //chatService.Status('available', 'call');
 
                 /* //document.getElementById("lblSipStatus").innerHTML = msg;
                  //Notification.info({message: msg, delay: 500, closeOnClick: true});
@@ -843,6 +869,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideIvrBtn();
             phoneFuncion.hideSwap();
             $scope.callLogSessionId = uuid4.generate();
+
+
         },
         freezeBtn: function () {
             $scope.isFreezeReq = true;
@@ -878,6 +906,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn').removeClass('display-none');
             phoneFuncion.idle();
             $scope.FreezeAcw($scope.call.sessionId, false);
+            chatService.Status('available', 'call');
         },
         startAcw: function () {
             $scope.isAcw = true;
@@ -897,6 +926,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#freezebtn').addClass('display-none').removeClass('phone-sm-btn veery-font-1-stopwatch-2 show-1-btn');
             //document.getElementById('freeze').innerHTML = "freeze";
             phoneFuncion.idle();
+
+            chatService.Status('available', 'call');
         }
         , showAnswerButton: function () {
             $('#answerButton').addClass('phone-sm-btn answer').removeClass('display-none');
@@ -1106,6 +1137,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: values[1]
         };
 
+        //agent_found|c9a0ee97-e3aa-45d2-838d-1aeafc026923|60|3726027252|sukitha.chanaka|99051000278670|ClientSupport|inbound|skype
+        if (values.length > 8) {
+
+            notifyData.channel = values[8];
+            if (notifyData.channel == 'skype')
+                notifyData.channelFrom = values[4];
+
+        }
+
         var index = notifyData.sessionId;
         if (notifyData.direction.toLowerCase() === 'outbound') {
             $scope.tabs.filter(function (item) {
@@ -1118,7 +1158,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         else {
             $scope.sayIt("you are receiving " + values[6] + " call");
         }
-        $scope.call.number = notifyData.channelFrom;
+        //$scope.call.number = notifyData.channelFrom;
         $scope.call.skill = notifyData.skill;
         $scope.call.Company = notifyData.company;
         $scope.call.CompanyNo = notifyData.channelTo;
@@ -1132,6 +1172,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.unredNotifications = 0;
+
+    $scope.OnTicketNoticeReceived = function (data) {
+
+        $scope.OnMessage(data);
+    };
 
     $scope.OnMessage = function (data) {
 
@@ -1148,6 +1193,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         }
 
+        var regex = /~#tid (.*?) ~/;
+        var tid = regex.exec(data.Message);
+        var regexref = /~#tref (.*?) ~/;
+        var tref = regexref.exec(data.Message);
         var objMessage = {
             "id": data.TopicKey,
             "header": data.Message,
@@ -1158,6 +1207,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "avatar": senderAvatar,
             "from": data.From
         };
+
+        if (Array.isArray(tid) && tid.length > 1) {
+            objMessage['ticket'] = tid[1];
+        }
+
+        if (Array.isArray(tref) && tref.length > 1) {
+            objMessage['ticketref'] = tref[1];
+        }
+
+
         if (data.TopicKey || data.messageType) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
             audio.play();
@@ -1195,8 +1254,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.agentDisconnected = function () {
+
         $scope.isSocketRegistered = false;
-        $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
+        if(!$scope.isLogingOut)
+        {
+            $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
+        }
+
         // $('#regNotification').addClass('display-none').removeClass('display-block');
         //$('#regNotificationLoading').addClass('display-none').removeClass('display-block');
 
@@ -1214,6 +1278,59 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.myNoteReminder = data;
         $scope.myNoteNotiMe.showMe();
     };
+    $scope.noticeRecieved = function (data) {
+       // $scope.myNoteReminder = data;
+       // $scope.myNoteNotiMe.showMe();
+
+
+        var senderAvatar;
+        var senderName;
+        $rootScope.$emit('noticeReceived', data);
+
+        if (data.from) {
+            if ($filter('filter')($scope.users, {id: data.from})) {
+                senderAvatar = $filter('filter')($scope.users, {username: data.from})[0].avatar;
+                senderName=$filter('filter')($scope.users, {username: data.from})[0].username;
+            }
+            else if ($filter('filter')($scope.userGroups, {name: data.from})) {
+                senderAvatar = $filter('filter')($scope.userGroups, {name: data.from})[0].avatar;
+                senderName=$filter('filter')($scope.userGroups, {name: data.from})[0].name;
+            }
+        }
+        var regex = /~#tid (.*?) ~/;
+        var tid = regex.exec(data.message);
+        var regexref = /~#tref (.*?) ~/;
+        var tref = regexref.exec(data.message);
+        var objMessage = {
+            "id": data.id,
+            "header": data.message,
+            "type": "menu",
+            "icon": "main-icon-2-speech-bubble",
+            "time": new Date(),
+            "read": false,
+            "avatar": senderAvatar,
+            "from": senderName,
+            "messageType":"notice",
+            "title":data.title
+        };
+
+
+
+            var audio = new Audio('assets/sounds/notification-1.mp3');
+            audio.play();
+            $scope.notifications.unshift(objMessage);
+            $('#notificationAlarm').addClass('animated swing');
+            $scope.unredNotifications = $scope.getCountOfUnredNotifications();
+            setTimeout(function () {
+                $('#notificationAlarm').removeClass('animated swing');
+            }, 500);
+
+
+
+
+    };
+
+
 
 
     var notificationEvent = {
@@ -1221,7 +1338,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         OnMessageReceived: $scope.OnMessage,
         onAgentDisconnected: $scope.agentDisconnected,
         onAgentAuthenticated: $scope.agentAuthenticated,
-        onToDoRemind: $scope.todoRemind
+        onToDoRemind: $scope.todoRemind,
+        OnTicketNoticeReceived:$scope.noticeRecieved
+
 
 
     };
@@ -1364,6 +1483,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             for (var i = 0; i < response.length; i++) {
 
                 response[i].status = 'offline';
+                response[i].callstatus = 'offline';
+                response[i].callstatusstyle = 'call-status-offline';
 
             }
 
@@ -1375,6 +1496,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             chatService.Request('pendingall');
             chatService.Request('allstatus');
+            chatService.Request('allcallstatus');
+
+
+
+
 
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -1396,8 +1522,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 profileDataParser.assigneeUserGroups = response.data.Result;
 
 
-                //SE.request()
-                //chatService.
+
+
             }
         }, function (err) {
             authService.IsCheckResponse(err);
@@ -1444,8 +1570,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     var openNewTicketTab = function (ticket, index) {
-        var tabTopic = "Ticket - " + ticket.reference;
-        $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket, index);
+
+
+        if (ticket.security_level >= profileDataParser.myProfile.security_level || !ticket.security_level) {
+            var tabTopic = "Ticket - " + ticket.reference;
+            $scope.addTab(tabTopic, tabTopic, 'ticketView', ticket, index);
+
+        }
+
+        else {
+            $scope.showAlert("Error", "error", "You are tring to access unauthorized ticket");
+        }
+
+
         /*var selectedTabs = $scope.tabs.filter(function (item) {
          return item.notificationData._id == ticket._id;
          });
@@ -2338,6 +2475,84 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
+    //update code get my rating =>> dashboard
+    $scope.isRatingStatue = false;
+    var pickMyRatings = function (owner) {
+        userProfileApiAccess.getMyRatings(owner).then(function (resPapers) {
+            if (resPapers.Result) {
+                $scope.sectionArray = {};
+                $scope.myRemarks = [];
+                angular.forEach(resPapers.Result, function (submissions) {
+                    if (submissions.answers) {
+                        angular.forEach(submissions.answers, function (answer) {
+
+
+                            if (answer.section && answer.question && answer.question.weight > 0 && answer.question.type != 'remark') {
+                                $scope.isRatingStatue = true;
+                                if ($scope.sectionArray[answer.section._id]) {
+                                    var ansValue = $scope.sectionArray[answer.section._id].value;
+                                    var val = (answer.points * answer.question.weight) / 10;
+
+                                    $scope.sectionArray[answer.section._id].value = ansValue + val;
+                                    $scope.sectionArray[answer.section._id].itemCount += 1;
+                                }
+                                else {
+
+                                    $scope.sectionArray[answer.section._id] =
+                                    {
+                                        value: (answer.points * answer.question.weight) / 10,
+                                        itemCount: 1,
+                                        name: answer.section.name,
+                                        id: answer.section._id
+                                    };
+
+                                }
+                            }
+
+                            console.log($scope.sectionArray);
+
+                            if (answer.section && answer.question && answer.question.type == 'remark') {
+                                var remarkObj =
+                                    {
+                                        evaluator: submissions.evaluator.name,
+                                        section: answer.section.name,
+                                        remark: answer.remarks,
+                                        avatar: submissions.evaluator.avatar
+                                    };
+                                $scope.myRemarks.push(remarkObj);
+                            }
+
+                        });
+                    }
+
+                });
+                //console.log($scope.sectionArray);
+
+            }
+            else {
+                console.log("Error");
+            }
+
+        }).catch(function (errPapers) {
+
+            console.log(errPapers);
+
+        })
+
+    };
+
+
+    $scope.RatingResultResolve = function (item) {
+        var rateObj =
+        {
+            starValue: Math.round(item.value / item.itemCount),
+            displayValue: (item.value / item.itemCount).toFixed(2)
+        };
+
+        return rateObj;
+    };
+
+
     $scope.getMyProfile = function () {
 
 
@@ -2347,7 +2562,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 profileDataParser.myProfile = response.data.Result;
                 $scope.loginAvatar = profileDataParser.myProfile.avatar;
                 $scope.firstName = profileDataParser.myProfile.firstname == null ? $scope.loginName : profileDataParser.myProfile.firstname;
+                $scope.lastName = profileDataParser.myProfile.lastname;
                 getUnreadMailCounters(profileDataParser.myProfile._id);
+                ///get use resource id
+                //update code damith
+                //get my rating
+                pickMyRatings(profileDataParser.myProfile._id);
+
+
             }
             else {
                 profileDataParser.myProfile = {};
@@ -2394,14 +2616,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     }
 
     //logOut
+    $scope.isLogingOut = false;
     $scope.logOut = function () {
 
         veeryNotification.disconnectFromServer();
-        $scope.veeryPhone.unregisterWithArds();
-        loginService.Logoff(function () {
-            $state.go('login');
-            $timeout.cancel(getAllRealTimeTimer);
+        $scope.isLogingOut = true;
+        $scope.veeryPhone.unregisterWithArds(function (done) {
+            loginService.Logoff(function () {
+                $state.go('login');
+                $timeout.cancel(getAllRealTimeTimer);
+            });
         });
+        //loginService.Logoff(function () {
+        //    $state.go('login');
+        //    $timeout.cancel(getAllRealTimeTimer);
+        //});
 
 
     };
@@ -2439,20 +2668,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     /*$scope.setExtention = function (selectedUser) {
 
-        try {
-            var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
-            if (angular.isArray(concurrencyInfos)) {
-                var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
-                $scope.call.number = RefInfo.Extention;
-            }
-            else {
-                $scope.showAlert('Error', 'error', "Fail To Find Extention.");
-            }
-        }
-        catch (ex) {
-            $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
-        }
-    };*/
+     try {
+     var concurrencyInfos = $filter('filter')(selectedUser.ConcurrencyInfo, {HandlingType: 'CALL'});
+     if (angular.isArray(concurrencyInfos)) {
+     var RefInfo = JSON.parse(concurrencyInfos[0].RefInfo);
+     $scope.call.number = RefInfo.Extention;
+     }
+     else {
+     $scope.showAlert('Error', 'error', "Fail To Find Extention.");
+     }
+     }
+     catch (ex) {
+     $scope.showAlert('Error', 'error', "Fail To Read Agent Data.");
+     }
+     };*/
     $scope.closeMessage = function () {
         divModel.model('#sendMessage', 'display-none');
     };
@@ -2523,7 +2752,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
     $scope.closeNotificationView = function () {
-        $('#uNotifiWrp').animate({bottom: '-245'}, 300);
+        $('#uNotifiWrp').animate({bottom: '-400'}, 300);
     };
 
     $scope.isSendingNotifi = false;
@@ -2775,6 +3004,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('font-color-green bold');
                     $scope.currentBerekOption = requestOption;
+
+                    chatService.Status('offline','chat');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
@@ -2795,6 +3026,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     // getCurrentState.breakState();
                     changeLockScreenView.hide();
                     $scope.isUnlock = false;
+                    chatService.Status('online','chat');
                     return;
                 }
             });
@@ -2922,10 +3154,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $('#Outbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Outbound";
                             return;
-                        } else {
+                        } else if (data.Result.Mode === "Inbound") {
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Inbound').addClass('font-color-green bold');
                             $scope.currentModeOption = "Inbound";
+                            return;
+                        } else {
+                            $('#userStatus').addClass('offline').removeClass('online');
+                            //$('#Inbound').addClass('font-color-green bold');
+                            $scope.currentModeOption = "Offline";
                             return;
                         }
                     }
@@ -2936,6 +3173,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             },
             getResourceState: function () {
                 resourceService.GetResource(authService.GetResourceId()).then(function (data) {
+                    if (data && data.IsSuccess) {
+                        if (data.Result && !data.Result.obj) {
+                            resourceService.RegisterWithArds(authService.GetResourceId()).then(function (data) {
+                                console.log('registerdWithArds' + data);
+                            }, function (error) {
+                                console.log('Error- registerdWithArds');
+                            });
+                        }
+                    }
+
                     console.log(data);
                 }, function (error) {
                     authService.IsCheckResponse(error);
@@ -3101,6 +3348,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.showMesssageModal = false;
         // $uibModalInstance.dismiss('cancel');
     };
+
+    $scope.oepnTicketOnNotification = function (MessageObj) {
+
+        $scope.addTab('Ticket - ' + MessageObj.ticketref, 'Ticket - ' + MessageObj.ticket, 'ticketView', {_id: MessageObj.ticket}, MessageObj.ticket);
+        $scope.showMesssageModal = false;
+    };
+
+
     $scope.addToTodo = function (MessageData) {
         $scope.addToDoList(MessageData);
         $scope.showMesssageModal = false;
@@ -3492,6 +3747,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (Array.isArray(userObj)) {
                     userObj.forEach(function (obj, index) {
                         obj.status = status[key];
+
                         obj.statusTime = Date.now();
                     });
                 }
@@ -3526,6 +3782,28 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
         }
     });
+
+
+    chatService.SubscribeCallStatus(function (status) {
+        if (status) {
+            Object.keys(status).forEach(function (key, index) {
+                var userObj = $scope.users.filter(function (item) {
+                    return key == item.username;
+                });
+                if (Array.isArray(userObj)) {
+                    userObj.forEach(function (obj, index) {
+
+                        obj.callstatus = status[key];
+                        obj.callstatusstyle = 'call-status-' + obj.callstatus;
+                        obj.callstatusTime = Date.now();
+                    });
+                }
+
+            });
+        }
+    });
+
+
 
 
     //show OnExistingclient

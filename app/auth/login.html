@@ -1,49 +1,130 @@
-<div class="login-wrapper" ng-controller="loginCtrl">
-
-    <div class="login-wrap">
-        <div class="login-header">
-            <img src="assets/img/logo.png">
-        </div>
-
-        <div class="animated pulse  login-body">
-            <form name="loginFrm" novalidate autocomplete="off">
-                <div class="form-group p-bottom-15">
-                    <label for="usersName">USERNAME</label>
-                     <span class="inline-block validation-on pull-right"
-                           ng-show="loginFrm.userName.$invalid &&
+<div class="login-main-wrp animated pulse" ng-controller="loginCtrl">
+    <div class="container">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="login-wrp">
+                <div class="col-lg-7">
+                    <div id="login" class="login-new-right-wrp">
+                        <div class="login-new-hl-wrp selected">
+                            Login - Agent Console
+                        </div>
+                        <div class="login-new-frm">
+                            <form name="loginFrm" novalidate autocomplete="off">
+                                <div class="form-group p-bottom-15">
+                                    <label for="usersName">USERNAME</label>
+                                    <span class="inline-block validation-on pull-right"
+                                          ng-show="loginFrm.userName.$invalid &&
                            !loginFrm.userName.$pristine">
                            required filed
-                     </span>
-                    <input type="text" my-enter="onClickLogin()" class="animated  form-control login-text"
-                           id="usersName"
-                           ng-model="userNme"
-                           name="userName"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="pwd">PASSWORD</label>
-                    <span class="inline-block validation-on pull-right"
-                          ng-show="loginFrm.password.$invalid &&
+                                     </span>
+                                    <input type="text" my-enter="onClickLogin()"
+                                           class="animated  form-control login-text login-txt"
+                                           id="usersName"
+                                           ng-model="userNme"
+                                           name="userName"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">PASSWORD</label>
+                                    <span class="inline-block validation-on pull-right "
+                                          ng-show="loginFrm.password.$invalid &&
                            !loginFrm.password.$pristine">
                            required filed
                      </span>
-                    <input type="password" my-enter="onClickLogin()" class="animated  form-control login-text"
-                           id="pwd"
-                           name="password"
-                           ng-model="pwd"
-                           required>
+                                    <input type="password" my-enter="onClickLogin()"
+                                           class="animated  form-control login-text login-txt"
+                                           id="pwd"
+                                           name="password"
+                                           ng-model="pwd"
+                                           required>
+
+                                </div>
+
+                                <div class="login-n-footer">
+                                    <button ng-click="onClickLogin()" ng-if="!isLogin" ng-disabled="loginFrm.$invalid"
+                                            class="btn btn-n-sign" style="display: inline-block">
+                                        SIGN IN
+                                    </button>
+
+                                    <div class="login-n-forget-pwd">
+                                        <ul>
+                                            <li tooltip-placement="top"
+                                                uib-tooltip="password reset using email" ng-click="goToRestEmail();">
+                                                <i class="ti-email"></i>
+                                            </li>
+                                            <li tooltip-placement="top"
+                                                uib-tooltip="password reset using token" ng-click="goToRestToken();">
+                                                <i class="ti-user"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="login-n-forget-pwd b-l">
+                                        Forget Password ?
+                                    </div>
+
+
+                                    <button ng-if="isLogin" disabled
+                                            class="btn btn-n-sign" style="display: inline-block">
+                                        PLEASE WAIT..
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+
 
                 </div>
-            </form>
-            <!--<div class="forget-pwd">-->
-                <!--forget password ?-->
-            <!--</div>-->
+                <div class="col-lg-5">
+                    <div class="row">
+                        <div class="login-new-bg"></div>
+                        <div class="login-left-i-wrp">
+                            <!--<img src="assets/img/bg/bg_900x500.jpg">-->
+                            <div class="login-new-body">
+                                <div class="login-new-logo">
+                                    <img src="assets/img/logo_130x130yellow.png"/>
+                                </div>
+                                <div class="login-new-header">
+                                    Welcome
+                                </div>
+                                <div class="login-new-hedaer-1">
+                                    Communication and Collaboration Platform
+                                </div>
+                                <div class="social-links">
+                                    <ul>
+                                        <li>
+                                            <a href="https://twitter.com/FaceTone_tweets" target="_blank">
+                                                <i class="fa fa-twitter"></i>
+                                            </a>
+
+                                        </li>
+                                        <li>
+                                            <a href="https://www.linkedin.com/showcase/13228877?pathWildcard=13228877"
+                                               target="_blank">
+                                                <i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.facebook.com/DuoFaceTone" target="_blank">
+                                                <i class="fa fa-facebook"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="copy-write">
+                                    following us
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="login-right-footer">
+                © 2017 facetone is a product of DuoWorld Inc. All Rights Reserved
+            </div>
         </div>
-        <div ng-if="!isLogin" ng-click="onClickLogin()" class="login-btn">
-            LOGIN
-        </div>
-        <div ng-if="isLogin" class="loading-btn">
-            please wait..
-        </div>
+
     </div>
 </div>

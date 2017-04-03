@@ -16,7 +16,7 @@
 
                 <a class="navbar-brand console-navbar-brand" href="#">Agent
                     Console
-                    <div class="version-beta">BETA</div>
+                    <!--<div class="version-beta">BETA</div>-->
                 </a>
             </div>
 
@@ -423,10 +423,11 @@
                             <div ng-include="'app/views/mail-inbox/inbox-view.html'"></div>
                         </div>
                         <div ng-switch-when="dashboard" class="bg-gray-200">
-                            <div ng-include="'app/views/dashboard/agentDashBoard.html'"></div>
+                            <div ng-include="'app/views/dashboard/agentDashboard1.html'"></div>
                         </div>
                         <div ng-switch-when="MyNote">
-                            <div ng-include="'app/views/myNote/my-remeider-note.html'"></div>
+                            <div
+                                 ng-include="'app/views/myNote/my-remeider-note.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>
@@ -787,6 +788,8 @@
 
     <!--Notification more information -->
     <div ng-include="'app/views/notification-details.html'"></div>
+
+
 
     <!-- lock screen -->
     <div ng-include="'app/views/lock-screen.html'"></div>

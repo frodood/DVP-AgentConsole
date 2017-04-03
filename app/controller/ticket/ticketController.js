@@ -3,8 +3,11 @@
  */
 
 agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $state, ticketService, moment, $rootScope, userService,
-                                            profileDataParser, authService) {
+                                            profileDataParser, authService,$anchorScroll) {
 
+
+
+    $anchorScroll();
 
     $scope.ticketList = {
         toDo: [],

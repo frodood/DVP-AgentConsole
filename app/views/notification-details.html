@@ -15,11 +15,19 @@
                                 <time-ago from-time='{{MessageObj.time}}'
                                           format='MM/dd/yyyy'></time-ago>
                             </div>
+
+                        </div>
+
+                        <div ng-if="MessageObj['ticket'] != null"
+                             class="ticket-id" ng-click="oepnTicketOnNotification(MessageObj)">
+                            Open ticket
                         </div>
 
                     </div>
                     <!-- body -->
+
                     <div class="u-body notification-v">
+                        <h4 style="padding-left: 10px" ng-if="MessageObj.messageType=='notice'">{{MessageObj.title}}</h4>
                          <textarea disabled readonly ng-model="MessageObj.header" class="form-control" rows="6">
                 </textarea>
                     </div>
@@ -30,15 +38,13 @@
                             Keep
                         </button>
                         <button class="btn btn-sm btn-sm-noti btn-green-op btn-min-w"
-                                ng-click="addToTodo(MessageObj)">
+                                ng-click="addToTodo(MessageObj)" ng-show="MessageObj.messageType!='notice'">
                             Add to To-Do
                         </button>
                         <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w"
                                 ng-click="discardNotification(MessageObj)">
                             Discard
                         </button>
-
-
                     </div>
                 </div>
             </div>
