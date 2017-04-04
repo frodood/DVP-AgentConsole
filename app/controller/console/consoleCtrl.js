@@ -17,8 +17,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         chatService.Status('offline', 'call');
     };
 
-    $window.onbeforeunload =  $scope.onExit;
-
+    $window.onbeforeunload = $scope.onExit;
 
 
     $scope.isReadyToSpeak = false;
@@ -647,7 +646,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     chatService.Status('offline', 'call');
                 }
                 //$scope.isRegistor = false;
-                                /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
+                /* document.getElementById("btnCall").disabled = !(b_connected && tsk_utils_have_webrtc() && tsk_utils_have_stream());
                  document.getElementById("btnAudioCall").disabled = document.getElementById("btnCall").disabled;
                  document.getElementById("btnHangUp").disabled = !oSipSessionCall;*/
             }
@@ -701,7 +700,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 phoneFuncion.updateCallStatus('Incoming Call');
                 $scope.veeryPhone.autoAnswer();
                 $scope.addToCallLog($scope.call.number, undefined);
-                chatService.Status('busy','call');
+                chatService.Status('busy', 'call');
 
             }
             catch (ex) {
@@ -1256,8 +1255,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentDisconnected = function () {
 
         $scope.isSocketRegistered = false;
-        if(!$scope.isLogingOut)
-        {
+        if (!$scope.isLogingOut) {
             $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
         }
 
@@ -1279,8 +1277,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.myNoteNotiMe.showMe();
     };
     $scope.noticeRecieved = function (data) {
-       // $scope.myNoteReminder = data;
-       // $scope.myNoteNotiMe.showMe();
+        // $scope.myNoteReminder = data;
+        // $scope.myNoteNotiMe.showMe();
 
 
         var senderAvatar;
@@ -1290,11 +1288,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (data.from) {
             if ($filter('filter')($scope.users, {id: data.from})) {
                 senderAvatar = $filter('filter')($scope.users, {username: data.from})[0].avatar;
-                senderName=$filter('filter')($scope.users, {username: data.from})[0].username;
+                senderName = $filter('filter')($scope.users, {username: data.from})[0].username;
             }
             else if ($filter('filter')($scope.userGroups, {name: data.from})) {
                 senderAvatar = $filter('filter')($scope.userGroups, {name: data.from})[0].avatar;
-                senderName=$filter('filter')($scope.userGroups, {name: data.from})[0].name;
+                senderName = $filter('filter')($scope.userGroups, {name: data.from})[0].name;
             }
         }
         var regex = /~#tid (.*?) ~/;
@@ -1310,27 +1308,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "read": false,
             "avatar": senderAvatar,
             "from": senderName,
-            "messageType":"notice",
-            "title":data.title
+            "messageType": "notice",
+            "title": data.title
         };
 
 
-
-            var audio = new Audio('assets/sounds/notification-1.mp3');
-            audio.play();
-            $scope.notifications.unshift(objMessage);
-            $('#notificationAlarm').addClass('animated swing');
-            $scope.unredNotifications = $scope.getCountOfUnredNotifications();
-            setTimeout(function () {
-                $('#notificationAlarm').removeClass('animated swing');
-            }, 500);
-
-
+        var audio = new Audio('assets/sounds/notification-1.mp3');
+        audio.play();
+        $scope.notifications.unshift(objMessage);
+        $('#notificationAlarm').addClass('animated swing');
+        $scope.unredNotifications = $scope.getCountOfUnredNotifications();
+        setTimeout(function () {
+            $('#notificationAlarm').removeClass('animated swing');
+        }, 500);
 
 
     };
-
-
 
 
     var notificationEvent = {
@@ -1339,25 +1332,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onAgentDisconnected: $scope.agentDisconnected,
         onAgentAuthenticated: $scope.agentAuthenticated,
         onToDoRemind: $scope.todoRemind,
-        OnTicketNoticeReceived:$scope.noticeRecieved
-
+        OnTicketNoticeReceived: $scope.noticeRecieved
 
 
     };
 
-    chatService.SubscribeConnection(function(isConnected){
+    chatService.SubscribeConnection(function (isConnected) {
 
-        if(isConnected){
+        if (isConnected) {
             $scope.agentAuthenticated();
-        }else{
+        } else {
             $scope.agentDisconnected();
         }
     });
 
 
-    chatService.SubscribeEvents(function(event, data){
+    chatService.SubscribeEvents(function (event, data) {
 
-        switch (event){
+        switch (event) {
 
             case 'agent_connected':
 
@@ -1396,8 +1388,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.OnMessage(data);
 
                 break;
-
-
 
 
         }
@@ -1561,9 +1551,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             chatService.Request('allcallstatus');
 
 
-
-
-
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.showAlert("Load Users", "error", "Fail To Get User List.")
@@ -1582,8 +1569,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 $scope.userGroups = response.data.Result;
                 profileDataParser.assigneeUserGroups = response.data.Result;
-
-
 
 
             }
@@ -2561,12 +2546,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 else {
 
                                     $scope.sectionArray[answer.section._id] =
-                                    {
-                                        value: (answer.points * answer.question.weight) / 10,
-                                        itemCount: 1,
-                                        name: answer.section.name,
-                                        id: answer.section._id
-                                    };
+                                        {
+                                            value: (answer.points * answer.question.weight) / 10,
+                                            itemCount: 1,
+                                            name: answer.section.name,
+                                            id: answer.section._id
+                                        };
 
                                 }
                             }
@@ -2606,10 +2591,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.RatingResultResolve = function (item) {
         var rateObj =
-        {
-            starValue: Math.round(item.value / item.itemCount),
-            displayValue: (item.value / item.itemCount).toFixed(2)
-        };
+            {
+                starValue: Math.round(item.value / item.itemCount),
+                displayValue: (item.value / item.itemCount).toFixed(2)
+            };
 
         return rateObj;
     };
@@ -3071,7 +3056,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $('#' + requestOption).addClass('font-color-green bold');
                     $scope.currentBerekOption = requestOption;
 
-                    chatService.Status('offline','chat');
+                    chatService.Status('offline', 'chat');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
@@ -3092,7 +3077,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     // getCurrentState.breakState();
                     changeLockScreenView.hide();
                     $scope.isUnlock = false;
-                    chatService.Status('online','chat');
+                    chatService.Status('online', 'chat');
                     return;
                 }
             });
@@ -3870,8 +3855,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
 
-
-
     //show OnExistingclient
     chatService.SubscribeChatAll(function (message) {
         if (message.who && message.who == 'client') {
@@ -3971,6 +3954,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.chatUserTypeFilter = function (user) {
         return user.type === 'client'
     };
+
+
+    //update new incoming notification
+    //callNIncomingAlert
+    var showNewIncomingNotfy = function () {
+        $('#callNIncomingAlert').animate({
+            right: '0'
+        }, 500);
+    };
+    var closeNewIncomingNotfy = function () {
+        $('#callNIncomingAlert').animate({
+            right: '-310'
+        }, 500);
+    };
+    showNewIncomingNotfy();
 
 
 }).directive("mainScroll", function ($window) {
