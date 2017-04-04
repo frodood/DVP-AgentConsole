@@ -1253,6 +1253,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isLoadingNotifiReg = false;
 
 
+    $scope.agentConnected = function () {
+
+    };
+
+    $scope.agentRejected = function () {
+
+    };
+
     $scope.agentDisconnected = function () {
 
         $scope.isSocketRegistered = false;
@@ -1336,13 +1344,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     var notificationEvent = {
         onAgentFound: $scope.agentFound,
         OnMessageReceived: $scope.OnMessage,
+        onAgentConnected: $scope.agentConnected,
+        onAgentRejected: $scope.agentRejected,
         onAgentDisconnected: $scope.agentDisconnected,
         onAgentAuthenticated: $scope.agentAuthenticated,
         onToDoRemind: $scope.todoRemind,
         OnTicketNoticeReceived:$scope.noticeRecieved
-
-
-
     };
 
     chatService.SubscribeConnection(function(isConnected){
