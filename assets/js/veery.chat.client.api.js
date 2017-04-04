@@ -89,6 +89,21 @@ window.SE = function (e) {
 
         });
 
+
+        socket.on('oldmessages', function (data) {
+            console.log("oldmessages");
+            if (callBack.OnOldMessages) {
+                callBack.OnOldMessages(data);
+            }
+
+            // socket.emit('seen',{to: data.to, uuid: data.id});
+
+        });
+
+
+
+
+
         socket.on('chatstatus', function (data) {
             console.log("chatstatus");
             if (callBack.OnChatStatus) {
@@ -441,7 +456,7 @@ window.SE = function (e) {
         var r = v(e, "type");
         if (connected) {
             if (r === "previous") {
-                socket.emit('request', {request: 'oldmessages', from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
+                socket.emit('request', {request: 'oldmessages',requester:  v(e, "requester"),  from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
             }
             else if (r === "next") {
                 socket.emit('request', {request: 'newmessages', from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});

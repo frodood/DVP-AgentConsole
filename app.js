@@ -12,7 +12,7 @@ var agentApp = angular.module('veeryAgentApp',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
         'angular.filter', 'satellizer', 'mdo-angular-cryptography'
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel', 'ngEmbed','ngEmojiPicker','ui.bootstrap.popover'
+        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel', 'ngEmbed','ngEmojiPicker','luegg.directives'
     ]);
 
 
@@ -38,7 +38,7 @@ var baseUrls = {
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',
+    'ipMessageURL': 'http://localhost:8889',
         //'http://ipmessagingservice.app.veery.cloud',
     'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app.veery.cloud//DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
@@ -334,6 +334,53 @@ agentApp.directive('passwordVerify', function () {
     }
 });
 
+
+agentApp.directive('execOnScrollToTop', function () {
+
+    return {
+
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var fn = scope.$eval(attrs.execOnScrollToTop);
+
+            element.on('scroll', function (e) {
+
+                if (!e.target.scrollTop) {
+                    console.log("scrolled to top...");
+                    scope.$apply(fn);
+                }
+
+            });
+        }
+
+    };
+
+});
+
+
+
+agentApp.directive('execOnScrollToBottom', function () {
+
+    return {
+
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var fn = scope.$eval(attrs.execOnScrollToBottom),
+                clientHeight = element[0].clientHeight;
+
+            element.on('scroll', function (e) {
+                var el = e.target;
+
+                if ((el.scrollHeight - el.scrollTop) === clientHeight) { // fully scrolled
+                    console.log("scrolled to bottom...");
+                    scope.$apply(fn);
+                }
+            });
+        }
+
+    };
+
+});
 
 agentApp.directive('passwordStrengthBox', [
     function () {
