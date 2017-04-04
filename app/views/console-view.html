@@ -334,7 +334,40 @@
 
 
     <!-- incoming call notification display-none-->
-    <div id="incomingNotification" class="console-phone-wrapper display-none  Phone is-animating "
+    <div id="callNIncomingAlert" class="n-incoming-call-wrp">
+        <div class="n-incoming-icon">
+            <div class="icon-round-n">
+                <i class="veery-phone-icon-1-call-answer"></i>
+            </div>
+        </div>
+        <div class="n-incoming-text-wrp">
+            <div id="callerName" class="caller-name">
+                John Doe
+            </div>
+            <div id="callerTime" class="call-time">
+                00:30
+            </div>
+            <div class="action-btn-wrp">
+                
+            </div>
+            <div class="button-footer">
+                <ul>
+                    <li>
+                        <button id="endNotificationCall" class="btn btn-end-n">
+                            END CALL
+                        </button>
+                    </li>
+                    <li>
+                        <button id="anzNotificationCall" class="btn btn-anz-n">
+                            ANZ CALL
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="incomingNotification" class="console-phone-wrapper display-none   Phone is-animating "
          id="phoneWidget">
         <div class="income-call-wrapper -ringing ">
             <div class="income-call-details">
@@ -350,7 +383,8 @@
                         <div class="col-md-6 p-left-40">
                             <div class="anz-btn  ">
                                 <div class="sonar-wave-green"></div>
-                                <i class="veery-phone-icon-1-call-answer " ng-click="veeryPhone.answerCall();"></i>
+                                <i class="veery-phone-icon-1-call-answer"
+                                   ng-click="veeryPhone.answerCall();"></i>
                             </div>
                         </div>
                         <div class="col-md-6 p-left-40">
@@ -373,9 +407,10 @@
 
 
     <div class="console-tab-wrapper  ">
+        <!--ng-class="{'fix-console-tab':isFiexedTab==true,
+                                         '':isFiexedTab==false}" -->
         <!--div ng-include="'app/views/console-tab-panel.html'"></div-->
-        <scrollable-tabset ng-class="{'fix-console-tab':isFiexedTab==true,
-                                         '':isFiexedTab==false}"
+        <scrollable-tabset class="fix-console-tab"
                            api="scrlTabsApi"
                            tooltip-left-placement="top"
                            id="consoleMainTab">
@@ -427,7 +462,7 @@
                         </div>
                         <div ng-switch-when="MyNote">
                             <div
-                                 ng-include="'app/views/myNote/my-remeider-note.html'"></div>
+                                    ng-include="'app/views/myNote/my-remeider-note.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>
@@ -788,7 +823,6 @@
 
     <!--Notification more information -->
     <div ng-include="'app/views/notification-details.html'"></div>
-
 
 
     <!-- lock screen -->
