@@ -7155,7 +7155,6 @@ ul.renote-color-btn > li {
     padding: 0px;
 }
 
-
 .notice-b-m-outer {
     position: relative;
     top: 0;
@@ -8199,11 +8198,11 @@ ul.renote-color-btn > li {
 
 .login-wrp {
     width: 100%;
-    height: 490px;
+    height: 420px;
     background: #fff;
     overflow: hidden;
     position: relative;
-    margin-top: 18%;
+    margin-top: 20%;
     /*border-radius: 5px;*/
 
 }
@@ -8307,7 +8306,7 @@ ul.renote-color-btn > li {
 .social-links {
     width: 100%;
     text-align: center;
-    margin-top: 120px;
+    margin-top: 55px;
 }
 
 .social-links > ul {
@@ -8348,7 +8347,7 @@ ul.renote-color-btn > li {
 
 .login-new-right-wrp {
     width: 100%;
-    padding: 75px 25px 20px 25px;
+    padding: 60px 25px 20px 25px;
 }
 
 .login-new-hl-wrp {
@@ -8376,13 +8375,12 @@ ul.renote-color-btn > li {
 .btn-n-sign {
     /* Rectangle 2: */
     background: #81B87F;
-    border-radius: 12px;
     /* SIGN IN: */
     font-family: 'AvenirNext-Bold', sans-serif;
     font-size: 12px;
     color: #FFFFFF;
     letter-spacing: -0.11px;
-    padding: 10px 15px 9px 15px;
+    padding: 5px 15px 5px 15px;
     outline: 0 !important;
 }
 
@@ -8390,7 +8388,7 @@ ul.renote-color-btn > li {
     /* right: */
     background: #FFFFFF;
     border-radius: 5px;
-    height: 45px;
+    height: 35px;
 }
 
 .login-n-footer {
