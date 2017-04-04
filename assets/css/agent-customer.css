@@ -677,14 +677,20 @@ body {
 /*console phone new ui update */
 .n-incoming-call-wrp {
     width: 300px;
-    min-height: 100px;
     position: fixed;
     right: -310px;
-    top: 50%;
+    bottom: 150px;
     z-index: 1000;
     background: #223448;
     padding-bottom: 13px;
 
+}
+
+.n-incoming-widget {
+    width: 300px;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
 }
 
 .n-incoming-icon {
@@ -710,6 +716,45 @@ body {
     margin: 0 auto;
 }
 
+.action-btn-wrp {
+    width: 100%;
+    min-height: 20px;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+.action-btn-wrp > ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.action-btn-wrp > ul > li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.n-notfy-action {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #fff;
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.n-notfy-action > i {
+    color: #fff;
+    font-size: 18px;
+}
+
 .n-incoming-icon > .icon-round-n {
     width: 50px;
     height: 50px;
@@ -721,7 +766,7 @@ body {
     background: rgb(13, 130, 61);
     padding-top: 8px;
     margin-left: 20px;
-    margin-top: 25px;
+    margin-top: 35px;
 }
 
 .n-incoming-icon > .icon-round-n > i {
@@ -744,7 +789,7 @@ body {
 .caller-name {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 18px;
-    padding-top: 10px;
+    padding-top: 7px;
 }
 
 .call-time {
@@ -752,6 +797,10 @@ body {
     font-size: 15px;
     padding-top: 0px;
     letter-spacing: 1px;
+}
+
+.call-time-small {
+    padding-top: 9px;
 }
 
 .button-footer {
@@ -793,6 +842,24 @@ body {
 .btn-anz-n:focus {
     background: #0ae5b9;
     color: #fff;
+}
+
+.toggle-panel {
+    position: absolute;
+    right: 15px;
+    top: 6px;
+    z-index: 100;
+}
+
+.toggle-panel > i {
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.toggle-panel > i :hover {
+    color: #fff;
+    font-size: 20px;
 }
 
 /*end*/

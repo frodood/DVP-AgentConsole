@@ -836,11 +836,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.phoneNotificationFunctions = {
         showNotfication: function (val) {
             if(val){
+                $('#notificationCallFunction').removeClass('display-none');
+                $('#notificationAcw').addClass('display-none');
                 $('#callNIncomingAlert').animate({
                     right: '0'
                 }, 500);
             }
             else{
+                $('#notificationAcw').removeClass('display-none');
+                $('#notificationCallFunction').addClass('display-none');
                 $('#callNIncomingAlert').animate({
                     right: '-310'
                 }, 500);
@@ -861,24 +865,41 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         unholdCall:function () {
             $scope.phoneNotificationFunctions.unholdState();
         },
-        freezeAcw:function () {
-            /*resourceService.FreezeAcw($scope.call.sessionId, true).then(function (response) {
+        endFreeze:function () {
+            document.getElementById('notificationfreezetimmer').getElementsByTagName('timer')[0].stop();
+            $scope.$broadcast('timer-reset');
 
+            resourceService.FreezeAcw($scope.call.sessionId, false).then(function (response) {
+                $scope.phoneNotificationFunctions.showNotfication(false);
+            }, function (err) {
+                $scope.phoneNotificationFunctions.showNotfication(false);
+            });
+
+        },
+        freezeAcw:function () {
+
+            $('#notificationfreezeRequest').removeClass('display-none');
+            $('#countdownnotificationCalltimmer').addClass('display-none');
+
+            resourceService.FreezeAcw($scope.call.sessionId, true).then(function (response) {
                 if (response) {
-                    $('#calltimmer').addClass('call-duations').removeClass('display-none');
-                    $('#freezebtn').addClass('phone-sm-btn veery-font-1-stopwatch-4 show-1-btn').removeClass('display-none');
-                    $('#freezeRequest').addClass('display-none').removeClass('call-duations');
-                    $scope.startCallTime();
+
+                    $('#countdownnotificationCalltimmer').addClass('display-none');
+                    $('#notificationfreezeRequest').addClass('display-none');
+                    $('#notificationfreezetimmer').removeClass('display-none');
+                    $('#notificationfreezebtn').addClass('display-none');
+                    $('#notificationendfreezebtn').removeClass('display-none');
+                    document.getElementById('notificationfreezetimmer').getElementsByTagName('timer')[0].start();
                 }
                 else {
-                    phoneFuncion.hidefreezeRequest();
+                    $('#countdownnotificationCalltimmer').removeClass('display-none');
+                    $('#notificationfreezeRequest').addClass('display-none');
                 }
-                $scope.isFreezeReq = false;
             }, function (err) {
-                authService.IsCheckResponse(err);
                 $scope.showAlert('Phone', 'error', "Fail Freeze Operation.");
-                phoneFuncion.hidefreezeRequest();
-            });*/
+                $('#countdownnotificationCalltimmer').removeClass('display-none');
+                $('#notificationfreezeRequest').addClass('display-none');
+            });
         },
         answerState:function () {
             $('#rejectNotificationCall').addClass('display-none');
@@ -888,9 +909,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#unholdNotificationCall').addClass('display-none');
             $('#notificationCallFunction').removeClass('display-none');
             $('#notificationAcw').addClass('display-none');
+            $('#notificationfreezebtn').removeClass('display-none');
+            $('#notificationendfreezebtn').addClass('display-none');
         },
         rejectState:function () {
-            $scope.phoneNotificationFunctions.showNotfication(false);
+            $scope.phoneNotificationFunctions.endState();
         },
         endState:function () {
             $('#rejectNotificationCall').removeClass('display-none');
@@ -900,6 +923,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#unholdNotificationCall').addClass('display-none');
             $('#notificationCallFunction').addClass('display-none');
             $('#notificationAcw').removeClass('display-none');
+            $('#countdownnotificationCalltimmer').removeClass('display-none');
+            document.getElementById('countdownnotificationCalltimmer').getElementsByTagName('timer')[0].start();
         },
         holdState:function () {
             $('#rejectNotificationCall').addClass('display-none');
@@ -4085,6 +4110,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     //update new incoming notification
+
+    $scope.toggleDownIncomingPanel = function () {
+        $('#callNIncomingAlert').animate({
+            bottom: '-130'
+        }, 500);
+        $('#toggleDown').addClass('display-none');
+        $('#toggleUp').removeClass('display-none');
+        $('#callerTimeSmall').removeClass('display-none');
+    };
+
+    $scope.toggleUpIncomingPanel = function () {
+        $('#callNIncomingAlert').animate({
+            bottom: '0'
+        }, 500);
+        $('#toggleDown').removeClass('display-none');
+        $('#toggleUp').addClass('display-none');
+        $('#callerTimeSmall').addClass('display-none');
+    };
 
 
 }).directive("mainScroll", function ($window) {

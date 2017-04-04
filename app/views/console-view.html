@@ -391,13 +391,19 @@
             </div>
         </div>
         <div id="notificationAcw" class="n-incoming-text-wrp display-none">
-            <div class="display-none" id="countdownnotificationCalltimmer">
-                <timer autostart="false" countdown="countdownVal"
-                       finish-callback="veeryPhone.FinishedAcw()"
+            <div class="call-duations" id="countdownnotificationCalltimmer">
+                <timer autostart="false" countdown="countdownVal" finish-callback="phoneNotificationFunctions.showNotfication(false);"
                        interval="1000">{{seconds}} second
                     <small ng-show="isFreezeReq">Freeze Processing</small>
                 </timer>
+            </div>
 
+            <div class="display-none call-duations" id="notificationfreezetimmer">
+                <!--{{duations}}-->
+                <timer autostart="false" interval="1000"
+                >{{hhours}}:
+                    {{mminutes}}: {{sseconds}}
+                </timer>
             </div>
             <div class="display-none loading-duration" id="notificationfreezeRequest">
                 Processing Freeze Request
@@ -406,8 +412,13 @@
             <div class="button-footer">
                 <ul>
                     <li>
-                        <button class="btn btn-end-n" ng-click="phoneNotificationFunctions.freezeAcw();">
-                            Free
+                        <button id="notificationfreezebtn" class="btn btn-end-n" ng-click="phoneNotificationFunctions.freezeAcw();">
+                            Freeze
+                        </button>
+                    </li>
+                    <li>
+                        <button id="notificationendfreezebtn" class="display-none btn btn-end-n" ng-click="phoneNotificationFunctions.endFreeze();">
+                            End-Freeze
                         </button>
                     </li>
                 </ul>
