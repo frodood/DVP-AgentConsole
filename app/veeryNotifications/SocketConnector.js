@@ -67,8 +67,8 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 console.log(reason);
 
                 isAuthenticated = false;
-                if (notificationEvent.onAgentDisconnected)
-                    notificationEvent.onAgentDisconnected();
+                if (notificationEvent.OnAgentUnauthenticate)
+                    notificationEvent.OnAgentUnauthenticate();
 
             });
 

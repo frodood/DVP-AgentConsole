@@ -340,12 +340,22 @@
                 <i class="veery-phone-icon-1-call-answer"></i>
             </div>
         </div>
-        <div class="n-incoming-text-wrp">
-            <div id="callerName" class="caller-name">
-                John Doe
+        <div id="notificationCallFunction" class="n-incoming-text-wrp">
+            <div id="callerName" class="caller-name" >
+                {{call.displayName}}
+            </div>
+            <div id="callerNumber" class="caller-name" >
+                {{call.displayNumber}}
             </div>
             <div id="callerTime" class="call-time">
-                00:30
+                {{call.skill}}
+            </div>
+            <div class="call-duations" id="notificationcalltimmer">
+                <!--{{duations}}-->
+                <timer autostart="false" interval="1000"
+                >{{hhours}}:
+                    {{mminutes}}: {{sseconds}}
+                </timer>
             </div>
             <div class="action-btn-wrp">
                 
@@ -353,17 +363,56 @@
             <div class="button-footer">
                 <ul>
                     <li>
-                        <button id="endNotificationCall" class="btn btn-end-n">
-                            END CALL
+                        <button id="rejectNotificationCall" class="btn btn-end-n" ng-click="phoneNotificationFunctions.rejectCall();">
+                            Reject
                         </button>
                     </li>
                     <li>
-                        <button id="anzNotificationCall" class="btn btn-anz-n">
-                            ANZ CALL
+                        <button id="anzNotificationCall" class="btn btn-anz-n" ng-click="phoneNotificationFunctions.answerCall();">
+                            Answer
+                        </button>
+                    </li>
+                    <li>
+                        <button id="endNotificationCall" class="btn btn-anz-n display-none" ng-click="phoneNotificationFunctions.endCall();">
+                            End
+                        </button>
+                    </li>
+                    <li>
+                        <button id="holdNotificationCall" class="btn btn-anz-n display-none" ng-click="phoneNotificationFunctions.holdCall();">
+                            Hold
+                        </button>
+                    </li>
+                    <li>
+                        <button id="unholdNotificationCall" class="btn btn-anz-n display-none" ng-click="phoneNotificationFunctions.unholdCall();">
+                            Un-hold
                         </button>
                     </li>
                 </ul>
             </div>
+        </div>
+        <div id="notificationAcw" class="n-incoming-text-wrp display-none">
+            <div class="display-none" id="countdownnotificationCalltimmer">
+                <timer autostart="false" countdown="countdownVal"
+                       finish-callback="veeryPhone.FinishedAcw()"
+                       interval="1000">{{seconds}} second
+                    <small ng-show="isFreezeReq">Freeze Processing</small>
+                </timer>
+
+            </div>
+            <div class="display-none loading-duration" id="notificationfreezeRequest">
+                Processing Freeze Request
+            </div>
+
+            <div class="button-footer">
+                <ul>
+                    <li>
+                        <button class="btn btn-end-n" ng-click="phoneNotificationFunctions.freezeAcw();">
+                            Free
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 
