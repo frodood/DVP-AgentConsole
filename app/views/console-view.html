@@ -335,11 +335,25 @@
 
     <!-- incoming call notification display-none-->
     <div id="callNIncomingAlert" class="n-incoming-call-wrp">
+
+        <div class="toggle-panel">
+            <i ng-click="toggleDownIncomingPanel()"
+               id="toggleDown" class="fa fa-angle-down"></i>
+
+            <i ng-click="toggleUpIncomingPanel()"
+               id="toggleUp"
+               class="fa fa-angle-up display-none"></i>
+        </div>
         <div class="n-incoming-widget">
             <div class="n-incoming-icon">
+                <div id="callerTimeSmall"
+                     class="call-time call-time-small display-none animated fadeIn">
+                    00:30
+                </div>
                 <div class="icon-round-n">
                     <i class="veery-phone-icon-1-call-answer"></i>
                 </div>
+
             </div>
             <div class="n-incoming-text-wrp">
                 <div id="callerName" class="caller-name">

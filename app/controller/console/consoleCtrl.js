@@ -3970,6 +3970,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     showNewIncomingNotfy();
 
+    $scope.toggleDownIncomingPanel = function () {
+        $('#callNIncomingAlert').animate({
+            bottom: '-130'
+        }, 500);
+        $('#toggleDown').addClass('display-none');
+        $('#toggleUp').removeClass('display-none');
+        $('#callerTimeSmall').removeClass('display-none');
+    };
+
+    $scope.toggleUpIncomingPanel = function () {
+        $('#callNIncomingAlert').animate({
+            bottom: '0'
+        }, 500);
+        $('#toggleDown').removeClass('display-none');
+        $('#toggleUp').addClass('display-none');
+        $('#callerTimeSmall').addClass('display-none');
+    };
+
 
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
