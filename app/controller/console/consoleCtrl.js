@@ -1506,6 +1506,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             case 'agent_connected':
 
+                $scope.agentConnected(data);
+
                 break;
 
             case 'agent_disconnected':
