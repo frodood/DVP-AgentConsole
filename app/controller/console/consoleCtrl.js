@@ -1550,12 +1550,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.veeryNotification = function () {
-        veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, notificationEvent);
+        //veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, notificationEvent);
     };
 
     $scope.veeryNotification();
     $scope.socketReconnect = function () {
-        veeryNotification.reconnectToServer();
+        //veeryNotification.reconnectToServer();
     };
 
 
