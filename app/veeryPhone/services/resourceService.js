@@ -133,6 +133,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
             return response.data.IsSuccess;
         });
     };
+
     var mapResourceToVeery = function (publicIdentity) {
         /*dynamic data = new JObject();
          data.SipURI = profile.publicIdentity.Replace("sip:", "");
@@ -203,8 +204,92 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
+    var callHungup = function (callrefid) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/hungup",
+            params: {
+                callrefid: callrefid
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var callHold = function (callrefid,opration) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/hold/"+opration,
+            params: {
+                callrefid: callrefid
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var callMute = function (callrefid,opration) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/mute/"+opration,
+            params: {
+                callrefid: callrefid
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var callDtmf = function (callrefid,opration) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/dtmf",
+            params: {
+                callrefid: callrefid
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var callAnswer = function (callrefid) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/answer",
+            params: {
+                callrefid: callrefid
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
 
     return {
+        CallHungup:callHungup,
+        CallHold:callHold,
+        CallMute:callMute,
+        CallDtmf:callDtmf,
+        CallAnswer:callAnswer,
         BreakRequest: breakRequest,
         EndBreakRequest: endBreakRequest,
         RegisterWithArds: registerWithArds,

@@ -361,7 +361,12 @@
                 
             </div>
             <div class="button-footer">
-                <ul>
+                <ul ng-show="isWaiting">
+                    <li>
+                        Please Wait.....
+                    </li>
+                </ul>
+                <ul ng-hide="isWaiting">
                     <li>
                         <button id="rejectNotificationCall" class="btn btn-end-n" ng-click="phoneNotificationFunctions.rejectCall();">
                             Reject
@@ -387,6 +392,17 @@
                             Un-hold
                         </button>
                     </li>
+                    <li>
+                        <button id="muteNotificationCall" class="btn btn-anz-n display-none" ng-click="phoneNotificationFunctions.muteCall();">
+                            Mute
+                        </button>
+                    </li>
+                    <li>
+                        <button id="uumuteNotificationCall" class="btn btn-anz-n display-none" ng-click="phoneNotificationFunctions.unmuteCall();">
+                            Un-mute
+                        </button>
+                    </li>
+
                 </ul>
             </div>
         </div>
