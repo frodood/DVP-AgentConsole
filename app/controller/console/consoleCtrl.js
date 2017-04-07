@@ -955,6 +955,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.isWaiting = false;
             });
 
+            chatService.Status('available', 'call');
+
         },
         freezeAcw: function () {
             if ($scope.isRegistor) return;
@@ -1514,6 +1516,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         if (Array.isArray(tid) && tid.length > 1) {
             objMessage['ticket'] = tid[1];
+            objMessage['ticketref'] = tid[1];
         }
 
         if (Array.isArray(tref) && tref.length > 1) {
