@@ -35,14 +35,14 @@ var baseUrls = {
     'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
     //todolistservice.app.veery.cloud
-    'monitorrestapi': 'http://localhost:3637/DVP/API/1.0.0.0/',//monitorrestapi.app.veery.cloud
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',//monitorrestapi.app.veery.cloud
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',
-    //'http://ipmessagingservice.app.veery.cloud',
+    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',//'http://ipmessagingservice.app.veery.cloud',
     'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-    'contactUrl': 'http://contacts.app.veery.cloud//DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
+    'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
+    'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/' //dialerapi.app.veery.cloud
 
 };
 

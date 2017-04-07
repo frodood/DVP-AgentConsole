@@ -204,6 +204,19 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
+    var call = function (number,extension) {
+        return $http({
+            method: 'get',
+            url: baseUrls.dialerUrl + number+"/"+extension
+        }).then(function (response) {
+            if (response.data ) {
+                return response.data;
+            } else {
+                return false;
+            }
+        });
+    };
+
     var callHungup = function (callrefid) {
         return $http({
             method: 'post',
@@ -286,6 +299,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
 
     return {
         CallHungup:callHungup,
+        Call:call,
         CallHold:callHold,
         CallMute:callMute,
         CallDtmf:callDtmf,

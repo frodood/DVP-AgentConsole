@@ -17,6 +17,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         chatService.Status('offline', 'call');
     };
 
+    $scope.safeApply = function (fn) {
+        var phase = this.$root.$$phase;
+        if (phase == '$apply' || phase == '$digest') {
+            if (fn && (typeof(fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
+
     $window.onbeforeunload = $scope.onExit;
 
 
@@ -342,7 +353,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         makeCall: function (callNumber, tabReference) {
             phoneFuncion.updateCallStatus('Dialing');
-            $scope.veeryPhone.makeAudioCall(callNumber);
+            if ($scope.isRegistor) {
+                $scope.veeryPhone.makeAudioCall(callNumber);
+            }
+            else {
+                var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
+                var value = decodeData.context.veeryaccount.display;
+                resourceService.Call(callNumber, value).then(function (res) {
+                    if(res){
+                        $scope.showAlert("Soft Phone", "success", "Successfully Dial To "+callNumber);
+                    }
+                    else {
+                        $scope.showAlert("Soft Phone", "error", "Fail to Make Call.");
+                    }
+                },function (err) {
+                    $scope.showAlert("Soft Phone", "error", "Fail to Make Call.");
+                })
+            }
+
 
             //  var nos = $filter('filter')(ticket.requester.contacts, {type: 'phone'});
 
@@ -905,7 +933,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if ($scope.isRegistor) return;
 
             $scope.isWaiting = true;
-            resourceService.CallMute($scope.call.sessionId,  'true').then(function (response) {
+            resourceService.CallMute($scope.call.sessionId, 'true').then(function (response) {
                 $scope.isWaiting = false;
 
             }, function (err) {
@@ -1007,7 +1035,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#holdNotificationCall').addClass('display-none');
             $('#unholdNotificationCall').removeClass('display-none');
             /*$('#muteNotificationCall').removeClass('display-none');
-            $('#uumuteNotificationCall').addClass('display-none');*/
+             $('#uumuteNotificationCall').addClass('display-none');*/
             $('#notificationCallFunction').removeClass('display-none');
             $('#notificationAcw').addClass('display-none');
         },
@@ -1019,7 +1047,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#holdNotificationCall').removeClass('display-none');
             $('#unholdNotificationCall').addClass('display-none');
             /*$('#muteNotificationCall').removeClass('display-none');
-            $('#uumuteNotificationCall').addClass('display-none');*/
+             $('#uumuteNotificationCall').addClass('display-none');*/
             $('#notificationCallFunction').removeClass('display-none');
             $('#notificationAcw').addClass('display-none');
         }
@@ -1041,8 +1069,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#rejectNotificationCall').addClass('display-none');
             $('#anzNotificationCall').addClass('display-none');
             $('#endNotificationCall').removeClass('display-none');
-           /* $('#holdNotificationCall').addClass('display-none');
-            $('#unholdNotificationCall').removeClass('display-none');*/
+            /* $('#holdNotificationCall').addClass('display-none');
+             $('#unholdNotificationCall').removeClass('display-none');*/
             $('#muteNotificationCall').removeClass('display-none');
             $('#uumuteNotificationCall').addClass('display-none');
             $('#notificationCallFunction').removeClass('display-none');
@@ -1199,7 +1227,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#speakerButton').addClass('display-none ');
         },
         updateCallStatus: function (status) {
-            $scope.call.status = status;
+            $scope.safeApply(function () {
+                $scope.call.status = status;
+            });
+
         },
         hideTransfer: function () {
             $('#transferCall').addClass('display-none').removeClass('display-inline');
@@ -1361,7 +1392,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.agentFound = function (data) {
 
-
+        console.log("agentFound");
         var values = data.Message.split("|");
         var notifyData = {
             company: data.Company,
@@ -1413,6 +1444,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.agentConnected = function (data) {
+        console.log("agentConnected");
         //"agent_connected|de1334de-35d8-412f-aa65-886f18c11487|60|18705056580|Extension 18705056580|94112375000|ClientSupport|inbound|call|duoarafath|eec46ff0-cbea-4b04-9132-d912e0e8dc55"
         var values = data.Message.split("|");
         if (values.length > 10) {
@@ -1424,17 +1456,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.agentRejected = function (data) {
+        console.log("agentRejected");
         $scope.phoneNotificationFunctions.rejectState();
     };
 
     $scope.agentDisconnected = function (data) {
+        console.log("agentDisconnected");
         $scope.phoneNotificationFunctions.stopCallTime();
         $scope.phoneNotificationFunctions.endState();
 
     };
 
     $scope.agentUnauthenticate = function (data) {
-
+        console.log("agentUnauthenticate");
         $scope.isSocketRegistered = false;
         if (!$scope.isLogingOut) {
             $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
@@ -1445,6 +1479,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.phoneNotificationFunctions.showNotfication(false);
     };
     $scope.agentAuthenticated = function () {
+        console.log("agentAuthenticated");
         $scope.isSocketRegistered = true;
         $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
         $('#regNotification').addClass('display-block').removeClass('display-none');
@@ -1454,12 +1489,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.unredNotifications = 0;
 
     $scope.OnTicketNoticeReceived = function (data) {
-
+        console.log("OnTicketNoticeReceived");
         $scope.OnMessage(data);
     };
 
     $scope.OnMessage = function (data) {
-
+        console.log("OnMessage");
         var senderAvatar;
 
         if (data.From) {
@@ -1511,7 +1546,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.readNotification = function (id) {
-
+        console.log("readNotification");
         var index = -1;
         for (var i = 0, len = $scope.notifications.length; i < len; i++) {
             if ($scope.notifications[i].id === id) {
@@ -1525,6 +1560,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.getCountOfUnredNotifications = function () {
+        console.log("getCountOfUnredNotifications");
         return filterFilter($scope.notifications, {read: false}).length;
     };
 
@@ -1535,10 +1571,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //#myNote
     $scope.todoRemind = function (data) {
+        console.log("todoRemind");
         $scope.myNoteReminder = data;
         $scope.myNoteNotiMe.showMe();
     };
     $scope.noticeRecieved = function (data) {
+        console.log("noticeRecieved");
         // $scope.myNoteReminder = data;
         // $scope.myNoteNotiMe.showMe();
 
