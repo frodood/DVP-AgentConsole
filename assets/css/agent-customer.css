@@ -676,13 +676,14 @@ body {
 
 /*console phone new ui update */
 .n-incoming-call-wrp {
-    width: 300px;
     position: fixed;
-    right: -310px;
-    bottom: 150px;
+    right: 0px;
+    bottom: 55px;
     z-index: 1000;
     background: #223448;
     padding-bottom: 13px;
+    height: 185px;
+    overflow: hidden;
 
 }
 
@@ -4576,7 +4577,7 @@ input.ps-form-controller[readonly] {
     top: 57px;
     width: calc(100% - 29px);
     z-index: 100;
-    background-color: rgba(255, 255, 255, 0.98);
+    background-color: rgba(255, 255, 255, 0.8);
     -webkit-box-shadow: 6px 7px 16px -14px rgba(0, 0, 0, 0.98);
     -moz-box-shadow: 6px 7px 16px -14px rgba(0, 0, 0, 0.98);
     box-shadow: 6px 7px 16px -14px rgba(0, 0, 0, 0.98);
