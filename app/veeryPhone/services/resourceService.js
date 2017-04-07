@@ -209,8 +209,8 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
             method: 'get',
             url: baseUrls.dialerUrl + number+"/"+extension
         }).then(function (response) {
-            if (response.data && response.data.IsSuccess) {
-                return response.data.Result;
+            if (response.data ) {
+                return response.data;
             } else {
                 return false;
             }

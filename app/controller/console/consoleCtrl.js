@@ -359,7 +359,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             else {
                 var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
                 var value = decodeData.context.veeryaccount.display;
-                resourceService.Call(callNumber, value);
+                resourceService.Call(callNumber, value).then(function (res) {
+                    if(res){
+                        $scope.showAlert("Soft Phone", "success", "Successfully Dial To "+callNumber);
+                    }
+                    else {
+                        $scope.showAlert("Soft Phone", "error", "Fail to Make Call.");
+                    }
+                },function (err) {
+                    $scope.showAlert("Soft Phone", "error", "Fail to Make Call.");
+                })
             }
 
 

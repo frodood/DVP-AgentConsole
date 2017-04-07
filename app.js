@@ -41,7 +41,7 @@ var baseUrls = {
     'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',//'http://ipmessagingservice.app.veery.cloud',
     'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
-    'dialerUrl': 'http://192.168.5.174:2226/DVP/DialerAPI/ClickToCall/' //dialerapi.app.veery.cloud
+    'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/' //dialerapi.app.veery.cloud
 
 };
 
