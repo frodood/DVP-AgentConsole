@@ -334,68 +334,88 @@
 
 
     <!-- incoming call notification display-none-->
-    <div id="callNIncomingAlert" class="n-incoming-call-wrp">
+    <div id="callNIncomingAlert" class="n-incoming-call-wrp display-none">
         <div class="n-incoming-icon">
             <div class="icon-round-n">
                 <i class="veery-phone-icon-1-call-answer"></i>
             </div>
         </div>
         <div id="notificationCallFunction" class="n-incoming-text-wrp">
-            <div id="callerName" class="caller-name" >
-                Jone Paerer
-                <!--{{call.displayName}}-->
+            <div id="callerName" class="caller-name">
+                {{call.displayName}}
             </div>
-            <div id="callerNumber" class="caller-name" >
-                0715986361
-                <!--{{call.displayNumber}}-->
+            <div id="callerNumber" class="caller-name">
+                {{call.displayNumber}}
             </div>
             <div id="callerTime" class="call-time">
-                english
-                <!--{{call.skill}}-->
+                {{call.skill}}
             </div>
             <div class="call-duations" id="notificationcalltimmer">
-                <!--{{duations}}-->
-                <timer autostart="false" interval="1000"
-                >{{hhours}}:
+                <timer autostart="false" interval="1000">
+                    {{hhours}}:
                     {{mminutes}}: {{sseconds}}
                 </timer>
             </div>
             <div class="action-btn-wrp">
-                
+
             </div>
             <div class="button-footer">
-                <ul>
+                <ul ng-show="isWaiting">
                     <li>
-                        <button id="rejectNotificationCall" class="btn btn-end-n" ng-click="phoneNotificationFunctions.rejectCall();">
+                        Please Wait.....
+                    </li>
+                </ul>
+                <ul ng-hide="isWaiting">
+                    <li>
+                        <button id="rejectNotificationCall" class="btn btn-end-n"
+                                ng-click="phoneNotificationFunctions.rejectCall();">
                             Reject
                         </button>
                     </li>
                     <li>
-                        <button id="anzNotificationCall" class="btn btn-anz-n" ng-click="phoneNotificationFunctions.answerCall();">
+                        <button id="anzNotificationCall" class="btn btn-anz-n"
+                                ng-click="phoneNotificationFunctions.answerCall();">
                             Answer
                         </button>
                     </li>
                     <li>
-                        <button id="endNotificationCall" class="btn btn-anz-n display-none" ng-click="phoneNotificationFunctions.endCall();">
+                        <button id="endNotificationCall" class="btn btn-anz-n display-none"
+                                ng-click="phoneNotificationFunctions.endCall();">
                             End
                         </button>
                     </li>
                     <li>
-                        <button id="holdNotificationCall" class="btn btn-anz-n display-none" ng-click="phoneNotificationFunctions.holdCall();">
+                        <button id="holdNotificationCall" class="btn btn-anz-n display-none"
+                                ng-click="phoneNotificationFunctions.holdCall();">
                             Hold
                         </button>
                     </li>
                     <li>
-                        <button id="unholdNotificationCall" class="btn btn-anz-n display-none" ng-click="phoneNotificationFunctions.unholdCall();">
+                        <button id="unholdNotificationCall" class="btn btn-anz-n display-none"
+                                ng-click="phoneNotificationFunctions.unholdCall();">
                             Un-hold
                         </button>
                     </li>
+                    <li>
+                        <button id="muteNotificationCall" class="btn btn-anz-n display-none"
+                                ng-click="phoneNotificationFunctions.muteCall();">
+                            Mute
+                        </button>
+                    </li>
+                    <li>
+                        <button id="uumuteNotificationCall" class="btn btn-anz-n display-none"
+                                ng-click="phoneNotificationFunctions.unmuteCall();">
+                            Un-mute
+                        </button>
+                    </li>
+
                 </ul>
             </div>
         </div>
         <div id="notificationAcw" class="n-incoming-text-wrp display-none">
             <div class="call-duations" id="countdownnotificationCalltimmer">
-                <timer autostart="false" countdown="countdownVal" finish-callback="phoneNotificationFunctions.showNotfication(false);"
+                <timer autostart="false" countdown="countdownVal"
+                       finish-callback="phoneNotificationFunctions.showNotfication(false);"
                        interval="1000">{{seconds}} second
                     <small ng-show="isFreezeReq">Freeze Processing</small>
                 </timer>
@@ -415,12 +435,14 @@
             <div class="button-footer">
                 <ul>
                     <li>
-                        <button id="notificationfreezebtn" class="btn btn-end-n" ng-click="phoneNotificationFunctions.freezeAcw();">
+                        <button id="notificationfreezebtn" class="btn btn-end-n"
+                                ng-click="phoneNotificationFunctions.freezeAcw();">
                             Freeze
                         </button>
                     </li>
                     <li>
-                        <button id="notificationendfreezebtn" class="display-none btn btn-end-n" ng-click="phoneNotificationFunctions.endFreeze();">
+                        <button id="notificationendfreezebtn" class="display-none btn btn-end-n"
+                                ng-click="phoneNotificationFunctions.endFreeze();">
                             End-Freeze
                         </button>
                     </li>

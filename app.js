@@ -12,7 +12,8 @@ var agentApp = angular.module('veeryAgentApp',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
         'angular.filter', 'satellizer', 'mdo-angular-cryptography'
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel', 'ngEmbed','ngEmojiPicker','luegg.directives'
+        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
+        'angularProgressbar'
     ]);
 
 
@@ -34,12 +35,12 @@ var baseUrls = {
     'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
     //todolistservice.app.veery.cloud
-    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
+    'monitorrestapi': 'http://localhost:3637/DVP/API/1.0.0.0/',//monitorrestapi.app.veery.cloud
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://localhost:8889',
-        //'http://ipmessagingservice.app.veery.cloud',
+    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',
+    //'http://ipmessagingservice.app.veery.cloud',
     'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app.veery.cloud//DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
 
@@ -302,7 +303,6 @@ agentApp.filter('millisecondsToDateTime', [function () {
 }]);
 
 
-
 //Password verification
 agentApp.directive('passwordVerify', function () {
     return {
@@ -356,7 +356,6 @@ agentApp.directive('execOnScrollToTop', function () {
     };
 
 });
-
 
 
 agentApp.directive('execOnScrollToBottom', function () {
