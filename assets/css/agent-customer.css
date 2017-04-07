@@ -683,7 +683,7 @@ body {
     z-index: 1000;
     background: #223448;
     padding-bottom: 13px;
-
+    height: 200px;
 }
 
 .n-incoming-widget {
