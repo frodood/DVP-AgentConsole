@@ -12,7 +12,8 @@ var agentApp = angular.module('veeryAgentApp',
         'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
         'angular.filter', 'satellizer', 'mdo-angular-cryptography'
         , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel', 'ngEmbed','ngEmojiPicker','luegg.directives'
+        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
+        'angularProgressbar'
     ]);
 
 
@@ -302,7 +303,6 @@ agentApp.filter('millisecondsToDateTime', [function () {
 }]);
 
 
-
 //Password verification
 agentApp.directive('passwordVerify', function () {
     return {
@@ -356,7 +356,6 @@ agentApp.directive('execOnScrollToTop', function () {
     };
 
 });
-
 
 
 agentApp.directive('execOnScrollToBottom', function () {
