@@ -348,7 +348,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.veeryPhone = {
 
         sipSendDTMF: function (dtmf) {
-            sipSendDTMF(dtmf);
+            if ($scope.isRegistor) {
+                sipSendDTMF(dtmf);
+            }
+            else {
+                $scope.phoneNotificationFunctions.SendDtmf(dtmf);
+            }
+
             //$scope.call.number = $scope.call.number + dtmf;
         },
         makeCall: function (callNumber, tabReference) {
@@ -380,6 +386,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (callNumber == "") {
                 return
             }
+            $scope.call.number = callNumber;
             sipCall('call-audio', callNumber);
             phoneFuncion.updateCallStatus('Dialing');
             $scope.$broadcast('timer-set-countdown');
@@ -881,6 +888,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             }
         },
+        SendDtmf: function (digit) {
+            if ($scope.isRegistor) return;
+            $scope.isWaiting = true;
+            resourceService.SendDtmf($scope.call.sessionId,digit).then(function (response) {
+                $scope.isWaiting = false;
+            }, function (err) {
+                $scope.isWaiting = false;
+            });
+        },
         answerCall: function () {
             if ($scope.isRegistor) return;
             $scope.isWaiting = true;
@@ -1000,6 +1016,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#rejectNotificationCall').addClass('display-none');
             $('#anzNotificationCall').addClass('display-none');
             $('#endNotificationCall').removeClass('display-none');
+            $('#endNotificationDialpad').removeClass('display-none');
             $('#holdNotificationCall').removeClass('display-none');
             $('#unholdNotificationCall').addClass('display-none');
             $('#muteNotificationCall').removeClass('display-none');
@@ -1018,6 +1035,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#rejectNotificationCall').removeClass('display-none');
             $('#anzNotificationCall').removeClass('display-none');
             $('#endNotificationCall').addClass('display-none');
+            $('#endNotificationDialpad').addClass('display-none');
             $('#holdNotificationCall').addClass('display-none');
             $('#unholdNotificationCall').addClass('display-none');
             $('#muteNotificationCall').addClass('display-none');
@@ -2121,6 +2139,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     });
 
+    $rootScope.$on('makecall', function (events, args) {
+        if(args)
+        $scope.veeryPhone.makeCall(args.callNumber, args.tabReference);
+    });
 
     var openEngagementTabForMailReply = function (args, index) {
         var notifyData = {

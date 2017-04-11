@@ -34,7 +34,7 @@ var baseUrls = {
     'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
     //todolistservice.app.veery.cloud
-    'monitorrestapi': 'http://localhost:3637/DVP/API/1.0.0.0/',//monitorrestapi.app.veery.cloud
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',//monitorrestapi.app.veery.cloud
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',

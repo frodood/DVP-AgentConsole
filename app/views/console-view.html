@@ -361,12 +361,14 @@
                 
             </div>
             <div class="button-footer">
+
                 <ul ng-show="isWaiting">
                     <li>
                         Please Wait.....
                     </li>
                 </ul>
                 <ul ng-hide="isWaiting">
+
                     <li>
                         <button id="rejectNotificationCall" class="btn btn-end-n" ng-click="phoneNotificationFunctions.rejectCall();">
                             Reject
@@ -375,6 +377,11 @@
                     <li>
                         <button id="anzNotificationCall" class="btn btn-anz-n" ng-click="phoneNotificationFunctions.answerCall();">
                             Answer
+                        </button>
+                    </li>
+                    <li>
+                        <button id="endNotificationDialpad" class="btn btn-anz-n display-none" ng-click="showNofifyDialpad=!showNofifyDialpad">
+                            Dialpad
                         </button>
                     </li>
                     <li>
@@ -404,6 +411,64 @@
                     </li>
 
                 </ul>
+                <div class="phone-dialpad-display " ng-show="showNofifyDialpad">
+                    <table class="phone-dialpad" >
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input type="button" class="phone-button" value="1" data-values='[1]' ng-click="veeryPhone.sipSendDTMF('1')"/>
+                            </td>
+                            <td>
+                                <input type="button" class="phone-button" value="2"
+                                       data-values='[2, "A", "B", "C"]' ng-click="veeryPhone.sipSendDTMF('2')"/>
+                            </td>
+                            <td>
+                                <input type="button" class="phone-button" value="3"
+                                       data-values='[3, "D", "E", "F"]' ng-click="veeryPhone.sipSendDTMF('3')"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" class="phone-button" value="4"
+                                       data-values='[4, "G", "H", "I"]' ng-click="veeryPhone.sipSendDTMF('4')"/>
+                            </td>
+                            <td>
+                                <input type="button" class="phone-button" value="5"
+                                       data-values='[5, "J", "K", "L"]' ng-click="veeryPhone.sipSendDTMF('5')"/>
+                            </td>
+                            <td>
+                                <input type="button" class="phone-button" value="6"
+                                       data-values='[6, "M", "N", "O"]' ng-click="veeryPhone.sipSendDTMF('6')"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" class="phone-button" value="7"
+                                       data-values='[7, "P", "Q", "R", "S"]' ng-click="veeryPhone.sipSendDTMF('7')"/>
+                            </td>
+                            <td>
+                                <input type="button" class="phone-button" value="8"
+                                       data-values='[8, "T", "U", "V"]' ng-click="veeryPhone.sipSendDTMF('8')"/>
+                            </td>
+                            <td>
+                                <input type="button" class="phone-button" value="9"
+                                       data-values='[9, "W", "X", "Y", "Z"]' ng-click="veeryPhone.sipSendDTMF('9')"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" class="phone-button" value="*" data-values='["*"]' ng-click="veeryPhone.sipSendDTMF('*')"/>
+                            </td>
+                            <td>
+                                <input type="button" class="phone-button" value="0" data-values='["0", " "]' ng-click="veeryPhone.sipSendDTMF('0')"/>
+                            </td>
+                            <td>
+                                <input type="button" class="phone-button" value="#" data-values='["#"]' ng-click="veeryPhone.sipSendDTMF('#')"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div id="notificationAcw" class="n-incoming-text-wrp display-none">
