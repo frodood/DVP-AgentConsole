@@ -1689,6 +1689,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 $(currentBtn).addClass('active');
             };
 
+            scope.makeCall = function (number) {
+                var data = {
+                    callNumber:number,
+                    tabReference:scope.tabReference
+                };
+                $rootScope.$emit('makecall', data);
+            };
             scope.gotoTicket = function (data) {
                 data.tabType = "ticketView";
                 data.activeSession = {

@@ -265,12 +265,13 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
-    var callDtmf = function (callrefid,opration) {
+    var sendDtmf = function (callrefid,digit) {
         return $http({
             method: 'post',
             url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/dtmf",
             params: {
-                callrefid: callrefid
+                callrefid: callrefid,
+                digit:digit
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -302,7 +303,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         Call:call,
         CallHold:callHold,
         CallMute:callMute,
-        CallDtmf:callDtmf,
+        SendDtmf:sendDtmf,
         CallAnswer:callAnswer,
         BreakRequest: breakRequest,
         EndBreakRequest: endBreakRequest,
