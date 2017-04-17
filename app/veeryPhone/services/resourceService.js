@@ -26,16 +26,16 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     };
 //{"ResourceId":resourceId,"HandlingTypes":["CALL"]}
     var registerWithArds = function (resourceId, contact) {
-
+/*{
+ "Type": "CALL",
+ "Contact": contact
+ }*/
         return $http({
             method: 'post',
             url: baseUrls.ardsliteserviceUrl + "resource",
             data: {
                 "ResourceId": resourceId,
-                "HandlingTypes": [{
-                    "Type": "CALL",
-                    "Contact": contact
-                }]
+                "HandlingTypes": []
             }
 
         }).then(function (response) {

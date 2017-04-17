@@ -714,6 +714,16 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
             return response;
         });
     };
+    var UpdateTicketSecurityLevel = function (ticketID,level) {
+
+        return $http({
+            method: 'PUT',
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/SecurityLevel?level="+level,
+
+        }).then(function (response) {
+            return response;
+        });
+    };
 
     /*------------ config ticker data -----------*/
     var GetMyTicketConfig = function (callback) {
@@ -735,6 +745,8 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
             callback(false, data);
         });
     };
+
+
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
@@ -796,7 +808,8 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         DeleteAttachmentFromSlot: DeleteAttachmentFromSlot,
         GetMyTicketConfig: GetMyTicketConfig,
         SaveMyTicketConfig: SaveMyTicketConfig,
-        getFormByIsolatedTag: getFormByIsolatedTag
+        getFormByIsolatedTag: getFormByIsolatedTag,
+        UpdateTicketSecurityLevel: UpdateTicketSecurityLevel
     }
 });
 
