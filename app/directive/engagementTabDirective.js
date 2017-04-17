@@ -1569,7 +1569,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         break;
 
                     default :
-                        category = scope.channel;
+                        if(scope.channel.includes("facebook"))
+                        {
+                            category = "facebook"
+                        }
+                        else{
+                            category = scope.channel;
+                        }
                         break;
 
                 }

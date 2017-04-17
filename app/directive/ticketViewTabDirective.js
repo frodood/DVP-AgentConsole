@@ -834,7 +834,21 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 };
 
 
-
+                scope.goToNewProfile = function (ticket) {
+                    var notifyData = {
+                        company: authService.GetCompanyInfo().company,
+                        direction: "direct",
+                        channelFrom: ticket.requester_displayname,
+                        channelTo: "direct",
+                        channel: ticket.channel,
+                        skill: '',
+                        sessionId: ticket.engagement_session.engagement_id,
+                        userProfile: undefined,
+                        tabType : 'newUserProfile',
+                        index : ticket.requester_displayname
+                    };
+                    $rootScope.$emit('openNewTab', notifyData);
+                };
 
 
                 scope.loadTicketSummary = function (ticketID) {
@@ -881,6 +895,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 }
                                 else {
                                     scope.ticket.requester_displayname = scope.ticket.engagement_session.channel_from;
+                                    scope.ticket.showProfileAddButton = true;
                                     if (scope.ticket.engagement_session.contact.type == "facebook-post") {
                                         scope.ticket.requester_avatar = "http://graph.facebook.com/v2.8/" + scope.ticket.engagement_session.contact.contact_name + "/picture?type=large";
                                     }

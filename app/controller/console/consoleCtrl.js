@@ -366,13 +366,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
                 var value = decodeData.context.veeryaccount.display;
                 resourceService.Call(callNumber, value).then(function (res) {
-                    if(res){
-                        $scope.showAlert("Soft Phone", "success", "Successfully Dial To "+callNumber);
+                    if (res) {
+                        $scope.showAlert("Soft Phone", "success", "Successfully Dial To " + callNumber);
                     }
                     else {
                         $scope.showAlert("Soft Phone", "error", "Fail to Make Call.");
                     }
-                },function (err) {
+                }, function (err) {
                     $scope.showAlert("Soft Phone", "error", "Fail to Make Call.");
                 })
             }
@@ -891,7 +891,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         SendDtmf: function (digit) {
             if ($scope.isRegistor) return;
             $scope.isWaiting = true;
-            resourceService.SendDtmf($scope.call.sessionId,digit).then(function (response) {
+            resourceService.SendDtmf($scope.call.sessionId, digit).then(function (response) {
                 $scope.isWaiting = false;
             }, function (err) {
                 $scope.isWaiting = false;
@@ -1434,7 +1434,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
         var index = notifyData.sessionId;
-        if (notifyData.direction.toLowerCase() === 'outbound') {
+        if (notifyData.direction.toLowerCase() != 'inbound') {
             $scope.tabs.filter(function (item) {
                 var substring = "-Call" + notifyData.channelFrom;
                 if (item.tabReference.indexOf(substring) !== -1) {
@@ -1458,7 +1458,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         /*show notifications */
-        $scope.phoneNotificationFunctions.showNotfication(true);
+        if (notifyData.direction.toLowerCase() === 'inbound' ||notifyData.direction.toLowerCase() === 'outbound'){
+            $scope.phoneNotificationFunctions.showNotfication(true);
+        }
     };
 
     $scope.agentConnected = function (data) {
@@ -1968,7 +1970,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         profileDataParser.RecentEngagements.push(id);
     };
 
-    var openNewUserProfileTab = function (profile, index) {
+    var openNewUserProfileTab = function (profile, index, sessionObj) {
         var engUuid = uuid4.generate();
         var engSessionObj = {
             engagement_id: engUuid,
@@ -1978,6 +1980,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             direction: "direct",
             has_profile: true
         };
+        if (sessionObj) {
+            sessionObj.engagement_id = engUuid;
+            engSessionObj = sessionObj;
+        }
+
 
         if (profile) {
             engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
@@ -2035,11 +2042,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         var notifyData = {
                             company: authService.GetCompanyInfo().company,
                             direction: "direct",
-                            channelFrom: "direct",
-                            channelTo: "direct",
-                            channel: "api",
+                            channelFrom: engSessionObj.channel_from,
+                            channelTo: engSessionObj.channel_to,
+                            channel: engSessionObj.channel,
                             skill: '',
-                            sessionId: engUuid,
+                            sessionId: engSessionObj.engagement_id,
                             userProfile: profile
                         };
                         $scope.addTab('Create New Profile', 'Engagement', 'engagement', notifyData, index);
@@ -2120,12 +2127,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 openEngagementTabForMailReply(args.data, args.index);
                 break;
             case 'userProfile':
-                openNewUserProfileTab(args, args.index);
+                openNewUserProfileTab(args, args.index, undefined);
+                break;
+
+            case 'newUserProfile':
+                var data = {
+                    Company: args.company,
+                    Message: "agent_found|" + args.sessionId + "|60|" + args.channelFrom + "|" + args.channelFrom + "|" + args.channelTo + "| |" + args.channel + "|"+ args.channel
+                };
+
+                $scope.agentFound(data);
+                //openNewUserProfileTab(undefined, args.index,args.sessionId);
                 break;
             default:
 
         }
     });
+
 
     $rootScope.$on('closeTab', function (events, args) {
         $scope.tabs.filter(function (item) {
@@ -2140,8 +2158,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
     $rootScope.$on('makecall', function (events, args) {
-        if(args)
-        $scope.veeryPhone.makeCall(args.callNumber, args.tabReference);
+        if (args)
+            $scope.veeryPhone.makeCall(args.callNumber, args.tabReference);
     });
 
     var openEngagementTabForMailReply = function (args, index) {
@@ -2490,14 +2508,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             item.obj.tabType = 'userProfile';
             item.obj.index = item.obj._id;
             //$rootScope.$emit('openNewTab', item.obj);
-            openNewUserProfileTab(item.obj, item.obj.index);
+            openNewUserProfileTab(item.obj, item.obj.index, undefined);
 
             $scope.searchText = "";
         }
     };
 
     $scope.createNewProfile = function () {
-        openNewUserProfileTab(undefined, 'createNewProfile');
+        openNewUserProfileTab(undefined, 'createNewProfile', undefined);
     };
 
     $scope.searchExternalUsers = {};

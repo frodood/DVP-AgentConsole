@@ -555,7 +555,13 @@
                                                     </div>
                                                     <div class="notification-text">
                                                         {{ticket.requester_displayname}}
+
+                                                        <i ng-show="ticket.showProfileAddButton" class="fa fa-plus-square cursor-pointer" ng-click="goToNewProfile(ticket);"></i>
                                                     </div>
+                                                    <!--<ul class="nav navbar-right panel_toolbox">
+                                                        <li><i class="fa fa-plus-square" ng-click="deleteSocialContact('facebook');"></i>
+                                                        </li>
+                                                    </ul>-->
                                                 </div>
                                             </div>
                                         </div>
