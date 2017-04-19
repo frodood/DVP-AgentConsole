@@ -217,6 +217,24 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
+    var transferCall = function (number,callrefid,legId) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/transfer",
+            params: {
+                callrefid: callrefid,
+                legId: legId,
+                number: number
+            }
+        }).then(function (response) {
+            if (response.data ) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
     var callHungup = function (callrefid) {
         return $http({
             method: 'post',
@@ -301,6 +319,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
     return {
         CallHungup:callHungup,
         Call:call,
+        TransferCall:transferCall,
         CallHold:callHold,
         CallMute:callMute,
         SendDtmf:sendDtmf,

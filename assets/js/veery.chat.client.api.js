@@ -255,6 +255,13 @@ window.SE = function (e) {
 
         });
 
+        socket.on('agent_rejected', function (data) {
+            data.messageType = "agent_rejected";
+            if (callBack.OnEvent)
+                callBack.OnEvent('agent_rejected',data);
+
+        });
+
         socket.on('todo_reminder', function (data) {
 
             if (callBack.OnEvent)

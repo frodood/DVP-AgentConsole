@@ -361,6 +361,15 @@
             </div>
             <div class="button-footer">
 
+                <div ng-show="showNofifyNumber">
+                    <div >
+                        <input required type="text"
+                               autocomplete="off"
+                               ng-model="call.number">
+                    </div>
+                    <i class="fa fa-share-square-o cursor-pointer" ng-click="phoneNotificationFunctions.transferCall(call.number);"></i>
+                </div>
+
                 <ul ng-show="isWaiting">
                     <li>
                         Please Wait.....
@@ -400,6 +409,12 @@
                         <button id="unholdNotificationCall" class="btn btn-anz-n display-none"
                                 ng-click="phoneNotificationFunctions.unholdCall();">
                             Un-hold
+                        </button>
+                    </li>
+                    <li>
+                        <button id="transferNotificationCall" class="btn btn-anz-n display-none"
+                                ng-click="showNofifyNumber=!showNofifyNumber">
+                            Transfer
                         </button>
                     </li>
                     <li>
