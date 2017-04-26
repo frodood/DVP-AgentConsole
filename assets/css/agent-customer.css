@@ -7176,12 +7176,12 @@ ul.renote-color-btn > li {
 
 .card-text-num-w > .lg-text {
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    font-size: 42px;
+    font-size: 25px;
 }
 
 .card-text-num-w > .sm-text {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    font-size: 18px;
+    font-size: 11px;
 }
 
 .c-text-yellow {
@@ -7245,7 +7245,7 @@ ul.renote-color-btn > li {
 
 .card-wrapper {
     width: 100%;
-    min-height: 100px;
+    min-height: 72px;
     overflow: hidden;
     position: relative;
 }
@@ -7288,7 +7288,7 @@ ul.renote-color-btn > li {
 }
 
 .left-d-icon > i {
-    font-size: 35px;
+    font-size: 25px;
 }
 
 .staffed-time {
@@ -7321,7 +7321,7 @@ ul.renote-color-btn > li {
     position: relative;
     display: block;
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    font-size: 23px;
+    font-size: 15px;
     text-align: left;
 }
 
@@ -7332,7 +7332,7 @@ ul.renote-color-btn > li {
     position: relative;
     display: block;
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     text-align: left;
 }
 
