@@ -48,6 +48,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.internalThumbFileUrl = baseUrls.fileService + "InternalFileService/File/Thumbnail/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/";
                 scope.FileServiceUrl = baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/";
 
+                scope.GeneralFileService=baseUrls.fileService + "FileService/File/Download/";
+
 
                 scope.slider = {
                     options: {
@@ -2010,7 +2012,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     if (scope.isImage(attachment.type)) {
 
-                        document.getElementById("image-viewer").href = scope.FileServiceUrl + attachment.url + "/SampleAttachment";
+                        document.getElementById("image-viewer").href = scope.GeneralFileService + attachment.url + "/SampleAttachment";
 
                         $('#image-viewer').trigger('click');
 

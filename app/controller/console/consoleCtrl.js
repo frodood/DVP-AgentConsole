@@ -3043,7 +3043,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isLogingOut = false;
     $scope.logOut = function () {
 
-        veeryNotification.disconnectFromServer();
+       // veeryNotification.disconnectFromServer();
         $scope.isLogingOut = true;
         $scope.veeryPhone.unregisterWithArds(function (done) {
             loginService.Logoff(function () {
