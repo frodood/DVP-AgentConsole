@@ -3,146 +3,158 @@
  */
 
 
-var agentApp = angular.module('veeryAgentApp',
-    ['ngRoute', 'ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
-        'angular-jwt', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
-        'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
-        'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
-        'angular.filter', 'satellizer', 'mdo-angular-cryptography'
-        , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
-        'angularProgressbar'
-    ]);
+var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui.bootstrap',
+  'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
+  'angular-jwt', 'btford.socket-io', 'LocalStorageModule',
+  'authServiceModule', 'ngTagsInput', 'schemaForm',
+  'yaru22.angular-timeago', 'timer', 'ngSanitize',
+  'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
+  'com.2fdevs.videogular',
+  'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster',
+  'ui.bootstrap.datetimepicker', 'moment-picker',
+  'angular.filter', 'satellizer', 'mdo-angular-cryptography',
+  'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging',
+  'pubnub.angular.service', 'ui.slimscroll',
+  'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
+  'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
+  'angularProgressbar'
+]);
 
 
 agentApp.constant('moment', moment);
 
 var baseUrls = {
-    'authUrl': 'http://userservice.app.veery.cloud',//http://userservice.app.veery.cloud
-    'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'notification': 'http://notificationservice.app.veery.cloud',
-    'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.app.veery.cloud
-    'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',//interactions.app.veery.cloud
-    'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/',//liteticket.app.veery.cloud
-    'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
-    'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
-    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
-    'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'fileServiceInternalUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/InternalFileService/',
-    'resourceService': 'http://192.168.0.5:8832/DVP/API/1.0.0.0/ResourceManager/', // http://resourceservice.app.veery.cloud
-    'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
-    'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    //todolistservice.app.veery.cloud
-    'monitorrestapi': 'http://localhost:3637/DVP/API/1.0.0.0/',//monitorrestapi.app.veery.cloud
-    'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
-    'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',//'http://ipmessagingservice.app.veery.cloud',
-    'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-    'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
-    'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/' //dialerapi.app.veery.cloud
+  'authUrl': 'http://userservice.app.veery.cloud', //http://userservice.app.veery.cloud
+  'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
+  'notification': 'http://notificationservice.app.veery.cloud',
+  'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/', //ardsliteservice.app.veery.cloud
+  'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/', //interactions.app.veery.cloud
+  'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/', //liteticket.app.veery.cloud
+  'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
+  'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
+  'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
+  'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
+  'fileServiceInternalUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/InternalFileService/',
+  'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/', // http://resourceservice.app.veery.cloud
+  'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
+  'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
+  //todolistservice.app.veery.cloud
+  'monitorrestapi': 'http://localhost:3637/DVP/API/1.0.0.0/', //monitorrestapi.app.veery.cloud
+  'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
+  'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
+  'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
+  'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud', //'http://ipmessagingservice.app.veery.cloud',
+  'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
+  'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
+  'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/' //dialerapi.app.veery.cloud
 
 };
 
 agentApp.constant('baseUrls', baseUrls);
 
 agentApp.constant('dashboardRefreshTime', 60000);
-agentApp.constant('turnServers', [{url: "stun:stun.l.google.com:19302"}, {url: "stun:stun.counterpath.net:3478"}, {url: "stun:numb.viagenie.ca:3478"}]);
+agentApp.constant('turnServers', [{
+  url: "stun:stun.l.google.com:19302"
+}, {
+  url: "stun:stun.counterpath.net:3478"
+}, {
+  url: "stun:numb.viagenie.ca:3478"
+}]);
 //{url:"stun:stun.l.google.com:19302"},{url:"stun:stun.counterpath.net:3478"},{url:"stun:numb.viagenie.ca:3478"}
 //{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}
 
 var phoneSetting = {
-    'TransferPhnCode': '*6',
-    'TransferExtCode': '*3',
-    'TransferIvrCode': '*9',
-    'EtlCode': '#',
-    'SwapCode': '1',
-    'ConferenceCode': '0',
-    'ExtNumberLength': 5
+  'TransferPhnCode': '*6',
+  'TransferExtCode': '*3',
+  'TransferIvrCode': '*9',
+  'EtlCode': '#',
+  'SwapCode': '1',
+  'ConferenceCode': '0',
+  'ExtNumberLength': 5
 };
 agentApp.constant('phoneSetting', phoneSetting);
 
-agentApp.config(function (scrollableTabsetConfigProvider) {
-    scrollableTabsetConfigProvider.setShowTooltips(true);
-    scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
-    scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
+agentApp.config(function(scrollableTabsetConfigProvider) {
+  scrollableTabsetConfigProvider.setShowTooltips(true);
+  scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
+  scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
 
-agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$authProvider", "gridsterConfig",
-    function ($httpProvider, $stateProvider, $urlRouterProvider, $authProvider) {
+agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
+  "$authProvider", "gridsterConfig",
+  function($httpProvider, $stateProvider, $urlRouterProvider, $authProvider) {
 
 
-        var authProviderUrl = 'http://userservice.app.veery.cloud/';
-        $authProvider.loginUrl = authProviderUrl + 'auth/login';
-        $authProvider.signupUrl = authProviderUrl + 'auth/signup';
+    var authProviderUrl = 'http://userservice.app.veery.cloud/';
+    $authProvider.loginUrl = authProviderUrl + 'auth/login';
+    $authProvider.signupUrl = authProviderUrl + 'auth/signup';
 
-        $urlRouterProvider.otherwise('/login');
-        $stateProvider.state("console", {
-            url: "/console",
-            templateUrl: "app/views/console-view.html",
-            data: {
-                requireLogin: true
-            }
-        }).state('login', {
-            url: "/login",
-            templateUrl: "app/auth/login.html",
-            data: {
-                requireLogin: false
-            }
-        }).state('reset-password-token', {
-            url: "/reset-password-token",
-            templateUrl: "app/auth/password-reset-token.html",
-            data: {
-                requireLogin: false
-            }
-        }).state('reset-password', {
-            url: "/reset-password",
-            templateUrl: "app/auth/password-reset.html",
-            data: {
-                requireLogin: false
-            }
-        }).state('reset-password-email', {
-            url: "/reset-password-email",
-            templateUrl: "app/auth/password-reset-email.html",
-            data: {
-                requireLogin: false
-            }
-        })
-    }], function (scrollableTabsetConfigProvider) {
-    scrollableTabsetConfigProvider.setShowTooltips(true);
-    scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
-    scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
+    $urlRouterProvider.otherwise('/login');
+    $stateProvider.state("console", {
+      url: "/console",
+      templateUrl: "app/views/console-view.html",
+      data: {
+        requireLogin: true
+      }
+    }).state('login', {
+      url: "/login",
+      templateUrl: "app/auth/login.html",
+      data: {
+        requireLogin: false
+      }
+    }).state('reset-password-token', {
+      url: "/reset-password-token",
+      templateUrl: "app/auth/password-reset-token.html",
+      data: {
+        requireLogin: false
+      }
+    }).state('reset-password', {
+      url: "/reset-password",
+      templateUrl: "app/auth/password-reset.html",
+      data: {
+        requireLogin: false
+      }
+    }).state('reset-password-email', {
+      url: "/reset-password-email",
+      templateUrl: "app/auth/password-reset-email.html",
+      data: {
+        requireLogin: false
+      }
+    })
+  }
+], function(scrollableTabsetConfigProvider) {
+  scrollableTabsetConfigProvider.setShowTooltips(true);
+  scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
+  scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
 
-agentApp.config(['$cryptoProvider', function ($cryptoProvider) {
-    $cryptoProvider.setCryptographyKey('1111111111111111');
+agentApp.config(['$cryptoProvider', function($cryptoProvider) {
+  $cryptoProvider.setCryptographyKey('1111111111111111');
 }]);
 
 agentApp.constant('config', {
-    Auth_API: 'http://userservice.162.243.230.46.xip.io/',
-    appVersion: 1.0,
-    client_Id_secret: 'ae849240-2c6d-11e6-b274-a9eec7dab26b:6145813102144258048'
+  Auth_API: 'http://userservice.162.243.230.46.xip.io/',
+  appVersion: 1.0,
+  client_Id_secret: 'ae849240-2c6d-11e6-b274-a9eec7dab26b:6145813102144258048'
 });
 
 //Authentication
-agentApp.run(function ($rootScope, loginService, $location, $state) {
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-        var requireLogin = toState.data.requireLogin;
-        if (requireLogin) {
-            if (!loginService.getToken()) {
-                event.preventDefault();
-                $state.go('login');
-            }
-            // get me a login modal!
-        }
-    });
-    var decodeToken = loginService.getTokenDecode();
-    if (!decodeToken) {
+agentApp.run(function($rootScope, loginService, $location, $state) {
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+    var requireLogin = toState.data.requireLogin;
+    if (requireLogin) {
+      if (!loginService.getToken()) {
+        event.preventDefault();
         $state.go('login');
-        return
+      }
+      // get me a login modal!
     }
+  });
+  var decodeToken = loginService.getTokenDecode();
+  if (!decodeToken) {
+    $state.go('login');
+    return
+  }
 });
 
 
@@ -287,200 +299,200 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
 //});
 
 
-agentApp.filter('secondsToDateTime', [function () {
-    return function (seconds) {
-        if (!seconds) {
-            return new Date(1970, 0, 1).setSeconds(0);
-        }
-        return new Date(1970, 0, 1).setSeconds(seconds);
-    };
+agentApp.filter('secondsToDateTime', [function() {
+  return function(seconds) {
+    if (!seconds) {
+      return new Date(1970, 0, 1).setSeconds(0);
+    }
+    return new Date(1970, 0, 1).setSeconds(seconds);
+  };
 }]);
 
-agentApp.filter('millisecondsToDateTime', [function () {
-    return function (seconds) {
-        return new Date(1970, 0, 1).setMilliseconds(seconds);
-    };
+agentApp.filter('millisecondsToDateTime', [function() {
+  return function(seconds) {
+    return new Date(1970, 0, 1).setMilliseconds(seconds);
+  };
 }]);
 
 
 //Password verification
-agentApp.directive('passwordVerify', function () {
-    return {
-        restrict: 'A', // only activate on element attribute
-        require: 'ngModel', // get a hold of NgModelController
-        link: function (scope, elem, attrs, ngModel) {
-            if (!ngModel) return; // do nothing if no ng-model
+agentApp.directive('passwordVerify', function() {
+  return {
+    restrict: 'A', // only activate on element attribute
+    require: 'ngModel', // get a hold of NgModelController
+    link: function(scope, elem, attrs, ngModel) {
+      if (!ngModel) return; // do nothing if no ng-model
 
-            // watch own value and re-validate on change
-            scope.$watch(attrs.ngModel, function () {
-                validate();
-            });
+      // watch own value and re-validate on change
+      scope.$watch(attrs.ngModel, function() {
+        validate();
+      });
 
-            // observe the other value and re-validate on change
-            attrs.$observe('passwordVerify', function (val) {
-                validate();
-            });
+      // observe the other value and re-validate on change
+      attrs.$observe('passwordVerify', function(val) {
+        validate();
+      });
 
-            var validate = function () {
-                // values
-                var val1 = ngModel.$viewValue;
-                var val2 = attrs.passwordVerify;
-                // set validity
-                var status = !val1 || !val2 || val1 === val2;
-                ngModel.$setValidity('passwordVerify', status);
-                // return val1
-            };
-        }
+      var validate = function() {
+        // values
+        var val1 = ngModel.$viewValue;
+        var val2 = attrs.passwordVerify;
+        // set validity
+        var status = !val1 || !val2 || val1 === val2;
+        ngModel.$setValidity('passwordVerify', status);
+        // return val1
+      };
     }
+  }
 });
 
 
-agentApp.directive('execOnScrollToTop', function () {
+agentApp.directive('execOnScrollToTop', function() {
 
-    return {
+  return {
 
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var fn = scope.$eval(attrs.execOnScrollToTop);
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      var fn = scope.$eval(attrs.execOnScrollToTop);
 
-            element.on('scroll', function (e) {
+      element.on('scroll', function(e) {
 
-                if (!e.target.scrollTop) {
-                    console.log("scrolled to top...");
-                    scope.$apply(fn);
-                }
-
-            });
+        if (!e.target.scrollTop) {
+          console.log("scrolled to top...");
+          scope.$apply(fn);
         }
 
-    };
+      });
+    }
+
+  };
 
 });
 
 
-agentApp.directive('execOnScrollToBottom', function () {
+agentApp.directive('execOnScrollToBottom', function() {
 
-    return {
+  return {
 
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var fn = scope.$eval(attrs.execOnScrollToBottom),
-                clientHeight = element[0].clientHeight;
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      var fn = scope.$eval(attrs.execOnScrollToBottom),
+        clientHeight = element[0].clientHeight;
 
-            element.on('scroll', function (e) {
-                var el = e.target;
+      element.on('scroll', function(e) {
+        var el = e.target;
 
-                if ((el.scrollHeight - el.scrollTop) === clientHeight) { // fully scrolled
-                    console.log("scrolled to bottom...");
-                    scope.$apply(fn);
-                }
-            });
+        if ((el.scrollHeight - el.scrollTop) === clientHeight) { // fully scrolled
+          console.log("scrolled to bottom...");
+          scope.$apply(fn);
         }
+      });
+    }
 
-    };
+  };
 
 });
 
 agentApp.directive('passwordStrengthBox', [
-    function () {
-        return {
-            require: 'ngModel',
-            restrict: 'E',
-            scope: {
-                password: '=ngModel',
-                confirm: '=',
-                box: '='
-            },
+  function() {
+    return {
+      require: 'ngModel',
+      restrict: 'E',
+      scope: {
+        password: '=ngModel',
+        confirm: '=',
+        box: '='
+      },
 
-            link: function (scope, elem, attrs, ctrl) {
-                //password validation
-                scope.isShowBox = false;
-                scope.isPwdValidation = {
-                    minLength: false,
-                    specialChr: false,
-                    digit: false,
-                    capitalLetter: false
-                };
-                scope.$watch('password', function (newVal) {
-                    scope.strength = isSatisfied(newVal && newVal.length >= 8) +
-                        isSatisfied(newVal && /[A-z]/.test(newVal)) +
-                        isSatisfied(newVal && /(?=.*[A-Z])/.test(newVal)) +
-                        isSatisfied(newVal && /(?=.*\W)/.test(newVal)) +
-                        isSatisfied(newVal && /\d/.test(newVal));
+      link: function(scope, elem, attrs, ctrl) {
+        //password validation
+        scope.isShowBox = false;
+        scope.isPwdValidation = {
+          minLength: false,
+          specialChr: false,
+          digit: false,
+          capitalLetter: false
+        };
+        scope.$watch('password', function(newVal) {
+          scope.strength = isSatisfied(newVal && newVal.length >= 8) +
+            isSatisfied(newVal && /[A-z]/.test(newVal)) +
+            isSatisfied(newVal && /(?=.*[A-Z])/.test(newVal)) +
+            isSatisfied(newVal && /(?=.*\W)/.test(newVal)) +
+            isSatisfied(newVal && /\d/.test(newVal));
 
-                    if (!ctrl || !newVal || scope.strength != 5) {
-                        ctrl.$setValidity('newPassword', false);
-                    } else {
-                        ctrl.$setValidity('newPassword', true);
-                    }
+          if (!ctrl || !newVal || scope.strength != 5) {
+            ctrl.$setValidity('newPassword', false);
+          } else {
+            ctrl.$setValidity('newPassword', true);
+          }
 
-                    //length
-                    if (newVal && newVal.length >= 8) {
-                        scope.isPwdValidation.minLength = true;
-                    } else {
-                        scope.isPwdValidation.minLength = false;
-                    }
+          //length
+          if (newVal && newVal.length >= 8) {
+            scope.isPwdValidation.minLength = true;
+          } else {
+            scope.isPwdValidation.minLength = false;
+          }
 
-                    // Special Character
-                    if (newVal && /(?=.*\W)/.test(newVal)) {
-                        scope.isPwdValidation.specialChr = true;
-                    } else {
-                        scope.isPwdValidation.specialChr = false;
-                    }
+          // Special Character
+          if (newVal && /(?=.*\W)/.test(newVal)) {
+            scope.isPwdValidation.specialChr = true;
+          } else {
+            scope.isPwdValidation.specialChr = false;
+          }
 
-                    //digit
-                    if (newVal && /\d/.test(newVal)) {
-                        scope.isPwdValidation.digit = true;
-                    } else {
-                        scope.isPwdValidation.digit = false;
-                    }
+          //digit
+          if (newVal && /\d/.test(newVal)) {
+            scope.isPwdValidation.digit = true;
+          } else {
+            scope.isPwdValidation.digit = false;
+          }
 
-                    //capital Letter
-                    if (newVal && /(?=.*[A-Z])/.test(newVal)) {
-                        scope.isPwdValidation.capitalLetter = true;
-                    } else {
-                        scope.isPwdValidation.capitalLetter = false;
-                    }
+          //capital Letter
+          if (newVal && /(?=.*[A-Z])/.test(newVal)) {
+            scope.isPwdValidation.capitalLetter = true;
+          } else {
+            scope.isPwdValidation.capitalLetter = false;
+          }
 
 
-                    //check password confirm validation
-                    // if (scope.confirm) {
-                    //     var origin = scope.confirm;
-                    //     if (origin !== newVal) {
-                    //         ctrl.$setValidity("unique", false);
-                    //     } else {
-                    //         ctrl.$setValidity("unique", true);
-                    //     }
-                    // };
+          //check password confirm validation
+          // if (scope.confirm) {
+          //     var origin = scope.confirm;
+          //     if (origin !== newVal) {
+          //         ctrl.$setValidity("unique", false);
+          //     } else {
+          //         ctrl.$setValidity("unique", true);
+          //     }
+          // };
 
-                    function isSatisfied(criteria) {
-                        return criteria ? 1 : 0;
-                    }
-                }, true);
-            },
-            template: '<div ng-if="strength != ' + 5 + ' "' +
-            'ng-show=strength' +
-            ' class="password-leg-wrapper login-lg-wrapper animated fadeIn ">' +
-            '<ul>' +
-            '<li>' +
-            '<i ng-show="isPwdValidation.minLength" class="ti-check color-green"></i>' +
-            '<i ng-show="!isPwdValidation.minLength" class="ti-close color-red"></i>' +
-            ' Min length 8' +
-            '</li>' +
-            '<li><i ng-show="isPwdValidation.specialChr" class="ti-check color-green "></i>' +
-            '<i ng-show="!isPwdValidation.specialChr" class="ti-close color-red"></i>' +
-            ' Special Character' +
-            '</li>' +
-            '<li><i ng-show="isPwdValidation.digit" class="ti-check color-green"></i>' +
-            '<i ng-show="!isPwdValidation.digit" class="ti-close color-red"></i>' +
-            ' Digit' +
-            '</li>' +
-            '<li><i ng-show="isPwdValidation.capitalLetter" class="ti-check color-green"></i>' +
-            '<i ng-show="!isPwdValidation.capitalLetter" class="ti-close color-red"></i>' +
-            ' Capital Letter' +
-            ' </li>' +
-            '</ul>' +
-            '</div>'
-        }
+          function isSatisfied(criteria) {
+            return criteria ? 1 : 0;
+          }
+        }, true);
+      },
+      template: '<div ng-if="strength != ' + 5 + ' "' +
+        'ng-show=strength' +
+        ' class="password-leg-wrapper login-lg-wrapper animated fadeIn ">' +
+        '<ul>' +
+        '<li>' +
+        '<i ng-show="isPwdValidation.minLength" class="ti-check color-green"></i>' +
+        '<i ng-show="!isPwdValidation.minLength" class="ti-close color-red"></i>' +
+        ' Min length 8' +
+        '</li>' +
+        '<li><i ng-show="isPwdValidation.specialChr" class="ti-check color-green "></i>' +
+        '<i ng-show="!isPwdValidation.specialChr" class="ti-close color-red"></i>' +
+        ' Special Character' +
+        '</li>' +
+        '<li><i ng-show="isPwdValidation.digit" class="ti-check color-green"></i>' +
+        '<i ng-show="!isPwdValidation.digit" class="ti-close color-red"></i>' +
+        ' Digit' +
+        '</li>' +
+        '<li><i ng-show="isPwdValidation.capitalLetter" class="ti-check color-green"></i>' +
+        '<i ng-show="!isPwdValidation.capitalLetter" class="ti-close color-red"></i>' +
+        ' Capital Letter' +
+        ' </li>' +
+        '</ul>' +
+        '</div>'
     }
+  }
 ]);
