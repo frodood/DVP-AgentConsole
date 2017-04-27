@@ -364,7 +364,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
             else {
                 var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
-                var value = decodeData.context.veeryaccount.display;
+                var value = decodeData.context.veeryaccount.contact;
                 resourceService.Call(callNumber, value).then(function (res) {
                     if (res) {
                         $scope.showAlert("Soft Phone", "success", "Successfully Dial To " + callNumber);
@@ -879,11 +879,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $('#callNIncomingAlert').animate({
                     right: '0'
                 }, 500);
-                if($scope.call.direction.toLowerCase() === 'outbound'){
+                if ($scope.call.direction.toLowerCase() === 'outbound') {
                     $('#anzNotificationCall').addClass('display-none');
                     $('#rejectNotificationCall').addClass('display-none');
                     $('#endNotificationCall').removeClass('display-none');
-                }else{
+                } else {
                     $('#anzNotificationCall').removeClass('display-none');
                     $('#rejectNotificationCall').removeClass('display-none');
                     $('#endNotificationCall').addClass('display-none');
@@ -929,7 +929,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         endCall: function () {
             if ($scope.isRegistor) return;
             $scope.isWaiting = true;
-            resourceService.CallHungup($scope.call.callrefid).then(function (response) {
+            resourceService.CallHungup(($scope.call.direction.toLowerCase() === 'outbound')? $scope.call.sessionId: $scope.call.callrefid).then(function (response) {
                 $scope.isWaiting = false;
             }, function (err) {
                 $scope.isWaiting = false;
@@ -950,9 +950,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         transferCall: function (number) {
             if ($scope.isRegistor) return;
             $scope.isWaiting = true;
-            resourceService.TransferCall(number,$scope.call.sessionId,$scope.call.callrefid).then(function (response) {
+            resourceService.TransferCall(number, $scope.call.sessionId, $scope.call.callrefid).then(function (response) {
                 $scope.isWaiting = false;
-                if(response){
+                if (response) {
                     $('#transferNotificationCall').addClass('display-none');
                 }
             }, function (err) {
@@ -1057,6 +1057,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#notificationfreezebtn').removeClass('display-none');
             $('#notificationendfreezebtn').addClass('display-none');
             $('#transferNotificationCall').removeClass('display-none');
+            //document.getElementById('countdownnotificationCalltimmer').getElementsByTagName('timer')[0].stop();
         },
         rejectState: function () {
             if ($scope.isRegistor) return;
@@ -1460,7 +1461,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         };
 
         //agent_found|c8e009d8-4e31-4685-ab57-2315c69854dd|60|18705056580|Extension 18705056580|94112375000|ClientSupport|inbound|call|duoarafath
-        //agent_found|c9a0ee97-e3aa-45d2-838d-1aeafc026923|60|3726027252|sukitha.chanaka|99051000278670|ClientSupport|inbound|skype
+
         if (values.length > 8) {
 
             notifyData.channel = values[8];
@@ -1489,13 +1490,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
         $scope.call.direction = notifyData.direction;
-        $scope.call.callrefid = undefined;
+        $scope.call.callrefid = (values.length >= 10)? values[10]: undefined;
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
 
 
         /*show notifications */
-        if (notifyData.direction.toLowerCase() === 'inbound' ||notifyData.direction.toLowerCase() === 'outbound'){
+        if (notifyData.direction.toLowerCase() === 'inbound' || notifyData.direction.toLowerCase() === 'outbound') {
             $scope.phoneNotificationFunctions.showNotfication(true);
         }
     };
@@ -2170,7 +2171,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'newUserProfile':
                 var data = {
                     Company: args.company,
-                    Message: "agent_found|" + args.sessionId + "|60|" + args.channelFrom + "|" + args.channelFrom + "|" + args.channelTo + "| |" + args.channel + "|"+ args.channel
+                    Message: "agent_found|" + args.sessionId + "|60|" + args.channelFrom + "|" + args.channelFrom + "|" + args.channelTo + "| |" + args.channel + "|" + args.channel
                 };
 
                 $scope.agentFound(data);
@@ -3043,7 +3044,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isLogingOut = false;
     $scope.logOut = function () {
 
-        veeryNotification.disconnectFromServer();
         $scope.isLogingOut = true;
         $scope.veeryPhone.unregisterWithArds(function (done) {
             loginService.Logoff(function () {

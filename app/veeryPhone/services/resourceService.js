@@ -225,6 +225,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
                 callrefid: callrefid,
                 legId: legId,
                 number: number
+
             }
         }).then(function (response) {
             if (response.data ) {
@@ -235,12 +236,12 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
-    var callHungup = function (callrefid) {
+    var callHungup = function (sessionId) {
         return $http({
             method: 'post',
             url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/hungup",
             params: {
-                callrefid: callrefid
+                callrefid: sessionId
             }
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
