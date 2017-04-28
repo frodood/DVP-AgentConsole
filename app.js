@@ -24,29 +24,28 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui.bootstrap',
 agentApp.constant('moment', moment);
 
 var baseUrls = {
-  'authUrl': 'http://userservice.app.veery.cloud', //http://userservice.app.veery.cloud
-  'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
-  'notification': 'http://notificationservice.app.veery.cloud',
-  'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/', //ardsliteservice.app.veery.cloud
-  'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/', //interactions.app.veery.cloud
-  'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/', //liteticket.app.veery.cloud
-  'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
-  'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
-  'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
-  'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
-  'fileServiceInternalUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/InternalFileService/',
-  'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/', // http://resourceservice.app.veery.cloud
-  'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
-  'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
-  //todolistservice.app.veery.cloud
-  'monitorrestapi': 'http://localhost:3637/DVP/API/1.0.0.0/', //monitorrestapi.app.veery.cloud
-  'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
-  'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
-  'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-  'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud', //'http://ipmessagingservice.app.veery.cloud',
-  'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-  'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
-  'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/' //dialerapi.app.veery.cloud
+    'authUrl': 'http://userservice.app.veery.cloud',//http://userservice.app.veery.cloud
+    'userServiceBaseUrl': 'http://userservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'notification': 'http://notificationservice.app.veery.cloud',
+    'ardsliteserviceUrl': 'http://ardsliteservice.app.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.app.veery.cloud
+    'engagementUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/',//interactions.app.veery.cloud
+    'ticketUrl': 'http://liteticket.app.veery.cloud/DVP/API/1.0.0.0/',//liteticket.app.veery.cloud
+    'ivrUrl': 'http://eventservice.app.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
+    'mailInboxUrl': 'http://interactions.app.veery.cloud/DVP/API/1.0.0.0/Inbox/',
+    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
+    'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'fileServiceInternalUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/InternalFileService/',
+    'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/', // http://resourceservice.app.veery.cloud
+    'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
+    'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',    //todolistservice.app.veery.cloud
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',//monitorrestapi.app.veery.cloud
+    'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
+    'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
+    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',//'http://ipmessagingservice.app.veery.cloud',
+    'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
+    'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
+    'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/' //dialerapi.app.veery.cloud
 
 };
 
