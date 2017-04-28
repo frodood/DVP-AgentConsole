@@ -1567,6 +1567,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                             category = 'direct';
                         }
                         break;
+                    case 'chat':
+                        category = 'email';
+                        break;
 
                     default :
                         if(scope.channel.includes("facebook"))
@@ -1638,7 +1641,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     if(category === 'direct') {
                         scope.createNProfile();
                     }else{
-                        if(scope.channel === 'chat'){
+                        userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                            scope.profileDetails = response;
+                            loadUserData();
+                        }, function (err) {
+                            scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                        });
+                       /* if(scope.channel === 'chat'){
                             userService.getExternalUserProfileByField("firstname", scope.channelFrom).then(function (response) {
                                 if (response && response.IsSuccess) {
                                     scope.profileDetails = response.Result;
@@ -1658,7 +1667,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                             }, function (err) {
                                 scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
                             });
-                        }
+                        }*/
                     }
                 }
             };
