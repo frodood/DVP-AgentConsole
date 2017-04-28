@@ -6334,9 +6334,9 @@ ul.renote-color-btn > li {
 
 /*typeing */
 .type-wrp {
-    width: 55px;
+    width: 54px;
     height: 25px;
-    margin-left: 11px;
+    margin-left: 5px;
     overflow: hidden;
     position: relative;
     display: inline-block;
@@ -6505,6 +6505,7 @@ ul.renote-color-btn > li {
     max-width: 217px;
     overflow: hidden;
     word-wrap: break-word;
+    padding: 5px 5px;
 }
 
 .snd-msg > .msg-t.pending {
@@ -6522,9 +6523,14 @@ ul.renote-color-btn > li {
 }
 
 .snd-msg > .msg-t.seen {
-    background: #36ba45;
-    color: #fff;
-    border: 1px solid #36ba45;
+    background: #ffffff;
+    color: #000;
+    border: 1px solid #eaeaea;
+}
+
+.msg-send-time {
+    font-size: 10px;
+    color: #c4c8ce;
 }
 
 @keyframes blink {
