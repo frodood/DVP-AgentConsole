@@ -238,7 +238,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     /*productivity*/
     $scope.doughnutData = {
-        labels: ["ACW", "Break", "OnCall", "Idle", "Hold"],
+        labels: ["ACW", "Break", "InCall", "OutCall", "Idle", "Hold"],
         datasets: [
             {
                 data: [0, 0, 0, 0, 0]
@@ -322,7 +322,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 if (response.length === 0)
                     return;
                 $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime),
-                    secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
+                    secondToHours(response.OnCallTime), secondToHours(response.OutboundCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
                 // window.myDoughnutChart.update();
                 $scope.doughnutObj = {
                     labels: $scope.doughnutData.labels,
