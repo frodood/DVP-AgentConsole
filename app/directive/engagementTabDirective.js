@@ -2114,7 +2114,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.company = 0;
             scope.getCompanyTenant = function () {
                 var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
-                console.info(decodeData);
                 scope.company = decodeData.company;
                 scope.tenant = decodeData.tenant;
             };
