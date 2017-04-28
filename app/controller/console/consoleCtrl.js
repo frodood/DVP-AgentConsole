@@ -929,7 +929,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         endCall: function () {
             if ($scope.isRegistor) return;
             $scope.isWaiting = true;
-            resourceService.CallHungup(($scope.call.direction.toLowerCase() === 'outbound')? $scope.call.sessionId: $scope.call.callrefid).then(function (response) {
+            resourceService.CallHungup(($scope.call.direction.toLowerCase() === 'outbound') ? $scope.call.sessionId : $scope.call.callrefid).then(function (response) {
                 $scope.isWaiting = false;
             }, function (err) {
                 $scope.isWaiting = false;
@@ -1490,7 +1490,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.call.CompanyNo = notifyData.channelTo;
         $scope.call.sessionId = notifyData.sessionId;
         $scope.call.direction = notifyData.direction;
-        $scope.call.callrefid = (values.length >= 10)? values[10]: undefined;
+        $scope.call.callrefid = (values.length >= 10) ? values[10] : undefined;
         $scope.addTab('Engagement - ' + values[3], 'Engagement', 'engagement', notifyData, index);
         collectSessions(index);
 
@@ -4311,7 +4311,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //get online users
     var onlineUser = chatService.onUserStatus();
-    console.log(onlineUser);
 
     $scope.showTabChatPanel = function (chatUser) {
 
