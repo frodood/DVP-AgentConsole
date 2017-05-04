@@ -6334,9 +6334,9 @@ ul.renote-color-btn > li {
 
 /*typeing */
 .type-wrp {
-    width: 55px;
+    width: 54px;
     height: 25px;
-    margin-left: 11px;
+    margin-left: 5px;
     overflow: hidden;
     position: relative;
     display: inline-block;
@@ -6505,6 +6505,7 @@ ul.renote-color-btn > li {
     max-width: 217px;
     overflow: hidden;
     word-wrap: break-word;
+    padding: 5px 5px;
 }
 
 .snd-msg > .msg-t.pending {
@@ -6522,9 +6523,14 @@ ul.renote-color-btn > li {
 }
 
 .snd-msg > .msg-t.seen {
-    background: #36ba45;
-    color: #fff;
-    border: 1px solid #36ba45;
+    background: #ffffff;
+    color: #000;
+    border: 1px solid #eaeaea;
+}
+
+.msg-send-time {
+    font-size: 10px;
+    color: #c4c8ce;
 }
 
 @keyframes blink {
@@ -6608,6 +6614,45 @@ ul.renote-color-btn > li {
     background: rgba(241, 239, 239, 1);
     z-index: 1;
     text-align: center;
+}
+
+.ne-image-wrapper {
+    height: 115px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 6px;
+    border: 2px solid #eaeaea;
+    padding: -1px;
+    /* border-radius: 5px; */
+    /* margin-right: 23px; */
+}
+
+.ne-video-player {
+    height: 150px;
+    overflow: hidden;
+    border: 2px solid #eaeaea;
+    margin-bottom: 6px;
+}
+
+.html5-video-player {
+    width: 200px;
+}
+
+.ne-video-player > iframe {
+    width: 204px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.ne-embed > div {
+    height: 150px;
+    overflow: hidden;
+}
+
+.ne-image-wrapper > img{
+    width: 199px;
+    height: auto;
 }
 
 /*right side nav panel */
@@ -7176,12 +7221,12 @@ ul.renote-color-btn > li {
 
 .card-text-num-w > .lg-text {
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    font-size: 42px;
+    font-size: 25px;
 }
 
 .card-text-num-w > .sm-text {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    font-size: 18px;
+    font-size: 11px;
 }
 
 .c-text-yellow {
@@ -7245,7 +7290,7 @@ ul.renote-color-btn > li {
 
 .card-wrapper {
     width: 100%;
-    min-height: 100px;
+    min-height: 72px;
     overflow: hidden;
     position: relative;
 }
@@ -7288,7 +7333,7 @@ ul.renote-color-btn > li {
 }
 
 .left-d-icon > i {
-    font-size: 35px;
+    font-size: 25px;
 }
 
 .staffed-time {
@@ -7321,7 +7366,7 @@ ul.renote-color-btn > li {
     position: relative;
     display: block;
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    font-size: 23px;
+    font-size: 15px;
     text-align: left;
 }
 
@@ -7332,7 +7377,7 @@ ul.renote-color-btn > li {
     position: relative;
     display: block;
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     text-align: left;
 }
 
