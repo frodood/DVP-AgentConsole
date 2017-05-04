@@ -61,6 +61,16 @@ window.SE = function (e) {
         });
 
 
+
+
+        socket.on('room:event', function (data) {
+            console.log("dashboard event");
+            if (callBack.OnDashBoardEvent) {
+                callBack.OnDashBoardEvent(data);
+            }
+        });
+
+
         socket.on('allcallstatus', function (data) {
             console.log("allcallstatus");
             if (callBack.OnAllCallStatus) {
@@ -369,6 +379,20 @@ window.SE = function (e) {
         }
     }
 
+    function sb(e) {
+        if (!e)throw g;
+
+        var r = v(e, "room");
+        if (connected) {
+            socket.emit('subscribe', {room: r});
+        }
+        else {
+            if (callBack.OnError) {
+                callBack.OnError({method: "connection", message: "Connection Lost."});
+            }
+        }
+    }
+
     function t(e) {
         if (!e)throw g;
 
@@ -514,6 +538,7 @@ window.SE = function (e) {
         "sessionend": se,
         "status": o,
         "typingstoped": a,
-        "reconnect": rc
+        "reconnect": rc,
+        "subscribe": sb
     }
 }();
