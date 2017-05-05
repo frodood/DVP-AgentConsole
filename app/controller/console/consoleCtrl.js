@@ -3364,7 +3364,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (getAllRealTimeTimer) {
             $timeout.cancel(getAllRealTimeTimer);
         }
-        $scope.veeryPhone.unregisterWithArds();
+        $scope.veeryPhone.unregisterWithArds(callback);
     });
 
     /* update code damith
