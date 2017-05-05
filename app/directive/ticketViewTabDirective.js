@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, profileDataParser, userService, uuid4, FileUploader, baseUrls, fileService) {
+agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, profileDataParser, userService, uuid4, FileUploader, baseUrls, fileService,$auth) {
     return {
         restrict: "EA",
         scope: {
@@ -1809,7 +1809,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     console.info('onProgressItem', fileItem, progress);
                     scope.uploadProgress = progress;
                     if (scope.uploadProgress == 100) {
-                        scope.showAlert("Attachment", "success", "Successfully uploaded");
+                        // scope.showAlert("Attachment", "success", "Successfully uploaded");
                         /* setTimeout(function () {
                          scope.uploadProgress=0;
                          }, 500);*/
@@ -1854,7 +1854,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                                 }
-                                if (scope.isNewSlot) {
+                                if (scope.isNewSlot && scope.updationSlot.slot.fileType==attchmentData.type.split("/")[0]) {
                                     scope.isNewSlot = false;
                                     scope.isUploading = false;
 
@@ -1885,6 +1885,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                                     //
                                 }
+                                else
+                                {
+                                    console.log("Invalid file type added");
+                                }
 
 
                             }
@@ -1901,6 +1905,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 };
                 uploader.onCompleteAll = function () {
                     console.info('onCompleteAll');
+                    scope.showAlert("Attachment", "success", "Successfully uploaded");
                     if (scope.isNewComment) {
                         scope.isCommentCompleted = true;
                         scope.isUploading = false;
@@ -1992,7 +1997,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     if (videogularAPI && id) {
                         var info = authService.GetCompanyInfo();
-                        var fileToPlay = baseUrls.fileService + 'InternalFileService/File/DownloadLatest/' + info.tenant + '/' + info.company + '/' + id + '.mp3';
+                        var fileToPlay = baseUrls.fileService + 'FileService/File/DownloadLatest/' + id + '.mp3?Authorization='+$auth.getToken();
 
                         var arr = [
                             {
@@ -2010,9 +2015,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 };
                 scope.playAttachment = function (attachment) {
 
+
+
                     if (scope.isImage(attachment.type)) {
 
-                        document.getElementById("image-viewer").href = scope.GeneralFileService + attachment.url + "/SampleAttachment";
+                        document.getElementById("image-viewer").href = scope.GeneralFileService + attachment.url + "/SampleAttachment?Authorization="+$auth.getToken();
 
                         $('#image-viewer').trigger('click');
 
@@ -2022,7 +2029,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         if (videogularAPI && attachment.url) {
                             var info = authService.GetCompanyInfo();
 
-                            var fileToPlay = scope.FileServiceUrl + attachment.url + "/SampleAttachment";
+                            var fileToPlay = scope.GeneralFileService + attachment.url + "/SampleAttachment?Authorization="+$auth.getToken();
+
+                            console.log(fileToPlay);
 
                             var arr = [
                                 {
@@ -2092,7 +2101,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 }
 
-                scope.isNewSlot = false;
                 scope.updationSlot;
                 scope.uploadAttachmentToSlot = function (slot) {
                     $("#commentUploader").click();
