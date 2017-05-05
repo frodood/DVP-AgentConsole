@@ -1282,10 +1282,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#speakerButton').addClass('display-none ');
         },
         updateCallStatus: function (status) {
-            $scope.safeApply(function () {
+            /*$scope.safeApply(function () {
                 $scope.call.status = status;
-            });
+            });*/
 
+            document.getElementById('callStatus').innerHTML = status;
         },
         hideTransfer: function () {
             $('#transferCall').addClass('display-none').removeClass('display-inline');
