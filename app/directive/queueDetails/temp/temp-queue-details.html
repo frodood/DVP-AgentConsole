@@ -1,0 +1,23 @@
+<div class="col-lg-5" ng-click="testCLickEvent()" style="cursor: pointer;">
+    <div class="queue-name-wrp">
+        <div class="qu-header-w">
+            {{queueDetails.QueueName}}
+        </div>
+    </div>
+
+</div>
+<div class="col-lg-3">
+    <div class="qu-time-wrp">
+        <div class="qu-header-w">
+            {{queueDetails.QueueInfo.CurrentWaiting}}
+        </div>
+
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="qu-time-wrp">
+        <div class="qu-header-w">
+            <timer start-time="queueDetails.QueueInfo.MaxWaitingMS" interval="1000"> {{hhours}} : {{mminutes}} : {{sseconds}}</timer>
+        </div>
+    </div>
+</div>

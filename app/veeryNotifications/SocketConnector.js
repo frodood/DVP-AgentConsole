@@ -67,8 +67,8 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 console.log(reason);
 
                 isAuthenticated = false;
-                if (notificationEvent.onAgentDisconnected)
-                    notificationEvent.onAgentDisconnected();
+                if (notificationEvent.OnAgentUnauthenticate)
+                    notificationEvent.OnAgentUnauthenticate();
 
             });
 
@@ -108,12 +108,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 //console.log(data);
             });
 
-            socket.on('agent_connected', function (data) {
-                //document.getElementById("lblNotification").innerHTML = data.Message;
 
-                //Notification.primary({message: data.Message, delay: 5000, closeOnClick: true});
-
-            });
             socket.on('agent_found', function (data) {
                 //var displayMsg = "Company : " + data.Company + "<br> Company No : " + values[5] + "<br> Caller : " + values[3] + "<br> Skill : " + values[6];
                 if (notificationEvent.onAgentFound)
@@ -121,10 +116,20 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
                 console.log("Agent found data " + data);
             });
 
-            socket.on('agent_disconnected', function (data) {
-                // document.getElementById("lblNotification").innerHTML = data.Message;
-                //Notification.primary({message: data.Message, delay: 5000, closeOnClick: true});
+            socket.on('agent_connected', function (data) {
+                if (notificationEvent.onAgentConnected)
+                    notificationEvent.onAgentConnected(data);
+            });
 
+            socket.on('agent_rejected', function (data) {
+                if (notificationEvent.onAgentRejected)
+                    notificationEvent.onAgentRejected(data);
+
+            });
+
+            socket.on('agent_disconnected', function (data) {
+                if (notificationEvent.onAgentDisconnected)
+                    notificationEvent.onAgentDisconnected(data);
             });
 
             socket.on('todo_reminder', function (data) {

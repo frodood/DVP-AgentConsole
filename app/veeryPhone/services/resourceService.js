@@ -133,6 +133,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
             return response.data.IsSuccess;
         });
     };
+
     var mapResourceToVeery = function (publicIdentity) {
         /*dynamic data = new JObject();
          data.SipURI = profile.publicIdentity.Replace("sip:", "");
@@ -203,8 +204,127 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
         });
     };
 
+    var call = function (number,extension) {
+        return $http({
+            method: 'get',
+            url: baseUrls.dialerUrl + number+"/"+extension
+        }).then(function (response) {
+            if (response.data ) {
+                return response.data;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var transferCall = function (number,callrefid,legId) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/transfer",
+            params: {
+                callrefid: callrefid,
+                legId: legId,
+                number: number
+
+            }
+        }).then(function (response) {
+            if (response.data ) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var callHungup = function (sessionId) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/hungup",
+            params: {
+                callrefid: sessionId
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var callHold = function (callrefid,opration) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/hold/"+opration,
+            params: {
+                callrefid: callrefid
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var callMute = function (callrefid,opration) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/mute/"+opration,
+            params: {
+                callrefid: callrefid
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var sendDtmf = function (callrefid,digit) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/dtmf",
+            params: {
+                callrefid: callrefid,
+                digit:digit
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
+
+    var callAnswer = function (callrefid) {
+        return $http({
+            method: 'post',
+            url: baseUrls.monitorrestapi + "MonitorRestAPI/Direct/answer",
+            params: {
+                callrefid: callrefid
+            }
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return false;
+            }
+        });
+    };
 
     return {
+        CallHungup:callHungup,
+        Call:call,
+        TransferCall:transferCall,
+        CallHold:callHold,
+        CallMute:callMute,
+        SendDtmf:sendDtmf,
+        CallAnswer:callAnswer,
         BreakRequest: breakRequest,
         EndBreakRequest: endBreakRequest,
         RegisterWithArds: registerWithArds,

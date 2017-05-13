@@ -41,6 +41,9 @@
                 <div class="timeline-body bottom-line ">
                     <p>direction : {{eng.direction}}</p>
                 </div>
+                <div ng-if="eng.body" class="timeline-body bottom-line ">
+                    <p> {{eng.body}}</p>
+                </div>
                 <div class="timeline-body">
                     <p ng-repeat="note in eng.notes">
                         <i class="fa fa-check-circle-o"></i>

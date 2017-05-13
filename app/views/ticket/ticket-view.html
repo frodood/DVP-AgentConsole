@@ -234,7 +234,7 @@
                                             </div>
 
                                             <div class="col-sm-4"> </div>
-                                            <div class="col-sm-4"> {{slot.slot.name}}</div>
+                                            <div class="col-sm-4"> {{slot.slot.name}}/{{slot.slot.fileType}}</div>
                                             <div class="col-sm-4"> </div>
 
 
@@ -555,7 +555,13 @@
                                                     </div>
                                                     <div class="notification-text">
                                                         {{ticket.requester_displayname}}
+
+                                                        <i ng-show="ticket.showProfileAddButton" class="fa fa-plus-square cursor-pointer" ng-click="goToNewProfile(ticket);"></i>
                                                     </div>
+                                                    <!--<ul class="nav navbar-right panel_toolbox">
+                                                        <li><i class="fa fa-plus-square" ng-click="deleteSocialContact('facebook');"></i>
+                                                        </li>
+                                                    </ul>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -814,7 +820,7 @@
                         </div>
                         <!-- END -->
 
-                        <!-- Security Level  -->
+                        <!-- Security Level
                         <div class="collaborators-wrapper" style="margin-top: 35px;">
                             <div class="details">
                                 <h5 class="bold"> SECURITY LEVEL
@@ -840,7 +846,7 @@
 
 
                         </div>
-                        <!-- END -->
+                         END -->
                     </div>
                 </div>
             </div>

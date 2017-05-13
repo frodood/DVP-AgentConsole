@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, profileDataParser, userService, uuid4, FileUploader, baseUrls, fileService) {
+agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, profileDataParser, userService, uuid4, FileUploader, baseUrls, fileService,$auth) {
     return {
         restrict: "EA",
         scope: {
@@ -47,6 +47,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 scope.internalThumbFileUrl = baseUrls.fileService + "InternalFileService/File/Thumbnail/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/";
                 scope.FileServiceUrl = baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/";
+
+                scope.GeneralFileService=baseUrls.fileService + "FileService/File/Download/";
 
 
                 scope.slider = {
@@ -834,7 +836,21 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 };
 
 
-
+                scope.goToNewProfile = function (ticket) {
+                    var notifyData = {
+                        company: authService.GetCompanyInfo().company,
+                        direction: "direct",
+                        channelFrom: ticket.requester_displayname,
+                        channelTo: "direct",
+                        channel: ticket.channel,
+                        skill: '',
+                        sessionId: ticket.engagement_session.engagement_id,
+                        userProfile: undefined,
+                        tabType : 'newUserProfile',
+                        index : ticket.requester_displayname
+                    };
+                    $rootScope.$emit('openNewTab', notifyData);
+                };
 
 
                 scope.loadTicketSummary = function (ticketID) {
@@ -881,6 +897,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 }
                                 else {
                                     scope.ticket.requester_displayname = scope.ticket.engagement_session.channel_from;
+                                    scope.ticket.showProfileAddButton = true;
                                     if (scope.ticket.engagement_session.contact.type == "facebook-post") {
                                         scope.ticket.requester_avatar = "http://graph.facebook.com/v2.8/" + scope.ticket.engagement_session.contact.contact_name + "/picture?type=large";
                                     }
@@ -1342,22 +1359,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                     if (assigneeObj && scope.ticket) {
-                        if (assigneeObj.listType === "User") {
-                            ticketService.AssignUserToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
-                                if (response && response.data.IsSuccess) {
-                                    scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
-                                    scope.ticket.assignee = assigneeObj;
-                                    scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
+                        if (assigneeObj.listType === "Group") {
 
-                                    scope.isEditAssignee = false;
-                                }
-                                else {
-                                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                                }
-                            }, function (error) {
-                                scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                            });
-                        } else {
+
                             ticketService.AssignUserGroupToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
                                 if (response && response.data.IsSuccess) {
 
@@ -1368,6 +1372,23 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                                     scope.isEditAssignee = false;
 
+                                }
+                                else {
+                                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                                }
+                            }, function (error) {
+                                scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                            });
+
+                        } else {
+
+                            ticketService.AssignUserToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
+                                if (response && response.data.IsSuccess) {
+                                    scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
+                                    scope.ticket.assignee = assigneeObj;
+                                    scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
+
+                                    scope.isEditAssignee = false;
                                 }
                                 else {
                                     scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
@@ -1788,7 +1809,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     console.info('onProgressItem', fileItem, progress);
                     scope.uploadProgress = progress;
                     if (scope.uploadProgress == 100) {
-                        scope.showAlert("Attachment", "success", "Successfully uploaded");
+                        // scope.showAlert("Attachment", "success", "Successfully uploaded");
                         /* setTimeout(function () {
                          scope.uploadProgress=0;
                          }, 500);*/
@@ -1833,7 +1854,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                                 }
-                                if (scope.isNewSlot) {
+                                if (scope.isNewSlot && scope.updationSlot.slot.fileType==attchmentData.type.split("/")[0]) {
                                     scope.isNewSlot = false;
                                     scope.isUploading = false;
 
@@ -1864,6 +1885,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                                     //
                                 }
+                                else
+                                {
+                                    console.log("Invalid file type added");
+                                }
 
 
                             }
@@ -1880,6 +1905,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 };
                 uploader.onCompleteAll = function () {
                     console.info('onCompleteAll');
+                    scope.showAlert("Attachment", "success", "Successfully uploaded");
                     if (scope.isNewComment) {
                         scope.isCommentCompleted = true;
                         scope.isUploading = false;
@@ -1971,7 +1997,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     if (videogularAPI && id) {
                         var info = authService.GetCompanyInfo();
-                        var fileToPlay = baseUrls.fileService + 'InternalFileService/File/DownloadLatest/' + info.tenant + '/' + info.company + '/' + id + '.mp3';
+                        var fileToPlay = baseUrls.fileService + 'FileService/File/DownloadLatest/' + id + '.mp3?Authorization='+$auth.getToken();
 
                         var arr = [
                             {
@@ -1989,9 +2015,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 };
                 scope.playAttachment = function (attachment) {
 
+
+
                     if (scope.isImage(attachment.type)) {
 
-                        document.getElementById("image-viewer").href = scope.FileServiceUrl + attachment.url + "/SampleAttachment";
+                        document.getElementById("image-viewer").href = scope.GeneralFileService + attachment.url + "/SampleAttachment?Authorization="+$auth.getToken();
 
                         $('#image-viewer').trigger('click');
 
@@ -2001,7 +2029,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         if (videogularAPI && attachment.url) {
                             var info = authService.GetCompanyInfo();
 
-                            var fileToPlay = scope.FileServiceUrl + attachment.url + "/SampleAttachment";
+                            var fileToPlay = scope.GeneralFileService + attachment.url + "/SampleAttachment?Authorization="+$auth.getToken();
+
+                            console.log(fileToPlay);
 
                             var arr = [
                                 {
@@ -2071,7 +2101,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 }
 
-                scope.isNewSlot = false;
                 scope.updationSlot;
                 scope.uploadAttachmentToSlot = function (slot) {
                     $("#commentUploader").click();
