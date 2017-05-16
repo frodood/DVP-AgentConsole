@@ -540,9 +540,9 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     //var getQueueDetails = $timeout(getAllRealTime, 5000);
 
     $scope.$on("$destroy", function () {
-        if (getAllRealTimeTimer) {
+        /*if (getAllRealTimeTimer) {
             $timeout.cancel(getAllRealTimeTimer);
-        }
+        }*/
         if (loadRecentDataTimer) {
             $timeout.cancel(loadRecentDataTimer);
         }

@@ -93,7 +93,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.countdownVal = 10;
     $scope.GetAcwTime = function () {
         resourceService.GetAcwTime().then(function (response) {
-            $scope.countdownVal = parseInt(JSON.parse(response).MaxAfterWorkTime) - 5;
+            $scope.countdownVal = (parseInt(JSON.parse(response).MaxAfterWorkTime) - 5)<=0?1:(parseInt(JSON.parse(response).MaxAfterWorkTime) - 5);
         }, function (err) {
             $scope.countdownVal = 10;
             authService.IsCheckResponse(err);
@@ -3365,7 +3365,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (getAllRealTimeTimer) {
             $timeout.cancel(getAllRealTimeTimer);
         }
-        $scope.veeryPhone.unregisterWithArds(callback);
+        $scope.veeryPhone.unregisterWithArds(function () {
+            
+        });
     });
 
     /* update code damith
