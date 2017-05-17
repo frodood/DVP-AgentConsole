@@ -2,17 +2,41 @@
  * Created by team verry on 9/23/2016.
  */
 
-agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout,$filter, dashboradService,
+agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $timeout, $filter, dashboradService,
                                                     ticketService, engagementService, profileDataParser,
-                                                    authService, dashboardRefreshTime, myNoteServices, $anchorScroll,profileDataParser,fileService) {
+                                                    authService, dashboardRefreshTime, myNoteServices, $anchorScroll, profileDataParser, fileService, chatService) {
 
+
+    chatService.SubscribeDashboard(function (event) {
+
+        console.log(event);
+        switch (event.roomName) {
+
+            case 'QUEUE:QueueDetail':
+
+                if (event.Message) {
+
+                    //
+                    if (event.Message.QueueInfo.CurrentMaxWaitTime) {
+                        var d = moment(event.Message.QueueInfo.CurrentMaxWaitTime).valueOf();
+                        event.Message.QueueInfo.MaxWaitingMS = d;
+                    }
+                    $scope.queueDetails[event.Message.QueueName] = event.Message;
+                } else {
+                    console.log("No Message found");
+                }
+
+                break;
+        }
+
+    });
 
 
     // call $anchorScroll()
     $anchorScroll();
 
 
-    $scope.showNoticeModal=false;
+    $scope.showNoticeModal = false;
 
     $scope.showAlert = function (title, type, content) {
         new PNotify({
@@ -238,7 +262,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     /*productivity*/
     $scope.doughnutData = {
-        labels: ["ACW", "Break", "OnCall", "Idle", "Hold"],
+        labels: ["ACW", "Break", "InCall", "OutCall", "Idle", "Hold"],
         datasets: [
             {
                 data: [0, 0, 0, 0, 0]
@@ -322,7 +346,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 if (response.length === 0)
                     return;
                 $scope.doughnutData.datasets[0].data = [secondToHours(response.AcwTime), secondToHours(response.BreakTime),
-                    secondToHours(response.OnCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
+                    secondToHours(response.OnCallTime), secondToHours(response.OutboundCallTime), secondToHours(response.IdleTime), secondToHours(response.HoldTime)];
                 // window.myDoughnutChart.update();
                 $scope.doughnutObj = {
                     labels: $scope.doughnutData.labels,
@@ -332,9 +356,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 $scope.productivity.OnCallTime = response.OnCallTime.toString().toHHMMSS();
                 $scope.productivity.StaffedTime = response.StaffedTime.toString().toHHMMSS();
                 $scope.productivity.BreakTime = response.BreakTime.toString().toHHMMSS();
+                $scope.productivity.OutboundCallTime = response.OutboundCallTime.toString().toHHMMSS();
                 $scope.productivity.IncomingCallCount = response.IncomingCallCount;
                 $scope.productivity.MissCallCount = response.MissCallCount;
                 $scope.productivity.TransferCallCount = response.TransferCallCount;
+                $scope.productivity.OutgoingCallCount = response.OutgoingCallCount;
             } else {
                 //$scope.showAlert("Productivity", "error", "Fail To Load Productivity.");
             }
@@ -427,20 +453,35 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
     GetDeferenceResolvedTicketSeries();
 
-    $scope.queueDetails = [];
+    //
+    $scope.queueDetails = {};
     var GetQueueDetails = function () {
         dashboradService.GetQueueDetails().then(function (response) {
-            $scope.queueDetails = response;
+
+            response.forEach(function (item) {
+
+
+
+                if (item.QueueInfo.CurrentMaxWaitTime && item.QueueInfo.CurrentMaxWaitTime != 0) {
+                    var d = moment(item.QueueInfo.CurrentMaxWaitTime).valueOf();
+                    item.QueueInfo.MaxWaitingMS = d;
+                }
+
+                $scope.queueDetails[item.QueueName] = item;
+
+
+            });
         }, function (err) {
             if (getAllRealTimeTimer) {
                 $timeout.cancel(getAllRealTimeTimer);
             }
             //authService.IsCheckResponse(err);
-            $scope.queueDetails = [];
+            $scope.queueDetails = {};
             // $scope.showAlert("Queue Details", "error", "Fail To Load Queue Details.");
         });
     };
     GetQueueDetails();
+
 
     $scope.recentTickets = [];
     var GetMyRecentTickets = function () {
@@ -489,19 +530,19 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     var getAllRealTime = function () {
         GetQueueDetails();
-        getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
+        //getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
     };
 
 
     var loadRecentDataTimer = $timeout(loadRecentData, $scope.refreshTime * 300);
     var loadGrapDataTimer = $timeout(loadGrapData, $scope.refreshTime * 36000);
-    var getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
+    //var getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
     //var getQueueDetails = $timeout(getAllRealTime, 5000);
 
     $scope.$on("$destroy", function () {
-        if (getAllRealTimeTimer) {
+        /*if (getAllRealTimeTimer) {
             $timeout.cancel(getAllRealTimeTimer);
-        }
+        }*/
         if (loadRecentDataTimer) {
             $timeout.cancel(loadRecentDataTimer);
         }
@@ -800,8 +841,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     //**** START NOTICE *******//
     $scope.NoticeList;
-    $rootScope.$on('noticeReceived', function (events, args)
-    {
+    $rootScope.$on('noticeReceived', function (events, args) {
         //$scope.NoticeList.push(args);
         $scope.loadNotices();
     });
@@ -821,8 +861,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
 
 
-
-
     $scope.internalThumbFileUrl = baseUrls.fileService + "InternalFileService/File/Download/" + $scope.userCompanyData.tenant + "/" + $scope.userCompanyData.company + "/";
     $scope.FileServiceUrl = baseUrls.fileService + "InternalFileService/File/Download/" + $scope.userCompanyData.tenant + "/" + $scope.userCompanyData.company + "/";
 
@@ -831,8 +869,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
 
     $scope.viewImage = function (attachment) {
-        if($scope.isImage(attachment.type))
-        {
+        if ($scope.isImage(attachment.type)) {
             document.getElementById("image-viewer").href = $scope.FileServiceUrl + attachment.url + "/SampleAttachment";
 
             $('#image-viewer').trigger('click');
@@ -841,25 +878,22 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     }
 
 
-
     $scope.loadNotices = function () {
 
         dashboradService.getStoredNotices().then(function (res) {
 
-            if(res.IsSuccess)
-            {
+            if (res.IsSuccess) {
 
-                $scope.NoticeList=res.Result;
+                $scope.NoticeList = res.Result;
 
                 $scope.NoticeListTemp = $scope.NoticeList.map(function (notice) {
 
-                    if(notice.attachments && notice.attachments.length>0)
-                    {
+                    if (notice.attachments && notice.attachments.length > 0) {
                         angular.forEach(notice.attachments, function (attachment) {
 
-                            attachment.linkData=$scope.internalThumbFileUrl+""+attachment.url+"/SampleAttachment";
+                            attachment.linkData = $scope.internalThumbFileUrl + "" + attachment.url + "/SampleAttachment";
                             console.log(attachment.linkData);
-                            notice.linkData = $scope.internalThumbFileUrl+""+attachment.url+"/SampleAttachment";
+                            notice.linkData = $scope.internalThumbFileUrl + "" + attachment.url + "/SampleAttachment";
                         });
 
 
@@ -868,33 +902,32 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     return notice;
                 });
             }
-            else
-            {
-                $scope.showAlert("Error","error","Failed to load notices");
+            else {
+                $scope.showAlert("Error", "error", "Failed to load notices");
             }
         }, function (err) {
-            $scope.showAlert("Error","error","Error in loading notices");
+            $scope.showAlert("Error", "error", "Error in loading notices");
         })
 
     }
 
     $scope.loadNotices();
-    $scope.NoticeObj={};
+    $scope.NoticeObj = {};
 
 
     $scope.showNotice = function (notice) {
-        $scope.showNoticeModal=true;
+        $scope.showNoticeModal = true;
         $scope.NoticeObj = notice;
 
 
         if (notice.from) {
             if ($filter('filter')(profileDataParser.assigneeUsers, {_id: notice.from})) {
                 $scope.NoticeObj.senderAvatar = $filter('filter')(profileDataParser.assigneeUsers, {_id: notice.from})[0].avatar;
-                $scope.NoticeObj.senderName=$filter('filter')(profileDataParser.assigneeUsers, {_id: notice.from})[0].username;
+                $scope.NoticeObj.senderName = $filter('filter')(profileDataParser.assigneeUsers, {_id: notice.from})[0].username;
             }
             else if ($filter('filter')($scope.userGroups, {name: notice.from})) {
                 $scope.NoticeObj.senderAvatar = $filter('filter')(profileDataParser.assigneeUserGroups, {_id: notice.from})[0].avatar;
-                $scope.NoticeObj.senderName=$filter('filter')(profileDataParser.assigneeUserGroups, {_id: notice.from})[0].name;
+                $scope.NoticeObj.senderName = $filter('filter')(profileDataParser.assigneeUserGroups, {_id: notice.from})[0].name;
             }
         }
 
@@ -902,7 +935,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
 
     $scope.hideNoticeDetails = function () {
-        $scope.showNoticeModal=false;
+        $scope.showNoticeModal = false;
     }
 
     //**** END NOTICE *******//

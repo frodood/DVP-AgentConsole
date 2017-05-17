@@ -245,7 +245,7 @@
                     <li class="dropdown console-profile-header ">
                         <a href="#"
                            class="dropdown-toggle login-name none-h" uib-dropdown-toggle>Hi,{{firstName}}</a>
-                        <a class="time none-h">{{timeBaseMsg}}</a>
+                        <!--<a class="time none-h">{{timeBaseMsg}}</a>-->
 
                     </li>
                     <ul class="dropdown-menu console-drop-menu" uib-dropdown-menu role="menu"
@@ -316,8 +316,7 @@
                         <li class="menuitem" role="menuitem"><a ng-click="openSettingPage();"
                                                                 href="javascript:void(0);">Settings</a></li>
                         <li class="menuitem" role="menuitem"><a href="javascript:void(0);"
-                                                                ng-click="logOut();"
-                        >Logout</a></li>
+                                                                ng-click="logOut();">Logout</a></li>
                     </ul>
 
 
@@ -332,9 +331,12 @@
     <!-- My note notification --->
     <div ng-include="'app/views/myNote/temp/my-note-noti-me.html'"></div>
 
+    <!-- New call notification UI update -1652017-->
+    <div ng-include="'app/views/ui-components/call-notification-panel.html'"></div>
+
 
     <!-- incoming call notification display-none-->
-    <div id="incomingNotification" class="console-phone-wrapper display-none  Phone is-animating "
+    <div id="incomingNotification" class="console-phone-wrapper display-none   Phone is-animating "
          id="phoneWidget">
         <div class="income-call-wrapper -ringing ">
             <div class="income-call-details">
@@ -350,7 +352,8 @@
                         <div class="col-md-6 p-left-40">
                             <div class="anz-btn  ">
                                 <div class="sonar-wave-green"></div>
-                                <i class="veery-phone-icon-1-call-answer " ng-click="veeryPhone.answerCall();"></i>
+                                <i class="veery-phone-icon-1-call-answer"
+                                   ng-click="veeryPhone.answerCall();"></i>
                             </div>
                         </div>
                         <div class="col-md-6 p-left-40">
@@ -373,9 +376,10 @@
 
 
     <div class="console-tab-wrapper  ">
+        <!--ng-class="{'fix-console-tab':isFiexedTab==true,
+                                         '':isFiexedTab==false}" -->
         <!--div ng-include="'app/views/console-tab-panel.html'"></div-->
-        <scrollable-tabset ng-class="{'fix-console-tab':isFiexedTab==true,
-                                         '':isFiexedTab==false}"
+        <scrollable-tabset class="fix-console-tab"
                            api="scrlTabsApi"
                            tooltip-left-placement="top"
                            id="consoleMainTab">
@@ -427,7 +431,7 @@
                         </div>
                         <div ng-switch-when="MyNote">
                             <div
-                                 ng-include="'app/views/myNote/my-remeider-note.html'"></div>
+                                    ng-include="'app/views/myNote/my-remeider-note.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>
@@ -496,7 +500,7 @@
 
 
                         <div class="dial-action" id="callStatus">
-                            {{call.status}}
+
                         </div>
                         <div class="call-duations" id="calltimmer">
                             <!--{{duations}}-->
@@ -715,7 +719,8 @@
                                         </div>-->
                     </div>
 
-                    <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none">
+
+                    <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none ">
                         <!--<div class="phone-sm-btn  veery-font-1-time"-->
                         <!--ng-click="veeryPhone.showCallLogs();"-->
                         <!--id="showCallLogs" title="Call Logs">-->
@@ -788,7 +793,6 @@
 
     <!--Notification more information -->
     <div ng-include="'app/views/notification-details.html'"></div>
-
 
 
     <!-- lock screen -->

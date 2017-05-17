@@ -7,6 +7,7 @@ window.SE = function (e) {
     var connected = false;
     var socket = {};
     var callBack = {};
+    var t;
 
     function v(e, t) {
         var r = e[t];
@@ -19,7 +20,7 @@ window.SE = function (e) {
 
         var r = v(e, "serverUrl");
         callBack = v(e, "callBackEvents");
-        socket = io(r);
+        socket = io.connect(r,{'forceNew':true });
 
         socket.on('connect', function () {
 
@@ -61,6 +62,16 @@ window.SE = function (e) {
         });
 
 
+
+
+        socket.on('room:event', function (data) {
+            console.log("dashboard event");
+            if (callBack.OnDashBoardEvent) {
+                callBack.OnDashBoardEvent(data);
+            }
+        });
+
+
         socket.on('allcallstatus', function (data) {
             console.log("allcallstatus");
             if (callBack.OnAllCallStatus) {
@@ -88,6 +99,21 @@ window.SE = function (e) {
             // socket.emit('seen',{to: data.to, uuid: data.id});
 
         });
+
+
+        socket.on('oldmessages', function (data) {
+            console.log("oldmessages");
+            if (callBack.OnOldMessages) {
+                callBack.OnOldMessages(data);
+            }
+
+            // socket.emit('seen',{to: data.to, uuid: data.id});
+
+        });
+
+
+
+
 
         socket.on('chatstatus', function (data) {
             console.log("chatstatus");
@@ -151,6 +177,7 @@ window.SE = function (e) {
 
         socket.on('agent', function (data) {
             console.log("agent");
+            clearTimeout(t);
             if (callBack.OnAgent) {
                 callBack.OnAgent(data);
             }
@@ -160,7 +187,7 @@ window.SE = function (e) {
             console.log("connectionerror");
 
             if(data === "no_agent_found"){
-                setTimeout(function(){
+                t = setTimeout(function(){
                     socket.emit('retryagent',{});
                 }, 10000);
 
@@ -176,6 +203,8 @@ window.SE = function (e) {
 
         socket.on('sessionend', function(data){
             console.log("sessionend");
+            socket.disconnect();
+            socket.close();
             if (callBack.OnSessionend) {
                 callBack.OnSessionend(data);
             }
@@ -183,10 +212,81 @@ window.SE = function (e) {
 
         socket.on('left', function(data){
             console.log("left");
+            socket.disconnect();
+            socket.close();
             if (callBack.OnLeft) {
                 callBack.OnLeft(data);
             }
         });
+
+        ////////////////////////////////////////////////notification API///////////////////////////////
+
+
+        socket.on('notice_message', function (data) {
+            data.messageType = "notice_message";
+            if (callBack.OnEvent)
+                callBack.OnEvent('notice_message',data);
+        });
+
+        socket.on('notice', function (data) {
+            data.messageType="notice";
+
+            if (callBack.OnEvent)
+                callBack.OnEvent('notice',data);
+
+
+        });
+
+        socket.on('ticket', function (data) {
+            data.messageType = "notice";
+            if (callBack.OnEvent)
+                callBack.OnEvent('notice',data);
+        });
+
+        socket.on('broadcast', function (data) {
+
+            data.messageType = "broadcast";
+            if (callBack.OnEvent)
+                callBack.OnEvent('notice_message',data);
+        });
+
+        socket.on('agent_connected', function (data) {
+            data.messageType = "agent_connected";
+            if (callBack.OnEvent)
+                callBack.OnEvent('agent_connected', data);
+
+        });
+
+        socket.on('agent_found', function (data) {
+            //var displayMsg = "Company : " + data.Company + "<br> Company No : " + values[5] + "<br> Caller : " + values[3] + "<br> Skill : " + values[6];
+            if (callBack.OnEvent)
+                callBack.OnEvent('agent_found',data);
+            //console.log("Agent found data " + data);
+        });
+
+        socket.on('agent_disconnected', function (data) {
+            data.messageType = "agent_disconnected";
+            if (callBack.OnEvent)
+                callBack.OnEvent('agent_disconnected',data);
+
+        });
+
+        socket.on('agent_rejected', function (data) {
+            data.messageType = "agent_rejected";
+            if (callBack.OnEvent)
+                callBack.OnEvent('agent_rejected',data);
+
+        });
+
+        socket.on('todo_reminder', function (data) {
+
+            if (callBack.OnEvent)
+                callBack.OnEvent('todo_reminder', data);
+
+
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -219,6 +319,12 @@ window.SE = function (e) {
         socket = {};
         callBack = {};
         console.log("Disconnected.");
+    }
+
+    function rc() {
+        //connected = false;
+        socket.connect();
+        console.log("Reconnect....");
     }
 
     function m(e) {
@@ -271,6 +377,20 @@ window.SE = function (e) {
         var r = v(e, "to"), k = v(e, "id");
         if (connected) {
             socket.emit('seen', {to: r, id: k});
+        }
+        else {
+            if (callBack.OnError) {
+                callBack.OnError({method: "connection", message: "Connection Lost."});
+            }
+        }
+    }
+
+    function sb(e) {
+        if (!e)throw g;
+
+        var r = v(e, "room");
+        if (connected) {
+            socket.emit('subscribe', {room: r});
         }
         else {
             if (callBack.OnError) {
@@ -373,7 +493,7 @@ window.SE = function (e) {
         var r = v(e, "type");
         if (connected) {
             if (r === "previous") {
-                socket.emit('request', {request: 'oldmessages', from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
+                socket.emit('request', {request: 'oldmessages',requester:  v(e, "requester"),  from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
             }
             else if (r === "next") {
                 socket.emit('request', {request: 'newmessages', from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
@@ -423,6 +543,8 @@ window.SE = function (e) {
         "disconnect": d,
         "sessionend": se,
         "status": o,
-        'typingstoped': a
+        "typingstoped": a,
+        "reconnect": rc,
+        "subscribe": sb
     }
 }();

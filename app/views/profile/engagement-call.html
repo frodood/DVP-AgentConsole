@@ -381,9 +381,13 @@
                                                     </div>
                                                     <!-- end -->
                                                     <div>
-                                                        <div ng-click="deleteSocialContact('facebook');"
+                                                        <div
                                                              class="prn2 header-round-icon"
                                                              ng-show="profileDetail.facebook">
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><i class="fa fa-trash" ng-click="deleteSocialContact('facebook');"></i>
+                                                                </li>
+                                                            </ul>
                                                             <div class="icon-left">
                                                                 <i class="fa fa-facebook "></i>
                                                             </div>
@@ -396,8 +400,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="prn2 header-round-icon"
-                                                             ng-click="deleteSocialContact('twitter');"
+
                                                              ng-show="profileDetail.twitter">
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><i class="fa fa-trash" ng-click="deleteSocialContact('twitter');"></i>
+                                                                </li>
+                                                            </ul>
                                                             <div class="icon-left">
                                                                 <i class="fa fa-twitter "></i>
                                                             </div>
@@ -410,8 +418,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="prn2 header-round-icon"
-                                                             ng-click="deleteSocialContact('linkedin');"
+
                                                              ng-show="profileDetail.linkedin">
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><i class="fa fa-trash" ng-click="deleteSocialContact('linkedin');"></i>
+                                                                </li>
+                                                            </ul>
                                                             <div class="icon-left">
                                                                 <i class="fa fa-linkedin "></i>
                                                             </div>
@@ -424,8 +436,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="prn2 header-round-icon"
-                                                             ng-click="deleteSocialContact('email');"
                                                              ng-show="profileDetail.email">
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><i class="fa fa-trash" ng-click="deleteSocialContact('email');"></i>
+                                                                </li>
+                                                            </ul>
                                                             <div class="icon-left">
                                                                 <i class="fa fa-envelope-o"></i>
                                                             </div>
@@ -438,8 +453,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="prn2 header-round-icon"
-                                                             ng-click="deleteSocialContact('skype');"
+
                                                              ng-show="profileDetail.skype">
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><i class="fa fa-trash" ng-click="deleteSocialContact('skype');"></i>
+                                                                </li>
+                                                            </ul>
                                                             <div class="icon-left">
                                                                 <i class="fa fa-skype "></i>
                                                             </div>
@@ -452,8 +471,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="prn2 header-round-icon"
-                                                             ng-click="deleteSocialContact('google+');"
+
                                                              ng-show="profileDetail.googleplus">
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><i class="fa fa-trash" ng-click="deleteSocialContact('google+');"></i>
+                                                                </li>
+                                                            </ul>
                                                             <div class="icon-left">
                                                                 <i class="fa fa-google-plus "></i>
                                                             </div>
@@ -466,9 +489,13 @@
                                                             </div>
                                                         </div>
                                                         <div class="prn2 header-round-icon"
-                                                             ng-click="deleteContact(c.contact)"
                                                              ng-repeat="c in profileDetail.contacts">
-                                                            <div class="icon-left" ng-if="c.contact!=''">
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><i class="fa fa-trash" ng-click="deleteContact(c.contact)"></i>
+                                                                </li>
+                                                            </ul>
+
+                                                            <div class="icon-left" ng-if="c.contact!=''" ng-click="c.type!='phone' || makeCall(c.contact)" ng-disabled="c.type!='phone'">
                                                                 <i class=""
                                                                    ng-class="{'fa fa-phone':c.type==' ',
                                                                 'fa fa-twitter':c.type=='twitter',
@@ -479,7 +506,7 @@
                                                                 'fa fa-envelope-o':c.type=='email'}"></i>
                                                                 <!--base on type,need to cheage icon-->
                                                             </div>
-                                                            <div class="prn2-contact text-header" ng-if="c.contact!=''">
+                                                            <div class="prn2-contact text-header" ng-if="c.contact!=''" ng-click="c.type!='phone' || makeCall(c.contact)" ng-disabled="c.type!='phone'">
                                                                 {{c.type}}
                                                                 <br/>
                                                                 <small>{{c.contact}}</small>
@@ -929,7 +956,7 @@
                                                 </option>
                                             </select>
 
-                                            <label for="ticketSubject">Security Level</label>
+                                            <label >Security Level</label>
                                             <select class="form-control" ng-model="ticket.security_level">
                                                 <option ng-repeat="level in secLevels" value="{{level}}">
                                                     {{level}}

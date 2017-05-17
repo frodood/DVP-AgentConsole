@@ -674,6 +674,195 @@ body {
     margin-left: 67px;
 }
 
+/*console phone new ui update */
+.n-incoming-call-wrp {
+    width: 300px;
+    position: fixed;
+    right: -310px;
+    bottom: 150px;
+    z-index: 1000;
+    background: #223448;
+    padding-bottom: 13px;
+    height: 200px;
+}
+
+.n-incoming-widget {
+    width: 300px;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.n-incoming-icon {
+    width: 70px;
+    display: inline-block;
+    height: 100px;
+    float: left;
+    position: relative;
+    text-align: center;
+    /*background: rgba(150, 150, 150, 0.22);*/
+    margin: 0 auto;
+}
+
+.n-incoming-text-wrp {
+    width: 230px;
+    display: inline-block;
+    height: 100px;
+    float: right;
+    position: relative;
+    text-align: center;
+    /*background: rgba(150, 150, 150, 0.22);*/
+    margin: 0 auto;
+}
+
+.action-btn-wrp {
+    width: 100%;
+    min-height: 20px;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+.action-btn-wrp > ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.action-btn-wrp > ul > li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.n-notfy-action {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #fff;
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.n-notfy-action > i {
+    color: #fff;
+    font-size: 18px;
+}
+
+.n-incoming-icon > .icon-round-n {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    z-index: 0;
+    border-radius: 50%;
+    background: rgb(13, 130, 61);
+    padding-top: 8px;
+    margin-left: 20px;
+    margin-top: 35px;
+}
+
+.n-incoming-icon > .icon-round-n > i {
+    color: #223448;
+    font-size: 30px;
+    padding-top: 20px;
+    z-index: 1000;
+}
+
+.caller-name,
+.call-time,
+.button-footer {
+    width: 100%;
+    display: block;
+    text-align: left;
+    color: #ffffff;
+    padding-left: 15px;
+}
+
+.caller-name {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 18px;
+    padding-top: 7px;
+}
+
+.call-time {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 15px;
+    padding-top: 0px;
+    letter-spacing: 1px;
+}
+
+.call-time-small {
+    padding-top: 9px;
+}
+
+.button-footer {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.button-footer > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.button-footer > ul > li {
+    display: inline-block;
+}
+
+.btn-end-n,
+.btn-anz-n {
+    border-radius: 0px;
+    font-size: 10px;
+}
+
+.btn-end-n {
+    background: #fb5f21;
+}
+
+.btn-anz-n {
+    background: #098a6c;
+}
+
+.btn-end-n:hover,
+.btn-end-n:focus {
+    background: #ff2516;
+    color: #fff;
+}
+
+.btn-anz-n:hover,
+.btn-anz-n:focus {
+    background: #0ae5b9;
+    color: #fff;
+}
+
+.toggle-panel {
+    position: absolute;
+    right: 15px;
+    top: 6px;
+    z-index: 100;
+}
+
+.toggle-panel > i {
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.toggle-panel > i :hover {
+    color: #fff;
+    font-size: 20px;
+}
+
+/*end*/
+
 /*view ticket*/
 .view-ticket-wrapper {
     width: 100%;
@@ -6144,9 +6333,9 @@ ul.renote-color-btn > li {
 
 /*typeing */
 .type-wrp {
-    width: 55px;
+    width: 54px;
     height: 25px;
-    margin-left: 11px;
+    margin-left: 5px;
     overflow: hidden;
     position: relative;
     display: inline-block;
@@ -6315,6 +6504,7 @@ ul.renote-color-btn > li {
     max-width: 217px;
     overflow: hidden;
     word-wrap: break-word;
+    padding: 5px 5px;
 }
 
 .snd-msg > .msg-t.pending {
@@ -6332,9 +6522,14 @@ ul.renote-color-btn > li {
 }
 
 .snd-msg > .msg-t.seen {
-    background: #36ba45;
-    color: #fff;
-    border: 1px solid #36ba45;
+    background: #ffffff;
+    color: #000;
+    border: 1px solid #eaeaea;
+}
+
+.msg-send-time {
+    font-size: 10px;
+    color: #c4c8ce;
 }
 
 @keyframes blink {
@@ -6418,6 +6613,45 @@ ul.renote-color-btn > li {
     background: rgba(241, 239, 239, 1);
     z-index: 1;
     text-align: center;
+}
+
+.ne-image-wrapper {
+    height: 115px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 6px;
+    border: 2px solid #eaeaea;
+    padding: -1px;
+    /* border-radius: 5px; */
+    /* margin-right: 23px; */
+}
+
+.ne-video-player {
+    height: 150px;
+    overflow: hidden;
+    border: 2px solid #eaeaea;
+    margin-bottom: 6px;
+}
+
+.html5-video-player {
+    width: 200px;
+}
+
+.ne-video-player > iframe {
+    width: 204px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.ne-embed > div {
+    height: 150px;
+    overflow: hidden;
+}
+
+.ne-image-wrapper > img {
+    width: 199px;
+    height: auto;
 }
 
 /*right side nav panel */
@@ -6986,12 +7220,12 @@ ul.renote-color-btn > li {
 
 .card-text-num-w > .lg-text {
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    font-size: 42px;
+    font-size: 25px;
 }
 
 .card-text-num-w > .sm-text {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    font-size: 18px;
+    font-size: 11px;
 }
 
 .c-text-yellow {
@@ -7055,7 +7289,7 @@ ul.renote-color-btn > li {
 
 .card-wrapper {
     width: 100%;
-    min-height: 100px;
+    min-height: 72px;
     overflow: hidden;
     position: relative;
 }
@@ -7098,7 +7332,7 @@ ul.renote-color-btn > li {
 }
 
 .left-d-icon > i {
-    font-size: 35px;
+    font-size: 25px;
 }
 
 .staffed-time {
@@ -7131,7 +7365,7 @@ ul.renote-color-btn > li {
     position: relative;
     display: block;
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    font-size: 23px;
+    font-size: 15px;
     text-align: left;
 }
 
@@ -7142,7 +7376,7 @@ ul.renote-color-btn > li {
     position: relative;
     display: block;
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     text-align: left;
 }
 
@@ -8199,7 +8433,11 @@ ul.renote-color-btn > li {
 
 .login-wrp {
     width: 100%;
+<<<<<<< HEAD
     height: 420px;
+=======
+    height: 410px;
+>>>>>>> dialog_implementation
     background: #fff;
     overflow: hidden;
     position: relative;
@@ -8307,7 +8545,11 @@ ul.renote-color-btn > li {
 .social-links {
     width: 100%;
     text-align: center;
+<<<<<<< HEAD
     margin-top: 55px;
+=======
+    margin-top: 35px;
+>>>>>>> dialog_implementation
 }
 
 .social-links > ul {
@@ -8348,7 +8590,11 @@ ul.renote-color-btn > li {
 
 .login-new-right-wrp {
     width: 100%;
+<<<<<<< HEAD
     padding: 60px 25px 20px 25px;
+=======
+    padding: 52px 25px 20px 25px;
+>>>>>>> dialog_implementation
 }
 
 .login-new-hl-wrp {
@@ -8449,4 +8695,255 @@ ul.renote-color-btn > li {
     border-right: 1px solid #81b87f;
     padding-right: 10px;
     margin-right: 10px;
+}
+
+/*new call notification UI update */
+.c-panel-wrapper-1652017 {
+    background: #223448;
+    border-radius: 1px;
+    width: 440px;
+    height: 200px;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0px;
+    right: -500px;
+    /*right: 0;*/
+    z-index: 3000;
+    -webkit-box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.3);
+    padding: 0px 10px 0px 10px;
+}
+
+.c-panel-wrapper-1652017 > section {
+    display: inline-block;
+}
+
+.c-panel-wrapper-1652017 >
+.c-panel-main-1652017 {
+    width: auto;
+    height: 145px;
+    overflow: hidden;
+    position: relative;
+    padding: 30px 10px 10px 32px;
+    z-index: 4000;
+}
+
+.c-panel-wrapper-1652017 > .c-right-1652017 {
+    width: auto;
+    height: 145px;
+    overflow: hidden;
+    position: relative;
+    padding: 15px 10px 10px 32px;
+}
+
+.c-left-icon-1652017 {
+    width: 95px;
+    height: 95px;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    float: left;
+    text-align: center;
+}
+
+.c-right-1652017 {
+
+}
+
+.c-panel-calling-1652017 {
+    /* Oval 4: */
+    /*background: #e7f7d6;*/
+    /*border: 9px solid rgba(143, 213, 56, 0.13);*/
+    background: rgba(231, 247, 214, 0.37);
+    padding: 5px 5px 5px 4px;
+}
+
+.c-panel-anz-1652017 {
+    /* Oval 4: */
+    background: rgba(247, 162, 162, 0.37);
+    padding: 2px 5px 5px 2px;
+    /*border: 14px solid rgba(233, 59, 59, 0.20);*/
+}
+
+.c-display-name-1652017 {
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    color: #bdbdbc;
+    letter-spacing: 0.52px;
+    display: block;
+    text-align: left;
+    width: auto;
+    height: 25px;
+}
+
+.c-display-name-1652017.name,
+.c-display-name-1652017.skill {
+    font-size: 13px;
+}
+
+.c-display-name-1652017.name {
+    font-family: "AvenirNextLTPro-Bold", Courier, monospace;
+    font-size: 15px;
+    color: #8a8e86;
+
+}
+
+.c-display-name-1652017.calling {
+    color: #B8E986;
+    font-size: 13px;
+}
+
+.c-panel-mainbtn-1652017 {
+    width: auto;
+    height: 30px;
+    margin-top: 0px;
+    overflow: hidden;
+    display: block;
+}
+
+.c-panel-mainbtn-1652017 >
+.c-panel-btn-wrp-1652017 {
+    display: inline-block;
+    /*width: 40%;*/
+}
+
+.btn-cn-1652017 {
+    font-family: "AvenirNextLTPro-Bold", Courier, monospace;
+    font-size: 10px;
+    background: transparent;
+    border-radius: 5px;
+    opacity: 0.8;
+    overflow: hidden;
+    margin-right: 5px;
+    letter-spacing: 0.66px;
+    outline: 0 !important;
+}
+
+.btn-anz-1652017 {
+    width: 100px;
+    height: 26px;
+    color: #8FD539;
+    border: 1px solid #8FD539;
+}
+
+.btn-end-call-1652017 {
+    width: 100px;
+    height: 26px;
+    border: 1px solid #EA3B3B;
+    color: #EA3B3B;
+}
+
+.btn-300-yellow-1652017 {
+    width: 100px;
+    height: 26px;
+    border: 1px solid #FCCF8B;
+    color: #FCCF8B;
+}
+
+.btn-cn-1652017:focus,
+.btn-cn-1652017:active,
+.btn-cn-1652017:hover {
+    background: #fff;
+}
+
+.c-footer-1652017 {
+    width: 100%;
+    height: 45px;
+    background: #223448;
+    border-top: 1px solid #ebdfc7;
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+
+.c-footer-1652017 > ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.c-footer-1652017 > ul > li {
+    display: inline-block;
+}
+
+.c-footer-icon-1652017 {
+    cursor: pointer;
+}
+
+.c-transfer-1652017 {
+    background: #ffffff;
+    position: absolute;
+    bottom: -500px;
+    left: 0px;
+    width: 100%;
+    height: 101px;
+    overflow: hidden;
+    z-index: 3500;
+    padding-top: 37px;
+    text-align: center;
+}
+
+.c-transfer-text-1652017,
+.c-transfer-btn-1652017 {
+    display: inline-block;
+}
+
+.c-transfer-text-1652017 {
+    width: 50%;
+}
+
+.form-control.txt-transfer {
+    height: 28px;
+    background: #f5f6f7;
+    border-radius: 5px;
+    border: 0px;
+}
+
+.close-transfer-view {
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #223448;
+}
+
+.close-transfer-view:hover,
+.close-transfer-view:focus,
+.close-transfer-view:active {
+    color: #d90000;
+}
+
+.c-panel-hide-1652017 {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 4010;
+    font-size: 13px;
+}
+
+.c-panel-hide-1652017 > i {
+    color: #8FD539;
+    font-size: 22px;
+}
+
+.c-panel-show-1652017 {
+    position: absolute;
+    bottom: 15px;
+    right: -0px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 4010;
+    font-size: 13px;
+    background: #223448;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding-top: 9px;
+}
+
+.c-panel-show-1652017 > i {
+    color: #8FD539;
+    font-size: 22px;
 }

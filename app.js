@@ -3,17 +3,22 @@
  */
 
 
-var agentApp = angular.module('veeryAgentApp',
-    ['ngRoute', 'ui.bootstrap', 'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
-        'angular-jwt', 'veeryNotificationMod', 'btford.socket-io', 'LocalStorageModule',
-        'authServiceModule', 'ngTagsInput', 'schemaForm', 'yaru22.angular-timeago', 'timer', 'ngSanitize',
-        'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
-        'com.2fdevs.videogular',
-        'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster', 'ui.bootstrap.datetimepicker', 'moment-picker',
-        'angular.filter', 'satellizer', 'mdo-angular-cryptography'
-        , 'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging', 'pubnub.angular.service', 'ui.slimscroll',
-        'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js", 'angular-carousel'
-    ]);
+var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui.bootstrap',
+    'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
+    'angular-jwt', 'btford.socket-io', 'LocalStorageModule',
+    'authServiceModule', 'ngTagsInput', 'schemaForm',
+    'yaru22.angular-timeago', 'timer', 'ngSanitize',
+    'uuid', 'angularFileUpload', 'download', 'fileServiceModule',
+    'com.2fdevs.videogular',
+    'ui.tab.scroll', 'ngAnimate', 'mgcrea.ngStrap', 'gridster',
+    'ui.bootstrap.datetimepicker', 'moment-picker',
+    'angular.filter', 'satellizer', 'mdo-angular-cryptography',
+    'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging',
+    'pubnub.angular.service', 'ui.slimscroll',
+    'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
+    'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
+    'angularProgressbar'
+]);
 
 
 agentApp.constant('moment', moment);
@@ -30,25 +35,30 @@ var baseUrls = {
     'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
     'fileService': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'fileServiceInternalUrl': 'http://fileservice.app.veery.cloud/DVP/API/1.0.0.0/InternalFileService/',
-    'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
+    'resourceService': 'http://resourceservice.app.veery.cloud/DVP/API/1.0.0.0/ResourceManager/', // http://resourceservice.app.veery.cloud
     'dashBordUrl': 'http://dashboardservice.app.veery.cloud/',
-    'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    //todolistservice.app.veery.cloud
-    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',
+    'toDoUrl': 'http://todolistservice.app.veery.cloud/DVP/API/1.0.0.0/',    //todolistservice.app.veery.cloud
+    'monitorrestapi': 'http://monitorrestapi.app.veery.cloud/DVP/API/1.0.0.0/',//monitorrestapi.app.veery.cloud
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',
-        //'http://ipmessagingservice.app.veery.cloud',
+    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud/',//'http://ipmessagingservice.app.veery.cloud',
     'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-    'contactUrl': 'http://contacts.app.veery.cloud//DVP/API/1.0.0.0/ContactManager/' //campaignmanager.app.veery.cloud
+    'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
+    'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/' //dialerapi.app.veery.cloud
 
 };
 
 agentApp.constant('baseUrls', baseUrls);
 
 agentApp.constant('dashboardRefreshTime', 60000);
-agentApp.constant('turnServers', [{url: "stun:stun.l.google.com:19302"}, {url: "stun:stun.counterpath.net:3478"}, {url: "stun:numb.viagenie.ca:3478"}]);
+agentApp.constant('turnServers', [{
+    url: "stun:stun.l.google.com:19302"
+}, {
+    url: "stun:stun.counterpath.net:3478"
+}, {
+    url: "stun:numb.viagenie.ca:3478"
+}]);
 //{url:"stun:stun.l.google.com:19302"},{url:"stun:stun.counterpath.net:3478"},{url:"stun:numb.viagenie.ca:3478"}
 //{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}
 
@@ -69,7 +79,8 @@ agentApp.config(function (scrollableTabsetConfigProvider) {
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
 });
 
-agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$authProvider", "gridsterConfig",
+agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
+    "$authProvider", "gridsterConfig",
     function ($httpProvider, $stateProvider, $urlRouterProvider, $authProvider) {
 
 
@@ -109,7 +120,8 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$auth
                 requireLogin: false
             }
         })
-    }], function (scrollableTabsetConfigProvider) {
+    }
+], function (scrollableTabsetConfigProvider) {
     scrollableTabsetConfigProvider.setShowTooltips(true);
     scrollableTabsetConfigProvider.setTooltipLeftPlacement('bottom');
     scrollableTabsetConfigProvider.setTooltipRightPlacement('left');
@@ -302,7 +314,6 @@ agentApp.filter('millisecondsToDateTime', [function () {
 }]);
 
 
-
 //Password verification
 agentApp.directive('passwordVerify', function () {
     return {
@@ -334,6 +345,52 @@ agentApp.directive('passwordVerify', function () {
     }
 });
 
+
+agentApp.directive('execOnScrollToTop', function () {
+
+    return {
+
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var fn = scope.$eval(attrs.execOnScrollToTop);
+
+            element.on('scroll', function (e) {
+
+                if (!e.target.scrollTop) {
+                    console.log("scrolled to top...");
+                    scope.$apply(fn);
+                }
+
+            });
+        }
+
+    };
+
+});
+
+
+agentApp.directive('execOnScrollToBottom', function () {
+
+    return {
+
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var fn = scope.$eval(attrs.execOnScrollToBottom),
+                clientHeight = element[0].clientHeight;
+
+            element.on('scroll', function (e) {
+                var el = e.target;
+
+                if ((el.scrollHeight - el.scrollTop) === clientHeight) { // fully scrolled
+                    console.log("scrolled to bottom...");
+                    scope.$apply(fn);
+                }
+            });
+        }
+
+    };
+
+});
 
 agentApp.directive('passwordStrengthBox', [
     function () {
