@@ -1,0 +1,191 @@
+<div class="c-panel-show-1652017 animated zoomInRight display-none" id="cPanelToggleLeft"
+     ng-click="cPanleToggelRight();">
+    <i class="fa fa-chevron-circle-left"></i>
+</div>
+
+<div id="callNIncomingAlert" class="c-panel-wrapper-1652017">
+
+    <!-- div toggle right and left -->
+    <div class="c-panel-hide-1652017 animated zoomInRight"
+         tooltip-placement="top" uib-tooltip="toggle right"
+         ng-click="cPanleToggelLeft();">
+        <i class="fa fa-chevron-circle-right"></i>
+    </div>
+    <!-- end -->
+
+    <section class="c-panel-main-1652017">
+        <div id="callingIcon" class="c-left-icon-1652017 c-panel-calling-1652017">
+            <img src="assets/img/call-panel/incoming-call.png" width="95">
+        </div>
+        <div id="EndIcon" class="c-left-icon-1652017 c-panel-anz-1652017 display-none">
+            <img src="assets/img/call-panel/anz-call.png" width="95">
+        </div>
+    </section>
+
+    <section id="notificationCallFunction"
+             class="c-right-1652017">
+        <div id="callerName"
+             class="c-display-name-1652017 name">
+            {{call.displayName}}
+        </div>
+        <div id="callerNumber"
+             class="c-display-name-1652017 skill">
+            {{call.displayNumber}}
+        </div>
+        <div id="callerTime"
+             class="c-display-name-1652017 skill">
+            {{call.skill}}
+        </div>
+        <div id="notificationcalltimmer"
+             class="c-display-name-1652017 skill display-none anz-call-state">
+            <timer autostart="false" interval="1000">
+                {{hhours}}:
+                {{mminutes}}: {{sseconds}}
+            </timer>
+        </div>
+
+        <!--<div class="c-display-name-1652017 calling">-->
+        <!--Calling...-->
+        <!--</div>-->
+
+        <div class="c-panel-mainbtn-1652017">
+            <div id="anzNotificationCall"
+                 class="c-panel-btn-wrp-1652017">
+                <button type="button"
+                        ng-click="phoneNotificationFunctions.answerCall();"
+                        class="btn btn-cn-1652017 btn-anz-1652017">
+                    ANSWER
+                </button>
+            </div>
+            <div id="endNotificationCall"
+                 class="c-panel-btn-wrp-1652017 display-none">
+                <button type="button"
+                        ng-click="phoneNotificationFunctions.endCall();"
+                        class="btn btn-cn-1652017 btn-end-call-1652017">
+                    END CALL
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Freeze -->
+    <section id="notificationAcw" class="c-right-1652017 display-none">
+        <div id="notificationfreezeRequest"
+             class="c-display-name-1652017 name">
+            Processing Freeze Request
+        </div>
+
+        <div id="countdownnotificationCalltimmer"
+             class="c-display-name-1652017 skill">
+            <timer autostart="false" countdown="countdownVal"
+                   finish-callback="phoneNotificationFunctions.showNotfication(false);"
+                   interval="1000">{{seconds}} second
+                <small ng-show="isFreezeReq">Freeze Processing</small>
+            </timer>
+        </div>
+
+        <div id="notificationfreezetimmer"
+             class="c-display-name-1652017 display-none skill">
+            <timer autostart="false" interval="1000">{{hhours}}:
+                {{mminutes}}: {{sseconds}}
+            </timer>
+        </div>
+
+
+        <div class="c-panel-mainbtn-1652017">
+            <div id="notificationfreezebtn"
+                 class="c-panel-btn-wrp-1652017">
+                <button type="button" ng-if="!isWaiting"
+                        ng-click="phoneNotificationFunctions.freezeAcw();"
+                        class="btn btn-cn-1652017 btn-300-yellow-1652017">
+                    FREEZE
+                </button>
+            </div>
+            <div id="notificationendfreezebtn"
+                 class="c-panel-btn-wrp-1652017 display-none">
+                <button type="button" ng-if="!isWaiting"
+                        ng-click="phoneNotificationFunctions.endFreeze();"
+                        class="btn btn-cn-1652017 btn-300-yellow-1652017 display-none ">
+                    END FREEZE
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- end Freeze -->
+
+    <!-- call transfer layout -->
+    <div id="transferCallViewPoint" class="c-transfer-1652017">
+        <form name="frmTransfer" novalidate>
+            <div id="transferView" class="close-transfer-view animated" ng-click="closeTransferView()">
+                <i class="ti-close"></i>
+            </div>
+            <div class="c-transfer-text-1652017">
+                <input type="text"
+                       name="transferNo"
+                       id="transferNo"
+                       autocomplete="off"
+                       ng-model="call.number"
+                       placeholder="enter transfer no here.."
+                       class="form-control txt-transfer"
+                       required/>
+            </div>
+            <div class="c-transfer-btn-1652017">
+                <button type="button"
+                        ng-if="!isWaiting"
+                        ng-click="phoneNotificationFunctions.transferCall(call.number);"
+                        ng-disabled="frmTransfer.$invalid"
+                        class="btn btn-cn-1652017 btn-anz-1652017 ">
+                    TRANSFER
+                </button>
+                <button type="button" ng-if="isWaiting" disabled
+                        class="btn btn-cn-1652017 btn-anz-1652017 ">
+                    WAIT...
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="c-footer-1652017">
+        <ul class="animated slideInUp anz-call-state display-none" ng-hide="isWaiting">
+            <li>
+                <!-- hold -->
+                <div id="holdNotificationCall"
+                     tooltip-placement="top" uib-tooltip="hold call"
+                     ng-click="phoneNotificationFunctions.holdCall();"
+                     class="c-footer-icon-1652017 display-none">
+                    <img src="assets/img/call-panel/hold.png" width="40">
+                </div>
+                <div id="unholdNotificationCall"
+                     tooltip-placement="top" uib-tooltip="un-hold call"
+                     ng-click="phoneNotificationFunctions.unholdCall();"
+                     class="c-footer-icon-1652017 display-none">
+                    <img src="assets/img/call-panel/active/hold_active.png" width="40">
+                </div>
+            </li>
+            <li>
+                <!-- mute -->
+                <div id="muteNotificationCall"
+                     ng-click="phoneNotificationFunctions.muteCall();"
+                     tooltip-placement="top" uib-tooltip="mute"
+                     class="c-footer-icon-1652017 display-none">
+                    <img src="assets/img/call-panel/mute.png" width="40">
+                </div>
+                <div id="uumuteNotificationCall"
+                     tooltip-placement="top" uib-tooltip="un-mute"
+                     ng-click="phoneNotificationFunctions.unmuteCall();"
+                     class="c-footer-icon-1652017 display-none">
+                    <img src="assets/img/call-panel/active/un-mute_active.png" width="40">
+                </div>
+            </li>
+            <li>
+                <!-- transfer -->
+                <div class="c-footer-icon-1652017"
+                     tooltip-placement="top" uib-tooltip="call transfer"
+                     ng-click="openTransferView()">
+                    <img src="assets/img/call-panel/transfer.png" width="50">
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -93,7 +93,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.countdownVal = 10;
     $scope.GetAcwTime = function () {
         resourceService.GetAcwTime().then(function (response) {
-            $scope.countdownVal = (parseInt(JSON.parse(response).MaxAfterWorkTime) - 5)<=0?1:(parseInt(JSON.parse(response).MaxAfterWorkTime) - 5);
+            $scope.countdownVal = (parseInt(JSON.parse(response).MaxAfterWorkTime) - 5) <= 0 ? 1 : (parseInt(JSON.parse(response).MaxAfterWorkTime) - 5);
         }, function (err) {
             $scope.countdownVal = 10;
             authService.IsCheckResponse(err);
@@ -876,9 +876,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (val) {
                 $('#notificationCallFunction').removeClass('display-none');
                 $('#notificationAcw').addClass('display-none');
+                $('.notification-acw').addClass('display-none');
                 $('#callNIncomingAlert').animate({
                     right: '0'
-                }, 500);
+                }, 300);
                 if ($scope.call.direction.toLowerCase() === 'outbound') {
                     $('#anzNotificationCall').addClass('display-none');
                     $('#rejectNotificationCall').addClass('display-none');
@@ -891,9 +892,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
             else {
                 $('#notificationAcw').removeClass('display-none');
+                $('.notification-acw').removeClass('display-none');
                 $('#notificationCallFunction').addClass('display-none');
                 $('#callNIncomingAlert').animate({
-                    right: '-310'
+                    right: '-500'
                 }, 500);
 
             }
@@ -929,7 +931,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         endCall: function () {
             if ($scope.isRegistor) return;
             $scope.isWaiting = true;
-            resourceService.CallHungup(($scope.call.direction.toLowerCase() === 'outbound') ? $scope.call.sessionId : $scope.call.callrefid).then(function (response) {
+            resourceService.CallHungup(($scope.call.direction.toLowerCase() === 'outbound') ?
+                $scope.call.sessionId : $scope.call.callrefid).then(function (response) {
                 $scope.isWaiting = false;
             }, function (err) {
                 $scope.isWaiting = false;
@@ -953,7 +956,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             resourceService.TransferCall(number, $scope.call.sessionId, $scope.call.callrefid).then(function (response) {
                 $scope.isWaiting = false;
                 if (response) {
-                    $('#transferNotificationCall').addClass('display-none');
+                    $('#transferCallViewPoint').animate({
+                        bottom: '-500'
+                    }, 200, function () {
+                        //$('#transferForm').removeClass('fadeIn');
+                    });
                 }
             }, function (err) {
                 $scope.isWaiting = false;
@@ -1057,6 +1064,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#notificationfreezebtn').removeClass('display-none');
             $('#notificationendfreezebtn').addClass('display-none');
             $('#transferNotificationCall').removeClass('display-none');
+            $('.anz-call-state').removeClass('display-none');
+            $('#callingIcon').addClass('display-none');
+            $('#EndIcon').removeClass('display-none');
             //document.getElementById('countdownnotificationCalltimmer').getElementsByTagName('timer')[0].stop();
         },
         rejectState: function () {
@@ -1078,7 +1088,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#countdownnotificationCalltimmer').removeClass('display-none');
             $('#transferNotificationCall').addClass('display-none');
             document.getElementById('countdownnotificationCalltimmer').getElementsByTagName('timer')[0].start();
+            $('.anz-call-state').addClass('display-none');
             $scope.call.number = '';
+
+            $('#callingIcon').removeClass('display-none');
+            $('#EndIcon').addClass('display-none');
         },
         holdState: function () {
             if ($scope.isRegistor) return;
@@ -1283,8 +1297,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         updateCallStatus: function (status) {
             /*$scope.safeApply(function () {
-                $scope.call.status = status;
-            });*/
+             $scope.call.status = status;
+             });*/
 
             document.getElementById('callStatus').innerHTML = status;
         },
@@ -3366,7 +3380,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $timeout.cancel(getAllRealTimeTimer);
         }
         $scope.veeryPhone.unregisterWithArds(function () {
-            
+
         });
     });
 
@@ -4355,6 +4369,37 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#callerTimeSmall').addClass('display-none');
     };
 
+
+    $scope.openTransferView = function () {
+        $('#transferCallViewPoint').animate({
+            bottom: '0'
+        }, 500, function () {
+            //$('#transferForm').addClass('fadeIn');
+        });
+    };
+    $scope.closeTransferView = function () {
+        $('#transferCallViewPoint').animate({
+            bottom: '-500'
+        }, 200, function () {
+            //$('#transferForm').removeClass('fadeIn');
+        });
+    };
+
+    $scope.cPanleToggelLeft = function () {
+        $('#callNIncomingAlert').animate({
+            right: '-500'
+        }, 400, function () {
+            $('#cPanelToggleLeft').removeClass('display-none');
+        });
+    };
+    $scope.cPanleToggelRight = function () {
+        $('#callNIncomingAlert').animate({
+            right: '0'
+        }, 400, function () {
+            //alert('done');
+            $('#cPanelToggleLeft').addClass('display-none');
+        });
+    };
 
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
