@@ -1,8 +1,8 @@
-<form name="ratingFrm">
-    <!-- e contact details -->
+<!--<form name="ratingFrm">
+    &lt;!&ndash; e contact details &ndash;&gt;
 
     <div class="row">
-        <!-- email -->
+        &lt;!&ndash; email &ndash;&gt;
         <div class="col-lg-12">
             <div class="form-group">
                 <div class="mail_list_column sip-user-wrap"
@@ -40,8 +40,9 @@
                     <div ng-repeat="remark in myRemarks">
                         <div>
                             <div>
-                                <span style="font-size: small ; color: red">{{remark.evaluator}} </span><span
-                                    style="color:white;;">commented about</span> <span style="color: darkorange;">{{remark.section}}</span>
+                                <span style="font-size: small ; color: red">{{remark.evaluator}} </span>
+                                <span style="color:white">commented about</span>
+                                <span style="color: darkorange">{{remark.section}}</span>
 
                                 <p style="color: white ; padding-top: 5px">{{remark.remark}}</p>
                             </div>
@@ -54,4 +55,75 @@
         </div>
     </div>
 
+</form>-->
+
+
+<form name="ratingFrm">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <div class="mail_list_column sip-user-wrap"
+                     ng-mouseover="viewScroll()"
+                     ng-mouseleave="hideScroll()"
+                     ng-slimscroll
+                     height="200" opacity="0.2" distance="0px"
+                     enabled="{{ scrollEnabled }}">
+
+                    <div ng-repeat="(key,value) in sectionArray" ng-init="ratingData = RatingResultResolve(value)">
+                        <div title="{{ratingData.displayValue}}">
+                            <h4 style="color: white" >{{value.name}}</h4>
+                            <span uib-rating state-on="'fa fa-star'"
+                                  state-off="'fa fa-star-o'"  ng-model="ratingData.starValue" max="10"
+                                  read-only="true"></span>
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div style="border-bottom: groove;">
+        <div>
+            <div class="col-lg-12">
+                <h3 style="color: white">Remarks</h3>
+                <div class="mail_list_column sip-user-wrap"
+                     ng-mouseover="viewScroll()"
+                     ng-mouseleave="hideScroll()"
+                     ng-slimscroll
+                     height="250" opacity="0.2" distance="0px"
+                     enabled="{{ scrollEnabled }}">
+                    <div ng-repeat="remark in myRemarks">
+                        <div>
+                            <div>
+                                <span style="font-size: small ; color: #191dff">{{remark.evaluator}} </span>
+                                <span style="color:white">commented about</span>
+                                <span style="color: darkorange">{{remark.section}}</span>
+
+                                <p style="color: white ; padding-top: 5px">{{remark.remark}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 </form>
+
+

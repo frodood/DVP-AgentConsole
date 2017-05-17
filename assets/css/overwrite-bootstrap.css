@@ -12,7 +12,7 @@
 }
 
 .navbar-nav > li > a {
-    padding-top: 0px;
+    padding-top: 9px;
     padding-bottom: 0px;
     font-size: 12px;
 }
@@ -161,9 +161,13 @@ label {
 .nav-tabs > li.console-main-tab.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
     color: #36ba45;
     cursor: default;
-    background-color: #17373c;
+    background-color: #ffffff;
     border: 0px solid #ddd;
-    border-bottom: 2px solid #36ba45;
+    /*border-bottom: 2px solid #36ba45;*/
+}
+
+.ui-tabs-scrollable {
+    margin-top: 13px;
 }
 
 .console-main-tab >

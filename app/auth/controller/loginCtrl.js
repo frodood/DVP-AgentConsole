@@ -43,6 +43,8 @@ agentApp.controller('loginCtrl', function ($rootScope, $scope, $state, $http,
             return;
         }
 
+        para.console = 'AGENT_CONSOLE';
+
         //parameter option
         //username
         //password

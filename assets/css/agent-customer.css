@@ -674,6 +674,196 @@ body {
     margin-left: 67px;
 }
 
+/*console phone new ui update */
+.n-incoming-call-wrp {
+    width: 300px;
+    position: fixed;
+    right: -310px;
+    bottom: 150px;
+    z-index: 1000;
+    background: #223448;
+    padding-bottom: 13px;
+    height: 200px;
+}
+
+.n-incoming-widget {
+    width: 300px;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.n-incoming-icon {
+    width: 70px;
+    display: inline-block;
+    height: 100px;
+    float: left;
+    position: relative;
+    text-align: center;
+    /*background: rgba(150, 150, 150, 0.22);*/
+    margin: 0 auto;
+}
+
+.n-incoming-text-wrp {
+    width: 230px;
+    display: inline-block;
+    height: 100px;
+    float: right;
+
+    position: relative;
+    text-align: center;
+    /*background: rgba(150, 150, 150, 0.22);*/
+    margin: 0 auto;
+}
+
+.action-btn-wrp {
+    width: 100%;
+    min-height: 20px;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+.action-btn-wrp > ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.action-btn-wrp > ul > li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.n-notfy-action {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #fff;
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.n-notfy-action > i {
+    color: #fff;
+    font-size: 18px;
+}
+
+.n-incoming-icon > .icon-round-n {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    z-index: 0;
+    border-radius: 50%;
+    background: rgb(13, 130, 61);
+    padding-top: 8px;
+    margin-left: 20px;
+    margin-top: 35px;
+}
+
+.n-incoming-icon > .icon-round-n > i {
+    color: #223448;
+    font-size: 30px;
+    padding-top: 20px;
+    z-index: 1000;
+}
+
+.caller-name,
+.call-time,
+.button-footer {
+    width: 100%;
+    display: block;
+    text-align: left;
+    color: #ffffff;
+    padding-left: 15px;
+}
+
+.caller-name {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 18px;
+    padding-top: 7px;
+}
+
+.call-time {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 15px;
+    padding-top: 0px;
+    letter-spacing: 1px;
+}
+
+.call-time-small {
+    padding-top: 9px;
+}
+
+.button-footer {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.button-footer > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.button-footer > ul > li {
+    display: inline-block;
+}
+
+.btn-end-n,
+.btn-anz-n {
+    border-radius: 0px;
+    font-size: 10px;
+}
+
+.btn-end-n {
+    background: #fb5f21;
+}
+
+.btn-anz-n {
+    background: #098a6c;
+}
+
+.btn-end-n:hover,
+.btn-end-n:focus {
+    background: #ff2516;
+    color: #fff;
+}
+
+.btn-anz-n:hover,
+.btn-anz-n:focus {
+    background: #0ae5b9;
+    color: #fff;
+}
+
+.toggle-panel {
+    position: absolute;
+    right: 15px;
+    top: 6px;
+    z-index: 100;
+}
+
+.toggle-panel > i {
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.toggle-panel > i :hover {
+    color: #fff;
+    font-size: 20px;
+}
+
+/*end*/
+
 /*view ticket*/
 .view-ticket-wrapper {
     width: 100%;
@@ -6144,9 +6334,9 @@ ul.renote-color-btn > li {
 
 /*typeing */
 .type-wrp {
-    width: 55px;
+    width: 54px;
     height: 25px;
-    margin-left: 11px;
+    margin-left: 5px;
     overflow: hidden;
     position: relative;
     display: inline-block;
@@ -6315,6 +6505,7 @@ ul.renote-color-btn > li {
     max-width: 217px;
     overflow: hidden;
     word-wrap: break-word;
+    padding: 5px 5px;
 }
 
 .snd-msg > .msg-t.pending {
@@ -6332,9 +6523,14 @@ ul.renote-color-btn > li {
 }
 
 .snd-msg > .msg-t.seen {
-    background: #36ba45;
-    color: #fff;
-    border: 1px solid #36ba45;
+    background: #ffffff;
+    color: #000;
+    border: 1px solid #eaeaea;
+}
+
+.msg-send-time {
+    font-size: 10px;
+    color: #c4c8ce;
 }
 
 @keyframes blink {
@@ -6418,6 +6614,45 @@ ul.renote-color-btn > li {
     background: rgba(241, 239, 239, 1);
     z-index: 1;
     text-align: center;
+}
+
+.ne-image-wrapper {
+    height: 115px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 6px;
+    border: 2px solid #eaeaea;
+    padding: -1px;
+    /* border-radius: 5px; */
+    /* margin-right: 23px; */
+}
+
+.ne-video-player {
+    height: 150px;
+    overflow: hidden;
+    border: 2px solid #eaeaea;
+    margin-bottom: 6px;
+}
+
+.html5-video-player {
+    width: 200px;
+}
+
+.ne-video-player > iframe {
+    width: 204px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.ne-embed > div {
+    height: 150px;
+    overflow: hidden;
+}
+
+.ne-image-wrapper > img{
+    width: 199px;
+    height: auto;
 }
 
 /*right side nav panel */
@@ -7155,7 +7390,6 @@ ul.renote-color-btn > li {
     padding: 0px;
 }
 
-
 .notice-b-m-outer {
     position: relative;
     top: 0;
@@ -7199,6 +7433,7 @@ ul.renote-color-btn > li {
     position: relative;
     padding-top: 10px;
     font-size: 17px;
+    font-size: 3vw;
     margin-bottom: 10px;
 }
 
@@ -8199,7 +8434,7 @@ ul.renote-color-btn > li {
 
 .login-wrp {
     width: 100%;
-    height: 490px;
+    height: 410px;
     background: #fff;
     overflow: hidden;
     position: relative;
@@ -8307,7 +8542,7 @@ ul.renote-color-btn > li {
 .social-links {
     width: 100%;
     text-align: center;
-    margin-top: 120px;
+    margin-top: 35px;
 }
 
 .social-links > ul {
@@ -8348,7 +8583,7 @@ ul.renote-color-btn > li {
 
 .login-new-right-wrp {
     width: 100%;
-    padding: 75px 25px 20px 25px;
+    padding: 52px 25px 20px 25px;
 }
 
 .login-new-hl-wrp {
@@ -8376,13 +8611,12 @@ ul.renote-color-btn > li {
 .btn-n-sign {
     /* Rectangle 2: */
     background: #81B87F;
-    border-radius: 12px;
     /* SIGN IN: */
     font-family: 'AvenirNext-Bold', sans-serif;
     font-size: 12px;
     color: #FFFFFF;
     letter-spacing: -0.11px;
-    padding: 10px 15px 9px 15px;
+    padding: 5px 15px 5px 15px;
     outline: 0 !important;
 }
 
@@ -8390,7 +8624,7 @@ ul.renote-color-btn > li {
     /* right: */
     background: #FFFFFF;
     border-radius: 5px;
-    height: 45px;
+    height: 35px;
 }
 
 .login-n-footer {
@@ -8451,3 +8685,4 @@ ul.renote-color-btn > li {
     padding-right: 10px;
     margin-right: 10px;
 }
+
