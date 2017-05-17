@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window,notificationService) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -1283,8 +1283,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         updateCallStatus: function (status) {
             /*$scope.safeApply(function () {
-                $scope.call.status = status;
-            });*/
+             $scope.call.status = status;
+             });*/
 
             document.getElementById('callStatus').innerHTML = status;
         },
@@ -2966,7 +2966,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         })
 
     };
-
+    $scope.titles=[];
 
     $scope.RatingResultResolve = function (item) {
         var rateObj =
@@ -2976,6 +2976,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             };
 
         return rateObj;
+    };
+
+    $scope.SetTitiles = function (value) {
+        $scope.titles =[];
+        for (var i = 1; i <= 10; i++)
+        {
+            $scope.titles.push(value);
+        }
+
     };
 
 
@@ -3366,7 +3375,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $timeout.cancel(getAllRealTimeTimer);
         }
         $scope.veeryPhone.unregisterWithArds(function () {
-            
+
         });
     });
 

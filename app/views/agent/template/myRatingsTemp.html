@@ -72,11 +72,11 @@
                     <div ng-repeat="(key,value) in sectionArray" ng-init="ratingData = RatingResultResolve(value)">
                         <div title="{{ratingData.displayValue}}">
                             <h4 style="color: white" >{{value.name}}</h4>
-                            <span uib-rating state-on="'fa fa-star'"
+                            <span ng-init="SetTitiles(ratingData.displayValue)"
+                                  uib-rating state-on="'fa fa-star'"
                                   state-off="'fa fa-star-o'"  ng-model="ratingData.starValue" max="10"
-                                  read-only="true"></span>
-
-
+                                  read-only="true"
+                                 titles= "titles"></span>
 
 
                         </div>
