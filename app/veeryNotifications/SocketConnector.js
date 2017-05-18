@@ -243,10 +243,44 @@ agentApp.factory("notificationService", function ($http, baseUrls, authService) 
         });
     };
 
+    var GetPersistenceMessages = function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/PersistenceMessages"
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    var RemovePersistenceMessage = function (mID) {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'DELETE',
+            url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/PersistenceMessage/"+mID
+        }).then(function (response) {
+            return response;
+        });
+    };
+    var RemoveAllPersistenceMessages = function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'DELETE',
+            url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/PersistenceMessages"
+        }).then(function (response) {
+            return response;
+        });
+    };
 
     return {
         sendNotification: sendNotification,
-        broadcastNotification: broadcastNotification
+        broadcastNotification: broadcastNotification,
+        GetPersistenceMessages:GetPersistenceMessages,
+        RemovePersistenceMessage:RemovePersistenceMessage,
+        RemoveAllPersistenceMessages:RemoveAllPersistenceMessages
 
     }
 });
