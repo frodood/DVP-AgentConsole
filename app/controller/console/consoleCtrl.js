@@ -1551,12 +1551,57 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         //$('#regNotificationLoading').addClass('display-none').removeClass('display-block');
         $scope.phoneNotificationFunctions.showNotfication(false);
     };
+
+    $scope.MakeNotificationObject = function (data) {
+
+
+        var callbackObj= JSON.parse(data.Callback);
+
+        callbackObj.From=data.From;
+        callbackObj.Message=callbackObj.Message;
+        callbackObj.TopicKey=callbackObj.Topic;
+        callbackObj.messageType=callbackObj.MessageType;
+        callbackObj.isPersistMessage=true;
+        callbackObj.PersistMessageID=data.id;
+
+
+        return callbackObj;
+
+    };
+
+    var isPersistanceLoaded = false;
+
     $scope.agentAuthenticated = function () {
         console.log("agentAuthenticated");
         $scope.isSocketRegistered = true;
         $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
         $('#regNotification').addClass('display-block').removeClass('display-none');
         $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
+
+        if(!isPersistanceLoaded)
+        {
+            notificationService.GetPersistenceMessages().then(function (response) {
+
+                if(response.data.IsSuccess)
+                {
+                    isPersistanceLoaded=true;
+
+                    angular.forEach(response.data.Result,function (value) {
+                        $scope.OnMessage($scope.MakeNotificationObject(value));
+                    });
+
+                }
+
+
+            },function (err) {
+
+            });
+        }
+
+
+
+
+
     };
 
     $scope.unredNotifications = 0;
@@ -1596,6 +1641,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "from": data.From
         };
 
+
+        if(data.isPersistMessage && data.PersistMessageID)
+        {
+            objMessage['isPersistMessage']=data.isPersistMessage;
+            objMessage['PersistMessageID']=data.PersistMessageID;
+        }
+
         if (Array.isArray(tid) && tid.length > 1) {
             objMessage['ticket'] = tid[1];
             objMessage['ticketref'] = tid[1];
@@ -1606,7 +1658,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
 
-        if (data.TopicKey || data.messageType) {
+        if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage)==-1) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
             audio.play();
             $scope.notifications.unshift(objMessage);
@@ -3770,11 +3822,43 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.showModal(notifyMessage);
     };
 
+    $scope.RemoveAllNotifications = function () {
+
+        notificationService.RemoveAllPersistenceMessages().then(function (response) {
+            $scope.unredNotifications = 0;
+            $scope.notifications =[];
+            $scope.showMesssageModal = false;
+
+        },function (error) {
+            Console.log("Error in Removing notifications");
+        })
+    };
+
+
 
     $scope.discardNotifications = function (notifyMessage) {
-        $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
-        $scope.unredNotifications = $scope.notifications.length;
-        $scope.showMesssageModal = false;
+        if(notifyMessage.isPersistMessage && notifyMessage.PersistMessageID)
+        {
+            notificationService.RemovePersistenceMessage(notifyMessage.PersistMessageID).then(function (response) {
+                $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
+                $scope.unredNotifications = $scope.notifications.length;
+                $scope.showMesssageModal = false;
+
+            },function (error) {
+                $scope.showAlert("Error", "error", "Error in deleting notification");
+                $scope.showMesssageModal = false;
+            });
+        }
+        else
+        {
+            $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
+            $scope.unredNotifications = $scope.notifications.length;
+            $scope.showMesssageModal = false;
+        }
+
+
+
+
     };
 
     $scope.addToDoList = function (todoMessage) {

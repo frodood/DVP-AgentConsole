@@ -8696,6 +8696,25 @@ ul.renote-color-btn > li {
     padding-right: 10px;
     margin-right: 10px;
 }
+.del-all-btn
+{
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+    text-align:center;
+    font-family: 'AvenirNextLTPro-Demi', sans-serif;
+    color: #898ea4;
+    width:inherit;
+}
+#delBtn:hover
+{
+    color: #000000;
+}
+#delBtn:active
+{
+    color: #000000;
+    background-color: #c7cce3;
+}
 
 /*new call notification UI update */
 .c-panel-wrapper-1652017 {
