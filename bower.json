@@ -79,7 +79,8 @@
     "angular-scroll-glue": "^2.2.0",
     "angular-progressbar": "^0.1.0",
     "progressbar.js": "^1.0.1",
-    "ng-emoticons": "^2.1.0"
+    "ng-emoticons": "^2.1.0",
+    "angular-confirm": "angular-confirm1#^1.1.0"
   },
   "resolutions": {
     "moment": "^2.14.1",

@@ -944,7 +944,7 @@
                                                                min-length="1"></auto-complete>
                                             </tags-input>-->
 
-                                            <select class="form-control" ng-model="ticket.assignee"
+                                            <!--<select class="form-control" ng-model="ticket.assignee"
                                                     ng-model-options="{trackBy: '$value'}">
                                                 <optgroup label="Users"></optgroup>
                                                 <option ng-repeat="c in assigneeUsers" value='{{c._id}}'>
@@ -954,7 +954,11 @@
                                                 <option ng-repeat="group in assigneeGroups" value='{{group._id}}'>
                                                     - {{group.name}}
                                                 </option>
-                                            </select>
+                                            </select>-->
+
+                                            <div custom-select="s._id as s.displayname for s in assigneeUsers | filter: { name: $searchTerm } track by s._id" ng-model="ticket.assignee"></div>
+
+
 
                                             <label >Security Level</label>
                                             <select class="form-control" ng-model="ticket.security_level">

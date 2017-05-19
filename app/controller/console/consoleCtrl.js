@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window,notificationService) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window,notificationService,$ngConfirm) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -68,9 +68,39 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.notifications = [];
+    $scope.Test=["ABC","BCD","CDE","DEF"];
     $scope.agentList = [];
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
+
+
+
+$scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
+
+    $ngConfirm({
+        title: title,
+        content: contentData, // if contentUrl is provided, 'content' is ignored.
+        scope: $scope,
+        buttons: {
+            // long hand button definition
+            ok: {
+                text: okText,
+                btnClass: 'btn-primary',
+                keys: ['enter'], // will trigger when enter is pressed
+                action: function(scope){
+                    okFunc();
+                }
+            },
+            // short hand button definition
+            close: function(scope){
+                closeFunc();
+            }
+        },
+    });
+
+
+}
+
 
     //
     $('#softPhoneDragElem').draggable({
@@ -1558,7 +1588,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var callbackObj= JSON.parse(data.Callback);
 
         callbackObj.From=data.From;
-        callbackObj.Message=callbackObj.Message;
         callbackObj.TopicKey=callbackObj.Topic;
         callbackObj.messageType=callbackObj.MessageType;
         callbackObj.isPersistMessage=true;
@@ -3824,14 +3853,62 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.RemoveAllNotifications = function () {
 
-        notificationService.RemoveAllPersistenceMessages().then(function (response) {
-            $scope.unredNotifications = 0;
-            $scope.notifications =[];
+
+        $scope.showConfirmation("Remove all notifications","Do you want to remove all Notifications ?","Ok",function () {
+            notificationService.RemoveAllPersistenceMessages().then(function (response) {
+
+                if(response.data.IsSuccess)
+                {
+                    $scope.unredNotifications = 0;
+                    $scope.notifications =[];
+                }
+                else
+                {
+                    console.log("Error in Removing notifications");
+                    $scope.showAlert("Error", "error", "Error in deleting notifications");
+                }
+
+                $scope.showMesssageModal = false;
+
+            },function (error) {
+                $scope.showAlert("Error", "error", "Error in deleting notifications");
+                console.log("Error in Removing notifications");
+            });
+        },function () {
+
+        });
+
+
+       /* notificationService.RemoveAllPersistenceMessages().then(function (response) {
+
+            if(response.data.IsSuccess)
+            {
+                $scope.unredNotifications = 0;
+                $scope.notifications =[];
+            }
+            else
+            {
+                console.log("Error in Removing notifications");
+                $scope.showAlert("Error", "error", "Error in deleting notifications");
+            }
+
             $scope.showMesssageModal = false;
 
         },function (error) {
-            Console.log("Error in Removing notifications");
-        })
+            $scope.showAlert("Error", "error", "Error in deleting notifications");
+            console.log("Error in Removing notifications");
+        });*/
+
+        /*$scope.showConfirm("Delete notifications","Delete","ok","cancel","Do you want to delete all notifications",function () {
+
+
+
+        },function () {
+
+        },null)*/
+
+
+
     };
 
 
