@@ -1654,6 +1654,11 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
 
 
         }
+        else
+        {
+            senderAvatar=null;
+            data.From="System";
+        }
 
         var regex = /~#tid (.*?) ~/;
         var tid = regex.exec(data.Message);

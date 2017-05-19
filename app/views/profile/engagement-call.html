@@ -956,16 +956,16 @@
                                                 </option>
                                             </select>-->
 
-                                            <div custom-select="s._id as s.displayname for s in assigneeUsers | filter: { name: $searchTerm } track by s._id" ng-model="ticket.assignee"></div>
+                                            <input type="text" ng-model="ticket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
 
 
 
-                                            <label >Security Level</label>
+                                            <!--<label >Security Level</label>
                                             <select class="form-control" ng-model="ticket.security_level">
                                                 <option ng-repeat="level in secLevels" value="{{level}}">
                                                     {{level}}
                                                 </option>
-                                            </select>
+                                            </select>-->
 
 
                                         </div>

@@ -114,10 +114,18 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.assigneeUsers = profileDataParser.assigneeUsers;
 
             angular.forEach(scope.assigneeUsers, function (assignee) {
-                assignee.displayname=scope.setUserTitles(assignee);
+                assignee.displayname = scope.setUserTitles(assignee);
             });
 
+
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
+            scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
+                value.displayname=value.name;
+                return value;
+            });
+            scope.assigneeUserData=scope.assigneeUsers.concat(scope.assigneeTempGroups);
+
+
 
             scope.pickCompanyInfo = function () {
                 var userCompanyData = authService.GetCompanyInfo();

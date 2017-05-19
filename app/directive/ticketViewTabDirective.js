@@ -30,7 +30,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.currentSubmission = null;
                 scope.currentForm = null;
 
-                scope.newAssignee = {};
+                scope.newAssignee ;
                 scope.isOverDue = false;
                 scope.newComment = "";
                 scope.ticketNextLevels = [];
@@ -788,7 +788,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                 scope.assigneeGroups = profileDataParser.assigneeUserGroups;
-
+                scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
+                    value.displayname=value.name;
+                    return value;
+                });
+                scope.assigneeUserData=scope.assigneeUsers.concat(scope.assigneeTempGroups);
 
                 scope.loadTicketNextLevel = function () {
                     ticketService.getTicketNextLevel(scope.ticket.type, scope.ticket.status).then(function (response) {
@@ -877,9 +881,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                             if (scope.ticket.assignee) {
                                 scope.ticket.assignee_displayname = scope.setUserTitles(scope.ticket.assignee);
+
                             }
                             else if (scope.ticket.assignee_gorup) {
                                 scope.ticket.assignee_displayname = scope.ticket.assignee_gorup.name;
+
                             }
                             else {
                                 scope.ticket.assignee_displayname = "Unassigned";
@@ -1271,19 +1277,19 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                         var commentObj =
-                        {
-                            "body": scope.newComment,
-                            "body_type": "text",
-                            "type": "comment",
-                            "public": mode,
-                            "channel": channel,
-                            "engagement_session": eng_session,
-                            "reply_session": reply_session,
-                            "attachments": comentAttachmentIds,
-                            "contact": contactObj
+                            {
+                                "body": scope.newComment,
+                                "body_type": "text",
+                                "type": "comment",
+                                "public": mode,
+                                "channel": channel,
+                                "engagement_session": eng_session,
+                                "reply_session": reply_session,
+                                "attachments": comentAttachmentIds,
+                                "contact": contactObj
 
 
-                        }
+                            }
 
                         if (mode == "public") {
                             commentObj["channel_from"] = reply_chnl_from;
@@ -1444,9 +1450,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.changeTicketStatus = function (newStatus) {
 
                     var bodyObj =
-                    {
-                        status: newStatus
-                    };
+                        {
+                            status: newStatus
+                        };
 
                     ticketService.updateTicketStatus(scope.ticket._id, bodyObj).then(function (response) {
                         if (response.data.IsSuccess) {
@@ -1472,7 +1478,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     scope.newSubTicket.priority = priority;
                 };
 
-                scope.saveSubTicket = function (subTicket) {
+                scope.saveSubTicket = function () {
 
                     if (scope.ticket.channel) {
                         scope.newSubTicket.channel = scope.ticket.channel;
@@ -1486,7 +1492,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             return obj.name;
                         });
                     }
-                    if (subTicket.assignee) {
+                    if (scope.newSubTicket.assignee) {
                         /*var subTicketAssignee=JSON.parse(subTicket.assignee);
                          if(subTicketAssignee.listType == "User")
                          {
@@ -1496,11 +1502,14 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                          {
                          subTicket.assignee_group=subTicketAssignee
                          }*/
-                        subTicket.assignee = JSON.parse(subTicket.assignee);
-                        subTicket.assignee_group = subTicket.assignee;
+                        console.log(scope.newSubTicket.assignee);
+
+                        // subTicket.assignee = JSON.parse(subTicket.assignee);
+                        scope.newSubTicket.assignee = scope.newSubTicket.assignee;
+                        scope.newSubTicket.assignee_group = scope.newSubTicket.assignee;
                     }
 
-                    ticketService.AddSubTicket(scope.ticket._id, subTicket).then(function (response) {
+                    ticketService.AddSubTicket(scope.ticket._id, scope.newSubTicket).then(function (response) {
 
                         if (response.data.IsSuccess) {
                             scope.showAlert("Sub ticket saving", "success", "Sub ticket saved successfully");
@@ -1513,13 +1522,16 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                              }
                              })*/
 
-                            response.data.Result.assignee = subTicket.assignee;
+                            response.data.Result.assignee = scope.newSubTicket.assignee;
 
-                            response.data.Result.assignee_displayname = scope.setUserTitles(subTicket.assignee);
+                            response.data.Result.assignee_displayname = scope.setUserTitles(scope.newSubTicket.assignee);
                             scope.subTickets.push(response.data.Result);
 
                             scope.showSubCreateTicket = false;
                             console.log("Sub ticket added successfully");
+
+                            scope.newSubTicket={};
+                            scope.postTags = [];
                         }
                         else {
                             scope.showAlert("Sub ticket saving", "error", "Sub ticket saving failed");
@@ -1834,13 +1846,13 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     console.info('onCompleteItem', fileItem, response, status, headers);
                     if (response.IsSuccess) {
                         var attchmentData =
-                        {
-                            file: fileItem._file.name,
-                            //url: baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
-                            url: response.Result,
-                            type: fileItem._file.type,
-                            size: fileItem._file.size
-                        }
+                            {
+                                file: fileItem._file.name,
+                                //url: baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/" + response.Result + "/SampleAttachment",
+                                url: response.Result,
+                                type: fileItem._file.type,
+                                size: fileItem._file.size
+                            }
 
 
                         ticketService.AddNewAttachmentToTicket(scope.ticket._id, attchmentData).then(function (response) {

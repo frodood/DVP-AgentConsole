@@ -595,7 +595,13 @@
                                                                 <span ng-bind-html="$highlight($getDisplayText())"></span>
                                                             </div>
                                                         </script>-->
-                                                        <select class="form-control" placeholder=""
+
+
+                                                        <input type="text" ng-model="newAssignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
+                                                               class="form-control" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Select user/group" >
+
+
+                                                        <!--<select class="form-control" placeholder=""
                                                                 ng-model="newAssignee"
                                                                 ng-model-options="{trackBy: '$value'}"
                                                                 style="margin-top: 7px;">
@@ -608,7 +614,7 @@
                                                                     value="{{group}}"> - {{group.name}}
                                                             </option>
 
-                                                        </select>
+                                                        </select>-->
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5">

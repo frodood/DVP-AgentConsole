@@ -126,7 +126,29 @@
                                 <div class="form-group">
                                     <label>Assignee user</label>
 
-                                    <select class="form-control" ng-model="newSubTicket.assignee"
+                                    <!--<input type="text" ng-model="newSubTicket.assignee" uib-typeahead="assignee.displayname for assignee in assigneeUsers | filter:$Value | limitTo:8" class="form-control">-->
+                                    <input type="text" ng-model="newSubTicket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
+
+
+                                    <!--<input list="comicstitle" type="text" class="form-control" ng-model="newSubTicket.assignee">
+                                    <datalist id="comicstitle" ng-model-options="{trackBy: '$value'}">
+                                        <option  data-ng-repeat="assignee in assigneeUsers" data-value="{{assignee.displayname}}" value="{{assignee}} ">
+
+                                        </option>
+                                    </datalist>-->
+
+                                    <!--<angucomplete-alt id="ex1"
+                                                      placeholder="Select assignee"
+                                                      pause="100"
+                                                      selected-object=newSubTicket.assignee
+                                                      local-data=assigneeUsers
+                                                      search-fields=displayname
+                                                      title-field=displayname
+                                                      minlength="1"
+                                                      input-class="form-control form-control-small"/>-->
+
+
+                                    <!--<select class="form-control" ng-model="newSubTicket.assignee"
                                             ng-model-options="{trackBy: '$value'}">
                                         <optgroup label="Users"></optgroup>
                                         <option ng-repeat="assignee in assigneeUsers" value='{{assignee}}'>
@@ -137,14 +159,16 @@
                                             - {{group.name}}
                                         </option>
                                     </select>
+-->
 
 
-                                    <label for="ticketSubject">Security Level</label>
+
+                                    <!--<label for="ticketSubject">Security Level</label>
                                     <select class="form-control" ng-model="newSubTicket.security_level">
                                         <option ng-repeat="level in secLevels" value="{{level}}">
                                             {{level}}
                                         </option>
-                                    </select>
+                                    </select>-->
 
                                 </div>
 
@@ -156,7 +180,7 @@
                             <div class="model-btn-wrapper">
                                 <div class="btn-warp ">
                                 <span class="btn btn-default"
-                                      ng-click="saveSubTicket(newSubTicket);">Save</span>
+                                      ng-click="saveSubTicket();">Save</span>
                                 </div>
                             </div>
 

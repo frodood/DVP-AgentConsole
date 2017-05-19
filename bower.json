@@ -80,7 +80,8 @@
     "angular-progressbar": "^0.1.0",
     "progressbar.js": "^1.0.1",
     "ng-emoticons": "^2.1.0",
-    "angular-confirm": "angular-confirm1#^1.1.0"
+    "angular-confirm": "angular-confirm1#^1.1.0",
+    "angucomplete-alt": "^3.0.0"
   },
   "resolutions": {
     "moment": "^2.14.1",
