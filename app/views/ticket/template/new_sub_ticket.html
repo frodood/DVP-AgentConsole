@@ -1,4 +1,12 @@
 <!-- add new sub ticket -->
+
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <img class="assignee-icon" src="assets/img/avatar/defaultProfile.png" ng-src="{{match.model.avatar}}">
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
 <div ng-show="showSubCreateTicket">
     <div class="position-relative">
         <div id="addNewTicket" class="animated fixed-model-opacity">
@@ -127,7 +135,14 @@
                                     <label>Assignee user</label>
 
                                     <!--<input type="text" ng-model="newSubTicket.assignee" uib-typeahead="assignee.displayname for assignee in assigneeUsers | filter:$Value | limitTo:8" class="form-control">-->
-                                    <input type="text" ng-model="newSubTicket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
+
+
+                                    <div class="scrollable-dropdown-menu">
+                                        <input type="text" ng-model="newSubTicket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}|limitTo:10"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html">
+                                    </div>
+
+
+
 
 
                                     <!--<input list="comicstitle" type="text" class="form-control" ng-model="newSubTicket.assignee">

@@ -784,6 +784,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 angular.forEach(scope.assigneeUsers, function (assignee) {
                     assignee.displayname = scope.setUserTitles(assignee);
+
                 });
 
 
@@ -1478,6 +1479,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     scope.newSubTicket.priority = priority;
                 };
 
+            
                 scope.saveSubTicket = function () {
 
                     if (scope.ticket.channel) {
