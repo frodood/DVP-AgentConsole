@@ -74,7 +74,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isEnableSoftPhoneDrag = false;
 
 
-
 $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
 
     $ngConfirm({

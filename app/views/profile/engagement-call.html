@@ -964,7 +964,7 @@
                                             </select>-->
                                             <div class="scrollable-dropdown-menu">
 
-                                                <input type="text" ng-model="ticket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}|limitTo:10"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html">
+                                                <input type="text" ng-model="ticket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html">
 
                                             </div>
 

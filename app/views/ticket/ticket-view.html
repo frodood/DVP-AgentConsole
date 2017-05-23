@@ -604,7 +604,7 @@
                                                         </script>-->
 
                                                         <div class="scrollable-dropdown-menu">
-                                                            <input type="text" ng-model="newAssignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}|limitTo:10"
+                                                            <input type="text" ng-model="newAssignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
                                                                    class="form-control" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Select user/group" typeahead-template-url="customTemplate.html">
                                                         </div>
 
