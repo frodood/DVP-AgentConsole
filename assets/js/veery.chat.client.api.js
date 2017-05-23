@@ -493,10 +493,10 @@ window.SE = function (e) {
         var r = v(e, "type");
         if (connected) {
             if (r === "previous") {
-                socket.emit('request', {request: 'oldmessages',requester:  v(e, "requester"),  from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
+                socket.emit('request', {request: 'oldmessages',requester:  v(e, "requester"),  from: v(e, "from"), to: v(e, "to"), id: v(e, "id"), who: v(e, "who")});
             }
             else if (r === "next") {
-                socket.emit('request', {request: 'newmessages', from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
+                socket.emit('request', {request: 'newmessages', from: v(e, "from"), to: v(e, "to"), id: v(e, "id"),  who: v(e, "who")});
             }
             else if (r === "allstatus") {
                 socket.emit('request', {request: 'allstatus'});
@@ -505,7 +505,7 @@ window.SE = function (e) {
                 socket.emit('request', {request: 'allcallstatus'});
             }
             else if (r === "latestmessages") {
-                socket.emit('request', {request: 'latestmessages', from: v(e, "from")});
+                socket.emit('request', {request: 'latestmessages', from: v(e, "from"), who: v(e, "who")});
             }
             else if (r === "pendingall") {
                 socket.emit('request', {request: 'pendingall'});
