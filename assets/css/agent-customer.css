@@ -8433,10 +8433,19 @@ ul.renote-color-btn > li {
 
 .login-wrp {
     width: 100%;
+<<<<<<< .mine
     < < < < < < < HEAD
+=======
+
+>>>>>>> .theirs
     height: 420px;
+<<<<<<< .mine
 = = = = = = = height: 410 px;
 > > > > > > > dialog_implementation background: #fff;
+=======
+    height: 410px;
+    background: #fff;
+>>>>>>> .theirs
     overflow: hidden;
     position: relative;
     margin-top: 20%;
@@ -8543,10 +8552,19 @@ ul.renote-color-btn > li {
 .social-links {
     width: 100%;
     text-align: center;
+<<<<<<< .mine
     < < < < < < < HEAD
+=======
+
+>>>>>>> .theirs
     margin-top: 55px;
+<<<<<<< .mine
 = = = = = = = margin-top: 35 px;
 > > > > > > > dialog_implementation
+=======
+    margin-top: 35px;
+
+>>>>>>> .theirs
 }
 
 .social-links > ul {
@@ -8587,10 +8605,19 @@ ul.renote-color-btn > li {
 
 .login-new-right-wrp {
     width: 100%;
+<<<<<<< .mine
     < < < < < < < HEAD
+=======
+
+>>>>>>> .theirs
     padding: 60px 25px 20px 25px;
+<<<<<<< .mine
 = = = = = = = padding: 52 px 25 px 20 px 25 px;
 > > > > > > > dialog_implementation
+=======
+    padding: 52px 25px 20px 25px;
+
+>>>>>>> .theirs
 }
 
 .login-new-hl-wrp {
@@ -8961,8 +8988,13 @@ ul.renote-color-btn > li {
 .c-panel-show-1652017 > i {
     color: #8FD539;
     font-size: 22px;
+<<<<<<< .mine
 }
 
+=======
+}
+
+>>>>>>> .theirs
 /*agent dialer wrapper */
 .agent-d-wrapper-0522017 {
     width: 500px;
@@ -8976,4 +9008,15 @@ ul.renote-color-btn > li {
     -webkit-box-shadow: -1px -2px 32px -4px rgba(0,0,0,0.39);
     -moz-box-shadow: -1px -2px 32px -4px rgba(0,0,0,0.39);
     box-shadow: -1px -2px 32px -4px rgba(0,0,0,0.39);
+}.assignee-icon {
+    width: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    text-align: center;
+
+}
+
+.scrollable-dropdown-menu .dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
 }

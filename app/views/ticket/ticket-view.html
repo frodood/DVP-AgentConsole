@@ -1,3 +1,10 @@
+
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <img class="assignee-icon" src="assets/img/avatar/defaultProfile.png" ng-src="{{match.model.avatar}}">
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
 <div class="animated fadeIn">
     <div ng-include="'app/views/ticket/ticket-edit.html'"></div>
     <div ng-include="'app/views/ticket/template/new_sub_ticket.html'"></div>
@@ -596,10 +603,10 @@
                                                             </div>
                                                         </script>-->
 
-
-                                                        <input type="text" ng-model="newAssignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
-                                                               class="form-control" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Select user/group" >
-
+                                                        <div class="scrollable-dropdown-menu">
+                                                            <input type="text" ng-model="newAssignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
+                                                                   class="form-control" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Select user/group" typeahead-template-url="customTemplate.html">
+                                                        </div>
 
                                                         <!--<select class="form-control" placeholder=""
                                                                 ng-model="newAssignee"

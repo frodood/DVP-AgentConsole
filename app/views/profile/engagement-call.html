@@ -1,3 +1,10 @@
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <img class="assignee-icon" src="assets/img/avatar/defaultProfile.png" ng-src="{{match.model.avatar}}">
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
 <div class="row">
     <!-- left main wrappper -->
     <div class="col-md-4 col-sm-4 col-xs-4">
@@ -955,10 +962,11 @@
                                                     - {{group.name}}
                                                 </option>
                                             </select>-->
+                                            <div class="scrollable-dropdown-menu">
 
-                                            <input type="text" ng-model="ticket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
+                                                <input type="text" ng-model="ticket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html">
 
-
+                                            </div>
 
                                             <!--<label >Security Level</label>
                                             <select class="form-control" ng-model="ticket.security_level">
