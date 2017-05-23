@@ -1,0 +1,123 @@
+<div class="user-p-c-n-ticket-052017">
+
+    <!-- user profile ticket header -->
+    <div class="user-p-t-header-052017">
+        <div class="header-052017">
+            create new ticket
+        </div>
+    </div>
+    <!-- user profile ticket body -->
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="user-p-t-body-052017">
+            <form>
+                <!-- subject -->
+                <div class="form-group">
+                    <label class="label-052017"
+                           for="exampleInputEmail1">
+                        SUBJECT*
+                    </label>
+                    <input type="email"
+                           class="form-control txt-input-052017"
+                           id="exampleInputEmail1">
+                </div>
+
+                <!-- priority -->
+                <div class="form-group">
+                    <label class="label-052017"
+                           for="exampleInputEmail1">
+                        Priority
+                    </label>
+                    <div class="user-p-t-tags-052017">
+                        <ul class="customer-style-ul">
+                            <li>
+                                <button class="btn btn-tag-sm">
+                                    <i class="fa fa-check"></i>
+                                    LOW
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-tag-sm">
+                                    NORMAL
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-tag-sm">
+                                    HIGH
+                                </button>
+                            </li>
+                            <li>
+                                <button class="btn btn-tag-sm">
+                                    URGENT
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ticket type -->
+                <div class="form-group">
+                    <label class="label-052017"
+                           for="exampleInputEmail1">
+                        Type*
+                    </label>
+                    <select class="form-control txt-input-052017">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+
+                <!-- tags -->
+                <div class="form-group">
+                    <label class="label-052017">tags</label>
+                    <div class="tag-reload-052017"
+                         ng-click="loadTags();"> Reload
+                    </div>
+
+                    <tags-input ng-model="postTags" display-property="name" placeholder="..."
+                                on-tag-removed="onIsolatedTagRemoved()">
+                        <auto-complete source="loadPostTags($query)"></auto-complete>
+                    </tags-input>
+                    <tags-input ng-model="newAddTags" placeholder="choose Tags"
+                                replace-spaces-with-dashes="false"
+                                display-property="name"
+                                add-from-autocomplete-only="true"
+                                on-tag-added="onChipAddTag($tag)"
+                                on-tag-removed="onChipDeleteTag($tag)"
+                                ng-disabled="" min-length="1">
+                        <auto-complete source="queryTagSearch($query)"
+                                       load-on-empty="true"
+                                       load-on-focus="true"
+                                       min-length="1"></auto-complete>
+                    </tags-input>
+                </div>
+
+                <!-- assign user -->
+                <div class="form-group">
+                    <label class="label-052017">
+                        assignee user
+                    </label>
+                    <div class="scrollable-dropdown-menu">
+                        <input type="text" ng-model="ticket.assignee"
+                               uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
+                               class="form-control txt-input-052017"
+                               typeahead-show-hint="true"
+                               typeahead-min-length="0"
+                               typeahead-template-url="customTemplate.html">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button disabled class="btn btn-lg btn-block btn-save-052017">
+                        <i class="fa fa-ticket"></i>
+                        create ticket
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
