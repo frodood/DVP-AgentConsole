@@ -331,13 +331,18 @@ window.SE = function (e) {
         if (!e)throw g;
 
         var r = v(e, "to"), m = v(e, "message"), t = v(e, "type");
+        var mediaType= e["mediaType"];
+        var mediaName= e["mediaName"];
         if (connected) {
             // tell server to execute 'new message' and send along one parameter
             var msg = {
                 to: r,
                 message: m,
                 type: t,
-                id: uniqueId()
+                id: uniqueId(),
+                mediaType: mediaType,
+                mediaName: mediaName
+
             };
             socket.emit('message', msg);
             
