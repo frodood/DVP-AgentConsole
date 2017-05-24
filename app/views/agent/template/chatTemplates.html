@@ -1,0 +1,65 @@
+<form name="tempFrm">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ps-sub-title">
+                <h5>New Chat Template</h5>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ticker description -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="form-group"
+                 ng-class="{ 'has-error': tempFrm.tempContent.$invalid && tempFrm.tempContent.$dirty }">
+                <label class="control-label">Content</label>
+                <textarea ng-model="chatTemp.content" class="form-control ps-form-controller" rows="3"
+                          name="tempContent"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ps-update-wrapper">
+                <button
+                        ng-disabled="tempFrm.$invalid || !chatTemp.content"
+                        ng-click="saveNewChatTemplate();"
+                        ng-class="isLoadingRequ==true ?'disabled-btn':''"
+                        class="btn btn-ps-update pull-right">Add
+                    <i id="proPersInfo"
+                       class="fa fa-spinner fa-pulse display-none"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div style="border-bottom: groove; padding-top: 20px">
+        <div>
+            <div class="col-lg-12">
+                <h3 style="color: white">Chat Templates</h3>
+                <div class="mail_list_column sip-user-wrap" style="overflow: hidden;width: 533px;height: 200px"
+                     ng-mouseover="viewScroll()"
+                     ng-mouseleave="hideScroll()"
+                     ng-slimscroll opacity="0.2" distance="0px"
+                     enabled="{{ scrollEnabled }}">
+                    <div ng-repeat="template in myTemplates">
+
+                        <div class="chat-Temp-obj">
+                            <span>{{template.content}}</span>
+                            <span class="fa fa-trash pull-right" style="padding-right: 10px" ng-click="deleteChatTemplate(template._id)"></span>
+
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>

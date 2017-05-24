@@ -10386,3 +10386,16 @@ tags-input .tags {
     text-decoration: underline;
 
 }
+
+.chat-Temp-obj  {
+
+    color: white;
+    border-bottom-style: groove;
+    border-bottom-width: thin;
+    height: 40px;
+}
+.chat-Temp-obj > span
+{
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
