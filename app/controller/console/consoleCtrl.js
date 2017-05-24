@@ -68,7 +68,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.notifications = [];
-    $scope.Test=["ABC","BCD","CDE","DEF"];
     $scope.agentList = [];
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
