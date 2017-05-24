@@ -88,14 +88,17 @@
 
 
                     <form class="form-inline navbar-form navbar-left ">
-                        <div class="form-group">
-                            <input id="commonSearch" type="text" autocomplete="off" class="main-search-input"
+                        <div class="form-group has-feedback">
+                            <input id="commonSearch" type="text" autocomplete="off" class="main-search-input has-feedback-right"
                                    ng-model="searchText"
                                    typeahead-min-length="0" typeahead-on-select="bindSearchData($item)"
                                    uib-typeahead="state as state.value for state in commonSearch($viewValue)"
-                                   placeholder="Search by keyword, #ticket or #profile" typeahead-no-results="noResults">
+                                   placeholder="Search by keyword, #ticket or #profile" typeahead-no-results="noResults" typeahead-loading="isLoading">
+                            <span class="fa fa-spinner fa-spin "
+                               style="margin-top: 3px; color: white; padding-left: 2px" ng-show="isLoading"></span>
 
-                                <span ng-show="noResults" style="color: white">No Results Found</span>
+                            <div class="no-result-box"><li ng-show="noResults" >--- No Results Found ---</li></div>
+
 
                         </div>
                     </form>
@@ -121,10 +124,10 @@
                 </ul>
 
 
-               <!-- <input type="text" list="comicstitle">
-                <datalist id="comicstitle">
-                    <option  data-ng-repeat="ttt in Test" value="{{ttt}}">
-                </datalist>-->
+                <!-- <input type="text" list="comicstitle">
+                 <datalist id="comicstitle">
+                     <option  data-ng-repeat="ttt in Test" value="{{ttt}}">
+                 </datalist>-->
 
 
 
@@ -405,7 +408,7 @@
                          index="tab.tabReference" ng-repeat="tab in tabs"
                          select="tabSelected(tab.tabReference)">
                     <uib-tab-heading>
-                        <div class="pull-left">{{tab.title}}
+                        <div class="pull-left tab-title">{{tab.title}}
                             <a data-ng-click='closeTab(tab)' class='btn btn-tab-close' href="javascript:">
                                 <span class='ti-close'></span></a>
                         </div>
@@ -449,6 +452,10 @@
                         <div ng-switch-when="MyNote">
                             <div
                                     ng-include="'app/views/myNote/my-remeider-note.html'"></div>
+                        </div>
+                        <div ng-switch-when="new-profile">
+                            <div
+                                    ng-include="'app/views/ui-kit/user-profile/user-engagement-console.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>
