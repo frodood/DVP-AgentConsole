@@ -404,7 +404,7 @@
                          index="tab.tabReference" ng-repeat="tab in tabs"
                          select="tabSelected(tab.tabReference)">
                     <uib-tab-heading>
-                        <div class="pull-left">{{tab.title}}
+                        <div class="pull-left tab-title">{{tab.title}}
                             <a data-ng-click='closeTab(tab)' class='btn btn-tab-close' href="javascript:">
                                 <span class='ti-close'></span></a>
                         </div>
@@ -448,6 +448,10 @@
                         <div ng-switch-when="MyNote">
                             <div
                                     ng-include="'app/views/myNote/my-remeider-note.html'"></div>
+                        </div>
+                        <div ng-switch-when="new-profile">
+                            <div
+                                    ng-include="'app/views/ui-kit/user-profile/user-engagement-console.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>

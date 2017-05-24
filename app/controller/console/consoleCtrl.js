@@ -2282,6 +2282,13 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
         }
     });
 
+    /* -------- new UI update user profile tab --------- */
+    //add dashboard inside tab
+    $scope.addUserProfileTab = function () {
+        $scope.addTab('new-profile', 'new-profile', 'new-profile', "new-profile", "new-profile");
+    };
+    $scope.addUserProfileTab();
+
 
     $rootScope.$on('closeTab', function (events, args) {
         $scope.tabs.filter(function (item) {
@@ -4573,6 +4580,28 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
             //alert('done');
             $('#cPanelToggleLeft').addClass('display-none');
         });
+    };
+
+
+    //new profile functions
+    $scope.labels = ["New", "closed", "solved", "new"];
+    $scope.data = [300, 500, 100, 30];
+    $scope.options = {
+        type: 'doughnut',
+        responsive: false,
+        legend: {
+            display: true,
+            position: 'bottom',
+            padding: 5,
+            labels: {
+                fontColor: 'rgb(72, 84, 101)',
+                fontSize: 11,
+                boxWidth: 10
+            }
+        },
+        title: {
+            display: true
+        }
     };
 
 }).directive("mainScroll", function ($window) {
