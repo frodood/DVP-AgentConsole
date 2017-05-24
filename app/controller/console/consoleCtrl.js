@@ -73,6 +73,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
 
+    $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
 
         $ngConfirm({
             title: title,
@@ -84,18 +85,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     text: okText,
                     btnClass: 'btn-primary',
                     keys: ['enter'], // will trigger when enter is pressed
-                    action: function (scope) {
+                    action: function(scope){
                         okFunc();
                     }
                 },
                 // short hand button definition
-                close: function (scope) {
+                close: function(scope){
                     closeFunc();
                 }
-            },
+            }
         });
-
-
     }
 
 
