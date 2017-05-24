@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window,notificationService,$ngConfirm) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -68,37 +68,37 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.notifications = [];
-    $scope.Test=["ABC","BCD","CDE","DEF"];
+    $scope.Test = ["ABC", "BCD", "CDE", "DEF"];
     $scope.agentList = [];
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
 
 
-$scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
+    $scope.showConfirmation = function (title, contentData, okText, okFunc, closeFunc) {
 
-    $ngConfirm({
-        title: title,
-        content: contentData, // if contentUrl is provided, 'content' is ignored.
-        scope: $scope,
-        buttons: {
-            // long hand button definition
-            ok: {
-                text: okText,
-                btnClass: 'btn-primary',
-                keys: ['enter'], // will trigger when enter is pressed
-                action: function(scope){
-                    okFunc();
+        $ngConfirm({
+            title: title,
+            content: contentData, // if contentUrl is provided, 'content' is ignored.
+            scope: $scope,
+            buttons: {
+                // long hand button definition
+                ok: {
+                    text: okText,
+                    btnClass: 'btn-primary',
+                    keys: ['enter'], // will trigger when enter is pressed
+                    action: function (scope) {
+                        okFunc();
+                    }
+                },
+                // short hand button definition
+                close: function (scope) {
+                    closeFunc();
                 }
             },
-            // short hand button definition
-            close: function(scope){
-                closeFunc();
-            }
-        },
-    });
+        });
 
 
-}
+    }
 
 
     //
@@ -1584,13 +1584,13 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
     $scope.MakeNotificationObject = function (data) {
 
 
-        var callbackObj= JSON.parse(data.Callback);
+        var callbackObj = JSON.parse(data.Callback);
 
-        callbackObj.From=data.From;
-        callbackObj.TopicKey=callbackObj.Topic;
-        callbackObj.messageType=callbackObj.MessageType;
-        callbackObj.isPersistMessage=true;
-        callbackObj.PersistMessageID=data.id;
+        callbackObj.From = data.From;
+        callbackObj.TopicKey = callbackObj.Topic;
+        callbackObj.messageType = callbackObj.MessageType;
+        callbackObj.isPersistMessage = true;
+        callbackObj.PersistMessageID = data.id;
 
 
         return callbackObj;
@@ -1606,28 +1606,23 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
         $('#regNotification').addClass('display-block').removeClass('display-none');
         $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
 
-        if(!isPersistanceLoaded)
-        {
+        if (!isPersistanceLoaded) {
             notificationService.GetPersistenceMessages().then(function (response) {
 
-                if(response.data.IsSuccess)
-                {
-                    isPersistanceLoaded=true;
+                if (response.data.IsSuccess) {
+                    isPersistanceLoaded = true;
 
-                    angular.forEach(response.data.Result,function (value) {
+                    angular.forEach(response.data.Result, function (value) {
                         $scope.OnMessage($scope.MakeNotificationObject(value));
                     });
 
                 }
 
 
-            },function (err) {
+            }, function (err) {
 
             });
         }
-
-
-
 
 
     };
@@ -1653,10 +1648,9 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
 
 
         }
-        else
-        {
-            senderAvatar=null;
-            data.From="System";
+        else {
+            senderAvatar = null;
+            data.From = "System";
         }
 
         var regex = /~#tid (.*?) ~/;
@@ -1675,10 +1669,9 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
         };
 
 
-        if(data.isPersistMessage && data.PersistMessageID)
-        {
-            objMessage['isPersistMessage']=data.isPersistMessage;
-            objMessage['PersistMessageID']=data.PersistMessageID;
+        if (data.isPersistMessage && data.PersistMessageID) {
+            objMessage['isPersistMessage'] = data.isPersistMessage;
+            objMessage['PersistMessageID'] = data.PersistMessageID;
         }
 
         if (Array.isArray(tid) && tid.length > 1) {
@@ -1691,7 +1684,7 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
         }
 
 
-        if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage)==-1) {
+        if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage) == -1) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
             audio.play();
             $scope.notifications.unshift(objMessage);
@@ -2287,7 +2280,7 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
     $scope.addUserProfileTab = function () {
         $scope.addTab('new-profile', 'new-profile', 'new-profile', "new-profile", "new-profile");
     };
-    $scope.addUserProfileTab();
+    //$scope.addUserProfileTab();
 
 
     $rootScope.$on('closeTab', function (events, args) {
@@ -3072,7 +3065,7 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
         })
 
     };
-    $scope.titles=[];
+    $scope.titles = [];
 
     $scope.RatingResultResolve = function (item) {
         var rateObj =
@@ -3085,9 +3078,8 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
     };
 
     $scope.SetTitiles = function (value) {
-        $scope.titles =[];
-        for (var i = 1; i <= 10; i++)
-        {
+        $scope.titles = [];
+        for (var i = 1; i <= 10; i++) {
             $scope.titles.push(value);
         }
 
@@ -3865,86 +3857,78 @@ $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
     $scope.RemoveAllNotifications = function () {
 
 
-        $scope.showConfirmation("Remove all notifications","Do you want to remove all Notifications ?","Ok",function () {
+        $scope.showConfirmation("Remove all notifications", "Do you want to remove all Notifications ?", "Ok", function () {
             notificationService.RemoveAllPersistenceMessages().then(function (response) {
 
-                if(response.data.IsSuccess)
-                {
+                if (response.data.IsSuccess) {
                     $scope.unredNotifications = 0;
-                    $scope.notifications =[];
+                    $scope.notifications = [];
                 }
-                else
-                {
+                else {
                     console.log("Error in Removing notifications");
                     $scope.showAlert("Error", "error", "Error in deleting notifications");
                 }
 
                 $scope.showMesssageModal = false;
 
-            },function (error) {
+            }, function (error) {
                 $scope.showAlert("Error", "error", "Error in deleting notifications");
                 console.log("Error in Removing notifications");
             });
-        },function () {
+        }, function () {
 
         });
 
 
-       /* notificationService.RemoveAllPersistenceMessages().then(function (response) {
+        /* notificationService.RemoveAllPersistenceMessages().then(function (response) {
 
-            if(response.data.IsSuccess)
-            {
-                $scope.unredNotifications = 0;
-                $scope.notifications =[];
-            }
-            else
-            {
-                console.log("Error in Removing notifications");
-                $scope.showAlert("Error", "error", "Error in deleting notifications");
-            }
+         if(response.data.IsSuccess)
+         {
+         $scope.unredNotifications = 0;
+         $scope.notifications =[];
+         }
+         else
+         {
+         console.log("Error in Removing notifications");
+         $scope.showAlert("Error", "error", "Error in deleting notifications");
+         }
 
-            $scope.showMesssageModal = false;
+         $scope.showMesssageModal = false;
 
-        },function (error) {
-            $scope.showAlert("Error", "error", "Error in deleting notifications");
-            console.log("Error in Removing notifications");
-        });*/
+         },function (error) {
+         $scope.showAlert("Error", "error", "Error in deleting notifications");
+         console.log("Error in Removing notifications");
+         });*/
 
         /*$scope.showConfirm("Delete notifications","Delete","ok","cancel","Do you want to delete all notifications",function () {
 
 
 
-        },function () {
+         },function () {
 
-        },null)*/
-
+         },null)*/
 
 
     };
 
 
-
     $scope.discardNotifications = function (notifyMessage) {
-        if(notifyMessage.isPersistMessage && notifyMessage.PersistMessageID)
-        {
+        if (notifyMessage.isPersistMessage && notifyMessage.PersistMessageID) {
             notificationService.RemovePersistenceMessage(notifyMessage.PersistMessageID).then(function (response) {
                 $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
                 $scope.unredNotifications = $scope.notifications.length;
                 $scope.showMesssageModal = false;
 
-            },function (error) {
+            }, function (error) {
                 $scope.showAlert("Error", "error", "Error in deleting notification");
                 $scope.showMesssageModal = false;
             });
         }
-        else
-        {
+        else {
             $scope.notifications.splice($scope.notifications.indexOf(notifyMessage), 1);
             $scope.unredNotifications = $scope.notifications.length;
             $scope.showMesssageModal = false;
         }
-
-
 
 
     };
