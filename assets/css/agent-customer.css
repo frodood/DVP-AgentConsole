@@ -6297,10 +6297,49 @@ ul.renote-color-btn > li {
     min-width: 8px;
     overflow: hidden;
     padding: 3px 5px 3px 5px;
-    border-radius: 2px;
     font-size: 12px;
     margin-bottom: 6px;
     border-radius: 12px;
+}
+
+.chat-type {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    display: block;
+    position: relative;
+    font-size: 10px;
+    color: #8B8B8B;
+    letter-spacing: 0.57px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 6px;
+    margin-left: 30px;
+    margin-right: 30px;
+
+}
+
+.chat-type.join {
+    border-bottom: 1px solid #516D8F;
+}
+
+.chat-type.left:before,
+.chat-type.left:after {
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: 6px;
+    width: 13%;
+}
+
+.chat-type.left:before {
+    background: #516D8F;
+    left: 40px;
+}
+
+.chat-type.left:after {
+    background: #516D8F;
+    right: 40px;
 }
 
 .rec-msg > .msg-t {
