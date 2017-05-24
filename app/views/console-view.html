@@ -179,12 +179,16 @@
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                         uib-dropdown uib-dropdown-toggle>
                         <i class="veery-font-1-file-1" ng-click="consoleTopMenu.openTicket()"></i>
-                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
+
+                    <li id="agentDialerTop" class="console-menu-icon m-left-10 m-right-10 m-top-6">
+                        <i class="fa fa-weibo" ng-click="consoleTopMenu.openAgentDialer()" title="Agent Dialer"></i>
+
+                    <li id="agentPhone" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">
                         <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none"
-                           style="margin-top: 3px;"></i>
-                        <i id="isBtnReg" class="main-icon-2-telephone-3" ng-click="consoleTopMenu.Register()"></i>
+                           style="margin-top: 3px;" title="Phone"></i>
+                        <i id="isBtnReg" class="main-icon-2-telephone-3" ng-click="consoleTopMenu.Register()" title="Phone"></i>
                         <i id="isCallOnline" class="main-icon-2-telephone-4 display-none"
-                           ng-click="consoleTopMenu.Register()"></i>
+                           ng-click="consoleTopMenu.Register()" title="Phone"></i>
                     </li>
 
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6" uib-dropdown uib-dropdown-toggle>

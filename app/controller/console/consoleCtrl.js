@@ -211,6 +211,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
         },
+        openAgentDialer: function () {
+            $('#AgentDialerUi').addClass('agent-d-wrapper-0522017 fadeIn').removeClass('display-none');
+            $rootScope.$emit('dialnextnumber', undefined);
+            $scope.agentDialerOn = true;
+        },
         Register: function () {
             $scope.veeryPhone.Register('DuoS123');
             getALlPhoneContact();
@@ -292,8 +297,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#softPhoneDragElem').addClass('display-none ').removeClass('display-block');
         phoneFuncion.idle();
         $scope.ShowHidePhone(false);
-
-
+        $('#agentDialerTop').removeClass('display-block active-menu-icon').addClass('display-none');
+        $rootScope.$emit('dialstop', undefined);
     };
 
     $scope.PhoneOnline = function () {
@@ -304,7 +309,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#softPhoneDragElem').addClass('display-block').removeClass('display-none ');
         $scope.ShowHidePhone(true);
         phoneFuncion.idle();
-
+        $('#agentDialerTop').addClass('display-block active-menu-icon').removeClass('display-none');
         //chatService.Status('available', 'call');
 
 
@@ -1232,7 +1237,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideSwap();
             $scope.callLogSessionId = uuid4.generate();
 
-            if (true) { // start only if dialer start
+            if ($scope.agentDialerOn) { // start only if dialer start
                 $rootScope.$emit('dialnextnumber', undefined);
             }
 
@@ -3583,6 +3588,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('font-color-green bold');
                     $scope.currentModeOption = requestOption;
+                    $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
@@ -3604,6 +3610,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     //changeLockScreenView.hide();
                     //$scope.isUnlock = false;
                     //return;
+                    $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
                 }
             });
         }
