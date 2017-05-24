@@ -68,7 +68,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.notifications = [];
-    $scope.Test = ["ABC", "BCD", "CDE", "DEF"];
     $scope.agentList = [];
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
@@ -95,7 +94,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             }
         });
-    }
+    };
 
 
     //
@@ -2285,7 +2284,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addUserProfileTab = function () {
         $scope.addTab('new-profile', 'new-profile', 'new-profile', "new-profile", "new-profile");
     };
-    $scope.addUserProfileTab();
+    //$scope.addUserProfileTab();
 
 
     $rootScope.$on('closeTab', function (events, args) {
