@@ -17,8 +17,8 @@ agentApp.directive('scrolly', function () {
     };
 });
 
-agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser,jwtHelper) {
+agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce) {
     return {
         restrict: "EA",
         scope: {
@@ -38,9 +38,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             searchUsers: "=",
             schemaResponseNewTicket: "="
         },
-        templateUrl: 'app/views/profile/engagement-call.html',
+        //templateUrl: 'app/views/profile/engagement-call.html',
+        templateUrl: 'app/views/engagement/engagement-console.html',
         link: function (scope, element, attributes) {
 
+            //update code damith
+            if (scope.profileDetail && scope.profileDetail.address) {
+                console.log(scope.profileDetail);
+                scope.profileDetail.address.locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
+                    'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
+            }
 
             scope.schemaw = scope.schemaResponseNewTicket.schema;
             scope.formw = scope.schemaResponseNewTicket.form;
@@ -85,26 +92,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.setUserTitles = function (userObj) {
 
-                var title="";
+                var title = "";
 
 
-                if(userObj.firstname && userObj.lastname)
-                {
-                    title=userObj.firstname+" "+ userObj.lastname;
+                if (userObj.firstname && userObj.lastname) {
+                    title = userObj.firstname + " " + userObj.lastname;
                 }
-                else
-                {
-                    if(userObj.firstname)
-                    {
-                        title=userObj.firstname;
+                else {
+                    if (userObj.firstname) {
+                        title = userObj.firstname;
                     }
-                    else if(userObj.lastname)
-                    {
-                        title=userObj.lastname;
+                    else if (userObj.lastname) {
+                        title = userObj.lastname;
                     }
-                    else
-                    {
-                        title=userObj.name;
+                    else {
+                        title = userObj.name;
                     }
 
                 }
@@ -120,11 +122,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
             scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
-                value.displayname=value.name;
+                value.displayname = value.name;
                 return value;
             });
-            scope.assigneeUserData=scope.assigneeUsers.concat(scope.assigneeTempGroups);
-
+            scope.assigneeUserData = scope.assigneeUsers.concat(scope.assigneeTempGroups);
 
 
             scope.pickCompanyInfo = function () {
@@ -448,7 +449,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                                 if (responseFS.Result) {
                                     ticketService.updateFormSubmissionData(scope.profileDetail._id, obj).then(function (responseUpdate) {
                                         if (responseUpdate.Result) {
-
 
 
                                             userService.mapFormSubmissionToProfile(responseUpdate.Result._id, scope.profileDetail._id).then(function (responseMap) {
@@ -878,43 +878,33 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.newAddTags = [];
             scope.postTags = [];
 
-            var findFormForCompanyOrTag = function(isolatedTags, callback)
-            {
-                ticketService.getFormByIsolatedTag(isolatedTags).then(function(tagForm)
-                {
-                    if(tagForm.Result && tagForm.Result.length > 0)
-                    {
+            var findFormForCompanyOrTag = function (isolatedTags, callback) {
+                ticketService.getFormByIsolatedTag(isolatedTags).then(function (tagForm) {
+                    if (tagForm.Result && tagForm.Result.length > 0) {
 
                         callback(null, tagForm.Result[0].dynamicForm);
                     }
-                    else
-                    {
-                        ticketService.getFormsForCompany().then(function(compForm)
-                        {
-                            if(compForm.Result.ticket_form)
-                            {
+                    else {
+                        ticketService.getFormsForCompany().then(function (compForm) {
+                            if (compForm.Result.ticket_form) {
                                 callback(null, compForm.Result.ticket_form);
                             }
-                            else
-                            {
+                            else {
                                 callback(null, null);
                             }
 
-                        }).catch(function(err)
-                        {
+                        }).catch(function (err) {
                             callback(err, null);
                         })
                     }
 
 
-                }).catch(function(err)
-                {
+                }).catch(function (err) {
                     callback(err, null);
                 })
             };
 
-            scope.onIsolatedTagRemoved = function()
-            {
+            scope.onIsolatedTagRemoved = function () {
                 var schema = {
                     type: "object",
                     properties: {}
@@ -922,15 +912,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
                 var form = [];
 
-                var arrMap = scope.postTags.map(function(item)
-                {
+                var arrMap = scope.postTags.map(function (item) {
                     return item.name;
                 })
 
-                findFormForCompanyOrTag(arrMap, function(err, ticket_form)
-                {
-                    if(ticket_form)
-                    {
+                findFormForCompanyOrTag(arrMap, function (err, ticket_form) {
+                    if (ticket_form) {
                         scope.currentTicketForm = ticket_form;
                         buildFormSchema(schema, form, ticket_form.fields);
                         //var currentForm = response.Result.ticket_form;
@@ -944,8 +931,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         scope.formw = form;
                         scope.modelw = {};
                     }
-                    else
-                    {
+                    else {
                         scope.currentTicketForm = null;
                     }
                 });
@@ -1083,13 +1069,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             };
 
             scope.loadMyAppMetaData = function () {
-                ticketService.GetMyTicketConfig(function (success,data) {
+                ticketService.GetMyTicketConfig(function (success, data) {
 
-                    if(success && data && data.Result)
-                    {
-                        scope.ticket.subject=data.Result.subject;
+                    if (success && data && data.Result) {
+                        scope.ticket.subject = data.Result.subject;
                         scope.setPriority(data.Result.priority);
-                        scope.ticket.description=data.Result.description;
+                        scope.ticket.description = data.Result.description;
 
                     }
                 });
@@ -1097,8 +1082,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             }
 
 
-
-            scope.saveTicket = function (ticket,cusForm) {
+            scope.saveTicket = function (ticket, cusForm) {
                 ticket.channel = scope.channel;
                 ticket.requester = scope.profileDetail._id;
                 ticket.engagement_session = scope.sessionId;
@@ -1178,7 +1162,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     }
 
 
-
                 }).catch(function (err) {
                     scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
@@ -1210,8 +1193,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.showNewTicket = function () {
                 if (scope.profileDetail && scope.profileDetail._id) {
                     scope.showCreateTicket = !scope.showCreateTicket;
-                    if(scope.showCreateTicket)
-                    {
+                    if (scope.showCreateTicket) {
                         scope.onIsolatedTagRemoved();
                         scope.loadMyAppMetaData();
                     }
@@ -1485,7 +1467,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         "street": "",
                         "city": "",
                         "province": "",
-                        "country": ""
+                        "country": "",
+                        "locationUrl": ""
                     },
                     "phone": scope.channelFrom,
                     "email": "",
@@ -1498,8 +1481,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             };
 
 
-
-            var loadUserData = function(){
+            var loadUserData = function () {
                 if (scope.profileDetails) {
                     if (scope.profileDetails.length == 1) {
                         scope.profileDetail = scope.profileDetails[0];
@@ -1561,7 +1543,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
 
-                switch (scope.channel){
+                switch (scope.channel) {
                     case 'call':
                         if (scope.direction === 'inbound' || scope.direction === 'outbound') {
                             category = 'phone';
@@ -1580,11 +1562,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         break;
 
                     default :
-                        if(scope.channel.includes("facebook"))
-                        {
+                        if (scope.channel.includes("facebook")) {
                             category = "facebook"
                         }
-                        else{
+                        else {
                             category = scope.channel;
                         }
                         break;
@@ -1646,36 +1627,36 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     }
 
                 } else {
-                    if(category === 'direct') {
+                    if (category === 'direct') {
                         scope.createNProfile();
-                    }else{
+                    } else {
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                             scope.profileDetails = response;
                             loadUserData();
                         }, function (err) {
                             scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
                         });
-                       /* if(scope.channel === 'chat'){
-                            userService.getExternalUserProfileByField("firstname", scope.channelFrom).then(function (response) {
-                                if (response && response.IsSuccess) {
-                                    scope.profileDetails = response.Result;
-                                }
+                        /* if(scope.channel === 'chat'){
+                         userService.getExternalUserProfileByField("firstname", scope.channelFrom).then(function (response) {
+                         if (response && response.IsSuccess) {
+                         scope.profileDetails = response.Result;
+                         }
 
-                                loadUserData();
-                            }, function (err) {
-                                scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                            });
-                        }else {
-                            userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
-                                scope.profileDetails = response;
+                         loadUserData();
+                         }, function (err) {
+                         scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                         });
+                         }else {
+                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                         scope.profileDetails = response;
 
-                                loadUserData();
+                         loadUserData();
 
 
-                            }, function (err) {
-                                scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                            });
-                        }*/
+                         }, function (err) {
+                         scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                         });
+                         }*/
                     }
                 }
             };
@@ -1714,8 +1695,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.makeCall = function (number) {
                 var data = {
-                    callNumber:number,
-                    tabReference:scope.tabReference
+                    callNumber: number,
+                    tabReference: scope.tabReference
                 };
                 $rootScope.$emit('makecall', data);
             };
@@ -1745,11 +1726,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 }
                 else {
                     var results = query ? scope.ticketList.filter(function (query) {
-                        var lowercaseQuery = angular.lowercase(query);
-                        return function filterFn(group) {
-                            return (group.ticketList.toLowerCase().indexOf(lowercaseQuery) != -1);
-                        };
-                    }) : [];
+                            var lowercaseQuery = angular.lowercase(query);
+                            return function filterFn(group) {
+                                return (group.ticketList.toLowerCase().indexOf(lowercaseQuery) != -1);
+                            };
+                        }) : [];
                     return results;
                 }
 
@@ -1764,7 +1745,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 "avatar": "assets/img/avatar/profileAvatar.png",
                 "birthday": "",
                 "gender": "",
-                "firstname": (scope.channel === "chat")?scope.channelFrom:"",
+                "firstname": (scope.channel === "chat") ? scope.channelFrom : "",
                 "lastname": "",
                 "locale": 0,
                 "ssn": "",
@@ -1776,7 +1757,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     "province": "",
                     "country": ""
                 },
-                "phone": (scope.channel === "call")?scope.channelFrom:"",
+                "phone": (scope.channel === "call") ? scope.channelFrom : "",
                 "email": "",
                 "dob": {
                     "day": 0,
@@ -1813,26 +1794,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             });
 
 
-
             var getCustomerTypes = function () {
                 userService.loadCutomerTags().then(function (response) {
 
-                    if(response.IsSuccess)
-                    {
-                        scope.customerType=response.Result;
+                    if (response.IsSuccess) {
+                        scope.customerType = response.Result;
                         scope.customerType.forEach(function (tag) {
-                            tag.cutomerType=tag.name;
+                            tag.cutomerType = tag.name;
 
                         });
                     }
-                    else
-                    {
-                        scope.customerType=[];
+                    else {
+                        scope.customerType = [];
                         scope.showAlert("Customer types", "error", "Fail To load Customer types.");
 
                     }
                 }, function (error) {
-                    scope.customerType=[];
+                    scope.customerType = [];
                     scope.showAlert("Customer types", "error", "Fail To load Customer types.");
                 });
             };
@@ -1863,11 +1841,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 }
                 else {
                     var results = query ? scope.customerType.filter(function (query) {
-                        var lowercaseQuery = angular.lowercase(query);
-                        return function filterFn(group) {
-                            return (group.customerType.toLowerCase().indexOf(lowercaseQuery) != -1);
-                        };
-                    }) : [];
+                            var lowercaseQuery = angular.lowercase(query);
+                            return function filterFn(group) {
+                                return (group.customerType.toLowerCase().indexOf(lowercaseQuery) != -1);
+                            };
+                        }) : [];
                     return results;
                 }
 
@@ -1900,7 +1878,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
 
             scope.saveNewProfile = function (profile) {
-                profile.tags=[];
+                profile.tags = [];
                 scope.cutomerTypes.forEach(function (tag) {
                     profile.tags.push(tag.cutomerType)
                 })
@@ -1910,37 +1888,31 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
                 userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
 
-                    if(resSSN.IsSuccess && resSSN.Result.length>0)
-                    {
+                    if (resSSN.IsSuccess && resSSN.Result.length > 0) {
                         scope.showAlert("Profile", "error", "SSN is already taken");
                     }
-                    else
-                    {
-                        userService.getExternalUserProfileByField("phone",profile.phone).then(function (resPhone) {
+                    else {
+                        userService.getExternalUserProfileByField("phone", profile.phone).then(function (resPhone) {
 
-                            if(resPhone.IsSuccess && resPhone.Result.length>0)
-                            {
+                            if (resPhone.IsSuccess && resPhone.Result.length > 0) {
                                 scope.showAlert("Profile", "error", "Phone number is already taken");
                             }
-                            else
-                            {
-                                userService.getExternalUserProfileByField("email",profile.email).then(function (resEmail) {
+                            else {
+                                userService.getExternalUserProfileByField("email", profile.email).then(function (resEmail) {
 
-                                    if(resEmail.IsSuccess && resEmail.Result.length>0)
-                                    {
+                                    if (resEmail.IsSuccess && resEmail.Result.length > 0) {
                                         scope.showAlert("Profile", "error", "Email is already taken");
                                     }
-                                    else
-                                    {
+                                    else {
                                         userService.CreateExternalUser(profile).then(function (response) {
                                             if (response) {
                                                 scope.profileDetail = response;
                                                 scope.showNewProfile = false;
 
                                                 scope.GetProfileHistory(response._id);
-                                                if(scope.exProfileId) {
+                                                if (scope.exProfileId) {
                                                     scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
-                                                }else {
+                                                } else {
                                                     scope.addIsolatedEngagementSession(response._id, scope.sessionId);
                                                 }
                                             }
@@ -1957,7 +1929,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                                 });
 
 
-
                             }
                         }, function (errPhone) {
                             scope.showAlert("Profile", "error", "Checking Phone number failed");
@@ -1969,37 +1940,29 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 });
 
 
-
             };
 
-            scope.CheckExternalUserAvailabilityBySSN = function (ssn,profile)
-            {
+            scope.CheckExternalUserAvailabilityBySSN = function (ssn, profile) {
                 var deferred = $q.defer();
 
                 userService.getExternalUserProfileBySsn(ssn).then(function (resPhone) {
 
-                    if(resPhone.IsSuccess)
-                    {
-                        if(resPhone.Result.length==0)
-                        {
+                    if (resPhone.IsSuccess) {
+                        if (resPhone.Result.length == 0) {
                             deferred.resolve(true);
                         }
-                        else
-                        {
-                            if(profile._id==resPhone.Result[0]._id)
-                            {
+                        else {
+                            if (profile._id == resPhone.Result[0]._id) {
                                 deferred.resolve(true);
                             }
-                            else
-                            {
+                            else {
                                 scope.showAlert("Profile", "error", "SSN is already taken");
                                 deferred.resolve(false);
                             }
                         }
 
                     }
-                    else
-                    {
+                    else {
                         deferred.resolve(true);
                     }
 
@@ -2011,41 +1974,35 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 return deferred.promise;
             }
 
-            scope.CheckExternalUserAvailabilityByField = function (field,value,profile) {
+            scope.CheckExternalUserAvailabilityByField = function (field, value, profile) {
 
                 var deferred = $q.defer();
 
-                userService.getExternalUserProfileByField(field,value).then(function (resPhone) {
+                userService.getExternalUserProfileByField(field, value).then(function (resPhone) {
 
-                    if(resPhone.IsSuccess)
-                    {
-                        if(resPhone.Result.length==0)
-                        {
+                    if (resPhone.IsSuccess) {
+                        if (resPhone.Result.length == 0) {
                             deferred.resolve(true);
                         }
-                        else
-                        {
-                            if(profile._id==resPhone.Result[0]._id)
-                            {
+                        else {
+                            if (profile._id == resPhone.Result[0]._id) {
                                 deferred.resolve(true);
                             }
-                            else
-                            {
-                                scope.showAlert("Profile", "error", field+" is already taken");
+                            else {
+                                scope.showAlert("Profile", "error", field + " is already taken");
                                 deferred.resolve(false);
                             }
                         }
 
 
                     }
-                    else
-                    {
+                    else {
                         deferred.resolve(true);
                     }
 
                 }, function (errPhone) {
 
-                    scope.showAlert("Profile", "error", "Error in searching "+field);
+                    scope.showAlert("Profile", "error", "Error in searching " + field);
                     deferred.resolve(false);
                 });
                 return deferred.promise;
@@ -2054,46 +2011,41 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.UpdateExternalUser = function (profile) {
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
-                profile.tags=[];
+                profile.tags = [];
                 scope.cutomerTypes.forEach(function (tag) {
                     profile.tags.push(tag.cutomerType)
                 });
                 profile.birthday = new Date(collectionDate);
 
 
-
-
                 $q.all([
-                    scope.CheckExternalUserAvailabilityByField("ssn",profile.ssn,profile),
-                    scope.CheckExternalUserAvailabilityByField("email",profile.email,profile),
-                    scope.CheckExternalUserAvailabilityByField("phone",profile.phone,profile),
-                ]).then(function(value) {
+                    scope.CheckExternalUserAvailabilityByField("ssn", profile.ssn, profile),
+                    scope.CheckExternalUserAvailabilityByField("email", profile.email, profile),
+                    scope.CheckExternalUserAvailabilityByField("phone", profile.phone, profile),
+                ]).then(function (value) {
                     // Success callback where value is an array containing the success values
 
-                    if(value.indexOf(false)==-1)
-                    {
+                    if (value.indexOf(false) == -1) {
                         userService.UpdateExternalUser(profile).then(function (response) {
                             if (response) {
-                                scope.cutomerTypes=[];
+                                scope.cutomerTypes = [];
                                 scope.showNewProfile = false;
                                 scope.editProfile = false;
 
                                 scope.showAlert("Profile", "success", "Update Successfully.");
                                 userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
 
-                                    if(resUserData.IsSuccess)
-                                    {
+                                    if (resUserData.IsSuccess) {
                                         scope.profileDetail = resUserData.Result;
                                     }
-                                    else
-                                    {
-                                        scope.showAlert("Profile","error","Failed to load updated profile");
+                                    else {
+                                        scope.showAlert("Profile", "error", "Failed to load updated profile");
 
                                     }
 
 
                                 }, function (errUserData) {
-                                    scope.showAlert("Profile","error","Failed to load updated profile");
+                                    scope.showAlert("Profile", "error", "Failed to load updated profile");
                                     console.log(errUserData)
                                 });
                             }
@@ -2104,19 +2056,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                             scope.showAlert("Profile", "error", "Fail To Save Profile.");
                         });
                     }
-                    else
-                    {
+                    else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
                     }
 
 
-
-
-                }, function(reason) {
+                }, function (reason) {
                     // Error callback where reason is the value of the first rejected promise
                     alert(value);
                 });
-
 
 
             };
@@ -2163,7 +2111,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 });
 
 
-
             };
             scope.cropImage = function () {
                 scope.cropImageURL = scope.myCroppedImage;
@@ -2200,41 +2147,37 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     },
                     editProfile: function () {
 
-                        userService.getExternalUserProfileByID(scope.profileDetail._id ).then(function (resNewProfile) {
+                        userService.getExternalUserProfileByID(scope.profileDetail._id).then(function (resNewProfile) {
 
-                            if(resNewProfile.IsSuccess)
-                            {
+                            if (resNewProfile.IsSuccess) {
 
                                 scope.newProfile = resNewProfile.Result;
-                                scope.newProfile.avatar=resNewProfile.Result.avatar;
+                                scope.newProfile.avatar = resNewProfile.Result.avatar;
                                 //alert(scope.newProfile.avatar);
-                                for(var i=0;i<scope.newProfile.tags.length;i++)
-                                {
-                                    scope.cutomerTypes[i]={"cutomerType":scope.newProfile.tags[i]};
+                                for (var i = 0; i < scope.newProfile.tags.length; i++) {
+                                    scope.cutomerTypes[i] = {"cutomerType": scope.newProfile.tags[i]};
                                 }
 
                                 var date = moment(scope.profileDetail.birthday);
                                 scope.newProfile.dob = {};
                                 scope.newProfile.dob.day = date.date();
                                 scope.newProfile.dob.month = {
-                                    'index': date.month()+1,
-                                    'name': date.month()+1
+                                    'index': date.month() + 1,
+                                    'name': date.month() + 1
                                 };
                                 scope.newProfile.dob.year = date.year();
                                 scope.showNewProfile = true;
                                 scope.editProfile = true;
                             }
-                            else
-                            {
-                                scope.showAlert("Error","error","Error in loading profile details");
+                            else {
+                                scope.showAlert("Error", "error", "Error in loading profile details");
                             }
                         }, function (errNewProfile) {
-                            scope.showAlert("Error","error","Error in loading profile details");
+                            scope.showAlert("Error", "error", "Error in loading profile details");
                             console.log(errNewProfile);
                         })
 
                         // scope.newProfile = scope.profileDetail;
-
 
 
                     },
@@ -2446,16 +2389,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 (function () {
     var app = angular.module("veeryAgentApp");
 
-    var profilePicUploadController = function ($scope, $stateParams, $filter, $uibModalInstance, $base64, $http, FileUploader, fileService, authService, jwtHelper,changeUrl) {
+    var profilePicUploadController = function ($scope, $stateParams, $filter, $uibModalInstance, $base64, $http, FileUploader, fileService, authService, jwtHelper, changeUrl) {
 
         $scope.showModal = true;
         $scope.isUploadDisable = true;
 
         $scope.myImage = '';
         $scope.myCroppedImage = '';
-
-
-
 
 
         $scope.myChannel = {
@@ -2722,8 +2662,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             // from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Base64_encoding_and_decoding
             return nChr > 64 && nChr < 91 ? nChr - 65
                 : nChr > 96 && nChr < 123 ? nChr - 71
-                : nChr > 47 && nChr < 58 ? nChr + 4
-                : nChr === 43 ? 62 : nChr === 47 ? 63 : 0;
+                    : nChr > 47 && nChr < 58 ? nChr + 4
+                        : nChr === 43 ? 62 : nChr === 47 ? 63 : 0;
         }
 
 

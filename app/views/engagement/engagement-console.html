@@ -1,0 +1,43 @@
+<!-- main wrapper -052017 -->
+<div class="user-p-m-wrapper-052017">
+    <!-- create new ticket -->
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <!-- left main wrapper scroll = fixed  -->
+            <div ng-include="'app/views/engagement/engagement-console-left.html'"></div>
+
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+            <!-- right main wrapper -->
+            <div class="user-p-right-052017">
+
+                <!--  create  new ticket modal -->
+                <div ng-show="showCreateTicket">
+                    <div ng-include="'app/views/engagement/create-new-ticket.html'"></div>
+                </div>
+
+                <div class="user-p-right-h-052017">
+                    <uib-tabset type="pills profile-c-pills-052017">
+                        <uib-tab heading="OVERALL">
+                            <div ng-include="'app/views/engagement/engagement.html'"></div>
+                        </uib-tab>
+                        <uib-tab heading="TIME LINE" classes="btn-sm">
+                            <!--time line-->
+                            <div ng-include="'app/views/engagement/engagement-time-line.html'"></div>
+                        </uib-tab>
+                        <uib-tab heading="TICKET" classes="btn-sm">
+                            <!--ticket-->
+                            <!--time line-->
+                            <div ng-include="'app/views/engagement/engagement-ticket.html'"></div>
+                        </uib-tab>
+                        <uib-tab heading="PROFILE" classes="btn-sm">
+                            <!--profile-->
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
