@@ -10412,3 +10412,12 @@ tags-input .tags {
     padding-top: 15px;
     padding-bottom: 5px;
 }
+.no-result-box {
+    background-color: #f7f7f7;
+}
+.no-result-box > li {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    color: #8298ae;
+    text-align: center;
+
+}
