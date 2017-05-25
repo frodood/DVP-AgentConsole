@@ -1226,7 +1226,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.loadNextEngagement();
             };
 
-            scope.recentEngList = []
+            scope.recentEngList = [];
+            scope.reventNotes = [];
             scope.currentPage = 1;
             scope.isShowTimeLine = false;
             scope.loadNextEngagement = function () {
@@ -1239,6 +1240,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.isShowTimeLine = true;
                     engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
                         scope.engagementsList = scope.engagementsList.concat(reply);
+
+                        //update code damith
+                        //get recent engagement notes
+                        if (scope.reventNotes) {
+                            scope.engagementsList.forEach(function (value) {
+                                if (value.notes && value.notes.length != 0) {
+                                    scope.reventNotes.push(value.notes)
+                                }
+                            });
+                        }
 
                         if (angular.isArray(reply) && scope.recentEngList.length === 0) {
                             scope.recentEngList = reply.slice(0, 1);

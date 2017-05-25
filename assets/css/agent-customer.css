@@ -9821,7 +9821,7 @@ tr.ivr-t-row-052017:nth-child(odd) {
 .engagement-tl-052017 > li > .e-t-l-wrapper-052017 {
     /* Rectangle 21: */
     width: 350px;
-    min-height: 308px;
+    min-height: 198px;
     border: 1px solid #F8F8F8;
     border-radius: 5px;
     overflow: hidden;
@@ -9967,7 +9967,7 @@ ul.customer-style-ul > li.value {
 
 .e-t-l-d-desc-052017 {
     width: 100%;
-    min-height: 25px;
+    height: auto;
     overflow: hidden;
     position: relative;
     padding: 5px;
@@ -10004,6 +10004,7 @@ ul.customer-style-ul > li.value {
     overflow: hidden;
     position: relative;
     padding: 10px;
+    margin-bottom: 4px;
 }
 
 .e-t-l-m-wrapper-052017 > .e-t-l-m-auth-052017 {
@@ -10387,15 +10388,15 @@ tags-input .tags {
 
 }
 
-.chat-Temp-obj  {
+.chat-Temp-obj {
 
     color: white;
     border-bottom-style: groove;
     border-bottom-width: thin;
     height: 40px;
 }
-.chat-Temp-obj > span
-{
+
+.chat-Temp-obj > span {
     padding-top: 15px;
     padding-bottom: 5px;
 }
