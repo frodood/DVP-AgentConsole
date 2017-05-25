@@ -3,7 +3,7 @@
  */
 
 
-var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui.bootstrap',
+var agentApp = angular.module('veeryAgentApp', ['ngRoute','ui', 'ui.bootstrap',
     'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
     'angular-jwt', 'btford.socket-io', 'LocalStorageModule',
     'authServiceModule', 'ngTagsInput', 'schemaForm',
@@ -17,7 +17,7 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui.bootstrap',
     'pubnub.angular.service', 'ui.slimscroll',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
-    'angularProgressbar','cp.ngConfirm','angucomplete-alt'
+    'angularProgressbar','cp.ngConfirm','angucomplete-alt','as.sortable'
 ]);
 
 
@@ -42,10 +42,11 @@ var baseUrls = {
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
     'sipuserUrl': 'http://sipuserendpointservice.app.veery.cloud/DVP/API/1.0.0.0/',
     'pwdVerifyUrl': 'http://userservice.app.veery.cloud/auth/verify',
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',//'http://ipmessagingservice.app.veery.cloud',
     'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
     'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/', //dialerapi.app.veery.cloud
+    'agentDialerUrl': 'http://localhost:8832/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app.veery.cloud
+    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',//'http://ipmessagingservice.app.veery.cloud',
     'templateUrl': 'http://templates.app.veery.cloud/DVP/API/1.0.0.0/TemplateService/' //dialerapi.app.veery.cloud
 
 };
