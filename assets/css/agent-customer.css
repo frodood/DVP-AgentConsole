@@ -10401,6 +10401,31 @@ tags-input .tags {
 
 }
 
+.ivr-n-found-052017 {
+    width: 100%;
+    min-height: 30px;
+    text-align: center;
+    margin: 30px auto;
+}
+
+.ivr-icon {
+    width: 60px;
+    display: block;
+    margin: 0 auto;
+}
+
+.error-msg {
+    /* IVR Record Not Found: */
+    font-family: 'AvenirNext-Regular', sans-serif;
+    color: #8A8E86;
+    letter-spacing: 0.44px;
+    display: block;
+}
+
+.error-msg.text-lg-052017 {
+    font-size: 20px;
+}
+
 .chat-Temp-obj {
 
     color: white;
