@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm,templateService) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -71,15 +71,37 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentList = [];
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
+    $scope.myTemplates=[];
+
+
+
+
+    var loadChatTemplates = function () {
+
+        templateService.getAvailableChatTemplates().then(function (temps) {
+
+            $scope.myTemplates = temps;
+
+        },function (error) {
+            $scope.showAlert('Error', 'error', 'Error in searching chat templates');
+            console.log(error);
+        })
+
+
+    };
+
+    loadChatTemplates();
+
+
 
     $scope.$watch('isLoading', function(newValue, oldValue) {
         if(newValue)
         {
-            $('#searchSpin').removeClass('display-none');
+
         }
         else if(newValue==false)
         {
-            $('#searchSpin').addClass('display-none');
+            $('#searchSpin').removeClass('display-block active-menu-icon').addClass('display-none');
         }
 
 
