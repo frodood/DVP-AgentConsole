@@ -9009,7 +9009,8 @@ ul.renote-color-btn > li {
     text-align: center;
     padding-top: 9px;
 }
-.c-panel-close-1652017{
+
+.c-panel-close-1652017 {
     position: absolute;
     bottom: 163px;
     right: 0px;
@@ -9024,7 +9025,7 @@ ul.renote-color-btn > li {
     padding-top: 9px;
 }
 
-.c-panel-close-1652017 > i{
+.c-panel-close-1652017 > i {
     color: #ff0e0b;
     font-size: 18px;
 }
@@ -10577,14 +10578,12 @@ tags-input .tags {
     padding-left: 10px;
     margin-left: 20px;
 }
-<<<<<<< HEAD
 
 .temp-block {
     padding-left: 5px;
-=======
-.temp-block{
+}
 
->>>>>>> a2026946390ca4a6403d126e9dc86de54e7f97a6
+.temp-block {
     margin-left: 20px;
     border-bottom: thick;
     border-radius: 25px;
@@ -10598,30 +10597,32 @@ tags-input .tags {
 
 }
 
-<<<<<<< HEAD
 .temp-list-block {
     height: 100px;
-=======
-.temp-list-block{
-    height:120px;
->>>>>>> a2026946390ca4a6403d126e9dc86de54e7f97a6
+}
+
+.temp-list-block {
+    height: 120px;
     overflow-x: auto;
     overflow-y: auto;
     margin-right: 20px;
 
 }
-.temp-btn-block{
+
+.temp-btn-block {
     padding-top: 20px;
     padding-bottom: 10px;
     padding-left: 250px;
 }
-.search-temp{
+
+.search-temp {
     padding-top: 20px;
     margin-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
 
 }
+
 .u-chat-temp-wrp {
     position: absolute;
     width: 100%;
@@ -10641,7 +10642,6 @@ tags-input .tags {
     background-color: #f7f7f7;
 
 }
-<<<<<<< HEAD
 
 .temp-done-btn {
     padding-right: 10px;
@@ -10649,13 +10649,12 @@ tags-input .tags {
 
 .form-group.validation-on-052017 > label {
     color: #EA3B3B;
-=======
+}
+
 .no-result-box > li {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     color: #8298ae;
     text-align: center;
-
->>>>>>> a2026946390ca4a6403d126e9dc86de54e7f97a6
 }
 
 .form-group.validation-on-052017 > .form-control {
