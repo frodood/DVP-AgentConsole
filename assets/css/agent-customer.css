@@ -9621,7 +9621,7 @@ ul.renote-color-btn > li {
 
 .user-p-e-wrapper-052017 {
     width: 100%;
-    min-height: 200px;
+    min-height: 170px;
     overflow: hidden;
     position: relative;
     padding: 10px;
@@ -10364,7 +10364,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: 100;
+    z-index: 10;
     background: #ffffff;
     top: 0;
     left: 0;
@@ -10672,6 +10672,10 @@ tags-input .tags {
     border: 1px solid #EEEEEE;
     border-radius: 2px;
     margin-bottom: 20px
+}
+
+.user-p-l-wrapper-052017.fix-h-052017 {
+    min-height: 80px;
 }
 
 .map-wrapper-052017 {
