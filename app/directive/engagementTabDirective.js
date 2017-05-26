@@ -39,8 +39,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             schemaResponseNewTicket: "=",
             pieChartOption: '='
         },
-        //templateUrl: 'app/views/profile/engagement-call.html',
-        templateUrl: 'app/views/engagement/engagement-console.html',
+        templateUrl: 'app/views/profile/engagement-call.html',
+        //templateUrl: 'app/views/engagement/engagement-console.html',
         link: function (scope, element, attributes) {
 
             //update code damith
@@ -2385,6 +2385,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.confimCancel = function () {
                 scope.isCnfmBoxShow = false;
             }
+
+
+            // update coda damith 052017
+            //engagement new profile functions
+
+            scope.isShowBasicInfoEditModal = false;
+            //on click >> show basic info edit view
+            scope.clickEditShowBasicInfo = function () {
+                scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
+            };
         }
     }
 }).directive("fileread", [function () {
@@ -2892,6 +2902,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
         }
     };
+
 
     app.controller("profilePicUploadController", profilePicUploadController);
 }());

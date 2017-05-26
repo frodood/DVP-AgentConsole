@@ -9585,13 +9585,19 @@ ul.renote-color-btn > li {
 }
 
 .user-p-e-wrapper-052017 {
+     width: 100%;
+     min-height: 200px;
+     overflow: hidden;
+     position: relative;
+     padding: 10px;
+ }
+/*user channel wrapper */
+.user-c-e-wrapper-052017 {
     width: 100%;
     min-height: 200px;
     overflow: hidden;
     position: relative;
-    padding: 10px;
 }
-
 .e-d-row-052017 {
     width: 100%;
     min-height: 35px;
