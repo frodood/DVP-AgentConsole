@@ -191,9 +191,9 @@
         </div>
 
         <div class="user-p-tl-wrapper-052017">
-            <ul class="user-p-timeline-052017 left"
-                ng-repeat="eng in engagementsList">
-                <li ng-repeat="note in eng.notes">
+            <ul class="user-p-timeline-052017 left">
+                <li ng-repeat="note in reventNotes"
+                    ng-if="!note">
                     <div class="r-timeline-052017-badge left">
                         <img src="assets/img/avatar/profileAvatar.png"
                              width="22"/>

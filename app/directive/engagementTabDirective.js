@@ -36,7 +36,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             profileDetail: "=",
             tabReference: "@",
             searchUsers: "=",
-            schemaResponseNewTicket: "="
+            schemaResponseNewTicket: "=",
+            pieChartOption: '='
         },
         //templateUrl: 'app/views/profile/engagement-call.html',
         templateUrl: 'app/views/engagement/engagement-console.html',
@@ -1226,7 +1227,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.loadNextEngagement();
             };
 
-            scope.recentEngList = []
+            scope.recentEngList = [];
+            scope.reventNotes = [];
             scope.currentPage = 1;
             scope.isShowTimeLine = false;
             scope.loadNextEngagement = function () {
@@ -1239,6 +1241,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.isShowTimeLine = true;
                     engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
                         scope.engagementsList = scope.engagementsList.concat(reply);
+
+                        //update code damith
+                        //get recent engagement notes
+                        if (scope.reventNotes) {
+                            scope.engagementsList.forEach(function (value) {
+                                if (value.notes && value.notes.length != 0) {
+                                    scope.reventNotes.push(value.notes)
+                                }
+                            });
+                        }
 
                         if (angular.isArray(reply) && scope.recentEngList.length === 0) {
                             scope.recentEngList = reply.slice(0, 1);
@@ -1366,10 +1378,18 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 });
             };
 
-
+            //modify this fun >>  engagement profile
             scope.getExternalUserTicketCounts = function (id) {
+                scope.ticketPieChart = {
+                    labels: [],
+                    data: []
+                };
                 ticketService.GetExternalUserTicketCounts(id).then(function (response) {
                     scope.ExternalUserTicketCounts = response;
+                    scope.ExternalUserTicketCounts.forEach(function (value, index) {
+                        scope.ticketPieChart.data.push(scope.ExternalUserTicketCounts[index].count);
+                        scope.ticketPieChart.labels.push(scope.ExternalUserTicketCounts[index]._id);
+                    });
                 }, function (err) {
                     scope.showAlert("Ticket", "error", "Fail To Get Ticket Count.")
                 });
