@@ -1,5 +1,5 @@
 <div class="user-p-right-tab-052017">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="user-e-widget-052017">
             <div class="header-052017 ">
                 ENGAGEMENT
@@ -51,44 +51,47 @@
                 </div>
             </div>
 
-            <!-- engagement channel wrapper -->
-            <div class="user-eng-call-wrapper-052017 animated fadeIn">
-                <div class="channel-main-wrapper">
-                    <div class="eng-channel-052017" ng-repeat="d in enggemntDetailsCount track by $index">
-                        <div class="eng-channel-des-052017">
-                            <ul class="customer-style-ul">
-                                <li class="channel-des-052017 pull-left">{{d._id}}</li>
-                                <li class="channel-value-052017 pull-right">{{d.val}}% &nbsp ({{d.count}})</li>
-                            </ul>
-                            <div class="channel-p-b-052017">
-                                <uib-progressbar
-                                        class="c-progress-b-052017"
-                                        animate="true"
-                                        value="d.val">
-                                </uib-progressbar>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- ticket summary  -->
             <div class="user-p-t-s-052017 animated fadeIn">
                 <div class="ticket-s-wrapper-052017">
-                    <div class="ticket-s-chart-052017">
+                    <!--<div class="row" style="padding-bottom: 5px;"-->
+                    <!--ng-repeat="t in ExternalUserTicketCounts">-->
+                    <!--<div class="col-sm-6 font-CyanA200">-->
+                    <!--{{t._id}}-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-6 font-CyanA200 text-right">-->
+                    <!--{{t.count}}-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!-- ticket summary details not found -->
+                    <div class="ivr-n-found-052017 ticket-cht-summary"
+                         ng-if="ticketPieChart.data==0">
+                        <div class="ivr-icon">
+                            <img src="assets/img/engagement-icon/chat-not-found.png" width="118">
+                        </div>
+                        <div class="error-msg text-lg-052017 text-center">
+                            Ticket Record Not Found
+                        </div>
+                    </div>
+
+                    <div class="ticket-s-chart-052017"
+                         ng-if="ticketPieChart.data!=0">
                         <canvas id="ticketSummary"
                                 width="250" height="250"
                                 class="chart chart-doughnut"
-                                chart-options="options"
-                                chart-data="data"
-                                chart-labels="labels">
+                                chart-options="pieChartOption"
+                                chart-data="ticketPieChart.data"
+                                chart-labels="ticketPieChart.labels">
                         </canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="user-e-widget-052017 animated fadeIn">
             <div class="header-052017 animated fadeIn">
                 IVR DETAILS
@@ -99,11 +102,11 @@
             <div class="user-p-ivr-wrapper-052017">
 
                 <!-- IVR details not found -->
-                <div class="ivr-n-found-052017" ng-if="ivrDetails.length==0">
+                <div class="ivr-n-found-052017 ivr-n-f" ng-if="ivrDetails.length==0">
                     <div class="ivr-icon">
-                        <img src="asstes/img/engagement-icon/IVR-icon-not-found.png" width="60">
+                        <img src="assets/img/engagement-icon/IVR-icon-not-found.png" width="118">
                     </div>
-                    <div class="error-msg text-lg-052017">
+                    <div class="error-msg text-lg-052017 text-center">
                         IVR Record Not Found
                     </div>
                 </div>

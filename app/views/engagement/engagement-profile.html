@@ -1,0 +1,248 @@
+<div class="user-p-right-tab-052017">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="user-e-widget-052017">
+            <div class="header-052017 inline-h">
+                <ul>
+                    <li class="pull-left">
+                        basic Profile Information
+                    </li>
+                    <li class="pull-right">
+                        <div class="header-r-icon-052017 ">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- basic profile details  -->
+            <div class="user-p-e-wrapper-052017 animated fadeIn">
+                <!-- Company  -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-building"></i> Company</li>
+                        <li class="pull-right value-052017 c-text-green">{{companyName}}</li>
+                    </ul>
+                </div>
+                <!-- first name -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-address-card-o"></i> First Name</li>
+                        <li class="pull-right value-052017">{{profileDetail.firstname}}</li>
+                    </ul>
+                </div>
+                <!-- last name -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="none-icon"></i> last Name</li>
+                        <li class="pull-right value-052017">{{profileDetail.lastname}}</li>
+                    </ul>
+                </div>
+                <!-- Gender -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-venus-mars"></i> Gender</li>
+                        <li class="pull-right value-052017">{{profileDetail.gender}}</li>
+                    </ul>
+                </div>
+                <!-- Birthday -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-calendar"></i>Birthday</li>
+                        <li class="pull-right value-052017">{{profileDetail.birthday| date:'MM-dd-yyyy'}}</li>
+                    </ul>
+                </div>
+
+                <!--&lt;!&ndash; email &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="fa fa-envelope"></i> EMAIL</li>-->
+                <!--<li class="pull-right value-052017"-->
+                <!--ng-if="profileDetail.email">-->
+                <!--{{profileDetail.email}}-->
+                <!--</li>-->
+                <!--<li class="pull-right value-052017"-->
+                <!--ng-if="!profileDetail.email">-->
+                <!-- - -->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; MOBILE PHONE &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="fa fa-phone-square"></i> MOBILE PHONE</li>-->
+                <!--<li class="pull-right value-052017">{{profileDetail.phone}}</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; LAND PHONE &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="none-icon"></i> LAND PHONE</li>-->
+                <!--<li class="pull-right value-052017">{{profileDetail.landnumber}}</li>-->
+                <!--</ul>-->
+                <!--</div> &lt;!&ndash; skill &ndash;&gt;-->
+
+                <!--&lt;!&ndash; TAGS &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="fa fa-tags"></i>TAGS</li>-->
+                <!--<li class="pull-right value-052017">-->
+                <!--<ul class="customer-style-ul profile-tag-052017">-->
+                <!--<li ng-repeat="tag in profileDetail.tags">-->
+                <!--{{tag}}-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!-- Local -->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="fa fa-handshake-o"></i>Local</li>-->
+                <!--<li class="pull-right value-052017">{{profileDetail.locale}}</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; SSN &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017">SSN</li>-->
+                <!--<li class="pull-right value-052017">{{profileDetail.ssn}}</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+            </div>
+
+            <!-- profile channel details -->
+            <div class="user-p-e-wrapper-052017 animated fadeIn" style="background: #f1f6ec;">
+                <div class="header-052017">
+                    CHANNEL
+                </div>
+                <!-- engagement channel wrapper -->
+                <div class="user-eng-call-wrapper-052017 animated fadeIn">
+                    <div class="channel-main-wrapper">
+                        <div class="eng-channel-052017" ng-repeat="d in enggemntDetailsCount track by $index">
+                            <div class="eng-channel-des-052017">
+                                <ul class="customer-style-ul">
+                                    <li class="channel-des-052017 pull-left">{{d._id}}</li>
+                                    <li class="channel-value-052017 pull-right">{{d.val}}% &nbsp ({{d.count}})</li>
+                                </ul>
+                                <div class="channel-p-b-052017">
+                                    <uib-progressbar
+                                            class="c-progress-b-052017"
+                                            animate="true"
+                                            value="d.val">
+                                    </uib-progressbar>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- other profile information -->
+            <!-- basic profile details  -->
+            <div class="user-p-e-wrapper-052017 animated fadeIn">
+                <div class="header-052017 inline-h">
+                    <ul>
+                        <li class="pull-left">
+                            OTHER INFORMATION
+                        </li>
+                        <li class="pull-right">
+                            <div class="header-r-icon-052017 ">
+                                <i class="fa fa-pencil"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Company  -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-tags"></i> Special Tags</li>
+                        <li class="pull-right value-052017 c-text-green">
+                            <ul class="customer-style-ul profile-tag-052017">
+                                <li ng-repeat="tag in profileDetail.tags">
+                                    {{tag}}
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- first name -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> SSN</li>
+                        <li class="pull-right value-052017">{{profileDetail.ssn}}</li>
+                    </ul>
+                </div>
+                <!-- last name -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">LOCAL</li>
+                        <li class="pull-right value-052017">{{profileDetail.locale}}</li>
+                    </ul>
+                </div>
+
+                <!--&lt;!&ndash; email &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="fa fa-envelope"></i> EMAIL</li>-->
+                <!--<li class="pull-right value-052017"-->
+                <!--ng-if="profileDetail.email">-->
+                <!--{{profileDetail.email}}-->
+                <!--</li>-->
+                <!--<li class="pull-right value-052017"-->
+                <!--ng-if="!profileDetail.email">-->
+                <!-- - -->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; MOBILE PHONE &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="fa fa-phone-square"></i> MOBILE PHONE</li>-->
+                <!--<li class="pull-right value-052017">{{profileDetail.phone}}</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; LAND PHONE &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="none-icon"></i> LAND PHONE</li>-->
+                <!--<li class="pull-right value-052017">{{profileDetail.landnumber}}</li>-->
+                <!--</ul>-->
+                <!--</div> &lt;!&ndash; skill &ndash;&gt;-->
+
+                <!--&lt;!&ndash; TAGS &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="fa fa-tags"></i>TAGS</li>-->
+                <!--<li class="pull-right value-052017">-->
+                <!--<ul class="customer-style-ul profile-tag-052017">-->
+                <!--<li ng-repeat="tag in profileDetail.tags">-->
+                <!--{{tag}}-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!-- Local -->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017"><i class="fa fa-handshake-o"></i>Local</li>-->
+                <!--<li class="pull-right value-052017">{{profileDetail.locale}}</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; SSN &ndash;&gt;-->
+                <!--<div class="e-d-row-052017">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="pull-left desc-052017">SSN</li>-->
+                <!--<li class="pull-right value-052017">{{profileDetail.ssn}}</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+    </div>
+</div>

@@ -4576,7 +4576,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //new profile functions
     $scope.labels = ["New", "closed", "solved", "new"];
     $scope.data = [300, 500, 100, 30];
-    $scope.options = {
+    $scope.ticketPieChartOpt = {
         type: 'doughnut',
         responsive: false,
         legend: {

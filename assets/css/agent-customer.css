@@ -9576,7 +9576,7 @@ ul.renote-color-btn > li {
 .user-e-widget-052017 {
     background: #FAFBFD;
     width: 100%;
-    min-height: 500px;
+    min-height: 285px;
     overflow: hidden;
     position: relative;
     border: 1px solid #EEEEEE;
@@ -9613,6 +9613,19 @@ ul.renote-color-btn > li {
     text-transform: uppercase;
 }
 
+.desc-052017 > i {
+    padding-right: 5px;
+    color: #b5ea85;
+}
+
+.c-text-green-052017 {
+    color: #b5ea85 !important;
+}
+
+.desc-052017 > i.none-icon {
+    padding-right: 21px;
+}
+
 .value-052017 {
     /* 103: */
     font-family: 'AvenirNext-Bold', sans-serif;
@@ -9620,6 +9633,21 @@ ul.renote-color-btn > li {
     color: #8B8B8B;
     letter-spacing: 0.53px;
     text-transform: uppercase;
+}
+
+.profile-tag-052017 {
+
+}
+
+.profile-tag-052017 > li {
+    display: inline-block;
+    padding: 3px 8px 2px 8px;
+    color: #e6794f;
+    margin-left: 4px;
+    margin-top: -4px;
+    text-align: center;
+    border: 1px solid #eb9573;
+    border-radius: 5px;
 }
 
 .user-eng-call-wrapper-052017 {
@@ -9807,6 +9835,7 @@ tr.ivr-t-row-052017:nth-child(odd) {
     font-size: 24px;
     color: #8C9088;
     letter-spacing: 0.57px;
+    padding-top: 60px;
 }
 
 /* engagement time line */
@@ -10405,19 +10434,31 @@ tags-input .tags {
     width: 100%;
     min-height: 30px;
     text-align: center;
-    margin: 30px auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.ivr-n-f {
+    margin: 30% auto;
+}
+
+.ticket-cht-summary {
+    margin-top: 30px;
 }
 
 .ivr-icon {
-    width: 60px;
+    width: 100%;
     display: block;
     margin: 0 auto;
+    overflow: hidden;
+    position: relative;
 }
 
 .error-msg {
+    width: 100%;
     /* IVR Record Not Found: */
-    font-family: 'AvenirNext-Regular', sans-serif;
-    color: #8A8E86;
+    font-family: 'AvenirNext-Bold', sans-serif;
+    color: #d9dee4;
     letter-spacing: 0.44px;
     display: block;
 }
@@ -10427,7 +10468,6 @@ tags-input .tags {
 }
 
 .chat-Temp-obj {
-
     color: white;
     border-bottom-style: groove;
     border-bottom-width: thin;
@@ -10437,4 +10477,18 @@ tags-input .tags {
 .chat-Temp-obj > span {
     padding-top: 15px;
     padding-bottom: 5px;
+}
+
+/*profile edit wrapper */
+.user-p-edit-wrapper-052017 {
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    background: #fff;
+    z-index: 10;
+}
+
+.user-edit-wrapper {
+    padding: 20px;
 }

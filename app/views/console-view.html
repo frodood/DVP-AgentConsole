@@ -80,7 +80,9 @@
                                 </div>
 
                             </div>
-                            <div ng-show="notifications.length>0" id="delBtn" class=" del-all-btn"><span onmouseover="this.style.cursor='pointer'" ng-click="RemoveAllNotifications()">Delete All</span></div>
+                            <div ng-show="notifications.length>0" id="delBtn" class=" del-all-btn"><span
+                                    onmouseover="this.style.cursor='pointer'" ng-click="RemoveAllNotifications()">Delete All</span>
+                            </div>
 
                         </ul>
 
@@ -90,16 +92,20 @@
                     <form class="form-inline navbar-form navbar-left ">
                         <div class="form-group has-feedback">
 
-                            <input id="commonSearch" type="text" autocomplete="off" class="main-search-input has-feedback-right"
+                            <input id="commonSearch" type="text" autocomplete="off"
+                                   class="main-search-input has-feedback-right"
                                    ng-model="searchText"
                                    typeahead-min-length="0" typeahead-on-select="bindSearchData($item)"
                                    uib-typeahead="state as state.value for state in commonSearch($viewValue)"
-                                   placeholder="Search by keyword, #ticket or #profile" typeahead-no-results="noResults" typeahead-loading="isLoading">
+                                   placeholder="Search by keyword, #ticket or #profile" typeahead-no-results="noResults"
+                                   typeahead-loading="isLoading">
 
                             <!--<span class="fa fa-spinner fa-spin  form-control-feedback left" style="margin-top: 8px; color: white; padding-left: 2px" aria-hidden="true"></span>-->
                             <span class="fa fa-spinner fa-spin"
-                                  style="margin-top: 3px; color: white; padding-left: 2px" ng-if="isLoading"  ></span>
-                            <div class="no-result-box"><li ng-show="noResults" >--- No Results Found ---</li></div>
+                                  style="margin-top: 3px; color: white; padding-left: 2px" ng-if="isLoading"></span>
+                            <div class="no-result-box">
+                                <li ng-show="noResults">--- No Results Found ---</li>
+                            </div>
 
 
                         </div>
@@ -131,7 +137,6 @@
                  <datalist id="comicstitle">
                      <option  data-ng-repeat="ttt in Test" value="{{ttt}}">
                  </datalist>-->
-
 
 
                 <ul class="nav navbar-nav navbar-right" uib-dropdown>
@@ -192,7 +197,8 @@
                     <li id="agentPhone" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">
                         <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none"
                            style="margin-top: 3px;" title="Phone"></i>
-                        <i id="isBtnReg" class="main-icon-2-telephone-3" ng-click="consoleTopMenu.Register()" title="Phone"></i>
+                        <i id="isBtnReg" class="main-icon-2-telephone-3" ng-click="consoleTopMenu.Register()"
+                           title="Phone"></i>
                         <i id="isCallOnline" class="main-icon-2-telephone-4 display-none"
                            ng-click="consoleTopMenu.Register()" title="Phone"></i>
                     </li>
@@ -432,7 +438,8 @@
                                             profile-detail="tab.notificationData.userProfile"
                                             tab-reference="{{tab.tabReference}}"
                                             search-users="searchExternalUsers"
-                                            schema-response-new-ticket="schemaResponse">
+                                            schema-response-new-ticket="schemaResponse"
+                                            pie-chart-option="ticketPieChartOpt">
 
                             </engagement-tab>
                         </div>
