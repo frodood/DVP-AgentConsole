@@ -3,10 +3,10 @@
     <div class="container">
         <div class="col-lg-offset-3 col-lg-4">
             <div class="notification-details-wrapper">
-                <div id="uNotifiWrp" class="u-notification-wrp">
+                <div id="uNotifiWrp" class="u-chat-temp-wrp">
                     <div class="u-noti-h b-bottom animated" id="uNotiH ">
 
-                        <h3>Chat template viewer</h3>
+                        <h3>Chat Template Viewer</h3>
 
                     </div>
 
@@ -14,9 +14,12 @@
                          <input type="text"  ng-model="myTemp" uib-typeahead="template as template.content for template in chatTemplates | filter:{content:$viewValue}"
                                 class="form-control temp-view-tx-box" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Check template"  typeahead-on-select ="addChatTemplate(myTemp.content)" >
                      </div>-->
-                    <input id="tempSearch" type="text" ng-model="searchCriteria" class="form-control"
-                           placeholder="Search for..."  temp-enter="addChatTemplate(searchCriteria)" >
+                    <div class="search-temp">
+                        <input id="tempSearch" type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for..."  temp-enter="addChatTemplate(searchCriteria)" >
 
+
+                    </div>
                     <div class="temp-list-block">
                         <ul class="list-unstyled">
                             <li ng-repeat="template in chatTemplates | filterBy: ['content']: searchCriteria">
@@ -29,17 +32,18 @@
 
 
 
+
                     <!-- body -->
 
 
                     <!-- footer -->
-                    <!--<div class="u-noti-footer">
+                    <div class="u-noti-footer temp-btn-block">
 
-                        <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w"
-                                ng-click="addChatTemplate()">
+                        <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w "
+                                ng-click="showTemplatePanel()">
                             Done
                         </button>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
