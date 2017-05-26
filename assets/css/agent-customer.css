@@ -10572,3 +10572,14 @@ tags-input .tags {
     /*background: #f7f7f7;*/
     background: #fff;
 }
+
+.no-result-box {
+    background-color: #f7f7f7;
+
+}
+.no-result-box > li {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    color: #8298ae;
+    text-align: center;
+
+}

@@ -97,11 +97,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.$watch('isLoading', function(newValue, oldValue) {
         if(newValue)
         {
-
+            $('#searchSpin').removeClass('display-none');
         }
         else if(newValue==false)
         {
-            $('#searchSpin').removeClass('display-block active-menu-icon').addClass('display-none');
+            $('#searchSpin').addClass('display-none');
         }
 
 
