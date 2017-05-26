@@ -1490,6 +1490,19 @@ tr.ivr-tbl:hover {
     padding-top: 20px;
 }
 
+.new-note-wrapper-icon {
+    width: 100%;
+    text-align: center;
+}
+
+.note-empty-text-052017 {
+    min-height: 30px;
+    font-size: 20px;
+    letter-spacing: 0.44px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
 .engagement-note-list {
     width: 100%;
     height: auto;
@@ -9190,6 +9203,8 @@ ul.renote-color-btn > li {
     font-size: 13px;
     color: #E6794F;
     letter-spacing: 0.57px;
+    margin-top: 5px;
+    margin-bottom: 6px;
 }
 
 .user-p-d-text-052017 > ul > li.full-name {
@@ -9496,7 +9511,7 @@ ul.renote-color-btn > li {
 
 .user-p-l-map-052017 {
     width: auto;
-    height: 140px;
+    height: 150px;
     overflow: hidden;
     position: relative;
     margin: 10px;
@@ -9585,12 +9600,13 @@ ul.renote-color-btn > li {
 }
 
 .user-p-e-wrapper-052017 {
-     width: 100%;
-     min-height: 200px;
-     overflow: hidden;
-     position: relative;
-     padding: 10px;
- }
+    width: 100%;
+    min-height: 200px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+}
+
 /*user channel wrapper */
 .user-c-e-wrapper-052017 {
     width: 100%;
@@ -9598,6 +9614,7 @@ ul.renote-color-btn > li {
     overflow: hidden;
     position: relative;
 }
+
 .e-d-row-052017 {
     width: 100%;
     min-height: 35px;
@@ -9652,7 +9669,7 @@ ul.renote-color-btn > li {
     margin-left: 4px;
     margin-top: -4px;
     text-align: center;
-    border: 1px solid #eb9573;
+    border: 1px solid #f7f7f7;
     border-radius: 5px;
 }
 
@@ -9814,11 +9831,12 @@ ul.renote-color-btn > li {
     overflow: hidden;
     position: relative;
     border-top: 0px !important;
-    font-family: 'AvenirNext-Regular', sans-serif;
-    font-size: 14px;
+    /* font-family: 'AvenirNext-Regular', sans-serif !important; */
+    font-size: 11px;
     color: #8A8E86;
     letter-spacing: 0.62px;
     border-radius: 0px;
+    text-transform: uppercase;
 
 }
 
@@ -9841,6 +9859,7 @@ tr.ivr-t-row-052017:nth-child(odd) {
     font-size: 24px;
     color: #8C9088;
     letter-spacing: 0.57px;
+    margin-top: 45px;
 }
 
 /* engagement time line */
@@ -10461,8 +10480,6 @@ tags-input .tags {
 
 .error-msg {
     width: 100%;
-    /* IVR Record Not Found: */
-    font-family: 'AvenirNext-Bold', sans-serif;
     color: #d9dee4;
     letter-spacing: 0.44px;
     display: block;
@@ -10488,14 +10505,28 @@ tags-input .tags {
 .user-p-edit-wrapper-052017 {
     width: 100%;
     position: absolute;
-    top: 50px;
+    top: 40px;
     bottom: 0;
-    background: #fff;
+    background: rgb(246, 246, 246);
     z-index: 10;
 }
 
 .user-edit-wrapper {
-    padding: 20px;
+    width: 100%;
+    overflow: hidden;
+    min-height: 250px;
+    background: rgb(255, 255, 255);
+    position: relative;
+    padding: 15px 50px 20px 50px;
+}
+
+.user-edit-wrapper-loading {
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    background: rgb(246, 246, 246);
+    z-index: 100;
 }
 
 .ch-temp-list {
@@ -10508,34 +10539,75 @@ tags-input .tags {
     background-color: #c7cce3;
     bottom: -400px;
 }
-.temp-p-show{
-    bottom:0px;
+
+.temp-p-show {
+    bottom: 0px;
 }
-.temp-p-hide{
+
+.temp-p-hide {
     bottom: -400px;
 }
 
-.temp-view{
+.temp-view {
     padding-top: 10px;
-    height:100px
+    height: 100px
 }
-.temp-view-tx-box{
+
+.temp-view-tx-box {
     width: 350px;
     padding-left: 10px;
     margin-left: 20px;
 }
-.temp-block{
+
+.temp-block {
     padding-left: 5px;
     margin-left: 20px;
     border-bottom: thick;
 }
 
-.temp-list-block{
-    height:100px;
+.temp-list-block {
+    height: 100px;
     overflow-x: auto;
     overflow-y: auto;
 
 }
-.temp-done-btn{
-    padding-right:10px;
+
+.temp-done-btn {
+    padding-right: 10px;
+}
+
+.form-group.validation-on-052017 > label {
+    color: #EA3B3B;
+}
+
+.form-group.validation-on-052017 > .form-control {
+    border: 1px solid #EA3B3B;
+    color: #EA3B3B;
+}
+
+/* user profile location wrapper */
+.user-p-l-wrapper-052017 {
+    background: #FAFBFD;
+    width: 100%;
+    min-height: 285px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #EEEEEE;
+    border-radius: 2px;
+    margin-bottom: 20px
+}
+
+.map-wrapper-052017 {
+    width: 100%;
+    height: 255px;
+    overflow: hidden;
+    position: relative;
+}
+
+.location-d-052017 {
+    width: 100%;
+    min-height: 50px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
 }

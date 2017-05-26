@@ -39,8 +39,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             schemaResponseNewTicket: "=",
             pieChartOption: '='
         },
-        templateUrl: 'app/views/profile/engagement-call.html',
-        //templateUrl: 'app/views/engagement/engagement-console.html',
+        //templateUrl: 'app/views/profile/engagement-call.html',
+        templateUrl: 'app/views/engagement/engagement-console.html',
         link: function (scope, element, attributes) {
 
             //update code damith
@@ -1244,13 +1244,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                         //update code damith
                         //get recent engagement notes
-                        if (scope.reventNotes) {
-                            scope.engagementsList.forEach(function (value) {
+                        //if (scope.reventNotes) {
+                        reply.forEach(function (value) {
                                 if (value.notes && value.notes.length != 0) {
-                                    scope.reventNotes.push(value.notes)
+                                    scope.reventNotes = scope.reventNotes.concat(value.notes)
                                 }
                             });
-                        }
+                        //}
 
                         if (angular.isArray(reply) && scope.recentEngList.length === 0) {
                             scope.recentEngList = reply.slice(0, 1);
@@ -2044,26 +2044,24 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.CheckExternalUserAvailabilityByField("phone", profile.phone, profile),
                 ]).then(function (value) {
                     // Success callback where value is an array containing the success values
-
+                    scope.isUpdateingProfile = true;
                     if (value.indexOf(false) == -1) {
                         userService.UpdateExternalUser(profile).then(function (response) {
+                            scope.isUpdateingProfile = false;
                             if (response) {
+
                                 scope.cutomerTypes = [];
                                 scope.showNewProfile = false;
                                 scope.editProfile = false;
 
                                 scope.showAlert("Profile", "success", "Update Successfully.");
                                 userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
-
                                     if (resUserData.IsSuccess) {
                                         scope.profileDetail = resUserData.Result;
                                     }
                                     else {
                                         scope.showAlert("Profile", "error", "Failed to load updated profile");
-
                                     }
-
-
                                 }, function (errUserData) {
                                     scope.showAlert("Profile", "error", "Failed to load updated profile");
                                     console.log(errUserData)
@@ -2073,8 +2071,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 scope.showAlert("Profile", "error", "Fail To Save Profile.");
                             }
                         }, function (err) {
+                            scope.isUpdateingProfile = false;
                             scope.showAlert("Profile", "error", "Fail To Save Profile.");
                         });
+
                     }
                     else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
@@ -2391,9 +2391,28 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             //engagement new profile functions
 
             scope.isShowBasicInfoEditModal = false;
+            scope.isShowBasicOtherInfoEditModal = false;
+            scope.isShowBasicLocationInfoEditModal = false;
             //on click >> show basic info edit view
             scope.clickEditShowBasicInfo = function () {
+                if (!scope.isShowBasicInfoEditModal) {
+                    scope.multipleProfile.editProfile();
+                }
                 scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
+            };
+
+            scope.clickEditShowOtherInfo = function () {
+                if (!scope.isShowBasicOtherInfoEditModal) {
+                    scope.multipleProfile.editProfile();
+                }
+                scope.isShowBasicOtherInfoEditModal = !scope.isShowBasicOtherInfoEditModal;
+            };
+
+            scope.clickEditShowLocationInfo = function () {
+                if (!scope.isShowBasicLocationInfoEditModal) {
+                    scope.multipleProfile.editProfile();
+                }
+                scope.isShowBasicLocationInfoEditModal = !scope.isShowBasicLocationInfoEditModal;
             };
         }
     }

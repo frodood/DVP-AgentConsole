@@ -4,16 +4,19 @@
 <div class="user-p-right-tab-052017">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="user-e-widget-052017">
-
             <!-- user profile basic information -->
-            <div
-                    ng-if="isShowBasicInfoEditModal">
+            <div>
                 <div ng-include="'app/views/engagement/edit-form/edit-basic-profile.html'"></div>
+            </div>
+
+            <!-- edit profile other information -->
+            <div>
+                <div ng-include="'app/views/engagement/edit-form/edit-other-information.html'"></div>
             </div>
 
 
             <div class="header-052017 inline-h">
-                <ul>
+                <ul ng-if="!isShowBasicOtherInfoEditModal">
                     <li class="pull-left">
                         basic Profile Information
                     </li>
@@ -23,6 +26,20 @@
                             <i ng-if="!isShowBasicInfoEditModal"
                                class="fa fa-pencil"></i>
                             <i ng-if="isShowBasicInfoEditModal"
+                               class="fa fa-close"></i>
+                        </div>
+                    </li>
+                </ul>
+                <ul ng-if="isShowBasicOtherInfoEditModal">
+                    <li class="pull-left">
+                        OTHER Profile Information
+                    </li>
+                    <li class="pull-right">
+                        <div class="header-r-icon-052017 "
+                             ng-click="clickEditShowOtherInfo();">
+                            <i ng-if="!isShowBasicOtherInfoEditModal"
+                               class="fa fa-pencil"></i>
+                            <i ng-if="isShowBasicOtherInfoEditModal"
                                class="fa fa-close"></i>
                         </div>
                     </li>
@@ -162,8 +179,12 @@
                             OTHER INFORMATION
                         </li>
                         <li class="pull-right">
-                            <div class="header-r-icon-052017 ">
-                                <i class="fa fa-pencil"></i>
+                            <div class="header-r-icon-052017 "
+                                 ng-click="clickEditShowOtherInfo();">
+                                <i ng-if="!isShowBasicOtherInfoEditModal"
+                                   class="fa fa-pencil"></i>
+                                <i ng-if="isShowBasicOtherInfoEditModal"
+                                   class="fa fa-close"></i>
                             </div>
                         </li>
                     </ul>
@@ -195,70 +216,83 @@
                         <li class="pull-right value-052017">{{profileDetail.locale}}</li>
                     </ul>
                 </div>
-
-                <!--&lt;!&ndash; email &ndash;&gt;-->
-                <!--<div class="e-d-row-052017">-->
-                <!--<ul class="customer-style-ul">-->
-                <!--<li class="pull-left desc-052017"><i class="fa fa-envelope"></i> EMAIL</li>-->
-                <!--<li class="pull-right value-052017"-->
-                <!--ng-if="profileDetail.email">-->
-                <!--{{profileDetail.email}}-->
-                <!--</li>-->
-                <!--<li class="pull-right value-052017"-->
-                <!--ng-if="!profileDetail.email">-->
-                <!-- - -->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</div>-->
-
-                <!--&lt;!&ndash; MOBILE PHONE &ndash;&gt;-->
-                <!--<div class="e-d-row-052017">-->
-                <!--<ul class="customer-style-ul">-->
-                <!--<li class="pull-left desc-052017"><i class="fa fa-phone-square"></i> MOBILE PHONE</li>-->
-                <!--<li class="pull-right value-052017">{{profileDetail.phone}}</li>-->
-                <!--</ul>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; LAND PHONE &ndash;&gt;-->
-                <!--<div class="e-d-row-052017">-->
-                <!--<ul class="customer-style-ul">-->
-                <!--<li class="pull-left desc-052017"><i class="none-icon"></i> LAND PHONE</li>-->
-                <!--<li class="pull-right value-052017">{{profileDetail.landnumber}}</li>-->
-                <!--</ul>-->
-                <!--</div> &lt;!&ndash; skill &ndash;&gt;-->
-
-                <!--&lt;!&ndash; TAGS &ndash;&gt;-->
-                <!--<div class="e-d-row-052017">-->
-                <!--<ul class="customer-style-ul">-->
-                <!--<li class="pull-left desc-052017"><i class="fa fa-tags"></i>TAGS</li>-->
-                <!--<li class="pull-right value-052017">-->
-                <!--<ul class="customer-style-ul profile-tag-052017">-->
-                <!--<li ng-repeat="tag in profileDetail.tags">-->
-                <!--{{tag}}-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</div>-->
-                <!-- Local -->
-                <!--<div class="e-d-row-052017">-->
-                <!--<ul class="customer-style-ul">-->
-                <!--<li class="pull-left desc-052017"><i class="fa fa-handshake-o"></i>Local</li>-->
-                <!--<li class="pull-right value-052017">{{profileDetail.locale}}</li>-->
-                <!--</ul>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; SSN &ndash;&gt;-->
-                <!--<div class="e-d-row-052017">-->
-                <!--<ul class="customer-style-ul">-->
-                <!--<li class="pull-left desc-052017">SSN</li>-->
-                <!--<li class="pull-right value-052017">{{profileDetail.ssn}}</li>-->
-                <!--</ul>-->
-                <!--</div>-->
             </div>
 
         </div>
     </div>
 
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <!-- user profile location wrapper -->
+        <div class="user-p-l-wrapper-052017">
+
+            <div ng-include="'app/views/engagement/edit-form/edit-location.html'"></div>
+
+            <div class="header-052017 inline-h">
+                <ul>
+                    <li class="pull-left">
+                        location Information
+                    </li>
+                    <li class="pull-right">
+                        <div class="header-r-icon-052017 "
+                             ng-click="clickEditShowLocationInfo();">
+                            <i ng-if="!isShowBasicLocationInfoEditModal"
+                               class="fa fa-pencil"></i>
+                            <i ng-if="isShowBasicLocationInfoEditModal"
+                               class="fa fa-close"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="map-wrapper-052017">
+                <iframe
+                        width="600"
+                        height="255"
+                        frameborder="0"
+                        style="border:0"
+                        ng-src="{{profileDetail.address.locationUrl}}"
+                        allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="location-d-052017">
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> P.O. Box / Building No</li>
+                        <li class="pull-right value-052017">{{profileDetail.address.number}}</li>
+                    </ul>
+                </div>
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> Street</li>
+                        <li class="pull-right value-052017">{{profileDetail.address.street}}</li>
+                    </ul>
+                </div>
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> City</li>
+                        <li class="pull-right value-052017">{{profileDetail.address.city}}</li>
+                    </ul>
+                </div>
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> Province</li>
+                        <li class="pull-right value-052017">{{profileDetail.address.province}}</li>
+                    </ul>
+                </div>
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> Country</li>
+                        <li class="pull-right value-052017">{{profileDetail.address.country}}</li>
+                    </ul>
+                </div>
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> Zip Code</li>
+                        <li class="pull-right value-052017">{{profileDetail.address.zipcode}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

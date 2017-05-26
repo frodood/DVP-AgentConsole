@@ -57,10 +57,10 @@ tags-input .tags .tag-item {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     height: 26px;
     line-height: 25px;
-    border: 1px solid #168039;
+    border: 1px solid #a5dd61;
     border-radius: 3px;
-    background: #168039;
-    color: #ffffff;
+    background: rgba(165, 221, 97, 0.4);
+    color: #000000;
 }
 
 tags-input .tags .tag-item.selected {
@@ -76,7 +76,7 @@ tags-input .tags .tag-item .remove-button {
     cursor: pointer;
     vertical-align: middle;
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    color: #fff;
+    color: #000;
 }
 
 tags-input .tags .tag-item .remove-button:active {
