@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm,templateService) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -71,6 +71,43 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentList = [];
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
+    $scope.myTemplates=[];
+
+
+
+
+    var loadChatTemplates = function () {
+
+        templateService.getAvailableChatTemplates().then(function (temps) {
+
+            $scope.myTemplates = temps;
+
+        },function (error) {
+            $scope.showAlert('Error', 'error', 'Error in searching chat templates');
+            console.log(error);
+        })
+
+
+    };
+
+    loadChatTemplates();
+
+
+
+    $scope.$watch('isLoading', function(newValue, oldValue) {
+        if(newValue)
+        {
+            $('#searchSpin').removeClass('display-none');
+        }
+        else if(newValue==false)
+        {
+            $('#searchSpin').addClass('display-none');
+        }
+
+
+
+    });
+
 
     $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
 
@@ -3112,6 +3149,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.loginAvatar = profileDataParser.myProfile.avatar;
                 $scope.firstName = profileDataParser.myProfile.firstname == null ? $scope.loginName : profileDataParser.myProfile.firstname;
                 $scope.lastName = profileDataParser.myProfile.lastname;
+                $scope.outboundAllowed = profileDataParser.myProfile.allowoutbound;
                 getUnreadMailCounters(profileDataParser.myProfile._id);
                 ///get use resource id
                 //update code damith

@@ -9604,13 +9604,19 @@ ul.renote-color-btn > li {
 }
 
 .user-p-e-wrapper-052017 {
+     width: 100%;
+     min-height: 200px;
+     overflow: hidden;
+     position: relative;
+     padding: 10px;
+ }
+/*user channel wrapper */
+.user-c-e-wrapper-052017 {
     width: 100%;
     min-height: 200px;
     overflow: hidden;
     position: relative;
-    padding: 10px;
 }
-
 .e-d-row-052017 {
     width: 100%;
     min-height: 35px;
@@ -10509,4 +10515,90 @@ tags-input .tags {
 
 .user-edit-wrapper {
     padding: 20px;
+}
+
+.ch-temp-list {
+    position: absolute;
+    left: 0;
+    right: 0px;
+    width: 100%;
+    height: 224px;
+    text-align: center;
+    background-color: #c7cce3;
+    bottom: -400px;
+}
+.temp-p-show{
+    bottom:0px;
+}
+.temp-p-hide{
+    bottom: -400px;
+}
+
+.temp-view{
+    padding-top: 10px;
+    height:100px
+}
+.temp-view-tx-box{
+    width: 350px;
+    padding-left: 10px;
+    margin-left: 20px;
+}
+.temp-block{
+
+    margin-left: 20px;
+    border-bottom: thick;
+    border-radius: 25px;
+    background: #f4f9e5;
+    width: auto;
+    height: 30px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding-left: 20px;
+    padding-top: 5px;
+
+}
+
+.temp-list-block{
+    height:120px;
+    overflow-x: auto;
+    overflow-y: auto;
+    margin-right: 20px;
+
+}
+.temp-btn-block{
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 250px;
+}
+.search-temp{
+    padding-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+.u-chat-temp-wrp {
+    position: absolute;
+    width: 100%;
+    height: 320px;
+    bottom: -400px;
+    right: 0;
+    z-index: 100;
+    -webkit-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    /*background: #f7f7f7;*/
+    background: #fff;
+}
+
+.no-result-box {
+    background-color: #f7f7f7;
+
+}
+.no-result-box > li {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    color: #8298ae;
+    text-align: center;
+
 }

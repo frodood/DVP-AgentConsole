@@ -102,7 +102,7 @@
 
                             <!--<span class="fa fa-spinner fa-spin  form-control-feedback left" style="margin-top: 8px; color: white; padding-left: 2px" aria-hidden="true"></span>-->
                             <span class="fa fa-spinner fa-spin"
-                                  style="margin-top: 3px; color: white; padding-left: 2px" ng-if="isLoading"></span>
+                                  style="margin-top: 3px; color: white; padding-left: 2px" ng-if="isLoading" id="searchSpin"></span>
                             <div class="no-result-box">
                                 <li ng-show="noResults">--- No Results Found ---</li>
                             </div>
@@ -331,7 +331,7 @@
                                                                 href="javascript:void(0);">
                             <i ng-show="currentModeOption=='Inbound'" class="ti-check"></i>inbound</a>
                         </li>
-                        <li class="menuitem" role="menuitem"><a id="Outbound"
+                        <li ng-if="outboundAllowed != false" class="menuitem" role="menuitem"><a id="Outbound"
                                                                 class=""
                                                                 ng-click="modeOption.outboundOption('Outbound');"
                                                                 href="javascript:void(0);">
@@ -839,7 +839,8 @@
                             get-chat-random-id="getChatRandomId()"
                             selected-chat-user="selectedChatUser"
                             login-avatar="loginAvatar"
-                            login-name="loginName">
+                            login-name="loginName"
+        chat-templates="myTemplates">
         </chat-tab-directive>
     </div>
 
