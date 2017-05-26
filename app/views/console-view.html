@@ -331,7 +331,7 @@
                                                                 href="javascript:void(0);">
                             <i ng-show="currentModeOption=='Inbound'" class="ti-check"></i>inbound</a>
                         </li>
-                        <li class="menuitem" role="menuitem"><a id="Outbound"
+                        <li ng-if="outboundAllowed != false" class="menuitem" role="menuitem"><a id="Outbound"
                                                                 class=""
                                                                 ng-click="modeOption.outboundOption('Outbound');"
                                                                 href="javascript:void(0);">
