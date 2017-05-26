@@ -8996,6 +8996,25 @@ ul.renote-color-btn > li {
     text-align: center;
     padding-top: 9px;
 }
+.c-panel-close-1652017{
+    position: absolute;
+    bottom: 163px;
+    right: 0px;
+    color: #ff0e0b;
+    cursor: pointer;
+    z-index: 4010;
+    font-size: 13px;
+    background: #223448;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding-top: 9px;
+}
+
+.c-panel-close-1652017 > i{
+    color: #ff0e0b;
+    font-size: 18px;
+}
 
 .c-panel-show-1652017 > i {
     color: #8FD539;
