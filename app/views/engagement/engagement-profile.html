@@ -1,14 +1,29 @@
+<!-- user profile edit modal -->
+
+
 <div class="user-p-right-tab-052017">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="user-e-widget-052017">
+
+            <!-- user profile basic information -->
+            <div
+                    ng-if="isShowBasicInfoEditModal">
+                <div ng-include="'app/views/engagement/edit-form/edit-basic-profile.html'"></div>
+            </div>
+
+
             <div class="header-052017 inline-h">
                 <ul>
                     <li class="pull-left">
                         basic Profile Information
                     </li>
                     <li class="pull-right">
-                        <div class="header-r-icon-052017 ">
-                            <i class="fa fa-pencil"></i>
+                        <div class="header-r-icon-052017 "
+                             ng-click="clickEditShowBasicInfo();">
+                            <i ng-if="!isShowBasicInfoEditModal"
+                               class="fa fa-pencil"></i>
+                            <i ng-if="isShowBasicInfoEditModal"
+                               class="fa fa-close"></i>
                         </div>
                     </li>
                 </ul>
@@ -112,7 +127,7 @@
             </div>
 
             <!-- profile channel details -->
-            <div class="user-p-e-wrapper-052017 animated fadeIn" style="background: #f1f6ec;">
+            <div class="user-c-e-wrapper-052017 animated fadeIn" style="background: #f1f6ec;">
                 <div class="header-052017">
                     CHANNEL
                 </div>
@@ -239,6 +254,7 @@
                 <!--</ul>-->
                 <!--</div>-->
             </div>
+
         </div>
     </div>
 

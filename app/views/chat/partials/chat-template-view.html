@@ -1,0 +1,47 @@
+<div class="animated view-notification-d-wrapper fadeIn" ng-if="showTemplateModal">
+    <!-- notification send UI -->
+    <div class="container">
+        <div class="col-lg-offset-3 col-lg-4">
+            <div class="notification-details-wrapper">
+                <div id="uNotifiWrp" class="u-notification-wrp">
+                    <div class="u-noti-h b-bottom animated" id="uNotiH ">
+
+                        <h3>Chat template viewer</h3>
+
+                    </div>
+
+                    <!-- <div class="temp-view scrollable-dropdown-menu ">
+                         <input type="text"  ng-model="myTemp" uib-typeahead="template as template.content for template in chatTemplates | filter:{content:$viewValue}"
+                                class="form-control temp-view-tx-box" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Check template"  typeahead-on-select ="addChatTemplate(myTemp.content)" >
+                     </div>-->
+                    <input id="tempSearch" type="text" ng-model="searchCriteria" class="form-control"
+                           placeholder="Search for..."  temp-enter="addChatTemplate(searchCriteria)" >
+
+                    <div class="temp-list-block">
+                        <ul class="list-unstyled">
+                            <li ng-repeat="template in chatTemplates | filterBy: ['content']: searchCriteria">
+                                <div ng-click="addChatTemplate(template.content)" class="temp-block">
+                                    {{template.content}}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+                    <!-- body -->
+
+
+                    <!-- footer -->
+                    <!--<div class="u-noti-footer">
+
+                        <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w"
+                                ng-click="addChatTemplate()">
+                            Done
+                        </button>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
