@@ -3,8 +3,12 @@
     <i class="fa fa-chevron-circle-left"></i>
 </div>
 
-<div id="callNIncomingAlert" class="c-panel-wrapper-1652017">
 
+<div id="callNIncomingAlert" class="c-panel-wrapper-1652017">
+    <div ng-if="ShowfreezeClose" class="c-panel-close-1652017 animated zoomInRight"
+         ng-click="phoneNotificationFunctions.closePanel();">
+        <i class="fa fa-close"></i>
+    </div>
     <!-- div toggle right and left -->
     <div class="c-panel-hide-1652017 animated zoomInRight"
          tooltip-placement="top" uib-tooltip="toggle right"
@@ -105,7 +109,7 @@
                  class="c-panel-btn-wrp-1652017 display-none">
                 <button type="button" ng-if="!isWaiting"
                         ng-click="phoneNotificationFunctions.endFreeze();"
-                        class="btn btn-cn-1652017 btn-300-yellow-1652017 display-none ">
+                        class="btn btn-cn-1652017 btn-300-yellow-1652017 ">
                     END FREEZE
                 </button>
             </div>
@@ -146,8 +150,8 @@
 
     </div>
 
-    <div class="c-footer-1652017">
-        <ul class="animated slideInUp anz-call-state display-none" ng-hide="isWaiting">
+    <div class="c-footer-1652017 animated slideInUp">
+        <ul class="anz-call-state display-none" ng-hide="isWaiting">
             <li>
                 <!-- hold -->
                 <div id="holdNotificationCall"
@@ -175,7 +179,7 @@
                      tooltip-placement="top" uib-tooltip="un-mute"
                      ng-click="phoneNotificationFunctions.unmuteCall();"
                      class="c-footer-icon-1652017 display-none">
-                    <img src="assets/img/call-panel/active/un-mute_active.png" width="40">
+                    <img src="assets/img/call-panel/active/un-mute.png" width="40">
                 </div>
             </li>
             <li>

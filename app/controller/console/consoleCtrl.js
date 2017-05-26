@@ -898,11 +898,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.isShowLog = false;
     $scope.isWaiting = false;
+    $scope.freezeRequest = false;
+    $scope.ShowfreezeClose = false;
     $scope.showNofifyDialpad = false;
 
     $scope.phoneNotificationFunctions = {
+        closePanel:function () {
+            $scope.freezeRequest = false;
+            $scope.phoneNotificationFunctions(false);
+        },
         showNotfication: function (val) {
-            if ($scope.isRegistor) return;
+            if ($scope.isRegistor )return;
+            if($scope.freezeRequest){
+                $scope.ShowfreezeClose = true;
+            }
             if (val) {
                 $('#notificationCallFunction').removeClass('display-none');
                 $('#notificationAcw').addClass('display-none');
@@ -1039,6 +1048,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             document.getElementById('notificationfreezetimmer').getElementsByTagName('timer')[0].stop();
             $scope.$broadcast('timer-reset');
             $scope.isWaiting = true;
+            $scope.freezeRequest = false;
             resourceService.FreezeAcw($scope.call.sessionId, false).then(function (response) {
                 $scope.phoneNotificationFunctions.showNotfication(false);
                 $scope.isWaiting = false;
@@ -1055,6 +1065,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $('#notificationfreezeRequest').removeClass('display-none');
             $('#countdownnotificationCalltimmer').addClass('display-none');
             $scope.isWaiting = true;
+            $scope.freezeRequest = true;
             resourceService.FreezeAcw($scope.call.sessionId, true).then(function (response) {
                 if (response) {
 
@@ -1071,6 +1082,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $('#notificationfreezeRequest').addClass('display-none');
                 }
                 $scope.isWaiting = false;
+                $scope.freezeRequest = false;
             }, function (err) {
                 $scope.showAlert('Phone', 'error', "Fail Freeze Operation.");
                 $('#countdownnotificationCalltimmer').removeClass('display-none');
