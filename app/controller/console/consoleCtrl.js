@@ -72,6 +72,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
 
+    $scope.$watch('isLoading', function(newValue, oldValue) {
+        if(newValue)
+        {
+            $('#searchSpin').removeClass('display-none');
+        }
+        else if(newValue==false)
+        {
+            $('#searchSpin').addClass('display-none');
+        }
+
+
+
+    });
+
+
     $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
 
         $ngConfirm({
