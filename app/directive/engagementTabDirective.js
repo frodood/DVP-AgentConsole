@@ -2419,6 +2419,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.closeTicketModal = function () {
                 scope.showCreateTicket = false;
             };
+
+            scope.isTicketCollapsed = true;
+
         }
     }
 }).directive("fileread", [function () {

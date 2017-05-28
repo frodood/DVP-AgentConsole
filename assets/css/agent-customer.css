@@ -4725,6 +4725,30 @@ div.btn-group.dropdown {
     background: #168039;
 }
 
+.selected-this.low {
+    background: #ffa918 !important;
+    color: #fff !important;
+    border: 1px solid #ffa918 !important;
+}
+
+.selected-this.normal {
+    background: #37dba9 !important;
+    color: #fff !important;
+    border: 1px solid #37dba9 !important;
+}
+
+.selected-this.high {
+    background: #fb5f21 !important;
+    color: #fff !important;
+    border: 1px solid #fb5f21 !important;
+}
+
+.selected-this.urgent {
+    background: #4383c4 !important;
+    color: #fff !important;
+    border: 1px solid #4383c4 !important;
+}
+
 .selected-this-btn {
     background: #168039;
     border-color: #168039;
@@ -10465,6 +10489,16 @@ tags-input .tags {
     font-size: 10px;
     color: #8FD539;
     letter-spacing: 0.57px;
+    outline: none !important;
+}
+
+.btn-tag-sm.selected-this > i {
+    display: inline-block;
+    color: #fff !important;
+}
+
+.btn-tag-sm > i {
+    display: none;
 }
 
 .tag-reload-052017 {
@@ -10653,7 +10687,7 @@ tags-input .tags {
 }
 
 .form-group.validation-on-052017 > label {
-    color: #EA3B3B;
+    color: #EA3B3B !important;
 }
 
 .no-result-box > li {
