@@ -481,9 +481,11 @@ window.SE = function (e) {
     function se(e) {
         if (!e)throw g;
         var r = v(e, "to");
+        var re = v(e, "message");
         if (connected) {
             socket.emit('sessionend', {
-                to: r
+                to: r,
+                message: re
             });
         }
         else {
