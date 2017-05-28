@@ -7,7 +7,7 @@
                     ID : {{sessionId}}
                 </li>
                 <li class="pull-right right-btn-052017">
-                    <button type="button"
+                    <button type="button" ng-if="!showCreateTicket"
                             ng-click="showNewTicket();"
                             class="btn btn-create-052017"
                             tooltip-trigger="'focus'"
@@ -17,6 +17,8 @@
                     </button>
 
                     <button type="button"
+                            ng-if="showCreateTicket"
+                            ng-click="closeTicketModal()"
                             class="btn btn-create-052017">
                         CLOSE
                     </button>

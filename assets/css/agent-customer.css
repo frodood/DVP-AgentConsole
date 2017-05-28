@@ -9489,7 +9489,7 @@ ul.renote-color-btn > li {
     border-radius: 50%;
     text-align: center;
     padding-top: 5px;
-    margin-top: -4px;
+    margin-top: -6px;
     cursor: pointer;
 }
 
@@ -10525,7 +10525,7 @@ tags-input .tags {
 .user-p-edit-wrapper-052017 {
     width: 100%;
     position: absolute;
-    top: 40px;
+    top: 45px;
     bottom: 0;
     background: rgb(246, 246, 246);
     z-index: 10;
@@ -10537,7 +10537,7 @@ tags-input .tags {
     min-height: 250px;
     background: rgb(255, 255, 255);
     position: relative;
-    padding: 15px 50px 20px 50px;
+    padding: 15px 5px 15px 5px;
 }
 
 .user-edit-wrapper-loading {

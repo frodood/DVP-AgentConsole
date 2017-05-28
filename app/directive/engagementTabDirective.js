@@ -1246,10 +1246,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         //get recent engagement notes
                         //if (scope.reventNotes) {
                         reply.forEach(function (value) {
-                                if (value.notes && value.notes.length != 0) {
-                                    scope.reventNotes = scope.reventNotes.concat(value.notes)
-                                }
-                            });
+                            if (value.notes && value.notes.length != 0) {
+                                scope.reventNotes = scope.reventNotes.concat(value.notes)
+                            }
+                        });
                         //}
 
                         if (angular.isArray(reply) && scope.recentEngList.length === 0) {
@@ -2413,6 +2413,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.multipleProfile.editProfile();
                 }
                 scope.isShowBasicLocationInfoEditModal = !scope.isShowBasicLocationInfoEditModal;
+            };
+
+
+            scope.closeTicketModal = function () {
+                scope.showCreateTicket = false;
             };
         }
     }
