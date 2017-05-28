@@ -9647,6 +9647,11 @@ ul.renote-color-btn > li {
     padding-right: 10px;
 }
 
+.e-d-row-052017.gray {
+    background: #f9fdf4;
+    border-radius: 6px;
+}
+
 .desc-052017 {
     /* Company: */
     font-family: 'AvenirNext-Regular', sans-serif;
@@ -10692,3 +10697,217 @@ tags-input .tags {
     position: relative;
     padding: 10px;
 }
+
+/* multiple profile view */
+.user-p-mp-052017 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    background: #F5F5F5;
+
+}
+
+.user-p-mp-wrapper-052017 {
+    width: 100%;
+    min-height: 600px;
+    background: #ffffff;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+
+}
+
+.multiple-p-left-w-052017 {
+    width: 100%;
+    min-height: 600px;
+    overflow: hidden;
+    position: relative;
+    border-right: 1px solid rgba(138, 142, 134, 0.1);
+    background: rgba(145, 211, 70, 0.07);
+
+}
+
+.create-new-wrp-052017 {
+    width: 200px;
+    overflow: hidden;
+    position: relative;
+    margin: 185px auto;
+}
+
+.multiple-p-right-w-052017 {
+    width: 100%;
+    min-height: 600px;
+    overflow: hidden;
+    position: relative;
+}
+
+.icon-lg-center-052017 {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.lg-text-052017 {
+    text-align: center;
+    /* CREATE NEW PROFILE: */
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 14px;
+    color: #AEE776;
+    letter-spacing: 0.74px;
+}
+
+.m-p-header-052017 {
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.body-mp-052017 {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.img-with-text-widget {
+    width: 100%;
+    min-height: 90px;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-with-text-widget.blue {
+    background: rgba(183, 213, 245, 0.16);
+}
+
+.img-with-text-widget.gray {
+    background: #FAFBFD;
+}
+
+.li-text-block {
+    width: auto;
+    min-height: 50px;
+    overflow: hidden;
+    position: relative;
+    padding-top: 23px;
+    padding-left: 5px;
+}
+
+.li-left-img-wrp {
+    /* Oval 8: */
+    width: 75px;
+    height: 75px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 7px solid rgba(183, 213, 245, 0.37);
+    margin: 7px 10px 0px 10px;
+    float: left;
+}
+
+.li-left-img-wrp > div > img {
+
+}
+
+.li-mu-p-name, .li-mu-p-income-no {
+    width: auto;
+    min-height: 10px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    text-align: left;
+    padding-bottom: 5px;
+}
+
+.li-mu-p-name {
+    /* William Jacob: */
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 14px;
+    color: #223448;
+    letter-spacing: 0.57px;
+}
+
+.li-mu-p-income-no {
+    /* +9435678123: */
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 13px;
+    color: #8A8E86;
+    letter-spacing: 0.48px;
+}
+
+.li-mu-r-i-wrp {
+    position: absolute;
+    bottom: 28px;
+    right: 15px;
+    min-height: 30px;
+    float: right;
+    overflow: hidden;
+}
+
+.btn-m-p-more {
+    /* Rectangle 26: */
+    width: 50px;
+    height: 22px;
+    font-family: 'AvenirNext-Regular', sans-serif;
+    background: rgba(143, 213, 56, 0.15);
+    border: 1px solid #8FD539;
+    border-radius: 7px;
+    font-size: 10px;
+    color: #8FD539;
+    letter-spacing: 0.57px;
+    text-align: center;
+    overflow: hidden;
+    padding: 0px;
+    outline: none !important;
+}
+
+.btn-m-p-more:hover,
+.btn-m-p-more:focus,
+.btn-m-p-more:active {
+    background: #8FD539;
+    color: #fff;
+}
+
+.multiple-p-e-wrapper {
+    position: absolute;
+    left: 0;
+    top: 128px;
+    width: 250px;
+    height: 400px;
+    background: #ffffff;
+    z-index: 22;
+}
+
+.multiple-e-wrapper {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.none-color {
+    background: transparent;
+    border: 0px;
+}
+
+.img-with-text-widget:nth-child(even) {
+    background: rgba(183, 213, 245, 0.16);
+}
+
+.img-with-text-widget:nth-child(odd) {
+    background: #FAFBFD;
+}
+
+
+
+
+
+
+

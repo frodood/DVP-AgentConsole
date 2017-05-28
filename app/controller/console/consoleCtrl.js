@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm,templateService) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm, templateService) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -71,9 +71,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentList = [];
     $scope.isFreezeReq = false;
     $scope.isEnableSoftPhoneDrag = false;
-    $scope.myTemplates=[];
-
-
+    $scope.myTemplates = [];
 
 
     var loadChatTemplates = function () {
@@ -82,7 +80,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             $scope.myTemplates = temps;
 
-        },function (error) {
+        }, function (error) {
             $scope.showAlert('Error', 'error', 'Error in searching chat templates');
             console.log(error);
         })
@@ -93,23 +91,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     loadChatTemplates();
 
 
-
-    $scope.$watch('isLoading', function(newValue, oldValue) {
-        if(newValue)
-        {
+    $scope.$watch('isLoading', function (newValue, oldValue) {
+        if (newValue) {
             $('#searchSpin').removeClass('display-none');
         }
-        else if(newValue==false)
-        {
+        else if (newValue == false) {
             $('#searchSpin').addClass('display-none');
         }
-
 
 
     });
 
 
-    $scope.showConfirmation = function (title,contentData,okText,okFunc,closeFunc) {
+    $scope.showConfirmation = function (title, contentData, okText, okFunc, closeFunc) {
 
         $ngConfirm({
             title: title,
@@ -121,12 +115,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     text: okText,
                     btnClass: 'btn-primary',
                     keys: ['enter'], // will trigger when enter is pressed
-                    action: function(scope){
+                    action: function (scope) {
                         okFunc();
                     }
                 },
                 // short hand button definition
-                close: function(scope){
+                close: function (scope) {
                     closeFunc();
                 }
             }
@@ -940,13 +934,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.showNofifyDialpad = false;
 
     $scope.phoneNotificationFunctions = {
-        closePanel:function () {
+        closePanel: function () {
             $scope.freezeRequest = false;
             $scope.phoneNotificationFunctions(false);
         },
         showNotfication: function (val) {
-            if ($scope.isRegistor )return;
-            if($scope.freezeRequest){
+            if ($scope.isRegistor)return;
+            if ($scope.freezeRequest) {
                 $scope.ShowfreezeClose = true;
             }
             if (val) {

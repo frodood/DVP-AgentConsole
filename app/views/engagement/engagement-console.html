@@ -2,6 +2,11 @@
 <div class="user-p-m-wrapper-052017">
     <!-- create new ticket -->
 
+    <!-- multiple profile view -->
+    <div>
+        <div ng-include="'app/views/engagement/multiple-profile.html'"></div>
+    </div>
+
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <!-- left main wrapper scroll = fixed  -->
@@ -15,7 +20,7 @@
 
                 <!--  create  new ticket modal -->
                 <div
-                     ng-if="showCreateTicket">
+                        ng-if="showCreateTicket">
                     <div ng-include="'app/views/engagement/edit-form/create-new-ticket.html'"></div>
                 </div>
 
