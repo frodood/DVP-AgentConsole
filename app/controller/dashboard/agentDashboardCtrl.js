@@ -461,7 +461,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             response.forEach(function (item) {
 
 
-
                 if (item.QueueInfo.CurrentMaxWaitTime && item.QueueInfo.CurrentMaxWaitTime != 0) {
                     var d = moment(item.QueueInfo.CurrentMaxWaitTime).valueOf();
                     item.QueueInfo.MaxWaitingMS = d;
@@ -541,8 +540,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     $scope.$on("$destroy", function () {
         /*if (getAllRealTimeTimer) {
-            $timeout.cancel(getAllRealTimeTimer);
-        }*/
+         $timeout.cancel(getAllRealTimeTimer);
+         }*/
         if (loadRecentDataTimer) {
             $timeout.cancel(loadRecentDataTimer);
         }
@@ -944,7 +943,15 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 }).config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-        chartColors: ['#8DA97C', '#BECE60', '#AEE776', '#62D292', '#6c5e8f']
+        chartColors: ['#8DA97C',
+            '#BECE60',
+            '#AEE776',
+            '#62D292',
+            '#E6F23C',
+            '#248C17',
+            '#A4C5B5',
+            '#2B9495',
+            '#CAB63C']
     });
 }]);
 

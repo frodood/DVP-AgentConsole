@@ -23,7 +23,13 @@
                             <ul class="customer-style-ul">
                                 <li class="direction-icon-052017">
                                     <div class="e-t-l-d-icon-052017">
-                                        <i class="fa fa-facebook"></i>
+                                        <i ng-class="{'fa fa-random':eng.channel=='api',
+                  'fa fa-twitter':eng.channel=='twitter',
+                   'fa fa-facebook':eng.channel=='facebook-post',
+                  'main-icon-2-telephone-3':eng.channel=='call',
+                  'fa fa-skype':eng.channel=='skype',
+                  'fa fa-bell-o':eng.channel=='sms',
+                  'fa fa-envelope-o':eng.channel=='email'}"></i>
                                     </div>
                                 </li>
                                 <li>
@@ -56,14 +62,15 @@
                         </div>
 
                         <!-- engagement tim line more details -->
-                        <div class="e-t-l-more-052017">
+                        <div class="e-t-l-more-052017"
+                             ng-if="eng.notes.length!=0">
                             <div class="e-t-l-m-wrapper-052017"
                                  ng-repeat="note in eng.notes">
                                 <div class="e-t-l-m-auth-052017">
                                     author | {{note.author}}
                                 </div>
                                 <div class="e-t-m-details-052017">
-                                    {{note.body}
+                                    {{note.body}}
                                 </div>
                             </div>
                         </div>

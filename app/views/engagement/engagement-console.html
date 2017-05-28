@@ -14,9 +14,10 @@
             <div class="user-p-right-052017">
 
                 <!--  create  new ticket modal -->
-                <div ng-show="showCreateTicket">
-                    <div ng-include="'app/views/engagement/create-new-ticket.html'"></div>
+                <div ng-if="showCreateTicket">
+                    <div ng-include="'app/views/engagement/edit-form/create-new-ticket.html'"></div>
                 </div>
+
 
                 <div class="user-p-right-h-052017">
                     <uib-tabset type="pills profile-c-pills-052017">
@@ -34,6 +35,7 @@
                         </uib-tab>
                         <uib-tab heading="PROFILE" classes="btn-sm">
                             <!--profile-->
+                            <div ng-include="'app/views/engagement/engagement-profile.html'"></div>
                         </uib-tab>
                     </uib-tabset>
                 </div>

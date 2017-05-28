@@ -20,6 +20,18 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
             }
         });
     };
+    var getAvailableChatTemplates = function () {
+        return $http({
+            method: 'get',
+            url: baseUrls.templateUrl + "AvailableChatTemplates"
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    };
     var addNewChatTemplate = function (saveValues) {
 
         return $http({
@@ -55,7 +67,8 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
     return {
         getMyChatTemplates: getMyChatTemplates,
         addNewChatTemplate: addNewChatTemplate,
-        RemoveChatTemplate: RemoveChatTemplate
+        RemoveChatTemplate: RemoveChatTemplate,
+        getAvailableChatTemplates: getAvailableChatTemplates
     }
 });
 

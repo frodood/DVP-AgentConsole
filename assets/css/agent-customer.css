@@ -1490,6 +1490,19 @@ tr.ivr-tbl:hover {
     padding-top: 20px;
 }
 
+.new-note-wrapper-icon {
+    width: 100%;
+    text-align: center;
+}
+
+.note-empty-text-052017 {
+    min-height: 30px;
+    font-size: 20px;
+    letter-spacing: 0.44px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
 .engagement-note-list {
     width: 100%;
     height: auto;
@@ -8997,6 +9010,26 @@ ul.renote-color-btn > li {
     padding-top: 9px;
 }
 
+.c-panel-close-1652017 {
+    position: absolute;
+    bottom: 163px;
+    right: 0px;
+    color: #ff0e0b;
+    cursor: pointer;
+    z-index: 4010;
+    font-size: 13px;
+    background: #223448;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding-top: 9px;
+}
+
+.c-panel-close-1652017 > i {
+    color: #ff0e0b;
+    font-size: 18px;
+}
+
 .c-panel-show-1652017 > i {
     color: #8FD539;
     font-size: 22px;
@@ -9190,6 +9223,8 @@ ul.renote-color-btn > li {
     font-size: 13px;
     color: #E6794F;
     letter-spacing: 0.57px;
+    margin-top: 5px;
+    margin-bottom: 6px;
 }
 
 .user-p-d-text-052017 > ul > li.full-name {
@@ -9496,7 +9531,7 @@ ul.renote-color-btn > li {
 
 .user-p-l-map-052017 {
     width: auto;
-    height: 140px;
+    height: 150px;
     overflow: hidden;
     position: relative;
     margin: 10px;
@@ -9576,7 +9611,7 @@ ul.renote-color-btn > li {
 .user-e-widget-052017 {
     background: #FAFBFD;
     width: 100%;
-    min-height: 500px;
+    min-height: 285px;
     overflow: hidden;
     position: relative;
     border: 1px solid #EEEEEE;
@@ -9586,10 +9621,18 @@ ul.renote-color-btn > li {
 
 .user-p-e-wrapper-052017 {
     width: 100%;
-    min-height: 200px;
+    min-height: 170px;
     overflow: hidden;
     position: relative;
     padding: 10px;
+}
+
+/*user channel wrapper */
+.user-c-e-wrapper-052017 {
+    width: 100%;
+    min-height: 200px;
+    overflow: hidden;
+    position: relative;
 }
 
 .e-d-row-052017 {
@@ -9613,6 +9656,19 @@ ul.renote-color-btn > li {
     text-transform: uppercase;
 }
 
+.desc-052017 > i {
+    padding-right: 5px;
+    color: #b5ea85;
+}
+
+.c-text-green-052017 {
+    color: #b5ea85 !important;
+}
+
+.desc-052017 > i.none-icon {
+    padding-right: 21px;
+}
+
 .value-052017 {
     /* 103: */
     font-family: 'AvenirNext-Bold', sans-serif;
@@ -9620,6 +9676,21 @@ ul.renote-color-btn > li {
     color: #8B8B8B;
     letter-spacing: 0.53px;
     text-transform: uppercase;
+}
+
+.profile-tag-052017 {
+
+}
+
+.profile-tag-052017 > li {
+    display: inline-block;
+    padding: 3px 8px 2px 8px;
+    color: #e6794f;
+    margin-left: 4px;
+    margin-top: -4px;
+    text-align: center;
+    border: 1px solid #f7f7f7;
+    border-radius: 5px;
 }
 
 .user-eng-call-wrapper-052017 {
@@ -9780,11 +9851,12 @@ ul.renote-color-btn > li {
     overflow: hidden;
     position: relative;
     border-top: 0px !important;
-    font-family: 'AvenirNext-Regular', sans-serif;
-    font-size: 14px;
+    /* font-family: 'AvenirNext-Regular', sans-serif !important; */
+    font-size: 11px;
     color: #8A8E86;
     letter-spacing: 0.62px;
     border-radius: 0px;
+    text-transform: uppercase;
 
 }
 
@@ -9807,6 +9879,7 @@ tr.ivr-t-row-052017:nth-child(odd) {
     font-size: 24px;
     color: #8C9088;
     letter-spacing: 0.57px;
+    margin-top: 45px;
 }
 
 /* engagement time line */
@@ -9834,7 +9907,7 @@ tr.ivr-t-row-052017:nth-child(odd) {
 .engagement-tl-052017 > li > .e-t-l-wrapper-052017 {
     /* Rectangle 21: */
     width: 350px;
-    min-height: 308px;
+    min-height: 198px;
     border: 1px solid #F8F8F8;
     border-radius: 5px;
     overflow: hidden;
@@ -9980,7 +10053,7 @@ ul.customer-style-ul > li.value {
 
 .e-t-l-d-desc-052017 {
     width: 100%;
-    min-height: 25px;
+    height: auto;
     overflow: hidden;
     position: relative;
     padding: 5px;
@@ -10017,6 +10090,7 @@ ul.customer-style-ul > li.value {
     overflow: hidden;
     position: relative;
     padding: 10px;
+    margin-bottom: 4px;
 }
 
 .e-t-l-m-wrapper-052017 > .e-t-l-m-auth-052017 {
@@ -10290,7 +10364,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: 100;
+    z-index: 10;
     background: #ffffff;
     top: 0;
     left: 0;
@@ -10400,24 +10474,221 @@ tags-input .tags {
 
 }
 
-.chat-Temp-obj  {
+.ivr-n-found-052017 {
+    width: 100%;
+    min-height: 30px;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
 
+.ivr-n-f {
+    margin: 30% auto;
+}
+
+.ticket-cht-summary {
+    margin-top: 30px;
+}
+
+.ivr-icon {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.error-msg {
+    width: 100%;
+    color: #d9dee4;
+    letter-spacing: 0.44px;
+    display: block;
+}
+
+.error-msg.text-lg-052017 {
+    font-size: 20px;
+}
+
+.chat-Temp-obj {
     color: white;
     border-bottom-style: groove;
     border-bottom-width: thin;
     height: 40px;
 }
-.chat-Temp-obj > span
-{
+
+.chat-Temp-obj > span {
     padding-top: 15px;
     padding-bottom: 5px;
 }
+
+/*profile edit wrapper */
+.user-p-edit-wrapper-052017 {
+    width: 100%;
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    background: rgb(246, 246, 246);
+    z-index: 10;
+}
+
+.user-edit-wrapper {
+    width: 100%;
+    overflow: hidden;
+    min-height: 250px;
+    background: rgb(255, 255, 255);
+    position: relative;
+    padding: 15px 50px 20px 50px;
+}
+
+.user-edit-wrapper-loading {
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    background: rgb(246, 246, 246);
+    z-index: 100;
+}
+
+.ch-temp-list {
+    position: absolute;
+    left: 0;
+    right: 0px;
+    width: 100%;
+    height: 224px;
+    text-align: center;
+    background-color: #c7cce3;
+    bottom: -400px;
+}
+
+.temp-p-show {
+    bottom: 0px;
+}
+
+.temp-p-hide {
+    bottom: -400px;
+}
+
+.temp-view {
+    padding-top: 10px;
+    height: 100px
+}
+
+.temp-view-tx-box {
+    width: 350px;
+    padding-left: 10px;
+    margin-left: 20px;
+}
+
+.temp-block {
+    padding-left: 5px;
+}
+
+.temp-block {
+    margin-left: 20px;
+    border-bottom: thick;
+    border-radius: 25px;
+    background: #f4f9e5;
+    width: auto;
+    height: 30px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding-left: 20px;
+    padding-top: 5px;
+
+}
+
+.temp-list-block {
+    height: 100px;
+}
+
+.temp-list-block {
+    height: 120px;
+    overflow-x: auto;
+    overflow-y: auto;
+    margin-right: 20px;
+
+}
+
+.temp-btn-block {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 250px;
+}
+
+.search-temp {
+    padding-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+.u-chat-temp-wrp {
+    position: absolute;
+    width: 100%;
+    height: 320px;
+    bottom: -400px;
+    right: 0;
+    z-index: 100;
+    -webkit-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    /*background: #f7f7f7;*/
+    background: #fff;
+}
+
 .no-result-box {
     background-color: #f7f7f7;
+
 }
+
+.temp-done-btn {
+    padding-right: 10px;
+}
+
+.form-group.validation-on-052017 > label {
+    color: #EA3B3B;
+}
+
 .no-result-box > li {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     color: #8298ae;
     text-align: center;
+}
 
+.form-group.validation-on-052017 > .form-control {
+    border: 1px solid #EA3B3B;
+    color: #EA3B3B;
+}
+
+/* user profile location wrapper */
+.user-p-l-wrapper-052017 {
+    background: #FAFBFD;
+    width: 100%;
+    min-height: 285px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #EEEEEE;
+    border-radius: 2px;
+    margin-bottom: 20px
+}
+
+.user-p-l-wrapper-052017.fix-h-052017 {
+    min-height: 80px;
+}
+
+.map-wrapper-052017 {
+    width: 100%;
+    height: 255px;
+    overflow: hidden;
+    position: relative;
+}
+
+.location-d-052017 {
+    width: 100%;
+    min-height: 50px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
 }

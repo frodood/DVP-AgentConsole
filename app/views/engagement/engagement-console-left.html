@@ -15,6 +15,11 @@
                             uib-tooltip="create new ticket">
                         CREATE TICKET
                     </button>
+
+                    <button type="button"
+                            class="btn btn-create-052017">
+                        CLOSE
+                    </button>
                 </li>
             </ul>
         </section>
@@ -29,7 +34,13 @@
         </div>
         <div class="user-p-d-text-052017">
             <ul>
-                <li class="tags">VIP</li>
+                <li class="tags">
+                    <ul class="customer-style-ul profile-tag-052017">
+                        <li ng-repeat="tag in profileDetail.tags">
+                            {{tag}}
+                        </li>
+                    </ul>
+                </li>
                 <li class="full-name">{{profileDetail.title}}.{{profileDetail.firstname}} {{profileDetail.lastname}}
                 </li>
                 <li class="l-update">Last update : {{profileDetail.created_at| date:'MM-dd-yyyy h:mma'}}</li>
@@ -139,11 +150,6 @@
                 <li class="pull-left">
                     LOCATION
                 </li>
-                <li class="pull-right">
-                    <div class="header-r-icon-052017 ">
-                        <i class="fa fa-pencil"></i>
-                    </div>
-                </li>
             </ul>
         </div>
 
@@ -163,7 +169,7 @@
             <div class="map-canvas">
                 <iframe
                         width="600"
-                        height="450"
+                        height="150"
                         frameborder="0"
                         style="border:0"
                         ng-src="{{profileDetail.address.locationUrl}}"
@@ -182,7 +188,8 @@
                 <li class="pull-left">
                     NOTES
                 </li>
-                <li class="pull-right">
+                <li ng-if="reventNotes.length!=0"
+                    class="pull-right">
                     <div class="header-r-icon-052017 ">
                         <i class="fa fa-plus"></i>
                     </div>
@@ -191,9 +198,18 @@
         </div>
 
         <div class="user-p-tl-wrapper-052017">
-            <ul class="user-p-timeline-052017 left"
-                ng-repeat="eng in engagementsList">
-                <li ng-repeat="note in eng.notes">
+
+            <div ng-if="reventNotes.length==0">
+                <div class="new-note-wrapper-icon">
+                    <img src="assets/img/engagement-icon/create-new-note.png" width="100 ">
+                </div>
+                <div class="error-msg note-empty-text-052017">
+                    Create New Note
+                </div>
+            </div>
+            <ul ng-if="reventNotes.length!=0"
+                class="user-p-timeline-052017 left">
+                <li ng-repeat="note in reventNotes | limitTo:2">
                     <div class="r-timeline-052017-badge left">
                         <img src="assets/img/avatar/profileAvatar.png"
                              width="22"/>

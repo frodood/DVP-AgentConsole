@@ -1,0 +1,149 @@
+<!-- Edit profile -->
+<div class="user-p-edit-wrapper-052017 animated "
+     ng-class="isShowBasicInfoEditModal==true ?'fadeIn':'display-none'">
+    <div class="user-edit-wrapper">
+        <!-- subject -->
+        <form name="newProfileForm" novalidate>
+            <!-- title -->
+            <div class="col-lg-12">
+                <div class="form-group"
+                     ng-class="{ 'validation-on-052017': newProfileForm.title.$invalid &&
+                         newProfileForm.newProfilelastname.$dirty }">
+                    <label class="label-052017"
+                           for="title">Title*</label>
+                    <select class="form-control"
+                            id="title"
+                            name="title"
+                            required
+                            ng-model="newProfile.title">
+                        <option ng-repeat="title in titles"
+                                value="{{title.id}}">
+                            {{title.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- first name -->
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <div class="form-group"
+                         ng-class="{ 'validation-on-052017': newProfileForm.newProfilefirstname.$invalid &&
+                         newProfileForm.newProfilefirstname.$dirty }">
+                        <label class="label-052017"
+                               for="firstName">
+                            FIRST NAME*
+                        </label>
+                        <input type="text"
+                               class="form-control txt-input-052017"
+                               name="newProfilefirstname"
+                               ng-model="newProfile.firstname"
+                               required
+                               id="firstName">
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+
+                <div class="col-lg-12">
+                    <div class="form-group"
+                         ng-class="{ 'validation-on-052017': newProfileForm.newProfilelastname.$invalid &&
+                         newProfileForm.newProfilelastname.$dirty }">
+                        <label class="label-052017"
+                               for="lastName">
+                            LAST NAME*
+                        </label>
+                        <input type="text"
+                               class="form-control txt-input-052017"
+                               name="newProfilelastname"
+                               ng-model="newProfile.lastname"
+                               required
+                               id="lastName">
+                    </div>
+                </div>
+            </div>
+            <!-- email / gender -->
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <div class="form-group" ng-class="{ 'validation-on-052017': newProfileForm.newProfileemail.$invalid &&
+                    newProfileForm.newProfileemail.$dirty }">
+                        <label class="label-052017"
+                               for="newProfileemail">
+                            EMAIL*
+                        </label>
+                        <input type="email"
+                               class="form-control txt-input-052017"
+                               name="newProfileemail"
+                               ng-model="newProfile.email"
+                               required
+                               id="newProfileemail">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <div class="form-group"
+                         class="form-group" ng-class="{ 'validation-on-052017': newProfileForm.gender.$invalid &&
+                    newProfileForm.gender.$dirty }">
+                        <label class="label-052017"
+                               for="gender">
+                            GENDER*
+                        </label>
+                        <select class="form-control"
+                                name="gender"
+                                id="gender"
+                                required
+                                ng-model="newProfile.gender">
+                            <option ng-repeat="gen in gender"
+                                    value="{{gen}}">
+                                {{gen}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- date of birth -->
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <label class="label-052017">
+                        DATE OF BIRTH
+                    </label>
+                </div>
+                <div class="col-lg-4">
+                    <select class="form-control"
+                            ng-options="day for day in dayList track by day"
+                            ng-model="newProfile.dob.day"></select>
+                </div>
+                <div class="col-lg-4">
+                    <select class="form-control"
+                            ng-options="month.name for month in monthList track by month.index"
+                            ng-model="newProfile.dob.month"></select>
+                </div>
+                <div class="col-lg-4">
+                    <select class="form-control"
+                            ng-options="y for y in yearList track by y"
+                            ng-model="newProfile.dob.year"></select>
+                </div>
+
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group" style="margin-top: 20px;">
+                    <button ng-if="!isUpdateingProfile"
+                            class="btn btn-lg btn-block btn-save-052017"
+                            ng-disabled="newProfileForm.$invalid"
+                            ng-click="UpdateExternalUser(newProfile);">
+                        UPDATE
+                    </button>
+                    <button ng-if="isUpdateingProfile"
+                            class="btn btn-lg btn-block btn-save-052017"
+                            disabled>
+                        PLEASE WAIT...
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
