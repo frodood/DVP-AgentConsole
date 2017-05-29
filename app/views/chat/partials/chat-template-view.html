@@ -23,7 +23,7 @@
                     <div class="temp-list-block">
                         <ul class="list-unstyled">
                             <li ng-repeat="template in chatTemplates | filterBy: ['content']: searchCriteria">
-                                <div ng-click="addChatTemplate(template.content)" class="temp-block">
+                                <div ng-click="addChatTemplate(template.content)" class="temp-block" onmouseover="" style="cursor: pointer;">
                                     {{template.content}}
                                 </div>
                             </li>
