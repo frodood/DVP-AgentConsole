@@ -10940,6 +10940,11 @@ tags-input .tags {
 .img-with-text-widget:nth-child(odd) {
     background: #FAFBFD;
 }
+.set-pointer {
+    cursor: pointer;
+    cursor: hand;
+}
+
 
 
 
