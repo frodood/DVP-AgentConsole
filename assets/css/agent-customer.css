@@ -10029,7 +10029,10 @@ tr.ivr-t-row-052017:nth-child(odd) {
 
 /* engagement time line */
 .user-p-e-tl-wrapper-052017 {
-
+    width: 100%;
+    height: 930px;
+    overflow: hidden;
+    position: relative;
 }
 
 .engagement-tl-052017 > li {
