@@ -10275,7 +10275,8 @@ ul.customer-style-ul > li.value {
 
 .user-p-t-h-wrapper-052017 {
     width: 100%;
-    min-height: 120px;
+    /*min-height: 120px;*/
+    height: 60px;
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #F0F0F0;
@@ -11140,7 +11141,7 @@ tags-input .tags {
     z-index: 100;
     text-align: center;
     margin: 0 auto;
-    padding-top: 15px;
+    padding-top: 19px;
     border-top: 1px solid #f3f3f3;
 }
 

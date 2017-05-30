@@ -2189,7 +2189,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                     'name': date.month() + 1
                                 };
                                 scope.newProfile.dob.year = date.year();
-                                scope.showNewProfile = true;
+                                //scope.showNewProfile = true;
                                 scope.editProfile = true;
                             }
                             else {

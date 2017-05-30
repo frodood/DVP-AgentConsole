@@ -8,7 +8,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     var getAllTicketsByRequester = function (requester, page) {
         return $http({
             method: 'get',
-            url: baseUrls.ticketUrl + "Tickets/Requester/" + requester + "/13/" + page
+            url: baseUrls.ticketUrl + "Tickets/Requester/" + requester + "/15/" + page
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
