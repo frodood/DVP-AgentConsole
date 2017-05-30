@@ -45,8 +45,8 @@ var baseUrls = {
     'qaModule': 'http://qamodule.app.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app.veery.cloud
     'dialerUrl': 'http://dialerapi.app.veery.cloud/DVP/DialerAPI/ClickToCall/', //dialerapi.app.veery.cloud
-    'agentDialerUrl': 'http://localhost:8832/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app.veery.cloud
-    'ipMessageURL': 'http://localhost:8889',//'http://ipmessagingservice.app.veery.cloud',
+    'agentDialerUrl': 'http://agentdialerservice.app.veery.cloud/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app.veery.cloud
+    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud',//'http://ipmessagingservice.app.veery.cloud',
     'templateUrl': 'http://templates.app.veery.cloud/DVP/API/1.0.0.0/TemplateService/' //dialerapi.app.veery.cloud
 
 };
