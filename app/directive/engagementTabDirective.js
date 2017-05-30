@@ -2393,29 +2393,91 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             // update coda damith 052017
             //engagement new profile functions
 
-            scope.isShowBasicInfoEditModal = false;
-            scope.isShowBasicOtherInfoEditModal = false;
-            scope.isShowBasicLocationInfoEditModal = false;
+
+            var editUIAnimationFun = function () {
+                return {
+                    showUiViewMode: function () {
+                        scope.isShowBasicInfoEditModal = false;
+                        scope.isShowBasicOtherInfoEditModal = false;
+                        scope.isShowBasicLocationInfoEditModal = false;
+                        scope.isBasicContactView = false;
+                        scope.isSocialView = false;
+                        scope.basicProfileViewMode = 'all';
+
+                    },
+                    showBasicInfoEditMode: function () {
+                        scope.basicProfileViewMode = 'all';
+                        if (!scope.isShowBasicInfoEditModal) {
+                            scope.multipleProfile.editProfile();
+                        }
+                        scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
+                    },
+                    showBasicContactEditMode: function () {
+                        if (!scope.isBasicContactView) {
+                            scope.basicProfileViewMode = 'contact';
+                            scope.multipleProfile.editProfile();
+                        }
+                        scope.isBasicContactView = !scope.isBasicContactView;
+                        if (!scope.isBasicContactView) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    },
+                    showOtherEditMode: function () {
+                        if (!scope.isShowBasicOtherInfoEditModal) {
+                            scope.basicProfileViewMode = 'other';
+                            scope.multipleProfile.editProfile();
+                        }
+                        scope.isShowBasicOtherInfoEditModal = !scope.isShowBasicOtherInfoEditModal;
+                        if (!scope.isShowBasicOtherInfoEditModal) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    },
+                    socialContactEditMode: function () {
+                        if (!scope.isSocialView) {
+                            scope.basicProfileViewMode = 'social';
+                            scope.multipleProfile.editProfile();
+                        }
+                        scope.isSocialView = !scope.isSocialView;
+                        if (!scope.isSocialView) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    }
+                }
+            }();
+
+            editUIAnimationFun.showUiViewMode();
+
             //on click >> show basic info edit view
             scope.clickEditShowBasicInfo = function () {
-                if (!scope.isShowBasicInfoEditModal) {
-                    scope.multipleProfile.editProfile();
-                }
-                scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
+                editUIAnimationFun.showBasicInfoEditMode();
             };
 
             scope.clickEditShowOtherInfo = function () {
-                if (!scope.isShowBasicOtherInfoEditModal) {
-                    scope.multipleProfile.editProfile();
-                }
-                scope.isShowBasicOtherInfoEditModal = !scope.isShowBasicOtherInfoEditModal;
+                editUIAnimationFun.showOtherEditMode();
+            };
+
+            scope.clickEditSocialInfo = function () {
+                editUIAnimationFun.showOtherEditMode();
             };
 
             scope.clickEditShowLocationInfo = function () {
+                scope.basicProfileViewMode = false;
                 if (!scope.isShowBasicLocationInfoEditModal) {
                     scope.multipleProfile.editProfile();
                 }
                 scope.isShowBasicLocationInfoEditModal = !scope.isShowBasicLocationInfoEditModal;
+                if (!scope.isShowBasicLocationInfoEditModal) {
+                    scope.basicProfileViewMode = true;
+                }
+            };
+
+            //basic contact edit form
+
+            scope.clickEditSocialContact = function () {
+                editUIAnimationFun.socialContactEditMode();
             };
 
 
@@ -2477,6 +2539,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         break;
                 }
             };
+
 
         }
     }

@@ -1,13 +1,13 @@
 <!-- Edit profile -->
-<div class="user-p-edit-wrapper-052017 animated "
-     ng-class="isShowBasicInfoEditModal==true ?'fadeIn':'display-none'">
+<div class="user-p-edit-wrapper-052017 "
+     ng-if="isShowBasicInfoEditModal">
     <div class="user-edit-wrapper">
         <!-- subject -->
         <form name="newProfileForm" novalidate>
             <!-- title -->
             <div class="col-lg-12">
                 <div class="form-group"
-                     ng-class="{ 'validation-on-052017': newProfileForm.title.$invalid &&
+                     ng-class="{ 'validation-on-052017': newProfileForm.newProfilelastname.$invalid &&
                          newProfileForm.newProfilelastname.$dirty }">
                     <label class="label-052017"
                            for="title">Title*</label>
