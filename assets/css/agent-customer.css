@@ -9106,7 +9106,7 @@ ul.renote-color-btn > li {
 
 .user-p-left-052017 {
     width: 100%;
-    min-height: 800px;
+    min-height: 1090px;
     background: #fff;
     position: relative;
     overflow: hidden;
@@ -9117,7 +9117,7 @@ ul.renote-color-btn > li {
 
 .user-p-right-052017 {
     width: 100%;
-    min-height: 800px;
+    min-height: 1090px;
     background: #fff;
     position: relative;
     overflow: hidden;
@@ -9137,6 +9137,10 @@ ul.renote-color-btn > li {
     letter-spacing: 0.66px;
     margin: 0;
     padding: 11px 10px 5px 10px;
+}
+
+.user-p-left-052017 > .user-p-left-h-052017.profile-h-default {
+    background: rgba(179, 179, 179, 0.07);
 }
 
 .user-p-left-h-052017 > .user-p-h-s-052017 {
@@ -9167,6 +9171,23 @@ ul.renote-color-btn > li {
     letter-spacing: 0.66px;
     height: 27px;
     text-transform: uppercase;
+}
+
+.default-btn {
+    background: #F0F0F0 !important;
+    color: #F0F0F0 !important;
+    border-color: #F0F0F0 !important;
+}
+
+.default-timeline-hedaer {
+    background: #e5e7e3 !important;
+    color: #e5e7e3 !important;
+    width: 115px !important;
+    height: 20px !important;
+    margin-top: 5px !important;
+    margin-left: 5px !important;
+    overflow: hidden !important;
+    border-radius: 2px !important;
 }
 
 .btn-save-052017 {
@@ -9201,6 +9222,12 @@ ul.renote-color-btn > li {
     padding-top: 7px;
 }
 
+.profile-id-052017.profile-default {
+    background: #F0F0F0 !important;
+    color: #F0F0F0 !important;
+    border-radius: 10px;
+}
+
 .user-p-d-052017 {
     width: 100%;
     min-height: 100px;
@@ -9221,6 +9248,10 @@ ul.renote-color-btn > li {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.50);
     background: #f6f6f6;
     margin: 0 auto;
+}
+
+.user-p-image-052017.default-img {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0);
 }
 
 .user-p-d-text-052017 {
@@ -9251,6 +9282,13 @@ ul.renote-color-btn > li {
     margin-bottom: 6px;
 }
 
+.tags.tags-default {
+    background: #f5f5f5 !important;
+    color: #f5f5f5 !important;
+    width: 50px;
+    margin: 0 auto;
+}
+
 .user-p-d-text-052017 > ul > li.full-name {
     /* Mr.Anthony Alexander: */
     font-family: 'AvenirNext-Bold', sans-serif;
@@ -9258,6 +9296,15 @@ ul.renote-color-btn > li {
     color: #A5A3A2;
     letter-spacing: 0.47px;
     padding-bottom: 5px;
+}
+
+.default-full-name {
+    background: #f5f5f5 !important;
+    color: #f5f5f5 !important;
+    width: 150px !important;
+    margin: 0 auto !important;
+    height: 15px !important;
+    border-radius: 10px;
 }
 
 .user-p-d-text-052017 > ul > li.l-update,
@@ -9391,6 +9438,18 @@ ul.renote-color-btn > li {
     margin-left: 45px;
 }
 
+.default-timeline-panel {
+    background: #f3f3f3 !important;
+    color: #f3f3f3 !important;
+    border-radius: 5px;
+}
+
+.default-value {
+    background: #f6f6f6 !important;
+    color: #f6f6f6 !important;
+    border-radius: 10px;
+}
+
 .user-p-r-timeline-panel-052017 >
 .left-t-l-wrapper-052017 {
     width: 100%;
@@ -9515,6 +9574,49 @@ ul.renote-color-btn > li {
     padding-top: 5px;
     margin-top: -6px;
     cursor: pointer;
+}
+
+.header-r-icon-052017.with-text {
+    width: auto;
+    height: 26px;
+    overflow: hidden;
+    position: relative;
+    background: rgba(30, 45, 64, 0);
+    border-radius: 0%;
+    text-align: center;
+    padding-top: 5px;
+    margin-top: -6px;
+    cursor: pointer;
+}
+
+.header-r-icon-052017.with-text > i {
+    color: #e7855e;
+}
+
+.header-r-icon-052017.with-text > i {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.header-052017.modal-header {
+    width: 100%;
+    min-height: 37px;
+    overflow: hidden;
+    text-align: left;
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.57px;
+    /* background: #fefbf6; */
+    padding: 20px 15px 10px 15px;
+}
+
+.modal-body-052017 {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    overflow: hidden;
+    position: relative;
 }
 
 .header-r-icon-052017 > i {
@@ -10429,7 +10531,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
     background-image: linear-gradient(-177deg, rgba(237, 238, 236, 0.00) 4%, #FFFFFF 100%);
     background: #f6f6f6;
     margin: 30px auto;
-    padding: 25px 15px 10px 15px;
+    padding: 0px;
 }
 
 .user-p-t-body-052017.create-new-t:before {
@@ -10447,7 +10549,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
 
 .label-052017 {
     /* Priority: */
-    font-family: 'AvenirNext-Regular', sans-serif !important;
+    /*font-family: 'AvenirNext-Regular', sans-serif !important;*/
     font-size: 11px;
     color: #8A8E86 !important;
     letter-spacing: 0.57px;
@@ -10785,6 +10887,7 @@ tags-input .tags {
     overflow: hidden;
     position: relative;
     text-align: center;
+    cursor: pointer;
 }
 
 .lg-text-052017 {
@@ -10939,6 +11042,35 @@ tags-input .tags {
     background: #FAFBFD;
 }
 
+.tb-create-new {
+    color: #95C0F2 !important;
+}
+
+.tb-create-new > i {
+    color: #95C0F2 !important;
+    padding-right: 5px;
+}
+
+.top-left-tab-btn-052017 {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+}
+
+.top-left-tab-btn-052017 > button {
+    font-family: 'AvenirNext-Bold', sans-serif;
+    width: 130px;
+    height: 30px;
+    /* Rectangle 3: */
+    background: #FFFFFF;
+    border: 1px solid #8FD539;
+    border-radius: 5px;
+    opacity: 0.8;
+    font-size: 10px;
+    color: #8FD539;
+    letter-spacing: 0.66px;
+    text-transform: uppercase;
+}
 
 
 
