@@ -1100,7 +1100,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     });
                 }
 
+                scope.isSaveingTicket = true;
                 ticketService.SaveTicket(ticket).then(function (response) {
+                    scope.isSaveingTicket = false;
                     if (response.IsSuccess) {
                         ticket.reference = response.Result.reference;
                         ticket.id = response.Result._id;
@@ -1120,6 +1122,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     }
                     scope.showCreateTicket = !response.IsSuccess;
                 }, function (err) {
+                    scope.isSaveingTicket = false;
                     scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
                 });
 
@@ -2458,14 +2461,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                                 profile.ssn = "";
                                                 scope.isLoadinNextFormWizad = false;
                                                 return;
+                                            } else {
+                                                scope.isLoadinNextFormWizad = false;
+                                                scope.isBasicInfo = false;
+                                                scope.isLocationView = true;
                                             }
                                         }, function (errEmail) {
                                             scope.showAlert("Profile", "error", "SSN is already taken");
                                         });
                                     }
-                                    scope.isLoadinNextFormWizad = false;
-                                    scope.isBasicInfo = false;
-                                    scope.isLocationView = true;
+
                                 });
                             }
                         });

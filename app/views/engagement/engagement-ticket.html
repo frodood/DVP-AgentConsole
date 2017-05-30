@@ -48,7 +48,14 @@
 
             <!-- user profile ticket body -->
             <div class="user-p-t-body-052017">
-                <div class="user-p-t-b-wrapper-052017">
+                <div class="user-p-t-b-wrapper-052017"
+                     slimscroll="{height: '820px',
+                                    railVisible: true,
+                                    color: '#EEEEEE',
+                                    size: '8px',
+                                    distance: '15px',
+                                    railColor: '#EEEEEE',
+                                    railBorderRadius: 10}">
                     <table class="table tbl-t-052017">
                         <tbody>
                         <tr ng-repeat="ticket in ticketList"
@@ -94,6 +101,18 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="more-ticket-wrapper-052017" ng-if="ticketList.length!=0">
+                    <div class="more-record-052017" ng-click="loadNextTickets();">
+                        <button ng-show="!isLoadingTicke" class="btn btn-more-data">
+                            VIEW MORE
+                        </button>
+                        <button ng-show="isLoadingTicke" disabled class="btn btn-more-data">
+                            PLEASE WAIT...
+                        </button>
+                    </div>
+                </div>
+
             </div>
 
         </div>
