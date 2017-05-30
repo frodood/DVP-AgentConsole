@@ -45,7 +45,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             //update code damith
             if (scope.profileDetail && scope.profileDetail.address) {
-                console.log(scope.profileDetail);
                 scope.profileDetail.address.locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
                     'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
             }
@@ -1901,67 +1900,68 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 profile.tags = [];
                 scope.cutomerTypes.forEach(function (tag) {
                     profile.tags.push(tag.cutomerType)
-                })
+                });
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
 
+                userService.CreateExternalUser(profile).then(function (response) {
+                    if (response) {
+                        scope.profileDetail = response;
+                        scope.showNewProfile = false;
 
-                userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
-
-                    if (resSSN.IsSuccess && resSSN.Result.length > 0) {
-                        scope.showAlert("Profile", "error", "SSN is already taken");
+                        scope.GetProfileHistory(response._id);
+                        if (scope.exProfileId) {
+                            scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                        } else {
+                            scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+                        }
+                        scope.showAlert("Profile", "success", "Profile Created Successfully.");
                     }
                     else {
-                        userService.getExternalUserProfileByField("phone", profile.phone).then(function (resPhone) {
-
-                            if (resPhone.IsSuccess && resPhone.Result.length > 0) {
-                                scope.showAlert("Profile", "error", "Phone number is already taken");
-                            }
-                            else {
-                                userService.getExternalUserProfileByField("email", profile.email).then(function (resEmail) {
-
-                                    if (resEmail.IsSuccess && resEmail.Result.length > 0) {
-                                        scope.showAlert("Profile", "error", "Email is already taken");
-                                    }
-                                    else {
-                                        userService.CreateExternalUser(profile).then(function (response) {
-                                            if (response) {
-                                                scope.profileDetail = response;
-                                                scope.showNewProfile = false;
-
-                                                scope.GetProfileHistory(response._id);
-                                                if (scope.exProfileId) {
-                                                    scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
-                                                } else {
-                                                    scope.addIsolatedEngagementSession(response._id, scope.sessionId);
-                                                }
-                                            }
-                                            else {
-                                                scope.showAlert("Profile", "error", "Fail To Save Profile.");
-                                            }
-                                        }, function (err) {
-                                            scope.showAlert("Profile", "error", "Fail To Save Profile.");
-                                        });
-                                    }
-
-                                }, function (errEmail) {
-                                    scope.showAlert("Profile", "error", "Checking Email failed");
-                                });
-
-
-                            }
-                        }, function (errPhone) {
-                            scope.showAlert("Profile", "error", "Checking Phone number failed");
-                        })
+                        scope.showAlert("Profile", "error", "Fail To Save Profile.");
                     }
-
-                }, function (errSSN) {
-                    scope.showAlert("Profile", "error", "Checking SSN failed");
+                }, function (err) {
+                    scope.showAlert("Profile", "error", "Fail To Save Profile.");
                 });
-
 
             };
 
+
+            // userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
+            //
+            //     if (resSSN.IsSuccess && resSSN.Result.length > 0) {
+            //         scope.showAlert("Profile", "error", "SSN is already taken");
+            //     }
+            //     else {
+            //         userService.getExternalUserProfileByField("phone", profile.phone).then(function (resPhone) {
+            //
+            //             if (resPhone.IsSuccess && resPhone.Result.length > 0) {
+            //                 scope.showAlert("Profile", "error", "Phone number is already taken");
+            //             }
+            //             else {
+            //                 userService.getExternalUserProfileByField("email", profile.email).then(function (resEmail) {
+            //
+            //                     if (resEmail.IsSuccess && resEmail.Result.length > 0) {
+            //                         scope.showAlert("Profile", "error", "Email is already taken");
+            //                     }
+            //                     else {
+            //
+            //                     }
+            //
+            //                 }, function (errEmail) {
+            //                     scope.showAlert("Profile", "error", "Checking Email failed");
+            //                 });
+            //
+            //
+            //             }
+            //         }, function (errPhone) {
+            //             scope.showAlert("Profile", "error", "Checking Phone number failed");
+            //         })
+            //     }
+            //
+            // }, function (errSSN) {
+            //     scope.showAlert("Profile", "error", "Checking SSN failed");
+            // });
             scope.CheckExternalUserAvailabilityBySSN = function (ssn, profile) {
                 var deferred = $q.defer();
 
@@ -2421,6 +2421,57 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             scope.isTicketCollapsed = true;
+
+            //new profile
+            scope.isLocationView = false;
+            scope.isBasicInfo = true;
+
+            scope.isLoadinNextFormWizad = false;
+
+            scope.goToNextWizard = function (wizardNo, profile) {
+                switch (wizardNo) {
+                    case '1':
+                        scope.isBasicInfo = true;
+                        scope.isLocationView = false;
+                        break;
+                    case '2':
+                        //validation on check event
+                        scope.isLoadinNextFormWizad = true;
+                        userService.getExternalUserProfileByField("phone", profile.phone).then(function (resPhone) {
+                            if (resPhone.IsSuccess && resPhone.Result.length > 0) {
+                                scope.showAlert("Profile", "error", "Phone number is already taken");
+                                profile.phone = "";
+                                scope.isLoadinNextFormWizad = false;
+                                return;
+                            } else {
+                                userService.getExternalUserProfileByField("email", profile.email).then(function (resEmail) {
+                                    if (resEmail.IsSuccess && resEmail.Result.length > 0) {
+                                        scope.showAlert("Profile", "error", "Email is already taken");
+                                        profile.email = "";
+                                        scope.isLoadinNextFormWizad = false;
+                                        return;
+                                    }
+                                    else {
+                                        userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
+                                            if (resSSN.IsSuccess && resSSN.Result.length > 0) {
+                                                scope.showAlert("Profile", "error", "SSN is already taken");
+                                                profile.ssn = "";
+                                                scope.isLoadinNextFormWizad = false;
+                                                return;
+                                            }
+                                        }, function (errEmail) {
+                                            scope.showAlert("Profile", "error", "SSN is already taken");
+                                        });
+                                    }
+                                    scope.isLoadinNextFormWizad = false;
+                                    scope.isBasicInfo = false;
+                                    scope.isLocationView = true;
+                                });
+                            }
+                        });
+                        break;
+                }
+            };
 
         }
     }

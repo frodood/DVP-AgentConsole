@@ -29,7 +29,7 @@
                             <div class="m-p-header-052017">
                                 <div class="header-052017 inline-h">
                                     <ul>
-                                        <li class="pull-left">
+                                        <li class="pull-left animated slideInDown">
                                             {{profileDetails.length}} profiles found
                                         </li>
                                         <li class="pull-right">
@@ -42,7 +42,13 @@
                                 </div>
                             </div>
 
-                            <div class="body-mp-052017">
+                            <div class="body-mp-052017" slimscroll="{height: '545px',
+                                    railVisible: true,
+                                    color: '#EEEEEE',
+                                    size: '8px',
+                                    distance: '15px',
+                                    railColor: '#EEEEEE',
+                                    railBorderRadius: 10}">
                                 <div class="img-with-text-widget"
                                      ng-repeat="p in profileDetails">
                                     <ul class="customer-style-ul">
@@ -69,36 +75,6 @@
                                                 <div class="right-icon-wrp">
                                                     <button type="button" class="btn btn-m-p-more"
                                                             ng-click="multipleProfile.openSelectedProfile(p);">
-                                                        view
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                                <div class="img-with-text-widget gray">
-                                    <ul class="customer-style-ul ">
-                                        <li>
-                                            <div class="li-left-img-wrp">
-                                                <div class="li-left-img">
-                                                    <img src="assets/img/avatar/amarkdalen.jpg" width="100">
-                                                </div>
-                                            </div>
-                                        <li>
-                                            <div class="li-text-block">
-                                                <div class="li-mu-p-name">
-                                                    William Jacob
-                                                </div>
-                                                <div class="li-mu-p-income-no">
-                                                    +9435678123
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="li-mu-r-i-wrp">
-                                                <div class="right-icon-wrp">
-                                                    <button type="button" class="btn btn-m-p-more">
                                                         view
                                                     </button>
                                                 </div>

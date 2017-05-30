@@ -2,10 +2,11 @@
 <div class="user-p-m-wrapper-052017">
     <!-- create new ticket -->
 
-    <!-- multiple profile view -->
-    <div>
+    <!--multiple profile view-->
+    <div class="display-none`">
         <div ng-include="'app/views/ui-kit/user-profile/multiple-profile.html'"></div>
     </div>
+
 
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -20,6 +21,11 @@
                 <div ng-show="showCreateTicket">
                     <div ng-include="'app/views/ui-kit/user-profile/create-new-ticket.html'"></div>
                 </div>
+
+
+                <!--<div>-->
+                <!--<div ng-include="'app/views/ui-kit/user-profile/create-new-profile.html'"></div>-->
+                <!--</div>-->
 
                 <div class="user-p-right-h-052017">
                     <uib-tabset type="pills profile-c-pills-052017">
@@ -38,7 +44,16 @@
                         <uib-tab heading="PROFILE" classes="btn-sm">
                             <!--profile-->
                         </uib-tab>
+
+
                     </uib-tabset>
+
+                    <div class="top-left-tab-btn-052017">
+                        <button class="btn"
+                                ng-click="createNProfile()">
+                            new profile
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
