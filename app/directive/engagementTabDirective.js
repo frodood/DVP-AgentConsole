@@ -45,7 +45,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             //update code damith
             if (scope.profileDetail && scope.profileDetail.address) {
-                console.log(scope.profileDetail);
                 scope.profileDetail.address.locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
                     'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
             }

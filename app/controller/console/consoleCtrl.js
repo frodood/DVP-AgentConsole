@@ -95,10 +95,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (newValue) {
             $('#searchSpin').removeClass('display-none');
         }
-        else  {
+        else {
             $('#searchSpin').addClass('display-none');
         }
-
 
 
     });
@@ -2328,7 +2327,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addUserProfileTab = function () {
         $scope.addTab('new-profile', 'new-profile', 'new-profile', "new-profile", "new-profile");
     };
-    //$scope.addUserProfileTab();
+    $scope.addUserProfileTab();
 
 
     $rootScope.$on('closeTab', function (events, args) {

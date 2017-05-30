@@ -1,2 +1,3 @@
-<div ng-if="!showNewProfile" ng-include="'app/views/engagement/temp/profile-summary.html'"></div>
+<div ng-if="!showNewProfile && profileDetail " ng-include="'app/views/engagement/temp/profile-summary.html'"></div>
 <div ng-if="showNewProfile" ng-include="'app/views/engagement/temp/user-profile-default.html'"></div>
+<!--<div ng-if="!profileDetail" ng-include="'app/views/engagement/temp/user-profile-default.html'"></div>-->
