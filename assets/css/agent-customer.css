@@ -9254,6 +9254,11 @@ ul.renote-color-btn > li {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0);
 }
 
+.default-img {
+    background: #f3f3f3 !important;
+    border: 0 !important;
+}
+
 .user-p-d-text-052017 {
     width: 100%;
     min-height: 50px;
@@ -9371,6 +9376,10 @@ ul.renote-color-btn > li {
     position: relative;
 }
 
+.default-timeline {
+
+}
+
 .user-p-timeline-052017:before {
     top: 0;
     bottom: 0;
@@ -9381,6 +9390,11 @@ ul.renote-color-btn > li {
     /* Rectangle 4: */
     background: #E5E7E3;
     border-radius: 8px;
+}
+
+.default-timeline.user-p-timeline-052017:before {
+    /* Rectangle 4: */
+    background: #f3f3f3;
 }
 
 .user-p-timeline-052017.left:before {
@@ -10729,7 +10743,7 @@ tags-input .tags {
     border-bottom: thick;
     border-radius: 25px;
     background: #f4f9e5;
-    width:inherit;
+    width: inherit;
     min-height: 30px;
     margin-bottom: 10px;
     margin-top: 5px;
@@ -11043,11 +11057,11 @@ tags-input .tags {
 .img-with-text-widget:nth-child(odd) {
     background: #FAFBFD;
 }
+
 .set-pointer {
     cursor: pointer;
     cursor: hand;
 }
-
 
 .tb-create-new {
     color: #95C0F2 !important;
