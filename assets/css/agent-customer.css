@@ -10729,12 +10729,14 @@ tags-input .tags {
     border-bottom: thick;
     border-radius: 25px;
     background: #f4f9e5;
-    width: auto;
-    height: 30px;
+    width:inherit;
+    min-height: 30px;
     margin-bottom: 10px;
     margin-top: 5px;
     padding-left: 20px;
     padding-top: 5px;
+    display: inline-block;
+    padding-right: 10px;
 
 }
 
@@ -11041,6 +11043,11 @@ tags-input .tags {
 .img-with-text-widget:nth-child(odd) {
     background: #FAFBFD;
 }
+.set-pointer {
+    cursor: pointer;
+    cursor: hand;
+}
+
 
 .tb-create-new {
     color: #95C0F2 !important;

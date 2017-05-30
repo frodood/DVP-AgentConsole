@@ -95,9 +95,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (newValue) {
             $('#searchSpin').removeClass('display-none');
         }
-        else if (newValue == false) {
+        else  {
             $('#searchSpin').addClass('display-none');
         }
+
 
 
     });
