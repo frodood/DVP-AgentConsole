@@ -1328,6 +1328,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.GetIvrDetailsByEngagementId = function () {
                 ivrService.GetIvrDetailsByEngagementId(scope.sessionId).then(function (response) {
                     scope.ivrDetails = response;
+                    console.log('ivr details...');
+                    console.log(scope.ivrDetails);
                 }, function (err) {
                     scope.showAlert("Engagement Session Note", "error", "Fail To Get Engagement Session Note.")
                 });
