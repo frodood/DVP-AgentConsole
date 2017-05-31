@@ -3,6 +3,20 @@
 
 <div class="user-p-right-tab-052017">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <!-- create new appointment -->
+        <div class="user-e-widget-052017" style="border: 3px dashed #ffffff;">
+            <div class="user-p-e-wrapper-052017">
+                <div class="header-052017 inline-h">
+                    <ul>
+                        <li class="pull-left animated slideInLeft">
+                            create new appointment
+                        </li>
+                    </ul>
+                </div>
+                <div ng-include="'app/views/engagement/edit-form/create-new-appointment.html'"></div>
+            </div>
+        </div>
+
         <div class="user-e-widget-052017">
             <!-- user profile basic information -->
             <div>
@@ -23,7 +37,6 @@
             <div>
                 <div ng-include="'app/views/engagement/edit-form/edit-social-contact.html'"></div>
             </div>
-
             <!-- basic profile details  -->
             <div class="user-p-e-wrapper-052017 animated fadeIn">
                 <div class="header-052017 inline-h">
@@ -113,6 +126,53 @@
                     <ul class="customer-style-ul">
                         <li class="pull-left desc-052017"><i class="fa fa-calendar"></i>Birthday</li>
                         <li class="pull-right value-052017">{{profileDetail.birthday| date:'MM-dd-yyyy'}}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- other  -->
+            <div class="user-p-e-wrapper-052017 animated fadeIn">
+                <div class="header-052017 inline-h">
+                    <ul>
+                        <li class="pull-left animated ">
+                            OTHER
+                        </li>
+                        <li class="pull-right">
+                            <div class="header-r-icon-052017 "
+                                 ng-click="clickEditShowOtherInfo();">
+                                <i ng-if="!isShowBasicOtherInfoEditModal"
+                                   class="fa fa-pencil"></i>
+                                <i ng-if="isShowBasicOtherInfoEditModal"
+                                   class="fa fa-close"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- tags  -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-tags"></i> Special Tags</li>
+                        <li class="pull-right value-052017 c-text-green">
+                            <ul class="customer-style-ul profile-tag-052017">
+                                <li ng-repeat="tag in profileDetail.tags">
+                                    {{tag}}
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- SSN -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> SSN</li>
+                        <li class="pull-right value-052017">{{profileDetail.ssn}}</li>
+                    </ul>
+                </div>
+                <!-- LOCAL -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">LOCAL</li>
+                        <li class="pull-right value-052017">{{profileDetail.locale}}</li>
                     </ul>
                 </div>
             </div>
@@ -208,52 +268,6 @@
                 </div>
             </div>
 
-            <!-- other  -->
-            <div class="user-p-e-wrapper-052017 animated fadeIn">
-                <div class="header-052017 inline-h">
-                    <ul>
-                        <li class="pull-left animated ">
-                            OTHER
-                        </li>
-                        <li class="pull-right">
-                            <div class="header-r-icon-052017 "
-                                 ng-click="clickEditShowOtherInfo();">
-                                <i ng-if="!isShowBasicOtherInfoEditModal"
-                                   class="fa fa-pencil"></i>
-                                <i ng-if="isShowBasicOtherInfoEditModal"
-                                   class="fa fa-close"></i>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- tags  -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"><i class="fa fa-tags"></i> Special Tags</li>
-                        <li class="pull-right value-052017 c-text-green">
-                            <ul class="customer-style-ul profile-tag-052017">
-                                <li ng-repeat="tag in profileDetail.tags">
-                                    {{tag}}
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- SSN -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"> SSN</li>
-                        <li class="pull-right value-052017">{{profileDetail.ssn}}</li>
-                    </ul>
-                </div>
-                <!-- LOCAL -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017">LOCAL</li>
-                        <li class="pull-right value-052017">{{profileDetail.locale}}</li>
-                    </ul>
-                </div>
-            </div>
 
         </div>
     </div>

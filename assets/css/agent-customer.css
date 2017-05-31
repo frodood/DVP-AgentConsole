@@ -10708,6 +10708,8 @@ tags-input .tags {
     z-index: 10;
 }
 
+
+
 .user-edit-wrapper {
     width: 100%;
     overflow: hidden;
@@ -10716,6 +10718,8 @@ tags-input .tags {
     position: relative;
     padding: 15px 5px 15px 5px;
 }
+
+
 
 .user-edit-wrapper-loading {
     width: 100%;
