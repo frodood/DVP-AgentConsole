@@ -2480,6 +2480,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 editUIAnimationFun.socialContactEditMode();
             };
 
+            scope.clickEditShowBasicContact = function () {
+                editUIAnimationFun.showBasicContactEditMode();
+            };
+
 
             scope.closeTicketModal = function () {
                 scope.showCreateTicket = false;
