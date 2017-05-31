@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList) {
     return {
         restrict: "EA",
         scope: {
@@ -1249,10 +1249,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         //if (scope.reventNotes) {
                         reply.forEach(function (value) {
                             if (value.notes && value.notes.length != 0) {
-                                scope.reventNotes = scope.reventNotes.concat(value.notes)
+                                scope.reventNotes = scope.reventNotes.concat(value.notes);
+
+                                scope.reventNotes.forEach(function (value, index) {
+                                    userImageList.getAvatarByUserName(value.author, function (data) {
+                                        scope.reventNotes[index].avatar = data;
+                                    })
+                                });
                             }
                         });
-                        //}
 
                         if (angular.isArray(reply) && scope.recentEngList.length === 0) {
                             scope.recentEngList = reply.slice(0, 1);
@@ -1300,7 +1305,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.showAlert("Note", "error", "Please Enter Note to Save.");
                     return;
                 }
+                scope.isSaveNote = true;
                 engagementService.AppendNoteToEngagementSession(scope.sessionId, {body: note}).then(function (response) {
+                    scope.isSaveNote = false;
                     if (response) {
                         scope.currentEngagement.notes.push({body: note});
                         document.getElementById("noteBody").innerHTML = "";
@@ -2393,7 +2400,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             // update coda damith 052017
             //engagement new profile functions
 
-
+            scope.isNewNote = false;
             var editUIAnimationFun = function () {
                 return {
                     showUiViewMode: function () {
@@ -2444,6 +2451,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                             editUIAnimationFun.showUiViewMode();
                         }
 
+                    }, showCreateNewNote: function () {
+                        scope.isNewNote = !scope.isNewNote;
                     }
                 }
             }();
@@ -2464,14 +2473,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             scope.clickEditShowLocationInfo = function () {
-                scope.basicProfileViewMode = false;
                 if (!scope.isShowBasicLocationInfoEditModal) {
                     scope.multipleProfile.editProfile();
                 }
                 scope.isShowBasicLocationInfoEditModal = !scope.isShowBasicLocationInfoEditModal;
-                if (!scope.isShowBasicLocationInfoEditModal) {
-                    scope.basicProfileViewMode = true;
-                }
             };
 
             //basic contact edit form
@@ -2487,6 +2492,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.closeTicketModal = function () {
                 scope.showCreateTicket = false;
+            };
+
+            scope.clickNewNote = function () {
+                editUIAnimationFun.showCreateNewNote();
             };
 
             scope.isTicketCollapsed = true;
