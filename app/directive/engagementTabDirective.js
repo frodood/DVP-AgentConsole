@@ -1308,6 +1308,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.isSaveNote = true;
                 engagementService.AppendNoteToEngagementSession(scope.sessionId, {body: note}).then(function (response) {
                     scope.isSaveNote = false;
+                    scope.isNewNote = false;
                     if (response) {
                         scope.currentEngagement.notes.push({body: note});
                         document.getElementById("noteBody").innerHTML = "";
