@@ -1493,6 +1493,7 @@ tr.ivr-tbl:hover {
 .new-note-wrapper-icon {
     width: 100%;
     text-align: center;
+    cursor: pointer;
 }
 
 .note-empty-text-052017 {
@@ -10029,7 +10030,10 @@ tr.ivr-t-row-052017:nth-child(odd) {
 
 /* engagement time line */
 .user-p-e-tl-wrapper-052017 {
-
+    width: 100%;
+    height: 930px;
+    overflow: hidden;
+    position: relative;
 }
 
 .engagement-tl-052017 > li {
@@ -10266,7 +10270,7 @@ ul.customer-style-ul > li.value {
 /* profile ticket */
 .user-p-t-wrapper-052017 {
     width: 100%;
-    min-height: 600px;
+    height: 1000px;
     overflow: hidden;
     position: relative;
     background: #FFFFFF;
@@ -10275,7 +10279,8 @@ ul.customer-style-ul > li.value {
 
 .user-p-t-h-wrapper-052017 {
     width: 100%;
-    min-height: 120px;
+    /*min-height: 120px;*/
+    height: 60px;
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #F0F0F0;
@@ -10351,7 +10356,20 @@ ul.customer-style-ul > li.value {
 }
 
 .tbl-t-052017 {
+    /* MORE: */
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 16px;
+    color: #8A8E86;
+    letter-spacing: 0.77px;
+    text-align: center;
+}
 
+.more-record-052017 {
+    width: 200px;
+    height: 40px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
 }
 
 tr.ticket-tbl-row-052017 {
@@ -10360,6 +10378,10 @@ tr.ticket-tbl-row-052017 {
     overflow: hidden;
     position: relative;
 
+}
+
+tr.ticket-tbl-row-052017:hover {
+    background: #f6f6f6;
 }
 
 tr.ticket-tbl-row-052017 > th,
@@ -10686,6 +10708,8 @@ tags-input .tags {
     z-index: 10;
 }
 
+
+
 .user-edit-wrapper {
     width: 100%;
     overflow: hidden;
@@ -10694,6 +10718,8 @@ tags-input .tags {
     position: relative;
     padding: 15px 5px 15px 5px;
 }
+
+
 
 .user-edit-wrapper-loading {
     width: 100%;
@@ -11033,9 +11059,24 @@ tags-input .tags {
 
 .btn-m-p-more:hover,
 .btn-m-p-more:focus,
-.btn-m-p-more:active {
+.btn-m-p-more:active,
+.btn-more-data:hover,
+.btn-more-data:focus,
+.btn-more-data:active {
     background: #8FD539;
     color: #fff;
+}
+
+.btn-more-data {
+    background: #FFFFFF;
+    border: 1px solid #8FD539;
+    border-radius: 5px;
+    opacity: 0.8;
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 11px;
+    color: #8FD539;
+    letter-spacing: 0.66px;
+    outline: none !important;
 }
 
 .multiple-p-e-wrapper {
@@ -11101,8 +11142,29 @@ tags-input .tags {
     text-transform: uppercase;
 }
 
+.more-ticket-wrapper-052017 {
+    width: 100%;
+    height: 50px;
+    background: rgb(255, 255, 255);
+    z-index: 100;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 19px;
+    border-top: 1px solid #f3f3f3;
+}
 
+/* add new note view mode */
+.user-p-note-wrapper-052017 {
+    width: 100%;
+    height: 255px;
+    position: relative;
+    overflow: hidden;
+    bottom: 0;
+    background: #fff;
+    z-index: 10;
+}
 
-
-
+.note-add-wrapper {
+    padding: 10px;
+}
 

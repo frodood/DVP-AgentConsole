@@ -24,6 +24,8 @@
                     </button>
                 </li>
             </ul>
+
+
         </section>
     </div>
 
@@ -187,14 +189,26 @@
     <!-- user profile note -->
     <section class=" user-p-note-052017">
         <div class="header-052017 inline-h">
-            <ul>
+            <ul ng-if="!isNewNote">
                 <li class="pull-left">
                     NOTES
                 </li>
                 <li ng-if="reventNotes.length!=0"
                     class="pull-right">
-                    <div class="header-r-icon-052017 ">
+                    <div class="header-r-icon-052017 "
+                         ng-click="clickNewNote();">
                         <i class="fa fa-plus"></i>
+                    </div>
+                </li>
+            </ul>
+
+            <ul ng-if="isNewNote">
+                <li class="pull-left animated slideInLeft">
+                    CREATE NEW NOTE
+                </li>
+                <li class="pull-right" ng-click="clickNewNote();">
+                    <div class="header-r-icon-052017 ">
+                        <i class="fa fa-close"></i>
                     </div>
                 </li>
             </ul>
@@ -202,19 +216,50 @@
 
         <div class="user-p-tl-wrapper-052017">
 
-            <div ng-if="reventNotes.length==0">
-                <div class="new-note-wrapper-icon">
+            <!-- add new note angagement -->
+            <div class="user-p-note-wrapper-052017" ng-if="isNewNote">
+                <div class="note-add-wrapper">
+                    <form name="userFormNote" novalidate>
+                        <div class="form-group"
+                             ng-class="{ 'has-error': userFormNote.note.$invalid && userFormNote.note.$dirty }">
+                            <label class="label-052017">note</label>
+                            <textarea id="noteBody"
+                                      type="text"
+                                      class="form-control txt-input-052017"
+                                      name="note"
+                                      ng-model="noteBody"
+                                      required/>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-block btn-save-052017"
+                                    ng-if="!isSaveNote"
+                                    ng-click="AppendNoteToEngagementSession(noteBody);"
+                                    ng-disabled="userFormNote.$invalid">save
+                            </button>
+                            <button class="btn btn-lg btn-block btn-save-052017"
+                                    disabled
+                                    ng-if="isSaveNote">please wait...
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div ng-if="reventNotes.length==0 && !isNewNote">
+                <div class="new-note-wrapper-icon" ng-click="clickNewNote();">
                     <img src="assets/img/engagement-icon/create-new-note.png" width="100 ">
                 </div>
                 <div class="error-msg note-empty-text-052017">
                     Create New Note
                 </div>
             </div>
-            <ul ng-if="reventNotes.length!=0"
+            <ul ng-if="reventNotes.length!=0 && !isNewNote"
                 class="user-p-timeline-052017 left">
                 <li ng-repeat="note in reventNotes | limitTo:2">
                     <div class="r-timeline-052017-badge left">
                         <img src="assets/img/avatar/profileAvatar.png"
+                             ng-src="{{note.avatar}}"
                              width="22"/>
                     </div>
 
@@ -227,6 +272,10 @@
                                     </li>
                                     <li class="user-052017">
                                         {{note.author}}
+                                    </li>
+                                    <li class="ticket-time-ago pull-right">
+                                        <time-ago from-time='{{note.created_at}}'
+                                                  format='MM/dd/yyyy'></time-ago>
                                     </li>
                                 </ul>
                             </div>

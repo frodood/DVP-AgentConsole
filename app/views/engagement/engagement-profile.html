@@ -3,6 +3,20 @@
 
 <div class="user-p-right-tab-052017">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <!-- create new appointment -->
+        <div class="user-e-widget-052017" style="border: 3px dashed #ffffff;">
+            <div class="user-p-e-wrapper-052017">
+                <div class="header-052017 inline-h">
+                    <ul>
+                        <li class="pull-left animated slideInLeft">
+                            create new appointment
+                        </li>
+                    </ul>
+                </div>
+                <div ng-include="'app/views/engagement/edit-form/create-new-appointment.html'"></div>
+            </div>
+        </div>
+
         <div class="user-e-widget-052017">
             <!-- user profile basic information -->
             <div>
@@ -14,10 +28,19 @@
                 <div ng-include="'app/views/engagement/edit-form/edit-other-information.html'"></div>
             </div>
 
+            <!-- edit basic contact -->
+            <div>
+                <div ng-include="'app/views/engagement/edit-form/edit-basic-contact.html'"></div>
+            </div>
+
+            <!-- edit social contact -->
+            <div>
+                <div ng-include="'app/views/engagement/edit-form/edit-social-contact.html'"></div>
+            </div>
             <!-- basic profile details  -->
             <div class="user-p-e-wrapper-052017 animated fadeIn">
                 <div class="header-052017 inline-h">
-                    <ul ng-if="!isShowBasicOtherInfoEditModal">
+                    <ul ng-if="basicProfileViewMode=='all'">
                         <li class="pull-left animated slideInLeft">
                             profile information
                         </li>
@@ -31,16 +54,40 @@
                             </div>
                         </li>
                     </ul>
-                    <ul ng-if="isShowBasicOtherInfoEditModal">
+                    <ul ng-if="basicProfileViewMode=='other'">
                         <li class="pull-left animated slideInLeft">
-                            OTHER Profileinformation
+                            OTHER Profile information
                         </li>
                         <li class="pull-right">
                             <div class="header-r-icon-052017 "
                                  ng-click="clickEditShowOtherInfo();">
-                                <i ng-if="!isShowBasicOtherInfoEditModal"
-                                   class="fa fa-pencil"></i>
                                 <i ng-if="isShowBasicOtherInfoEditModal"
+                                   class="fa fa-close"></i>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul ng-if="basicProfileViewMode=='contact'">
+                        <li class="pull-left animated slideInLeft">
+                            BASIC CONTACT
+                        </li>
+                        <li class="pull-right">
+                            <div class="header-r-icon-052017 "
+                                 ng-click="clickEditShowBasicContact();">
+                                <i ng-if="isBasicContactView"
+                                   class="fa fa-close"></i>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul ng-if="basicProfileViewMode=='social'">
+                        <li class="pull-left animated slideInLeft">
+                            social CONTACT
+                        </li>
+                        <li class="pull-right">
+                            <div class="header-r-icon-052017 "
+                                 ng-click="clickEditSocialContact();">
+                                <i ng-if="isSocialView"
                                    class="fa fa-close"></i>
                             </div>
                         </li>
@@ -83,108 +130,7 @@
                 </div>
             </div>
 
-            <!-- contact details -->
-            <div class="user-p-e-wrapper-052017 animated fadeIn">
-                <div class="header-052017 inline-h">
-                    <ul>
-                        <li class="pull-left animated ">
-                            BASIC CONTACT
-                        </li>
-                        <li class="pull-right">
-                            <div class="header-r-icon-052017 "
-                                 ng-click="clickEditShowOtherInfo();">
-                                <i ng-if="!isShowBasicOtherInfoEditModal"
-                                   class="fa fa-pencil"></i>
-                                <i ng-if="isShowBasicOtherInfoEditModal"
-                                   class="fa fa-close"></i>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- tags  -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"><i class="fa fa-phone"></i> phone no</li>
-                        <li class="pull-right value-052017 c-text-green" ng-if="!newProfile.phone">
-                            {{newProfile.phone}}
-                        </li>
-                        <li class="pull-right value-052017 c-text-green" ng-if="newProfile.phone">
-                            -
-                        </li>
-                    </ul>
-                </div>
-                <!-- SSN -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"><i class="fa fa-phone"></i> Land no</li>
-                        <li class="pull-right value-052017" ng-if="!newProfile.landnumber">
-                            {{profileDetail.landnumber}}
-                        </li>
-                        <li class="pull-right value-052017 c-text-green" ng-if="newProfile.landnumber">
-                            -
-                        </li>
-                    </ul>
-                </div>
-                <!-- LOCAL -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"><i class="fa fa-envelope"></i>Email</li>
-                        <li class="pull-right value-052017">
-                            {{profileDetail.email}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- other profile information -->
-            <!-- basic profile details  -->
-            <div class="user-p-e-wrapper-052017 animated fadeIn">
-                <div class="header-052017 inline-h">
-                    <ul>
-                        <li class="pull-left animated ">
-                            SOCIAL CONTACT
-                        </li>
-                        <li class="pull-right">
-                            <div class="header-r-icon-052017 "
-                                 ng-click="clickEditShowOtherInfo();">
-                                <i ng-if="!isShowBasicOtherInfoEditModal"
-                                   class="fa fa-pencil"></i>
-                                <i ng-if="isShowBasicOtherInfoEditModal"
-                                   class="fa fa-close"></i>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- tags  -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"><i class="fa fa-tags"></i> Special Tags</li>
-                        <li class="pull-right value-052017 c-text-green">
-                            <ul class="customer-style-ul profile-tag-052017">
-                                <li ng-repeat="tag in profileDetail.tags">
-                                    {{tag}}
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- SSN -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"> SSN</li>
-                        <li class="pull-right value-052017">{{profileDetail.ssn}}</li>
-                    </ul>
-                </div>
-                <!-- LOCAL -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017">LOCAL</li>
-                        <li class="pull-right value-052017">{{profileDetail.locale}}</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- other contact -->
+            <!-- other  -->
             <div class="user-p-e-wrapper-052017 animated fadeIn">
                 <div class="header-052017 inline-h">
                     <ul>
@@ -230,6 +176,98 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- contact details -->
+            <div class="user-p-e-wrapper-052017 animated fadeIn">
+                <div class="header-052017 inline-h">
+                    <ul>
+                        <li class="pull-left animated ">
+                            BASIC CONTACT
+                        </li>
+                        <li class="pull-right">
+                            <div class="header-r-icon-052017 "
+                                 ng-click="clickEditShowBasicContact();">
+                                <i ng-if="!isBasicContactView"
+                                   class="fa fa-pencil"></i>
+                                <i ng-if="isBasicContactView"
+                                   class="fa fa-close"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- tags  -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-phone"></i> phone no</li>
+                        <li class="pull-right value-052017 c-text-green" ng-if="profileDetail.phone!=''">
+                            {{profileDetail.phone}}
+                        </li>
+                        <li class="pull-right value-052017 c-text-green" ng-if="profileDetail.phone==''">
+                            -
+                        </li>
+                    </ul>
+                </div>
+                <!-- SSN -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-phone"></i> Land no</li>
+                        <li class="pull-right value-052017" ng-if="profileDetail.landnumber">
+                            {{profileDetail.landnumber}}
+                        </li>
+                        <li class="pull-right value-052017 c-text-green" ng-if="!profileDetail.landnumber">
+                            -
+                        </li>
+                    </ul>
+                </div>
+                <!-- LOCAL -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-envelope"></i>Email</li>
+                        <li class="pull-right value-052017">
+                            {{profileDetail.email}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- other profile information -->
+            <!-- basic profile details  -->
+            <div class="user-p-e-wrapper-052017 animated fadeIn">
+                <div class="header-052017 inline-h">
+                    <ul>
+                        <li class="pull-left animated ">
+                            SOCIAL CONTACT
+                        </li>
+                        <li class="pull-right">
+                            <div class="header-r-icon-052017 "
+                                 ng-click="clickEditSocialContact();">
+                                <i ng-if="!isSocialView"
+                                   class="fa fa-pencil"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- facebook -->
+                <div class="e-d-row-052017 ">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017 facebook-channel"><i class="fa fa-facebook"></i> facebook</li>
+                        <li class="pull-right value-052017" ng-if="profileDetail.facebook!=''">
+                            {{profileDetail.facebook}}
+                        </li>
+                        <li class="pull-right value-052017" ng-if="profileDetail.facebook==''">-</li>
+                    </ul>
+                </div>
+                <!-- twitter -->
+                <div class="e-d-row-052017 ">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017 twitter-channel"><i class="fa fa-twitter"></i>twitter</li>
+                        <li class="pull-right value-052017" ng-if="profileDetail.twitter!=''">{{profileDetail.twitter}}
+                        </li>
+                        <li class="pull-right value-052017" ng-if="profileDetail.twitter==''">-</li>
+                    </ul>
+                </div>
+            </div>
+
 
         </div>
     </div>

@@ -8,7 +8,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     var getAllTicketsByRequester = function (requester, page) {
         return $http({
             method: 'get',
-            url: baseUrls.ticketUrl + "Tickets/Requester/" + requester + "/5/" + page
+            url: baseUrls.ticketUrl + "Tickets/Requester/" + requester + "/15/" + page
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -714,11 +714,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
             return response;
         });
     };
-    var UpdateTicketSecurityLevel = function (ticketID,level) {
+    var UpdateTicketSecurityLevel = function (ticketID, level) {
 
         return $http({
             method: 'PUT',
-            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/SecurityLevel?level="+level,
+            url: baseUrls.ticketUrl + "Ticket/" + ticketID + "/SecurityLevel?level=" + level,
 
         }).then(function (response) {
             return response;
@@ -727,7 +727,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
 
     /*------------ config ticker data -----------*/
     var GetMyTicketConfig = function (callback) {
-        $http.get(baseUrls.userServiceBaseUrl+'MyAppMeta')
+        $http.get(baseUrls.userServiceBaseUrl + 'MyAppMeta')
             .success(function (data, status, headers, config) {
                 callback(true, data);
             }).error(function (data, status, headers, config) {
@@ -737,7 +737,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     };
 
     var SaveMyTicketConfig = function (param, callback) {
-        $http.put(baseUrls.userServiceBaseUrl+'MyAppMeta', param)
+        $http.put(baseUrls.userServiceBaseUrl + 'MyAppMeta', param)
             .success(function (data, status, headers, config) {
                 callback(true, data);
             }).error(function (data, status, headers, config) {
@@ -745,7 +745,6 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
             callback(false, data);
         });
     };
-
 
 
     return {

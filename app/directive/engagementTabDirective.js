@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList) {
     return {
         restrict: "EA",
         scope: {
@@ -1100,7 +1100,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     });
                 }
 
+                scope.isSaveingTicket = true;
                 ticketService.SaveTicket(ticket).then(function (response) {
+                    scope.isSaveingTicket = false;
                     if (response.IsSuccess) {
                         ticket.reference = response.Result.reference;
                         ticket.id = response.Result._id;
@@ -1120,6 +1122,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     }
                     scope.showCreateTicket = !response.IsSuccess;
                 }, function (err) {
+                    scope.isSaveingTicket = false;
                     scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
                 });
 
@@ -1246,10 +1249,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         //if (scope.reventNotes) {
                         reply.forEach(function (value) {
                             if (value.notes && value.notes.length != 0) {
-                                scope.reventNotes = scope.reventNotes.concat(value.notes)
+                                scope.reventNotes = scope.reventNotes.concat(value.notes);
+
+                                scope.reventNotes.forEach(function (value, index) {
+                                    userImageList.getAvatarByUserName(value.author, function (data) {
+                                        scope.reventNotes[index].avatar = data;
+                                    })
+                                });
                             }
                         });
-                        //}
 
                         if (angular.isArray(reply) && scope.recentEngList.length === 0) {
                             scope.recentEngList = reply.slice(0, 1);
@@ -1297,7 +1305,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.showAlert("Note", "error", "Please Enter Note to Save.");
                     return;
                 }
+                scope.isSaveNote = true;
                 engagementService.AppendNoteToEngagementSession(scope.sessionId, {body: note}).then(function (response) {
+                    scope.isSaveNote = false;
+                    scope.isNewNote = false;
                     if (response) {
                         scope.currentEngagement.notes.push({body: note});
                         document.getElementById("noteBody").innerHTML = "";
@@ -1317,6 +1328,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.GetIvrDetailsByEngagementId = function () {
                 ivrService.GetIvrDetailsByEngagementId(scope.sessionId).then(function (response) {
                     scope.ivrDetails = response;
+                    console.log('ivr details...');
+                    console.log(scope.ivrDetails);
                 }, function (err) {
                     scope.showAlert("Engagement Session Note", "error", "Fail To Get Engagement Session Note.")
                 });
@@ -2186,7 +2199,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                     'name': date.month() + 1
                                 };
                                 scope.newProfile.dob.year = date.year();
-                                scope.showNewProfile = true;
+                                //scope.showNewProfile = true;
                                 scope.editProfile = true;
                             }
                             else {
@@ -2390,22 +2403,76 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             // update coda damith 052017
             //engagement new profile functions
 
-            scope.isShowBasicInfoEditModal = false;
-            scope.isShowBasicOtherInfoEditModal = false;
-            scope.isShowBasicLocationInfoEditModal = false;
+            scope.isNewNote = false;
+            var editUIAnimationFun = function () {
+                return {
+                    showUiViewMode: function () {
+                        scope.isShowBasicInfoEditModal = false;
+                        scope.isShowBasicOtherInfoEditModal = false;
+                        scope.isShowBasicLocationInfoEditModal = false;
+                        scope.isBasicContactView = false;
+                        scope.isSocialView = false;
+                        scope.basicProfileViewMode = 'all';
+
+                    },
+                    showBasicInfoEditMode: function () {
+                        scope.basicProfileViewMode = 'all';
+                        if (!scope.isShowBasicInfoEditModal) {
+                            scope.multipleProfile.editProfile();
+                        }
+                        scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
+                    },
+                    showBasicContactEditMode: function () {
+                        if (!scope.isBasicContactView) {
+                            scope.basicProfileViewMode = 'contact';
+                            scope.multipleProfile.editProfile();
+                        }
+                        scope.isBasicContactView = !scope.isBasicContactView;
+                        if (!scope.isBasicContactView) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    },
+                    showOtherEditMode: function () {
+                        if (!scope.isShowBasicOtherInfoEditModal) {
+                            scope.basicProfileViewMode = 'other';
+                            scope.multipleProfile.editProfile();
+                        }
+                        scope.isShowBasicOtherInfoEditModal = !scope.isShowBasicOtherInfoEditModal;
+                        if (!scope.isShowBasicOtherInfoEditModal) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    },
+                    socialContactEditMode: function () {
+                        if (!scope.isSocialView) {
+                            scope.basicProfileViewMode = 'social';
+                            scope.multipleProfile.editProfile();
+                        }
+                        scope.isSocialView = !scope.isSocialView;
+                        if (!scope.isSocialView) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    }, showCreateNewNote: function () {
+                        scope.isNewNote = !scope.isNewNote;
+                    }
+                }
+            }();
+
+            editUIAnimationFun.showUiViewMode();
+
             //on click >> show basic info edit view
             scope.clickEditShowBasicInfo = function () {
-                if (!scope.isShowBasicInfoEditModal) {
-                    scope.multipleProfile.editProfile();
-                }
-                scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
+                editUIAnimationFun.showBasicInfoEditMode();
             };
 
             scope.clickEditShowOtherInfo = function () {
-                if (!scope.isShowBasicOtherInfoEditModal) {
-                    scope.multipleProfile.editProfile();
-                }
-                scope.isShowBasicOtherInfoEditModal = !scope.isShowBasicOtherInfoEditModal;
+                editUIAnimationFun.showOtherEditMode();
+            };
+
+            scope.clickEditSocialInfo = function () {
+                editUIAnimationFun.showOtherEditMode();
             };
 
             scope.clickEditShowLocationInfo = function () {
@@ -2415,9 +2482,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.isShowBasicLocationInfoEditModal = !scope.isShowBasicLocationInfoEditModal;
             };
 
+            //basic contact edit form
+
+            scope.clickEditSocialContact = function () {
+                editUIAnimationFun.socialContactEditMode();
+            };
+
+            scope.clickEditShowBasicContact = function () {
+                editUIAnimationFun.showBasicContactEditMode();
+            };
+
 
             scope.closeTicketModal = function () {
                 scope.showCreateTicket = false;
+            };
+
+            scope.clickNewNote = function () {
+                editUIAnimationFun.showCreateNewNote();
             };
 
             scope.isTicketCollapsed = true;
@@ -2458,20 +2539,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                                 profile.ssn = "";
                                                 scope.isLoadinNextFormWizad = false;
                                                 return;
+                                            } else {
+                                                scope.isLoadinNextFormWizad = false;
+                                                scope.isBasicInfo = false;
+                                                scope.isLocationView = true;
                                             }
                                         }, function (errEmail) {
                                             scope.showAlert("Profile", "error", "SSN is already taken");
                                         });
                                     }
-                                    scope.isLoadinNextFormWizad = false;
-                                    scope.isBasicInfo = false;
-                                    scope.isLocationView = true;
+
                                 });
                             }
                         });
                         break;
                 }
             };
+
 
         }
     }
