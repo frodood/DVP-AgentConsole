@@ -8599,7 +8599,7 @@ ul.renote-color-btn > li {
 
 .login-new-hedaer-2 {
     /* A Voice, Video, Mess: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 12px;
     color: #000;
     letter-spacing: -0.11px;
@@ -8716,7 +8716,7 @@ ul.renote-color-btn > li {
 }
 
 .login-n-forget-pwd {
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 15px;
     color: #c2c2cb;
     letter-spacing: -0.15px;
@@ -8728,7 +8728,7 @@ ul.renote-color-btn > li {
 
 .login-right-footer {
     /* Froget Password: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 13px;
     color: #7c7c7c;
     letter-spacing: -0.15px;
@@ -9155,7 +9155,7 @@ ul.renote-color-btn > li {
 
 .user-p-left-h-052017 > .user-p-h-s-052017 > ul > li {
     display: inline-block;
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 10px;
     color: #A0A0A0;
     letter-spacing: 0.66px;
@@ -9316,7 +9316,7 @@ ul.renote-color-btn > li {
 .user-p-d-text-052017 > ul > li.l-update,
 .user-p-d-text-052017 > ul > li.p-no {
     /* Last update : 01/03/: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 13px;
     color: #A5A3A2;
     letter-spacing: 0.57px;
@@ -9512,7 +9512,7 @@ ul.renote-color-btn > li {
 }
 
 .small-t-l-body-052017 {
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 12px;
     color: #8B8B8B;
     letter-spacing: 0.66px;
@@ -9526,7 +9526,7 @@ ul.renote-color-btn > li {
 
 .small-t-l-footer {
     /* ticket id : Test_tic: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 10px;
     color: #8B8B8B;
     letter-spacing: 0.44px;
@@ -9539,16 +9539,13 @@ ul.renote-color-btn > li {
 
 }
 
-
-
-
 .small-t-l-footer > ul > li {
     display: inline-block;
 
 }
 
 .small-t-l-header-052017 > ul > li.ticket-time-ago {
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 8px;
     color: #8A8E86;
     letter-spacing: 0.57px;
@@ -9667,7 +9664,7 @@ ul.renote-color-btn > li {
 
 .location-name-052017 {
     /* 71 Pilgrim Avenue ,C: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 13px;
     color: #8B8B8B;
     letter-spacing: 0.57px;
@@ -9798,7 +9795,7 @@ ul.renote-color-btn > li {
 
 .desc-052017 {
     /* Company: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 12px;
     color: #8B8B8B;
     letter-spacing: 0.53px;
@@ -9897,7 +9894,7 @@ ul.renote-color-btn > li {
 
 .channel-value-052017 {
     /* 25% (150): */
-    font-family: AvenirNext-Regular;
+    font-family: AvenirNextLTPro-Regular;
     font-size: 11px;
     color: #45B007;
     letter-spacing: -0.13px;
@@ -10000,7 +9997,7 @@ ul.renote-color-btn > li {
     overflow: hidden;
     position: relative;
     border-top: 0px !important;
-    /* font-family: 'AvenirNext-Regular', sans-serif !important; */
+    /* font-family: 'AvenirNextLTPro-Regular', sans-serif !important; */
     font-size: 11px;
     color: #8A8E86;
     letter-spacing: 0.62px;
@@ -10112,7 +10109,7 @@ ul.customer-style-ul > li.from-to-052017 {
 }
 
 ul.customer-style-ul > li.value {
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     /* duodemouser@gmail.co: */
     font-size: 14px;
     color: #8A8E86;
@@ -10213,7 +10210,7 @@ ul.customer-style-ul > li.value {
 }
 
 .e-t-d-d-wrapper-052017 {
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 14px;
     color: #8A8E86;
 }
@@ -10259,7 +10256,7 @@ ul.customer-style-ul > li.value {
 
 .e-t-l-m-wrapper-052017 >
 .e-t-m-details-052017 {
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     width: 100%;
     min-height: 20px;
     display: block;
@@ -10305,7 +10302,7 @@ ul.customer-style-ul > li.value {
     min-height: 15px;
     overflow: hidden;
     position: relative;
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 13px;
     color: #8A8E86;
     letter-spacing: 0.63px;
@@ -10390,7 +10387,7 @@ tr.ticket-tbl-row-052017:hover {
 tr.ticket-tbl-row-052017 > th,
 tr.ticket-tbl-row-052017 > td {
     /* tag trigger is worki: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 14px;
     color: #8A8E86;
     letter-spacing: 0.73px;
@@ -10441,7 +10438,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
 
 .ticket-tbl-row-052017 > td.t-td-desc-052017 {
     /* tag trigger is worki: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 15px;
     color: #8A8E86;
     letter-spacing: 0.73px;
@@ -10486,7 +10483,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
 
 .ticket-tbl-row-052017 > td.t-td-t-ago-052017 {
     /* 21 days ago: */
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 14px;
     color: #908E8D;
     letter-spacing: 0.57px;
@@ -10590,7 +10587,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
 
 .label-052017 {
     /* Priority: */
-    /*font-family: 'AvenirNext-Regular', sans-serif !important;*/
+    /*font-family: 'AvenirNextLTPro-Regular', sans-serif !important;*/
     font-size: 11px;
     color: #8A8E86 !important;
     letter-spacing: 0.57px;
@@ -10604,7 +10601,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
 }
 
 tags-input .tags {
-    font-family: 'AvenirNext-Regular', sans-serif !important;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif !important;
     font-size: 11px;
     border: 1px solid #EAE6E6 !important;
     border-radius: 6px !important;
@@ -10628,7 +10625,7 @@ tags-input .tags {
     border: 1px solid #8FD539;
     border-radius: 5px;
     /* HIGH: */
-    font-family: 'AvenirNext-Regular', sans-serif !important;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif !important;
     font-size: 10px;
     color: #8FD539;
     letter-spacing: 0.57px;
@@ -10713,8 +10710,6 @@ tags-input .tags {
     z-index: 10;
 }
 
-
-
 .user-edit-wrapper {
     width: 100%;
     overflow: hidden;
@@ -10723,8 +10718,6 @@ tags-input .tags {
     position: relative;
     padding: 15px 5px 15px 5px;
 }
-
-
 
 .user-edit-wrapper-loading {
     width: 100%;
@@ -11049,7 +11042,7 @@ tags-input .tags {
     /* Rectangle 26: */
     width: 50px;
     height: 22px;
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid #8FD539;
     border-radius: 7px;
@@ -11173,3 +11166,55 @@ tags-input .tags {
     padding: 10px;
 }
 
+/*my note new UI update */
+.modal-header-052017 {
+    border-bottom: 1px solid rgba(229, 229, 229, 0.37);
+    padding-top: 20px;
+    padding-bottom: 17px;
+    padding-left: 30px;
+    padding-right: 24px;
+}
+
+.modal-lg-header {
+    font-size: 14px;
+    color: #8A8E86;
+    letter-spacing: 0.6px;
+}
+
+.my-note-r-052017 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(243, 242, 242, 0.95);
+    z-index: 10;
+}
+
+.btn-modal {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    width: 115px;
+    height: 35px;
+    background: rgba(173, 231, 118, 0.33);
+    border: 1px solid #8FD539;
+    border-radius: 8px;
+    font-size: 11px;
+    color: #8FD539;
+    letter-spacing: 0.71px;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 10px;
+    outline: none !important;
+}
+
+.text-modal {
+    height: 40px;
+}
+
+.reminder-wrapper-052017 {
+    width: 100%;
+    height: 300px;
+    background: #ffffff;
+    margin: 20% auto;
+    border-radius: 8px;
+}
