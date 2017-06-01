@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll) {
     return {
         restrict: "EA",
         scope: {
@@ -1248,7 +1248,26 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         //get recent engagement notes
                         //if (scope.reventNotes) {
                         reply.forEach(function (value) {
+
+
                             if (value.notes && value.notes.length != 0) {
+
+                                value.notes.forEach(function (no, ind) {
+
+
+                                    var regexid = /#TID (.*)/;
+                                    var tref = regexid.exec(no.body);
+
+
+                                    if (Array.isArray(tref) && tref.length > 1) {
+                                        no.tid = tref[1];
+                                    }
+
+                                    console.log("ticket id found " + no.tid);
+
+                                });
+
+
                                 scope.reventNotes = scope.reventNotes.concat(value.notes);
 
                                 scope.reventNotes.forEach(function (value, index) {
@@ -2068,6 +2087,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 scope.editProfile = false;
 
                                 scope.showAlert("Profile", "success", "Update Successfully.");
+                                editUIAnimationFun.showUiViewMode();
+                                $anchorScroll();
                                 userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
                                     if (resUserData.IsSuccess) {
                                         scope.profileDetail = resUserData.Result;
@@ -2556,6 +2577,20 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
             };
 
+            //open ticket tab using ticket ref ID
+            scope.oepnTicketOnNotification = function (obj) {
+                scope.addTab('Ticket - ' + obj.ticketref, 'Ticket - ' + obj.ticket, 'ticketView', {_id: obj.ticket}, obj.ticket);
+            };
+
+            scope.getTicketByRefe = function (ref) {
+                ticketService.searchTicketByField('reference', ref).then(function (response) {
+                    if (response.IsSuccess) {
+                        if (Array.isArray(response.Result) && response.Result.length) {
+                            scope.gotoTicket(response.Result[0]);
+                        }
+                    }
+                });
+            };
 
         }
     }

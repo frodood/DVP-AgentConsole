@@ -9539,6 +9539,9 @@ ul.renote-color-btn > li {
 
 }
 
+
+
+
 .small-t-l-footer > ul > li {
     display: inline-block;
 
@@ -10443,6 +10446,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
     color: #8A8E86;
     letter-spacing: 0.73px;
     padding-top: 20px;
+    text-align: left;
 }
 
 .t-td-channel-052017 {
@@ -10487,6 +10491,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
     color: #908E8D;
     letter-spacing: 0.57px;
     padding-top: 20px;
+    text-align: left;
 }
 
 .t-td-t-status-052017 {
