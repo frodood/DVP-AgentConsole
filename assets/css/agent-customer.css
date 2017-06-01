@@ -5416,9 +5416,9 @@ ul.renote-color-btn > li {
 
 .mynote-noti-wrapper {
     width: 400px;
-    height: 113px;
+    height: 160px;
     position: absolute;
-    top: -92px;
+    top: -120px;
     /*top: 62px;*/
     background: #0d9d95;
     margin: 0 auto;

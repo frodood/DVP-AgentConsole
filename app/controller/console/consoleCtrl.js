@@ -1771,6 +1771,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.todoRemind = function (data) {
         console.log("todoRemind");
         $scope.myNoteReminder = data;
+        console.log($scope.myNoteReminder);
+
         $scope.myNoteNotiMe.showMe();
     };
     $scope.noticeRecieved = function (data) {
@@ -4034,13 +4036,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         return {
             showMe: function () {
                 $('#myNoteShow').animate({
-                    top: "69"
+                    top: "100"
                 });
                 timeoutNotiMe();
             },
             hideMe: function () {
                 $('#myNoteShow').animate({
-                    top: "-92"
+                    top: "-120"
                 })
             }
         }

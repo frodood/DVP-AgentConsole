@@ -1,91 +1,99 @@
 <div class="row" ng-controller="myNoteCtrl" style="overflow: hidden">
     <div class="col-lg-12 col-xs-12">
         <!--<div moment-picker="myDate"> {{ myDate }} </div>-->
-        <div id="renote-add-wrapper" class="renote-add-wrapper">
-            <div class="col-lg-offset-3 col-lg-6">
-                <div id="addNoteRow" class="renote-add-wrap">
-                    <input id="txtTakeNote"
-                           type="text"
-                           class="form-control renote-input-box take-note-text"
-                           placeholder="Take a note"/>
-                </div>
-
-                <div id="addNoteWindow" class="renote-add-wrap new-note display-none">
-                    <div class="renote-add-close" ng-click="addNewNote.close();">
-                        <i class="ti-close"></i>
-                    </div>
-                    <div class="renote-tet-wrapper">
-                        <input
-                                type="text"
-                                ng-model="note.title"
-                                class="form-control renote-input-box take-note-title-text"
-                                placeholder="Title"/>
-                        <!--<input-->
-                        <!--type="text"-->
-                        <!--ng-model="note.note"-->
-                        <!--class="form-control renote-input-box take-note-text "-->
-                        <!--placeholder="Take a note"/>-->
-                        <textarea id="noteReminder" placeholder="Take a note" ng-model="note.note"
-                                  class="form-control renote-input-box take-note-text note-text-area"></textarea>
+        <form name="frmNewNote">
+            <div id="renote-add-wrapper" class="renote-add-wrapper">
+                <div class="col-lg-offset-3 col-lg-6">
+                    <div id="addNoteRow" class="renote-add-wrap">
+                        <input id="txtTakeNote"
+                               type="text"
+                               name="noteDesc"
+                               class="form-control renote-input-box take-note-text"
+                               placeholder="Take a note"/>
                     </div>
 
-                    <div class="renote-footer">
-                        <div class="col-lg-6">
-                            <ul class="renote-color-btn">
-                                <!--<li>-->
-                                <!--<div class="note-color-btn default-color"-->
-                                <!--ng-click="addNewNote.selectColor('default-color');"-->
-                                <!--tooltip-placement="low" uib-tooltip="none">-->
-                                <!--<i ng-show="note.priority=='default-color'"-->
-                                <!--class="ti-check"></i>-->
-                                <!--</div>-->
-                                <!--</li>-->
-                                <li>
-                                    <div class="note-color-btn low"
-                                         ng-click="addNewNote.selectColor('low');"
-                                         tooltip-placement="low" uib-tooltip="low">
-                                        <i ng-show="note.priority=='low'"
-                                           class="ti-check"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div tooltip-placement="top" uib-tooltip="normal"
-                                         ng-click="addNewNote.selectColor('normal');"
-                                         class="note-color-btn normal">
-                                        <i ng-show="note.priority=='normal'"
-                                           class="ti-check"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div tooltip-placement="top" uib-tooltip="urgent"
-                                         ng-click="addNewNote.selectColor('urgent');"
-                                         class="note-color-btn urgent">
-                                        <i ng-show="note.priority=='urgent'"
-                                           class="ti-check"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div tooltip-placement="top" uib-tooltip="high"
-                                         ng-click="addNewNote.selectColor('high');"
-                                         class="note-color-btn high">
-                                        <i ng-show="note.priority=='high'"
-                                           class="ti-check"></i>
-                                    </div>
-                                </li>
-
-                            </ul>
-
+                    <div id="addNoteWindow" class="renote-add-wrap new-note display-none">
+                        <div class="renote-add-close" ng-click="addNewNote.close();">
+                            <i class="ti-close"></i>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="renote-done" ng-click="addNewNote.done(note.title,note.priority,note.note);">
-                                DONE
+                        <div class="renote-tet-wrapper" >
+                            <input
+                                    type="text"
+                                    name="noteDesc"
+                                    ng-model="note.title"
+                                    required
+                                    class="form-control renote-input-box take-note-title-text"
+                                    placeholder="Title" style="margin-bottom: 10px;"/>
+                            <!--<input-->
+                            <!--type="text"-->
+                            <!--ng-model="note.note"-->
+                            <!--class="form-control renote-input-box take-note-text "-->
+                            <!--placeholder="Take a note"/>-->
+                            <textarea id="noteReminder" placeholder="Take a note" ng-model="note.note"
+                                      required
+                                      class="form-control renote-input-box take-note-text note-text-area"></textarea>
+                        </div>
+
+                        <div class="renote-footer">
+                            <div class="col-lg-6">
+                                <ul class="renote-color-btn">
+                                    <!--<li>-->
+                                    <!--<div class="note-color-btn default-color"-->
+                                    <!--ng-click="addNewNote.selectColor('default-color');"-->
+                                    <!--tooltip-placement="low" uib-tooltip="none">-->
+                                    <!--<i ng-show="note.priority=='default-color'"-->
+                                    <!--class="ti-check"></i>-->
+                                    <!--</div>-->
+                                    <!--</li>-->
+                                    <li>
+                                        <div class="note-color-btn low"
+                                             ng-click="addNewNote.selectColor('low');"
+                                             tooltip-placement="low" uib-tooltip="low">
+                                            <i ng-show="note.priority=='low'"
+                                               class="ti-check"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div tooltip-placement="top" uib-tooltip="normal"
+                                             ng-click="addNewNote.selectColor('normal');"
+                                             class="note-color-btn normal">
+                                            <i ng-show="note.priority=='normal'"
+                                               class="ti-check"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div tooltip-placement="top" uib-tooltip="urgent"
+                                             ng-click="addNewNote.selectColor('urgent');"
+                                             class="note-color-btn urgent">
+                                            <i ng-show="note.priority=='urgent'"
+                                               class="ti-check"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div tooltip-placement="top" uib-tooltip="high"
+                                             ng-click="addNewNote.selectColor('high');"
+                                             class="note-color-btn high">
+                                            <i ng-show="note.priority=='high'"
+                                               class="ti-check"></i>
+                                        </div>
+                                    </li>
+
+                                </ul>
+
                             </div>
-                        </div>
+                            <div class="col-lg-6">
+                                <div class="renote-done"
+                                     ng-if="!frmNewNote.$invalid"
+                                     ng-click="addNewNote.done(note.title,note.priority,note.note);">
+                                    DONE
+                                </div>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         <!-- end -->
         <div class="row">
             <div class="col-lg-12">
@@ -166,7 +174,7 @@
                                 <button ng-if="!isSavingReminder" class="btn btn-modal pull-right "
                                         ng-disabled="frmReminder.$invalid"
                                         ng-click="reminderMe.createDueDate()">
-                                    Reminder Me
+                                    Remind Me
                                 </button>
                                 <button ng-if="isSavingReminder"
                                         class="btn btn-modal pull-right" disabled>
@@ -176,7 +184,8 @@
                         </div>
                     </form>
 
-                    <div id="reminderLoading" class="display-none my-note-remind-me loading {{ reminderObj.priority }} ">
+                    <div id="reminderLoading"
+                         class="display-none my-note-remind-me loading {{ reminderObj.priority }} ">
                         <div>
                             <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
                                 <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
@@ -190,37 +199,37 @@
 
     <!-- Reminder Me  mode -->
     <!--<div id="reminderMode" class="animated mynote-remind-me-modal display-none">-->
-        <!--<div class="col-lg-offset-4 col-lg-4 col-md-2 col-xs-2 ">-->
-            <!--<div class="mynote-reminder-body">-->
-                <!--<div id="reminderSelect" class="my-note-remind-me ">-->
-                    <!--<div class="renote-add-close" ng-click="reminderMe.close()">-->
-                        <!--<i class="ti-close"></i>-->
-                    <!--</div>-->
-                    <!--<div class="row header model-reminder-header ">-->
-                        <!--{{ reminderObj.title }}-->
-                    <!--</div>-->
+    <!--<div class="col-lg-offset-4 col-lg-4 col-md-2 col-xs-2 ">-->
+    <!--<div class="mynote-reminder-body">-->
+    <!--<div id="reminderSelect" class="my-note-remind-me ">-->
+    <!--<div class="renote-add-close" ng-click="reminderMe.close()">-->
+    <!--<i class="ti-close"></i>-->
+    <!--</div>-->
+    <!--<div class="row header model-reminder-header ">-->
+    <!--{{ reminderObj.title }}-->
+    <!--</div>-->
 
-                    <!--<div class="remind-body">-->
-                        <!--<div class="date">-->
-                            <!--<div moment-picker="myDate"> {{ myDate }}</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+    <!--<div class="remind-body">-->
+    <!--<div class="date">-->
+    <!--<div moment-picker="myDate"> {{ myDate }}</div>-->
+    <!--</div>-->
+    <!--</div>-->
 
-                    <!--<div class="reminder-footer">-->
+    <!--<div class="reminder-footer">-->
     <!--<span class="{{ reminderObj.priority }}"-->
-          <!--ng-click="reminderMe.createDueDate()">Reminder Me</span>-->
-                    <!--</div>-->
-                <!--</div>-->
+    <!--ng-click="reminderMe.createDueDate()">Reminder Me</span>-->
+    <!--</div>-->
+    <!--</div>-->
 
-                <!--<div id="reminderLoading" class="display-none my-note-remind-me loading {{ reminderObj.priority }} ">-->
-                    <!--<div>-->
-                        <!--<svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">-->
-                            <!--<circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>-->
-                        <!--</svg>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+    <!--<div id="reminderLoading" class="display-none my-note-remind-me loading {{ reminderObj.priority }} ">-->
+    <!--<div>-->
+    <!--<svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">-->
+    <!--<circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>-->
+    <!--</svg>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
 
 </div>
@@ -232,6 +241,7 @@
         $('#dueTimePickerDueDate').datetimepicker({
             controlType: 'select',
             oneLine: true,
+            minDate: '0y',
             timeFormat: 'hh:mm tt'
         });
     });

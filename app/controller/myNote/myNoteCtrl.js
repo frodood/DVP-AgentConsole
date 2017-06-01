@@ -47,7 +47,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices, authService)
             },
             done: function (title, priority, note) {
                 $scope.note = {};
-                $scope.note.priority = 'default-color';
+                $scope.note.priority = 'low';
                 var note = {
                     title: title,
                     priority: priority,
