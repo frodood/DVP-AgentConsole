@@ -1,5 +1,44 @@
 <!-- main wrapper -052017 -->
 <div class="user-p-m-wrapper-052017">
+
+    <!-- Confirm Box -->
+    <div class="confirm-box-wrapper" ng-show="mapProfile.isShowConfirm">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div class="confirm-body">
+                <h5>Are you sure..? Add to Contact</h5>
+                <div class="select-option-wrapper">
+                    <ul>
+                        <li ng-show="mapProfile.showNumberd">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="mapProfile.addNumber"> add phone number to contacts
+                                </label>
+                            </div>
+                        </li>
+                        <li ng-show="mapProfile.showEngagement">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="mapProfile.mapEngagement"> map interaction to
+                                    profile
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="confirm-btn-wrapper">
+                    <div class="ok-btn" ng-click="mapProfileAndNumber()">
+                        OK
+                    </div>
+                    <div class="cancel-btn">
+                        CANCEL
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end -->
+
     <!-- multiple profile view -->
     <div>
         <div ng-include="'app/views/engagement/multiple-profile.html'"></div>
@@ -22,7 +61,6 @@
                 <div ng-if="showNewProfile">
                     <div ng-include="'app/views/engagement/edit-form/create-new-profile.html'"></div>
                 </div>
-
 
                 <div class="user-p-right-h-052017">
                     <uib-tabset type="pills profile-c-pills-052017">

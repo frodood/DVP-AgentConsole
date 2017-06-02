@@ -3,52 +3,59 @@
         <div class="user-p-t-wrapper-052017">
             <!-- user profile ticket header wrapper -->
             <div class="user-p-t-h-wrapper-052017">
-                <div class="header-052017">
+                <div class="header-052017" style="padding-top: 21px;">
                     all ticket ({{ticketList.length}})
                 </div>
 
                 <!-- user profile ticket type -->
                 <div class="user-p-t-type-052017">
-                    <div class="u-p-t-t-wrapper-052017">
-                        type
-                    </div>
+                    <!--<div class="u-p-t-t-wrapper-052017">-->
+                    <!--type-->
+                    <!--</div>-->
                     <!-- user profile ticket type list -->
-                    <div class="u-p-t-t-list">
-                        <ul class="customer-style-ul">
-                            <li>
-                                <div class="ticket-type-052017 selected">
-                                    <i class="fa fa-check"></i>
-                                    all
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ticket-type-052017">
-                                    low
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ticket-type-052017">
-                                    urgent
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ticket-type-052017">
-                                    high
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ticket-type-052017">
-                                    normal
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    <!--<div class="u-p-t-t-list">-->
+                    <!--<ul class="customer-style-ul">-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017 selected">-->
+                    <!--<i class="fa fa-check"></i>-->
+                    <!--all-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017">-->
+                    <!--low-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017">-->
+                    <!--urgent-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017">-->
+                    <!--high-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017">-->
+                    <!--normal-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
                 </div>
             </div>
 
             <!-- user profile ticket body -->
             <div class="user-p-t-body-052017">
-                <div class="user-p-t-b-wrapper-052017">
+                <div class="user-p-t-b-wrapper-052017"
+                     slimscroll="{height: '870px',
+                                    railVisible: true,
+                                    color: '#EEEEEE',
+                                    size: '8px',
+                                    distance: '15px',
+                                    railColor: '#EEEEEE',
+                                    railBorderRadius: 10}">
                     <table class="table tbl-t-052017">
                         <tbody>
                         <tr ng-repeat="ticket in ticketList"
@@ -89,11 +96,23 @@
                             <td class="t-td-t-ago-052017">
                                 <time-ago from-time='{{ticket.created_at}}' format='MM/dd/yyyy'></time-ago>
                             </td>
-                            <td class="t-td-more-052017">MORE</td>
+                            <td class="t-td-more-052017" ng-click="gotoTicket(ticket)">MORE</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <div class="more-ticket-wrapper-052017" ng-if="ticketList.length!=0">
+                    <div class="more-record-052017" ng-click="loadNextTickets();">
+                        <button ng-show="!isLoadingTicke" class="btn btn-more-data">
+                            VIEW MORE
+                        </button>
+                        <button ng-show="isLoadingTicke" disabled class="btn btn-more-data">
+                            PLEASE WAIT...
+                        </button>
+                    </div>
+                </div>
+
             </div>
 
         </div>

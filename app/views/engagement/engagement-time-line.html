@@ -2,7 +2,14 @@
     <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
         <!-- user profile  engagement  time line -->
         <div class="user-p-e-tl-wrapper-052017">
-            <ul class="engagement-tl-052017 customer-style-ul">
+            <ul class="engagement-tl-052017 customer-style-ul"
+                slimscroll="{height: '930px',
+                                    railVisible: true,
+                                    color: '#EEEEEE',
+                                    size: '8px',
+                                    distance: '15px',
+                                    railColor: '#EEEEEE',
+                                    railBorderRadius: 10}">
                 <!-- left site section -->
                 <li ng-repeat="eng in engagementsList"
                     ng-class="{'time-line-right-052017':eng.direction=='outbound'}">
@@ -72,12 +79,30 @@
                                 <div class="e-t-m-details-052017">
                                     {{note.body}}
                                 </div>
+                                <div ng-if="note.tid"
+                                     class="e-t-m-details-052017">
+                                    <button type="button" class="btn btn-m-p-more pull-right"
+                                            ng-click="getTicketByRefe(note.tid);">
+                                        more
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                     </div>
                 </li>
             </ul>
+        </div>
+
+        <div class="more-ticket-wrapper-052017" ng-if="engagementsList.length!=0">
+            <div class="more-record-052017" ng-click="showMore();">
+                <button ng-show="!isShowTimeLine" class="btn btn-more-data">
+                    VIEW MORE
+                </button>
+                <button ng-show="isShowTimeLine" disabled class="btn btn-more-data">
+                    PLEASE WAIT...
+                </button>
+            </div>
         </div>
     </div>
 </div>

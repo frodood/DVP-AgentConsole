@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm, templateService) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm, templateService, userImageList) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -95,10 +95,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (newValue) {
             $('#searchSpin').removeClass('display-none');
         }
-        else  {
+        else {
             $('#searchSpin').addClass('display-none');
         }
-
 
 
     });
@@ -2120,6 +2119,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
             $scope.users = response;
+            userImageList.addInToUserList(response)
+
             profileDataParser.assigneeUsers = response;
 
 
@@ -4157,13 +4158,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         return {
             showMe: function () {
                 $('#myNoteShow').animate({
-                    top: "69"
+                    top: "100"
                 });
                 timeoutNotiMe();
             },
             hideMe: function () {
                 $('#myNoteShow').animate({
-                    top: "-92"
+                    top: "-120"
                 })
             }
         }
