@@ -209,7 +209,7 @@
                         uib-dropdown uib-dropdown-toggle>
                         <i class="veery-font-1-file-1" ng-click="consoleTopMenu.openTicket()"></i>
 
-                    <li id="agentDialerTop" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">
+                    <li ng-if="outboundAllowed" id="agentDialerTop" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">
                         <i class="fa fa-weibo" ng-click="consoleTopMenu.openAgentDialer()" title="Agent Dialer"></i>
 
                     <li id="agentPhone" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">

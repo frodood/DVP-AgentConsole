@@ -384,6 +384,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.profile = {};
     $scope.profile.displayName = "";
+    $scope.profile.freezeExceeded = false;
+    $scope.profile.break_exceeded = false;
     $scope.profile.authorizationName = "";
     $scope.profile.publicIdentity = "";//sip:bob@159.203.160.47
     $scope.profile.server = {};
@@ -1279,7 +1281,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if ($scope.agentDialerOn) { // start only if dialer start
                 $rootScope.$emit('dialnextnumber', undefined);
             }
-
+            $scope.profile.freezeExceeded = false;
         },
         freezeBtn: function () {
             $scope.isFreezeReq = true;
@@ -1970,8 +1972,36 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
 
-    })
+    });
 
+    chatService.SubscribeDashboard(function (event) {
+        switch (event.roomName) {
+            case 'ARDS:freeze_exceeded':
+                if (event.Message) {
+
+                    var resourceId = authService.GetResourceId();
+                    if ($scope.profile && event.Message.ResourceId === resourceId) {
+                        $scope.profile.freezeExceeded = true;
+                    }
+                }
+
+                break;
+            case 'ARDS:break_exceeded':
+                if (event.Message) {
+
+                    var resourceId = authService.GetResourceId();
+                    if ($scope.profile && event.Message.ResourceId === resourceId) {
+                        $scope.profile.break_exceeded = true;
+                    }
+                }
+
+                break;
+            default:
+                //console.log(event);
+                break;
+
+        }
+    });
 
     $scope.veeryNotification = function () {
         //veeryNotification.connectToServer(authService.TokenWithoutBearer(), baseUrls.notification, notificationEvent);
@@ -4196,6 +4226,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         $scope.lockPwd = "";
                         document.getElementById("lockPwd").value = "";
                         $scope.breakOption.endBreakOption('Available');
+                        $scope.profile.break_exceeded = false;
                     } else {
                         $scope.lockPwd = "";
                         $scope.showAlert('Error', 'error', 'Invalid authentication..');
