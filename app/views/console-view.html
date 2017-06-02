@@ -79,25 +79,29 @@
                                             <h5>{{notifi.from}}</h5>
                                             <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
                                                 ?'....':''}}</h4>
-                                <div class="notification-list" ng-repeat="notifi in notifications" ng-click="showNotificationMessage(notifi)">
-                                    <div class="notify-img-small">
-                                        <img src="assets/img/avatar/profileAvatar.png"
-                                             ng-src="{{notifi.avatar}}">
-                                    </div>
-                                    <div class="noti-detail">
-                                        <h5>{{notifi.from}}</h5>
-                                        <h4 >{{notifi.header | limitTo: 20}}{{notifi.header.length>20 ?'....':''}}</h4>
+                                            <div class="notification-list" ng-repeat="notifi in notifications"
+                                                 ng-click="showNotificationMessage(notifi)">
+                                                <div class="notify-img-small">
+                                                    <img src="assets/img/avatar/profileAvatar.png"
+                                                         ng-src="{{notifi.avatar}}">
+                                                </div>
+                                                <div class="noti-detail">
+                                                    <h5>{{notifi.from}}</h5>
+                                                    <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
+                                                        ?'....':''}}</h4>
 
-                                            <div>
-                                                <time-ago from-time='{{notifi.time}}'
-                                                          format='MM/dd/yyyy'></time-ago>
+                                                    <div>
+                                                        <time-ago from-time='{{notifi.time}}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </section>
-                                ss
                             </div>
+                            
                             <div ng-show="notifications.length>0" id="delBtn" class=" del-all-btn"><span
                                     onmouseover="this.style.cursor='pointer'" ng-click="RemoveAllNotifications()">Delete All</span>
                             </div>
@@ -209,7 +213,9 @@
                         uib-dropdown uib-dropdown-toggle>
                         <i class="veery-font-1-file-1" ng-click="consoleTopMenu.openTicket()"></i>
 
-                    <li ng-if="outboundAllowed" id="agentDialerTop" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">
+                        <!--display-none-->
+                    <li ng-if="outboundAllowed" id="agentDialerTop"
+                        class="console-menu-icon m-left-10 m-right-10 m-top-6 ">
                         <i class="fa fa-weibo" ng-click="consoleTopMenu.openAgentDialer()" title="Agent Dialer"></i>
 
                     <li id="agentPhone" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">
