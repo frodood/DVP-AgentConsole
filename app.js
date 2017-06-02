@@ -3,7 +3,7 @@
  */
 
 
-var agentApp = angular.module('veeryAgentApp', ['ngRoute','ui', 'ui.bootstrap',
+var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui', 'ui.bootstrap',
     'ui.router', 'jkuri.slimscroll', 'veerySoftPhoneModule', 'base64',
     'angular-jwt', 'btford.socket-io', 'LocalStorageModule',
     'authServiceModule', 'ngTagsInput', 'schemaForm',
@@ -17,7 +17,7 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute','ui', 'ui.bootstrap',
     'pubnub.angular.service', 'ui.slimscroll',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
-    'angularProgressbar','cp.ngConfirm','angucomplete-alt','as.sortable'
+    'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable'
 ]);
 
 
