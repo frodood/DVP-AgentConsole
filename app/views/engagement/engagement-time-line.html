@@ -79,6 +79,13 @@
                                 <div class="e-t-m-details-052017">
                                     {{note.body}}
                                 </div>
+                                <div ng-if="note.tid"
+                                     class="e-t-m-details-052017">
+                                    <button type="button" class="btn btn-m-p-more pull-right"
+                                            ng-click="getTicketByRefe(note.tid);">
+                                        more
+                                    </button>
+                                </div>
                             </div>
                         </div>
 

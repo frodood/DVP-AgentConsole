@@ -1660,7 +1660,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     isPersistanceLoaded = true;
 
                     angular.forEach(response.data.Result, function (value) {
-                        $scope.OnMessage($scope.MakeNotificationObject(value));
+
+                        var valObj = JSON.parse(value.Callback);
+
+                        if(valObj.eventName=="todo_reminder")
+                        {
+                            $scope.todoRemind($scope.MakeNotificationObject(value));
+                        }
+                        else
+                        {
+                            $scope.OnMessage($scope.MakeNotificationObject(value));
+                        }
+
+
                     });
 
                 }
@@ -1769,9 +1781,73 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //#myNote
     $scope.todoRemind = function (data) {
+        var displayReminder = true;
         console.log("todoRemind");
         $scope.myNoteReminder = data;
-        $scope.myNoteNotiMe.showMe();
+
+
+
+
+        if (data.From) {
+            if ($filter('filter')($scope.users, {username: data.From})) {
+                senderAvatar = $filter('filter')($scope.users, {username: data.From}).avatar;
+            }
+            else if ($filter('filter')($scope.userGroups, {name: data.From})) {
+                senderAvatar = $filter('filter')($scope.userGroups, {username: data.From}).avatar;
+            }
+            else
+            {
+                senderAvatar = null;
+            }
+
+
+        }
+        else {
+            senderAvatar = null;
+            data.From = "System";
+        }
+
+
+        var objMessage = {
+            "id": data.TopicKey,
+            "header": data.Message.Message,
+            "title": data.Message.title,
+            "type": "menu",
+            "icon": "main-icon-2-speech-bubble",
+            "time": new Date(),
+            "read": false,
+            "avatar": senderAvatar,
+            "from": data.From,
+            "messageType":"todo",
+            "external_user":data.Message.external_user
+        };
+
+        if (data.isPersistMessage && data.PersistMessageID) {
+            objMessage['isPersistMessage'] = data.isPersistMessage;
+            objMessage['PersistMessageID'] = data.PersistMessageID;
+            displayReminder = false;
+        }
+
+
+        if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage) == -1) {
+            var audio = new Audio('assets/sounds/notification-1.mp3');
+            audio.play();
+            $scope.notifications.unshift(objMessage);
+            $('#notificationAlarm').addClass('animated swing');
+            $scope.unredNotifications = $scope.getCountOfUnredNotifications();
+            setTimeout(function () {
+                $('#notificationAlarm').removeClass('animated swing');
+            }, 500);
+        }
+
+        if(displayReminder)
+        {
+            $scope.myNoteNotiMe.showMe();
+        }
+
+
+
+
     };
     $scope.noticeRecieved = function (data) {
         console.log("noticeRecieved");
@@ -2030,6 +2106,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     // load User List
     $scope.users = [];
+    $scope.externalUsers=[];
     $scope.loadUsers = function () {
         userService.LoadUser().then(function (response) {
 
@@ -2060,6 +2137,26 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.loadUsers();
+
+
+    $scope.loadExternalUsers = function () {
+
+        userService.getsearchExternalUsers().then(function (response) {
+
+            if(response.IsSuccess)
+            {
+                $scope.externalUsers=response.Result;
+            }
+            else
+            {
+                console.log("No external users found");
+            }
+        },function (error) {
+            console.log("Error in searching external users ",error);
+        });
+    };
+
+    $scope.loadExternalUsers();
 
     //load userGroup list
     $scope.userGroups = [];
@@ -2150,7 +2247,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         profileDataParser.RecentEngagements.push(id);
     };
 
-    var openNewUserProfileTab = function (profile, index, sessionObj) {
+    var openNewUserProfileTab = function (profile, index, sessionObj,data) {
         var engUuid = uuid4.generate();
         var engSessionObj = {
             engagement_id: engUuid,
@@ -2165,6 +2262,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             engSessionObj = sessionObj;
         }
 
+        if(data)
+        {
+
+            engSessionObj.channel= data.channel;
+            engSessionObj.channel_from= data.channel_from;
+            engSessionObj.channel_to= data.channel_to;
+            engSessionObj.direction= data.direction;
+
+        }
+
 
         if (profile) {
             engagementService.createEngagementSession(profile._id, engSessionObj).then(function (response) {
@@ -2174,10 +2281,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         var notifyData = {
                             company: profile.company,
-                            direction: "direct",
-                            channelFrom: "direct",
-                            channelTo: "direct",
-                            channel: "api",
+                            direction: response.Result.direction,
+                            channelFrom: response.Result.channel_from,
+                            channelTo: response.Result.channel_to,
+                            channel: response.Result.channel,
                             skill: '',
                             sessionId: engUuid,
                             userProfile: profile
@@ -2307,7 +2414,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 openEngagementTabForMailReply(args.data, args.index);
                 break;
             case 'userProfile':
-                openNewUserProfileTab(args, args.index, undefined);
+                openNewUserProfileTab(args, args.index, undefined,undefined);
                 break;
 
             case 'newUserProfile':
@@ -2695,14 +2802,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             item.obj.tabType = 'userProfile';
             item.obj.index = item.obj._id;
             //$rootScope.$emit('openNewTab', item.obj);
-            openNewUserProfileTab(item.obj, item.obj.index, undefined);
+            openNewUserProfileTab(item.obj, item.obj.index, undefined,undefined);
 
             $scope.searchText = "";
         }
     };
 
     $scope.createNewProfile = function () {
-        openNewUserProfileTab(undefined, 'createNewProfile', undefined);
+        openNewUserProfileTab(undefined, 'createNewProfile', undefined,undefined);
     };
 
     $scope.searchExternalUsers = {};
@@ -4016,6 +4123,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.addTab('Ticket - ' + MessageObj.ticketref, 'Ticket - ' + MessageObj.ticket, 'ticketView', {_id: MessageObj.ticket}, MessageObj.ticket);
         $scope.showMesssageModal = false;
     };
+    $scope.openUserProfile = function (userID) {
+
+        $scope.showMesssageModal=false;
+        var userObj = $scope.externalUsers.filter(function (item) {
+            return userID == item._id;
+        });
+
+        var DataObj ={
+            channel:"appointment",
+            channel_from:profileDataParser.myProfile.username,
+            channel_to: userObj[0].firstname,
+            direction: "OUTBOUND"
+
+        }
+
+        openNewUserProfileTab(userObj[0],userID,undefined,DataObj);
+    };
 
 
     $scope.addToTodo = function (MessageData) {
@@ -4034,13 +4158,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         return {
             showMe: function () {
                 $('#myNoteShow').animate({
-                    top: "69"
+                    top: "100"
                 });
                 timeoutNotiMe();
             },
             hideMe: function () {
                 $('#myNoteShow').animate({
-                    top: "-92"
+                    top: "-120"
                 })
             }
         }
@@ -4672,6 +4796,7 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
 
     $scope.showMesssageModal = true;
     $scope.MessageObj = MessageObj;
+    console.log(MessageObj);
 
 
 })

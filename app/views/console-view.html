@@ -56,29 +56,47 @@
                             <li class="divider"></li>
                             <div class="console-notofication-wrapper">
                                 <div class="notification-status" ng-show="unredNotifications==0">
+
                                     <i class="animated   veery-font-1-alarm"> </i>
                                     </br>
                                     no new notification
                                 </div>
 
-                                <div class="notification-list" ng-click="showNotificationMessage(notifi)"
-                                     ng-repeat="notifi in notifications">
+                                <section slimscroll="{height: '300px',
+                                    railVisible: true,
+                                    color: '#B6B8B5',
+                                    size: '8px',
+                                    distance: '10px',
+                                    railColor: '#B6B8B5',
+                                    railBorderRadius: 10}">
+                                    <div class="notification-list" ng-click="showNotificationMessage(notifi)"
+                                         ng-repeat="notifi in notifications">
+                                        <div class="notify-img-small">
+                                            <img src="assets/img/avatar/profileAvatar.png"
+                                                 ng-src="{{notifi.avatar}}">
+                                        </div>
+                                        <div class="noti-detail">
+                                            <h5>{{notifi.from}}</h5>
+                                            <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
+                                                ?'....':''}}</h4>
+                                <div class="notification-list" ng-repeat="notifi in notifications" ng-click="showNotificationMessage(notifi)">
                                     <div class="notify-img-small">
                                         <img src="assets/img/avatar/profileAvatar.png"
                                              ng-src="{{notifi.avatar}}">
                                     </div>
                                     <div class="noti-detail">
                                         <h5>{{notifi.from}}</h5>
-                                        <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20 ?'....':''}}</h4>
+                                        <h4 >{{notifi.header | limitTo: 20}}{{notifi.header.length>20 ?'....':''}}</h4>
 
-                                        <div>
-                                            <time-ago from-time='{{notifi.time}}'
-                                                      format='MM/dd/yyyy'></time-ago>
+                                            <div>
+                                                <time-ago from-time='{{notifi.time}}'
+                                                          format='MM/dd/yyyy'></time-ago>
+                                            </div>
+
                                         </div>
-
                                     </div>
-                                </div>
-
+                                </section>
+                                ss
                             </div>
                             <div ng-show="notifications.length>0" id="delBtn" class=" del-all-btn"><span
                                     onmouseover="this.style.cursor='pointer'" ng-click="RemoveAllNotifications()">Delete All</span>
@@ -332,9 +350,9 @@
                             <i ng-show="currentModeOption=='Inbound'" class="ti-check"></i>inbound</a>
                         </li>
                         <li ng-if="outboundAllowed != false" class="menuitem" role="menuitem"><a id="Outbound"
-                                                                class=""
-                                                                ng-click="modeOption.outboundOption('Outbound');"
-                                                                href="javascript:void(0);">
+                                                                                                 class=""
+                                                                                                 ng-click="modeOption.outboundOption('Outbound');"
+                                                                                                 href="javascript:void(0);">
                             <i ng-show="currentModeOption=='Outbound'" class="ti-check"></i>outbound</a>
                         </li>
                         <li class="divider"></li>
@@ -840,7 +858,7 @@
                             selected-chat-user="selectedChatUser"
                             login-avatar="loginAvatar"
                             login-name="loginName"
-        chat-templates="myTemplates">
+                            chat-templates="myTemplates">
         </chat-tab-directive>
     </div>
 
