@@ -61,8 +61,7 @@
                                     no new notification
                                 </div>
 
-                                <div class="notification-list" ng-click="showNotificationMessage(notifi)"
-                                     ng-repeat="notifi in notifications">
+                                <div class="notification-list" ng-repeat="notifi in notifications" ng-click="showNotificationMessage(notifi)">
                                     <div class="notify-img-small">
                                         <img src="assets/img/avatar/profileAvatar.png"
                                              ng-src="{{notifi.avatar}}">

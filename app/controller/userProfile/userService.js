@@ -63,6 +63,16 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
             return response.data;
         });
     };
+    var getsearchExternalUsers = function () {
+        var authToken = authService.GetToken();
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.userServiceBaseUrl + "ExternalUsers"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
 
     var getMyProfileDetails = function () {
         var authToken = authService.GetToken();
@@ -221,6 +231,7 @@ agentApp.factory("userService", function ($http, baseUrls, authService) {
         getUserList: getUserList,
         getUserGroupList: getUserGroupList,
         searchExternalUsers: searchExternalUsers,
+        getsearchExternalUsers: getsearchExternalUsers,
         getMyProfileDetails: getMyProfileDetails,
         mapFormSubmissionToProfile: mapFormSubmissionToProfile,
         CreateExternalUser: createExternalUser,
