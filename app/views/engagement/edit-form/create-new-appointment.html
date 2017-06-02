@@ -1,0 +1,67 @@
+<div class="user-edit-wrapper">
+    <form name="frmAppointment" novalidate>
+        <!-- appointment date -->
+        <div class="col-lg-12">
+            <div class="form-group"
+                 ng-class="{ 'validation-on-052017': frmAppointment.appDate.$invalid &&
+                         frmAppointment.appDate.$dirty }">
+                <label class="label-052017">
+                    appoinment date*
+                </label>
+                <input type="text"
+                       ng-model="appoiment.date"
+                       name="appDate"
+                       required
+                       class="form-control dueTimePicker txt-input-052017"/>
+            </div>
+        </div>
+
+        <!-- appointment title -->
+        <div class="col-lg-12">
+            <div class="form-group"
+                 ng-class="{ 'validation-on-052017': frmAppointment.appTitle.$invalid && frmAppointment.appTitle.$dirty }">
+                <label class="label-052017">Title*</label>
+                <input type="text"
+                       name="appTitle"
+                       ng-model="appoiment.title"
+                       class="form-control  txt-input-052017"
+                       required/>
+            </div>
+        </div>
+
+        <!-- appointment description -->
+        <div class="col-lg-12">
+            <div class="form-group"
+                 ng-class="{ 'validation-on-052017': frmAppointment.appDesc.$invalid && frmAppointment.appDesc.$dirty }">
+                <label class="label-052017">Description*</label>
+
+                <textarea id="noteBody"
+                          type="text"
+                          class="form-control txt-input-052017"
+
+                          name="appDesc" ng-model="appoiment.desc" ng-model="noteBody"
+                          required/>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="form-group" style="margin-top: 20px;">
+                <button ng-disabled="frmAppointment.$invalid"
+                        class="btn btn-lg btn-block btn-save-052017">
+                    SAVE
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    //jquery ui datetime picket
+    $(function () {
+        $('.dueTimePicker').datetimepicker({
+            controlType: 'select',
+            oneLine: true,
+            timeFormat: 'hh:mm tt'
+        });
+    });
+</script>

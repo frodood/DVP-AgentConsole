@@ -765,6 +765,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     priority: priority,
                     note: note
                 };
+
+
+
+
                 console.log(note);
                 if (note) {
                     if (!note.title && !note.note) {

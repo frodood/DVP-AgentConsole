@@ -106,7 +106,9 @@
                             <div class="small-t-l-footer">
                                 <ul>
                                     <li class="ticket-id-h">ticket id :</li>
-                                    <li class="ticket-id"> {{recentTicket.reference}}</li>
+                                    <li class="ticket-id cursor-pointer" ng-click="gotoTicket(recentTicket)">
+                                        {{recentTicket.reference}}
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -137,8 +139,8 @@
                                 </ul>
                             </div>
 
-                            <div class="small-t-l-body-052017">
-                                {{eng.channel_to}}
+                            <div class="small-t-l-body-052017" style="text-transform: uppercase; color: #2aabd2">
+                                CHANNEL : {{eng.channel}}
                             </div>
                         </div>
                     </section>
@@ -148,8 +150,10 @@
         </div>
     </section>
 
+
     <!-- user profile location -->
-    <section class="user-p-location-052017">
+    <!-- user profile location -->
+    <section class="user-p-location-052017" >
         <div class="header-052017 inline-h">
             <ul>
                 <li class="pull-left">
