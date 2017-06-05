@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll,myNoteServices) {
     return {
         restrict: "EA",
         scope: {
@@ -1329,7 +1329,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.isSaveNote = false;
                     scope.isNewNote = false;
                     if (response) {
-                        scope.currentEngagement.notes.push({body: note});
+                        //scope.reventNotes.push({body: note});
                         document.getElementById("noteBody").innerHTML = "";
                         document.getElementById("noteBody").value = "";
                         scope.showAlert("Note", "success", "Note Add Successfully.");
@@ -1642,8 +1642,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     if (scope.channelFrom != "direct") {
                         if (scope.exProfileId) {
                             scope.mapProfile.showEngagement = true;
-                        } else {
-                            scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
+                        }
+
+                        else {
+                            if(scope.channel != "appointment")
+                            {
+                                scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
+                            }
+
                         }
                     }
 
@@ -2591,6 +2597,101 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     }
                 });
             };
+
+
+            scope.appoiment={};
+            var showAlert = function (title, type, content) {
+                new PNotify({
+                    title: title,
+                    text: content,
+                    type: type,
+                    styling: 'bootstrap3'
+                });
+            };
+
+
+            scope.createDueDate= function (reminderObj,myDate) {
+
+
+                myNoteServices.ReminderMyNote(reminderObj, myDate).then(function (res) {
+                    console.log(res);
+                    if (res.data.IsSuccess) {
+                        showAlert('Appointment Note', 'success', 'Appointment saved successfully');
+                        scope.appoiment={};
+
+                    } else {
+                        showAlert('Appointment Note', 'error', res.data.CustomMessage);
+                    }
+
+                }, function (err) {
+
+                    authService.IsCheckResponse(err);
+                    console.log(err);
+                    showAlert('Appointment Note', 'error', 'Error in Saving Appointment');
+
+                });
+            };
+
+            scope.saveNewNote = function () {
+                scope.note = {};
+                console.log(scope.profileDetail);
+                var myDate = scope.appoiment.date;
+                console.log(myDate);
+                scope.note.priority = 'default-color';
+                var note = {
+                    title: scope.appoiment.title,
+                    priority: scope.appoiment.priority,
+                    note: scope.appoiment.note,
+                    external_user:scope.profileDetail._id
+                };
+
+
+                console.log(note);
+
+                if (note) {
+                    if (!note.title && !note.note) {
+                        showAlert('Appointment Note', 'error', "Invalid or Empty content found");
+                        return;
+                    }
+                }
+                // loadingSave();
+                myNoteServices.CreateMyNote(note).then(function (res) {
+
+                    if (res.data.IsSuccess) {
+
+                        if (res.data.Result) {
+                            item = res.data.Result;
+
+
+                            scope.createDueDate(item,myDate);
+
+
+                            //showAlert('Reminder Note', 'success', 'Note Created Successfully.');
+
+                            //item.sizeY = "auto";
+
+                            //scope.noteLists.push(item);
+                            //scope.note.priority = 'low';
+
+
+                        }
+                        /* if ($scope.noteLists.length == 0) {
+                         //uiFuntions.myNoteNotFound();
+                         return;
+                         }*/
+                        //uiFuntions.foundMyNote();
+
+                    }
+                }, function (err) {
+
+                    authService.IsCheckResponse(err);
+                    showAlert('Appointment Note', 'error', 'Error in saving new Appointment');
+                    console.log(err);
+                });
+
+            };
+
+
 
         }
     }
