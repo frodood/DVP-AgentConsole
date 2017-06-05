@@ -3,19 +3,7 @@
 
 <div class="user-p-right-tab-052017">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <!-- create new appointment -->
-        <div class="user-e-widget-052017">
-            <div class="user-p-e-wrapper-052017">
-                <div class="header-052017 inline-h">
-                    <ul>
-                        <li class="pull-left animated slideInLeft">
-                            create new appointment
-                        </li>
-                    </ul>
-                </div>
-                <div ng-include="'app/views/engagement/edit-form/create-new-appointment.html'"></div>
-            </div>
-        </div>
+
 
         <div class="user-e-widget-052017">
             <!-- user profile basic information -->
@@ -268,11 +256,54 @@
                 </div>
             </div>
 
-
+        </div>
+        
+        <!-- create new appointment -->
+        <div class="user-e-widget-052017">
+            <div class="user-p-e-wrapper-052017">
+                <div class="header-052017 inline-h">
+                    <ul>
+                        <li class="pull-left animated slideInLeft">
+                            create new appointment
+                        </li>
+                    </ul>
+                </div>
+                <div ng-include="'app/views/engagement/edit-form/create-new-appointment.html'"></div>
+            </div>
         </div>
     </div>
 
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+
+        <!-- other contact details -->
+        <div class="user-p-l-wrapper-052017">
+            <div class="header-052017 inline-h">
+                <ul>
+                    <li class="pull-left">
+                        other contacts
+                    </li>
+                    <li class="pull-right">
+                        <div class="header-r-icon-052017 "
+                             ng-click="clickEditShowLocationInfo();">
+                            <i ng-if="!isShowBasicLocationInfoEditModal"
+                               class="fa fa-pencil"></i>
+                            <i ng-if="isShowBasicLocationInfoEditModal"
+                               class="fa fa-close"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="location-d-052017">
+                <div class="e-d-row-052017" ng-repeat="contact in profileDetail.contacts track by $index">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> {{contact.type}}</li>
+                        <li class="pull-right value-052017">{{contact.contact}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
         <!-- user profile channel -->
         <div class="user-p-l-wrapper-052017 fix-h-052017">

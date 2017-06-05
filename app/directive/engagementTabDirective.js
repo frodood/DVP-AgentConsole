@@ -2431,6 +2431,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.isNewNote = false;
             var editUIAnimationFun = function () {
+                $anchorScroll();
                 return {
                     showUiViewMode: function () {
                         scope.isShowBasicInfoEditModal = false;
