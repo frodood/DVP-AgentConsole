@@ -1342,31 +1342,39 @@ ul.info-list-lg > li > h5 {
     padding-top: 10px;
 }
 
-.api-channel > i {
+.api-channel > i,
+.api-channel{
     color: #0eeaff !important;
 }
 
-.twitter-channel > i {
+.twitter-channel > i,
+.twitter-channel{
     color: #55acee !important;
 }
 
-.call-channel > i {
+.call-channel > i,
+.call-channel{
     color: #369d3e !important;
 }
 
-.email-channel > i {
+.email-channel > i,
+.email-channel{
     color: #2fb81b !important;
 }
 
-.sms-channel > i {
+.sms-channel > i,
+.sms-channel
+{
     color: #f0ad4e !important;
 }
 
-.facebook-channel > i {
+.facebook-channel > i,
+.facebook-channel{
     color: #3b5998 !important;
 }
 
-.voicemail-channel > i {
+.voicemail-channel > i,
+.voicemail-channel{
     color: #d2c242 !important;
 }
 
