@@ -29,6 +29,15 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
         }
     };
 
+    $scope.showAlert = function (title, type, content) {
+        new PNotify({
+            title: title,
+            text: content,
+            type: type,
+            styling: "bootstrap3"
+        });
+    };
+
     $scope.contactList = [];
 
     $scope.isLoading = false;
@@ -36,13 +45,14 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
     $scope.BatchName = undefined;
     var resid = authService.GetResourceIss();
     $scope.getALlPhoneContact = function () {
+        if (!$scope.BatchName) {
+            return;
+        }
         $scope.isLoading = true;
         if ($('#AgentDialerUi').hasClass("display-none")) {
             return;
         }
-        if (!$scope.BatchName) {
-            return;
-        }
+
         if ($scope.contactList.length == 0) {
             $scope.currentPage = 0;
             $('#btn-close').removeClass('display-none');
@@ -183,7 +193,7 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
             }
             $scope.isLoading = false;
         }, function (error) {
-            //$scope.showAlert("Agent Dialer", 'error', "Fail To Get Page Count.");
+            $scope.showAlert("Agent Dialer", 'error', "Fail To Get Page Count.");
             $scope.isLoading = false;
         });
     };
