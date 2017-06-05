@@ -69,34 +69,24 @@
                                     distance: '10px',
                                     railColor: '#B6B8B5',
                                     railBorderRadius: 10}">
-                                    <div class="notification-list" ng-click="showNotificationMessage(notifi)"
-                                         ng-repeat="notifi in notifications">
-                                        <div class="notify-img-small">
-                                            <img src="assets/img/avatar/profileAvatar.png"
-                                                 ng-src="{{notifi.avatar}}">
-                                        </div>
+
+                                <div class="notification-list" ng-repeat="notifi in notifications" ng-click="showNotificationMessage(notifi)">
+                                    <div class="notify-img-small">
+                                        <img src="assets/img/avatar/profileAvatar.png"
+                                             ng-src="{{notifi.avatar}}">
+                                    </div>
+                                    <div class="noti-detail">
                                         <div class="noti-detail">
                                             <h5>{{notifi.from}}</h5>
                                             <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
                                                 ?'....':''}}</h4>
-                                            <div class="notification-list" ng-repeat="notifi in notifications"
-                                                 ng-click="showNotificationMessage(notifi)">
-                                                <div class="notify-img-small">
-                                                    <img src="assets/img/avatar/profileAvatar.png"
-                                                         ng-src="{{notifi.avatar}}">
-                                                </div>
-                                                <div class="noti-detail">
-                                                    <h5>{{notifi.from}}</h5>
-                                                    <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
-                                                        ?'....':''}}</h4>
 
-                                                    <div>
-                                                        <time-ago from-time='{{notifi.time}}'
-                                                                  format='MM/dd/yyyy'></time-ago>
-                                                    </div>
-
-                                                </div>
+                                            <div>
+                                                <time-ago from-time='{{notifi.time}}'
+                                                          format='MM/dd/yyyy'></time-ago>
                                             </div>
+
+                                        </div>
                                         </div>
                                     </div>
                                 </section>

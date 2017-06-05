@@ -51,12 +51,22 @@ agentApp.factory("myNoteServices", function ($http, baseUrls, authService) {
         });
     };
 
+    var getUserNotes = function (id) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.toDoUrl + "user/"+id+"/ToDoList"
+        }).then(function (response) {
+            return response;
+        });
+    };
+
     //return functions
     return {
         GetAllMyToDo: getAllMyToDo,
         CreateMyNote: createMyNote,
         CheckMyNote: checkMyNote,
         DeleteMyNote: deleteMyNote,
-        ReminderMyNote: reminderMyNote
+        ReminderMyNote: reminderMyNote,
+        getUserNotes:getUserNotes
     }
 });
