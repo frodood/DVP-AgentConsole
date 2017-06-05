@@ -101,7 +101,7 @@
                                     </div>
                                 </section>
                             </div>
-                            
+
                             <div ng-show="notifications.length>0" id="delBtn" class=" del-all-btn"><span
                                     onmouseover="this.style.cursor='pointer'" ng-click="RemoveAllNotifications()">Delete All</span>
                             </div>
@@ -208,15 +208,19 @@
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
                         <i class="veery-font-1-notepad" ng-click="addFilterTab();">
                         </i>
+                    </li>
 
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                         uib-dropdown uib-dropdown-toggle>
                         <i class="veery-font-1-file-1" ng-click="consoleTopMenu.openTicket()"></i>
+                    </li>
 
-                        <!--display-none-->
-                    <li ng-if="outboundAllowed" id="agentDialerTop"
+                    <!--display-none ng-if="outboundAllowed"-->
+                    <li  id="agentDialerTop"
                         class="console-menu-icon m-left-10 m-right-10 m-top-6 ">
                         <i class="fa fa-weibo" ng-click="consoleTopMenu.openAgentDialer()" title="Agent Dialer"></i>
+                    </li>
+
 
                     <li id="agentPhone" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">
                         <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none"

@@ -1329,7 +1329,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.isSaveNote = false;
                     scope.isNewNote = false;
                     if (response) {
-                        scope.currentEngagement.notes.push({body: note});
+                        //scope.reventNotes.push({body: note});
                         document.getElementById("noteBody").innerHTML = "";
                         document.getElementById("noteBody").value = "";
                         scope.showAlert("Note", "success", "Note Add Successfully.");
