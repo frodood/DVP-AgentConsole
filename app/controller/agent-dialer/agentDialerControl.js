@@ -33,10 +33,14 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
 
     $scope.isLoading = false;
     $scope.currentPage = 0;
+    $scope.BatchName = undefined;
     var resid = authService.GetResourceIss();
     $scope.getALlPhoneContact = function () {
         $scope.isLoading = true;
         if ($('#AgentDialerUi').hasClass("display-none")) {
+            return;
+        }
+        if (!$scope.BatchName) {
             return;
         }
         if ($scope.contactList.length == 0) {
@@ -44,7 +48,7 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
             $('#btn-close').removeClass('display-none');
         }
         $scope.currentPage++;
-        agentDialerService.GetAllContacts(resid, $scope.currentPage).then(function (response) {
+        agentDialerService.GetAllContacts(resid,$scope.BatchName, $scope.currentPage).then(function (response) {
             $scope.isLoading = false;
             if (response && angular.isArray(response) && response.length > 0) {
                 $('#btn-close').addClass('display-none');
@@ -58,7 +62,7 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
         });
     };
 
-    $scope.getALlPhoneContact();
+    //$scope.getALlPhoneContact();
 
     $scope.updateContact = function (obj) {
         agentDialerService.UpdateContact(obj).then(function (response) {
@@ -167,6 +171,23 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
         'Close',
         'New',
         'Dial'
-    ]
+    ];
+
+    $scope.BatchNames = [];
+    $scope.HeaderDetails = function () {
+        $scope.BatchNames = [];
+        $scope.isLoading = true;
+        agentDialerService.HeaderDetails(resid).then(function (response) {
+            if (response) {
+                $scope.BatchNames = response.BatchName;
+            }
+            $scope.isLoading = false;
+        }, function (error) {
+            //$scope.showAlert("Agent Dialer", 'error', "Fail To Get Page Count.");
+            $scope.isLoading = false;
+        });
+    };
+
+    $scope.HeaderDetails();
 });
 
