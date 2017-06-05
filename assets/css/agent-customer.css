@@ -6665,14 +6665,14 @@ ul.renote-color-btn > li {
 }
 
 /*.tag-list {*/
-    /*height: 100px;*/
+/*height: 100px;*/
 /*}*/
 
 .tag-list > li {
     display: inline-block;
 }
 
-.tag-list-wrp{
+.tag-list-wrp {
     height: 94px;
     margin-bottom: 8px;
     overflow: hidden;
@@ -9313,6 +9313,28 @@ ul.renote-color-btn > li {
     margin: 0 auto;
 }
 
+.avatar-e-wrapper {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: #fff;
+    text-align: center;
+    cursor: pointer;
+    top: 64px;
+    left: 28px;
+    padding-top: 2px;
+}
+
+.avatar-e-wrapper > i {
+    color: #000;
+}
+
+.avatar-e-wrapper > i:hover {
+    color: #FFAA00;
+}
+
 .user-p-image-052017.default-img {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0);
 }
@@ -10905,6 +10927,44 @@ tags-input .tags {
     color: #EA3B3B;
 }
 
+.user-img-wrp-052017 {
+    width: 220px;
+    height: 134px;
+    padding-top: 10px;
+    margin: 0px auto;
+    text-align: center;
+    margin-bottom: 27px;
+}
+
+.user-img {
+    width: 100%;
+    display: block;
+}
+
+.edit-btn-img {
+    padding-top: 10px;
+}
+
+.profile-tag-052017.btn-wrp > li {
+    font-family: ' AvenirNextLTPro-Bold', sans-serif;
+    background: #FFFFFF;
+    border: 1px solid #FFAA00;
+    border-radius: 5px;
+    opacity: 0.8;
+    font-size: 12px;
+    color: #FFAA00;
+    letter-spacing: 0.66px;
+    cursor: pointer;
+}
+
+.profile-tag-052017.btn-wrp > li:hover,
+.profile-tag-052017.btn-wrp > li:active,
+.profile-tag-052017.btn-wrp > li:focus {
+    background: #FFAA00;
+    color: #ffffff;
+    outline: none !important;
+}
+
 /* user profile location wrapper */
 .user-p-l-wrapper-052017 {
     background: #FAFBFD;
@@ -11275,8 +11335,40 @@ tags-input .tags {
 
 .reminder-wrapper-052017 {
     width: 100%;
-    height: 300px;
+    height: 500px;
     background: #ffffff;
     margin: 20% auto;
     border-radius: 8px;
 }
+
+/*profile avatar upload wrapper */
+.i-u-profile-052017 {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    background: #ffffff;
+    border-radius: 2px;
+    margin: 10% auto;
+}
+
+.upload-wrapper {
+    min-height: 150px;
+    margin: 64px auto;
+    position: relative;
+    overflow: hidden;
+    padding-top: 25px;
+    cursor: pointer;
+}
+
+.header-wrp {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
+.upload-icon > i {
+    font-size: 25px;
+    text-align: center;
+}
+

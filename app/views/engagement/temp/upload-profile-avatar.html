@@ -1,0 +1,155 @@
+<div class="row" ng-show="showModal">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-4 col-sm-4 col-xs-12"></div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <h3>Select user's profile picture</h3>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+        </div>
+
+        <div class="x_panel">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-1 col-sm-1 col-xs-12"></div>
+                    <div class="col-md-8 col-sm-8 col-xs-12"><input type="file" nv-file-select="" uploader="uploader"
+                                                                    ng-click="clearQueue()" accept="image/*"/><br/>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1 col-sm-1 col-xs-12"></div>
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                    <div>Original Image:</div>
+                    <div class="profileCropArea">
+                        <img-crop image="uploader.queue[0].image"
+                                  result-image="uploader.queue[0].croppedImage"></img-crop>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-12"></div>
+
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                    <div>Cropped Image:</div>
+                    <div style="border: 3pt"><img id="cropedArea" ng-src="{{uploader.queue[0].croppedImage}}"/></div>
+                </div>
+
+
+            </div>
+            <div class="row ">
+                <div class="col-md-8 col-sm-8 col-xs-12"></div>
+                <div class="col-md-3 col-sm-3 col-xs-12 pull-right" style="margin-bottom: 20px">
+                    <button type="button" ng-click="uploader.queue[0].upload()"
+                            ng-disabled="isUploadDisable || uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess||!uploader.queue[0]">
+                        <span class="fa fa-upload"></span> Upload
+                    </button>
+                    <button type="button" ng-click="uploader.queue[0].cancel()"
+                            ng-disabled="!uploader.queue[0].isUploading">
+                        <span class="fa fa-ban-circle"></span> Cancel
+                    </button>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-12"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div ng-repeat="item in uploader.queue">
+        <div class="cropArea">
+            <img-crop image="item.image" result-image="item.croppedImage"></img-crop>
+        </div>
+        <div>Cropped Image:</div>
+        <div><img ng-src="{{item.croppedImage}}" /></div>
+
+        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+            <span class="glyphicon glyphicon-upload"></span> Upload
+        </button>
+        <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+        </button>
+
+    </div>
+-->
+
+
+    <!--<div class="col-md-9" style="margin-bottom: 40px">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="50%">Name</th>
+                <th ng-show="uploader.isHTML5">Size</th>
+                <th ng-show="uploader.isHTML5">Progress</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in uploader.queue">
+                <td>
+                    <strong>{{ item.file.name }}</strong>
+
+                    <div class="cropArea">
+                        <img-crop image="item.image" result-image="item.croppedImage"></img-crop>
+                    </div>
+                    <div>Cropped Image:</div>
+                    <div><img ng-src="{{item.croppedImage}}" /></div>
+
+                </td>
+                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                <td ng-show="uploader.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap>
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                        <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        &lt;!&ndash;<div ng-repeat="item in uploader.queue"></div>
+        <div class="cropArea">
+            <img-crop image="item.image" result-image="item.croppedImage"></img-crop>
+        </div>
+        <div>Cropped Image:</div>
+        <div><img ng-src="{{item.croppedImage}}" /></div>&ndash;&gt;
+        <div>
+            <div>
+                Queue progress:
+                <div class="progress" style="">
+                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                <span class="glyphicon glyphicon-upload"></span> Save
+            </button>
+            <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+            </button>
+
+        </div>
+
+    </div>-->
+
+
+</div>
+
+

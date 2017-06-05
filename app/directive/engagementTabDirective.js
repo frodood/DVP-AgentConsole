@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll,myNoteServices) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices) {
     return {
         restrict: "EA",
         scope: {
@@ -1645,8 +1645,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         }
 
                         else {
-                            if(scope.channel != "appointment")
-                            {
+                            if (scope.channel != "appointment") {
                                 scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
                             }
 
@@ -2583,6 +2582,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
             };
 
+
             //open ticket tab using ticket ref ID
             scope.oepnTicketOnNotification = function (obj) {
                 scope.addTab('Ticket - ' + obj.ticketref, 'Ticket - ' + obj.ticket, 'ticketView', {_id: obj.ticket}, obj.ticket);
@@ -2598,8 +2598,17 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 });
             };
 
+            //upload profile avatar
+            //
+            scope.isAvatarUpload = false;
 
-            scope.appoiment={};
+            scope.showUploadModal = function () {
+                //scope.isAvatarUpload = !scope.isAvatarUpload;
+            };
+
+
+            //APPOINTMENT pawan
+            scope.appoiment = {};
             var showAlert = function (title, type, content) {
                 new PNotify({
                     title: title,
@@ -2610,14 +2619,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
 
-            scope.createDueDate= function (reminderObj,myDate) {
+            scope.createDueDate = function (reminderObj, myDate) {
 
 
                 myNoteServices.ReminderMyNote(reminderObj, myDate).then(function (res) {
                     console.log(res);
                     if (res.data.IsSuccess) {
                         showAlert('Appointment Note', 'success', 'Appointment saved successfully');
-                        scope.appoiment={};
+                        scope.appoiment = {};
 
                     } else {
                         showAlert('Appointment Note', 'error', res.data.CustomMessage);
@@ -2642,7 +2651,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     title: scope.appoiment.title,
                     priority: scope.appoiment.priority,
                     note: scope.appoiment.note,
-                    external_user:scope.profileDetail._id
+                    external_user: scope.profileDetail._id
                 };
 
 
@@ -2663,7 +2672,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                             item = res.data.Result;
 
 
-                            scope.createDueDate(item,myDate);
+                            scope.createDueDate(item, myDate);
 
 
                             //showAlert('Reminder Note', 'success', 'Note Created Successfully.');
@@ -2689,8 +2698,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     console.log(err);
                 });
 
-            };
-
+            };//end appointment
 
 
         }
