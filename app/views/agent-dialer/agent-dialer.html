@@ -7,6 +7,17 @@
         <div class="col-md-10 col-sm-10 col-xs-10">
             <table class="col-md-12 col-sm-12 col-xs-12 table table-bordered">
                 <thead>
+                <tr>
+                    <td>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group"                             >
+                            <select class="form-control has-feedback-left" id="Extensions"
+                                    ng-model="BatchName"
+                                    ng-change="getALlPhoneContact();"   ng-options="opt as opt for opt in BatchNames track by opt" required>
+                                <option disabled value=''>Batch Names</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
                 <tr class="item" >
                     <td ng-if="currentItem.ContactNumber">{{currentItem.ContactNumber}}</td>
                     <td ng-if="currentItem.ContactNumber">
