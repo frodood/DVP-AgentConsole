@@ -1536,6 +1536,30 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
      });*/
     /*--------------------------Veery Phone---------------------------------------*/
 
+
+    /*--------------------------Dialer Message---------------------------------------*/
+
+    $scope.previewMessage = {};
+    $scope.dialerMessage = {
+        sendPreviewReply: function(topicKey, replyMessage){
+            var replyData = {Tkey: topicKey, Message: replyMessage};
+            notificationService.ReplyToNotification(replyData).then(function (response) {
+
+                if(!response.IsSuccess){
+                    $scope.showAlert("Preview Reply", "error", "Error in reply message");
+                }
+
+            }, function (error) {
+                $scope.showAlert("Preview Reply", "error", "Error in reply message");
+            });
+
+            $('#previewMessage').addClass('display-none fadeIn').removeClass('display-block  zoomOut');
+        }
+    };
+
+    /*--------------------------Dialer Message---------------------------------------*/
+
+
     /*--------------------------      Notification  ---------------------------------------*/
 
     $scope.agentFound = function (data) {
@@ -1591,6 +1615,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         /*show notifications */
         if (notifyData.direction.toLowerCase() === 'inbound' || notifyData.direction.toLowerCase() === 'outbound') {
             $scope.phoneNotificationFunctions.showNotfication(true);
+        }
+    };
+
+    $scope.dialerPreviewMessage = function (data) {
+        if(data) {
+            console.log('dialerPreviewMessage data :: ' + JSON.stringify(data));
+
+            $scope.previewMessage.Tkey = data.TopicKey;
+            $scope.previewMessage.Message = "";
+
+            if(data.Message) {
+                $scope.previewMessage.PreviewData = JSON.parse(data.Message);
+            }else{
+                $scope.previewMessage.PreviewData = undefined;
+            }
+
+            $('#previewMessage').addClass('display-block fadeIn').removeClass('display-none zoomOut');
+
         }
     };
 
@@ -1925,7 +1967,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     chatService.SubscribeEvents(function (event, data) {
-
+        console.log('preview_dialer_message :: '+ event);
         switch (event) {
 
             case 'agent_connected':
@@ -1965,6 +2007,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'notice_message':
 
                 $scope.OnMessage(data);
+
+                break;
+
+            case 'preview_dialer_message':
+
+                $scope.dialerPreviewMessage(data);
 
                 break;
 

@@ -275,12 +275,27 @@ agentApp.factory("notificationService", function ($http, baseUrls, authService) 
         });
     };
 
+    var replyToNotification = function (replyData) {
+
+        return $http({
+            method: 'POST',
+            url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/Notification/reply",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: replyData
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
     return {
         sendNotification: sendNotification,
         broadcastNotification: broadcastNotification,
         GetPersistenceMessages:GetPersistenceMessages,
         RemovePersistenceMessage:RemovePersistenceMessage,
-        RemoveAllPersistenceMessages:RemoveAllPersistenceMessages
+        RemoveAllPersistenceMessages:RemoveAllPersistenceMessages,
+        ReplyToNotification: replyToNotification
 
     }
 });

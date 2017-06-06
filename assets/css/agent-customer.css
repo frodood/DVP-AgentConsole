@@ -438,6 +438,12 @@ body {
     text-align: center;
 }
 
+.income-call-details > .preview-details {
+    color: #fff;
+    margin-top: 40px;
+    text-align: center;
+}
+
 .income-call-details > .company-details {
     text-align: left;
     padding-top: 15px;
@@ -455,6 +461,12 @@ body {
 .income-call-details > .user-details > small {
     color: #36ba45;
     padding-left: 15px;
+}
+
+.income-call-details > .preview-details > small {
+    color: #36ba45;
+    padding-left: 15px;
+    word-break: keep-all ;
 }
 
 .anz-btn,
