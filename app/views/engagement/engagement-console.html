@@ -36,13 +36,17 @@
             </div>
         </div>
     </div>
-
     <!-- end -->
 
+
+
+
     <!-- multiple profile view -->
-    <div>
-        <div ng-include="'app/views/engagement/multiple-profile.html'"></div>
-    </div>
+    <div ng-include="'app/views/engagement/multiple-profile.html'"></div>
+
+    <!-- profile avatar upload modal -->
+    <div ng-include="'app/views/engagement/temp/upload-profile-avatar.html'"></div>
+
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <!-- left main wrapper scroll = fixed  -->
@@ -62,17 +66,20 @@
                     <div ng-include="'app/views/engagement/edit-form/create-new-profile.html'"></div>
                 </div>
 
+
+
+
                 <div class="user-p-right-h-052017">
                     <uib-tabset type="pills profile-c-pills-052017">
                         <uib-tab heading="OVERALL">
                             <!-- engagement -->
                             <div ng-include="'app/views/engagement/engagement.html'"></div>
                         </uib-tab>
-                        <uib-tab heading="TIME LINE" classes="btn-sm">
+                        <uib-tab heading="TIME LINE" classes="btn-sm" disable="engagementsList.length==0">
                             <!--time line-->
                             <div ng-include="'app/views/engagement/engagement-time-line.html'"></div>
                         </uib-tab>
-                        <uib-tab heading="TICKET" classes="btn-sm">
+                        <uib-tab heading="TICKET" classes="btn-sm" disable="ticketList.length==0">
                             <!--ticket-->
                             <div ng-include="'app/views/engagement/engagement-ticket.html'"></div>
                         </uib-tab>
