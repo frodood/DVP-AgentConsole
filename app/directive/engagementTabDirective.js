@@ -2421,7 +2421,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     userService.DeleteContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
                         scope.isLoadingOtherContactDelete = false;
                         scope.isCnfmBoxShow = false;
-                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.showAlert('Delete Contact', 'success', "Contact Information Deleted Successfully");
                         scope.profileDetail.contacts.forEach(function (value, key) {
                             if (scope.profileDetail.contacts[key].contact == deleteContactObj.contact) {
                                 scope.profileDetail.contacts.splice(key, 1);
@@ -2436,7 +2436,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 //delete social contact details
                 if (deleteContactObj.status == 2) {
                     userService.DeleteSocialContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
-                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.showAlert('Delete Contact', 'success', "Contact Information Deleted Successfully");
                         scope.profileDetail[deleteContactObj.contact] = '';
                         scope.isCnfmBoxShow = false;
                     }, function (err) {

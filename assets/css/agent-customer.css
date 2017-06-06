@@ -1377,6 +1377,11 @@ ul.info-list-lg > li > h5 {
     color: #d2c242 !important;
 }
 
+.viber-channel > i,
+.viber-channel {
+    color: #59267c !important;
+}
+
 .timeline-title {
     margin-top: 0;
     color: inherit;

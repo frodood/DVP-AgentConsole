@@ -111,53 +111,6 @@
                 </div>
             </div>
 
-            <!-- other  -->
-            <div class="user-p-e-wrapper-052017 animated fadeIn">
-                <div class="header-052017 inline-h">
-                    <ul>
-                        <li class="pull-left animated ">
-                            OTHER
-                        </li>
-                        <li class="pull-right">
-                            <div class="header-r-icon-052017 "
-                                 ng-click="clickEditShowOtherInfo();">
-                                <i ng-if="!isShowBasicOtherInfoEditModal"
-                                   class="fa fa-pencil"></i>
-                                <i ng-if="isShowBasicOtherInfoEditModal"
-                                   class="fa fa-close"></i>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- tags  -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"><i class="fa fa-tags"></i> Special Tags</li>
-                        <li class="pull-right value-052017 c-text-green">
-                            <ul class="customer-style-ul profile-tag-052017">
-                                <li ng-repeat="tag in profileDetail.tags">
-                                    {{tag}}
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- SSN -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017"> SSN</li>
-                        <li class="pull-right value-052017">{{profileDetail.ssn}}</li>
-                    </ul>
-                </div>
-                <!-- LOCAL -->
-                <div class="e-d-row-052017">
-                    <ul class="customer-style-ul">
-                        <li class="pull-left desc-052017">LOCAL</li>
-                        <li class="pull-right value-052017">{{profileDetail.locale}}</li>
-                    </ul>
-                </div>
-            </div>
-
             <!-- contact details -->
             <div class="user-p-e-wrapper-052017 animated fadeIn">
                 <div class="header-052017 inline-h">
@@ -207,6 +160,53 @@
                         <li class="pull-right value-052017">
                             {{profileDetail.email}}
                         </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- other  -->
+            <div class="user-p-e-wrapper-052017 animated fadeIn">
+                <div class="header-052017 inline-h">
+                    <ul>
+                        <li class="pull-left animated ">
+                            OTHER
+                        </li>
+                        <li class="pull-right">
+                            <div class="header-r-icon-052017 "
+                                 ng-click="clickEditShowOtherInfo();">
+                                <i ng-if="!isShowBasicOtherInfoEditModal"
+                                   class="fa fa-pencil"></i>
+                                <i ng-if="isShowBasicOtherInfoEditModal"
+                                   class="fa fa-close"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- tags  -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"><i class="fa fa-tags"></i> Special Tags</li>
+                        <li class="pull-right value-052017 c-text-green">
+                            <ul class="customer-style-ul profile-tag-052017">
+                                <li ng-repeat="tag in profileDetail.tags">
+                                    {{tag}}
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- SSN -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017"> SSN</li>
+                        <li class="pull-right value-052017">{{profileDetail.ssn}}</li>
+                    </ul>
+                </div>
+                <!-- LOCAL -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">LOCAL</li>
+                        <li class="pull-right value-052017">{{profileDetail.locale}}</li>
                     </ul>
                 </div>
             </div>
@@ -363,7 +363,7 @@
                             <i class="fa fa-envelope email-channel" ng-if="contact.type=='email'"></i>
                             <i class="fa fa-phone c-text-green-052017" ng-if="contact.type=='phone'"></i>
                             <i class="fa fa-twitter twitter-channel" ng-if="contact.type=='twitter'"></i>
-                            <i class="fa fa-address-book sms-channel" ng-if="contact.type=='viber'"></i>
+                            <i class="fa fa-address-book viber-channel" ng-if="contact.type=='viber'"></i>
                             {{contact.type}}
                         </li>
                         <li class="pull-right value-052017">
