@@ -70,23 +70,24 @@
                                     railColor: '#B6B8B5',
                                     railBorderRadius: 10}">
 
-                                <div class="notification-list" ng-repeat="notifi in notifications" ng-click="showNotificationMessage(notifi)">
-                                    <div class="notify-img-small">
-                                        <img src="assets/img/avatar/profileAvatar.png"
-                                             ng-src="{{notifi.avatar}}">
-                                    </div>
-                                    <div class="noti-detail">
-                                        <div class="noti-detail">
-                                            <h5>{{notifi.from}}</h5>
-                                            <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
-                                                ?'....':''}}</h4>
-
-                                            <div>
-                                                <time-ago from-time='{{notifi.time}}'
-                                                          format='MM/dd/yyyy'></time-ago>
-                                            </div>
-
+                                    <div class="notification-list" ng-repeat="notifi in notifications"
+                                         ng-click="showNotificationMessage(notifi)">
+                                        <div class="notify-img-small">
+                                            <img src="assets/img/avatar/profileAvatar.png"
+                                                 ng-src="{{notifi.avatar}}">
                                         </div>
+                                        <div class="noti-detail">
+                                            <div class="noti-detail">
+                                                <h5>{{notifi.from}}</h5>
+                                                <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
+                                                    ?'....':''}}</h4>
+
+                                                <div>
+                                                    <time-ago from-time='{{notifi.time}}'
+                                                              format='MM/dd/yyyy'></time-ago>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
@@ -198,15 +199,19 @@
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
                         <i class="veery-font-1-notepad" ng-click="addFilterTab();">
                         </i>
+                    </li>
 
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                         uib-dropdown uib-dropdown-toggle>
                         <i class="veery-font-1-file-1" ng-click="consoleTopMenu.openTicket()"></i>
+                    </li>
 
-                        <!--display-none-->
-                    <li ng-if="outboundAllowed" id="agentDialerTop"
+                    <!--display-none ng-if="outboundAllowed"-->
+                    <li id="agentDialerTop"
                         class="console-menu-icon m-left-10 m-right-10 m-top-6 ">
                         <i class="fa fa-weibo" ng-click="consoleTopMenu.openAgentDialer()" title="Agent Dialer"></i>
+                    </li>
+
 
                     <li id="agentPhone" class="console-menu-icon m-left-10 m-right-10 m-top-6 display-none">
                         <i id="isLoadingRegPhone" class="fa fa-spinner  fa-spin display-none"
@@ -549,7 +554,7 @@
                         </div>
 
 
-                        <div class="dial-action" id="callStatus">
+                        <div class="dial-action" id="callStatus" ng-class="profile.freezeExceeded?'error-txt':''">
 
                         </div>
                         <div class="call-duations" id="calltimmer">
@@ -865,6 +870,10 @@
 
     <!-- agent dialer -->
     <div ng-include="'app/views/agent-dialer/agent-dialer.html'"></div>
+
+
+    <!-- new UI agent dialer -->
+    <div ng-include="'app/views/ui-kit/widget/agent-dialer.html'"></div>
 
 </div>
 

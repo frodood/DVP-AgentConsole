@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll,myNoteServices) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices) {
     return {
         restrict: "EA",
         scope: {
@@ -44,9 +44,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         link: function (scope, element, attributes) {
 
             //update code damith
+            var updateUserMapLocation = function () {
+                if (scope.profileDetail.address.street || scope.profileDetail.address.city) {
+                    locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
+                        'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
+                } else {
+                    locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
+                        'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q=sdsd+ted');
+                    scope.isLocationFound = true;
+                }
+
+                scope.profileDetail.address.locationUrl = locationUrl;
+            };
+
             if (scope.profileDetail && scope.profileDetail.address) {
-                scope.profileDetail.address.locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
-                    'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
+                var locationUrl;
+                scope.isLocationFound = false;
+                updateUserMapLocation();
             }
 
             scope.schemaw = scope.schemaResponseNewTicket.schema;
@@ -1329,7 +1343,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.isSaveNote = false;
                     scope.isNewNote = false;
                     if (response) {
-                        scope.currentEngagement.notes.push({body: note});
+                        var noteObj = {
+                            "avatar": profileDataParser.myProfile.avatar,
+                            "author": profileDataParser.myProfile.username,
+                            "created_at": moment(),
+                            "body": note
+                        };
+                        scope.reventNotes.unshift(noteObj);
                         document.getElementById("noteBody").innerHTML = "";
                         document.getElementById("noteBody").value = "";
                         scope.showAlert("Note", "success", "Note Add Successfully.");
@@ -1645,8 +1665,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         }
 
                         else {
-                            if(scope.channel != "appointment")
-                            {
+                            if (scope.channel != "appointment") {
                                 scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
                             }
 
@@ -2098,6 +2117,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
                                     if (resUserData.IsSuccess) {
                                         scope.profileDetail = resUserData.Result;
+                                        updateUserMapLocation();
                                     }
                                     else {
                                         scope.showAlert("Profile", "error", "Failed to load updated profile");
@@ -2152,7 +2172,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
 
 
-            }
+            };
 
 
             scope.viewCropArea = function () {
@@ -2160,7 +2180,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 //modal show
                 var modalInstance = $uibModal.open({
                     animation: true,
-                    templateUrl: './app/views/profile/partials/profile-picture-modal.html',
+                    templateUrl: './app/views/engagement/temp/upload-profile-avatar.html',
                     controller: 'profilePicUploadController',
                     size: 'lg',
                     resolve: {
@@ -2334,9 +2354,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     type: newContact.contactType,
                     display: newContact.contact
                 };
+
+                scope.isSavingOContact = true;
                 userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
+                    scope.isSavingOContact = false;
                     if (response.IsSuccess) {
                         scope.profileDetail.contacts.push(contactInfo);
+                        scope.showAlert('Profile Contact', 'success', "Contact Added Successfully");
+                        editUIAnimationFun.showUiViewMode();
+
                     } else {
                         scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                     }
@@ -2396,14 +2422,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.confimOk = function () {
                 //delete contact
                 if (deleteContactObj.status == 1) {
+                    scope.isLoadingOtherContactDelete = true;
                     userService.DeleteContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
-                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.isLoadingOtherContactDelete = false;
+                        scope.isCnfmBoxShow = false;
+                        scope.showAlert('Delete Contact', 'success', "Contact Information Deleted Successfully");
                         scope.profileDetail.contacts.forEach(function (value, key) {
                             if (scope.profileDetail.contacts[key].contact == deleteContactObj.contact) {
                                 scope.profileDetail.contacts.splice(key, 1);
                             }
                         });
-                        scope.isCnfmBoxShow = false;
 
                     }, function (err) {
                         console.log(err);
@@ -2413,7 +2441,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 //delete social contact details
                 if (deleteContactObj.status == 2) {
                     userService.DeleteSocialContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
-                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.showAlert('Delete Contact', 'success', "Contact Information Deleted Successfully");
                         scope.profileDetail[deleteContactObj.contact] = '';
                         scope.isCnfmBoxShow = false;
                     }, function (err) {
@@ -2432,6 +2460,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.isNewNote = false;
             var editUIAnimationFun = function () {
+                $anchorScroll();
                 return {
                     showUiViewMode: function () {
                         scope.isShowBasicInfoEditModal = false;
@@ -2439,6 +2468,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.isShowBasicLocationInfoEditModal = false;
                         scope.isBasicContactView = false;
                         scope.isSocialView = false;
+                        scope.isOtherContactView = false;
+                        scope.isOtherContactEditMode = false;
+                        scope.isCnfmBoxShow = false;
                         scope.basicProfileViewMode = 'all';
 
                     },
@@ -2483,6 +2515,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                     }, showCreateNewNote: function () {
                         scope.isNewNote = !scope.isNewNote;
+                    },
+                    editOtherContact: function () {
+                        scope.isOtherContactView = !scope.isOtherContactView;
+                    },
+                    editOtherContactMode: function () {
+                        scope.isOtherContactEditMode = !scope.isOtherContactEditMode;
+                        scope.isCnfmBoxShow = false;
                     }
                 }
             }();
@@ -2510,7 +2549,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             //basic contact edit form
-
             scope.clickEditSocialContact = function () {
                 editUIAnimationFun.socialContactEditMode();
             };
@@ -2530,6 +2568,18 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.isTicketCollapsed = true;
 
+
+            //edit other contact details
+            scope.clickEditShowOtherContact = function () {
+                editUIAnimationFun.editOtherContact();
+            };
+
+
+            //edit other contact
+            scope.clickDeleteContact = function () {
+                editUIAnimationFun.editOtherContactMode();
+            };
+
             //new profile
             scope.isLocationView = false;
             scope.isBasicInfo = true;
@@ -2541,6 +2591,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     case '1':
                         scope.isBasicInfo = true;
                         scope.isLocationView = false;
+
                         break;
                     case '2':
                         //validation on check event
@@ -2583,6 +2634,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
             };
 
+
             //open ticket tab using ticket ref ID
             scope.oepnTicketOnNotification = function (obj) {
                 scope.addTab('Ticket - ' + obj.ticketref, 'Ticket - ' + obj.ticket, 'ticketView', {_id: obj.ticket}, obj.ticket);
@@ -2598,8 +2650,17 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 });
             };
 
+            //upload profile avatar
+            //
+            scope.isAvatarUpload = false;
 
-            scope.appoiment={};
+            scope.showUploadModal = function () {
+                //scope.isAvatarUpload = !scope.isAvatarUpload;
+            };
+
+
+            //APPOINTMENT pawan
+            scope.appoiment = {};
             var showAlert = function (title, type, content) {
                 new PNotify({
                     title: title,
@@ -2610,14 +2671,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
 
-            scope.createDueDate= function (reminderObj,myDate) {
+            scope.createDueDate = function (reminderObj, myDate) {
 
 
                 myNoteServices.ReminderMyNote(reminderObj, myDate).then(function (res) {
                     console.log(res);
                     if (res.data.IsSuccess) {
                         showAlert('Appointment Note', 'success', 'Appointment saved successfully');
-                        scope.appoiment={};
+                        scope.appoiment = {};
 
                     } else {
                         showAlert('Appointment Note', 'error', res.data.CustomMessage);
@@ -2642,7 +2703,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     title: scope.appoiment.title,
                     priority: scope.appoiment.priority,
                     note: scope.appoiment.note,
-                    external_user:scope.profileDetail._id
+                    external_user: scope.profileDetail._id
                 };
 
 
@@ -2663,7 +2724,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                             item = res.data.Result;
 
 
-                            scope.createDueDate(item,myDate);
+                            scope.createDueDate(item, myDate);
 
 
                             //showAlert('Reminder Note', 'success', 'Note Created Successfully.');
@@ -2689,8 +2750,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     console.log(err);
                 });
 
-            };
-
+            };//end appointment
 
 
         }
@@ -2897,6 +2957,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 type: 'success',
                 styling: 'bootstrap3'
             });
+
+            //profile edit image upload
 
             changeUrl(response.Result);
             $uibModalInstance.dismiss('cancel');
