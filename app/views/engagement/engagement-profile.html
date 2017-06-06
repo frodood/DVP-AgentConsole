@@ -330,16 +330,24 @@
                 </ul>
             </div>
 
-            <div class="location-d-052017 animated fadeIn">
+            <div class="location-d-052017">
                 <!-- contact delete confirmation box -->
                 <div class="box-confirmation-wrapper" ng-show="isCnfmBoxShow && isOtherContactEditMode">
-                    <div class="conf-layout">
+
+                    <!-- loading -->
+                    <div class="loading-note" ng-if="isLoadingOtherContactDelete"
+                         style="margin-top: 15%;">
+                        <svg class="spinner-container" width="40px" height="40px" viewBox="0 0 52 52">
+                            <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+                        </svg>
+                    </div>
+
+                    <div class="conf-layout" ng-if="!isLoadingOtherContactDelete">
                         Are you sure delete contact ?
                         <div class="cnf-btn-wrapper">
                             <ul>
                                 <li class="cancel" ng-click="confimCancel()">Cancel</li>
                                 <li class="ok" ng-click="confimOk()">Ok</li>
-
                             </ul>
                         </div>
                     </div>

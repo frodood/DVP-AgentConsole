@@ -2417,14 +2417,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.confimOk = function () {
                 //delete contact
                 if (deleteContactObj.status == 1) {
+                    scope.isLoadingOtherContactDelete = true;
                     userService.DeleteContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
+                        scope.isLoadingOtherContactDelete = false;
+                        scope.isCnfmBoxShow = false;
                         scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
                         scope.profileDetail.contacts.forEach(function (value, key) {
                             if (scope.profileDetail.contacts[key].contact == deleteContactObj.contact) {
                                 scope.profileDetail.contacts.splice(key, 1);
                             }
                         });
-                        scope.isCnfmBoxShow = false;
 
                     }, function (err) {
                         console.log(err);
