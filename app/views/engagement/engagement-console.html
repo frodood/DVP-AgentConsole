@@ -70,11 +70,11 @@
                             <!-- engagement -->
                             <div ng-include="'app/views/engagement/engagement.html'"></div>
                         </uib-tab>
-                        <uib-tab heading="TIME LINE" classes="btn-sm">
+                        <uib-tab heading="TIME LINE" classes="btn-sm" disable="engagementsList.length==0">
                             <!--time line-->
                             <div ng-include="'app/views/engagement/engagement-time-line.html'"></div>
                         </uib-tab>
-                        <uib-tab heading="TICKET" classes="btn-sm">
+                        <uib-tab heading="TICKET" classes="btn-sm" disable="ticketList.length==0">
                             <!--ticket-->
                             <div ng-include="'app/views/engagement/engagement-ticket.html'"></div>
                         </uib-tab>

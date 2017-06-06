@@ -70,23 +70,24 @@
                                     railColor: '#B6B8B5',
                                     railBorderRadius: 10}">
 
-                                <div class="notification-list" ng-repeat="notifi in notifications" ng-click="showNotificationMessage(notifi)">
-                                    <div class="notify-img-small">
-                                        <img src="assets/img/avatar/profileAvatar.png"
-                                             ng-src="{{notifi.avatar}}">
-                                    </div>
-                                    <div class="noti-detail">
-                                        <div class="noti-detail">
-                                            <h5>{{notifi.from}}</h5>
-                                            <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
-                                                ?'....':''}}</h4>
-
-                                            <div>
-                                                <time-ago from-time='{{notifi.time}}'
-                                                          format='MM/dd/yyyy'></time-ago>
-                                            </div>
-
+                                    <div class="notification-list" ng-repeat="notifi in notifications"
+                                         ng-click="showNotificationMessage(notifi)">
+                                        <div class="notify-img-small">
+                                            <img src="assets/img/avatar/profileAvatar.png"
+                                                 ng-src="{{notifi.avatar}}">
                                         </div>
+                                        <div class="noti-detail">
+                                            <div class="noti-detail">
+                                                <h5>{{notifi.from}}</h5>
+                                                <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
+                                                    ?'....':''}}</h4>
+
+                                                <div>
+                                                    <time-ago from-time='{{notifi.time}}'
+                                                              format='MM/dd/yyyy'></time-ago>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
@@ -206,7 +207,7 @@
                     </li>
 
                     <!--display-none ng-if="outboundAllowed"-->
-                    <li  id="agentDialerTop"
+                    <li id="agentDialerTop"
                         class="console-menu-icon m-left-10 m-right-10 m-top-6 ">
                         <i class="fa fa-weibo" ng-click="consoleTopMenu.openAgentDialer()" title="Agent Dialer"></i>
                     </li>

@@ -1329,7 +1329,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.isSaveNote = false;
                     scope.isNewNote = false;
                     if (response) {
-                        //scope.reventNotes.push({body: note});
+                        var noteObj = {
+                            "avatar": profileDataParser.myProfile.avatar,
+                            "author": profileDataParser.myProfile.username,
+                            "created_at": moment(),
+                            "body": note
+                        };
+                        scope.reventNotes.unshift(noteObj);
                         document.getElementById("noteBody").innerHTML = "";
                         document.getElementById("noteBody").value = "";
                         scope.showAlert("Note", "success", "Note Add Successfully.");
@@ -2151,7 +2157,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
 
 
-            }
+            };
 
 
             scope.viewCropArea = function () {
@@ -2159,7 +2165,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 //modal show
                 var modalInstance = $uibModal.open({
                     animation: true,
-                    templateUrl: './app/views/profile/partials/profile-picture-modal.html',
+                    templateUrl: './app/views/engagement/temp/upload-profile-avatar.html',
                     controller: 'profilePicUploadController',
                     size: 'lg',
                     resolve: {
@@ -2333,9 +2339,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     type: newContact.contactType,
                     display: newContact.contact
                 };
+
+                scope.isSavingOContact = true;
                 userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
+                    scope.isSavingOContact = false;
                     if (response.IsSuccess) {
                         scope.profileDetail.contacts.push(contactInfo);
+                        scope.showAlert('Profile Contact', 'success', "Contact Added Successfully");
+                        editUIAnimationFun.showUiViewMode();
+
                     } else {
                         scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                     }
@@ -2439,6 +2451,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.isShowBasicLocationInfoEditModal = false;
                         scope.isBasicContactView = false;
                         scope.isSocialView = false;
+                        scope.isOtherContactView = false;
                         scope.basicProfileViewMode = 'all';
 
                     },
@@ -2483,6 +2496,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                     }, showCreateNewNote: function () {
                         scope.isNewNote = !scope.isNewNote;
+                    },
+                    editOtherContact: function () {
+                        scope.isOtherContactView = !scope.isOtherContactView;
                     }
                 }
             }();
@@ -2510,7 +2526,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             //basic contact edit form
-
             scope.clickEditSocialContact = function () {
                 editUIAnimationFun.socialContactEditMode();
             };
@@ -2530,6 +2545,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.isTicketCollapsed = true;
 
+
+            //edit other contact details
+            scope.clickEditShowOtherContact = function () {
+                editUIAnimationFun.editOtherContact();
+            };
+
             //new profile
             scope.isLocationView = false;
             scope.isBasicInfo = true;
@@ -2541,6 +2562,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     case '1':
                         scope.isBasicInfo = true;
                         scope.isLocationView = false;
+
                         break;
                     case '2':
                         //validation on check event
@@ -2906,6 +2928,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 type: 'success',
                 styling: 'bootstrap3'
             });
+
+            //profile edit image upload
 
             changeUrl(response.Result);
             $uibModalInstance.dismiss('cancel');
