@@ -2462,6 +2462,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.isBasicContactView = false;
                         scope.isSocialView = false;
                         scope.isOtherContactView = false;
+                        scope.isOtherContactEditMode = false;
+                        scope.isCnfmBoxShow = false;
                         scope.basicProfileViewMode = 'all';
 
                     },
@@ -2509,6 +2511,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     },
                     editOtherContact: function () {
                         scope.isOtherContactView = !scope.isOtherContactView;
+                    },
+                    editOtherContactMode: function () {
+                        scope.isOtherContactEditMode = !scope.isOtherContactEditMode;
+                        scope.isCnfmBoxShow = false;
                     }
                 }
             }();
@@ -2559,6 +2565,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             //edit other contact details
             scope.clickEditShowOtherContact = function () {
                 editUIAnimationFun.editOtherContact();
+            };
+
+
+            //edit other contact
+            scope.clickDeleteContact = function () {
+                editUIAnimationFun.editOtherContactMode();
             };
 
             //new profile

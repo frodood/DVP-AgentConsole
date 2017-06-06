@@ -308,7 +308,7 @@
                         other contacts
                     </li>
                     <li class="pull-right">
-                        <div class="header-r-icon-052017 "
+                        <div class="header-r-icon-052017 " ng-if="!isOtherContactEditMode"
                              ng-click="clickEditShowOtherContact();">
                             <i ng-if="!isOtherContactView"
                                class="fa fa-plus"></i>
@@ -316,10 +316,34 @@
                                class="fa fa-close"></i>
                         </div>
                     </li>
+                    <li class="pull-right">
+                        <div class="header-r-icon-052017 "
+                             ng-click="clickDeleteContact();">
+                            <i ng-if="!isOtherContactEditMode"
+                               class="fa fa-trash-o"></i>
+                            <i ng-if="isOtherContactEditMode"
+                               class="fa fa-close"></i>
+                        </div>
+                    </li>
                 </ul>
             </div>
 
             <div class="location-d-052017">
+                <!-- contact delete confirmation box -->
+                <div class="box-confirmation-wrapper" ng-show="isCnfmBoxShow && isOtherContactEditMode">
+                    <div class="conf-layout">
+                        Are you sure delete contact ?
+                        <div class="cnf-btn-wrapper">
+                            <ul>
+                                <li class="cancel" ng-click="confimCancel()">Cancel</li>
+                                <li class="ok" ng-click="confimOk()">Ok</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- end -->
+
                 <div class="e-d-row-052017"
                      ng-repeat="contact in profileDetail.contacts track by $index">
                     <ul class="customer-style-ul">
@@ -334,7 +358,11 @@
                         </li>
                         <li class="pull-right value-052017">
                             {{contact.contact}}
-                            <!--<i class="ti-check" ></i>-->
+                            <div class="right-icon-delete"
+                                 ng-if="isOtherContactEditMode"
+                                 ng-click="deleteContact(contact.contact);">
+                                <i class="ti-minus"></i>
+                            </div>
                         </li>
                     </ul>
                 </div>
