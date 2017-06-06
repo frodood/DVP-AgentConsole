@@ -308,7 +308,8 @@
                         other contacts
                     </li>
                     <li class="pull-right">
-                        <div class="header-r-icon-052017 " ng-if="!isOtherContactEditMode"
+                        <div class="header-r-icon-052017 "
+                             ng-if="!isOtherContactEditMode"
                              ng-click="clickEditShowOtherContact();">
                             <i ng-if="!isOtherContactView"
                                class="fa fa-plus"></i>
@@ -317,7 +318,8 @@
                         </div>
                     </li>
                     <li class="pull-right">
-                        <div class="header-r-icon-052017 "
+                        <div class="header-r-icon-052017"
+                             ng-if="!isOtherContactView"
                              ng-click="clickDeleteContact();">
                             <i ng-if="!isOtherContactEditMode"
                                class="fa fa-trash-o"></i>
@@ -328,7 +330,7 @@
                 </ul>
             </div>
 
-            <div class="location-d-052017">
+            <div class="location-d-052017 animated fadeIn">
                 <!-- contact delete confirmation box -->
                 <div class="box-confirmation-wrapper" ng-show="isCnfmBoxShow && isOtherContactEditMode">
                     <div class="conf-layout">
