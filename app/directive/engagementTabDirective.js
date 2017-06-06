@@ -44,9 +44,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         link: function (scope, element, attributes) {
 
             //update code damith
-            if (scope.profileDetail && scope.profileDetail.address) {
-                var locationUrl;
-                scope.isLocationFound = false;
+            var updateUserMapLocation = function () {
                 if (scope.profileDetail.address.street || scope.profileDetail.address.city) {
                     locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
                         'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
@@ -57,6 +55,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
 
                 scope.profileDetail.address.locationUrl = locationUrl;
+            };
+
+            if (scope.profileDetail && scope.profileDetail.address) {
+                var locationUrl;
+                scope.isLocationFound = false;
+                updateUserMapLocation();
             }
 
             scope.schemaw = scope.schemaResponseNewTicket.schema;
@@ -2113,6 +2117,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
                                     if (resUserData.IsSuccess) {
                                         scope.profileDetail = resUserData.Result;
+                                        updateUserMapLocation();
                                     }
                                     else {
                                         scope.showAlert("Profile", "error", "Failed to load updated profile");
