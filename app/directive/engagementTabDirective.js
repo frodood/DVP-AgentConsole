@@ -45,8 +45,18 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             //update code damith
             if (scope.profileDetail && scope.profileDetail.address) {
-                scope.profileDetail.address.locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
-                    'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
+                var locationUrl;
+                scope.isLocationFound = false;
+                if (scope.profileDetail.address.street || scope.profileDetail.address.city) {
+                    locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
+                        'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
+                } else {
+                    locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
+                        'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q=sdsd+ted');
+                    scope.isLocationFound = true;
+                }
+
+                scope.profileDetail.address.locationUrl = locationUrl;
             }
 
             scope.schemaw = scope.schemaResponseNewTicket.schema;
