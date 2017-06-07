@@ -6353,7 +6353,7 @@ ul.renote-color-btn > li {
 }
 
 .chat-type {
-    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     display: block;
     position: relative;
     font-size: 10px;
@@ -6369,8 +6369,12 @@ ul.renote-color-btn > li {
 
 }
 
+.chat-type.left{
+    font-style: italic;
+}
+
 .chat-type.join {
-    border-bottom: 1px solid #516D8F;
+    border-bottom: 1px solid #dee1ea;
 }
 
 .chat-type.left:before,
