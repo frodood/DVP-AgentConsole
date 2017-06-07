@@ -58,9 +58,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
 
-            scope.showInteractionModal =false;
-
-
+            scope.showInteractionModal = false;
 
 
             if (scope.profileDetail && scope.profileDetail.address) {
@@ -142,8 +140,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
             scope.assigneeTempGroups;
-            if(scope.assigneeGroups)
-            {
+            if (scope.assigneeGroups) {
                 scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
                     value.displayname = value.name;
                     return value;
@@ -1786,7 +1783,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     tabReference: scope.tabReference
                 };
                 $rootScope.$emit('makecall', data);
-                scope.showInteractionModal =false;
+                scope.showInteractionModal = false;
             };
             scope.gotoTicket = function (data) {
                 data.tabType = "ticketView";
@@ -2675,6 +2672,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 //scope.isAvatarUpload = !scope.isAvatarUpload;
             };
 
+            scope.goToBackMultiProfile = function () {
+                scope.showMultiProfile = true;
+                scope.showNewProfile = false;
+            };
 
             //APPOINTMENT pawan
             scope.appoiment = {};
@@ -2770,57 +2771,50 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };//end appointment
 
 
-            scope.phoneContact =[];
+            scope.phoneContact = [];
 
             scope.viewCallModal = function () {
-                scope.showInteractionModal=!scope.showInteractionModal;
+                scope.showInteractionModal = !scope.showInteractionModal;
             }
 
             scope.showCallOptions = function () {
 
                 console.log(scope.profileDetail.contacts);
-                scope.phoneContact =scope.profileDetail.contacts.filter(function (item) {
+                scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
 
-                    if(item.type=="phone")
-                    {
+                    if (item.type == "phone") {
                         return item;
                     }
 
                 });
 
-                if(scope.profileDetail.phone)
-                {
+                if (scope.profileDetail.phone) {
                     scope.phoneContact.push(
                         {
-                            contact:scope.profileDetail.phone,
-                            type:"phone",
+                            contact: scope.profileDetail.phone,
+                            type: "phone",
                             verified: true
                         }
                     )
                 }
-                if(scope.profileDetail.landnumber)
-                {
+                if (scope.profileDetail.landnumber) {
                     scope.phoneContact.push(
                         {
-                            contact:scope.profileDetail.landnumber,
-                            type:"phone",
+                            contact: scope.profileDetail.landnumber,
+                            type: "phone",
                             verified: true
                         }
                     )
                 }
 
-                if(scope.phoneContact.length==1)
-                {
+                if (scope.phoneContact.length == 1) {
                     scope.makeCall(scope.phoneContact[0].contact);
                 }
-                else
-                {
-                    if(scope.phoneContact.length==0)
-                    {
-                        scope.showAlert("Error","error","No phone number found");
+                else {
+                    if (scope.phoneContact.length == 0) {
+                        scope.showAlert("Error", "error", "No phone number found");
                     }
-                    else
-                    {
+                    else {
                         scope.viewCallModal();
                     }
 

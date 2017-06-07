@@ -4,6 +4,13 @@
         <div class="header-052017 animated slideInDown">
             create new profile
         </div>
+
+        <div class="top-left-tab-btn-052017" ng-if="!profileDetail">
+            <button class="btn"
+                    ng-click="goToBackMultiProfile()">
+                back
+            </button>
+        </div>
     </div>
     <!-- user profile ticket body -->
     <div class="col-lg-6 col-lg-offset-3">
@@ -24,6 +31,7 @@
                                     <i class="ti-close"></i>
                                 </div>
                             </li>
+
                         </ul>
                     </div>
                     <div class="modal-body-052017 animated fadeIn">
