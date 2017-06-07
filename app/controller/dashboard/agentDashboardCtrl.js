@@ -457,19 +457,20 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     $scope.queueDetails = {};
     var GetQueueDetails = function () {
         dashboradService.GetQueueDetails().then(function (response) {
-
-            response.forEach(function (item) {
-
-
-                if (item.QueueInfo.CurrentMaxWaitTime && item.QueueInfo.CurrentMaxWaitTime != 0) {
-                    var d = moment(item.QueueInfo.CurrentMaxWaitTime).valueOf();
-                    item.QueueInfo.MaxWaitingMS = d;
-                }
-
-                $scope.queueDetails[item.QueueName] = item;
+            if (response) {
+                response.forEach(function (item) {
 
 
-            });
+                    if (item.QueueInfo.CurrentMaxWaitTime && item.QueueInfo.CurrentMaxWaitTime != 0) {
+                        var d = moment(item.QueueInfo.CurrentMaxWaitTime).valueOf();
+                        item.QueueInfo.MaxWaitingMS = d;
+                    }
+
+                    $scope.queueDetails[item.QueueName] = item;
+
+
+                });
+            }
         }, function (err) {
             if (getAllRealTimeTimer) {
                 $timeout.cancel(getAllRealTimeTimer);
@@ -765,8 +766,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     priority: priority,
                     note: note
                 };
-
-
 
 
                 console.log(note);

@@ -1536,6 +1536,30 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
      });*/
     /*--------------------------Veery Phone---------------------------------------*/
 
+
+    /*--------------------------Dialer Message---------------------------------------*/
+
+    $scope.previewMessage = {};
+    $scope.dialerMessage = {
+        sendPreviewReply: function(topicKey, replyMessage){
+            var replyData = {Tkey: topicKey, Message: replyMessage};
+            notificationService.ReplyToNotification(replyData).then(function (response) {
+
+                if(!response.IsSuccess){
+                    $scope.showAlert("Preview Reply", "error", "Error in reply message");
+                }
+
+            }, function (error) {
+                $scope.showAlert("Preview Reply", "error", "Error in reply message");
+            });
+
+            $('#previewMessage').addClass('display-none fadeIn').removeClass('display-block  zoomOut');
+        }
+    };
+
+    /*--------------------------Dialer Message---------------------------------------*/
+
+
     /*--------------------------      Notification  ---------------------------------------*/
 
     $scope.agentFound = function (data) {
@@ -1591,6 +1615,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         /*show notifications */
         if (notifyData.direction.toLowerCase() === 'inbound' || notifyData.direction.toLowerCase() === 'outbound') {
             $scope.phoneNotificationFunctions.showNotfication(true);
+        }
+    };
+
+    $scope.dialerPreviewMessage = function (data) {
+        if(data) {
+            console.log('dialerPreviewMessage data :: ' + JSON.stringify(data));
+
+            $scope.previewMessage.Tkey = data.TopicKey;
+            $scope.previewMessage.Message = "";
+
+            if(data.Message) {
+                $scope.previewMessage.PreviewData = JSON.parse(data.Message);
+            }else{
+                $scope.previewMessage.PreviewData = undefined;
+            }
+
+            $('#previewMessage').addClass('display-block fadeIn').removeClass('display-none zoomOut');
+
         }
     };
 
@@ -1655,36 +1697,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $('#regNotification').addClass('display-block').removeClass('display-none');
         $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
 
-        if (!isPersistanceLoaded) {
-            notificationService.GetPersistenceMessages().then(function (response) {
-
-                if (response.data.IsSuccess) {
-                    isPersistanceLoaded = true;
-
-                    angular.forEach(response.data.Result, function (value) {
-
-                        var valObj = JSON.parse(value.Callback);
-
-                        if(valObj.eventName=="todo_reminder")
-                        {
-                            $scope.todoRemind($scope.MakeNotificationObject(value));
-                        }
-                        else
-                        {
-                            $scope.OnMessage($scope.MakeNotificationObject(value));
-                        }
-
-
-                    });
-
-                }
-
-
-            }, function (err) {
-
-            });
-        }
-
 
     };
 
@@ -1697,17 +1709,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.OnMessage = function (data) {
         console.log("OnMessage");
-        var senderAvatar;
+        var senderAvatar ="assets/img/avatar/profileAvatar.png";
 
-        if (data.From) {
-            if ($filter('filter')($scope.users, {username: data.From})) {
-                senderAvatar = $filter('filter')($scope.users, {username: data.From})[0].avatar;
+        if (data.From && $scope.users) {
+
+            var user = $filter('filter')($scope.users, {username: data.From});
+            if (user && user.length) {
+                senderAvatar = user[0].avatar;
             }
             else if ($filter('filter')($scope.userGroups, {name: data.From})) {
-                senderAvatar = $filter('filter')($scope.userGroups, {username: data.From})[0].avatar;
+                var user = $filter('filter')($scope.userGroups, {username: data.From});
+                if (user && user.length) {
+                    senderAvatar = user[0].avatar;
+                }
             }
-
-
         }
         else {
             senderAvatar = null;
@@ -1788,8 +1803,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         $scope.myNoteReminder = data;
 
 
-
-
         if (data.From) {
             if ($filter('filter')($scope.users, {username: data.From})) {
                 senderAvatar = $filter('filter')($scope.users, {username: data.From}).avatar;
@@ -1797,8 +1810,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             else if ($filter('filter')($scope.userGroups, {name: data.From})) {
                 senderAvatar = $filter('filter')($scope.userGroups, {username: data.From}).avatar;
             }
-            else
-            {
+            else {
                 senderAvatar = null;
             }
 
@@ -1820,8 +1832,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             "read": false,
             "avatar": senderAvatar,
             "from": data.From,
-            "messageType":"todo",
-            "external_user":data.Message.external_user
+            "messageType": "todo",
+            "external_user": data.Message.external_user
         };
 
         if (data.isPersistMessage && data.PersistMessageID) {
@@ -1842,12 +1854,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }, 500);
         }
 
-        if(displayReminder)
-        {
+        if (displayReminder) {
             $scope.myNoteNotiMe.showMe();
         }
-
-
 
 
     };
@@ -1925,7 +1934,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     chatService.SubscribeEvents(function (event, data) {
-
+        console.log('preview_dialer_message :: '+ event);
         switch (event) {
 
             case 'agent_connected':
@@ -1965,6 +1974,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'notice_message':
 
                 $scope.OnMessage(data);
+
+                break;
+
+            case 'preview_dialer_message':
+
+                $scope.dialerPreviewMessage(data);
 
                 break;
 
@@ -2136,7 +2151,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     // load User List
     $scope.users = [];
-    $scope.externalUsers=[];
+    $scope.externalUsers = [];
     $scope.loadUsers = function () {
         userService.LoadUser().then(function (response) {
 
@@ -2160,7 +2175,34 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             chatService.Request('allstatus');
             chatService.Request('allcallstatus');
 
+            // load notification message
+            if (!isPersistanceLoaded) {
+                notificationService.GetPersistenceMessages().then(function (response) {
 
+                    if (response.data.IsSuccess) {
+                        isPersistanceLoaded = true;
+
+                        angular.forEach(response.data.Result, function (value) {
+
+                            var valObj = JSON.parse(value.Callback);
+
+                            if (valObj.eventName == "todo_reminder") {
+                                $scope.todoRemind($scope.MakeNotificationObject(value));
+                            }
+                            else {
+                                $scope.OnMessage($scope.MakeNotificationObject(value));
+                            }
+
+
+                        });
+
+                    }
+
+
+                }, function (err) {
+
+                });
+            }
         }, function (err) {
             authService.IsCheckResponse(err);
             $scope.showAlert("Load Users", "error", "Fail To Get User List.")
@@ -2173,16 +2215,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         userService.getsearchExternalUsers().then(function (response) {
 
-            if(response.IsSuccess)
-            {
-                $scope.externalUsers=response.Result;
+            if (response.IsSuccess) {
+                $scope.externalUsers = response.Result;
             }
-            else
-            {
+            else {
                 console.log("No external users found");
             }
-        },function (error) {
-            console.log("Error in searching external users ",error);
+        }, function (error) {
+            console.log("Error in searching external users ", error);
         });
     };
 
@@ -2277,7 +2317,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         profileDataParser.RecentEngagements.push(id);
     };
 
-    var openNewUserProfileTab = function (profile, index, sessionObj,data) {
+    var openNewUserProfileTab = function (profile, index, sessionObj, data) {
         var engUuid = uuid4.generate();
         var engSessionObj = {
             engagement_id: engUuid,
@@ -2292,13 +2332,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             engSessionObj = sessionObj;
         }
 
-        if(data)
-        {
+        if (data) {
 
-            engSessionObj.channel= data.channel;
-            engSessionObj.channel_from= data.channel_from;
-            engSessionObj.channel_to= data.channel_to;
-            engSessionObj.direction= data.direction;
+            engSessionObj.channel = data.channel;
+            engSessionObj.channel_from = data.channel_from;
+            engSessionObj.channel_to = data.channel_to;
+            engSessionObj.direction = data.direction;
 
         }
 
@@ -2444,7 +2483,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 openEngagementTabForMailReply(args.data, args.index);
                 break;
             case 'userProfile':
-                openNewUserProfileTab(args, args.index, undefined,undefined);
+                openNewUserProfileTab(args, args.index, undefined, undefined);
                 break;
 
             case 'newUserProfile':
@@ -2832,14 +2871,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             item.obj.tabType = 'userProfile';
             item.obj.index = item.obj._id;
             //$rootScope.$emit('openNewTab', item.obj);
-            openNewUserProfileTab(item.obj, item.obj.index, undefined,undefined);
+            openNewUserProfileTab(item.obj, item.obj.index, undefined, undefined);
 
             $scope.searchText = "";
         }
     };
 
     $scope.createNewProfile = function () {
-        openNewUserProfileTab(undefined, 'createNewProfile', undefined,undefined);
+        openNewUserProfileTab(undefined, 'createNewProfile', undefined, undefined);
     };
 
     $scope.searchExternalUsers = {};
@@ -4155,20 +4194,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.openUserProfile = function (userID) {
 
-        $scope.showMesssageModal=false;
+        $scope.showMesssageModal = false;
         var userObj = $scope.externalUsers.filter(function (item) {
             return userID == item._id;
         });
 
-        var DataObj ={
-            channel:"appointment",
-            channel_from:profileDataParser.myProfile.username,
+        var DataObj = {
+            channel: "appointment",
+            channel_from: profileDataParser.myProfile.username,
             channel_to: userObj[0].firstname,
             direction: "OUTBOUND"
 
         }
 
-        openNewUserProfileTab(userObj[0],userID,undefined,DataObj);
+        openNewUserProfileTab(userObj[0], userID, undefined, DataObj);
     };
 
 

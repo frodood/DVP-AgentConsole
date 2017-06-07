@@ -296,6 +296,11 @@ window.SE = function (e) {
 
         });
 
+        socket.on('preview_dialer_message', function (data) {
+            if (callBack.OnEvent)
+                callBack.OnEvent('preview_dialer_message',data);
+        });
+
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
 

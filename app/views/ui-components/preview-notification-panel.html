@@ -1,0 +1,27 @@
+<div id="previewMessage" class="console-phone-wrapper display-none   Phone is-animating ">
+    <div class="income-call-wrapper -ringing ">
+        <div class="income-call-details">
+            <div class="preview-details">
+                <!--<h4>{{call.number}}</h4>-->
+                <small>{{previewMessage.PreviewData}}</small>
+            </div>
+            <div class="incoming-action-wrapper">
+                <div class="row">
+                    <div class="col-md-6 p-left-40">
+                        <div class="anz-btn  ">
+                            <div class="sonar-wave-green"></div>
+                            <i class="veery-phone-icon-1-call-answer"
+                               ng-click="dialerMessage.sendPreviewReply(previewMessage.Tkey, 'ACCEPTED');"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-left-40">
+                        <div class="hangout-btn">
+                            <i class="veery-phone-icon-1-end-call-button"
+                               ng-click="dialerMessage.sendPreviewReply(previewMessage.Tkey, 'REJECT');"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
