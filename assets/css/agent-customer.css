@@ -9159,8 +9159,13 @@ ul.renote-color-btn > li {
 }
 
 .scrollable-dropdown-menu .dropdown-menu {
+    width: 100%;
     max-height: 200px;
     overflow-y: auto;
+}
+
+.scrollable-dropdown-menu > ul >li{
+
 }
 
 /******* new UI version update 052017
