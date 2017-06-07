@@ -466,7 +466,7 @@ body {
 .income-call-details > .preview-details > small {
     color: #36ba45;
     padding-left: 15px;
-    word-break: keep-all ;
+    word-break: keep-all;
 }
 
 .anz-btn,
@@ -10187,7 +10187,7 @@ tr.ivr-t-row-052017:nth-child(odd) {
     content: " ";
     width: 4px;
     background: #E5E7E3;
-    left: 50%;
+    left: 440px;
     margin-left: -1.5px;
     border-radius: 14px;
 }
@@ -10205,6 +10205,17 @@ tr.ivr-t-row-052017:nth-child(odd) {
 
 .e-t-l-wrapper-052017.left {
     margin-left: 5%;
+}
+
+.e-t-l-wrapper-052017.left:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 20px solid #fbfcfd;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    left: 391px;
 }
 
 .e-t-l-wrapper-052017.right {
@@ -10266,7 +10277,7 @@ ul.customer-style-ul > li.value {
     text-align: center;
     position: absolute;
     top: 16px;
-    left: 50%;
+    left: 442px;
     margin-left: -15px;
     z-index: 0;
     border-top-right-radius: 50%;
