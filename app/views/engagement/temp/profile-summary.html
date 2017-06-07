@@ -36,10 +36,10 @@
                  ng-src="{{profileDetail.avatar}}"
                  width="80">
 
-            <div class="avatar-e-wrapper animated slideInUp"
-                 ng-click="viewCropArea()">
-                <i class="ti-camera"></i>
-            </div>
+            <!--<div class="avatar-e-wrapper animated slideInUp"-->
+                 <!--ng-click="viewCropArea()">-->
+                <!--<i class="ti-camera"></i>-->
+            <!--</div>-->
         </div>
         <div class="user-p-d-text-052017">
             <ul>
@@ -52,7 +52,7 @@
                 </li>
                 <li class="full-name">{{profileDetail.title}}.{{profileDetail.firstname}} {{profileDetail.lastname}}
                 </li>
-                <li class="l-update">Last update : {{profileDetail.created_at| date:'MM-dd-yyyy h:mma'}}</li>
+                <li class="l-update">Last update : {{profileDetail.updated_at| date:'MM-dd-yyyy h:mma'}}</li>
                 <li class="p-no">Phone No : {{profileDetail.phone}}</li>
                 <li class="btn">
                     <button type="button"
@@ -61,6 +61,12 @@
                         <i class="fa fa-search"></i>
                         SEARCH
                     </button>
+                    <button type="button"
+                                     ng-click="showCallOptions()"
+                                     class="btn btn-search-052017">
+                    <i class="fa fa-search"></i>
+                    CALL
+                </button>
                 </li>
             </ul>
         </div>
@@ -319,3 +325,5 @@
         </div>
     </section>
 </div>
+
+<div ng-include="'app/views/Interaction_details.html'"></div>

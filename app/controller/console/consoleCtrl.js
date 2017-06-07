@@ -1856,6 +1856,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         if (displayReminder) {
             $scope.myNoteNotiMe.showMe();
+            $scope.goToTopScroller();
         }
 
 
