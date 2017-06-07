@@ -6302,13 +6302,12 @@ ul.renote-color-btn > li {
 
 .chat-body {
     position: relative;
-    height: 305px;
+    /*height: 305px;*/
     width: 260px;
     margin-top: 50px;
     overflow: hidden;
     display: table-cell;
     vertical-align: bottom;
-    overflow: hidden;
     padding: 10px 10px 10px 10px;
 }
 
@@ -6376,11 +6375,11 @@ ul.renote-color-btn > li {
 
 .chat-type.left:before,
 .chat-type.left:after {
-    content: "";
-    height: 1px;
-    position: absolute;
-    top: 6px;
-    width: 13%;
+    /*content: "";*/
+    /*height: 1px;*/
+    /*position: absolute;*/
+    /*top: 6px;*/
+    /*width: 13%;*/
 }
 
 .chat-type.left:before {
