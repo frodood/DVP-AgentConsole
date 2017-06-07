@@ -1989,6 +1989,25 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     });
 
+    var convertToNoticifationObject =function(event){
+        var data = {};
+        angular.copy(event, data);
+        var mObject = data.Message;
+
+        mObject.From = mObject.UserName;
+        if ($scope.users && $scope.users.length) {
+            var items = $filter('filter')($scope.users, {resourceid: mObject.ResourceId.toString()});
+            mObject.From = (items&&items.length)?items[0].username : mObject.UserName;
+        }
+
+        mObject.TopicKey = data.eventName;
+        mObject.messageType = mObject.Message;
+        mObject.header = mObject.Message;
+        mObject.isPersistMessage = mObject.Direction !== "STATELESS";
+        mObject.PersistMessageID = mObject.id;
+        return mObject;
+    };
+
     chatService.SubscribeDashboard(function (event) {
         switch (event.roomName) {
             case 'ARDS:freeze_exceeded':
@@ -1997,6 +2016,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
                         $scope.profile.freezeExceeded = true;
+                        $scope.OnMessage(convertToNoticifationObject(event));
                     }
                 }
 
@@ -2007,6 +2027,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
                         $scope.profile.break_exceeded = true;
+                        $scope.OnMessage(convertToNoticifationObject(event));
                     }
                 }
 
