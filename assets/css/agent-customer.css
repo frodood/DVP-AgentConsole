@@ -6527,9 +6527,9 @@ ul.renote-color-btn > li {
 }
 
 .chat-txt {
-    background: transparent;
-    border: 0px;
-    height: 32px;
+    background: transparent !important;
+    border: 0px !important;
+    height: 32px !important;
     margin-top: 2px;
 }
 
