@@ -11613,4 +11613,7 @@ tr.t-dialer-b > td {
     list-style-type: none;
 }
 
+.dialer-btn {
+    cursor: pointer;
+}
 
