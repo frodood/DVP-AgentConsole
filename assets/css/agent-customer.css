@@ -11568,4 +11568,17 @@ tr.t-dialer-b > td {
 .dialer-icon-wrp {
     text-align: center;
     margin: 0 auto;
+}.contact-block
+{
+    background: beige;
+    border-radius: 10px;
+    height: 30px;
+    padding-top: 5px;
+    padding-left: 15px;
+    margin-bottom: 5px;
 }
+.contact-block > li
+{
+    list-style-type: none;
+}
+
