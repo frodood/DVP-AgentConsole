@@ -1,0 +1,115 @@
+
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
+
+<div class=" view-notification-d-wrapper" ng-if="showSMSModal">
+    <!-- notification send UI -->
+    <div class="container">
+        <i class="fa fa-window-close pull-right"></i>
+        <div class="">
+            <div class="notification-details-wrapper">
+                <div id="uNotifiWrp" class="u-template-wrp">
+                    <div class="u-noti-h b-bottom animated" id="uNotiH ">
+
+                        <h4>Send {{contactType}} to : {{contactData}}</h4>
+
+
+
+                    </div>
+                    <!-- body -->
+
+
+
+                    <div class="u-body notification-v">
+                        <!--<div class="scrollable-dropdown-menu">
+                            &lt;!&ndash;<input type="text" ng-model="phoneNumber"  uib-typeahead="contactObj as contactObj.contact for contactObj in phoneContact | filter:{contact:$viewValue} "
+                                   class="form-control" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Select phonenumber" typeahead-template-url="customTemplate.html">
+                        &ndash;&gt;</div>-->
+
+
+                        <div class="form-group">
+                            <label>Select Template</label>
+                            <input type="text"
+                                   ng-model="newAssignee"
+                                   uib-typeahead="msgTemp as msgTemp.name for msgTemp in MessageTemplates | filter:{name:$viewValue} "
+                                   class="form-control"
+                                   typeahead-show-hint="true"
+                                   typeahead-min-length="0"
+                                   placeholder="Select Template"
+                                   typeahead-template-url="customTemplate.html" ng-disabled="!isTempAdded">
+                        </div>
+                        <!--<div class=" animated fadeIn">-->
+                            <!--&lt;!&ndash; company &ndash;&gt;-->
+                            <!--<div ng-slimscroll-->
+                                 <!--opacity="0.1"-->
+                                 <!--distance="5px"-->
+                                 <!--height="200px"-->
+                                 <!--width="100%"-->
+                                 <!--enabled="true"-->
+                                 <!--id="scrlActions">-->
+
+                                <!--&lt;!&ndash;<div ng-repeat="msgTemp in MessageTemplates">-->
+
+                                    <!--<div class="e-d-row-052017">-->
+                                        <!--<ul class="customer-style-ul">-->
+                                            <!--<li class="pull-left desc-052017" title="{{msgTemp.content.content}}">{{msgTemp.content.content | limitTo:20}}</li>-->
+                                            <!--<li class="pull-right value-052017">-->
+                                                <!--<button class="fa fa-envelope" ng-click="">-->
+
+                                                <!--</button>-->
+
+                                            <!--</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>&ndash;&gt;-->
+
+
+
+
+                            <!--</div>-->
+
+
+
+
+                        <!--</div>-->
+
+                        <div>
+
+                            <label class="temp-topic"><input type="checkbox" name="body-checkbox" value="body_value" ng-click="activateBody()">     Or add message body</label>
+
+                        </div>
+
+                        <div class="u-sms-body-container" >
+                            <textarea class="u-sms-body-wrp" ng-disabled="isTempAdded"></textarea>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <!-- footer -->
+                    <div class="u-noti-footer">
+                        <div class="pull-right" style="padding-right: 5px ; padding-bottom: 20px">
+                            <button class="btn btn-sm btn-sm-noti btn-green-op btn-min-w"
+                                    ng-click="">
+                                Send
+                            </button>
+
+                            <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w"
+                                    ng-click="showTemplates('')">
+                                Cancel
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

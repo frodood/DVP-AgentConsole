@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices,templateService) {
     return {
         restrict: "EA",
         scope: {
@@ -44,6 +44,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         link: function (scope, element, attributes) {
 
             //update code damith
+
+
+
             var updateUserMapLocation = function () {
                 if (scope.profileDetail.address.street || scope.profileDetail.address.city) {
                     locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
@@ -2771,14 +2774,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
 
             scope.phoneContact =[];
+            scope.contactType="";
 
             scope.viewCallModal = function () {
                 scope.showInteractionModal=!scope.showInteractionModal;
             }
 
-            scope.showCallOptions = function () {
+            scope.showCallOptions = function (contactType) {
 
-                console.log(scope.profileDetail.contacts);
+                scope.phoneContact=[];
+                scope.contactType=contactType;
                 scope.phoneContact =scope.profileDetail.contacts.filter(function (item) {
 
                     if(item.type=="phone")
@@ -2811,7 +2816,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                 if(scope.phoneContact.length==1)
                 {
-                    scope.makeCall(scope.phoneContact[0].contact);
+                    if(scope.contactType=='CALL')
+                    {
+                        scope.makeCall(scope.phoneContact[0].contact);
+                    }
+                    else
+                    {
+                        scope.proceedContact(scope.phoneContact[0].contact);
+                    }
+
                 }
                 else
                 {
@@ -2828,6 +2841,105 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
 
             }
+
+            scope.showMailOptions = function () {
+
+                scope.phoneContact=[];
+                scope.contactType="email";
+
+                console.log(scope.profileDetail.contacts);
+                scope.phoneContact =scope.profileDetail.contacts.filter(function (item) {
+
+                    if(item.type=="Email")
+                    {
+                        return item;
+                    }
+
+                });
+
+                if(scope.profileDetail.email)
+                {
+                    scope.phoneContact.push(
+                        {
+                            contact:scope.profileDetail.email,
+                            type:"Email",
+                            verified: true
+                        }
+                    )
+                }
+
+
+                if(scope.phoneContact.length==1)
+                {
+                    scope.showTemplates(scope.phoneContact[0].contact);
+                }
+                else
+                {
+                    if(scope.phoneContact.length==0)
+                    {
+                        scope.showAlert("Error","error","No phone number found");
+                    }
+                    else
+                    {
+                        scope.viewCallModal();
+                    }
+
+                }
+
+
+            }
+
+            scope.proceedContact = function (contact) {
+                if(contact)
+                {
+                    if(scope.contactType=="CALL")
+                    {
+                        scope.makeCall(contact);
+                    }
+                    else
+                    {
+                        scope.showTemplates(contact);
+                    }
+                }
+            }
+
+            scope.MessageTemplates=[];
+
+
+            scope.loadTemplates = function () {
+
+                templateService.getTemplatesByType().then(function (resTemp) {
+
+                    if(resTemp)
+                    {
+                        scope.MessageTemplates=resTemp;
+                    }
+
+                },function (errTemp) {
+
+                    scope.showAlert("Error","error","Error in loading Templates");
+                });
+
+            };
+            scope.loadTemplates();
+            scope.showSMSModal=false;
+            scope.isTempAdded=true;
+            scope.contactData="";
+
+
+            scope.showTemplates = function (contact) {
+                scope.showSMSModal =!scope.showSMSModal;
+                if(contact)
+                {
+                   scope.contactData=contact;
+                }
+            }
+            scope.activateBody = function () {
+                scope.isTempAdded=!scope.isTempAdded;
+            }
+
+
+
 
 
         }

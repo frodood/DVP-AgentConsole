@@ -11519,16 +11519,65 @@ tr.t-dialer-b > td {
     text-align: center;
     margin: 0 auto;
 }.contact-block
-{
-    background: beige;
-    border-radius: 10px;
-    height: 30px;
-    padding-top: 5px;
-    padding-left: 15px;
-    margin-bottom: 5px;
-}
+ {
+     background: beige;
+     border-radius: 10px;
+     height: 30px;
+     padding-top: 5px;
+     padding-left: 15px;
+     margin-bottom: 5px;
+ }
 .contact-block > li
 {
     list-style-type: none;
 }
+
+.u-template-wrp {
+
+    width: 500px;
+    height: 500px;
+    bottom: -400px;
+    right: 0;
+    top:10px;
+    margin:10px auto;
+    z-index: 100;
+    -webkit-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    /*background: #f7f7f7;*/
+    background: #fff;
+}
+
+.u-sms-body-container {
+    padding-left: 15px;
+    margin-top: 20px;
+}
+.u-sms-body-wrp {
+    width: 450px;
+    height: 200px;
+}
+.text-temp-wrap {
+    width: 100%;
+    min-height: 100px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+    border-bottom-color: #0d5ab1;
+}
+
+.temp-topic{
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 14px;
+    color: #292929;
+    letter-spacing: 0.53px;
+    text-transform: uppercase;
+}
+.contact-action:hover
+{
+    background-color: #c7d6e9;
+    cursor: pointer;
+    text-color:whitesmoke;
+}
+
 
