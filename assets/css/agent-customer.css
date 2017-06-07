@@ -438,6 +438,12 @@ body {
     text-align: center;
 }
 
+.income-call-details > .preview-details {
+    color: #fff;
+    margin-top: 40px;
+    text-align: center;
+}
+
 .income-call-details > .company-details {
     text-align: left;
     padding-top: 15px;
@@ -455,6 +461,12 @@ body {
 .income-call-details > .user-details > small {
     color: #36ba45;
     padding-left: 15px;
+}
+
+.income-call-details > .preview-details > small {
+    color: #36ba45;
+    padding-left: 15px;
+    word-break: keep-all ;
 }
 
 .anz-btn,
@@ -1343,39 +1355,43 @@ ul.info-list-lg > li > h5 {
 }
 
 .api-channel > i,
-.api-channel{
+.api-channel {
     color: #0eeaff !important;
 }
 
 .twitter-channel > i,
-.twitter-channel{
+.twitter-channel {
     color: #55acee !important;
 }
 
 .call-channel > i,
-.call-channel{
+.call-channel {
     color: #369d3e !important;
 }
 
 .email-channel > i,
-.email-channel{
+.email-channel {
     color: #2fb81b !important;
 }
 
 .sms-channel > i,
-.sms-channel
-{
+.sms-channel {
     color: #f0ad4e !important;
 }
 
 .facebook-channel > i,
-.facebook-channel{
+.facebook-channel {
     color: #3b5998 !important;
 }
 
 .voicemail-channel > i,
-.voicemail-channel{
+.voicemail-channel {
     color: #d2c242 !important;
+}
+
+.viber-channel > i,
+.viber-channel {
+    color: #59267c !important;
 }
 
 .timeline-title {
@@ -6010,17 +6026,17 @@ ul.renote-color-btn > li {
 .box-confirmation-wrapper {
     position: absolute;
     z-index: 990;
-    width: 110%;
+    width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(255, 255, 255, 0.93);
 }
 
 .box-confirmation-wrapper .conf-layout {
     font-family: 'AvenirNextLTPro-Cn', sans-serif;
-    background: #ffffff;
+    background: transparent;
     width: 100%;
-    height: 150px;
-    margin-top: 100px;
+    min-height: 150px;
+    margin-top: 0px;
     text-align: center;
     font-size: 25px;
     padding: 38px 5px 10px 5px;
@@ -9232,7 +9248,7 @@ ul.renote-color-btn > li {
 }
 
 .btn-create-052017 {
-    font-family: ' AvenirNextLTPro-Bold', sans-serif;
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
     background: #FFFFFF;
     border: 1px solid #FFAA00;
     border-radius: 5px;
@@ -9262,7 +9278,7 @@ ul.renote-color-btn > li {
 }
 
 .btn-save-052017 {
-    font-family: ' AvenirNextLTPro-Bold', sans-serif;
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
     background: #FFFFFF;
     border: 1px solid #FFAA00;
     border-radius: 5px;
@@ -9332,11 +9348,12 @@ ul.renote-color-btn > li {
     cursor: pointer;
     top: 64px;
     left: 28px;
-    padding-top: 2px;
+    padding-top: 0px;
 }
 
 .avatar-e-wrapper > i {
     color: #000;
+    font-size: 12px;
 }
 
 .avatar-e-wrapper > i:hover {
@@ -9681,6 +9698,7 @@ ul.renote-color-btn > li {
     padding-top: 5px;
     margin-top: -6px;
     cursor: pointer;
+    margin-left: 5px;
 }
 
 .header-r-icon-052017.with-text {
@@ -9700,7 +9718,7 @@ ul.renote-color-btn > li {
     color: #ff0000;
 }
 
-.error-txt{
+.error-txt {
     color: #ff0000;
 }
 
@@ -9793,6 +9811,10 @@ ul.renote-color-btn > li {
     overflow: hidden;
     position: relative;
     padding: 14px 15px 0px 15px;
+}
+
+.uib-tab.disabled > a {
+    color: #f1f1f1 !important;
 }
 
 .profile-c-pills-052017 > li,
@@ -9918,6 +9940,27 @@ ul.renote-color-btn > li {
     color: #8B8B8B;
     letter-spacing: 0.53px;
     text-transform: uppercase;
+}
+
+.right-icon-delete {
+    float: right;
+    width: 20px;
+    height: 20px;
+    background: #f65d51;
+    border-radius: 100%;
+    margin-left: 10px;
+    text-align: center;
+    padding-top: 4px;
+    cursor: pointer;
+}
+
+.right-icon-delete > i {
+    color: #fff;
+}
+
+.value-052017 > i {
+    color: #b5ea85;
+    padding-left: 5px;
 }
 
 .profile-tag-052017 {
@@ -11309,6 +11352,11 @@ tags-input .tags {
     padding-right: 24px;
 }
 
+.modal-header-052017.small {
+    border-bottom: 1px solid rgba(229, 229, 229, 0.37);
+    padding: 15px;
+}
+
 .modal-lg-header {
     font-size: 14px;
     color: #8A8E86;
@@ -11347,7 +11395,7 @@ tags-input .tags {
 
 .reminder-wrapper-052017 {
     width: 100%;
-    height: 500px;
+    height: 255px;
     background: #ffffff;
     margin: 20% auto;
     border-radius: 8px;
@@ -11355,13 +11403,12 @@ tags-input .tags {
 
 /*profile avatar upload wrapper */
 .i-u-profile-052017 {
-    width: 100%;
-    height: 300px;
+    height: 450px;
     overflow: hidden;
     position: relative;
     background: #ffffff;
     border-radius: 2px;
-    margin: 10% auto;
+    padding: 20px;
 }
 
 .upload-wrapper {
@@ -11384,7 +11431,83 @@ tags-input .tags {
     text-align: center;
 }
 
-.contact-block
+/* new dialer UI */
+.dialer-052017.main-wrapper {
+    position: fixed;
+    width: 475px;
+    height: 320px;
+    right: 0;
+    bottom: 150px;
+    z-index: 100;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.07);
+    background: #FAFBFD;
+    border: 1px solid #EEEEEE;
+}
+
+.blue-header {
+    /* AUTO NUMBER DIALER: */
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 13px;
+    color: #223448;
+    letter-spacing: 0.71px;
+}
+
+.dialer-052017-body {
+    width: 100%;
+    height: 195px;
+    padding: 15px;
+}
+
+.dialer-052017-tbl-wrp {
+    width: 100%;
+    height: 185px;
+    overflow: hidden;
+}
+
+.t-dialer-h {
+    /* Rectangle 2: */
+    background: #e3e3e4;
+}
+
+.t-dialer-h > th {
+    /* NUMBER: */
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 12px;
+    color: #B6B8B5;
+    letter-spacing: 0.71px;
+    border-bottom: 0px solid #ddd !important;
+    text-transform: uppercase;
+}
+
+tr.t-dialer-b > th,
+tr.t-dialer-b > td {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 13px;
+    color: #B6B8B5;
+    letter-spacing: 0.71px;
+    border-top: 0px solid #ddd !important;
+}
+
+.t-dialer-b:nth-child(even) {
+    background: #ffffff;
+}
+
+.t-dialer-b:nth-child(odd) {
+    background: #FAFBFD;
+}
+
+.dialer-052017-footer {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 15px;
+}
+
+.dialer-icon-wrp {
+    text-align: center;
+    margin: 0 auto;
+}.contact-block
 {
     background: beige;
     border-radius: 10px;

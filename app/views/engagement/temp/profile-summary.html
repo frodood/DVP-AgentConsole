@@ -6,13 +6,12 @@
                 <li class="profile-id-052017">
                     ID : {{sessionId}}
                 </li>
-                <li class="pull-right right-btn-052017" ng-if="!showNewProfile">
-                    <button type="button" ng-if="!showCreateTicket"
+                <li class="pull-right right-btn-052017"
+                    ng-if="!showNewProfile">
+                    <button type="button"
+                            ng-if="!showCreateTicket"
                             ng-click="showNewTicket();"
-                            class="btn btn-create-052017"
-                            tooltip-trigger="'focus'"
-                            tooltip-placement="top"
-                            uib-tooltip="create new ticket">
+                            class="btn btn-create-052017">
                         CREATE TICKET
                     </button>
 
@@ -37,10 +36,10 @@
                  ng-src="{{profileDetail.avatar}}"
                  width="80">
 
-            <div class="avatar-e-wrapper animated slideInUp"
-                 ng-click="viewCropArea()">
-                <i class="ti-camera"></i>
-            </div>
+            <!--<div class="avatar-e-wrapper animated slideInUp"-->
+                 <!--ng-click="viewCropArea()">-->
+                <!--<i class="ti-camera"></i>-->
+            <!--</div>-->
         </div>
         <div class="user-p-d-text-052017">
             <ul>
@@ -53,7 +52,7 @@
                 </li>
                 <li class="full-name">{{profileDetail.title}}.{{profileDetail.firstname}} {{profileDetail.lastname}}
                 </li>
-                <li class="l-update">Last update : {{profileDetail.created_at| date:'MM-dd-yyyy h:mma'}}</li>
+                <li class="l-update">Last update : {{profileDetail.updated_at| date:'MM-dd-yyyy h:mma'}}</li>
                 <li class="p-no">Phone No : {{profileDetail.phone}}</li>
                 <li class="btn">
                     <button type="button"
@@ -150,20 +149,19 @@
                                 </ul>
                             </div>
 
-                            <div class="small-t-l-body-052017" style="text-transform: uppercase; color: #2aabd2">
+                            <div class="small-t-l-body-052017">
                                 CHANNEL : {{eng.channel}}
                             </div>
                         </div>
                     </section>
                 </li>
-
             </ul>
         </div>
     </section>
 
 
-    <!-- user profile location -->
-    <!-- user profile location -->
+    <!--user profile location-->
+    <!--user profile location-->
     <section class="user-p-location-052017">
         <div class="header-052017 inline-h">
             <ul>
@@ -172,9 +170,9 @@
                 </li>
             </ul>
         </div>
-
         <!-- location name -->
-        <div class="user-p-location-d-052017">
+        <div class="user-p-location-d-052017"
+             ng-if="!isLocationFound">
             <ul class="customer-style-ul">
                 <li class="location-pin-052017"><i class="ti-location-pin"></i></li>
                 <li class="location-name-052017">{{profileDetail.address.zipcode}}
@@ -183,7 +181,6 @@
                 </li>
             </ul>
         </div>
-
         <!-- location map -->
         <div class="user-p-l-map-052017">
             <div class="map-canvas">
@@ -197,9 +194,32 @@
                 </iframe>
             </div>
         </div>
-
-
     </section>
+
+
+    <!-- user profile default location -->
+    <!--<section class="user-p-location-052017">-->
+    <!--<div class="header-052017 inline-h">-->
+    <!--<ul>-->
+    <!--<li class="pull-left default-value">-->
+    <!--LOCATION-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; location name &ndash;&gt;-->
+    <!--<div class="user-p-location-d-052017">-->
+    <!--<ul class="customer-style-ul">-->
+    <!--<li class="location-name-052017 default-value">71 Pilgrim Avenue ,Chevy Chase, MD 20815</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; location map &ndash;&gt;-->
+    <!--<div class="user-p-l-map-052017 default-value">-->
+    <!--<div class="map-canvas "></div>-->
+    <!--</div>-->
+    <!--</section>-->
+
 
     <!-- user profile note -->
     <section class=" user-p-note-052017">
@@ -286,7 +306,8 @@
                                         AUTHOR |
                                     </li>
                                     <li class="user-052017">
-                                        {{note.author}}
+                                        {{note.author | limitTo: 50}}
+                                        {{note.author > 50 ? '...' : ''}}
                                     </li>
                                     <li class="ticket-time-ago pull-right">
                                         <time-ago from-time='{{note.created_at}}'
