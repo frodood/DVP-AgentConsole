@@ -44,6 +44,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         link: function (scope, element, attributes) {
 
             //update code damith
+
+            scope.showInteractionModal =false;
+
+
+
+
             if (scope.profileDetail && scope.profileDetail.address) {
                 scope.profileDetail.address.locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
                     'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
@@ -1755,6 +1761,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     tabReference: scope.tabReference
                 };
                 $rootScope.$emit('makecall', data);
+                scope.showInteractionModal =false;
             };
             scope.gotoTicket = function (data) {
                 data.tabType = "ticketView";
@@ -2700,6 +2707,66 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 });
 
             };//end appointment
+
+
+            scope.phoneContact =[];
+
+            scope.viewCallModal = function () {
+                scope.showInteractionModal=!scope.showInteractionModal;
+            }
+
+            scope.showCallOptions = function () {
+
+                console.log(scope.profileDetail.contacts);
+                scope.phoneContact =scope.profileDetail.contacts.filter(function (item) {
+
+                    if(item.type=="phone")
+                    {
+                        return item;
+                    }
+
+                });
+
+                if(scope.profileDetail.phone)
+                {
+                    scope.phoneContact.push(
+                        {
+                            contact:scope.profileDetail.phone,
+                            type:"phone",
+                            verified: true
+                        }
+                    )
+                }
+                if(scope.profileDetail.landnumber)
+                {
+                    scope.phoneContact.push(
+                        {
+                            contact:scope.profileDetail.landnumber,
+                            type:"phone",
+                            verified: true
+                        }
+                    )
+                }
+
+                if(scope.phoneContact.length==1)
+                {
+                    scope.makeCall(scope.phoneContact[0].contact);
+                }
+                else
+                {
+                    if(scope.phoneContact.length==0)
+                    {
+                        scope.showAlert("Error","error","No phone number found");
+                    }
+                    else
+                    {
+                        scope.viewCallModal();
+                    }
+
+                }
+
+
+            }
 
 
         }
