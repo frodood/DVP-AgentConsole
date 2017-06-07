@@ -17,7 +17,8 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui', 'ui.bootstrap',
     'pubnub.angular.service', 'ui.slimscroll',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
-    'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable'
+    'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable',
+    'angular-timeline'
 ]);
 
 

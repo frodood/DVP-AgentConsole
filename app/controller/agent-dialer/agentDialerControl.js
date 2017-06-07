@@ -148,7 +148,7 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
         $('#btn-update').addClass('display-none');
         $('#btn-close').addClass('display-none');
 
-        makeCall();
+        //makeCall();
 
     };
 
@@ -199,5 +199,9 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
     };
 
     $scope.HeaderDetails();
+
+
+    //update code damith
+
 });
 
