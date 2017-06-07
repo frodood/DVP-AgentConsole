@@ -2017,6 +2017,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
                         $scope.profile.freezeExceeded = true;
+                        if(event.Message.SessionId){
+                            event.Message.Message = event.Message.Message +" Session : "+event.Message.SessionId;
+                        }
                         $scope.OnMessage(convertToNoticifationObject(event));
                     }
                 }
@@ -2028,6 +2031,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
                         $scope.profile.break_exceeded = true;
+
                         $scope.OnMessage(convertToNoticifationObject(event));
                     }
                 }
