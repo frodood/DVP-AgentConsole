@@ -141,10 +141,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
 
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
-            scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
-                value.displayname = value.name;
-                return value;
-            });
+            scope.assigneeTempGroups;
+            if(scope.assigneeGroups)
+            {
+                scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
+                    value.displayname = value.name;
+                    return value;
+                });
+            }
+
             scope.assigneeUserData = scope.assigneeUsers.concat(scope.assigneeTempGroups);
 
 
