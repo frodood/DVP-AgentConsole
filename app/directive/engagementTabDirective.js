@@ -2460,7 +2460,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.isNewNote = false;
             var editUIAnimationFun = function () {
-                $anchorScroll();
+
                 return {
                     showUiViewMode: function () {
                         scope.isShowBasicInfoEditModal = false;
@@ -2475,6 +2475,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                     },
                     showBasicInfoEditMode: function () {
+                        $anchorScroll();
                         scope.basicProfileViewMode = 'all';
                         if (!scope.isShowBasicInfoEditModal) {
                             scope.multipleProfile.editProfile();
@@ -2482,6 +2483,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
                     },
                     showBasicContactEditMode: function () {
+                        $anchorScroll();
                         if (!scope.isBasicContactView) {
                             scope.basicProfileViewMode = 'contact';
                             scope.multipleProfile.editProfile();
@@ -2493,6 +2495,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                     },
                     showOtherEditMode: function () {
+                        $anchorScroll();
                         if (!scope.isShowBasicOtherInfoEditModal) {
                             scope.basicProfileViewMode = 'other';
                             scope.multipleProfile.editProfile();
@@ -2504,6 +2507,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                     },
                     socialContactEditMode: function () {
+                        $anchorScroll();
                         if (!scope.isSocialView) {
                             scope.basicProfileViewMode = 'social';
                             scope.multipleProfile.editProfile();
@@ -2517,6 +2521,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.isNewNote = !scope.isNewNote;
                     },
                     editOtherContact: function () {
+
                         scope.isOtherContactView = !scope.isOtherContactView;
                     },
                     editOtherContactMode: function () {

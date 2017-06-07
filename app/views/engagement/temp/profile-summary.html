@@ -36,10 +36,10 @@
                  ng-src="{{profileDetail.avatar}}"
                  width="80">
 
-            <div class="avatar-e-wrapper animated slideInUp"
-                 ng-click="viewCropArea()">
-                <i class="ti-camera"></i>
-            </div>
+            <!--<div class="avatar-e-wrapper animated slideInUp"-->
+                 <!--ng-click="viewCropArea()">-->
+                <!--<i class="ti-camera"></i>-->
+            <!--</div>-->
         </div>
         <div class="user-p-d-text-052017">
             <ul>
@@ -52,7 +52,7 @@
                 </li>
                 <li class="full-name">{{profileDetail.title}}.{{profileDetail.firstname}} {{profileDetail.lastname}}
                 </li>
-                <li class="l-update">Last update : {{profileDetail.created_at| date:'MM-dd-yyyy h:mma'}}</li>
+                <li class="l-update">Last update : {{profileDetail.updated_at| date:'MM-dd-yyyy h:mma'}}</li>
                 <li class="p-no">Phone No : {{profileDetail.phone}}</li>
                 <li class="btn">
                     <button type="button"
