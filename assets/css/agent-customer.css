@@ -11615,7 +11615,7 @@ tr.t-dialer-b > td {
 .u-template-wrp {
 
     width: 500px;
-    height: 500px;
+    height: auto;
     bottom: -400px;
     right: 0;
     top:10px;
@@ -11635,7 +11635,7 @@ tr.t-dialer-b > td {
 }
 .u-sms-body-wrp {
     width: 450px;
-    height: 200px;
+    height: 100px;
 }
 .text-temp-wrap {
     width: 100%;
@@ -11661,6 +11661,14 @@ tr.t-dialer-b > td {
 }
 
 .dialer-btn {
+    cursor: pointer;
+}
+.attchment-text-deco
+{
+    text-decoration: line-through;
+}
+.attchment-clip:hover
+{
     cursor: pointer;
 }
 

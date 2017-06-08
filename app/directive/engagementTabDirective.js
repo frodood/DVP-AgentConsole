@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices,templateService) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices,templateService,FileUploader,fileService) {
     return {
         restrict: "EA",
         scope: {
@@ -44,6 +44,71 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         link: function (scope, element, attributes) {
 
             //update code damith
+scope.mailAttchments =[];
+            scope.file = {};
+            scope.uploadProgress = 0;
+            scope.file.Category = "EMAIL_ATTACHMENTS";
+            var uploader = scope.uploader = new FileUploader({
+                url: fileService.UploadUrl,
+                headers: fileService.Headers
+            });
+
+
+            uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                console.info('onWhenAddingFileFailed', item, filter, options);
+            };
+            uploader.onAfterAddingFile = function (fileItem) {
+                console.info('onAfterAddingFile', fileItem);
+                fileItem.upload();
+
+            };
+            uploader.onAfterAddingAll = function (addedFileItems) {
+
+
+                console.info('onAfterAddingAll', addedFileItems);
+            };
+            uploader.onBeforeUploadItem = function (item) {
+
+                item.formData.push({'fileCategory': scope.file.Category});
+                console.info('onBeforeUploadItem', item);
+            };
+            uploader.onProgressItem = function (fileItem, progress) {
+                console.info('onProgressItem', fileItem, progress);
+                scope.uploadProgress = progress;
+                if (scope.uploadProgress == 100) {
+
+
+                }
+            };
+            uploader.onProgressAll = function (progress) {
+                console.info('onProgressAll', progress);
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                console.info('onSuccessItem', fileItem, response, status, headers);
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {
+                console.info('onErrorItem', fileItem, response, status, headers);
+                scope.showAlert("Attachment", "error", "Uploading failed");
+                scope.uploadProgress = 0;
+            };
+            uploader.onCancelItem = function (fileItem, response, status, headers) {
+                console.info('onCancelItem', fileItem, response, status, headers);
+            };
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {
+                console.info('onCompleteItem', fileItem, response, status, headers);
+                if (response.IsSuccess) {
+
+                    fileItem.uuid=response.Result;
+                    fileItem.availablity=true;
+                    scope.mailAttchments.push(fileItem);
+
+                }
+            };
+            uploader.onCompleteAll = function () {
+                console.info('onCompleteAll');
+                scope.showAlert("Attachment", "success", "Successfully uploaded");
+
+            };
 
 
 
@@ -2919,19 +2984,57 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.showSMSModal=false;
             scope.isTempAdded=true;
             scope.contactData="";
+            scope.isNewAttachment=false;
 
 
             scope.showTemplates = function (contact) {
                 scope.showSMSModal =!scope.showSMSModal;
                 if(contact)
                 {
-                   scope.contactData=contact;
+                    scope.contactData=contact;
                 }
             }
             scope.activateBody = function () {
                 scope.isTempAdded=!scope.isTempAdded;
             }
 
+            scope.showAttchmentModule = function () {
+                scope.isNewAttachment =!scope.isNewAttachment;
+            }
+
+            scope.changeAttchStatus = function (item) {
+
+                var index=scope.mailAttchments.indexOf(item);
+
+                if(index!=-1)
+                {
+                    scope.mailAttchments[index].availablity =! scope.mailAttchments[index].availablity;
+
+
+                }
+
+
+
+
+            };
+
+            scope.sendMessage = function (type,msgObj) {
+
+
+
+                if(type=='email')
+                {
+                    var activeAttchments = scope.mailAttchments.filter(function (item) {
+                        if(item.availability)
+                        {
+                            return item;
+                        }
+                    });
+                    //send message;
+                }
+
+
+            }
 
 
 

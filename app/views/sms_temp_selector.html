@@ -34,13 +34,14 @@
                         <div class="form-group">
                             <label>Select Template</label>
                             <input type="text"
-                                   ng-model="newAssignee"
+                                   ng-model="msgObj.Template"
                                    uib-typeahead="msgTemp as msgTemp.name for msgTemp in MessageTemplates | filter:{name:$viewValue} "
                                    class="form-control"
                                    typeahead-show-hint="true"
                                    typeahead-min-length="0"
                                    placeholder="Select Template"
                                    typeahead-template-url="customTemplate.html" ng-disabled="!isTempAdded">
+                            <label ng-show="isTempAdded && msgObj.Template" class="pull-right" title="{{msgObj.Template.content.content}}">preview</label>
                         </div>
 
 
@@ -51,10 +52,46 @@
                         </div>
 
                         <div class="u-sms-body-container" >
-                            <textarea class="u-sms-body-wrp" ng-disabled="isTempAdded"></textarea>
+                            <textarea class="u-sms-body-wrp" ng-model="msgObj.Body" ng-show="!isTempAdded"></textarea>
                         </div>
 
+                        <div class="form-group" ng-show="contactType=='email'">
+                            <label>Attchments  ({{mailAttchments.length}}) <i class="fa fa-paperclip attchment-clip" ng-click="showAttchmentModule()" ></i></label>
+                            <div ng-slimscroll
+                                 opacity="0.1"
+                                 distance="5px"
+                                 height="50px"
+                                 width="100%"
+                                 enabled="true"
+                                 id="scrlActions">
+                                <div ng-repeat="attchment in mailAttchments">
 
+                                    <div class="e-d-row-052017"  >
+                                        <ul class="customer-style-ul">
+                                            <li class="pull-left desc-052017 " ><span ng-class="{ 'attchment-text-deco': attchment.availablity==false }">{{attchment._file.name}}</span> <i ng-class="{ 'fa fa-times': attchment.availablity==true,'fa fa-undo':attchment.availablity==false}" ng-click="changeAttchStatus(attchment)" style="padding-left: 3px"></i></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div ng-if="uploader.isHTML5" ng-show="isNewAttachment" style="margin-top: 5px">
+                                <div nv-file-drop="" uploader="uploader">
+                                    <div nv-file-over="" uploader="uploader"
+                                         over-class="another-file-over-class" class="upload-area bold">
+                                        Choose a file or drag it here.
+                                    </div>
+                                </div>
+                                <div class=" time-wrapper">
+                                    <uib-progressbar value="uploadProgress" type="warning">
+                                    </uib-progressbar>
+                                </div>
+                            </div>
+
+                        </div>
 
 
 
@@ -64,7 +101,7 @@
                     <div class="u-noti-footer">
                         <div class="pull-right" style="padding-right: 5px ; padding-bottom: 20px">
                             <button class="btn btn-sm btn-sm-noti btn-green-op btn-min-w"
-                                    ng-click="">
+                                    ng-click="sendMessage(contactType,msgObj)">
                                 Send
                             </button>
 
