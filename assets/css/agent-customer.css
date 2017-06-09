@@ -9718,7 +9718,7 @@ ul.renote-color-btn > li {
 }
 
 .error-txt {
-    color: #ff0000;
+    color: #ff0000 !important;
 }
 
 .header-r-icon-052017.with-text > i {

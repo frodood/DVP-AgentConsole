@@ -2021,6 +2021,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             event.Message.Message = event.Message.Message +" Session : "+event.Message.SessionId;
                         }
                         $scope.OnMessage(convertToNoticifationObject(event));
+                        phoneFuncion.updateCallStatus('Freeze Exceeded.');
                     }
                 }
 
@@ -2031,7 +2032,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
                         $scope.profile.break_exceeded = true;
-
                         $scope.OnMessage(convertToNoticifationObject(event));
                     }
                 }

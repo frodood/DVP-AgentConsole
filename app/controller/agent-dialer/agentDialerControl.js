@@ -125,13 +125,19 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
             }
 
         });
-    }
+    };
 
     //$scope.getALlPhoneContact();
 
     $scope.updateContact = function (obj) {
         agentDialerService.UpdateContact(obj).then(function (response) {
-            console.log(response);
+            if(response)
+            {
+                $scope.showAlert("Agent Dialer", 'success', "Successfully Update..");
+            }
+            else{
+                $scope.showAlert("Agent Dialer", 'error', "Fail To Update.");
+            }
         });
     };
 
