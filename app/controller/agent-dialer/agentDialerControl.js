@@ -262,6 +262,11 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
     $scope.HeaderDetails();
 
 
+    $scope.closeDialer = function () {
+        $('#AgentDialerUi').addClass('display-none');
+    };
+
+
     //update code damith
 
 });
