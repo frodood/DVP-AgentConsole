@@ -44,7 +44,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         link: function (scope, element, attributes) {
 
             //update code damith
-scope.mailAttchments =[];
+            scope.mailAttchments =[];
             scope.file = {};
             scope.uploadProgress = 0;
             scope.file.Category = "EMAIL_ATTACHMENTS";
@@ -2996,6 +2996,7 @@ scope.mailAttchments =[];
             }
             scope.activateBody = function () {
                 scope.isTempAdded=!scope.isTempAdded;
+
             }
 
             scope.showAttchmentModule = function () {
@@ -3018,11 +3019,33 @@ scope.mailAttchments =[];
 
             };
 
-            scope.sendMessage = function (type,msgObj) {
+            scope.sendMessage = function (msgType,msgObj) {
+
+
+                var mailObj =
+                    {
+                        from:'duodilani',
+                        to:scope.contactData,
+                        channel:msgType,
+                        template:"",
+                        body:""
+
+
+                    };
+
+                if(scope.isTempAdded)
+                {
+                    mailObj.template=msgObj.Template.content.content;
+                }
+                else
+                {
+                    mailObj.body=msgObj.Body;
+                }
 
 
 
-                if(type=='email')
+
+                if(msgType=='email')
                 {
                     var activeAttchments = scope.mailAttchments.filter(function (item) {
                         if(item.availability)
