@@ -42,13 +42,13 @@
                 </textarea>
                     </div>
                     <!-- footer -->
-                    <div class="u-noti-footer ">
+                    <div class="u-noti-footer">
                         <button class="btn btn-sm btn-sm-noti btn-green-op btn-min-w"
                                 ng-click="keepNotification()">
                             Keep
                         </button>
                         <button class="btn btn-sm btn-sm-noti btn-green-op btn-min-w"
-                                ng-click="addToTodo(MessageObj)" ng-if="MessageObj.messageType!='notice' " ng-disabled="MessageObj.messageType=='todo'">
+                                ng-click="addToTodo(MessageObj)" ng-if="MessageObj.messageType!='notice' " ng-hide="MessageObj.messageType=='todo'">
                             Add to To-Do
                         </button>
                         <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w"
