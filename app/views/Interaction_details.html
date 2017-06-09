@@ -1,0 +1,117 @@
+
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
+<div class=" view-notification-d-wrapper" ng-if="showInteractionModal" ng-click="viewCallModal()">
+    <!-- notification send UI -->
+
+    <div class="container">
+        <i class="fa fa-window-close pull-right"></i>
+        <div class="col-lg-offset-3 col-lg-4">
+            <div class="notification-details-wrapper">
+                <div id="uNotifiWrp" class="u-notification-wrp">
+                    <div class="u-noti-h b-bottom animated" id="uNotiH ">
+
+                        <h4>Contact List</h4>
+
+
+
+                    </div>
+                    <!-- body -->
+
+
+
+                    <div class="u-body notification-v">
+
+                        <div class="user-p-e-wrapper-052017 animated fadeIn">
+                            <!-- company -->
+
+                            <div ng-slimscroll
+                                 opacity="0.1"
+                                 distance="5px"
+                                 height="200px"
+                                 width="100%"
+                                 enabled="true"
+                                 id="scrlActions">
+
+                                <div ng-repeat="contactObj in phoneContact">
+
+                                    <div class="e-d-row-052017 contact-action" >
+                                        <ul class="customer-style-ul">
+                                            <li class="pull-left desc-052017 " ng-click="proceedContact(contactObj.contact)" >{{contactObj.contact}}</li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<div class=" view-notification-d-wrapper" ng-if="showInteractionModal">
+    &lt;!&ndash; notification send UI &ndash;&gt;
+    <div class="container">
+        <div class="col-lg-offset-3 col-lg-4">
+            <div class="notification-details-wrapper">
+                <div id="uNotifiWrp" class="u-notification-wrp">
+                    <div >
+
+                        <div class="scrollable-dropdown-menu">
+                            <input type="text" ng-model="newAssignee"  uib-typeahead="contactObj as contactObj.contact for contactObj in phoneContact | filter:{contact:$viewValue} "
+                                   class="form-control" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Select phonenumber" typeahead-template-url="customTemplate.html">
+                        </div>
+
+                    </div>
+                    &lt;!&ndash; body &ndash;&gt;
+
+                    &lt;!&ndash; footer &ndash;&gt;
+                   &lt;!&ndash; <div class="u-noti-footer">
+                        <button class="btn btn-sm btn-sm-noti btn-green-op btn-min-w"
+                                ng-click="keepNotification()">
+                            Keep
+                        </button>
+
+                        <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w"
+                                ng-click="showInteractionModal==false">
+                            Discard
+                        </button>
+                    </div>&ndash;&gt;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
