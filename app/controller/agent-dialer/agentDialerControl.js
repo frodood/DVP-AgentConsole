@@ -196,15 +196,12 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
 
     $scope.startDialer = function () {
         $scope.dialerState = constants.DialerState[1];
-        $('.btnStartId').addClass('display-none');
         $('#btn-start').addClass('display-none');
         $('#btn-pause').removeClass('display-none');
-        $('.btnStopId').removeClass('display-none');
-        $('.btnResumeId').addClass('display-none');
         $('#btn-update').addClass('display-none');
         $('#btn-close').addClass('display-none');
 
-        $('#btn-stop').addClass('display-none');
+        $('#btn-stop').removeClass('display-none');
         $('#btn-resume').addClass('display-none');
 
         UIanimation.showCurrentDialerDetails();
@@ -214,9 +211,6 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
     };
 
     $scope.stopDialer = function () {
-        $('.btnStartId').removeClass('display-none');
-        $('.btnStopId').addClass('display-none');
-        $('.btnResumeId').addClass('display-none');
 
         $('#AgentDialerUi').addClass('display-none');
         $('#btn-pause').addClass('display-none');
@@ -230,12 +224,8 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
     };
 
     $scope.pauseDialer = function () {
-        $('.btnStartId').addClass('display-none');
         $('#btn-pause').addClass('display-none');
-        $('.btnStopId').addClass('display-none');
-        $('.btnResumeId').removeClass('display-none');
         $('#btn-update').removeClass('display-none');
-
         $('#btn-start').addClass('display-none');
         $('#btn-stop').addClass('display-none');
         $('#btn-resume').removeClass('display-none');
