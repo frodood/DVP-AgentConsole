@@ -11700,15 +11700,14 @@ tr.t-dialer-b > td {
     text-align: center;
 }
 
-
 /*update pawan CSS */
 .u-template-wrp {
     width: 500px;
     height: auto;
     bottom: -400px;
     right: 0;
-    top:10px;
-    margin:10px auto;
+    top: 10px;
+    margin: 10px auto;
     z-index: 100;
     -webkit-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: -3px 1px 12px -5px rgba(0, 0, 0, 0.75);
@@ -11722,6 +11721,7 @@ tr.t-dialer-b > td {
     padding-left: 15px;
     margin-top: 20px;
 }
+
 .u-sms-body-wrp {
     width: 450px;
     height: 100px;
@@ -11736,31 +11736,37 @@ tr.t-dialer-b > td {
     border-bottom-color: #0d5ab1;
 }
 
-.temp-topic{
+.temp-topic {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     font-size: 14px;
     color: #292929;
     letter-spacing: 0.53px;
     text-transform: uppercase;
 }
-.contact-action:hover
-{
+
+.contact-action:hover {
     background-color: #c7d6e9;
     cursor: pointer;
-    text-color:whitesmoke;
+    text-color: whitesmoke;
 }
 
 .dialer-btn {
     cursor: pointer;
 }
-.attchment-text-deco
-{
+
+.attchment-text-deco {
     text-decoration: line-through;
 }
-.attchment-clip:hover
-{
+
+.attchment-clip:hover {
     cursor: pointer;
 }
+
 /*end */
+
+/*screen break type */
+.time-exceed {
+    background-color: #d86161;
+}
 
 
