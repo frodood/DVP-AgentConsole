@@ -1291,7 +1291,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.ticket.selectedTags = [];
                     scope.newAddTags = [];
                     scope.postTags = [];
-                    
+
                     scope.showCreateTicket = !scope.showCreateTicket;
 
                 } else {
