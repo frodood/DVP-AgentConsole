@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices,templateService,FileUploader,fileService) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices, templateService, FileUploader, fileService) {
     return {
         restrict: "EA",
         scope: {
@@ -44,7 +44,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         link: function (scope, element, attributes) {
 
             //update code damith
-            scope.mailAttchments =[];
+            scope.mailAttchments = [];
             scope.file = {};
             scope.uploadProgress = 0;
             scope.file.Category = "EMAIL_ATTACHMENTS";
@@ -98,8 +98,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 console.info('onCompleteItem', fileItem, response, status, headers);
                 if (response.IsSuccess) {
 
-                    fileItem.uuid=response.Result;
-                    fileItem.availablity=true;
+                    fileItem.uuid = response.Result;
+                    fileItem.availablity = true;
                     scope.mailAttchments.push(fileItem);
 
                 }
@@ -109,7 +109,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.showAlert("Attachment", "success", "Successfully uploaded");
 
             };
-
 
 
             var updateUserMapLocation = function () {
@@ -1285,11 +1284,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.showNewTicket = function () {
                 if (scope.profileDetail && scope.profileDetail._id) {
+                    scope.onIsolatedTagRemoved();
+                    scope.loadMyAppMetaData();
+                    scope.newAddTags = [];
+                    scope.ticket = {};
+                    scope.ticket.selectedTags = [];
+                    scope.newAddTags = [];
+                    scope.postTags = [];
+                    
                     scope.showCreateTicket = !scope.showCreateTicket;
-                    if (scope.showCreateTicket) {
-                        scope.onIsolatedTagRemoved();
-                        scope.loadMyAppMetaData();
-                    }
+
                 } else {
                     scope.showAlert("Ticket", "error", "Please Create Profile First.")
                 }
@@ -2197,7 +2201,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 scope.showNewProfile = false;
                                 scope.editProfile = false;
 
-                                scope.showAlert("Profile", "success", "Update Successfully.");
+                                scope.showAlert("Profile", "success", "Profile Updated Successfully.");
                                 editUIAnimationFun.showUiViewMode();
                                 $anchorScroll();
                                 userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
@@ -2243,7 +2247,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.cropImageURL = null;
             scope.tenant = 0;
             scope.company = 0;
-            scope.agentIss="";
+            scope.agentIss = "";
             scope.getCompanyTenant = function () {
                 var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
                 scope.company = decodeData.company;
@@ -2876,7 +2880,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
 
             scope.phoneContact = [];
-            scope.contactType="";
+            scope.contactType = "";
 
             scope.viewCallModal = function () {
                 scope.showInteractionModal = !scope.showInteractionModal;
@@ -2884,9 +2888,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.showCallOptions = function (contactType) {
 
-                scope.phoneContact=[];
-                scope.contactType=contactType;
-                scope.isTempAdded=true;
+                scope.phoneContact = [];
+                scope.contactType = contactType;
+                scope.isTempAdded = true;
                 scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
 
                     if (item.type == "phone") {
@@ -2915,12 +2919,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
 
                 if (scope.phoneContact.length == 1) {
-                    if(scope.contactType=='CALL')
-                    {
+                    if (scope.contactType == 'CALL') {
                         scope.makeCall(scope.phoneContact[0].contact);
                     }
-                    else
-                    {
+                    else {
                         scope.proceedContact(scope.phoneContact[0].contact);
                     }
 
@@ -2940,44 +2942,38 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.showMailOptions = function () {
 
-                scope.phoneContact=[];
-                scope.contactType="email";
-                scope.isTempAdded=true;
+                scope.phoneContact = [];
+                scope.contactType = "email";
+                scope.isTempAdded = true;
 
                 console.log(scope.profileDetail.contacts);
-                scope.phoneContact =scope.profileDetail.contacts.filter(function (item) {
+                scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
 
-                    if(item.type.toLowerCase()=="email")
-                    {
+                    if (item.type.toLowerCase() == "email") {
                         return item;
                     }
 
                 });
 
-                if(scope.profileDetail.email)
-                {
+                if (scope.profileDetail.email) {
                     scope.phoneContact.push(
                         {
-                            contact:scope.profileDetail.email,
-                            type:"email",
+                            contact: scope.profileDetail.email,
+                            type: "email",
                             verified: true
                         }
                     )
                 }
 
 
-                if(scope.phoneContact.length==1)
-                {
+                if (scope.phoneContact.length == 1) {
                     scope.showTemplates(scope.phoneContact[0].contact);
                 }
-                else
-                {
-                    if(scope.phoneContact.length==0)
-                    {
-                        scope.showAlert("Error","error","No phone number found");
+                else {
+                    if (scope.phoneContact.length == 0) {
+                        scope.showAlert("Error", "error", "No phone number found");
                     }
-                    else
-                    {
+                    else {
                         scope.viewCallModal();
                     }
 
@@ -2987,177 +2983,158 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             }
 
             scope.proceedContact = function (contact) {
-                if(contact)
-                {
-                    if(scope.contactType=="CALL")
-                    {
+                if (contact) {
+                    if (scope.contactType == "CALL") {
                         scope.makeCall(contact);
                     }
-                    else
-                    {
+                    else {
                         scope.showTemplates(contact);
                     }
                 }
             }
 
-            scope.MessageTemplates=[];
+            scope.MessageTemplates = [];
 
 
             scope.loadTemplates = function () {
 
                 templateService.getTemplatesByType().then(function (resTemp) {
 
-                    if(resTemp)
-                    {
-                        scope.MessageTemplates=resTemp;
+                    if (resTemp) {
+                        scope.MessageTemplates = resTemp;
                     }
 
-                },function (errTemp) {
+                }, function (errTemp) {
 
-                    scope.showAlert("Error","error","Error in loading Templates");
+                    scope.showAlert("Error", "error", "Error in loading Templates");
                 });
 
             };
             scope.loadTemplates();
-            scope.showSMSModal=false;
-            scope.isTempAdded=true;
-            scope.contactData="";
-            scope.isNewAttachment=false;
-            scope.paramList=[];
-            scope.isSaveDisable=false;
+            scope.showSMSModal = false;
+            scope.isTempAdded = true;
+            scope.contactData = "";
+            scope.isNewAttachment = false;
+            scope.paramList = [];
+            scope.isSaveDisable = false;
 
 
             scope.showTemplates = function (contact) {
-                scope.showSMSModal =!scope.showSMSModal;
-                if(contact)
-                {
-                    scope.contactData=contact;
+                scope.showSMSModal = !scope.showSMSModal;
+                if (contact) {
+                    scope.contactData = contact;
                 }
                 else {
-                    scope.mailAttchments =[];
-                    scope.paramList={};
-                    scope.msgObj={};
+                    scope.mailAttchments = [];
+                    scope.paramList = {};
+                    scope.msgObj = {};
                 }
 
 
             }
             scope.activateBody = function () {
-                scope.isTempAdded=!scope.isTempAdded;
+                scope.isTempAdded = !scope.isTempAdded;
 
             }
 
             scope.showAttchmentModule = function () {
-                scope.isNewAttachment =!scope.isNewAttachment;
+                scope.isNewAttachment = !scope.isNewAttachment;
             }
 
             scope.changeAttchStatus = function (item) {
 
-                var index=scope.mailAttchments.indexOf(item);
+                var index = scope.mailAttchments.indexOf(item);
 
-                if(index!=-1)
-                {
-                    scope.mailAttchments[index].availablity =! scope.mailAttchments[index].availablity;
+                if (index != -1) {
+                    scope.mailAttchments[index].availablity = !scope.mailAttchments[index].availablity;
 
 
                 }
-
-
 
 
             };
 
 
-
-            scope.sendMessage = function (msgType,msgObj) {
-
-
-
+            scope.sendMessage = function (msgType, msgObj) {
 
 
                 var mailObj =
                     {
-                        from:scope.agentIss,
-                        to:scope.contactData,
-                        channel:msgType,
-                        template:"",
-                        body:"",
-                        parameters:{}
+                        from: scope.agentIss,
+                        to: scope.contactData,
+                        channel: msgType,
+                        template: "",
+                        body: "",
+                        parameters: {}
 
 
                     };
 
-                mailObj.parameters=profileDataParser.myProfile;
+                mailObj.parameters = profileDataParser.myProfile;
 
-                if(scope.isTempAdded)
-                {
-                    mailObj.template=msgObj.Template.name;
+                if (scope.isTempAdded) {
+                    mailObj.template = msgObj.Template.name;
 
-                    angular.forEach(scope.paramList,function (item) {
-                        var ParamName=item.name;
-                        mailObj.parameters[ParamName]=item.value;
+                    angular.forEach(scope.paramList, function (item) {
+                        var ParamName = item.name;
+                        mailObj.parameters[ParamName] = item.value;
 
                     });
 
 
-                    mailObj.body="";
+                    mailObj.body = "";
                 }
-                else
-                {
-                    mailObj.body=msgObj.Body;
-                    mailObj.template="";
-                    mailObj.parameters={};
+                else {
+                    mailObj.body = msgObj.Body;
+                    mailObj.template = "";
+                    mailObj.parameters = {};
 
                 }
 
 
-
-
-                if(msgType.toLowerCase()=='email')
-                {
-                    var companyInfo= authService.GetCompanyInfo();
+                if (msgType.toLowerCase() == 'email') {
+                    var companyInfo = authService.GetCompanyInfo();
                     var activeAttchments = scope.mailAttchments.map(function (item) {
-                        if(item.availablity)
-                        {
-                            return {"name": item._file.name, "url":baseUrls.fileServiceInternalUrl+ "File/Download/" +companyInfo.tenant + "/" +companyInfo.company+"/"+item.uuid+"/"+item._file.name}
+                        if (item.availablity) {
+                            return {
+                                "name": item._file.name,
+                                "url": baseUrls.fileServiceInternalUrl + "File/Download/" + companyInfo.tenant + "/" + companyInfo.company + "/" + item.uuid + "/" + item._file.name
+                            }
                         }
                     });
 
 
-                    mailObj.attachments=activeAttchments;
+                    mailObj.attachments = activeAttchments;
                     //send message;
                 }
-                else if(msgType=='sms')
-                {
-                    mailObj.attachments=[];
+                else if (msgType == 'sms') {
+                    mailObj.attachments = [];
                 }
 
 
                 engagementService.sendEmailAndSms(mailObj).then(function (res) {
 
-                    if(msgType=="sms"){
-                        scope.showAlert("Success","success","SMS sent successfully");
+                    if (msgType == "sms") {
+                        scope.showAlert("Success", "success", "SMS sent successfully");
                     }
-                    else
-                    {
-                        scope.showAlert("Success","success","Email sent successfully");
+                    else {
+                        scope.showAlert("Success", "success", "Email sent successfully");
                     }
                     scope.showTemplates('');
 
 
-                },function (err) {
-                    console.log("Sending Error ",err);
-                    if(msgType=="sms"){
-                        scope.showAlert("Error","error","SMS sending failed");
+                }, function (err) {
+                    console.log("Sending Error ", err);
+                    if (msgType == "sms") {
+                        scope.showAlert("Error", "error", "SMS sending failed");
                     }
-                    else
-                    {
-                        scope.showAlert("Error","error","Email sending failed");
+                    else {
+                        scope.showAlert("Error", "error", "Email sending failed");
                     }
                 })
 
 
             };
-
 
 
             scope.loadParamList = function (tempObj) {
@@ -3166,46 +3143,37 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             }
 
             scope.checkParams = function (tempObj) {
-                scope.paramList=[];
-                var templateContent=tempObj.content.content;
+                scope.paramList = [];
+                var templateContent = tempObj.content.content;
                 var splitList = templateContent.match(/({[a-zA-Z])\w+}/g);
                 //console.log(splitList);
                 //console.log(scope.template.name +" : "+splitList.length);
 
-                if(splitList)
-                {
-                    for(var i=0;i<splitList.length;i++)
-                    {
-                        console.log("name data "+splitList[i].match(/([a-zA-Z])\w+/g));
+                if (splitList) {
+                    for (var i = 0; i < splitList.length; i++) {
+                        console.log("name data " + splitList[i].match(/([a-zA-Z])\w+/g));
 
-                        if(splitList.indexOf({name:splitList[i].match(/([a-zA-Z])\w+/g)})==-1)
-                        {
+                        if (splitList.indexOf({name: splitList[i].match(/([a-zA-Z])\w+/g)}) == -1) {
                             var paramData =
                                 {
-                                    name:splitList[i].match(/([a-zA-Z])\w+/g)[0]
+                                    name: splitList[i].match(/([a-zA-Z])\w+/g)[0]
                                 }
                         }
 
-                        scope.paramList[i]=paramData;
+                        scope.paramList[i] = paramData;
                     }
                 }
 
 
-                angular.forEach(scope.paramList,function (item) {
+                angular.forEach(scope.paramList, function (item) {
 
-                    if(item.name in profileDataParser.myProfile)
-                    {
-                        item.value=profileDataParser.myProfile[item.name];
+                    if (item.name in profileDataParser.myProfile) {
+                        item.value = profileDataParser.myProfile[item.name];
                     }
                 });
 
 
-
-
-
             };
-
-
 
 
         }
@@ -3390,7 +3358,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
         uploader.onProgressItem = function (fileItem, progress) {
             console.info('onProgressItem', fileItem, progress);
-            scope.isSaveDisable=true;
+            scope.isSaveDisable = true;
         };
         uploader.onProgressAll = function (progress) {
             console.info('onProgressAll', progress);
@@ -3407,7 +3375,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         uploader.onCompleteItem = function (fileItem, response, status, headers) {
             console.info('onCompleteItem', fileItem, response, status, headers);
             console.log("result ", response.Result);
-            scope.isSaveDisable=false;
+            scope.isSaveDisable = false;
             new PNotify({
                 title: 'File Upload!',
                 text: "Picture uploaded successfully",
@@ -3423,7 +3391,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         };
         uploader.onCompleteAll = function () {
             console.info('onCompleteAll');
-            scope.isSaveDisable=false;
+            scope.isSaveDisable = false;
         };
 
 
