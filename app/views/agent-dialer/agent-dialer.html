@@ -9,20 +9,21 @@
                 <thead>
                 <tr>
                     <td>
-                        <div class="col-md-12 col-sm-12 col-xs-12 form-group"                             >
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                             <select class="form-control has-feedback-left" id="Extensions"
                                     ng-model="BatchName"
-                                    ng-change="getALlPhoneContact();"   ng-options="opt as opt for opt in BatchNames track by opt" required>
+                                    ng-change="getALlPhoneContact();"
+                                    ng-options="opt as opt for opt in BatchNames track by opt" required>
                                 <option disabled value=''>Batch Names</option>
                             </select>
                         </div>
                     </td>
                 </tr>
-                <tr class="item" >
+                <tr class="item">
                     <td ng-if="currentItem.ContactNumber">{{currentItem.ContactNumber}}</td>
                     <td ng-if="currentItem.ContactNumber">
                         <input type="text" class="form-control"
-                               ng-model="currentItem.OtherData" >
+                               ng-model="currentItem.OtherData">
                     </td>
                     <td ng-if="currentItem.ContactNumber">
                         <select class="form-control "
@@ -48,13 +49,13 @@
                     <td id="btn-pause" class="display-none">
                         <i class="fa fa-pause cursor-pointer" ng-click="pauseDialer();" title="Pause"></i>
                     </td>
-                    <td id="btn-stop" class="display-none" >
+                    <td id="btn-stop" class="display-none">
                         <i class="fa fa-stop cursor-pointer" ng-click="stopDialer();" title="Stop"></i>
                     </td>
-                    <td id="btn-resume" class="display-none" >
+                    <td id="btn-resume" class="display-none">
                         <i class="fa fa-step-forward cursor-pointer " ng-click="resumeDialer();" title="Resume"></i>
                     </td>
-                    <td id="btn-close" class="display-none" >
+                    <td id="btn-close" class="display-none">
                         <i class="fa fa-times cursor-pointer " ng-click="stopDialer();" title="Close"></i>
                     </td>
                     <!--<td>
@@ -69,7 +70,6 @@
 
 
 
-        </br></br>
         <div class="col-md-12 col-sm-12 col-xs-12" ng-show="contactList.length">
             <table style="width:auto;" class="table table-bordered">
                 <thead>

@@ -3,26 +3,70 @@
 
 <!--</div>-->
 
-<!-- user profile multiple profile -->
+<!-- user profile multiple profile  -->
 <div class="user-p-mp-052017" ng-if="showMultiProfile">
     <div class="container-fluid">
         <div class="col-lg-8 col-lg-offset-2">
             <div class="user-p-mp-wrapper-052017">
                 <div class="col-lg-7">
-                    <div class="row">
-                        <div class="multiple-p-left-w-052017">
 
-                            <div class="create-new-wrp-052017">
-                                <div class="icon-lg-center-052017" ng-click="createNProfile()">
-                                    <img src="assets/img/lg-new.png" width="120">
+                    <div class="row">
+                        <div class="user-e-widget-052017"
+                             style="width: 400px;margin: 100px auto;
+                             background: transparent">
+                            <div class="header-052017 ">
+                                ENGAGEMENT
+                            </div>
+
+                            <!-- engagement user profile wrapper -->
+                            <div class="user-p-e-wrapper-052017 animated fadeIn">
+                                <!-- company -->
+                                <div class="e-d-row-052017">
+                                    <ul class="customer-style-ul">
+                                        <li class="pull-left desc-052017">COMPANY</li>
+                                        <li class="pull-right value-052017">{{company}}</li>
+                                    </ul>
                                 </div>
-                                <div class="lg-text-052017 text-uppercase">
-                                    create new profile
+                                <!-- direction -->
+                                <div class="e-d-row-052017">
+                                    <ul class="customer-style-ul">
+                                        <li class="pull-left desc-052017">Direction</li>
+                                        <li class="pull-right value-052017">{{direction}}</li>
+                                    </ul>
+                                </div>
+                                <!-- Channel from -->
+                                <div class="e-d-row-052017">
+                                    <ul class="customer-style-ul">
+                                        <li class="pull-left desc-052017">channel from</li>
+                                        <li class="pull-right value-052017">{{channelFrom}}</li>
+                                    </ul>
+                                </div>
+                                <!-- Channel to  -->
+                                <div class="e-d-row-052017">
+                                    <ul class="customer-style-ul">
+                                        <li class="pull-left desc-052017">channel to</li>
+                                        <li class="pull-right value-052017">{{channelTo}}</li>
+                                    </ul>
+                                </div>
+                                <!-- Channel -->
+                                <div class="e-d-row-052017">
+                                    <ul class="customer-style-ul">
+                                        <li class="pull-left desc-052017">channel</li>
+                                        <li class="pull-right value-052017">{{channel}}</li>
+                                    </ul>
+                                </div>
+                                <!-- skill -->
+                                <div class="e-d-row-052017">
+                                    <ul class="customer-style-ul">
+                                        <li class="pull-left desc-052017">skill</li>
+                                        <li class="pull-right value-052017">{{skill}}</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-5">
                     <div class="row">
                         <div class="multiple-p-right-w-052017">
@@ -42,14 +86,22 @@
                                 </div>
                             </div>
 
-                            <div class="body-mp-052017" slimscroll="{height: '545px',
+                            <div class="body-mp-052017" slimscroll="{height: '390px',
                                     railVisible: true,
                                     color: '#EEEEEE',
                                     size: '8px',
                                     distance: '15px',
                                     railColor: '#EEEEEE',
                                     railBorderRadius: 10}">
+
+                                <div class="profile-not-found"
+                                     ng-if="profileDetails.length==0">
+                                    <img src="assets/img/profile-not-found.png"
+                                         width="210px">
+                                </div>
+
                                 <div class="img-with-text-widget"
+                                     ng-if="profileDetails.length!=0"
                                      ng-repeat="p in profileDetails">
                                     <ul class="customer-style-ul">
                                         <li>
@@ -82,6 +134,19 @@
                                         </li>
 
                                     </ul>
+                                </div>
+                            </div>
+
+                            <div class="footer-mp-052017">
+                                <div class="multiple-p-left-w-052017">
+                                    <div class="create-new-wrp-052017">
+                                        <div class="icon-lg-center-052017" ng-click="createNProfile()">
+                                            <img src="assets/img/lg-new.png" width="70">
+                                        </div>
+                                        <div class="lg-text-052017 text-uppercase">
+                                            create new profile
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

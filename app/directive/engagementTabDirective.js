@@ -1428,7 +1428,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.reventNotes.unshift(noteObj);
                         document.getElementById("noteBody").innerHTML = "";
                         document.getElementById("noteBody").value = "";
-                        scope.showAlert("Note", "success", "Note Add Successfully.");
+                        scope.showAlert("Note", "success", "Note Added Successfully.");
 
                     }
                     else {
@@ -1591,6 +1591,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             scope.createNProfile = function () {
+                scope.isEditCurrentProfile = false;
                 if (scope.profileDetail) {
                     scope.exProfileId = angular.copy(scope.profileDetail._id);
                 }
@@ -2043,7 +2044,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.profileDetail = response;
                         scope.showNewProfile = false;
 
-                        scope.GetProfileHistory(response._id);
+                        scope.ticketList = [];
+                        scope.engagementsList = [];
+                        //scope.GetProfileHistory(scope.profileDetail._id);
+                        scope.loadNextEngagement();
                         if (scope.exProfileId) {
                             scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
                         } else {
@@ -2172,6 +2176,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 profile.birthday = new Date(collectionDate);
 
 
+                //update profile image
+                profile.avatar = scope.profileDetail.avatar;
+                scope.isEditCurrentProfile = false;
+
+
                 $q.all([
                     scope.CheckExternalUserAvailabilityByField("ssn", profile.ssn, profile),
                     scope.CheckExternalUserAvailabilityByField("email", profile.email, profile),
@@ -2245,9 +2254,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.changeAvatarURL = function (fileID) {
 
+                if (scope.isEditCurrentProfile) {
+                    scope.profileDetail.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
+                }
+
                 if (fileID) {
                     scope.newProfile.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
-
                 }
 
 
@@ -2255,7 +2267,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
 
             scope.viewCropArea = function () {
-
+                scope.isEditCurrentProfile = true;
                 //modal show
                 var modalInstance = $uibModal.open({
                     animation: true,
@@ -2538,6 +2550,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             //engagement new profile functions
 
             scope.isNewNote = false;
+            scope.currentItemTempObj = {};
             var editUIAnimationFun = function () {
 
                 return {
@@ -2551,6 +2564,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.isOtherContactEditMode = false;
                         scope.isCnfmBoxShow = false;
                         scope.basicProfileViewMode = 'all';
+                        scope.currentItemTempObj = {};
+
 
                     },
                     showBasicInfoEditMode: function () {
@@ -2558,6 +2573,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.basicProfileViewMode = 'all';
                         if (!scope.isShowBasicInfoEditModal) {
                             scope.multipleProfile.editProfile();
+                            scope.currentItemTempObj = angular.copy(scope.profileDetail);
+                        } else {
+                            scope.profileDetail = angular.copy(scope.currentItemTempObj);
+                            scope.currentItemTempObj = {};
                         }
                         scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
                     },
@@ -2566,6 +2585,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         if (!scope.isBasicContactView) {
                             scope.basicProfileViewMode = 'contact';
                             scope.multipleProfile.editProfile();
+                            scope.currentItemTempObj = angular.copy(scope.profileDetail);
+                        } else {
+                            scope.profileDetail = angular.copy(scope.currentItemTempObj);
+
+                            scope.currentItemTempObj = {};
                         }
                         scope.isBasicContactView = !scope.isBasicContactView;
                         if (!scope.isBasicContactView) {
@@ -2578,6 +2602,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         if (!scope.isShowBasicOtherInfoEditModal) {
                             scope.basicProfileViewMode = 'other';
                             scope.multipleProfile.editProfile();
+                            scope.currentItemTempObj = angular.copy(scope.profileDetail);
+                        } else {
+                            scope.profileDetail = angular.copy(scope.currentItemTempObj);
+                            scope.cutomerTypes = scope.profileDetail.tags;
+                            scope.currentItemTempObj = {};
                         }
                         scope.isShowBasicOtherInfoEditModal = !scope.isShowBasicOtherInfoEditModal;
                         if (!scope.isShowBasicOtherInfoEditModal) {
@@ -2590,6 +2619,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         if (!scope.isSocialView) {
                             scope.basicProfileViewMode = 'social';
                             scope.multipleProfile.editProfile();
+                            scope.currentItemTempObj = angular.copy(scope.profileDetail);
+                        } else {
+                            scope.profileDetail = angular.copy(scope.currentItemTempObj);
+                            scope.cutomerTypes = scope.profileDetail.tags;
+                            scope.currentItemTempObj = {};
                         }
                         scope.isSocialView = !scope.isSocialView;
                         if (!scope.isSocialView) {

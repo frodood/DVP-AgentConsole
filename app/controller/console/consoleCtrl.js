@@ -1761,8 +1761,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage) == -1) {
-            var audio = new Audio('assets/sounds/notification-1.mp3');
-            audio.play();
+           // var audio = new Audio('assets/sounds/notification-1.mp3');
+           // audio.play();
             $scope.notifications.unshift(objMessage);
             $('#notificationAlarm').addClass('animated swing');
             $scope.unredNotifications = $scope.getCountOfUnredNotifications();
