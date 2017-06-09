@@ -11,7 +11,7 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
     var getMyChatTemplates = function () {
         return $http({
             method: 'get',
-            url: baseUrls.templateUrl + "MyChatTemplates"
+            url: baseUrls.templateUrl + "TemplateService/MyChatTemplates"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -23,7 +23,7 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
     var getAvailableChatTemplates = function () {
         return $http({
             method: 'get',
-            url: baseUrls.templateUrl + "AvailableChatTemplates"
+            url: baseUrls.templateUrl + "TemplateService/AvailableChatTemplates"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -36,7 +36,7 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
 
         return $http({
             method: 'POST',
-            url: baseUrls.templateUrl + "ChatTemplate",
+            url: baseUrls.templateUrl + "TemplateService/ChatTemplate",
             data: JSON.stringify(saveValues)
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
@@ -51,7 +51,7 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
 
         return $http({
             method: 'DELETE',
-            url: baseUrls.templateUrl + "ChatTemplate/"+tempID
+            url: baseUrls.templateUrl + "TemplateService/ChatTemplate/"+tempID
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
@@ -61,6 +61,18 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
         });
 
     };
+    var getTemplatesByType = function () {
+        return $http({
+            method: 'get',
+            url: baseUrls.templateUrl + "/RenderService/TemplateByType/text"
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return undefined;
+            }
+        });
+    }
 
 
 
@@ -68,7 +80,8 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
         getMyChatTemplates: getMyChatTemplates,
         addNewChatTemplate: addNewChatTemplate,
         RemoveChatTemplate: RemoveChatTemplate,
-        getAvailableChatTemplates: getAvailableChatTemplates
+        getAvailableChatTemplates: getAvailableChatTemplates,
+        getTemplatesByType: getTemplatesByType
     }
 });
 
