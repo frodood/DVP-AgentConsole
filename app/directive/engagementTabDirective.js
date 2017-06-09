@@ -1959,13 +1959,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.customerType = response.Result;
                         scope.customerType.forEach(function (tag) {
                             tag.cutomerType = tag.name;
-
                         });
                     }
                     else {
                         scope.customerType = [];
                         scope.showAlert("Customer types", "error", "Fail To load Customer types.");
-
                     }
                 }, function (error) {
                     scope.customerType = [];
