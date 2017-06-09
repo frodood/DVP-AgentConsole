@@ -2243,10 +2243,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.cropImageURL = null;
             scope.tenant = 0;
             scope.company = 0;
+            scope.agentIss="";
             scope.getCompanyTenant = function () {
                 var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
                 scope.company = decodeData.company;
                 scope.tenant = decodeData.tenant;
+                scope.agentIss = decodeData.iss;
             };
             scope.getCompanyTenant();
 
@@ -3019,6 +3021,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.isTempAdded=true;
             scope.contactData="";
             scope.isNewAttachment=false;
+            scope.paramList=[];
+            scope.isSaveDisable=false;
 
 
             scope.showTemplates = function (contact) {
@@ -3027,6 +3031,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 {
                     scope.contactData=contact;
                 }
+                else {
+                    scope.mailAttchments ={};
+                    scope.paramList={};
+                    scope.msgObj={};
+                }
+
+
             }
             scope.activateBody = function () {
                 scope.isTempAdded=!scope.isTempAdded;
@@ -3053,27 +3064,47 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             };
 
+
+
             scope.sendMessage = function (msgType,msgObj) {
+
+
+
 
 
                 var mailObj =
                     {
-                        from:'duodilani',
+                        from:scope.agentIss,
                         to:scope.contactData,
                         channel:msgType,
                         template:"",
-                        body:""
+                        body:"",
+                        parameters:{}
 
 
                     };
 
+                mailObj.parameters=profileDataParser.myProfile;
+
                 if(scope.isTempAdded)
                 {
-                    mailObj.template=msgObj.Template.content.content;
+                    mailObj.template=msgObj.Template.name;
+
+                    angular.forEach(scope.paramList,function (item) {
+                        var ParamName=item.name;
+                        mailObj.parameters[ParamName]=item.value;
+
+                    });
+
+
+                    mailObj.body="";
                 }
                 else
                 {
                     mailObj.body=msgObj.Body;
+                    mailObj.template="";
+                    mailObj.parameters={};
+
                 }
 
 
@@ -3081,17 +3112,96 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                 if(msgType=='email')
                 {
-                    var activeAttchments = scope.mailAttchments.filter(function (item) {
-                        if(item.availability)
+                    var companyInfo= authService.GetCompanyInfo();
+                    var activeAttchments = scope.mailAttchments.map(function (item) {
+                        if(item.availablity)
                         {
-                            return item;
+                            return {"name": item._file.name, "url":baseUrls.fileServiceInternalUrl+ "File/Download/" +companyInfo.tenant + "/" +companyInfo.company+"/"+item.uuid+"/"+item._file.name}
                         }
                     });
+
+
+                    mailObj.attachments=activeAttchments;
                     //send message;
+                }
+                else if(msgType=='sms')
+                {
+                    mailObj.attachments=[];
                 }
 
 
+                engagementService.sendEmailAndSms(mailObj).then(function (res) {
+
+                    if(msgType=="sms"){
+                        scope.showAlert("Success","success","SMS sent successfully");
+                    }
+                    else
+                    {
+                        scope.showAlert("Success","success","Email sent successfully");
+                    }
+                    scope.showTemplates('');
+
+
+                },function (err) {
+                    console.log("Sending Error ",err);
+                    if(msgType=="sms"){
+                        scope.showAlert("Error","error","SMS sending failed");
+                    }
+                    else
+                    {
+                        scope.showAlert("Error","error","Email sending failed");
+                    }
+                })
+
+
+            };
+
+
+
+            scope.loadParamList = function (tempObj) {
+                scope.checkParams(tempObj);
+
             }
+
+            scope.checkParams = function (tempObj) {
+                scope.paramList=[];
+                var templateContent=tempObj.content.content;
+                var splitList = templateContent.match(/({[a-zA-Z])\w+}/g);
+                //console.log(splitList);
+                //console.log(scope.template.name +" : "+splitList.length);
+
+                if(splitList)
+                {
+                    for(var i=0;i<splitList.length;i++)
+                    {
+                        console.log("name data "+splitList[i].match(/([a-zA-Z])\w+/g));
+
+                        if(splitList.indexOf({name:splitList[i].match(/([a-zA-Z])\w+/g)})==-1)
+                        {
+                            var paramData =
+                                {
+                                    name:splitList[i].match(/([a-zA-Z])\w+/g)[0]
+                                }
+                        }
+
+                        scope.paramList[i]=paramData;
+                    }
+                }
+
+
+                angular.forEach(scope.paramList,function (item) {
+
+                    if(item.name in profileDataParser.myProfile)
+                    {
+                        item.value=profileDataParser.myProfile[item.name];
+                    }
+                });
+
+
+
+
+
+            };
 
 
 
@@ -3278,6 +3388,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
         uploader.onProgressItem = function (fileItem, progress) {
             console.info('onProgressItem', fileItem, progress);
+            scope.isSaveDisable=true;
         };
         uploader.onProgressAll = function (progress) {
             console.info('onProgressAll', progress);
@@ -3294,6 +3405,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         uploader.onCompleteItem = function (fileItem, response, status, headers) {
             console.info('onCompleteItem', fileItem, response, status, headers);
             console.log("result ", response.Result);
+            scope.isSaveDisable=false;
             new PNotify({
                 title: 'File Upload!',
                 text: "Picture uploaded successfully",
@@ -3309,6 +3421,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         };
         uploader.onCompleteAll = function () {
             console.info('onCompleteAll');
+            scope.isSaveDisable=false;
         };
 
 
