@@ -40,8 +40,38 @@
                                    typeahead-show-hint="true"
                                    typeahead-min-length="0"
                                    placeholder="Select Template"
-                                   typeahead-template-url="customTemplate.html" ng-disabled="!isTempAdded">
+                                   typeahead-template-url="customTemplate.html" ng-disabled="!isTempAdded" typeahead-on-select="loadParamList(msgObj.Template)">
                             <label ng-show="isTempAdded && msgObj.Template" class="pull-right" title="{{msgObj.Template.content.content}}">preview</label>
+
+                            <div ng-show="isTempAdded && msgObj.Template">
+                                <label>Parameters</label>
+                                <div ng-slimscroll
+                                     opacity="0.1"
+                                     distance="5px"
+                                     height="50px"
+                                     width="100%"
+                                     enabled="true"
+                                     id="scrlParams">
+
+                                    <div ng-repeat="paramItem in paramList">
+
+                                        <div class="e-d-row-052017"  >
+                                            <ul class="customer-style-ul">
+                                                <li class="pull-left desc-052017 " >
+                                                    <label >{{paramItem.name}}</label>
+                                                    <input type="text" class="form-control has-feedback-left"
+                                                           ng-model="paramItem.value"
+                                                           placeholder="">
+
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
 
@@ -101,7 +131,7 @@
                     <div class="u-noti-footer">
                         <div class="pull-right" style="padding-right: 5px ; padding-bottom: 20px">
                             <button class="btn btn-sm btn-sm-noti btn-green-op btn-min-w"
-                                    ng-click="sendMessage(contactType,msgObj)">
+                                    ng-click="sendMessage(contactType,msgObj)" ng-disabled="(!msgObj.Template && !msgObj.Body) || isSaveDisable">
                                 Send
                             </button>
 
