@@ -2945,7 +2945,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 console.log(scope.profileDetail.contacts);
                 scope.phoneContact =scope.profileDetail.contacts.filter(function (item) {
 
-                    if(item.type=="Email")
+                    if(item.type.toLowerCase()=="email")
                     {
                         return item;
                     }
@@ -2957,7 +2957,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.phoneContact.push(
                         {
                             contact:scope.profileDetail.email,
-                            type:"Email",
+                            type:"email",
                             verified: true
                         }
                     )
