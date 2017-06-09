@@ -3384,7 +3384,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         uploader.onCompleteItem = function (fileItem, response, status, headers) {
             console.info('onCompleteItem', fileItem, response, status, headers);
             console.log("result ", response.Result);
-            scope.isSaveDisable = false;
+            $scope.isSaveDisable = false;
             new PNotify({
                 title: 'File Upload!',
                 text: "Picture uploaded successfully",
@@ -3400,7 +3400,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         };
         uploader.onCompleteAll = function () {
             console.info('onCompleteAll');
-            scope.isSaveDisable = false;
+            $scope.isSaveDisable = false;
         };
 
 
