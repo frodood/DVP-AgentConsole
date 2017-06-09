@@ -2211,14 +2211,17 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                     }
                                     else {
                                         scope.showAlert("Profile", "error", "Failed to load updated profile");
+                                        scope.isUpdateingProfile = false;
                                     }
                                 }, function (errUserData) {
                                     scope.showAlert("Profile", "error", "Failed to load updated profile");
+                                    scope.isUpdateingProfile = false;
                                     console.log(errUserData)
                                 });
                             }
                             else {
                                 scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                                scope.isUpdateingProfile = false;
                             }
                         }, function (err) {
                             scope.isUpdateingProfile = false;
@@ -2228,11 +2231,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     }
                     else {
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                        scope.isUpdateingProfile = false;
                     }
 
 
                 }, function (reason) {
                     // Error callback where reason is the value of the first rejected promise
+                    scope.isUpdateingProfile = false;
                     alert(value);
                 });
 
@@ -2891,8 +2896,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.phoneContact = [];
                 scope.contactType = contactType;
                 scope.isTempAdded = true;
-                scope.isNewAttachment=false;
-                scope.uploadProgress=0;
+                scope.isNewAttachment = false;
+                scope.uploadProgress = 0;
                 scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
 
                     if (item.type == "phone") {
@@ -2947,8 +2952,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.phoneContact = [];
                 scope.contactType = "email";
                 scope.isTempAdded = true;
-                scope.isNewAttachment=false;
-                scope.uploadProgress=0;
+                scope.isNewAttachment = false;
+                scope.uploadProgress = 0;
 
                 console.log(scope.profileDetail.contacts);
                 scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
