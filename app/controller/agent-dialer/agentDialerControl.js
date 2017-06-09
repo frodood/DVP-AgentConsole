@@ -18,6 +18,42 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
 
     $anchorScroll();
 
+
+    //code update damith
+    var UIanimation = function () {
+        //private
+
+        //access public
+        return {
+            showCurrentDialerDetails: function () {
+                $('#dialerDetails').removeClass('display-none');
+                $('#dialerDetails').animate({
+                    height: '35',
+                    padding: '8 5 0 5'
+                }, 400);
+                $('#tblDialerWrp').animate({height: '160'}, 400);
+            },
+            hideCurrentDialerDetails: function () {
+                $('#dialerDetails').animate({
+                    height: '0',
+                    padding: '0'
+                }, 400, function () {
+                    // $('#dialerDetails').addClass('display-none');
+                    $('#tblDialerWrp').animate({height: '185'}, 400);
+                });
+            }
+        }
+    }();
+
+    $scope.goToDialer = function () {
+        $('#batchSelectScreen').animate({height: '0'}, 400, function () {
+            $('#mainDialerScreen').removeClass('display-none').addClass('fadeIn');
+            $('.batchSelectScreen').addClass('display-none');
+        });
+    };
+
+    UIanimation.hideCurrentDialerDetails();
+
     $scope.safeApply = function (fn) {
         var phase = this.$root.$$phase;
         if (phase == '$apply' || phase == '$digest') {
@@ -58,7 +94,7 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
             $('#btn-close').removeClass('display-none');
         }
         $scope.currentPage++;
-        agentDialerService.GetAllContacts(resid,$scope.BatchName, $scope.currentPage).then(function (response) {
+        agentDialerService.GetAllContacts(resid, $scope.BatchName, $scope.currentPage).then(function (response) {
             $scope.isLoading = false;
             if (response && angular.isArray(response) && response.length > 0) {
                 $('#btn-close').addClass('display-none');
@@ -71,6 +107,25 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
 
         });
     };
+
+    //
+    $scope.getAllContactScreen = function () {
+        $scope.isLoading = true;
+        $scope.currentPage++;
+        agentDialerService.GetAllContacts(resid, $scope.BatchName,
+            $scope.currentPage).then(function (response) {
+            $scope.isLoading = false;
+            if (response && angular.isArray(response) && response.length > 0) {
+                $('#btn-close').addClass('display-none');
+                response.map(function (item) {
+                    $scope.safeApply(function () {
+                        $scope.contactList.push(item);
+                    });
+                });
+            }
+
+        });
+    }
 
     //$scope.getALlPhoneContact();
 
@@ -141,33 +196,49 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
 
     $scope.startDialer = function () {
         $scope.dialerState = constants.DialerState[1];
+        $('.btnStartId').addClass('display-none');
         $('#btn-start').addClass('display-none');
         $('#btn-pause').removeClass('display-none');
-        $('#btn-stop').removeClass('display-none');
-        $('#btn-resume').addClass('display-none');
+        $('.btnStopId').removeClass('display-none');
+        $('.btnResumeId').addClass('display-none');
         $('#btn-update').addClass('display-none');
         $('#btn-close').addClass('display-none');
 
-        //makeCall();
+        $('#btn-stop').addClass('display-none');
+        $('#btn-resume').addClass('display-none');
+
+        UIanimation.showCurrentDialerDetails();
+
+        makeCall();
 
     };
 
     $scope.stopDialer = function () {
-        $('#btn-start').removeClass('display-none');
+        $('.btnStartId').removeClass('display-none');
+        $('.btnStopId').addClass('display-none');
+        $('.btnResumeId').addClass('display-none');
+
+        $('#AgentDialerUi').addClass('display-none');
         $('#btn-pause').addClass('display-none');
+        $('#btn-start').removeClass('display-none');
         $('#btn-stop').addClass('display-none');
         $('#btn-resume').addClass('display-none');
-        $('#AgentDialerUi').addClass('display-none');
         $scope.dialerState = constants.DialerState[2];
         $scope.currentItem = {};
+
+        UIanimation.hideCurrentDialerDetails();
     };
 
     $scope.pauseDialer = function () {
-        $('#btn-start').addClass('display-none');
+        $('.btnStartId').addClass('display-none');
         $('#btn-pause').addClass('display-none');
+        $('.btnStopId').addClass('display-none');
+        $('.btnResumeId').removeClass('display-none');
+        $('#btn-update').removeClass('display-none');
+
+        $('#btn-start').addClass('display-none');
         $('#btn-stop').addClass('display-none');
         $('#btn-resume').removeClass('display-none');
-        $('#btn-update').removeClass('display-none');
         $scope.dialerState = constants.DialerState[3];
     };
 

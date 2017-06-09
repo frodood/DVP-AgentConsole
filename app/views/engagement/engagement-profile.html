@@ -75,6 +75,15 @@
                     </ul>
                 </div>
                 <!-- Company  -->
+
+                <!-- profile avatar -->
+                <div class="e-d-row-052017" style="padding-bottom: 20px;padding-top: 20px;">
+                    <div class="user-p-image-052017">
+                        <img src="assets/img/avatar/profileAvatar.png"
+                             ng-src="{{profileDetail.avatar}}"
+                             width="80">
+                    </div>
+                </div>
                 <div class="e-d-row-052017">
                     <ul class="customer-style-ul">
                         <li class="pull-left desc-052017"><i class="fa fa-building"></i> Company</li>
@@ -213,39 +222,39 @@
 
             <!--&lt;!&ndash; social contact &ndash;&gt;-->
             <!--<div class="user-p-e-wrapper-052017 animated fadeIn">-->
-                <!--<div class="header-052017 inline-h">-->
-                    <!--<ul>-->
-                        <!--<li class="pull-left animated ">-->
-                            <!--SOCIAL CONTACT-->
-                        <!--</li>-->
-                        <!--<li class="pull-right">-->
-                            <!--<div class="header-r-icon-052017 "-->
-                                 <!--ng-click="clickEditSocialContact();">-->
-                                <!--<i ng-if="!isSocialView"-->
-                                   <!--class="fa fa-pencil"></i>-->
-                            <!--</div>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; facebook &ndash;&gt;-->
-                <!--<div class="e-d-row-052017 ">-->
-                    <!--<ul class="customer-style-ul">-->
-                        <!--<li class="pull-left desc-052017 "><i class="fa fa-facebook facebook-channel"></i> facebook</li>-->
-                        <!--<li class="pull-right value-052017" ng-if="profileDetail.facebook!=''">-->
-                            <!--{{profileDetail.facebook}}-->
-                        <!--</li>-->
-                        <!--<li class="pull-right value-052017" ng-if="profileDetail.facebook==''">-</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; twitter &ndash;&gt;-->
-                <!--<div class="e-d-row-052017 ">-->
-                    <!--<ul class="customer-style-ul">-->
-                        <!--<li class="pull-left desc-052017 "><i class="fa fa-twitter twitter-channel"></i>twitter</li>-->
-                        <!--<li class="pull-right value-052017" ng-if="profileDetail.twitter!=''">{{profileDetail.twitter}}-->
-                        <!--</li>-->
-                        <!--<li class="pull-right value-052017" ng-if="profileDetail.twitter==''">-</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
+            <!--<div class="header-052017 inline-h">-->
+            <!--<ul>-->
+            <!--<li class="pull-left animated ">-->
+            <!--SOCIAL CONTACT-->
+            <!--</li>-->
+            <!--<li class="pull-right">-->
+            <!--<div class="header-r-icon-052017 "-->
+            <!--ng-click="clickEditSocialContact();">-->
+            <!--<i ng-if="!isSocialView"-->
+            <!--class="fa fa-pencil"></i>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; facebook &ndash;&gt;-->
+            <!--<div class="e-d-row-052017 ">-->
+            <!--<ul class="customer-style-ul">-->
+            <!--<li class="pull-left desc-052017 "><i class="fa fa-facebook facebook-channel"></i> facebook</li>-->
+            <!--<li class="pull-right value-052017" ng-if="profileDetail.facebook!=''">-->
+            <!--{{profileDetail.facebook}}-->
+            <!--</li>-->
+            <!--<li class="pull-right value-052017" ng-if="profileDetail.facebook==''">-</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; twitter &ndash;&gt;-->
+            <!--<div class="e-d-row-052017 ">-->
+            <!--<ul class="customer-style-ul">-->
+            <!--<li class="pull-left desc-052017 "><i class="fa fa-twitter twitter-channel"></i>twitter</li>-->
+            <!--<li class="pull-right value-052017" ng-if="profileDetail.twitter!=''">{{profileDetail.twitter}}-->
+            <!--</li>-->
+            <!--<li class="pull-right value-052017" ng-if="profileDetail.twitter==''">-</li>-->
+            <!--</ul>-->
+            <!--</div>-->
             <!--</div>-->
 
         </div>
@@ -330,29 +339,30 @@
                 </ul>
             </div>
 
-            <div class="location-d-052017">
-                <!-- contact delete confirmation box -->
-                <div class="box-confirmation-wrapper" ng-show="isCnfmBoxShow && isOtherContactEditMode">
+            <!-- contact delete confirmation box -->
+            <div class="box-confirmation-wrapper" ng-show="isCnfmBoxShow && isOtherContactEditMode">
 
-                    <!-- loading -->
-                    <div class="loading-note" ng-if="isLoadingOtherContactDelete"
-                         style="margin-top: 15%;">
-                        <svg class="spinner-container" width="40px" height="40px" viewBox="0 0 52 52">
-                            <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
-                        </svg>
-                    </div>
+                <!-- loading -->
+                <div class="loading-note" ng-if="isLoadingOtherContactDelete"
+                     style="margin-top: 15%;">
+                    <svg class="spinner-container" width="40px" height="40px" viewBox="0 0 52 52">
+                        <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+                    </svg>
+                </div>
 
-                    <div class="conf-layout" ng-if="!isLoadingOtherContactDelete">
-                        Are you sure delete contact ?
-                        <div class="cnf-btn-wrapper">
-                            <ul>
-                                <li class="cancel" ng-click="confimCancel()">Cancel</li>
-                                <li class="ok" ng-click="confimOk()">Ok</li>
-                            </ul>
-                        </div>
+                <div class="conf-layout" ng-if="!isLoadingOtherContactDelete">
+                    Are you sure delete contact ?
+                    <div class="cnf-btn-wrapper">
+                        <ul>
+                            <li class="cancel" ng-click="confimCancel()">Cancel</li>
+                            <li class="ok" ng-click="confimOk()">Ok</li>
+                        </ul>
                     </div>
                 </div>
-                <!-- end -->
+            </div>
+            <!-- end -->
+            <div class="location-d-052017">
+
 
                 <div class="e-d-row-052017"
                      ng-repeat="contact in profileDetail.contacts track by $index">

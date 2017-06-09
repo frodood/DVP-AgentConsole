@@ -4,6 +4,21 @@
     <div class="user-edit-wrapper">
         <!-- subject -->
         <form name="newProfileForm" novalidate>
+
+            <!-- profile avatar -->
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <div class="user-p-image-052017">
+                        <img src="assets/img/avatar/profileAvatar.png"
+                             ng-src="{{profileDetail.avatar}}"
+                             width="80">
+                        <div class="avatar-e-wrapper animated slideInUp"
+                             ng-click="viewCropArea()">
+                            <i class="ti-camera"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- title -->
             <div class="col-lg-12">
                 <div class="form-group"

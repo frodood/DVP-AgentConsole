@@ -4740,27 +4740,27 @@ div.btn-group.dropdown {
 }
 
 .selected-this.low {
-    background: #ffa918 !important;
+    background: #8298ae !important;
     color: #fff !important;
-    border: 1px solid #ffa918 !important;
+    border: 1px solid #8298ae !important;
 }
 
 .selected-this.normal {
-    background: #37dba9 !important;
+    background: #00cd73 !important;
     color: #fff !important;
-    border: 1px solid #37dba9 !important;
+    border: 1px solid #00cd73 !important;
 }
 
 .selected-this.high {
-    background: #fb5f21 !important;
+    background: #ff8c00 !important;
     color: #fff !important;
-    border: 1px solid #fb5f21 !important;
+    border: 1px solid #ff8c00 !important;
 }
 
 .selected-this.urgent {
-    background: #4383c4 !important;
+    background: #EA3B3B !important;
     color: #fff !important;
-    border: 1px solid #4383c4 !important;
+    border: 1px solid #EA3B3B !important;
 }
 
 .selected-this-btn {
@@ -9342,21 +9342,21 @@ ul.renote-color-btn > li {
     height: 25px;
     overflow: hidden;
     border-radius: 50%;
-    background: #fff;
+    background: #8fd539;
     text-align: center;
     cursor: pointer;
-    top: 64px;
+    top: 52px;
     left: 28px;
-    padding-top: 0px;
+    padding-top: 7px;
 }
 
 .avatar-e-wrapper > i {
-    color: #000;
+    color: #223448;
     font-size: 12px;
 }
 
 .avatar-e-wrapper > i:hover {
-    color: #FFAA00;
+    color: #fff;
 }
 
 .user-p-image-052017.default-img {
@@ -10814,6 +10814,7 @@ tr.ticket-tbl-row-052017:nth-child(even) {
 
 .txt-input-052017,
 .form-control {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif !important;
     /* Rectangle 6: */
     border: 1px solid #EAE6E6;
     border-radius: 6px;
@@ -11145,47 +11146,51 @@ tags-input .tags {
 
 .user-p-mp-wrapper-052017 {
     width: 100%;
-    min-height: 600px;
+    height: 550px;
     background: #ffffff;
     margin-top: 50px;
     margin-bottom: 10px;
-    border-radius: 10px;
-
+    /* border-radius: 10px; */
 }
 
 .multiple-p-left-w-052017 {
     width: 100%;
-    min-height: 600px;
     overflow: hidden;
     position: relative;
-    border-right: 1px solid rgba(138, 142, 134, 0.1);
-    background: rgba(145, 211, 70, 0.07);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    /* border-right: 0px solid rgba(138, 142, 134, 0.1); */
+    /* background: rgba(145, 211, 70, 0.07); */
+    /* border-top-left-radius: 10px; */
+    /* border-bottom-left-radius: 10px; */
+    border-top: 1px solid #f8f8fa;
 }
 
 .create-new-wrp-052017 {
-    width: 200px;
+    width: 100%;
     overflow: hidden;
     position: relative;
-    margin: 185px auto;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .multiple-p-right-w-052017 {
     width: 100%;
-    height: 600px;
+    height: 550px;
     overflow: hidden;
     position: relative;
+    background: #ffffff;
+    border-radius: 0px;
+    border-left: 1px solid #eee;
 }
 
 .icon-lg-center-052017 {
-    width: 120px;
-    height: 120px;
+
     margin: 0 auto;
-    overflow: hidden;
+    /*overflow: hidden;*/
     position: relative;
     text-align: center;
     cursor: pointer;
+    display: inline-block;
+    padding-top: 13px;
 }
 
 .lg-text-052017 {
@@ -11195,13 +11200,15 @@ tags-input .tags {
     font-size: 14px;
     color: #AEE776;
     letter-spacing: 0.74px;
+    display: inline-block;
 }
 
 .m-p-header-052017 {
     width: 100%;
-    height: 40px;
+    height: 56px;
     overflow: hidden;
     padding: 10px;
+    border-bottom: 1px solid #eee;
 }
 
 .body-mp-052017 {
@@ -11209,7 +11216,7 @@ tags-input .tags {
     height: 545px;
     overflow: hidden;
     overflow-x: auto;
-    margin-top: 15px;
+    /*margin-top: 15px;*/
     border-bottom-right-radius: 10px;
 }
 
@@ -11546,7 +11553,7 @@ tags-input .tags {
 .dialer-052017-body {
     width: 100%;
     height: 195px;
-    padding: 15px;
+    padding: 5px 15px;
 }
 
 .dialer-052017-tbl-wrp {
@@ -11600,6 +11607,10 @@ tr.t-dialer-b > td {
     margin: 0 auto;
 }
 
+.dialer-icon-wrp > li {
+    display: inline-block;
+}
+
 .contact-block {
     background: beige;
     border-radius: 10px;
@@ -11613,7 +11624,78 @@ tr.t-dialer-b > td {
     list-style-type: none;
 }
 
+.play-wrp {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+}
+
 .dialer-btn {
     cursor: pointer;
 }
 
+.dialer-052017.batch-num {
+    position: absolute;
+    top: 7px;
+    right: 19px;
+
+}
+
+.border-right {
+    border-right: 1px solid #e3e3e4;
+    padding-right: 17px;
+}
+
+.dialer-052017.dialer-details {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: #ffffff;
+    margin-bottom: 6px;
+    border: 0px solid #F8F8F8;
+
+}
+
+.dialer-052017.dialer-details > ul > li {
+    display: inline-block;
+    padding-right: 10px;
+}
+
+.dialer-052017 .select-batch-wrp {
+
+}
+
+.batch-num-wrp {
+    width: 100%;
+    overflow: hidden;
+    padding-top: 45px;
+}
+
+.center-lg-select {
+    width: 300px;
+    height: 45px;
+    margin: 0 auto;
+}
+
+.batch-select-btn-wrp {
+    width: 100%;
+    text-align: center;
+    padding-top: 8px;
+}
+
+.btn-batch-selected {
+    width: 300px;
+    margin: 0 auto
+}
+
+.dialer-052017.current-item {
+    font-family: 'AvenirNextLTPro-Bold;', sans-serif;
+    font-size: 13px;
+    color: #B6B8B5;
+}
+
+.profile-not-found {
+    width: 210px;
+    margin: 80px auto;
+    text-align: center;
+}
