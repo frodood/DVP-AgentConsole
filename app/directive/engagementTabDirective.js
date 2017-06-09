@@ -2886,6 +2886,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                 scope.phoneContact=[];
                 scope.contactType=contactType;
+                scope.isTempAdded=true;
                 scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
 
                     if (item.type == "phone") {
@@ -2941,6 +2942,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                 scope.phoneContact=[];
                 scope.contactType="email";
+                scope.isTempAdded=true;
 
                 console.log(scope.profileDetail.contacts);
                 scope.phoneContact =scope.profileDetail.contacts.filter(function (item) {
