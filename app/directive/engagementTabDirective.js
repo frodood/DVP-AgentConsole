@@ -3032,7 +3032,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.contactData=contact;
                 }
                 else {
-                    scope.mailAttchments ={};
+                    scope.mailAttchments =[];
                     scope.paramList={};
                     scope.msgObj={};
                 }
@@ -3110,7 +3110,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
 
 
-                if(msgType=='email')
+                if(msgType.toLowerCase()=='email')
                 {
                     var companyInfo= authService.GetCompanyInfo();
                     var activeAttchments = scope.mailAttchments.map(function (item) {
