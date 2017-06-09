@@ -8,7 +8,7 @@
                 AUTO NUMBER DIALER
             </li>
             <li class="pull-right" id="btn-close">
-                <div ng-click="closeDialer(); "
+                <div ng-click="stopDialer(); "
                      class="header-r-icon-052017 with-text">
                     <i class="ti-close"></i>
                 </div>
@@ -25,7 +25,7 @@
                 <select
                         class="form-control txt-input-052017 center-lg-select"
                         ng-model="BatchName"
-                        ng-change="getAllContactScreen();"
+                        ng-change="getALlPhoneContactByBatchName();"
                         ng-options="opt as opt for opt in BatchNames track by opt" required>
                     <option disabled value=''>Choose here</option>
                 </select>
@@ -58,25 +58,41 @@
                 <li class="pull-left blue-header border-right">
                     AUTO NUMBER DIALER
                 </li>
-                <li>
+                <li class="pull-left">
+                    <select style="width: 223px;"
+                            class="dialer-052017 batch-num form-control txt-input-052017" id="Extensions"
+                            ng-model="BatchName"
+                            ng-change="getALlPhoneContactByBatchName();"
+                            ng-options="opt as opt for opt in BatchNames track by opt" required>
+                        <option disabled value=''>Choose batch name here</option>
+                    </select>
+                </li>
+                <!--<li class="pull-left">
                     <div class="dialer-052017 batch-num">
                         <div class="form-group">
                             <select style="width: 223px;"
                                     class="form-control txt-input-052017" id="Extensions"
                                     ng-model="BatchName"
-                                    ng-change="getALlPhoneContact();"
+                                    ng-change="getALlPhoneContactByBatchName();"
                                     ng-options="opt as opt for opt in BatchNames track by opt" required>
                                 <option disabled value=''>Choose batch name here</option>
                             </select>
                         </div>
                     </div>
+                </li>-->
+
+                <li class="pull-right" id="btn-close-dialer">
+                    <div ng-click="stopDialer(); "
+                         class="header-r-icon-052017 with-text">
+                        <i class="ti-close"></i>
+                    </div>
                 </li>
-                <!--<li class="pull-right" id="btn-close">-->
-                <!--<div ng-click="reminderMe.close()"-->
-                <!--class="header-r-icon-052017 with-text">-->
-                <!--<i class="ti-close"></i>-->
-                <!--</div>-->
-                <!--</li>-->
+                <!--<li class="pull-right" id="btn-close1">
+                <div ng-click="reminderMe.close()"
+                class="header-r-icon-052017 with-text">
+                <i class="ti-close"></i>
+                </div>
+                </li>-->
             </ul>
         </div>
 
@@ -146,7 +162,7 @@
                 </ul>
             </div>
 
-            <div id="tblDialerWrp"
+            <div ng-show="contactList.length" id="tblDialerWrp"
                  slimscroll="{height: '190px',
                                     railVisible: true,
                                     color: '#8A8E86',
@@ -175,6 +191,18 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="dialer-052017-tbl-wrp tbDialerWrpId" ng-hide="contactList.length">
+
+                <div class="table" ng-hide="isLoading">
+                    No Data...
+                </div>
+
+                <div class="table" ng-show="isLoading">
+                    Please Wait...
+                </div>
+
+            </div>
         </div>
 
         <div class="dialer-052017-footer">
@@ -195,15 +223,11 @@
                     </div>
                 </li>
 
-                <!--<li>-->
-                <!--<div id="btn-resume"-->
-                <!--class="dialer-btn play-wrp display-none">-->
-                <!--<img src="assets/img/stop.png"-->
-                <!--width="50">-->
-                <!--</div>-->
-                <!--</li>-->
+
             </ul>
         </div>
+
+
     </div>
 
 </section>

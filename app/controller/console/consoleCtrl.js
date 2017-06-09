@@ -240,6 +240,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         openAgentDialer: function () {
             $('#AgentDialerUi').addClass('agent-d-wrapper-0522017 fadeIn').removeClass('display-none');
+            $('#btn-close-dialer').removeClass('display-none');
             $rootScope.$emit('dialnextnumber', undefined);
             $scope.agentDialerOn = true;
         },
