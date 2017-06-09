@@ -18,7 +18,7 @@ agentApp.directive('scrolly', function () {
 });
 
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices) {
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices,templateService,FileUploader,fileService) {
     return {
         restrict: "EA",
         scope: {
@@ -44,6 +44,74 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
         link: function (scope, element, attributes) {
 
             //update code damith
+            scope.mailAttchments =[];
+            scope.file = {};
+            scope.uploadProgress = 0;
+            scope.file.Category = "EMAIL_ATTACHMENTS";
+            var uploader = scope.uploader = new FileUploader({
+                url: fileService.UploadUrl,
+                headers: fileService.Headers
+            });
+
+
+            uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                console.info('onWhenAddingFileFailed', item, filter, options);
+            };
+            uploader.onAfterAddingFile = function (fileItem) {
+                console.info('onAfterAddingFile', fileItem);
+                fileItem.upload();
+
+            };
+            uploader.onAfterAddingAll = function (addedFileItems) {
+
+
+                console.info('onAfterAddingAll', addedFileItems);
+            };
+            uploader.onBeforeUploadItem = function (item) {
+
+                item.formData.push({'fileCategory': scope.file.Category});
+                console.info('onBeforeUploadItem', item);
+            };
+            uploader.onProgressItem = function (fileItem, progress) {
+                console.info('onProgressItem', fileItem, progress);
+                scope.uploadProgress = progress;
+                if (scope.uploadProgress == 100) {
+
+
+                }
+            };
+            uploader.onProgressAll = function (progress) {
+                console.info('onProgressAll', progress);
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                console.info('onSuccessItem', fileItem, response, status, headers);
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {
+                console.info('onErrorItem', fileItem, response, status, headers);
+                scope.showAlert("Attachment", "error", "Uploading failed");
+                scope.uploadProgress = 0;
+            };
+            uploader.onCancelItem = function (fileItem, response, status, headers) {
+                console.info('onCancelItem', fileItem, response, status, headers);
+            };
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {
+                console.info('onCompleteItem', fileItem, response, status, headers);
+                if (response.IsSuccess) {
+
+                    fileItem.uuid=response.Result;
+                    fileItem.availablity=true;
+                    scope.mailAttchments.push(fileItem);
+
+                }
+            };
+            uploader.onCompleteAll = function () {
+                console.info('onCompleteAll');
+                scope.showAlert("Attachment", "success", "Successfully uploaded");
+
+            };
+
+
+
             var updateUserMapLocation = function () {
                 if (scope.profileDetail.address.street || scope.profileDetail.address.city) {
                     locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
@@ -2806,14 +2874,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
 
             scope.phoneContact = [];
+            scope.contactType="";
 
             scope.viewCallModal = function () {
                 scope.showInteractionModal = !scope.showInteractionModal;
             }
 
-            scope.showCallOptions = function () {
+            scope.showCallOptions = function (contactType) {
 
-                console.log(scope.profileDetail.contacts);
+                scope.phoneContact=[];
+                scope.contactType=contactType;
                 scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
 
                     if (item.type == "phone") {
@@ -2842,7 +2912,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
 
                 if (scope.phoneContact.length == 1) {
-                    scope.makeCall(scope.phoneContact[0].contact);
+                    if(scope.contactType=='CALL')
+                    {
+                        scope.makeCall(scope.phoneContact[0].contact);
+                    }
+                    else
+                    {
+                        scope.proceedContact(scope.phoneContact[0].contact);
+                    }
+
                 }
                 else {
                     if (scope.phoneContact.length == 0) {
@@ -2856,6 +2934,166 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
 
             }
+
+            scope.showMailOptions = function () {
+
+                scope.phoneContact=[];
+                scope.contactType="email";
+
+                console.log(scope.profileDetail.contacts);
+                scope.phoneContact =scope.profileDetail.contacts.filter(function (item) {
+
+                    if(item.type=="Email")
+                    {
+                        return item;
+                    }
+
+                });
+
+                if(scope.profileDetail.email)
+                {
+                    scope.phoneContact.push(
+                        {
+                            contact:scope.profileDetail.email,
+                            type:"Email",
+                            verified: true
+                        }
+                    )
+                }
+
+
+                if(scope.phoneContact.length==1)
+                {
+                    scope.showTemplates(scope.phoneContact[0].contact);
+                }
+                else
+                {
+                    if(scope.phoneContact.length==0)
+                    {
+                        scope.showAlert("Error","error","No phone number found");
+                    }
+                    else
+                    {
+                        scope.viewCallModal();
+                    }
+
+                }
+
+
+            }
+
+            scope.proceedContact = function (contact) {
+                if(contact)
+                {
+                    if(scope.contactType=="CALL")
+                    {
+                        scope.makeCall(contact);
+                    }
+                    else
+                    {
+                        scope.showTemplates(contact);
+                    }
+                }
+            }
+
+            scope.MessageTemplates=[];
+
+
+            scope.loadTemplates = function () {
+
+                templateService.getTemplatesByType().then(function (resTemp) {
+
+                    if(resTemp)
+                    {
+                        scope.MessageTemplates=resTemp;
+                    }
+
+                },function (errTemp) {
+
+                    scope.showAlert("Error","error","Error in loading Templates");
+                });
+
+            };
+            scope.loadTemplates();
+            scope.showSMSModal=false;
+            scope.isTempAdded=true;
+            scope.contactData="";
+            scope.isNewAttachment=false;
+
+
+            scope.showTemplates = function (contact) {
+                scope.showSMSModal =!scope.showSMSModal;
+                if(contact)
+                {
+                    scope.contactData=contact;
+                }
+            }
+            scope.activateBody = function () {
+                scope.isTempAdded=!scope.isTempAdded;
+
+            }
+
+            scope.showAttchmentModule = function () {
+                scope.isNewAttachment =!scope.isNewAttachment;
+            }
+
+            scope.changeAttchStatus = function (item) {
+
+                var index=scope.mailAttchments.indexOf(item);
+
+                if(index!=-1)
+                {
+                    scope.mailAttchments[index].availablity =! scope.mailAttchments[index].availablity;
+
+
+                }
+
+
+
+
+            };
+
+            scope.sendMessage = function (msgType,msgObj) {
+
+
+                var mailObj =
+                    {
+                        from:'duodilani',
+                        to:scope.contactData,
+                        channel:msgType,
+                        template:"",
+                        body:""
+
+
+                    };
+
+                if(scope.isTempAdded)
+                {
+                    mailObj.template=msgObj.Template.content.content;
+                }
+                else
+                {
+                    mailObj.body=msgObj.Body;
+                }
+
+
+
+
+                if(msgType=='email')
+                {
+                    var activeAttchments = scope.mailAttchments.filter(function (item) {
+                        if(item.availability)
+                        {
+                            return item;
+                        }
+                    });
+                    //send message;
+                }
+
+
+            }
+
+
 
 
         }

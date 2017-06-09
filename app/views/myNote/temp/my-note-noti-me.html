@@ -11,10 +11,19 @@
 
                 {{myNoteReminder.Message.Message}}
             </h5>
-            <h6 ng-show="myNoteReminder.Message.external_user"
-                 style="padding-bottom: 10px" ng-click="openUserProfile(myNoteReminder.Message.external_user)" onmouseover="" style="cursor: pointer;">
-                Open profile
-            </h6>
+
+            <div>
+
+
+                    <label  ng-show="myNoteReminder.Message.external_user"
+                           ng-click="openUserProfile(myNoteReminder.Message.external_user)" class="attchment-clip">
+                        <h6 style="color: ghostwhite">Open profile</h6>
+
+                    </label>
+
+
+            </div>
+
 
             <div class="note-close" ng-click="myNoteNotiMe.hideMe();">
                 <i class="ti-close"></i>
