@@ -11762,6 +11762,17 @@ tr.t-dialer-b > td {
     cursor: pointer;
 }
 
+.profile-data-error{
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    font-size: 19px;
+    color: #e5e7e3;
+    position: absolute;
+    top: 111px;
+    margin: 0 auto;
+    left: 153px;
+    text-transform: uppercase;
+}
+
 /*end */
 
 /*screen break type */

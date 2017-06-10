@@ -166,7 +166,7 @@
                 <div class="e-d-row-052017">
                     <ul class="customer-style-ul">
                         <li class="pull-left desc-052017"><i class="fa fa-envelope email-channel"></i>Email</li>
-                        <li class="pull-right value-052017">
+                        <li class="pull-right value-052017" style="text-transform: lowercase;">
                             {{profileDetail.email}}
                         </li>
                     </ul>
@@ -277,7 +277,7 @@
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
         <!-- user profile channel -->
-        <div class="user-p-l-wrapper-052017 fix-h-052017">
+        <div class="user-p-l-wrapper-052017 fix-h-052017" ng-if="enggemntDetailsCount.length!=0">
             <!-- profile channel details -->
             <div class="user-c-e-wrapper-052017 animated fadeIn" style="background: #f1f6ec;padding-bottom: 5px;">
                 <div class="header-052017">
@@ -307,7 +307,7 @@
         </div>
 
         <!-- other contact details -->
-        <div class="user-p-l-wrapper-052017">
+        <div class="user-p-l-wrapper-052017" ng-if="profileDetail.contacts.length!=0">
             <!-- EDIT -->
             <div ng-include="'app/views/engagement/edit-form/edit-other-contact.html'"></div>
 
@@ -376,7 +376,7 @@
                             <i class="fa fa-address-book viber-channel" ng-if="contact.type=='viber'"></i>
                             {{contact.type}}
                         </li>
-                        <li class="pull-right value-052017">
+                        <li class="pull-right value-052017" style="text-transform: lowercase;">
                             {{contact.contact}}
                             <div class="right-icon-delete"
                                  ng-if="isOtherContactEditMode"

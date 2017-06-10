@@ -2046,8 +2046,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.profileDetail = response;
                         scope.showNewProfile = false;
 
+                        //clear all
                         scope.ticketList = [];
                         scope.engagementsList = [];
+                        scope.recentTicketList = [];
+                        scope.reventNotes = [];
+                        scope.enggemntDetailsCount = [];
+                        scope.ExternalUserTicketCounts = [];
+
                         //scope.GetProfileHistory(scope.profileDetail._id);
                         scope.loadNextEngagement();
                         if (scope.exProfileId) {
@@ -2262,7 +2268,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.changeAvatarURL = function (fileID) {
 
                 if (scope.isEditCurrentProfile) {
-                    scope.profileDetail.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
+                    if (scope.profileDetail) {
+                        scope.profileDetail.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
+                    }
                 }
 
                 if (fileID) {
@@ -2333,7 +2341,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 scope.newProfile.avatar = resNewProfile.Result.avatar;
                                 //alert(scope.newProfile.avatar);
                                 for (var i = 0; i < scope.newProfile.tags.length; i++) {
-                                    scope.cutomerTypes[i] = {"cutomerType": scope.newProfile.tags[i]};
+                                    if (scope.newProfile.tags[i]) {
+                                        scope.cutomerTypes[i] = {"cutomerType": scope.newProfile.tags[i]};
+                                    }
+
                                 }
 
                                 var date = moment(scope.profileDetail.birthday);
@@ -3365,7 +3376,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
         uploader.onProgressItem = function (fileItem, progress) {
             console.info('onProgressItem', fileItem, progress);
-            scope.isSaveDisable = true;
+            $scope.isSaveDisable = true;
         };
         uploader.onProgressAll = function (progress) {
             console.info('onProgressAll', progress);
@@ -3407,7 +3418,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             uploader.clearQueue();
             $scope.isUploadDisable = true;
             document.getElementById("cropedArea").src = "";
-        }
+        };
         $scope.showMe = function () {
             alert("showMe");
 
