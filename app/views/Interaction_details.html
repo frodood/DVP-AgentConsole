@@ -36,16 +36,17 @@
                                  width="100%"
                                  enabled="true"
                                  id="scrlActions">
+                                <ul class="customer-style-ul">
+                                    <div ng-repeat="contactObj in phoneContact">
 
-                                <div ng-repeat="contactObj in phoneContact">
+                                        <div class="e-d-row-052017 contact-action" ng-click="proceedContact(contactObj.contact)" >
 
-                                    <div class="e-d-row-052017 contact-action" >
-                                        <ul class="customer-style-ul">
-                                            <li class="pull-left desc-052017 " ng-click="proceedContact(contactObj.contact)" >{{contactObj.contact}}</li>
+                                            <li class="pull-left desc-052017 " >{{contactObj.contact}}</li>
 
-                                        </ul>
+
+                                        </div>
                                     </div>
-                                </div>
+                                </ul>
 
 
                             </div>
