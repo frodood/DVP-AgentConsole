@@ -2046,8 +2046,14 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.profileDetail = response;
                         scope.showNewProfile = false;
 
+                        //clear all
                         scope.ticketList = [];
                         scope.engagementsList = [];
+                        scope.recentTicketList = [];
+                        scope.reventNotes = [];
+                        scope.enggemntDetailsCount = [];
+                        scope.ExternalUserTicketCounts = [];
+
                         //scope.GetProfileHistory(scope.profileDetail._id);
                         scope.loadNextEngagement();
                         if (scope.exProfileId) {
@@ -2262,7 +2268,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.changeAvatarURL = function (fileID) {
 
                 if (scope.isEditCurrentProfile) {
-                    scope.profileDetail.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
+                    if (scope.profileDetail) {
+                        scope.profileDetail.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
+                    }
                 }
 
                 if (fileID) {
