@@ -2047,12 +2047,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.showNewProfile = false;
 
                         //clear all
-                        //scope.ticketList = [];
-                        //scope.engagementsList = [];
-                        //scope.recentTicketList = [];
-                        //scope.reventNotes = [];
-                        //scope.enggemntDetailsCount = [];
-                        //scope.ExternalUserTicketCounts = [];
+                        scope.ticketList = [];
+                        scope.engagementsList = [];
+                        scope.recentTicketList = [];
+                        scope.reventNotes = [];
+                        scope.enggemntDetailsCount = [];
+                        scope.ExternalUserTicketCounts = [];
 
                         scope.GetProfileHistory(scope.profileDetail._id);
                         //scope.loadNextEngagement();
