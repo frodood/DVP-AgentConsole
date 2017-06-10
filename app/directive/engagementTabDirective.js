@@ -2333,7 +2333,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 scope.newProfile.avatar = resNewProfile.Result.avatar;
                                 //alert(scope.newProfile.avatar);
                                 for (var i = 0; i < scope.newProfile.tags.length; i++) {
-                                    if(scope.newProfile.tags[i]){
+                                    if (scope.newProfile.tags[i]) {
                                         scope.cutomerTypes[i] = {"cutomerType": scope.newProfile.tags[i]};
                                     }
 
@@ -3368,7 +3368,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
         uploader.onProgressItem = function (fileItem, progress) {
             console.info('onProgressItem', fileItem, progress);
-            scope.isSaveDisable = true;
+            $scope.isSaveDisable = true;
         };
         uploader.onProgressAll = function (progress) {
             console.info('onProgressAll', progress);
@@ -3410,7 +3410,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             uploader.clearQueue();
             $scope.isUploadDisable = true;
             document.getElementById("cropedArea").src = "";
-        }
+        };
         $scope.showMe = function () {
             alert("showMe");
 
