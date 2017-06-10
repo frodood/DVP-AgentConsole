@@ -2333,7 +2333,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 scope.newProfile.avatar = resNewProfile.Result.avatar;
                                 //alert(scope.newProfile.avatar);
                                 for (var i = 0; i < scope.newProfile.tags.length; i++) {
-                                    scope.cutomerTypes[i] = {"cutomerType": scope.newProfile.tags[i]};
+                                    if(scope.newProfile.tags[i]){
+                                        scope.cutomerTypes[i] = {"cutomerType": scope.newProfile.tags[i]};
+                                    }
+
                                 }
 
                                 var date = moment(scope.profileDetail.birthday);
