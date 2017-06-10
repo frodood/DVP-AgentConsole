@@ -233,6 +233,8 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
         $('#btn-start').removeClass('display-none');
         $('#btn-stop').addClass('display-none');
         $('#btn-resume').addClass('display-none');
+        $('#mainDialerScreen').addClass('display-none');
+        $('.batchSelectScreen').removeClass('display-none');
         $scope.dialerState = constants.DialerState[2];
         $scope.currentItem = {};
 
