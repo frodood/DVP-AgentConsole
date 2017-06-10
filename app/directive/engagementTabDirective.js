@@ -1725,7 +1725,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
 
                 if (scope.profileDetail) {
-
+                    scope.isEnagagementOpen = true;
                     scope.GetProfileHistory(scope.profileDetail._id);
                     scope.profileLoadin = false;
                     scope.showMultiProfile = false;
@@ -1785,12 +1785,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                 } else {
                     if (category === 'direct') {
+                        scope.isEnagagementOpen = true;
                         scope.createNProfile();
                     } else {
+                        scope.isEnagagementOpen = false;
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                            scope.isEnagagementOpen = true;
                             scope.profileDetails = response;
                             loadUserData();
                         }, function (err) {
+                            scope.isProfileFound = false;
                             scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
                         });
                         /* if(scope.channel === 'chat'){
