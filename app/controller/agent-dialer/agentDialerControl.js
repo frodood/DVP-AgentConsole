@@ -41,6 +41,7 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
                     // $('#dialerDetails').addClass('display-none');
                     $('#tblDialerWrp').animate({height: '185'}, 400);
                 });
+                $('#btn-close').removeClass('display-none');
             }
         }
     }();
