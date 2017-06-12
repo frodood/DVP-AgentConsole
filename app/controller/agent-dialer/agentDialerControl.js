@@ -13,7 +13,7 @@ agentApp.constant('constants', {
 
 });
 
-agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $anchorScroll, agentDialerService, authService, constants) {
+agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $anchorScroll,$filter, agentDialerService, authService, constants) {
 
 
     $anchorScroll();
@@ -100,11 +100,30 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
             if (response && angular.isArray(response) && response.length > 0) {
                // $('#btn-close').addClass('display-none');
                 response.map(function (item) {
-                    $scope.safeApply(function () {
-                        $scope.contactList.push(item);
-                    });
+                    var n = $filter('filter')($scope.contactList, {'ContactNumber':item.ContactNumber});
+                    if(n&&n.length){
+                        console.log("Duplicate Number");
+                    }
+                    else{
+                        $scope.safeApply(function () {
+                            $scope.contactList.push(item);
+                        });
+                    }
+
+
+                    /*$scope.safeApply(function () {
+
+                       var n = $filter('filter')($scope.contactList, {'ContactNumber':item.ContactNumber});
+                       if(n&&n.length){
+                           console.log("Duplicate Number");
+                       }
+                       else{
+                           $scope.contactList.push(item);
+                       }
+
+                    });*/
                 });
-                if ($scope.contactList.length == 0) {
+                if ($scope.contactList.length <= 10) {
                     $scope.currentPage = 0;
                     $('#btn-close').removeClass('display-none');
                 }
@@ -158,6 +177,9 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
             $scope.showAlert("Agent Dialer", 'error', "Auto Update Processing. Please Try Aging Later ...");
             return;
         }
+        if ($scope.contactList.length <= 10) {
+            $scope.getALlPhoneContact();
+        }
         if ((obj.DialerState !=$scope.temp.DialerState)||(obj.OtherData !=$scope.temp.OtherData)||(obj.OtherData !=$scope.temp.OtherData)) {
             agentDialerService.UpdateContactStatus(obj).then(function (response) {
                 if (response) {
@@ -197,7 +219,8 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
                 }
             }
             else if ($scope.contactList.length === 0) {
-                $scope.stopDialer();
+                $scope.pauseDialer();
+                //$('#btn-stop').removeClass('display-none');
             }
         });
 
@@ -231,7 +254,7 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
 
         }
 
-        if ($scope.contactList.length <= 10) {
+        if ($scope.contactList.length == 10) {
             $scope.getALlPhoneContact();
         }
 
