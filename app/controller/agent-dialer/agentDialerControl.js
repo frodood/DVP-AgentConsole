@@ -140,14 +140,38 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
 
     $scope.updateContact = function (obj) {
         agentDialerService.UpdateContact(obj).then(function (response) {
-            if(response)
+            console.log(response);
+            $scope.isAutoUpdateDone = true;
+            /*if(response)
             {
                 $scope.showAlert("Agent Dialer", 'success', "Successfully Update..");
             }
             else{
                 $scope.showAlert("Agent Dialer", 'error', "Fail To Update.");
-            }
+            }*/
         });
+    };
+
+    $scope.updateContactStatus = function (obj) {
+        if(!$scope.isAutoUpdateDone){
+            $scope.showAlert("Agent Dialer", 'error', "Auto Update Processing. Please Try Aging Later ...");
+            return;
+        }
+        if ((obj.DialerState !=$scope.temp.DialerState)||(obj.OtherData !=$scope.temp.OtherData)||(obj.OtherData !=$scope.temp.OtherData)) {
+            agentDialerService.UpdateContactStatus(obj).then(function (response) {
+                if (response) {
+                    $scope.showAlert("Agent Dialer", 'success', "Successfully Update.");
+
+                }
+                else {
+                    $scope.showAlert("Agent Dialer", 'error', "Fail To Update.");
+
+                }
+            });
+        }
+        else{
+            $scope.showAlert("Agent Dialer", 'error', "Existing Data Has All Ready Been Saved.");
+        }
     };
 
     $scope.dialerState = constants.DialerState[2];
@@ -179,20 +203,33 @@ agentApp.controller('agentDialerControl', function ($rootScope, $scope, $http, $
     };
 
 
+    $scope.isAutoUpdateDone = false;
+    $scope.temp = {};
     $rootScope.$on('dialnextnumber', function (events, args) {
         if ($scope.currentItem.ContactNumber) {
             try {
-                var temp = {};
-                angular.copy($scope.currentItem, temp);
-                $scope.updateContact(temp);
+                $scope.isAutoUpdateDone = false;
+                angular.copy($scope.currentItem, $scope.temp);
+                $scope.updateContact($scope.temp);
             } catch (e) {
                 console.log(e);
             }
         }
 
-        if ($scope.dialerState === constants.DialerState[1]) {
+        /*if ($scope.dialerState === constants.DialerState[1]) {
             makeCall();
+        }*/
+        switch($scope.dialerState) {
+            case constants.DialerState[1]:
+                makeCall();
+                break;
+            case constants.DialerState[2]:
+                $scope.HeaderDetails();
+                break;
+            default:
+
         }
+
         if ($scope.contactList.length <= 10) {
             $scope.getALlPhoneContact();
         }
