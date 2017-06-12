@@ -3945,11 +3945,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         if (data.Result.Mode === "Outbound") {
                             $('#userStatus').addClass('offline').removeClass('online');
                             $('#Outbound').addClass('font-color-green bold');
+                            $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
                             $scope.currentModeOption = "Outbound";
                             return;
                         } else if (data.Result.Mode === "Inbound") {
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Inbound').addClass('font-color-green bold');
+                            $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
                             $scope.currentModeOption = "Inbound";
                             return;
                         } else {
