@@ -9,7 +9,7 @@ agentApp.factory('agentDialerService', function ($http, baseUrls) {
             method: 'GET',
             url: baseUrls.agentDialerUrl + "Resource/"+resourceId+"/Numbers",
             params: {
-                StartDate: new Date(),
+                StartDate: new Date().toISOString(),
                 pageNo: pageNo,
                 rowCount: 20,
                 BatchName:batchName
