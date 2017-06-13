@@ -1566,6 +1566,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentFound = function (data) {
 
         console.log("agentFound");
+        /* var values = data.Message.split("|");
+        var direction = values[7].toLowerCase();
+        var notifyData = {
+            company: data.Company,
+            direction: values[7],
+            channelFrom: direction=== 'inbound' ? values[3]:values[5],
+            channelTo: direction=== 'inbound' ? values[5]:values[3],
+            channel: 'call',
+            skill: values[6],
+            sessionId: values[1],
+            displayName: values[4]
+        };*/
         var values = data.Message.split("|");
         var notifyData = {
             company: data.Company,
@@ -1577,7 +1589,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sessionId: values[1],
             displayName: values[4]
         };
-
         //agent_found|c8e009d8-4e31-4685-ab57-2315c69854dd|60|18705056580|Extension 18705056580|94112375000|ClientSupport|inbound|call|duoarafath
 
         if (values.length > 8) {
