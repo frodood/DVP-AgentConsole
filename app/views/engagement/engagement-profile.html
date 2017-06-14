@@ -307,10 +307,20 @@
         </div>
 
         <!-- other contact details -->
-        <div class="user-p-l-wrapper-052017" ng-if="profileDetail.contacts.length!=0">
+        <div class="user-p-l-wrapper-052017">
             <!-- EDIT -->
             <div ng-include="'app/views/engagement/edit-form/edit-other-contact.html'"></div>
 
+            <!-- contact not found -->
+            <div class="contact-d-nf-wrapper-052017"
+                 ng-if="profileDetail.contacts.length==0">
+                <div class="new-note-wrapper-icon" ng-click="clickEditShowOtherContact();">
+                    <img src="assets/img/new-contact.png" width="100 ">
+                </div>
+                <div class="error-msg note-empty-text-052017" ng-click="clickEditShowOtherContact();">
+                    Create New Contact
+                </div>
+            </div>
             <div class="header-052017 inline-h">
                 <ul>
                     <li class="pull-left">
@@ -326,7 +336,8 @@
                                class="fa fa-close"></i>
                         </div>
                     </li>
-                    <li class="pull-right">
+                    <li class="pull-right"
+                        ng-if="profileDetail.contacts.length!=0">
                         <div class="header-r-icon-052017"
                              ng-if="!isOtherContactView"
                              ng-click="clickDeleteContact();">

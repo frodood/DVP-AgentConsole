@@ -9,7 +9,7 @@ agentApp.factory('agentDialerService', function ($http, baseUrls) {
             method: 'GET',
             url: baseUrls.agentDialerUrl + "Resource/"+resourceId+"/Numbers",
             params: {
-                StartDate: new Date(),
+                StartDate: new Date().toISOString(),
                 pageNo: pageNo,
                 rowCount: 20,
                 BatchName:batchName
@@ -35,6 +35,16 @@ agentApp.factory('agentDialerService', function ($http, baseUrls) {
         });
     };
 
+    var updateContactStatus = function (obj) {
+        return $http({
+            method: 'PUT',
+            data: obj,
+            url: baseUrls.agentDialerUrl + "Number/"+obj.AgentDialNumberId+"/OnlyStatus"
+        }).then(function (response) {
+            return !!(response.data && response.data.IsSuccess);
+        });
+    };
+
     var headerDetails = function (resid) {
         var data = {};
         data.ResourceId = resid;
@@ -55,6 +65,7 @@ agentApp.factory('agentDialerService', function ($http, baseUrls) {
     return {
         GetAllContacts: getAllContacts,
         UpdateContact:updateContact,
+        UpdateContactStatus:updateContactStatus,
         HeaderDetails:headerDetails
     }
 });

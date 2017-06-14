@@ -25,14 +25,14 @@
                 <div class="e-d-row-052017">
                     <ul class="customer-style-ul">
                         <li class="pull-left desc-052017">channel from</li>
-                        <li class="pull-right value-052017">{{channelFrom}}</li>
+                        <li class="pull-right value-052017">{{direction=== 'inbound' ? channelFrom:channelTo}}</li>
                     </ul>
                 </div>
                 <!-- Channel to  -->
                 <div class="e-d-row-052017">
                     <ul class="customer-style-ul">
                         <li class="pull-left desc-052017">channel to</li>
-                        <li class="pull-right value-052017">{{channelTo}}</li>
+                        <li class="pull-right value-052017">{{direction=== 'inbound' ? channelTo:channelFrom}}</li>
                     </ul>
                 </div>
                 <!-- Channel -->
