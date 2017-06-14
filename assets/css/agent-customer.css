@@ -11391,7 +11391,7 @@ tags-input .tags {
 
 .top-left-tab-btn-052017 > button {
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
-    width: 130px;
+    width: 110px;
     height: 30px;
     /* Rectangle 3: */
     background: #FFFFFF;
@@ -11402,6 +11402,13 @@ tags-input .tags {
     color: #8FD539;
     letter-spacing: 0.66px;
     text-transform: uppercase;
+}
+
+.top-left-tab-btn-052017 > button:hover,
+.top-left-tab-btn-052017 > button:active,
+.top-left-tab-btn-052017 > button:focus {
+    background: #8FD539;
+    color: #fff;
 }
 
 .more-ticket-wrapper-052017 {
@@ -11790,4 +11797,43 @@ tr.t-dialer-b > td {
     bottom: 0;
     text-align: center;
     padding-top: 60px;
+}
+
+/*action btn wrapper */
+.quick-action-btn-wrp {
+    margin-top: 10px;
+}
+
+.quick-action-btn-wrp > ul {
+}
+
+.quick-action-btn-wrp > ul > li {
+    display: inline-block;
+}
+
+.action-btn-052017 {
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 100%;
+    padding-top: 2px;
+}
+
+.action-btn-052017.active {
+    background: #FFFFFF;
+    border: 1px solid #8FD539;
+}
+
+.action-btn-052017:hover,
+.action-btn-052017:active,
+.action-btn-052017:focus {
+    background: rgba(143, 213, 57, 0.1);
+}
+
+.action-btn-052017 > i {
+    color: #8FD539;
+    font-size: 13px;
 }

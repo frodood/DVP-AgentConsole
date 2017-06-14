@@ -2059,6 +2059,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.ExternalUserTicketCounts = [];
 
                         scope.GetProfileHistory(scope.profileDetail._id);
+                        updateUserMapLocation();
+
                         //scope.loadNextEngagement();
                         if (scope.exProfileId) {
                             scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
