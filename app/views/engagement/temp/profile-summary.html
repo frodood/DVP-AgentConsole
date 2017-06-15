@@ -1,0 +1,339 @@
+<div class="user-p-left-052017">
+    <div class="user-p-left-h-052017">
+        <!-- user profile header section -->
+        <section class="user-p-h-s-052017">
+            <ul>
+                <li class="profile-id-052017">
+                    ID : {{sessionId}}
+                </li>
+                <li class="pull-right right-btn-052017"
+                    ng-if="!showNewProfile">
+                    <button type="button"
+                            ng-if="!showCreateTicket"
+                            ng-click="showNewTicket();"
+                            class="btn btn-create-052017">
+                        CREATE TICKET
+                    </button>
+
+                    <button type="button"
+                            ng-if="showCreateTicket && !isBasicInfo"
+                            ng-click="closeTicketModal()"
+                            class="btn btn-create-052017">
+                        CLOSE
+                    </button>
+                </li>
+            </ul>
+
+
+        </section>
+    </div>
+
+
+    <!-- left user profile detail basic -->
+    <section class="user-p-d-052017">
+        <div class="user-p-image-052017">
+            <img src="assets/img/avatar/profileAvatar.png"
+                 ng-src="{{profileDetail.avatar}}"
+                 width="80">
+
+            <!--<div class="avatar-e-wrapper animated slideInUp"-->
+            <!--ng-click="viewCropArea()">-->
+            <!--<i class="ti-camera"></i>-->
+            <!--</div>-->
+        </div>
+        <div class="user-p-d-text-052017">
+            <ul>
+                <li class="tags">
+                    <ul class="customer-style-ul profile-tag-052017">
+                        <li ng-repeat="tag in profileDetail.tags">
+                            {{tag}}
+                        </li>
+                    </ul>
+                </li>
+                <li class="full-name">{{profileDetail.title}}.{{profileDetail.firstname}} {{profileDetail.lastname}}
+                </li>
+                <li class="l-update">Last Update : {{profileDetail.updated_at| date:'MM-dd-yyyy h:mma'}}</li>
+                <li class="p-no">Phone No : {{profileDetail.phone}}</li>
+                <li>
+                    <div class="quick-action-btn-wrp">
+                        <ul class="list-inline">
+                            <li>
+                                <div class="action-btn-052017 active"
+                                     ng-click="showCallOptions('CALL')">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="action-btn-052017 active" ng-click="showCallOptions('sms')">
+                                    <i class="fa fa-comment-o"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="action-btn-052017 active" ng-click="showMailOptions()">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </section>
+
+
+    <!-- user profile recent activity -->
+    <section class="user-p-r-a-052017">
+        <div class="header-052017">
+            RECENT ACTIVITY
+        </div>
+
+        <!-- user profile recent activity time line -->
+        <div class="user-p-tl-wrapper-052017">
+            <ul class="user-p-timeline-052017 left">
+                <li ng-repeat="recentTicket in recentTicketList">
+                    <div class="r-timeline-052017-badge left">
+                        <img src="assets/img/avatar/profileAvatar.png"
+                             ng-src="{{recentTicket.assignee.avatar}}"
+                             width="22"/>
+                    </div>
+
+                    <section class="user-p-r-timeline-panel-052017">
+                        <div class="left-t-l-wrapper-052017">
+                            <!-- recent ticket list -->
+
+                            <div class="small-t-l-header-052017">
+                                <ul>
+                                    <li class="date-052017">
+                                        <!--{{recentTicket.created_at | date:'MM-dd-yyyy'}} |-->
+                                        {{recentTicket.type}} |
+                                    </li>
+                                    <li class="close-052017">
+                                        {{recentTicket.status}}
+                                    </li>
+                                    <li class="ticket-time-ago pull-right">
+                                        <time-ago from-time='{{ recentTicket.created_at}}'
+                                                  format='MM/dd/yyyy'></time-ago>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="small-t-l-body-052017">
+                                {{recentTicket.subject | limitTo: 60}}
+                                {{recentTicket.subject.length > 60 ? '...' : ''}}
+                            </div>
+                            <div class="small-t-l-footer">
+                                <ul>
+                                    <li class="ticket-id-h">ticket id :</li>
+                                    <li class="ticket-id cursor-pointer" ng-click="gotoTicket(recentTicket)">
+                                        {{recentTicket.reference}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </li>
+
+                <!-- recent angagement list -->
+                <li ng-repeat="eng in recentEngList">
+                    <div class="r-timeline-052017-badge left">
+                        <img src="assets/img/avatar/profileAvatar.png"
+                             width="22"/>
+                    </div>
+
+                    <section class="user-p-r-timeline-panel-052017">
+                        <div class="left-t-l-wrapper-052017">
+                            <div class="small-t-l-header-052017">
+                                <ul>
+                                    <li class="date">
+                                        TO : {{eng.channel_to}} |
+                                    </li>
+                                    <li class="user-052017">
+                                        FROM : {{eng.channel_from}}
+                                    </li>
+                                    <li class="ticket-time-ago pull-right">
+                                        <time-ago from-time='{{ eng.created_at}}'
+                                                  format='MM/dd/yyyy'></time-ago>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="small-t-l-body-052017">
+                                CHANNEL : {{eng.channel}}
+                            </div>
+                        </div>
+                    </section>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!--user profile location-->
+    <!--user profile location-->
+    <section class="user-p-location-052017">
+        <div class="header-052017 inline-h">
+            <ul>
+                <li class="pull-left">
+                    LOCATION
+                </li>
+            </ul>
+        </div>
+        <!-- location name -->
+        <div class="user-p-location-d-052017"
+             ng-if="!isLocationFound">
+            <ul class="customer-style-ul">
+                <li class="location-pin-052017"><i class="ti-location-pin"></i></li>
+                <li class="location-name-052017">{{profileDetail.address.zipcode}}
+                    ,{{profileDetail.address.street}},
+                    {{profileDetail.address.city}}
+                </li>
+            </ul>
+        </div>
+        <!-- location map -->
+        <div class="user-p-l-map-052017">
+            <div class="map-canvas">
+                <iframe
+                        width="600"
+                        height="150"
+                        frameborder="0"
+                        style="border:0"
+                        ng-src="{{profileDetail.address.locationUrl}}"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- user profile default location -->
+    <!--<section class="user-p-location-052017">-->
+    <!--<div class="header-052017 inline-h">-->
+    <!--<ul>-->
+    <!--<li class="pull-left default-value">-->
+    <!--LOCATION-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; location name &ndash;&gt;-->
+    <!--<div class="user-p-location-d-052017">-->
+    <!--<ul class="customer-style-ul">-->
+    <!--<li class="location-name-052017 default-value">71 Pilgrim Avenue ,Chevy Chase, MD 20815</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; location map &ndash;&gt;-->
+    <!--<div class="user-p-l-map-052017 default-value">-->
+    <!--<div class="map-canvas "></div>-->
+    <!--</div>-->
+    <!--</section>-->
+
+
+    <!-- user profile note -->
+    <section class=" user-p-note-052017">
+        <div class="header-052017 inline-h">
+            <ul ng-if="!isNewNote">
+                <li class="pull-left">
+                    NOTES
+                </li>
+                <li ng-if="reventNotes.length!=0"
+                    class="pull-right">
+                    <div class="header-r-icon-052017 "
+                         ng-click="clickNewNote();">
+                        <i class="fa fa-plus"></i>
+                    </div>
+                </li>
+            </ul>
+
+            <ul ng-if="isNewNote">
+                <li class="pull-left animated slideInLeft">
+                    CREATE NEW NOTE
+                </li>
+                <li class="pull-right" ng-click="clickNewNote();">
+                    <div class="header-r-icon-052017 ">
+                        <i class="fa fa-close"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="user-p-tl-wrapper-052017">
+
+            <!-- add new note angagement -->
+            <div class="user-p-note-wrapper-052017" ng-if="isNewNote">
+                <div class="note-add-wrapper">
+                    <form name="userFormNote" novalidate>
+                        <div class="form-group"
+                             ng-class="{ 'has-error': userFormNote.note.$invalid && userFormNote.note.$dirty }">
+                            <label class="label-052017">note</label>
+                            <textarea id="noteBody"
+                                      type="text"
+                                      class="form-control txt-input-052017"
+                                      name="note"
+                                      ng-model="noteBody"
+                                      required/>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-block btn-save-052017"
+                                    ng-if="!isSaveNote"
+                                    ng-click="AppendNoteToEngagementSession(noteBody);"
+                                    ng-disabled="userFormNote.$invalid">save
+                            </button>
+                            <button class="btn btn-lg btn-block btn-save-052017"
+                                    disabled
+                                    ng-if="isSaveNote">please wait...
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div ng-if="reventNotes.length==0 && !isNewNote">
+                <div class="new-note-wrapper-icon" ng-click="clickNewNote();">
+                    <img src="assets/img/engagement-icon/create-new-note.png" width="100 ">
+                </div>
+                <div class="error-msg note-empty-text-052017">
+                    Create New Note
+                </div>
+            </div>
+            <ul ng-if="reventNotes.length!=0 && !isNewNote"
+                class="user-p-timeline-052017 left">
+                <li ng-repeat="note in reventNotes | limitTo:2">
+                    <div class="r-timeline-052017-badge left">
+                        <img src="assets/img/avatar/profileAvatar.png"
+                             ng-src="{{note.avatar}}"
+                             width="22"/>
+                    </div>
+
+                    <section class="user-p-r-timeline-panel-052017">
+                        <div class="left-t-l-wrapper-052017">
+                            <div class="small-t-l-header-052017">
+                                <ul>
+                                    <li class="date-052017">
+                                        AUTHOR |
+                                    </li>
+                                    <li class="user-052017">
+                                        {{note.author | limitTo: 50}}
+                                        {{note.author > 50 ? '...' : ''}}
+                                    </li>
+                                    <li class="ticket-time-ago pull-right">
+                                        <time-ago from-time='{{note.created_at}}'
+                                                  format='MM/dd/yyyy'></time-ago>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="small-t-l-body-052017">
+                                {{note.body}}
+                            </div>
+                        </div>
+                    </section>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+<div ng-include="'app/views/Interaction_details.html'"></div>
+<div ng-include="'app/views/sms_temp_selector.html'"></div>

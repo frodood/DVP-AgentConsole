@@ -1,0 +1,62 @@
+<div class="user-p-edit-wrapper-052017 animated"
+     ng-class="isOtherContactView==true ?'fadeIn':'display-none'">
+    <div class="user-edit-wrapper">
+        <!-- subject -->
+        <form name="newContactForm" novalidate>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label class="label-052017">
+                        contact type*
+                    </label>
+                    <select class="form-control txt-input-052017"
+                            required
+                            ng-model="newContact.contactType">
+                        <option value="" disabled selected>Select
+                            contact
+                            type
+                        </option>
+                        <option>phone</option>
+                        <option>email</option>
+                        <option>facebook</option>
+                        <option>twitter</option>
+                        <option>skype</option>
+                        <option>viber</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label class="label-052017"
+                           ng-class="{'validation-on-052017': newContactForm.contact.$invalid &&
+                         newContactForm.contact.$dirty }">
+                        contact
+                    </label>
+                    <input type="text"
+                           class="form-control txt-input-052017"
+                           name="contact"
+                           id="contact"
+                           ng-model="newContact.contact"
+                           required>
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <div class="form-group" style="margin-top: 20px;">
+                    <button ng-if="!isSavingOContact"
+                            class="btn btn-lg btn-block btn-save-052017"
+                            ng-disabled="newContactForm.$invalid"
+                            ng-click="addContactToUsr(newContact);">
+                        ADD
+                    </button>
+                    <button ng-if="isSavingOContact"
+                            class="btn btn-lg btn-block btn-save-052017"
+                            disabled>
+                        PLEASE WAIT...
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

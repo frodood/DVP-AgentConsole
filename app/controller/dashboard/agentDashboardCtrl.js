@@ -457,20 +457,20 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     $scope.queueDetails = {};
     var GetQueueDetails = function () {
         dashboradService.GetQueueDetails().then(function (response) {
-
-            response.forEach(function (item) {
-
-
-
-                if (item.QueueInfo.CurrentMaxWaitTime && item.QueueInfo.CurrentMaxWaitTime != 0) {
-                    var d = moment(item.QueueInfo.CurrentMaxWaitTime).valueOf();
-                    item.QueueInfo.MaxWaitingMS = d;
-                }
-
-                $scope.queueDetails[item.QueueName] = item;
+            if (response) {
+                response.forEach(function (item) {
 
 
-            });
+                    if (item.QueueInfo.CurrentMaxWaitTime && item.QueueInfo.CurrentMaxWaitTime != 0) {
+                        var d = moment(item.QueueInfo.CurrentMaxWaitTime).valueOf();
+                        item.QueueInfo.MaxWaitingMS = d;
+                    }
+
+                    $scope.queueDetails[item.QueueName] = item;
+
+
+                });
+            }
         }, function (err) {
             if (getAllRealTimeTimer) {
                 $timeout.cancel(getAllRealTimeTimer);
@@ -541,8 +541,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     $scope.$on("$destroy", function () {
         /*if (getAllRealTimeTimer) {
-            $timeout.cancel(getAllRealTimeTimer);
-        }*/
+         $timeout.cancel(getAllRealTimeTimer);
+         }*/
         if (loadRecentDataTimer) {
             $timeout.cancel(loadRecentDataTimer);
         }
@@ -766,6 +766,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     priority: priority,
                     note: note
                 };
+
+
                 console.log(note);
                 if (note) {
                     if (!note.title && !note.note) {
@@ -944,7 +946,16 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 }).config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-        chartColors: ['#223448', '#e7855e', '#098a6c', '#137899', '#6c5e8f']
+        chartColors: ['#8DA97C',
+            '#BECE60',
+            '#AEE776',
+            '#62D292',
+            '#E6F23C',
+            '#248C17',
+            '#A4C5B5',
+            '#2B9495',
+            '#CAB63C']
     });
 }]);
+
 

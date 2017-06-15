@@ -10,6 +10,11 @@
             {{myNote.note}}
         </div>
     </div>
+    <div class="row">
+        <div  ng-if="myNote.due_at">
+           <h6>{{myNote.due_at | date:'yyyy-MM-dd HH:mm:ss Z'}}</h6>
+        </div>
+    </div>
 </div>
 <div class="row">
     <ul class="note-footer">

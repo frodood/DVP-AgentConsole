@@ -17,8 +17,8 @@ agentApp.directive('scrolly', function () {
     };
 });
 
-agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, engagementService, ivrService,
-                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser,jwtHelper) {
+agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,
+                                              userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices, templateService, FileUploader, fileService) {
     return {
         restrict: "EA",
         scope: {
@@ -36,11 +36,103 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             profileDetail: "=",
             tabReference: "@",
             searchUsers: "=",
-            schemaResponseNewTicket: "="
+            schemaResponseNewTicket: "=",
+            pieChartOption: '='
         },
-        templateUrl: 'app/views/profile/engagement-call.html',
+        //templateUrl: 'app/views/profile/engagement-call.html',
+        templateUrl: 'app/views/engagement/engagement-console.html',
         link: function (scope, element, attributes) {
 
+            //update code damith
+            scope.mailAttchments = [];
+            scope.file = {};
+            scope.uploadProgress = 0;
+            scope.file.Category = "EMAIL_ATTACHMENTS";
+            var uploader = scope.uploader = new FileUploader({
+                url: fileService.UploadUrl,
+                headers: fileService.Headers
+            });
+
+
+            uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                console.info('onWhenAddingFileFailed', item, filter, options);
+            };
+            uploader.onAfterAddingFile = function (fileItem) {
+                console.info('onAfterAddingFile', fileItem);
+                fileItem.upload();
+
+            };
+            uploader.onAfterAddingAll = function (addedFileItems) {
+
+
+                console.info('onAfterAddingAll', addedFileItems);
+            };
+            uploader.onBeforeUploadItem = function (item) {
+
+                item.formData.push({'fileCategory': scope.file.Category});
+                console.info('onBeforeUploadItem', item);
+            };
+            uploader.onProgressItem = function (fileItem, progress) {
+                console.info('onProgressItem', fileItem, progress);
+                scope.uploadProgress = progress;
+                if (scope.uploadProgress == 100) {
+
+
+                }
+            };
+            uploader.onProgressAll = function (progress) {
+                console.info('onProgressAll', progress);
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                console.info('onSuccessItem', fileItem, response, status, headers);
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {
+                console.info('onErrorItem', fileItem, response, status, headers);
+                scope.showAlert("Attachment", "error", "Uploading failed");
+                scope.uploadProgress = 0;
+            };
+            uploader.onCancelItem = function (fileItem, response, status, headers) {
+                console.info('onCancelItem', fileItem, response, status, headers);
+            };
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {
+                console.info('onCompleteItem', fileItem, response, status, headers);
+                if (response.IsSuccess) {
+
+                    fileItem.uuid = response.Result;
+                    fileItem.availablity = true;
+                    scope.mailAttchments.push(fileItem);
+
+                }
+            };
+            uploader.onCompleteAll = function () {
+                console.info('onCompleteAll');
+                scope.showAlert("Attachment", "success", "Successfully uploaded");
+
+            };
+
+
+            var updateUserMapLocation = function () {
+                if (scope.profileDetail.address.street || scope.profileDetail.address.city) {
+                    locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
+                        'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q="' + scope.profileDetail.address.street + "+" + scope.profileDetail.address.city + "'");
+                } else {
+                    locationUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?' +
+                        'key=AIzaSyClN46_HJnXR5x7acMT70AkLLLi87Ni9I4&q=sdsd+ted');
+                    scope.isLocationFound = true;
+                }
+
+                scope.profileDetail.address.locationUrl = locationUrl;
+            };
+
+
+            scope.showInteractionModal = false;
+
+
+            if (scope.profileDetail && scope.profileDetail.address) {
+                var locationUrl;
+                scope.isLocationFound = false;
+                updateUserMapLocation();
+            }
 
             scope.schemaw = scope.schemaResponseNewTicket.schema;
             scope.formw = scope.schemaResponseNewTicket.form;
@@ -85,26 +177,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.setUserTitles = function (userObj) {
 
-                var title="";
+                var title = "";
 
 
-                if(userObj.firstname && userObj.lastname)
-                {
-                    title=userObj.firstname+" "+ userObj.lastname;
+                if (userObj.firstname && userObj.lastname) {
+                    title = userObj.firstname + " " + userObj.lastname;
                 }
-                else
-                {
-                    if(userObj.firstname)
-                    {
-                        title=userObj.firstname;
+                else {
+                    if (userObj.firstname) {
+                        title = userObj.firstname;
                     }
-                    else if(userObj.lastname)
-                    {
-                        title=userObj.lastname;
+                    else if (userObj.lastname) {
+                        title = userObj.lastname;
                     }
-                    else
-                    {
-                        title=userObj.name;
+                    else {
+                        title = userObj.name;
                     }
 
                 }
@@ -114,10 +201,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.assigneeUsers = profileDataParser.assigneeUsers;
 
             angular.forEach(scope.assigneeUsers, function (assignee) {
-                assignee.displayname=scope.setUserTitles(assignee);
+                assignee.displayname = scope.setUserTitles(assignee);
             });
 
+
             scope.assigneeGroups = profileDataParser.assigneeUserGroups;
+            scope.assigneeTempGroups;
+            if (scope.assigneeGroups) {
+                scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
+                    value.displayname = value.name;
+                    return value;
+                });
+            }
+
+            scope.assigneeUserData = scope.assigneeUsers.concat(scope.assigneeTempGroups);
+
 
             scope.pickCompanyInfo = function () {
                 var userCompanyData = authService.GetCompanyInfo();
@@ -440,7 +538,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                                 if (responseFS.Result) {
                                     ticketService.updateFormSubmissionData(scope.profileDetail._id, obj).then(function (responseUpdate) {
                                         if (responseUpdate.Result) {
-
 
 
                                             userService.mapFormSubmissionToProfile(responseUpdate.Result._id, scope.profileDetail._id).then(function (responseMap) {
@@ -870,50 +967,33 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.newAddTags = [];
             scope.postTags = [];
 
-            var findFormForCompanyOrTag = function(isolatedTags, callback)
-            {
-                ticketService.getFormByIsolatedTag(isolatedTags).then(function(tagForm)
-                {
-                    if(tagForm.Result && tagForm.Result.length > 0)
-                    {
+            var findFormForCompanyOrTag = function (isolatedTags, callback) {
+                ticketService.getFormByIsolatedTag(isolatedTags).then(function (tagForm) {
+                    if (tagForm.Result && tagForm.Result.length > 0) {
 
                         callback(null, tagForm.Result[0].dynamicForm);
                     }
-                    else
-                    {
-                        ticketService.getFormsForCompany().then(function(compForm)
-                        {
-                            
-                              if(compForm.Result)
-                              {
-                                    if(compForm.Result.ticket_form)
-                                    {
-                                        callback(null, compForm.Result.ticket_form);
-                                    }
-                                    else
-                                    {
-                                        callback(null, null);
-                                    }
-                              }else{
-                                  
-                                  callback(null, null);
-                              }
+                    else {
+                        ticketService.getFormsForCompany().then(function (compForm) {
+                            if (compForm.Result.ticket_form) {
+                                callback(null, compForm.Result.ticket_form);
+                            }
+                            else {
+                                callback(null, null);
+                            }
 
-                        }).catch(function(err)
-                        {
+                        }).catch(function (err) {
                             callback(err, null);
                         })
                     }
 
 
-                }).catch(function(err)
-                {
+                }).catch(function (err) {
                     callback(err, null);
                 })
             };
 
-            scope.onIsolatedTagRemoved = function()
-            {
+            scope.onIsolatedTagRemoved = function () {
                 var schema = {
                     type: "object",
                     properties: {}
@@ -921,15 +1001,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
                 var form = [];
 
-                var arrMap = scope.postTags.map(function(item)
-                {
+                var arrMap = scope.postTags.map(function (item) {
                     return item.name;
                 })
 
-                findFormForCompanyOrTag(arrMap, function(err, ticket_form)
-                {
-                    if(ticket_form)
-                    {
+                findFormForCompanyOrTag(arrMap, function (err, ticket_form) {
+                    if (ticket_form) {
                         scope.currentTicketForm = ticket_form;
                         buildFormSchema(schema, form, ticket_form.fields);
                         //var currentForm = response.Result.ticket_form;
@@ -943,8 +1020,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         scope.formw = form;
                         scope.modelw = {};
                     }
-                    else
-                    {
+                    else {
                         scope.currentTicketForm = null;
                     }
                 });
@@ -1082,13 +1158,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             };
 
             scope.loadMyAppMetaData = function () {
-                ticketService.GetMyTicketConfig(function (success,data) {
+                ticketService.GetMyTicketConfig(function (success, data) {
 
-                    if(success && data && data.Result)
-                    {
-                        scope.ticket.subject=data.Result.subject;
+                    if (success && data && data.Result) {
+                        scope.ticket.subject = data.Result.subject;
                         scope.setPriority(data.Result.priority);
-                        scope.ticket.description=data.Result.description;
+                        scope.ticket.description = data.Result.description;
 
                     }
                 });
@@ -1096,8 +1171,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             }
 
 
-
-            scope.saveTicket = function (ticket,cusForm) {
+            scope.saveTicket = function (ticket, cusForm) {
                 ticket.channel = scope.channel;
                 ticket.requester = scope.profileDetail._id;
                 ticket.engagement_session = scope.sessionId;
@@ -1115,7 +1189,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     });
                 }
 
+                scope.isSaveingTicket = true;
                 ticketService.SaveTicket(ticket).then(function (response) {
+                    scope.isSaveingTicket = false;
                     if (response.IsSuccess) {
                         ticket.reference = response.Result.reference;
                         ticket.id = response.Result._id;
@@ -1135,6 +1211,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     }
                     scope.showCreateTicket = !response.IsSuccess;
                 }, function (err) {
+                    scope.isSaveingTicket = false;
                     scope.showAlert("Save Ticket", "error", "Fail To Save Ticket.");
                 });
 
@@ -1182,7 +1259,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     }
 
 
-
                 }).catch(function (err) {
                     scope.showAlert('Ticket Other Data', 'error', 'Ticket other data save failed');
 
@@ -1213,12 +1289,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.showNewTicket = function () {
                 if (scope.profileDetail && scope.profileDetail._id) {
+                    scope.onIsolatedTagRemoved();
+                    scope.loadMyAppMetaData();
+                    scope.newAddTags = [];
+                    scope.ticket = {};
+                    scope.ticket.selectedTags = [];
+                    scope.newAddTags = [];
+                    scope.postTags = [];
+
                     scope.showCreateTicket = !scope.showCreateTicket;
-                    if(scope.showCreateTicket)
-                    {
-                        scope.onIsolatedTagRemoved();
-                        scope.loadMyAppMetaData();
-                    }
+
                 } else {
                     scope.showAlert("Ticket", "error", "Please Create Profile First.")
                 }
@@ -1248,7 +1328,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 scope.loadNextEngagement();
             };
 
-            scope.recentEngList = []
+            scope.recentEngList = [];
+            scope.reventNotes = [];
             scope.currentPage = 1;
             scope.isShowTimeLine = false;
             scope.loadNextEngagement = function () {
@@ -1261,6 +1342,40 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     scope.isShowTimeLine = true;
                     engagementService.GetEngagementSessions(scope.engagementId, ids).then(function (reply) {
                         scope.engagementsList = scope.engagementsList.concat(reply);
+
+                        //update code damith
+                        //get recent engagement notes
+                        //if (scope.reventNotes) {
+                        reply.forEach(function (value) {
+
+
+                            if (value.notes && value.notes.length != 0) {
+
+                                value.notes.forEach(function (no, ind) {
+
+
+                                    var regexid = /#TID (.*)/;
+                                    var tref = regexid.exec(no.body);
+
+
+                                    if (Array.isArray(tref) && tref.length > 1) {
+                                        no.tid = tref[1];
+                                    }
+
+                                    console.log("ticket id found " + no.tid);
+
+                                });
+
+
+                                scope.reventNotes = scope.reventNotes.concat(value.notes);
+
+                                scope.reventNotes.forEach(function (value, index) {
+                                    userImageList.getAvatarByUserName(value.author, function (data) {
+                                        scope.reventNotes[index].avatar = data;
+                                    })
+                                });
+                            }
+                        });
 
                         if (angular.isArray(reply) && scope.recentEngList.length === 0) {
                             scope.recentEngList = reply.slice(0, 1);
@@ -1308,12 +1423,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     scope.showAlert("Note", "error", "Please Enter Note to Save.");
                     return;
                 }
+                scope.isSaveNote = true;
                 engagementService.AppendNoteToEngagementSession(scope.sessionId, {body: note}).then(function (response) {
+                    scope.isSaveNote = false;
+                    scope.isNewNote = false;
                     if (response) {
-                        scope.currentEngagement.notes.push({body: note});
+                        var noteObj = {
+                            "avatar": profileDataParser.myProfile.avatar,
+                            "author": profileDataParser.myProfile.username,
+                            "created_at": moment(),
+                            "body": note
+                        };
+                        scope.reventNotes.unshift(noteObj);
                         document.getElementById("noteBody").innerHTML = "";
                         document.getElementById("noteBody").value = "";
-                        scope.showAlert("Note", "success", "Note Add Successfully.");
+                        scope.showAlert("Note", "success", "Note Added Successfully.");
 
                     }
                     else {
@@ -1328,6 +1452,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.GetIvrDetailsByEngagementId = function () {
                 ivrService.GetIvrDetailsByEngagementId(scope.sessionId).then(function (response) {
                     scope.ivrDetails = response;
+                    console.log('ivr details...');
+                    console.log(scope.ivrDetails);
                 }, function (err) {
                     scope.showAlert("Engagement Session Note", "error", "Fail To Get Engagement Session Note.")
                 });
@@ -1388,10 +1514,18 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 });
             };
 
-
+            //modify this fun >>  engagement profile
             scope.getExternalUserTicketCounts = function (id) {
+                scope.ticketPieChart = {
+                    labels: [],
+                    data: []
+                };
                 ticketService.GetExternalUserTicketCounts(id).then(function (response) {
                     scope.ExternalUserTicketCounts = response;
+                    scope.ExternalUserTicketCounts.forEach(function (value, index) {
+                        scope.ticketPieChart.data.push(scope.ExternalUserTicketCounts[index].count);
+                        scope.ticketPieChart.labels.push(scope.ExternalUserTicketCounts[index]._id);
+                    });
                 }, function (err) {
                     scope.showAlert("Ticket", "error", "Fail To Get Ticket Count.")
                 });
@@ -1466,6 +1600,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             };
 
             scope.createNProfile = function () {
+                scope.isEditCurrentProfile = false;
                 if (scope.profileDetail) {
                     scope.exProfileId = angular.copy(scope.profileDetail._id);
                 }
@@ -1489,7 +1624,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         "street": "",
                         "city": "",
                         "province": "",
-                        "country": ""
+                        "country": "",
+                        "locationUrl": ""
                     },
                     "phone": scope.channelFrom,
                     "email": "",
@@ -1502,8 +1638,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             };
 
 
-
-            var loadUserData = function(){
+            var loadUserData = function () {
                 if (scope.profileDetails) {
                     if (scope.profileDetails.length == 1) {
                         scope.profileDetail = scope.profileDetails[0];
@@ -1565,7 +1700,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
 
-                switch (scope.channel){
+                switch (scope.channel) {
                     case 'call':
                         if (scope.direction === 'inbound' || scope.direction === 'outbound') {
                             category = 'phone';
@@ -1584,11 +1719,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         break;
 
                     default :
-                        if(scope.channel.includes("facebook"))
-                        {
+                        if (scope.channel.includes("facebook")) {
                             category = "facebook"
                         }
-                        else{
+                        else {
                             category = scope.channel;
                         }
                         break;
@@ -1596,7 +1730,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 }
 
                 if (scope.profileDetail) {
-
+                    scope.isEnagagementOpen = true;
                     scope.GetProfileHistory(scope.profileDetail._id);
                     scope.profileLoadin = false;
                     scope.showMultiProfile = false;
@@ -1614,8 +1748,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     if (scope.channelFrom != "direct") {
                         if (scope.exProfileId) {
                             scope.mapProfile.showEngagement = true;
-                        } else {
-                            scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
+                        }
+
+                        else {
+                            if (scope.channel != "appointment") {
+                                scope.addIsolatedEngagementSession(scope.profileDetail._id, scope.sessionId);
+                            }
+
                         }
                     }
 
@@ -1650,36 +1789,40 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     }
 
                 } else {
-                    if(category === 'direct') {
+                    if (category === 'direct') {
+                        scope.isEnagagementOpen = true;
                         scope.createNProfile();
-                    }else{
+                    } else {
+                        scope.isEnagagementOpen = false;
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                            scope.isEnagagementOpen = true;
                             scope.profileDetails = response;
                             loadUserData();
                         }, function (err) {
+                            scope.isProfileFound = false;
                             scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
                         });
-                       /* if(scope.channel === 'chat'){
-                            userService.getExternalUserProfileByField("firstname", scope.channelFrom).then(function (response) {
-                                if (response && response.IsSuccess) {
-                                    scope.profileDetails = response.Result;
-                                }
+                        /* if(scope.channel === 'chat'){
+                         userService.getExternalUserProfileByField("firstname", scope.channelFrom).then(function (response) {
+                         if (response && response.IsSuccess) {
+                         scope.profileDetails = response.Result;
+                         }
 
-                                loadUserData();
-                            }, function (err) {
-                                scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                            });
-                        }else {
-                            userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
-                                scope.profileDetails = response;
+                         loadUserData();
+                         }, function (err) {
+                         scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                         });
+                         }else {
+                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
+                         scope.profileDetails = response;
 
-                                loadUserData();
+                         loadUserData();
 
 
-                            }, function (err) {
-                                scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
-                            });
-                        }*/
+                         }, function (err) {
+                         scope.showAlert("User Profile", "error", "Fail To Get User Profile Details.")
+                         });
+                         }*/
                     }
                 }
             };
@@ -1718,10 +1861,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.makeCall = function (number) {
                 var data = {
-                    callNumber:number,
-                    tabReference:scope.tabReference
+                    callNumber: number,
+                    tabReference: scope.tabReference
                 };
                 $rootScope.$emit('makecall', data);
+                scope.showInteractionModal = false;
             };
             scope.gotoTicket = function (data) {
                 data.tabType = "ticketView";
@@ -1749,11 +1893,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 }
                 else {
                     var results = query ? scope.ticketList.filter(function (query) {
-                        var lowercaseQuery = angular.lowercase(query);
-                        return function filterFn(group) {
-                            return (group.ticketList.toLowerCase().indexOf(lowercaseQuery) != -1);
-                        };
-                    }) : [];
+                            var lowercaseQuery = angular.lowercase(query);
+                            return function filterFn(group) {
+                                return (group.ticketList.toLowerCase().indexOf(lowercaseQuery) != -1);
+                            };
+                        }) : [];
                     return results;
                 }
 
@@ -1768,7 +1912,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 "avatar": "assets/img/avatar/profileAvatar.png",
                 "birthday": "",
                 "gender": "",
-                "firstname": (scope.channel === "chat")?scope.channelFrom:"",
+                "firstname": (scope.channel === "chat") ? scope.channelFrom : "",
                 "lastname": "",
                 "locale": 0,
                 "ssn": "",
@@ -1780,7 +1924,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     "province": "",
                     "country": ""
                 },
-                "phone": (scope.channel === "call")?scope.channelFrom:"",
+                "phone": (scope.channel === "call") ? scope.channelFrom : "",
                 "email": "",
                 "dob": {
                     "day": 0,
@@ -1817,26 +1961,21 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             });
 
 
-
             var getCustomerTypes = function () {
                 userService.loadCutomerTags().then(function (response) {
 
-                    if(response.IsSuccess)
-                    {
-                        scope.customerType=response.Result;
+                    if (response.IsSuccess) {
+                        scope.customerType = response.Result;
                         scope.customerType.forEach(function (tag) {
-                            tag.cutomerType=tag.name;
-
+                            tag.cutomerType = tag.name;
                         });
                     }
-                    else
-                    {
-                        scope.customerType=[];
+                    else {
+                        scope.customerType = [];
                         scope.showAlert("Customer types", "error", "Fail To load Customer types.");
-
                     }
                 }, function (error) {
-                    scope.customerType=[];
+                    scope.customerType = [];
                     scope.showAlert("Customer types", "error", "Fail To load Customer types.");
                 });
             };
@@ -1867,11 +2006,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 }
                 else {
                     var results = query ? scope.customerType.filter(function (query) {
-                        var lowercaseQuery = angular.lowercase(query);
-                        return function filterFn(group) {
-                            return (group.customerType.toLowerCase().indexOf(lowercaseQuery) != -1);
-                        };
-                    }) : [];
+                            var lowercaseQuery = angular.lowercase(query);
+                            return function filterFn(group) {
+                                return (group.customerType.toLowerCase().indexOf(lowercaseQuery) != -1);
+                            };
+                        }) : [];
                     return results;
                 }
 
@@ -1904,106 +2043,103 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
 
             scope.saveNewProfile = function (profile) {
-                profile.tags=[];
+                profile.tags = [];
                 scope.cutomerTypes.forEach(function (tag) {
                     profile.tags.push(tag.cutomerType)
                 });
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
 
+                userService.CreateExternalUser(profile).then(function (response) {
+                    if (response) {
+                        scope.profileDetail = response;
+                        scope.showNewProfile = false;
 
-                //userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
-                //
-                //    if(resSSN.IsSuccess && resSSN.Result.length>0)
-                //    {
-                //        scope.showAlert("Profile", "error", "SSN is already taken");
-                //    }
-                //    else
-                //    {
-                //        userService.getExternalUserProfileByField("phone",profile.phone).then(function (resPhone) {
-                //
-                //            if(resPhone.IsSuccess && resPhone.Result.length>0)
-                //            {
-                //                scope.showAlert("Profile", "error", "Phone number is already taken");
-                //            }
-                //            else
-                //            {
-                //                userService.getExternalUserProfileByField("email",profile.email).then(function (resEmail) {
-                //
-                //                    if(resEmail.IsSuccess && resEmail.Result.length>0)
-                //                    {
-                //                        scope.showAlert("Profile", "error", "Email is already taken");
-                //                    }
-                //                    else
-                //                    {
-                                        userService.CreateExternalUser(profile).then(function (response) {
-                                            if (response) {
-                                                scope.profileDetail = response;
-                                                scope.showNewProfile = false;
+                        //clear all
+                        scope.ticketList = [];
+                        scope.engagementsList = [];
+                        scope.recentTicketList = [];
+                        scope.reventNotes = [];
+                        scope.enggemntDetailsCount = [];
+                        scope.ExternalUserTicketCounts = [];
 
-                                                scope.GetProfileHistory(response._id);
-                                                if(scope.exProfileId) {
-                                                    scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
-                                                }else {
-                                                    scope.addIsolatedEngagementSession(response._id, scope.sessionId);
-                                                }
-                                            }
-                                            else {
-                                                scope.showAlert("Profile", "error", "Fail To Save Profile.");
-                                            }
-                                        }, function (err) {
-                                            scope.showAlert("Profile", "error", "Fail To Save Profile.");
-                                        });
-                //                    }
-                //
-                //                }, function (errEmail) {
-                //                    scope.showAlert("Profile", "error", "Checking Email failed");
-                //                });
-                //
-                //
-                //
-                //            }
-                //        }, function (errPhone) {
-                //            scope.showAlert("Profile", "error", "Checking Phone number failed");
-                //        })
-                //    }
-                //
-                //}, function (errSSN) {
-                //    scope.showAlert("Profile", "error", "Checking SSN failed");
-                //});
+                        scope.GetProfileHistory(scope.profileDetail._id);
+                        updateUserMapLocation();
 
-
+                        //scope.loadNextEngagement();
+                        if (scope.exProfileId) {
+                            scope.moveEngagementBetweenProfiles(scope.sessionId, 'cut', scope.exProfileId, scope.profileDetail._id);
+                        } else {
+                            scope.addIsolatedEngagementSession(response._id, scope.sessionId);
+                        }
+                        scope.showAlert("Profile", "success", "Profile Created Successfully.");
+                    }
+                    else {
+                        scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                    }
+                }, function (err) {
+                    scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                });
 
             };
 
-            scope.CheckExternalUserAvailabilityBySSN = function (ssn,profile)
-            {
+
+            // userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
+            //
+            //     if (resSSN.IsSuccess && resSSN.Result.length > 0) {
+            //         scope.showAlert("Profile", "error", "SSN is already taken");
+            //     }
+            //     else {
+            //         userService.getExternalUserProfileByField("phone", profile.phone).then(function (resPhone) {
+            //
+            //             if (resPhone.IsSuccess && resPhone.Result.length > 0) {
+            //                 scope.showAlert("Profile", "error", "Phone number is already taken");
+            //             }
+            //             else {
+            //                 userService.getExternalUserProfileByField("email", profile.email).then(function (resEmail) {
+            //
+            //                     if (resEmail.IsSuccess && resEmail.Result.length > 0) {
+            //                         scope.showAlert("Profile", "error", "Email is already taken");
+            //                     }
+            //                     else {
+            //
+            //                     }
+            //
+            //                 }, function (errEmail) {
+            //                     scope.showAlert("Profile", "error", "Checking Email failed");
+            //                 });
+            //
+            //
+            //             }
+            //         }, function (errPhone) {
+            //             scope.showAlert("Profile", "error", "Checking Phone number failed");
+            //         })
+            //     }
+            //
+            // }, function (errSSN) {
+            //     scope.showAlert("Profile", "error", "Checking SSN failed");
+            // });
+            scope.CheckExternalUserAvailabilityBySSN = function (ssn, profile) {
                 var deferred = $q.defer();
 
                 userService.getExternalUserProfileBySsn(ssn).then(function (resPhone) {
 
-                    if(resPhone.IsSuccess)
-                    {
-                        if(resPhone.Result.length==0)
-                        {
+                    if (resPhone.IsSuccess) {
+                        if (resPhone.Result.length == 0) {
                             deferred.resolve(true);
                         }
-                        else
-                        {
-                            if(profile._id==resPhone.Result[0]._id)
-                            {
+                        else {
+                            if (profile._id == resPhone.Result[0]._id) {
                                 deferred.resolve(true);
                             }
-                            else
-                            {
+                            else {
                                 scope.showAlert("Profile", "error", "SSN is already taken");
                                 deferred.resolve(false);
                             }
                         }
 
                     }
-                    else
-                    {
+                    else {
                         deferred.resolve(true);
                     }
 
@@ -2015,41 +2151,35 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 return deferred.promise;
             }
 
-            scope.CheckExternalUserAvailabilityByField = function (field,value,profile) {
+            scope.CheckExternalUserAvailabilityByField = function (field, value, profile) {
 
                 var deferred = $q.defer();
 
-                userService.getExternalUserProfileByField(field,value).then(function (resPhone) {
+                userService.getExternalUserProfileByField(field, value).then(function (resPhone) {
 
-                    if(resPhone.IsSuccess)
-                    {
-                        if(resPhone.Result.length==0)
-                        {
+                    if (resPhone.IsSuccess) {
+                        if (resPhone.Result.length == 0) {
                             deferred.resolve(true);
                         }
-                        else
-                        {
-                            if(profile._id==resPhone.Result[0]._id)
-                            {
+                        else {
+                            if (profile._id == resPhone.Result[0]._id) {
                                 deferred.resolve(true);
                             }
-                            else
-                            {
-                                scope.showAlert("Profile", "error", field+" is already taken");
+                            else {
+                                scope.showAlert("Profile", "error", field + " is already taken");
                                 deferred.resolve(false);
                             }
                         }
 
 
                     }
-                    else
-                    {
+                    else {
                         deferred.resolve(true);
                     }
 
                 }, function (errPhone) {
 
-                    scope.showAlert("Profile", "error", "Error in searching "+field);
+                    scope.showAlert("Profile", "error", "Error in searching " + field);
                     deferred.resolve(false);
                 });
                 return deferred.promise;
@@ -2058,69 +2188,73 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
             scope.UpdateExternalUser = function (profile) {
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
-                profile.tags=[];
+                profile.tags = [];
                 scope.cutomerTypes.forEach(function (tag) {
                     profile.tags.push(tag.cutomerType)
                 });
                 profile.birthday = new Date(collectionDate);
 
 
+                //update profile image
+                profile.avatar = scope.profileDetail.avatar;
+                scope.isEditCurrentProfile = false;
 
 
-                //$q.all([
-                //    scope.CheckExternalUserAvailabilityByField("ssn",profile.ssn,profile),
-                //    scope.CheckExternalUserAvailabilityByField("email",profile.email,profile),
-                //    scope.CheckExternalUserAvailabilityByField("phone",profile.phone,profile),
-                //]).then(function(value) {
-                //    // Success callback where value is an array containing the success values
-                //
-                //    if(value.indexOf(false)==-1)
-                //    {
+                $q.all([
+                    scope.CheckExternalUserAvailabilityByField("ssn", profile.ssn, profile),
+                    scope.CheckExternalUserAvailabilityByField("email", profile.email, profile),
+                    scope.CheckExternalUserAvailabilityByField("phone", profile.phone, profile),
+                ]).then(function (value) {
+                    // Success callback where value is an array containing the success values
+                    scope.isUpdateingProfile = true;
+                    if (value.indexOf(false) == -1) {
                         userService.UpdateExternalUser(profile).then(function (response) {
+                            scope.isUpdateingProfile = false;
                             if (response) {
-                                scope.cutomerTypes=[];
+
+                                scope.cutomerTypes = [];
                                 scope.showNewProfile = false;
                                 scope.editProfile = false;
 
-                                scope.showAlert("Profile", "success", "Update Successfully.");
+                                scope.showAlert("Profile", "success", "Profile Updated Successfully.");
+                                editUIAnimationFun.showUiViewMode();
+                                $anchorScroll();
                                 userService.getExternalUserProfileByID(response._id).then(function (resUserData) {
-
-                                    if(resUserData.IsSuccess)
-                                    {
+                                    if (resUserData.IsSuccess) {
                                         scope.profileDetail = resUserData.Result;
+                                        updateUserMapLocation();
                                     }
-                                    else
-                                    {
-                                        scope.showAlert("Profile","error","Failed to load updated profile");
-
+                                    else {
+                                        scope.showAlert("Profile", "error", "Failed to load updated profile");
+                                        scope.isUpdateingProfile = false;
                                     }
-
-
                                 }, function (errUserData) {
-                                    scope.showAlert("Profile","error","Failed to load updated profile");
+                                    scope.showAlert("Profile", "error", "Failed to load updated profile");
+                                    scope.isUpdateingProfile = false;
                                     console.log(errUserData)
                                 });
                             }
                             else {
                                 scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                                scope.isUpdateingProfile = false;
                             }
                         }, function (err) {
+                            scope.isUpdateingProfile = false;
                             scope.showAlert("Profile", "error", "Fail To Save Profile.");
                         });
-                //    }
-                //    else
-                //    {
-                //        scope.showAlert("Profile", "error", "Fail To Save Profile.");
-                //    }
-                //
-                //
-                //
-                //
-                //}, function(reason) {
-                //    // Error callback where reason is the value of the first rejected promise
-                //    alert(value);
-                //});
 
+                    }
+                    else {
+                        scope.showAlert("Profile", "error", "Fail To Save Profile.");
+                        scope.isUpdateingProfile = false;
+                    }
+
+
+                }, function (reason) {
+                    // Error callback where reason is the value of the first rejected promise
+                    scope.isUpdateingProfile = false;
+                    alert(value);
+                });
 
 
             };
@@ -2133,30 +2267,37 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.cropImageURL = null;
             scope.tenant = 0;
             scope.company = 0;
+            scope.agentIss = "";
             scope.getCompanyTenant = function () {
                 var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
                 scope.company = decodeData.company;
                 scope.tenant = decodeData.tenant;
+                scope.agentIss = decodeData.iss;
             };
             scope.getCompanyTenant();
 
             scope.changeAvatarURL = function (fileID) {
 
+                if (scope.isEditCurrentProfile) {
+                    if (scope.profileDetail) {
+                        scope.profileDetail.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
+                    }
+                }
+
                 if (fileID) {
                     scope.newProfile.avatar = baseUrls.fileServiceInternalUrl + "File/Download/" + scope.tenant + "/" + scope.company + "/" + fileID + "/ProPic";
-
                 }
 
 
-            }
+            };
 
 
             scope.viewCropArea = function () {
-
+                scope.isEditCurrentProfile = true;
                 //modal show
                 var modalInstance = $uibModal.open({
                     animation: true,
-                    templateUrl: './app/views/profile/partials/profile-picture-modal.html',
+                    templateUrl: './app/views/engagement/temp/upload-profile-avatar.html',
                     controller: 'profilePicUploadController',
                     size: 'lg',
                     resolve: {
@@ -2165,7 +2306,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                         }
                     }
                 });
-
 
 
             };
@@ -2204,41 +2344,40 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     },
                     editProfile: function () {
 
-                        userService.getExternalUserProfileByID(scope.profileDetail._id ).then(function (resNewProfile) {
+                        userService.getExternalUserProfileByID(scope.profileDetail._id).then(function (resNewProfile) {
 
-                            if(resNewProfile.IsSuccess)
-                            {
+                            if (resNewProfile.IsSuccess) {
 
                                 scope.newProfile = resNewProfile.Result;
-                                scope.newProfile.avatar=resNewProfile.Result.avatar;
+                                scope.newProfile.avatar = resNewProfile.Result.avatar;
                                 //alert(scope.newProfile.avatar);
-                                for(var i=0;i<scope.newProfile.tags.length;i++)
-                                {
-                                    scope.cutomerTypes[i]={"cutomerType":scope.newProfile.tags[i]};
+                                for (var i = 0; i < scope.newProfile.tags.length; i++) {
+                                    if (scope.newProfile.tags[i]) {
+                                        scope.cutomerTypes[i] = {"cutomerType": scope.newProfile.tags[i]};
+                                    }
+
                                 }
 
                                 var date = moment(scope.profileDetail.birthday);
                                 scope.newProfile.dob = {};
                                 scope.newProfile.dob.day = date.date();
                                 scope.newProfile.dob.month = {
-                                    'index': date.month()+1,
-                                    'name': date.month()+1
+                                    'index': date.month() + 1,
+                                    'name': date.month() + 1
                                 };
                                 scope.newProfile.dob.year = date.year();
-                                scope.showNewProfile = true;
+                                //scope.showNewProfile = true;
                                 scope.editProfile = true;
                             }
-                            else
-                            {
-                                scope.showAlert("Error","error","Error in loading profile details");
+                            else {
+                                scope.showAlert("Error", "error", "Error in loading profile details");
                             }
                         }, function (errNewProfile) {
-                            scope.showAlert("Error","error","Error in loading profile details");
+                            scope.showAlert("Error", "error", "Error in loading profile details");
                             console.log(errNewProfile);
                         })
 
                         // scope.newProfile = scope.profileDetail;
-
 
 
                     },
@@ -2335,9 +2474,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                     type: newContact.contactType,
                     display: newContact.contact
                 };
+
+                scope.isSavingOContact = true;
                 userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
+                    scope.isSavingOContact = false;
                     if (response.IsSuccess) {
                         scope.profileDetail.contacts.push(contactInfo);
+                        scope.showAlert('Profile Contact', 'success', "Contact Added Successfully");
+                        editUIAnimationFun.showUiViewMode();
+
                     } else {
                         scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                     }
@@ -2397,14 +2542,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.confimOk = function () {
                 //delete contact
                 if (deleteContactObj.status == 1) {
+                    scope.isLoadingOtherContactDelete = true;
                     userService.DeleteContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
-                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.isLoadingOtherContactDelete = false;
+                        scope.isCnfmBoxShow = false;
+                        scope.showAlert('Delete Contact', 'success', "Contact Information Deleted Successfully");
                         scope.profileDetail.contacts.forEach(function (value, key) {
                             if (scope.profileDetail.contacts[key].contact == deleteContactObj.contact) {
                                 scope.profileDetail.contacts.splice(key, 1);
                             }
                         });
-                        scope.isCnfmBoxShow = false;
 
                     }, function (err) {
                         console.log(err);
@@ -2414,7 +2561,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 //delete social contact details
                 if (deleteContactObj.status == 2) {
                     userService.DeleteSocialContact(scope.profileDetail._id, deleteContactObj.contact).then(function (res) {
-                        scope.showAlert('Delete Contact', 'success', "Remove External User Contact successfully");
+                        scope.showAlert('Delete Contact', 'success', "Contact Information Deleted Successfully");
                         scope.profileDetail[deleteContactObj.contact] = '';
                         scope.isCnfmBoxShow = false;
                     }, function (err) {
@@ -2426,6 +2573,638 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             scope.confimCancel = function () {
                 scope.isCnfmBoxShow = false;
             }
+
+
+            // update coda damith 052017
+            //engagement new profile functions
+
+            scope.isNewNote = false;
+            scope.currentItemTempObj = {};
+            var editUIAnimationFun = function () {
+
+                return {
+                    showUiViewMode: function () {
+                        scope.isShowBasicInfoEditModal = false;
+                        scope.isShowBasicOtherInfoEditModal = false;
+                        scope.isShowBasicLocationInfoEditModal = false;
+                        scope.isBasicContactView = false;
+                        scope.isSocialView = false;
+                        scope.isOtherContactView = false;
+                        scope.isOtherContactEditMode = false;
+                        scope.isCnfmBoxShow = false;
+                        scope.basicProfileViewMode = 'all';
+                        scope.currentItemTempObj = {};
+
+
+                    },
+                    showBasicInfoEditMode: function () {
+                        $anchorScroll();
+                        scope.basicProfileViewMode = 'all';
+                        if (!scope.isShowBasicInfoEditModal) {
+                            scope.multipleProfile.editProfile();
+                            scope.currentItemTempObj = angular.copy(scope.profileDetail);
+                        } else {
+                            scope.profileDetail = angular.copy(scope.currentItemTempObj);
+                            scope.currentItemTempObj = {};
+                        }
+                        scope.isShowBasicInfoEditModal = !scope.isShowBasicInfoEditModal;
+                    },
+                    showBasicContactEditMode: function () {
+                        $anchorScroll();
+                        if (!scope.isBasicContactView) {
+                            scope.basicProfileViewMode = 'contact';
+                            scope.multipleProfile.editProfile();
+                            scope.currentItemTempObj = angular.copy(scope.profileDetail);
+                        } else {
+                            scope.profileDetail = angular.copy(scope.currentItemTempObj);
+
+                            scope.currentItemTempObj = {};
+                        }
+                        scope.isBasicContactView = !scope.isBasicContactView;
+                        if (!scope.isBasicContactView) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    },
+                    showOtherEditMode: function () {
+                        $anchorScroll();
+                        if (!scope.isShowBasicOtherInfoEditModal) {
+                            scope.basicProfileViewMode = 'other';
+                            scope.multipleProfile.editProfile();
+                            scope.currentItemTempObj = angular.copy(scope.profileDetail);
+                        } else {
+                            scope.profileDetail = angular.copy(scope.currentItemTempObj);
+                            scope.cutomerTypes = scope.profileDetail.tags;
+                            scope.currentItemTempObj = {};
+                        }
+                        scope.isShowBasicOtherInfoEditModal = !scope.isShowBasicOtherInfoEditModal;
+                        if (!scope.isShowBasicOtherInfoEditModal) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    },
+                    socialContactEditMode: function () {
+                        $anchorScroll();
+                        if (!scope.isSocialView) {
+                            scope.basicProfileViewMode = 'social';
+                            scope.multipleProfile.editProfile();
+                            scope.currentItemTempObj = angular.copy(scope.profileDetail);
+                        } else {
+                            scope.profileDetail = angular.copy(scope.currentItemTempObj);
+                            scope.cutomerTypes = scope.profileDetail.tags;
+                            scope.currentItemTempObj = {};
+                        }
+                        scope.isSocialView = !scope.isSocialView;
+                        if (!scope.isSocialView) {
+                            editUIAnimationFun.showUiViewMode();
+                        }
+
+                    }, showCreateNewNote: function () {
+                        scope.isNewNote = !scope.isNewNote;
+                    },
+                    editOtherContact: function () {
+
+                        scope.isOtherContactView = !scope.isOtherContactView;
+                    },
+                    editOtherContactMode: function () {
+                        scope.isOtherContactEditMode = !scope.isOtherContactEditMode;
+                        scope.isCnfmBoxShow = false;
+                    }
+                }
+            }();
+
+            editUIAnimationFun.showUiViewMode();
+
+            //on click >> show basic info edit view
+            scope.clickEditShowBasicInfo = function () {
+                editUIAnimationFun.showBasicInfoEditMode();
+            };
+
+            scope.clickEditShowOtherInfo = function () {
+                editUIAnimationFun.showOtherEditMode();
+            };
+
+            scope.clickEditSocialInfo = function () {
+                editUIAnimationFun.showOtherEditMode();
+            };
+
+            scope.clickEditShowLocationInfo = function () {
+                if (!scope.isShowBasicLocationInfoEditModal) {
+                    scope.multipleProfile.editProfile();
+                }
+                scope.isShowBasicLocationInfoEditModal = !scope.isShowBasicLocationInfoEditModal;
+            };
+
+            //basic contact edit form
+            scope.clickEditSocialContact = function () {
+                editUIAnimationFun.socialContactEditMode();
+            };
+
+            scope.clickEditShowBasicContact = function () {
+                editUIAnimationFun.showBasicContactEditMode();
+            };
+
+
+            scope.closeTicketModal = function () {
+                scope.showCreateTicket = false;
+            };
+
+            scope.clickNewNote = function () {
+                editUIAnimationFun.showCreateNewNote();
+            };
+
+            scope.isTicketCollapsed = true;
+
+
+            //edit other contact details
+            scope.clickEditShowOtherContact = function () {
+                editUIAnimationFun.editOtherContact();
+            };
+
+
+            //edit other contact
+            scope.clickDeleteContact = function () {
+                editUIAnimationFun.editOtherContactMode();
+            };
+
+            //new profile
+            scope.isLocationView = false;
+            scope.isBasicInfo = true;
+
+            scope.isLoadinNextFormWizad = false;
+
+            scope.goToNextWizard = function (wizardNo, profile) {
+                switch (wizardNo) {
+                    case '1':
+                        scope.isBasicInfo = true;
+                        scope.isLocationView = false;
+
+                        break;
+                    case '2':
+                        //validation on check event
+                        scope.isLoadinNextFormWizad = true;
+                        userService.getExternalUserProfileByField("phone", profile.phone).then(function (resPhone) {
+                            if (resPhone.IsSuccess && resPhone.Result.length > 0) {
+                                scope.showAlert("Profile", "error", "Phone number is already taken");
+                                profile.phone = "";
+                                scope.isLoadinNextFormWizad = false;
+                                return;
+                            } else {
+                                userService.getExternalUserProfileByField("email", profile.email).then(function (resEmail) {
+                                    if (resEmail.IsSuccess && resEmail.Result.length > 0) {
+                                        scope.showAlert("Profile", "error", "Email is already taken");
+                                        profile.email = "";
+                                        scope.isLoadinNextFormWizad = false;
+                                        return;
+                                    }
+                                    else {
+                                        userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
+                                            if (resSSN.IsSuccess && resSSN.Result.length > 0) {
+                                                scope.showAlert("Profile", "error", "SSN is already taken");
+                                                profile.ssn = "";
+                                                scope.isLoadinNextFormWizad = false;
+                                                return;
+                                            } else {
+                                                scope.isLoadinNextFormWizad = false;
+                                                scope.isBasicInfo = false;
+                                                scope.isLocationView = true;
+                                            }
+                                        }, function (errEmail) {
+                                            scope.showAlert("Profile", "error", "SSN is already taken");
+                                        });
+                                    }
+
+                                });
+                            }
+                        });
+                        break;
+                }
+            };
+
+
+            //open ticket tab using ticket ref ID
+            scope.oepnTicketOnNotification = function (obj) {
+                scope.addTab('Ticket - ' + obj.ticketref, 'Ticket - ' + obj.ticket, 'ticketView', {_id: obj.ticket}, obj.ticket);
+            };
+
+            scope.getTicketByRefe = function (ref) {
+                ticketService.searchTicketByField('reference', ref).then(function (response) {
+                    if (response.IsSuccess) {
+                        if (Array.isArray(response.Result) && response.Result.length) {
+                            scope.gotoTicket(response.Result[0]);
+                        }
+                    }
+                });
+            };
+
+            //upload profile avatar
+            //
+            scope.isAvatarUpload = false;
+
+            scope.showUploadModal = function () {
+                //scope.isAvatarUpload = !scope.isAvatarUpload;
+            };
+
+            scope.goToBackMultiProfile = function () {
+                scope.showMultiProfile = true;
+                scope.showNewProfile = false;
+            };
+
+            //APPOINTMENT pawan
+            scope.appoiment = {};
+            var showAlert = function (title, type, content) {
+                new PNotify({
+                    title: title,
+                    text: content,
+                    type: type,
+                    styling: 'bootstrap3'
+                });
+            };
+
+
+            scope.createDueDate = function (reminderObj, myDate) {
+
+
+                myNoteServices.ReminderMyNote(reminderObj, myDate).then(function (res) {
+                    console.log(res);
+                    if (res.data.IsSuccess) {
+                        showAlert('Appointment Note', 'success', 'Appointment saved successfully');
+                        scope.appoiment = {};
+
+                    } else {
+                        showAlert('Appointment Note', 'error', res.data.CustomMessage);
+                    }
+
+                }, function (err) {
+
+                    authService.IsCheckResponse(err);
+                    console.log(err);
+                    showAlert('Appointment Note', 'error', 'Error in Saving Appointment');
+
+                });
+            };
+
+            scope.saveNewNote = function () {
+                scope.note = {};
+                console.log(scope.profileDetail);
+                var myDate = scope.appoiment.date;
+                console.log(myDate);
+                scope.note.priority = 'default-color';
+                var note = {
+                    title: scope.appoiment.title,
+                    priority: scope.appoiment.priority,
+                    note: scope.appoiment.note,
+                    external_user: scope.profileDetail._id
+                };
+
+
+                console.log(note);
+
+                if (note) {
+                    if (!note.title && !note.note) {
+                        showAlert('Appointment Note', 'error', "Invalid or Empty content found");
+                        return;
+                    }
+                }
+                // loadingSave();
+                myNoteServices.CreateMyNote(note).then(function (res) {
+
+                    if (res.data.IsSuccess) {
+
+                        if (res.data.Result) {
+                            item = res.data.Result;
+
+
+                            scope.createDueDate(item, myDate);
+
+
+                            //showAlert('Reminder Note', 'success', 'Note Created Successfully.');
+
+                            //item.sizeY = "auto";
+
+                            //scope.noteLists.push(item);
+                            //scope.note.priority = 'low';
+
+
+                        }
+                        /* if ($scope.noteLists.length == 0) {
+                         //uiFuntions.myNoteNotFound();
+                         return;
+                         }*/
+                        //uiFuntions.foundMyNote();
+
+                    }
+                }, function (err) {
+
+                    authService.IsCheckResponse(err);
+                    showAlert('Appointment Note', 'error', 'Error in saving new Appointment');
+                    console.log(err);
+                });
+
+            };//end appointment
+
+
+            scope.phoneContact = [];
+            scope.contactType = "";
+
+            scope.viewCallModal = function () {
+                scope.showInteractionModal = !scope.showInteractionModal;
+            }
+
+            scope.showCallOptions = function (contactType) {
+
+                scope.phoneContact = [];
+                scope.contactType = contactType;
+                scope.isTempAdded = true;
+                scope.isNewAttachment = false;
+                scope.uploadProgress = 0;
+                scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
+
+                    if (item.type == "phone") {
+                        return item;
+                    }
+
+                });
+
+                if (scope.profileDetail.phone) {
+                    scope.phoneContact.push(
+                        {
+                            contact: scope.profileDetail.phone,
+                            type: "phone",
+                            verified: true
+                        }
+                    )
+                }
+                if (scope.profileDetail.landnumber) {
+                    scope.phoneContact.push(
+                        {
+                            contact: scope.profileDetail.landnumber,
+                            type: "phone",
+                            verified: true
+                        }
+                    )
+                }
+
+                if (scope.phoneContact.length == 1) {
+                    if (scope.contactType == 'CALL') {
+                        scope.makeCall(scope.phoneContact[0].contact);
+                    }
+                    else {
+                        scope.proceedContact(scope.phoneContact[0].contact);
+                    }
+
+                }
+                else {
+                    if (scope.phoneContact.length == 0) {
+                        scope.showAlert("Error", "error", "No phone number found");
+                    }
+                    else {
+                        scope.viewCallModal();
+                    }
+
+                }
+
+
+            }
+
+            scope.showMailOptions = function () {
+
+                scope.phoneContact = [];
+                scope.contactType = "email";
+                scope.isTempAdded = true;
+                scope.isNewAttachment = false;
+                scope.uploadProgress = 0;
+
+                console.log(scope.profileDetail.contacts);
+                scope.phoneContact = scope.profileDetail.contacts.filter(function (item) {
+
+                    if (item.type.toLowerCase() == "email") {
+                        return item;
+                    }
+
+                });
+
+                if (scope.profileDetail.email) {
+                    scope.phoneContact.push(
+                        {
+                            contact: scope.profileDetail.email,
+                            type: "email",
+                            verified: true
+                        }
+                    )
+                }
+
+
+                if (scope.phoneContact.length == 1) {
+                    scope.showTemplates(scope.phoneContact[0].contact);
+                }
+                else {
+                    if (scope.phoneContact.length == 0) {
+                        scope.showAlert("Error", "error", "No phone number found");
+                    }
+                    else {
+                        scope.viewCallModal();
+                    }
+
+                }
+
+
+            }
+
+            scope.proceedContact = function (contact) {
+                if (contact) {
+                    if (scope.contactType == "CALL") {
+                        scope.makeCall(contact);
+                    }
+                    else {
+                        scope.showTemplates(contact);
+                    }
+                }
+            }
+
+            scope.MessageTemplates = [];
+
+
+            scope.loadTemplates = function () {
+
+                templateService.getTemplatesByType().then(function (resTemp) {
+
+                    if (resTemp) {
+                        scope.MessageTemplates = resTemp;
+                    }
+
+                }, function (errTemp) {
+
+                    scope.showAlert("Error", "error", "Error in loading Templates");
+                });
+
+            };
+            scope.loadTemplates();
+            scope.showSMSModal = false;
+            scope.isTempAdded = true;
+            scope.contactData = "";
+            scope.isNewAttachment = false;
+            scope.paramList = [];
+            scope.isSaveDisable = false;
+
+
+            scope.showTemplates = function (contact) {
+                scope.showSMSModal = !scope.showSMSModal;
+                if (contact) {
+                    scope.contactData = contact;
+                }
+                else {
+                    scope.mailAttchments = [];
+                    scope.paramList = {};
+                    scope.msgObj = {};
+                }
+
+
+            }
+            scope.activateBody = function () {
+                scope.isTempAdded = !scope.isTempAdded;
+
+            }
+
+            scope.showAttchmentModule = function () {
+                scope.isNewAttachment = !scope.isNewAttachment;
+            }
+
+            scope.changeAttchStatus = function (item) {
+
+                var index = scope.mailAttchments.indexOf(item);
+
+                if (index != -1) {
+                    scope.mailAttchments[index].availablity = !scope.mailAttchments[index].availablity;
+
+
+                }
+
+
+            };
+
+
+            scope.sendMessage = function (msgType, msgObj) {
+
+
+                var mailObj =
+                    {
+                        from: "",
+                        to: scope.contactData,
+                        channel: msgType,
+                        template: "",
+                        body: "",
+                        parameters: {}
+
+
+                    };
+
+                mailObj.parameters = profileDataParser.myProfile;
+
+                if (scope.isTempAdded) {
+                    mailObj.template = msgObj.Template.name;
+
+                    angular.forEach(scope.paramList, function (item) {
+                        var ParamName = item.name;
+                        mailObj.parameters[ParamName] = item.value;
+
+                    });
+
+
+                    mailObj.body = "";
+                }
+                else {
+                    mailObj.body = msgObj.Body;
+                    mailObj.template = "";
+                    mailObj.parameters = {};
+
+                }
+
+
+                if (msgType.toLowerCase() == 'email') {
+                    var companyInfo = authService.GetCompanyInfo();
+                    var activeAttchments = scope.mailAttchments.map(function (item) {
+                        if (item.availablity) {
+                            return {
+                                "name": item._file.name,
+                                "url": baseUrls.fileServiceInternalUrl + "File/Download/" + companyInfo.tenant + "/" + companyInfo.company + "/" + item.uuid + "/" + item._file.name
+                            }
+                        }
+                    });
+
+
+                    mailObj.attachments = activeAttchments;
+                    //send message;
+                }
+                else if (msgType == 'sms') {
+                    mailObj.attachments = [];
+                }
+
+
+                engagementService.sendEmailAndSms(mailObj).then(function (res) {
+
+                    if (msgType == "sms") {
+                        scope.showAlert("Success", "success", "SMS sent successfully");
+                    }
+                    else {
+                        scope.showAlert("Success", "success", "Email sent successfully");
+                    }
+                    scope.showTemplates('');
+
+
+                }, function (err) {
+                    console.log("Sending Error ", err);
+                    if (msgType == "sms") {
+                        scope.showAlert("Error", "error", "SMS sending failed");
+                    }
+                    else {
+                        scope.showAlert("Error", "error", "Email sending failed");
+                    }
+                })
+
+
+            };
+
+
+            scope.loadParamList = function (tempObj) {
+                scope.checkParams(tempObj);
+
+            }
+
+            scope.checkParams = function (tempObj) {
+                scope.paramList = [];
+                var templateContent = tempObj.content.content;
+                var splitList = templateContent.match(/({[a-zA-Z])\w+}/g);
+                //console.log(splitList);
+                //console.log(scope.template.name +" : "+splitList.length);
+
+                if (splitList) {
+                    for (var i = 0; i < splitList.length; i++) {
+                        console.log("name data " + splitList[i].match(/([a-zA-Z])\w+/g));
+
+                        if (splitList.indexOf({name: splitList[i].match(/([a-zA-Z])\w+/g)}) == -1) {
+                            var paramData =
+                                {
+                                    name: splitList[i].match(/([a-zA-Z])\w+/g)[0]
+                                }
+                        }
+
+                        scope.paramList[i] = paramData;
+                    }
+                }
+
+
+                angular.forEach(scope.paramList, function (item) {
+
+                    if (item.name in profileDataParser.myProfile) {
+                        item.value = profileDataParser.myProfile[item.name];
+                    }
+                });
+
+
+            };
+
+
         }
     }
 }).directive("fileread", [function () {
@@ -2450,16 +3229,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 (function () {
     var app = angular.module("veeryAgentApp");
 
-    var profilePicUploadController = function ($scope, $stateParams, $filter, $uibModalInstance, $base64, $http, FileUploader, fileService, authService, jwtHelper,changeUrl) {
+    var profilePicUploadController = function ($scope, $stateParams, $filter, $uibModalInstance, $base64, $http, FileUploader, fileService, authService, jwtHelper, changeUrl) {
 
         $scope.showModal = true;
         $scope.isUploadDisable = true;
 
         $scope.myImage = '';
         $scope.myCroppedImage = '';
-
-
-
 
 
         $scope.myChannel = {
@@ -2611,6 +3387,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
         uploader.onProgressItem = function (fileItem, progress) {
             console.info('onProgressItem', fileItem, progress);
+            $scope.isSaveDisable = true;
         };
         uploader.onProgressAll = function (progress) {
             console.info('onProgressAll', progress);
@@ -2627,6 +3404,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
         uploader.onCompleteItem = function (fileItem, response, status, headers) {
             console.info('onCompleteItem', fileItem, response, status, headers);
             console.log("result ", response.Result);
+            $scope.isSaveDisable = false;
             new PNotify({
                 title: 'File Upload!',
                 text: "Picture uploaded successfully",
@@ -2634,12 +3412,15 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
                 styling: 'bootstrap3'
             });
 
+            //profile edit image upload
+
             changeUrl(response.Result);
             $uibModalInstance.dismiss('cancel');
 
         };
         uploader.onCompleteAll = function () {
             console.info('onCompleteAll');
+            $scope.isSaveDisable = false;
         };
 
 
@@ -2648,7 +3429,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             uploader.clearQueue();
             $scope.isUploadDisable = true;
             document.getElementById("cropedArea").src = "";
-        }
+        };
         $scope.showMe = function () {
             alert("showMe");
 
@@ -2726,8 +3507,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
             // from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Base64_encoding_and_decoding
             return nChr > 64 && nChr < 91 ? nChr - 65
                 : nChr > 96 && nChr < 123 ? nChr - 71
-                : nChr > 47 && nChr < 58 ? nChr + 4
-                : nChr === 43 ? 62 : nChr === 47 ? 63 : 0;
+                    : nChr > 47 && nChr < 58 ? nChr + 4
+                        : nChr === 43 ? 62 : nChr === 47 ? 63 : 0;
         }
 
 
@@ -2936,6 +3717,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope,$uibModal,$q, 
 
         }
     };
+
 
     app.controller("profilePicUploadController", profilePicUploadController);
 }());

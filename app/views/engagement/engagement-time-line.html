@@ -1,0 +1,126 @@
+<div class="user-p-right-tab-052017">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <!-- user profile  engagement  time line -->
+        <div class="user-p-e-tl-wrapper-052017">
+
+            <div slimscroll="{height: '930px',
+                        railVisible: true,
+                        color: '#EEEEEE',
+                        size: '8px',
+                        distance: '15px',
+                        railColor: '#EEEEEE',
+                        railBorderRadius: 10}">
+                <timeline>
+                    <timeline-event ng-repeat="eng in engagementsList" side="left">
+                        <timeline-badge class="e-t-l-badge-052017 {{eng.channel}}"></timeline-badge>
+                        <timeline-panel ng-class="{'outbound-panel-right':eng.direction=='outbound'}">
+                            <div class="e-t-l-wrapper-052017 left">
+                                <div class="e-t-l-header-052017">
+                                    <ul class="customer-style-ul">
+                                        <li class="from-to-052017">From</li>
+                                        <li class="value">{{eng.channel_from}}</li>
+                                    </ul>
+                                    <ul class="customer-style-ul row-fluid">
+                                        <li class="from-to-052017">To</li>
+                                        <li class="value">{{eng.channel_to}}</li>
+                                    </ul>
+                                </div>
+
+                                <div class="e-t-l-direction-052017">
+                                    <ul class="customer-style-ul">
+                                        <li class="direction-icon-052017">
+                                            <div class="e-t-l-d-icon-052017">
+                                                <!--<i ng-class="{'fa fa-random':eng.channel=='api',-->
+                                                <!--'fa fa-twitter':eng.channel=='twitter',-->
+                                                <!--'fa fa-facebook':eng.channel=='facebook-post',-->
+                                                <!--'main-icon-2-telephone-3':eng.channel=='call',-->
+                                                <!--'fa fa-skype':eng.channel=='skype',-->
+                                                <!--'fa fa-bell-o':eng.channel=='sms',-->
+                                                <!--'fa fa-envelope-o':eng.channel=='email'}"></i>-->
+
+                                                <img ng-if="eng.channel=='facebook'"
+                                                     src="assets/img/timeline/fb.png"
+                                                     width="80"/>
+                                                <img ng-if="eng.channel=='skype'"
+                                                     src="assets/img/timeline/skype.png"
+                                                     width="80"/>
+                                                <img ng-if="eng.channel=='call'"
+                                                     src="assets/img/timeline/outbound-call.png"
+                                                     width="80"/>
+                                                <img ng-if="eng.channel=='twitter'"
+                                                     src="assets/img/timeline/outbound-call.png"
+                                                     width="80"/>
+                                                <img ng-if="eng.channel=='api'"
+                                                     src="assets/img/timeline/api.png"
+                                                     width="80"/>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <ul class="customer-style-ul">
+                                                <li>
+                                                    <div class="e-t-l-channel-d-052017">
+                                                        direction : {{eng.direction}}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="e-t-l-channel-d-052017 channel {{eng.channel}}">
+                                                        {{eng.channel}}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="e-t-l-channel-d-052017">
+                                                        <time-ago from-time='{{eng.created_at}}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- engagement time line direction description -->
+                                <div class="e-t-l-d-desc-052017">
+                                    <div class="e-t-d-d-wrapper-052017">
+                                        {{eng.body}}
+                                    </div>
+                                </div>
+
+                                <!-- engagement tim line more details -->
+                                <div class="e-t-l-more-052017"
+                                     ng-if="eng.notes.length!=0">
+                                    <div class="e-t-l-m-wrapper-052017"
+                                         ng-repeat="note in eng.notes">
+                                        <div class="e-t-l-m-auth-052017">
+                                            author | {{note.author}}
+                                        </div>
+                                        <div class="e-t-m-details-052017">
+                                            {{note.body}}
+                                        </div>
+                                        <div ng-if="note.tid"
+                                             class="e-t-m-details-052017">
+                                            <button type="button" class="btn btn-m-p-more pull-right"
+                                                    ng-click="getTicketByRefe(note.tid);">
+                                                more
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </timeline-panel>
+                    </timeline-event>
+
+            </div>
+        </div>
+
+        <div class="more-ticket-wrapper-052017" ng-if="engagementsList.length!=0">
+            <div class="more-record-052017" ng-click="showMore();">
+                <button ng-show="!isShowTimeLine" class="btn btn-more-data">
+                    VIEW MORE
+                </button>
+                <button ng-show="isShowTimeLine" disabled class="btn btn-more-data">
+                    PLEASE WAIT...
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -50,7 +50,7 @@
                                     <div class="ps-wrp">
                                         <div class="ps-menu"
                                              ng-click="clickMenu(menu)"
-                                             ng-repeat="menu in menusObj.menu | limitTo:5 track by $index ">
+                                             ng-repeat="menu in menusObj.menu | limitTo:6 track by $index ">
                                             <div class="row">
                                                 <div class="col-lg-2">
                                                     <div class="s-icon"
@@ -146,6 +146,11 @@
                                              id="myratings"
                                              class="edit-info">
                                             <div ng-include="'app/views/agent/template/myRatingsTemp.html'"></div>
+                                        </div>
+                                        <div ng-if="menusObj.selectedMenu.id=='sm06'"
+                                             id="myChatTemps"
+                                             class="edit-info">
+                                            <div ng-include="'app/views/agent/template/chatTemplates.html'"></div>
                                         </div>
                                     </div>
                                 </div>

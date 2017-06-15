@@ -1,0 +1,133 @@
+<div class="user-p-right-tab-052017">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="user-e-widget-052017">
+            <div class="header-052017 ">
+                ENGAGEMENT
+            </div>
+
+            <!-- engagement user profile wrapper -->
+            <div class="user-p-e-wrapper-052017 animated fadeIn">
+                <!-- company -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">COMPANY</li>
+                        <li class="pull-right value-052017">{{company}}</li>
+                    </ul>
+                </div>
+                <!-- direction -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">Direction</li>
+                        <li class="pull-right value-052017">{{direction}}</li>
+                    </ul>
+                </div>
+                <!-- Channel from -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">channel from</li>
+                        <li class="pull-right value-052017">{{direction=== 'inbound' ? channelFrom:channelTo}}</li>
+                    </ul>
+                </div>
+                <!-- Channel to  -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">channel to</li>
+                        <li class="pull-right value-052017">{{direction=== 'inbound' ? channelTo:channelFrom}}</li>
+                    </ul>
+                </div>
+                <!-- Channel -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">channel</li>
+                        <li class="pull-right value-052017">{{channel}}</li>
+                    </ul>
+                </div>
+                <!-- skill -->
+                <div class="e-d-row-052017">
+                    <ul class="customer-style-ul">
+                        <li class="pull-left desc-052017">skill</li>
+                        <li class="pull-right value-052017">{{skill}}</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- ticket summary  -->
+            <div class="user-p-t-s-052017 animated fadeIn">
+                <div class="header-052017 ">
+                    Ticket summary
+                </div>
+                <div class="ticket-s-wrapper-052017">
+
+                    <!-- ticket summary details not found -->
+                    <div class="ivr-n-found-052017 ticket-cht-summary"
+                         ng-if="ticketPieChart.data==0">
+                        <div class="ivr-icon">
+                            <img src="assets/img/engagement-icon/chat-not-found.png" width="118">
+                        </div>
+                        <div class="error-msg text-lg-052017 text-center">
+                            Ticket Record Not Found
+                        </div>
+                    </div>
+
+                    <div class="ticket-s-chart-052017" ng-if="ticketPieChart.data!=0">
+                        <canvas id="ticketSummary"
+                                width="250" height="250"
+                                class="chart chart-doughnut"
+                                chart-options="pieChartOption"
+                                chart-data="ticketPieChart.data"
+                                chart-labels="ticketPieChart.labels">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="user-e-widget-052017 animated fadeIn">
+            <div class="header-052017 animated fadeIn">
+                IVR DETAILS
+            </div>
+
+
+            <!-- ivr wrapper -->
+            <div class="user-p-ivr-wrapper-052017">
+
+                <!-- IVR details not found -->
+                <div class="ivr-n-found-052017 ivr-n-f" ng-if="ivrDetails.length==0">
+                    <div class="ivr-icon">
+                        <img src="assets/img/engagement-icon/IVR-icon-not-found.png" width="118">
+                    </div>
+                    <div class="error-msg text-lg-052017 text-center">
+                        IVR Record Not Found
+                    </div>
+                </div>
+
+                <!-- ivr details -->
+                <div class="ivr-main-wrapper-052017" ng-if="ivrDetails.length!=0">
+                    <div class="ivr-t-body-052017">
+                        <table class="table ivr-tbl-052017">
+                            <thead>
+                            <tr class="ivr-t-h-052017">
+                                <th>PATH</th>
+                                <th>DATA</th>
+                            </tr>
+                            </thead>
+                            <tbody class="ivr-t-body-052017">
+                            <tr class="ivr-t-row-052017" ng-repeat="ivr in ivrDetails">
+                                <td>{{ivr.EventName}}</td>
+                                <td>{{ivr.EventParams}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ivr-t-c-wrapper-052017">
+                        <div class="iver-t-c-052017">
+                            TOTAL : {{ivrDetails.length}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
