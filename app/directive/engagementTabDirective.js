@@ -3084,7 +3084,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                 var mailObj =
                     {
-                        from: scope.agentIss,
+                        from: "",
                         to: scope.contactData,
                         channel: msgType,
                         template: "",
