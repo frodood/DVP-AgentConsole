@@ -62,6 +62,16 @@ window.SE = function (e) {
         });
 
 
+        socket.on('tags', function (data) {
+            console.log("tags");
+            if (callBack.OnTags) {
+                callBack.OnTags(data);
+            }
+        });
+
+
+
+
 
 
         socket.on('room:event', function (data) {
@@ -286,6 +296,11 @@ window.SE = function (e) {
 
         });
 
+        socket.on('preview_dialer_message', function (data) {
+            if (callBack.OnEvent)
+                callBack.OnEvent('preview_dialer_message',data);
+        });
+
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -331,13 +346,18 @@ window.SE = function (e) {
         if (!e)throw g;
 
         var r = v(e, "to"), m = v(e, "message"), t = v(e, "type");
+        var mediaType= e["mediaType"];
+        var mediaName= e["mediaName"];
         if (connected) {
             // tell server to execute 'new message' and send along one parameter
             var msg = {
                 to: r,
                 message: m,
                 type: t,
-                id: uniqueId()
+                id: uniqueId(),
+                mediaType: mediaType,
+                mediaName: mediaName
+
             };
             socket.emit('message', msg);
             
@@ -476,9 +496,30 @@ window.SE = function (e) {
     function se(e) {
         if (!e)throw g;
         var r = v(e, "to");
+        var re = v(e, "message");
         if (connected) {
             socket.emit('sessionend', {
-                to: r
+                to: r,
+                message: re
+            });
+        }
+        else {
+            if (callBack.OnError) {
+                callBack.OnError({method: "connection", message: "Connection Lost."});
+            }
+        }
+    }
+
+
+
+    function nt(e) {
+        if (!e)throw g;
+        var r = v(e, "to");
+        var re = v(e, "message");
+        if (connected) {
+            socket.emit('tag', {
+                to: r,
+                message: re
             });
         }
         else {
@@ -493,10 +534,10 @@ window.SE = function (e) {
         var r = v(e, "type");
         if (connected) {
             if (r === "previous") {
-                socket.emit('request', {request: 'oldmessages',requester:  v(e, "requester"),  from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
+                socket.emit('request', {request: 'oldmessages',requester:  v(e, "requester"),  from: v(e, "from"), to: v(e, "to"), id: v(e, "id"), who: v(e, "who")});
             }
             else if (r === "next") {
-                socket.emit('request', {request: 'newmessages', from: v(e, "from"), to: v(e, "to"), id: v(e, "id")});
+                socket.emit('request', {request: 'newmessages', from: v(e, "from"), to: v(e, "to"), id: v(e, "id"),  who: v(e, "who")});
             }
             else if (r === "allstatus") {
                 socket.emit('request', {request: 'allstatus'});
@@ -505,7 +546,10 @@ window.SE = function (e) {
                 socket.emit('request', {request: 'allcallstatus'});
             }
             else if (r === "latestmessages") {
-                socket.emit('request', {request: 'latestmessages', from: v(e, "from")});
+                socket.emit('request', {request: 'latestmessages', from: v(e, "from"), who: v(e, "who")});
+            }
+            else if (r === "tags") {
+                socket.emit('request', {request: 'tags', from: v(e, "from")});
             }
             else if (r === "pendingall") {
                 socket.emit('request', {request: 'pendingall'});
@@ -542,6 +586,7 @@ window.SE = function (e) {
         "acceptclient": c,
         "disconnect": d,
         "sessionend": se,
+        "tag": nt,
         "status": o,
         "typingstoped": a,
         "reconnect": rc,

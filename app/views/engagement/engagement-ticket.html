@@ -1,0 +1,120 @@
+<div class="user-p-right-tab-052017">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <div class="user-p-t-wrapper-052017">
+            <!-- user profile ticket header wrapper -->
+            <div class="user-p-t-h-wrapper-052017">
+                <div class="header-052017" style="padding-top: 21px;">
+                    all ticket ({{ticketList.length}})
+                </div>
+
+                <!-- user profile ticket type -->
+                <div class="user-p-t-type-052017">
+                    <!--<div class="u-p-t-t-wrapper-052017">-->
+                    <!--type-->
+                    <!--</div>-->
+                    <!-- user profile ticket type list -->
+                    <!--<div class="u-p-t-t-list">-->
+                    <!--<ul class="customer-style-ul">-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017 selected">-->
+                    <!--<i class="fa fa-check"></i>-->
+                    <!--all-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017">-->
+                    <!--low-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017">-->
+                    <!--urgent-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017">-->
+                    <!--high-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="ticket-type-052017">-->
+                    <!--normal-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                </div>
+            </div>
+
+            <!-- user profile ticket body -->
+            <div class="user-p-t-body-052017">
+                <div class="user-p-t-b-wrapper-052017"
+                     slimscroll="{height: '870px',
+                                    railVisible: true,
+                                    color: '#EEEEEE',
+                                    size: '8px',
+                                    distance: '15px',
+                                    railColor: '#EEEEEE',
+                                    railBorderRadius: 10}">
+                    <table class="table tbl-t-052017">
+                        <tbody>
+                        <tr ng-repeat="ticket in ticketList"
+                            class="ticket-tbl-row-052017">
+                            <th scope="row">
+                                <div class="t-c-img-052017">
+                                    <img src="assets/img/avatar/profileAvatar.png"
+                                         ng-src="{{ticket.submitter.avatar}}"
+                                         width="40">
+                                </div>
+                            </th>
+                            <td class="t-td-type-052017">
+                                <!-- ticket status group wrapper -->
+                                <div class="t-td-s-g-wrapper-052017">
+                                    <div class="t-td-t-status-052017"
+                                         ng-class="{'high-052017':ticket.priority=='high',
+                        'normal-052017':ticket.priority=='normal',
+                        'low-052017':ticket.priority=='low',
+                        'urgent-052017':ticket.priority=='urgent'}"></div>
+                                    {{ticket.type}}
+                                </div>
+                            </td>
+                            <td class="t-td-desc-052017">
+                                {{ticket.subject}}
+                            </td>
+                            <td class="t-td-channel-052017">
+                                <div class="t-td-c-wrapper-052017 facebook">
+                                    <i ng-class="{'fa fa-random':ticket.channel=='api',
+                  'fa fa-twitter':ticket.channel=='twitter',
+                   'fa fa-facebook':ticket.channel=='facebook-post',
+                  'fa fa-phone':ticket.channel=='call',
+                  'fa fa-bookmark-o':ticket.channel=='new',
+                  'fa fa-bell-o':ticket.channel=='sms',
+                  'fa fa-envelope-o':ticket.channel=='email'}"></i>
+                                </div>
+
+                            </td>
+                            <td class="t-td-t-ago-052017">
+                                <time-ago from-time='{{ticket.created_at}}' format='MM/dd/yyyy'></time-ago>
+                            </td>
+                            <td class="t-td-more-052017" ng-click="gotoTicket(ticket)">MORE</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="more-ticket-wrapper-052017" ng-if="ticketList.length!=0">
+                    <div class="more-record-052017" ng-click="loadNextTickets();">
+                        <button ng-show="!isLoadingTicke" class="btn btn-more-data">
+                            VIEW MORE
+                        </button>
+                        <button ng-show="isLoadingTicke" disabled class="btn btn-more-data">
+                            PLEASE WAIT...
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

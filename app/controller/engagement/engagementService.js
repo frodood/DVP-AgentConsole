@@ -153,6 +153,21 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         });
     };
 
+    var sendEmailAndSms = function (msgObj) {
+        return $http({
+            method: 'post',
+            url: baseUrls.engagementUrl+"UMS/Interact",
+            data:msgObj
+        }).then(function (response) {
+            if (response.data) {
+                return response.data;
+            } else {
+                return undefined;
+            }
+        });
+    }
+
+
     return {
         GetEngagementIdsByProfile: getEngagementIdsByProfile,
         GetEngagementSession:getEngagementSession,
@@ -163,7 +178,8 @@ agentApp.factory("engagementService", function ($http, baseUrls,authService) {
         EngagementCount:engagementCount,
         MoveEngagementBetweenProfiles: moveEngagementBetweenProfiles,
         AddIsolatedEngagementSession: addIsolatedEngagementSession,
-        AddEngagementSessionForProfile: addEngagementSessionForProfile
+        AddEngagementSessionForProfile: addEngagementSessionForProfile,
+        sendEmailAndSms:sendEmailAndSms
     }
 });
 

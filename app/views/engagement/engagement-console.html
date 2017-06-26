@@ -1,0 +1,109 @@
+<!-- main wrapper -052017 -->
+<div class="user-p-m-wrapper-052017">
+
+    <!-- Confirm Box -->
+    <div class="confirm-box-wrapper" ng-show="mapProfile.isShowConfirm">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div class="confirm-body">
+                <h5>Are you sure..? Add to Contact</h5>
+                <div class="select-option-wrapper">
+                    <ul>
+                        <li ng-show="mapProfile.showNumberd">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="mapProfile.addNumber"> add phone number to contacts
+                                </label>
+                            </div>
+                        </li>
+                        <li ng-show="mapProfile.showEngagement">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="mapProfile.mapEngagement"> map interaction to
+                                    profile
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="confirm-btn-wrapper">
+                    <div class="ok-btn" ng-click="mapProfileAndNumber()">
+                        OK
+                    </div>
+                    <div class="cancel-btn">
+                        CANCEL
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end -->
+
+
+    <!-- multiple profile view -->
+    <div ng-include="'app/views/engagement/multiple-profile.html'"></div>
+
+    <!-- profile avatar upload modal -->
+    <div ng-include="'app/views/engagement/temp/upload-profile-avatar.html'"></div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <!-- left main wrapper scroll = fixed  -->
+            <div ng-include="'app/views/engagement/engagement-console-left.html'"></div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+            <!-- right main wrapper ng-if="isEnagagementOpen==true;" -->
+            <div class="user-p-right-052017" ng-if="isEnagagementOpen==true;">
+
+                <!--  create  new ticket modal -->
+                <div ng-if="showCreateTicket">
+                    <div ng-include="'app/views/engagement/edit-form/create-new-ticket.html'"></div>
+                </div>
+
+                <!-- create new profile -->
+                <div ng-if="showNewProfile">
+                    <div ng-include="'app/views/engagement/edit-form/create-new-profile.html'"></div>
+                </div>
+
+
+                <div class="user-p-right-h-052017">
+                    <uib-tabset type="pills profile-c-pills-052017">
+                        <uib-tab heading="ENGAGEMENTS">
+                            <!-- engagement -->
+                            <div ng-include="'app/views/engagement/engagement.html'"></div>
+                        </uib-tab>
+                        <uib-tab heading="TIME LINE" classes="btn-sm" disable="engagementsList.length==0">
+                            <!--time line-->
+                            <div ng-include="'app/views/engagement/engagement-time-line.html'"></div>
+                        </uib-tab>
+                        <uib-tab heading="TICKETS" classes="btn-sm" disable="ticketList.length==0">
+                            <!--ticket-->
+                            <div ng-include="'app/views/engagement/engagement-ticket.html'"></div>
+                        </uib-tab>
+                        <uib-tab heading="PROFILE" classes="btn-sm">
+                            <!--profile-->
+                            <div ng-include="'app/views/engagement/engagement-profile.html'"></div>
+                        </uib-tab>
+                        <uib-tab heading="FORMS" classes="btn-sm">
+                            <!--profile-->
+                            <div ng-include="'app/views/engagement/engagement-other.html'"></div>
+                        </uib-tab>
+                    </uib-tabset>
+
+                    <div class="top-left-tab-btn-052017">
+                        <button type="button"
+                                ng-click="multipleProfile.searchProfile();"
+                                class="btn btn-search-052017">
+                            <i class="ti-search"></i>
+                            SEARCH
+                        </button>
+                        <button class="btn"
+                                ng-click="createNProfile()">
+                            <i class="ti-plus"></i>
+                            new profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

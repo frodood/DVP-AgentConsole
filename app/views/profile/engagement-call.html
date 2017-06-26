@@ -1,3 +1,10 @@
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <img class="assignee-icon" src="assets/img/avatar/defaultProfile.png" ng-src="{{match.model.avatar}}">
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
 <div class="row">
     <!-- left main wrappper -->
     <div class="col-md-4 col-sm-4 col-xs-4">
@@ -170,6 +177,7 @@
                                 <div class="btn-warp inline-btn" ng-click="multipleProfile.searchProfile();">
                                     <span class="btn  btn-default">Search</span>
                                 </div>
+
 
                             </div>
                         </div>
@@ -944,7 +952,7 @@
                                                                min-length="1"></auto-complete>
                                             </tags-input>-->
 
-                                            <select class="form-control" ng-model="ticket.assignee"
+                                            <!--<select class="form-control" ng-model="ticket.assignee"
                                                     ng-model-options="{trackBy: '$value'}">
                                                 <optgroup label="Users"></optgroup>
                                                 <option ng-repeat="c in assigneeUsers" value='{{c._id}}'>
@@ -954,14 +962,19 @@
                                                 <option ng-repeat="group in assigneeGroups" value='{{group._id}}'>
                                                     - {{group.name}}
                                                 </option>
-                                            </select>
+                                            </select>-->
+                                            <div class="scrollable-dropdown-menu">
 
-                                            <label >Security Level</label>
+                                                <input type="text" ng-model="ticket.assignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html">
+
+                                            </div>
+
+                                            <!--<label >Security Level</label>
                                             <select class="form-control" ng-model="ticket.security_level">
                                                 <option ng-repeat="level in secLevels" value="{{level}}">
                                                     {{level}}
                                                 </option>
-                                            </select>
+                                            </select>-->
 
 
                                         </div>
@@ -1031,25 +1044,7 @@
     </div>
     <!-- end -->
 
-    <!-- contact delete confirmation box -->
-    <div class="box-confirmation-wrapper" ng-show="isCnfmBoxShow">
-        <div class="col-lg-3 col-lg-offset-4">
-            <div class="conf-layout">
-                Are you sure delete contact ?
 
-                <div class="cnf-btn-wrapper">
-                    <ul>
-                        <li class="cancel" ng-click="confimCancel()">Cancel</li>
-                        <li class="ok" ng-click="confimOk()">Ok</li>
-
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-    <!-- end -->
 
 </div>
 

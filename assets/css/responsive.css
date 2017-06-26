@@ -11,6 +11,11 @@
         text-align: left;
     }
 
+    /* user profile */
+    .right-btn-052017 {
+        float: left;
+    }
+
 }
 
 @media screen and (min-width: 400px) and (max-width: 200px) {
@@ -20,6 +25,16 @@
 
     .layout-header > div > .btn-wrapper {
         text-align: left;
+    }
+
+    /* user profile */
+    .right-btn-052017 {
+        float: left;
+    }
+
+    .eng-channel-052017 {
+        width: 100%;
+        display: block;
     }
 }
 
@@ -32,18 +47,44 @@
         text-align: left;
     }
 
+    /* user profile */
+    .right-btn-052017 {
+        float: left;
+    }
+
+    .eng-channel-052017 {
+        width: 100%;
+        display: block;
+    }
+
+    .channel-main-wrapper {
+        padding-right: 15px;
+    }
+
 }
 
 @media (min-width: 1200px) {
     .col-lg-3-resize {
         width: 20%;
     }
-
 }
 
 @media (max-width: 1300px) and (min-width: 150px) {
     .time-tracker-wrapper {
         display: none;
+    }
+
+    .eng-channel-052017 {
+        width: 100%;
+        display: block;
+    }
+
+    .channel-main-wrapper {
+        padding-right: 15px;
+    }
+
+    .eng-channel-052017 {
+        margin-bottom: 8px;
     }
 }
 

@@ -2,15 +2,28 @@
     <div id="myNoteShow" class="mynote-noti-wrapper -ringing">
         <div class="body">
             <div class="header">
-                ToDo Reminder
+                {{myNoteReminder.Message.title}}
             </div>
             <div class="note-notification-icon ">
                 <i class="veery-font-1-alarm-1 "></i>
             </div>
             <h5>
 
-                {{myNoteReminder.Message}}
+                {{myNoteReminder.Message.Message}}
             </h5>
+
+            <div>
+
+
+                    <label  ng-show="myNoteReminder.Message.external_user"
+                           ng-click="openUserProfile(myNoteReminder.Message.external_user)" class="attchment-clip">
+                        <h6 style="color: ghostwhite">Open profile</h6>
+
+                    </label>
+
+
+            </div>
+
 
             <div class="note-close" ng-click="myNoteNotiMe.hideMe();">
                 <i class="ti-close"></i>

@@ -2,7 +2,7 @@
  * Created by Damith on 10/20/2016.
  */
 
-agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) {
+agentApp.controller('myNoteCtrl', function ($scope, myNoteServices, authService) {
 
 
     //####Click take a note
@@ -47,7 +47,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) 
             },
             done: function (title, priority, note) {
                 $scope.note = {};
-                $scope.note.priority = 'default-color';
+                $scope.note.priority = 'low';
                 var note = {
                     title: title,
                     priority: priority,
@@ -63,7 +63,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) 
                 myNoteServices.CreateMyNote(note).then(function (res) {
                     if (res.data.IsSuccess) {
 
-                        if(res.data.Result) {
+                        if (res.data.Result) {
                             item = res.data.Result;
                             //item.sizeY = "auto";
 
@@ -128,6 +128,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) 
         var loadedReminder = function () {
             $('#reminderLoading').addClass('display-none');
             $('#reminderSelect').removeClass('display-none');
+            $scope.isDataSaving = false;
         };
 
         return {
@@ -141,8 +142,9 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) 
             },
             createDueDate: function () {
                 loadingReminder();
-                myNoteServices.ReminderMyNote($scope.reminderObj, $scope.myDate).then(function (res) {
-                    console.log(res);
+                $scope.isSavingReminder = true;
+                myNoteServices.ReminderMyNote($scope.reminderObj, $scope.dueDate).then(function (res) {
+                    $scope.isSavingReminder = false;
                     if (res.data.IsSuccess) {
                         showAlert('Reminder Note', 'success', 'Reminder saved successfully');
                         $scope.reminderMe.close();
@@ -151,8 +153,8 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) 
                     }
                     loadedReminder();
                 }, function (err) {
+                    $scope.isSavingReminder = false;
                     authService.IsCheckResponse(err);
-                    console.log(err);
                     showAlert('Reminder Note', 'error', 'Error in DeleteMyNote');
                     loadedReminder();
                 });
@@ -171,7 +173,7 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) 
                 uiFuntions.loadingMyNote();
                 myNoteServices.GetAllMyToDo().then(function (res) {
                     if (res.data.IsSuccess) {
-                        $scope.noteLists = res.data.Result.map(function(item){
+                        $scope.noteLists = res.data.Result.map(function (item) {
 
                             //item.sizex = "";
                             //item.sizeY= "100";
@@ -229,8 +231,6 @@ agentApp.controller('myNoteCtrl', function ($scope, myNoteServices,authService) 
             } // optional callback fired when drag is started,
         }
     };
-
-
 
 
 });
