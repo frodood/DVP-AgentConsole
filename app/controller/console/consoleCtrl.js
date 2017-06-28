@@ -1542,11 +1542,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.previewMessage = {};
     $scope.dialerMessage = {
-        sendPreviewReply: function(topicKey, replyMessage){
+        sendPreviewReply: function (topicKey, replyMessage) {
             var replyData = {Tkey: topicKey, Message: replyMessage};
             notificationService.ReplyToNotification(replyData).then(function (response) {
 
-                if(!response.IsSuccess){
+                if (!response.IsSuccess) {
                     $scope.showAlert("Preview Reply", "error", "Error in reply message");
                 }
 
@@ -1567,17 +1567,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         console.log("agentFound");
         /* var values = data.Message.split("|");
-        var direction = values[7].toLowerCase();
-        var notifyData = {
-            company: data.Company,
-            direction: values[7],
-            channelFrom: direction=== 'inbound' ? values[3]:values[5],
-            channelTo: direction=== 'inbound' ? values[5]:values[3],
-            channel: 'call',
-            skill: values[6],
-            sessionId: values[1],
-            displayName: values[4]
-        };*/
+         var direction = values[7].toLowerCase();
+         var notifyData = {
+         company: data.Company,
+         direction: values[7],
+         channelFrom: direction=== 'inbound' ? values[3]:values[5],
+         channelTo: direction=== 'inbound' ? values[5]:values[3],
+         channel: 'call',
+         skill: values[6],
+         sessionId: values[1],
+         displayName: values[4]
+         };*/
         var values = data.Message.split("|");
         var notifyData = {
             company: data.Company,
@@ -1631,15 +1631,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.dialerPreviewMessage = function (data) {
-        if(data) {
+        if (data) {
             console.log('dialerPreviewMessage data :: ' + JSON.stringify(data));
 
             $scope.previewMessage.Tkey = data.TopicKey;
             $scope.previewMessage.Message = "";
 
-            if(data.Message) {
+            if (data.Message) {
                 $scope.previewMessage.PreviewData = JSON.parse(data.Message);
-            }else{
+            } else {
                 $scope.previewMessage.PreviewData = undefined;
             }
 
@@ -1721,7 +1721,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.OnMessage = function (data) {
         console.log("OnMessage");
-        var senderAvatar ="assets/img/avatar/profileAvatar.png";
+        var senderAvatar = "assets/img/avatar/profileAvatar.png";
 
         if (data.From && $scope.users) {
 
@@ -1773,8 +1773,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage) == -1) {
-           // var audio = new Audio('assets/sounds/notification-1.mp3');
-           // audio.play();
+            // var audio = new Audio('assets/sounds/notification-1.mp3');
+            // audio.play();
             $scope.notifications.unshift(objMessage);
             $('#notificationAlarm').addClass('animated swing');
             $scope.unredNotifications = $scope.getCountOfUnredNotifications();
@@ -1947,7 +1947,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     chatService.SubscribeEvents(function (event, data) {
-        console.log('preview_dialer_message :: '+ event);
+        console.log('preview_dialer_message :: ' + event);
         switch (event) {
 
             case 'agent_connected':
@@ -2002,7 +2002,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     });
 
-    var convertToNoticifationObject =function(event){
+    var convertToNoticifationObject = function (event) {
         var data = {};
         angular.copy(event, data);
         var mObject = data.Message;
@@ -2010,7 +2010,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         mObject.From = mObject.UserName;
         if ($scope.users && $scope.users.length) {
             var items = $filter('filter')($scope.users, {resourceid: mObject.ResourceId.toString()});
-            mObject.From = (items&&items.length)?items[0].username : mObject.UserName;
+            mObject.From = (items && items.length) ? items[0].username : mObject.UserName;
         }
 
         mObject.TopicKey = data.eventName;
@@ -2029,8 +2029,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
                         $scope.profile.freezeExceeded = true;
-                        if(event.Message.SessionId){
-                            event.Message.Message = event.Message.Message +" Session : "+event.Message.SessionId;
+                        if (event.Message.SessionId) {
+                            event.Message.Message = event.Message.Message + " Session : " + event.Message.SessionId;
                         }
                         $scope.OnMessage(convertToNoticifationObject(event));
                         phoneFuncion.updateCallStatus('Freeze Exceeded.');
@@ -2491,6 +2491,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addMyNote = function () {
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
+
+    //ToDo
     $scope.addDashBoard();
 
 
@@ -3574,7 +3576,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 //}
                             }
                             $scope.notificationMsg.clients = clients;
-                            $scope.notificationMsg.isPersist=true;
+                            $scope.notificationMsg.isPersist = true;
                             notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
                                 $scope.notificationMsg = {};
                                 console.log("send notification success :: " + JSON.stringify(clients));
@@ -3600,7 +3602,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 });
             } else {
                 $scope.notificationMsg.To = $scope.naviSelectedUser.username;
-                $scope.notificationMsg.isPersist=true;
+                $scope.notificationMsg.isPersist = true;
                 notificationService.sendNotification($scope.notificationMsg, "message", "").then(function (response) {
                     console.log("send notification success :: " + $scope.notificationMsg.To);
                     $scope.notificationMsg = {};

@@ -995,13 +995,13 @@ body {
 /*main console tab wrapper */
 .ui-tabs-scrollable > .spacer > div:first-child > .tab-content {
     margin-top: -1px;
-    border-top: 1px solid #d9dee4;
+    border-top: 0px solid #d9dee4;
     /*border-left: 1px solid #d9dee4;*/
     /*border-bottom: 1px solid #d9dee4;*/
 }
 
 .console-tab-wrapper {
-    padding: 80px 15px 10px 15px;
+    padding: 80px 15px 60px 70px;
 }
 
 .tab-content {
@@ -2948,12 +2948,12 @@ div > div >
 }
 
 .main-search-input {
-    border: 1px solid #8298ae;
-    min-width: 310px;
-    background: transparent;
-    height: 30px;
+    border: 0px solid #8298ae;
+    min-width: 330px;
+    background: #2F4762;
+    height: 35px;
     padding: 6px 12px;
-    border-radius: 0px;
+    border-radius: 7px;
     color: #ffffff;
 }
 
@@ -11836,4 +11836,99 @@ tr.t-dialer-b > td {
 .action-btn-052017 > i {
     color: #8FD539;
     font-size: 13px;
+}
+
+/*main console icon bar update */
+.top-log-052017 {
+    width: 180px;
+    height: 52px;
+    overflow: hidden;
+    position: relative;
+    float: left;
+    background-image: linear-gradient(-90deg, #223448 26%, #364C67 100%);
+    padding-top: 20px;
+}
+
+.top-log-052017 > .version-name {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    position: absolute;
+    color: #90d246;
+    font-size: 10px;
+    right: 41px;
+    bottom: 3px;
+}
+
+.top-log-052017 > img {
+    width: 160px;
+    margin-top: -19px;
+}
+
+.left-menu-wrapper052017 {
+    width: 60px;
+    height: 100%;
+    position: fixed;
+    overflow: hidden;
+    float: left;
+    top: 52px;
+    bottom: 0;
+    left: 0;
+    background: #ffffff;
+    box-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.06);
+    -o-box-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.06);
+    -moz-box-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.06);
+    -webkit-box-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.06);
+}
+
+.left-menu-wrapper052017 {
+
+}
+
+.left-menu-wrapper052017 > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.left-menu-wrapper052017 > ul > li {
+    display: block;
+    width: 60px;
+    /* height: 40px; */
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.left-menu-wrapper052017 > ul > li > .left-icon {
+    cursor: pointer;
+}
+
+.left-menu-wrapper052017 > ul > li > .left-icon > img.small {
+    width: 30px;
+}
+
+.icon-status {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    overflow: hidden;
+    border-radius: 100%;
+}
+
+.icon-status.left-menu {
+    border: 3px solid #FFFFFF;
+    bottom: 0;
+    right: 15px;
+}
+
+.icon-status.left-menu.offline {
+    background: #E7855E;
+}
+
+.header-search052017 {
+    width: 350px;
+    background: #2F4762;
+    height: 37px;
+    overflow: hidden;
 }
