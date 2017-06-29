@@ -1692,6 +1692,25 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
             };
 
+            scope.GetIntegrationDetails = function (id) {
+                var postData = {
+                    "PROFILE_ADDITIONAL_DATA": {
+                        "Reference": id
+                    }
+                };
+                integrationAPIService.GetIntegrationDetails("PROFILE_ADDITIONAL_DATA",postData).then(function (response) {
+                   angular.forEach(response,function (item) {
+                       if(item){
+                           angular.extend(scope.profileDetail,item);
+                       }
+                    });
+
+                }, function (err) {
+                    scope.showAlert("User Profile", "error", "Fail To Get Additional Profile Details.")
+                });
+
+            };
+
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
 
@@ -1727,6 +1746,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 if (scope.profileDetail) {
                     scope.isEnagagementOpen = true;
                     scope.GetProfileHistory(scope.profileDetail._id);
+                    scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
                     scope.profileLoadin = false;
                     scope.showMultiProfile = false;
                     scope.showNewProfile = false;
@@ -1792,6 +1812,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                             scope.isEnagagementOpen = true;
                             scope.profileDetails = response;
+                            scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
                             loadUserData();
                         }, function (err) {
                             scope.isProfileFound = false;

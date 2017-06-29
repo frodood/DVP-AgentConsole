@@ -31,9 +31,26 @@
             })
         };
 
+        var getIntegrationDetails = function (type,data) {
+
+            var url = baseUrls.integrationapi + type+"/CallAPIs";
+            return $http({
+                method: 'POST',
+                url: url,
+                data:data
+            }).then(function (response) {
+                if (response.data && response.data.IsSuccess) {
+                    return response.data.Result;
+                } else {
+                    return null;
+                }
+            })
+        };
+
         return {
             getIntegrationURLMetaData: getIntegrationURLMetaData,
-            getIntegrationAPIData: getIntegrationAPIData
+            getIntegrationAPIData: getIntegrationAPIData,
+            GetIntegrationDetails: getIntegrationDetails
         };
     };
 
