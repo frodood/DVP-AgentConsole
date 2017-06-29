@@ -1857,7 +1857,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage) == -1) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
-            audio.play();
+            //audio.play();
             $scope.notifications.unshift(objMessage);
             $('#notificationAlarm').addClass('animated swing');
             $scope.unredNotifications = $scope.getCountOfUnredNotifications();
@@ -1912,7 +1912,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         var audio = new Audio('assets/sounds/notification-1.mp3');
-        audio.play();
+        //audio.play();
         $scope.notifications.unshift(objMessage);
         $('#notificationAlarm').addClass('animated swing');
         $scope.unredNotifications = $scope.getCountOfUnredNotifications();
@@ -2493,7 +2493,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     //ToDo
-    $scope.addDashBoard();
+    //$scope.addDashBoard();
 
 
     var openNewEngagementTab = function (args, index) {

@@ -4,43 +4,135 @@
     <nav id="navBar" class="navbar navbar-default console-nav-bar">
 
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+            <div class="col-lg-12 col-md-12">
 
-                <a class="navbar-brand console-navbar-brand top-log-052017" href="#">
-                    <div class="version-name">
-                        v 2.3
-                    </div>
-                    <img src="assets/img/logo/logo300x100.png">
-                </a>
-            </div>
 
-            <form class="form-inline navbar-form navbar-left ">
-                <div class="form-group has-feedback">
-                    <input id="commonSearch" type="text" autocomplete="off"
-                           class="main-search-input has-feedback-right"
-                           ng-model="searchText"
-                           typeahead-min-length="0" typeahead-on-select="bindSearchData($item)"
-                           uib-typeahead="state as state.value for state in commonSearch($viewValue)"
-                           placeholder="Search by keyword, #ticket or #profile" typeahead-no-results="noResults"
-                           typeahead-loading="isLoading">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
-                    <!--<span class="fa fa-spinner fa-spin  form-control-feedback left" style="margin-top: 8px; color: white; padding-left: 2px" aria-hidden="true"></span>-->
-                    <span class="fa fa-spinner fa-spin"
-                          style="margin-top: 3px; color: white; padding-left: 2px" id="searchSpin"></span>
-                    <div class="no-result-box">
-                        <li ng-show="noResults">--- No Results Found ---</li>
-                    </div>
+                    <a class="navbar-brand console-navbar-brand top-log-052017" href="#">
+                        <div class="version-name">
+                            v 2.3
+                        </div>
+                        <img src="assets/img/logo/logo300x100.png">
+                    </a>
                 </div>
-            </form>
 
+                <form class="form-inline navbar-form navbar-left ">
+                    <div class="form-group has-feedback">
+                        <input id="commonSearch" type="text" autocomplete="off"
+                               class="main-search-input has-feedback-right"
+                               ng-model="searchText"
+                               typeahead-min-length="0" typeahead-on-select="bindSearchData($item)"
+                               uib-typeahead="state as state.value for state in commonSearch($viewValue)"
+                               placeholder="Search by keyword, #ticket or #profile" typeahead-no-results="noResults"
+                               typeahead-loading="isLoading">
+
+                        <!--<span class="fa fa-spinner fa-spin  form-control-feedback left" style="margin-top: 8px; color: white; padding-left: 2px" aria-hidden="true"></span>-->
+                        <span class="fa fa-spinner fa-spin"
+                              style="margin-top: 3px; color: white; padding-left: 2px" id="searchSpin"></span>
+                        <div class="no-result-box">
+                            <li ng-show="noResults">--- No Results Found ---</li>
+                        </div>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right" uib-dropdown>
+                    <!-- registration icon -->
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                        uib-dropdown
+                        uib-dropdown-toggle>
+                        <img class="small" src="assets/img/180x180/register180x180.png">
+                        <div id="regStatus" class="task-state task-none"></div>
+
+                        <ul class="dropdown-menu console-drop-menu notification-menu-right"
+                            uib-dropdown-menu
+                            role="menu">
+                            <li>
+                                <a class="drop-header">Register</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li ng-repeat="obj in resourceTaskObj" class="menuitem text-lowercase" srole="menuitem"><a
+                                    ng-class="obj.task==obj.RegTask ?'font-color-green bold':''"
+                                    ng-click="changeRegisterStatus.changeStatus(obj.task);"
+                                    href="javascript:void(0);">
+                                {{obj.task}}
+                                <div class="drop-active-icon"
+                                     ng-class="obj.task==obj.RegTask?'active':''">
+                                    <!--<i class="ti-check"></i>-->
+                                </div>
+
+                            </a></li>
+                        </ul>
+                    </li>
+
+                    <!--ng-show="obj.task==obj.RegTask"-->
+
+
+                    <!-- mode icon -->
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6" uib-dropdown
+                        uib-dropdown-toggle>
+                        <img class="small" src="assets/img/180x180/mode180x180.png">
+                        <div id="modeStatus" class="task-state task-none"></div>
+
+                        <ul class="dropdown-menu console-drop-menu notification-menu-right"
+                            uib-dropdown-menu
+                            role="menu">
+                            <li><a class="drop-header">Mode</a></li>
+                            <li class="divider"></li>
+                            <li class="menuitem" role="menuitem"><a id="Inbound"
+                                                                    class=""
+                                                                    ng-click="modeOption.inboundOption('Inbound');"
+                                                                    href="javascript:void(0);">
+                                <i ng-show="currentModeOption=='Inbound'" class="ti-check"></i>inbound</a>
+                            </li>
+                            <li ng-if="outboundAllowed != false" class="menuitem" role="menuitem"><a id="Outbound"
+                                                                                                     class=""
+                                                                                                     ng-click="modeOption.outboundOption('Outbound');"
+                                                                                                     href="javascript:void(0);">
+                                <i ng-show="currentModeOption=='Outbound'" class="ti-check"></i>outbound</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- break icon -->
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
+                        <img class="small" src="assets/img/180x180/break180x180.png">
+                    </li>
+
+                    <!-- notification icon -->
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
+                        <img class="small" src="assets/img/180x180/notification180x180.png">
+                        <div id="notificationStatus" class="task-state task-none"></div>
+                    </li>
+
+                    <!-- chat toggle icon -->
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
+                        <img ng-click="openNav()"
+                             class="small" src="assets/img/180x180/chat180x180.png">
+                        <div id="chatStatus" class="task-state task-none"></div>
+                    </li>
+                    <li>
+                        <h5 class="agent-login-name">
+                            Hi,{{firstName}}
+                        </h5>
+
+                    </li>
+                    <li>
+                        <div id="consoleProfileImg" class="console-profile-img" uib-dropdown-toggle>
+                            <img src="assets/img/avatar/default-user.png" ng-src="{{loginAvatar}}">
+
+                            <div id="userStatus" class="user-state online"></div>
+                        </div>
+                </ul>
+            </div>
+            <!-- /.col-12 -->
         </div>
         <!-- /.container-fluid -->
     </nav>
@@ -51,9 +143,11 @@
             <ul>
                 <!-- create new profile -->
                 <li style="padding-top: 50px;">
-                    <div class="left-icon animated slideInLeft">
+                    <div class="left-icon animated slideInLeft"
+                         tooltip-placement="right"
+                         uib-tooltip="On the right">
                         <img class="bg" src="assets/img/180x180/profile-create180x180.png"
-                             width="45px">
+                             width="40px">
                     </div>
                 </li>
                 <!-- go to home -->
@@ -89,9 +183,6 @@
 
                     </div>
                 </li>
-            </ul>
-
-            <ul style="bottom: 80px;position: absolute;">
                 <li>
                     <div class="left-icon animated slideInLeft">
                         <img class="small" src="assets/img/180x180/setting180x180.png">
@@ -106,7 +197,7 @@
                 </li>
             </ul>
         </div>
-    </div> 
+    </div>
 
 
     <!-- My note notification --->
@@ -158,7 +249,12 @@
     <div ng-include="'app/views/right-side-nav.html'"></div>
 
 
-    <div class="console-tab-wrapper  ">
+    <div class="console-def-img" ng-if="tabs.length==0">
+        <img src="assets/img/defulat-console-400x400.png" width="300">
+    </div>
+
+
+    <div class="console-tab-wrapper" ng-if="tabs.length!=0">
         <!--ng-class="{'fix-console-tab':isFiexedTab==true,
                                          '':isFiexedTab==false}" -->
         <!--div ng-include="'app/views/console-tab-panel.html'"></div-->

@@ -21,7 +21,7 @@
 }
 
 .dropdown-menu .divider {
-    background-color: #a1d700;
+    background-color: #dfdfdf;
 }
 
 .console-drop-menu > li > a.drop-header {
@@ -40,6 +40,24 @@
 .dropdown-menu > li > a:hover {
     background-color: #c3c0bb;
     color: #908E8D !important;
+}
+
+.drop-desc-small {
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    color: #bdbdbd;
+    padding-left: 20px;
+}
+
+.dropdown-menu.console-drop-menu > li > a:focus,
+.dropdown-menu.console-drop-menu > li > a:hover {
+    background-color: #f3f3f3 !important;
+    color: #908E8D !important;
+    border-radius: 5px;
+}
+
+.dropdown-menu.console-drop-menu {
+    padding-bottom: 15px;
+    padding-top: 10px;
 }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
@@ -79,7 +97,7 @@
 }
 
 .online {
-    background: #36ba45;
+    background: #07ff2b;
 }
 
 .offline {
