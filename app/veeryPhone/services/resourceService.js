@@ -124,7 +124,7 @@ resourceModule.factory("resourceService", function ($http, $log, baseUrls, dataP
             url: baseUrls.ardsliteserviceUrl + "resource/" + authService.GetResourceId() + "/concurrencyslot/session/" + callSessionId,
             data: {
                 "RequestType": "CALL",
-                "State": endFreeze ? "Freeze" : "EndFreeze",
+                "State": endFreeze ? "Freeze" : "endFreeze",
                 "Reason": "",
                 "OtherInfo": ""
             }

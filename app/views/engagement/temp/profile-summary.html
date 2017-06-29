@@ -54,25 +54,28 @@
                 </li>
                 <li class="l-update">Last Update : {{profileDetail.updated_at| date:'MM-dd-yyyy h:mma'}}</li>
                 <li class="p-no">Phone No : {{profileDetail.phone}}</li>
-                <li class="btn">
-                    <button type="button"
-                            ng-click="showCallOptions('CALL')"
-                            class="btn btn-search-052017">
-                        <i class="fa fa-phone"></i>
-                        CALL
-                    </button>
-                    <button type="button"
-                            ng-click="showCallOptions('sms')"
-                            class="btn btn-search-052017">
-                        <i class="fa fa-mobile"></i>
-                        SMS
-                    </button>
-                    <button type="button"
-                            ng-click="showMailOptions()"
-                            class="btn btn-search-052017">
-                        <i class="fa fa-envelope-o"></i>
-                        Email
-                    </button>
+                <li>
+                    <div class="quick-action-btn-wrp">
+                        <ul class="list-inline">
+                            <li>
+                                <div class="action-btn-052017 active"
+                                     ng-click="showCallOptions('CALL')">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="action-btn-052017 active" ng-click="showCallOptions('sms')">
+                                    <i class="fa fa-comment-o"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="action-btn-052017 active" ng-click="showMailOptions()">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>

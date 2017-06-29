@@ -70,7 +70,7 @@
     "angular-touch": "1.5.8",
     "angular-carousel": "^1.0.1",
     "ngEmbed": "ng-embed#^2.1.1",
-    "highlightjs": "^9.10.0",
+    "highlightjs": "^9.12.0",
     "angular-emoji-picker": "^0.3.0",
     "ng-emoji-picker": "^0.13.2",
     "angular-ui-bootstrap": "master",

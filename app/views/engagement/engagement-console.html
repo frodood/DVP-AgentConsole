@@ -52,7 +52,7 @@
         </div>
         <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
             <!-- right main wrapper ng-if="isEnagagementOpen==true;" -->
-            <div class="user-p-right-052017">
+            <div class="user-p-right-052017" ng-if="isEnagagementOpen==true;">
 
                 <!--  create  new ticket modal -->
                 <div ng-if="showCreateTicket">
@@ -90,15 +90,16 @@
                     </uib-tabset>
 
                     <div class="top-left-tab-btn-052017">
-                        <button class="btn"
-                                ng-click="createNProfile()">
-                            new profile
-                        </button>
                         <button type="button"
                                 ng-click="multipleProfile.searchProfile();"
                                 class="btn btn-search-052017">
-                            <i class="fa fa-search"></i>
+                            <i class="ti-search"></i>
                             SEARCH
+                        </button>
+                        <button class="btn"
+                                ng-click="createNProfile()">
+                            <i class="ti-plus"></i>
+                            new profile
                         </button>
                     </div>
                 </div>

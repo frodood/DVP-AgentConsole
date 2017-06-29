@@ -3574,7 +3574,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 //}
                             }
                             $scope.notificationMsg.clients = clients;
-
+                            $scope.notificationMsg.isPersist=true;
                             notificationService.broadcastNotification($scope.notificationMsg).then(function (response) {
                                 $scope.notificationMsg = {};
                                 console.log("send notification success :: " + JSON.stringify(clients));
@@ -3600,6 +3600,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 });
             } else {
                 $scope.notificationMsg.To = $scope.naviSelectedUser.username;
+                $scope.notificationMsg.isPersist=true;
                 notificationService.sendNotification($scope.notificationMsg, "message", "").then(function (response) {
                     console.log("send notification success :: " + $scope.notificationMsg.To);
                     $scope.notificationMsg = {};
