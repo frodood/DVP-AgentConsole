@@ -3846,13 +3846,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             console.log(requestOption);
             dataParser.userProfile = $scope.profile;
             modeList.forEach(function (option) {
-                $(option).removeClass('font-color-green bold');
+                $(option).removeClass('active-font');
             });
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res) {
                     $('#userStatus').addClass('offline').removeClass('online');
                     $scope.showAlert(requestOption, "success", 'update resource state success');
-                    $('#' + requestOption).addClass('font-color-green bold');
+                    $('#' + requestOption).addClass('active-font').addClass('top-drop-text');
                     $scope.currentModeOption = requestOption;
                     $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
                 }
@@ -3864,13 +3864,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         inboundOption: function (requestOption) {
             dataParser.userProfile = $scope.profile;
             modeList.forEach(function (option) {
-                $(option).removeClass('font-color-green bold');
+                $(option).removeClass('active-font').addClass('top-drop-text');
             });
             resourceService.EndBreakRequest(authService.GetResourceId(), requestOption).then(function (data) {
                 if (data) {
                     $scope.showAlert("Available", "success", "Update resource state success.");
                     $('#userStatus').addClass('online').removeClass('offline');
-                    $('#Inbound').addClass('font-color-green bold');
+                    $('#Inbound').addClass('active-font');
                     $scope.currentModeOption = requestOption;
                     // getCurrentState.breakState();
                     //changeLockScreenView.hide();
@@ -3903,6 +3903,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         getCurrentState.getCurrentRegisterTask();
                         getCurrentState.breakState();
                         $scope.showAlert("Change Register", "success", "Register resource info success.");
+                        $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
                     })
                 } else {
                     console.log(data);
@@ -3958,13 +3959,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         if (data.Result.Mode === "Outbound") {
                             $('#userStatus').addClass('offline').removeClass('online');
-                            $('#Outbound').addClass('font-color-green bold');
+                            $('#Outbound').addClass('active-font');
                             $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
                             $scope.currentModeOption = "Outbound";
                             return;
                         } else if (data.Result.Mode === "Inbound") {
                             $('#userStatus').addClass('online').removeClass('offline');
-                            $('#Inbound').addClass('font-color-green bold');
+                            $('#Inbound').addClass('active-font');
                             $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
                             $scope.currentModeOption = "Inbound";
                             return;
@@ -4000,6 +4001,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             },
             getResourceTasks: function () {
                 resourceService.GetResourceTasks(authService.GetResourceId()).then(function (data) {
+                    //all task are offline mode
+                    $('#regStatusNone').removeClass('reg-status-done').addClass('task-none');
                     if (data && data.IsSuccess) {
                         data.Result.forEach(function (value, key) {
                             // $scope.resourceTaskObj = [];
@@ -4031,6 +4034,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                         data.Result.obj.LoginTasks.forEach(function (value, key) {
                                             if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
                                                 $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
+                                                $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
                                             }
                                         })
 
@@ -4049,6 +4053,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (data && data.IsSuccess) {
                         $scope.resourceTaskObj[index].RegTask = null;
                         // getCurrentState.getCurrentRegisterTask();
+                        $('#regStatusNone').removeClass('reg-status-done').addClass('task-none ');
+                        $scope.resourceTaskObj.forEach(function (value, i) {
+                            if ($scope.resourceTaskObj[i].RegTask != null) {
+                                $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
+                            }
+                        });
+
                         $scope.showAlert("Agent Task", "success", "Delete resource info success.");
                     }
                 }, function (error) {

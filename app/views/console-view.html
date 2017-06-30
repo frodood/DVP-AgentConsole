@@ -49,7 +49,8 @@
                         uib-dropdown
                         uib-dropdown-toggle>
                         <img class="small" src="assets/img/180x180/register180x180.png">
-                        <div id="regStatus" class="task-state task-none"></div>
+                        <div id="regStatusNone" class="task-state task-none"></div>
+                        <!--<div id="regStatusDone" class="task-state regStatusDone display-none"></div>-->
 
                         <ul class="dropdown-menu console-drop-menu notification-menu-right"
                             uib-dropdown-menu
@@ -59,13 +60,12 @@
                             </li>
                             <li class="divider"></li>
                             <li ng-repeat="obj in resourceTaskObj" class="menuitem text-lowercase" srole="menuitem"><a
-                                    ng-class="obj.task==obj.RegTask ?'font-color-green bold':''"
+                                    ng-class="obj.task==obj.RegTask ?'active-font':'top-drop-text'"
                                     ng-click="changeRegisterStatus.changeStatus(obj.task);"
                                     href="javascript:void(0);">
                                 {{obj.task}}
-                                <div class="drop-active-icon"
-                                     ng-class="obj.task==obj.RegTask?'active':''">
-                                    <!--<i class="ti-check"></i>-->
+                                <div class="drop-active-icon">
+                                    <i class="ti-check" ng-class="obj.task==obj.RegTask ?'active':''"></i>
                                 </div>
 
                             </a></li>
@@ -78,38 +78,132 @@
                     <!-- mode icon -->
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6" uib-dropdown
                         uib-dropdown-toggle>
-                        <img class="small" src="assets/img/180x180/mode180x180.png">
-                        <div id="modeStatus" class="task-state task-none"></div>
+                        <img ng-show="currentModeOption!='Inbound' &&
+                        currentModeOption!='Outbound' " class="small"
+                             src="assets/img/180x180/mode180x180.png"
+                             style="width: 25px;">
+                        <img ng-show="currentModeOption=='Inbound'" class="small"
+                             src="assets/img/180x180/inbound180x180.png" style="width: 25px;">
+                        <img ng-show="currentModeOption=='Outbound'" class="small"
+                             src="assets/img/180x180/outbound180x180.png" style="width: 25px;">
+
+                        <!--<div id="modeStatus" class="task-state task-none"></div>-->
 
                         <ul class="dropdown-menu console-drop-menu notification-menu-right"
                             uib-dropdown-menu
                             role="menu">
                             <li><a class="drop-header">Mode</a></li>
                             <li class="divider"></li>
-                            <li class="menuitem" role="menuitem"><a id="Inbound"
-                                                                    class=""
-                                                                    ng-click="modeOption.inboundOption('Inbound');"
-                                                                    href="javascript:void(0);">
-                                <i ng-show="currentModeOption=='Inbound'" class="ti-check"></i>inbound</a>
+                            <li class="menuitem" role="menuitem">
+                                <a id="Inbound"
+                                   ng-class="currentModeOption=='Inbound' ?'active-font':'top-drop-text'"
+                                   ng-click="modeOption.inboundOption('Inbound');"
+                                   href="javascript:void(0);">
+                                    Inbound
+                                    <div class="drop-active-icon">
+                                        <i class="ti-check" ng-class="currentModeOption=='Inbound' ?'active':''"></i>
+                                    </div>
+                                </a>
                             </li>
-                            <li ng-if="outboundAllowed != false" class="menuitem" role="menuitem"><a id="Outbound"
-                                                                                                     class=""
-                                                                                                     ng-click="modeOption.outboundOption('Outbound');"
-                                                                                                     href="javascript:void(0);">
-                                <i ng-show="currentModeOption=='Outbound'" class="ti-check"></i>outbound</a>
+                            <li ng-if="outboundAllowed != false" class="menuitem" role="menuitem">
+                                <a id="Outbound"
+                                   ng-class="currentModeOption=='Outbound' ?'active-font':'top-drop-text'"
+                                   ng-click="modeOption.outboundOption('Outbound');"
+                                   href="javascript:void(0);">
+                                    Outbound
+                                    <div class="drop-active-icon">
+                                        <i class="ti-check" ng-class="currentModeOption=='Outbound' ?'active':''"></i>
+                                    </div>
+                                </a>
                             </li>
                         </ul>
                     </li>
 
                     <!-- break icon -->
-                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                        uib-dropdown
+                        uib-dropdown-toggle>
                         <img class="small" src="assets/img/180x180/break180x180.png">
+
+                        <ul class="dropdown-menu console-drop-menu notification-menu-right"
+                            uib-dropdown-menu
+                            role="menu">
+                            <li><a class="drop-header">IT'S A Break Time</a></li>
+                            <li class="divider"></li>
+                            <li class="menuitem" role="menuitem" ng-repeat="breakType in dynamicBreakTypes"><a
+                                    id="breakType.BreakType"
+                                    class=""
+                                    ng-click="breakOption.changeBreakOption(breakType.BreakType);"
+                                    href="javascript:void(0);">
+                                {{breakType.BreakType}}
+                                <!--<div class="drop-active-icon">-->
+                                <!--<i class="ti-check"-->
+                                <!--ng-class="currentBerekOption==breakType.BreakType ?'active':''"></i>-->
+                                <!--</div>-->
+                            </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <!-- notification icon -->
-                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
+                    <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                        uib-dropdown
+                        uib-dropdown-toggle>
                         <img class="small" src="assets/img/180x180/notification180x180.png">
                         <div id="notificationStatus" class="task-state task-none"></div>
+                        <ul class="dropdown-menu console-drop-menu notification-menu-right notification-widget  "
+                            uib-dropdown-menu
+                            role="menu">
+                            <li class="notification-header">
+                                <a class="drop-header">Notification
+                                    center</a>
+                                <span class="drop-sub-header">new ({{unredNotifications}})</span>
+                            </li>
+                            <li class="divider"></li>
+                            <div class="console-notofication-wrapper">
+                                <div class="notification-status" ng-show="unredNotifications==0">
+
+                                    <i class="animated   veery-font-1-alarm"> </i>
+                                    </br>
+                                    No New Notification
+                                </div>
+
+                                <section slimscroll="{height: '300px',
+                                    railVisible: true,
+                                    color: '#B6B8B5',
+                                    size: '8px',
+                                    distance: '10px',
+                                    railColor: '#B6B8B5',
+                                    railBorderRadius: 10}">
+
+                                    <div class="notification-list" ng-repeat="notifi in notifications"
+                                         ng-click="showNotificationMessage(notifi)">
+                                        <div class="notify-img-small">
+                                            <img src="assets/img/avatar/profileAvatar.png"
+                                                 ng-src="{{notifi.avatar}}">
+                                        </div>
+                                        <div class="noti-detail">
+                                            <div class="noti-detail">
+                                                <h5>{{notifi.from}}</h5>
+                                                <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
+                                                    ?'....':''}}</h4>
+
+                                                <div>
+                                                    <time-ago from-time='{{notifi.time}}'
+                                                              format='MM/dd/yyyy'></time-ago>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div ng-show="notifications.length>0" id="delBtn" class=" del-all-btn"><span
+                                    onmouseover="this.style.cursor='pointer'" ng-click="RemoveAllNotifications()">Delete All</span>
+                            </div>
+
+                        </ul>
                     </li>
 
                     <!-- chat toggle icon -->
@@ -144,16 +238,20 @@
                 <!-- create new profile -->
                 <li style="padding-top: 50px;">
                     <div class="left-icon animated slideInLeft"
+
                          tooltip-placement="right"
                          uib-tooltip="On the right">
-                        <img class="bg" src="assets/img/180x180/profile-create180x180.png"
+                        <img class="bg"
+                             ng-click="createNewProfile();"
+                             src="assets/img/180x180/profile-create180x180.png"
                              width="40px">
                     </div>
                 </li>
                 <!-- go to home -->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <img class="small" src="assets/img/180x180/home180x180.png">
+                        <img ng-click="addDashBoard();" class="small"
+                             src="assets/img/180x180/home180x180.png">
                     </div>
                 </li>
 
@@ -165,12 +263,16 @@
                         <div class="icon-status left-menu offline"></div>
                     </div>
                 </li>
+
+                <!-- my note --->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <img class="small" src="assets/img/180x180/mynote180x180.png">
+                        <img ng-click="addMyNote();"
+                             class="small" src="assets/img/180x180/mynote180x180.png">
 
                     </div>
                 </li>
+                <!-- ticket inbox -->
                 <li>
                     <div class="left-icon animated slideInLeft">
                         <img class="small" src="assets/img/180x180/inbox180x180.png">
@@ -183,20 +285,106 @@
 
                     </div>
                 </li>
-                <li>
-                    <div class="left-icon animated slideInLeft">
-                        <img class="small" src="assets/img/180x180/setting180x180.png">
 
+            </ul>
+
+
+            <!--<div class="left-menu-bottom">-->
+            <!--<ul>-->
+            <!--<li>-->
+            <!--<div class="left-icon animated slideInLeft">-->
+            <!--<img class="small" src="assets/img/180x180/setting180x180.png">-->
+
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<div class="left-icon animated slideInLeft">-->
+            <!--<img class="small" src="assets/img/180x180/logout180x180.png">-->
+
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+
+    <div class="timer-wrapper052017">
+        <div class="t-ticket-details">
+            <ul>
+                <li>
+                    <div class="t-ticket-id">
+                        {{ttimer.ticketRef}}
                     </div>
                 </li>
                 <li>
-                    <div class="left-icon animated slideInLeft">
-                        <img class="small" src="assets/img/180x180/logout180x180.png">
-
+                    <div class="t-link-icon"
+                         ng-click="openTimerTicket()">
+                        <i class="ti-link"></i>
                     </div>
                 </li>
             </ul>
         </div>
+
+        <div class="t-action">
+            <ul>
+                <li>
+                    <div class="t-timer-count" id="clock-timer">
+                        <timer autostart="false" interval="1000"
+                               ng-show="ttimer.active"
+                               start-time="ttimer.startTime">{{hhours}}:
+                            {{mminutes}}: {{sseconds}}
+                        </timer>
+
+                        <div ng-show="!ttimer.active">
+                            00:00:00
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="timer-action-menu">
+                        <ul class="customer-style-ul">
+                            <li>
+                                <div id="pause" class="timer-pause"
+                                     ng-click="pauseTime()"
+                                     ng-if="status.active && !ttimer.pause">
+                                    <i class="ti-control-pause"></i>
+                                </div>
+
+                                <div class="timer-pause"
+                                     ng-if="!status.active && !ttimer.pause">
+                                    <i class="ti-control-pause"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="run-timer"
+                                     ng-if="!status.active || ttimer.pause"
+                                     ng-click="startTracker()">
+                                    <i class="ti-control-play"></i>
+                                </div>
+                                <div class="run-timer"
+                                     ng-if="status.active">
+                                    <i class="ti-control-play"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <div ng-if="status.active"
+                                     ng-click="stopTime()"
+                                     class="timer-stop">
+                                    <i class="ti-control-stop"></i>
+                                </div>
+                                <div ng-if="!status.active"
+                                     class="timer-stop">
+                                    <i class="ti-control-stop"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
     </div>
 
 

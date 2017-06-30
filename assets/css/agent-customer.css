@@ -100,6 +100,10 @@ body {
     background: #e4e4e4;
 }
 
+.task-state.reg-status-done {
+    background: #74BEFB;
+}
+
 .console-main-search {
     margin-left: 45px;
 }
@@ -147,16 +151,29 @@ body {
 .drop-active-icon {
     width: 10px;
     height: 10px;
-    border: 2px solid #fff;
-    border-radius: 100%;
+    /*border: 2px solid #fff;*/
+    /*border-radius: 100%;*/
     float: right;
-    background: #F7F7F7;
+    /*background: #F7F7F7;*/
     margin-right: 10px;
     margin-top: 4px;
 }
 
-.drop-active-icon.active {
-    background: #74BEFB !important;
+.drop-active-icon > i {
+    color: #f0f0f0;
+}
+
+.drop-active-icon > i.active {
+    color: #FFAA00 !important;
+}
+
+.active-font {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    color: #FFAA00 !important;
+}
+
+.top-drop-text {
+    color: #cccccc !important;
 }
 
 .drop-active-icon {
@@ -175,6 +192,7 @@ body {
 .menuitem {
     padding-left: 10px;
     padding-right: 10px;
+    color: #dedede;
 }
 
 .menuitem-with-icon {
@@ -241,15 +259,22 @@ body {
     padding-bottom: 0;
 }
 
+.notification-widget {
+    min-width: 300px;
+    min-height: 355px;
+    padding-bottom: 0;
+}
+
 .console-drop-menu > li.notification-header > span.drop-sub-header {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
-    font-size: 13px;
-    padding-top: 6px;
+    font-size: 10px;
+    padding-top: 4px;
     display: inline-block;
     text-align: right;
     float: right;
     color: #36ba45 !important;
     padding-right: 13px;
+    text-transform: uppercase;
 }
 
 .console-drop-menu.notification-menu::before {
@@ -263,6 +288,11 @@ body {
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-bottom: 22px solid white;
+}
+
+.notification-widget::before {
+    right: 10px;
+    left: inherit;
 }
 
 .console-drop-menu.notification-menu-left::before {
@@ -289,14 +319,14 @@ body {
 
 .console-notofication-wrapper > .notification-status {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 75px;
     font-size: 16px;
-    color: #36ba45;
+    color: #e8eae8;
 }
 
 .console-notofication-wrapper > .notification-status > i {
     font-size: 50px;
-    color: #36ba45;
+    color: #e8eae8;
 }
 
 .notification-list {
@@ -2983,7 +3013,7 @@ div > div >
 
 .main-search-input {
     border: 0px solid #8298ae;
-    min-width: 330px;
+    min-width: 313px;
     background: #2F4762;
     height: 30px;
     padding: 6px 12px;
@@ -11917,13 +11947,15 @@ tr.t-dialer-b > td {
 
 }
 
-.left-menu-wrapper052017 > ul {
+.left-menu-wrapper052017 > ul,
+.left-menu-bottom > ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.left-menu-wrapper052017 > ul > li {
+.left-menu-wrapper052017 > ul > li,
+.left-menu-bottom > ul > li {
     display: block;
     width: 50px;
     /* height: 40px; */
@@ -11958,7 +11990,7 @@ img.small {
 .icon-status.left-menu {
     border: 3px solid #FFFFFF;
     bottom: 0;
-    right: 15px;
+    right: 8px;
 }
 
 .icon-status.left-menu.offline {
@@ -11996,4 +12028,103 @@ ul.m-right-user-info > li {
     text-align: center;
     margin: 250px auto;
     left: 36%;
+}
+
+.left-menu-bottom {
+    position: absolute;
+    bottom: 70px;
+}
+
+/*ticket tracker */
+.timer-wrapper052017 {
+    position: fixed;
+    overflow: hidden;
+    left: 56px;
+    bottom: 12px;
+    width: 210px;
+    height: 60px;
+    background-image: linear-gradient(-180deg, #DEFFD5 0%, #7BDDBB 100%);
+    padding: 5px 10px 5px 10px;
+    z-index: 100;
+    border-radius: 3px;
+}
+
+.timer-wrapper052017 > .t-ticket-details {
+    display: block;
+    height: 20px;
+}
+
+.t-ticket-details > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.t-ticket-details > ul > li {
+    display: inline-block;
+}
+
+.t-ticket-id {
+    /* Ticket - Duo-40914: */
+    /*font-family: Avenir-Medium;*/
+    float: left;
+    font-size: 12px;
+    color: #223448;
+    letter-spacing: 1.21px;
+    text-align: left;
+}
+
+.t-link-icon {
+    text-align: right;
+    float: right;
+}
+
+.t-timer-count {
+    /* 00:00:03: */
+    font-family: 'Avenir-Heavy', sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    letter-spacing: 2.22px;
+    text-align: left;
+    float: left;
+}
+
+.t-action {
+}
+
+.timer-action-menu > ul > li {
+    display: inline-block;
+}
+
+.t-action > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.t-action > ul > li {
+    display: inline-block;
+}
+
+.run-timer {
+    /* Oval 18: */
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    background: #FFFFFF;
+    text-align: center;
+    margin: 0 auto;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.50);
+    padding-top: 3px;
+}
+
+.run-timer > i {
+    font-size: 20px;
+}
+
+.timer-pause,
+.run-timer,
+.timer-stop {
+    margin-right: 10px;
+    cursor: pointer;
 }
