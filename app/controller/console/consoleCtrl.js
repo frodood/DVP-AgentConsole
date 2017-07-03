@@ -2643,6 +2643,65 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ttimer.ticketRef = "Start";
     $scope.ttimer.ticket = undefined;
 
+    //update new ui timer function
+    var timerUIFun = function () {
+
+        //.addClass('display-none').removeClass('display-block');
+        //.addClass('display-block').removeClass('display-none');
+        return {
+            pauseModeOn: function () {
+                $('#pauseActive').addClass('display-inline').removeClass('display-none');
+                $('#pauseDisable').addClass('display-none').removeClass('display-inline');
+            },
+            pauseModeOff: function () {
+                $('#pauseActive').addClass('display-none').removeClass('display-inline');
+                $('#pauseDisable').addClass('display-inline').removeClass('display-none');
+            },
+            startTrackerModeOn: function () {
+                $('#startActive').addClass('display-inline').removeClass('display-none');
+                $('#startDisable').addClass('display-none').removeClass('display-inline');
+            },
+            startTrackerModeOff: function () {
+                $('#startActive').addClass('display-none').removeClass('display-inline');
+                $('#startDisable').addClass('display-inline').removeClass('display-none');
+            },
+            stopTrackerModeOn: function () {
+                $('#stopActive').addClass('display-inline').removeClass('display-none');
+                $('#stopDisable').addClass('display-none').removeClass('display-inline');
+            },
+            stopTrackerModeOff: function () {
+                $('#stopActive').addClass('display-none').removeClass('display-inline');
+                $('#stopDisable').addClass('display-inline').removeClass('display-none');
+            },
+            timerDisableMode: function () {
+                timerUIFun.pauseModeOff();
+                timerUIFun.startTrackerModeOn();
+                timerUIFun.stopTrackerModeOff();
+            },
+            timerActiveMode: function () {
+                $('#timerWidget').removeClass('display-none').addClass('display-block');
+                timerUIFun.pauseModeOn();
+                timerUIFun.startTrackerModeOff();
+                timerUIFun.stopTrackerModeOn();
+            },
+            timerPauseMode: function () {
+                timerUIFun.pauseModeOff();
+                timerUIFun.startTrackerModeOn();
+                timerUIFun.stopTrackerModeOn();
+            },
+            timerStopMode: function () {
+                timerUIFun.pauseModeOff();
+                timerUIFun.startTrackerModeOn();
+                timerUIFun.stopTrackerModeOn();
+            },
+            timerStartMode: function () {
+                timerUIFun.pauseModeOn();
+                timerUIFun.startTrackerModeOff();
+                timerUIFun.stopTrackerModeOn();
+            }
+        }
+    }();
+
     $scope.openTimerTicket = function () {
         if ($scope.ttimer.ticket) {
             $scope.ttimer.ticket.tabType = 'ticketView';
@@ -2659,9 +2718,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.status.active = false;
                 $scope.ttimer.active = false;
                 $scope.ttimer.pause = false;
+                $scope.ttimer.play = true;
                 $scope.ttimer.ticketRef = "Start";
                 $scope.ttimer.trackerId = undefined;
                 $scope.ttimer.ticket = undefined;
+                timerUIFun.timerDisableMode();
 
             }
             else {
@@ -2679,6 +2740,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response) {
 
                 $scope.ttimer.pause = true;
+                $scope.ttimer.play = true;
+                timerUIFun.timerPauseMode();
                 $scope.ttimer.pausedTime = moment.utc();
                 document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
 
@@ -2699,7 +2762,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //    var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
     //    $scope.counter = elapsed;
     //}
-
     $scope.startTracker = function () {
         if ($scope.ttimer.pause) {
             ticketService.startTimer().then(function (response) {
@@ -2713,8 +2775,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     document.getElementById('clock-timer').getElementsByTagName('timer')[0].resume();
                     $scope.ttimer.pause = false;
                     $scope.status.active = true;
+                    $scope.ttimer.play = true;
                     $scope.ttimer.pausedTime = {};
-
+                    timerUIFun.timerStartMode();
                 }
                 else {
                     $scope.showAlert("Tracker", "error", "Timer failed to resume timer ");
@@ -2747,7 +2810,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.status.active = true;
                         $scope.ttimer.active = true;
-
+                        timerUIFun.timerActiveMode();
                         $scope.ttimer.ticket = $scope.activeTab.notificationData;
                         $scope.ttimer.ticketId = $scope.activeTab.notificationData._id;
                         $scope.ttimer.ticketRef = $scope.activeTab.content;
@@ -2808,12 +2871,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $scope.ttimer.ticketRef = ticket.reference;
                             $scope.ttimer.trackerId = response._id;
 
+                            timerUIFun.timerActiveMode();
+
                             document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
 
                             if (response.last_event === "pause") {
                                 $timeout(function () {
                                     $scope.ttimer.pause = true;
                                     $scope.ttimer.pausedTime = moment.utc();
+                                    timerUIFun.timerPauseMode();
                                     document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
                                 }, 1000);
                             }
@@ -2825,6 +2891,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     console.log(error);
                     $scope.showAlert("Tracker", "error", "Timer failed to load ticket details");
                 });
+            } else {
+                $('#timerWidget').addClass('display-none').removeClass('display-block');
+                timerUIFun.timerDisableMode();
             }
         }, function (error) {
             authService.IsCheckResponse(error);
@@ -2833,6 +2902,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.checkTimerOnLogin();
+
+    $scope.showTimer = function () {
+        $('#timerWidget').removeClass('display-none').addClass('display-block');
+        $('#HideTimer').removeClass('display-none').addClass('display-block');
+        $('#openTimer').addClass('display-none').removeClass('display-block');
+    };
+    $scope.hideTimer = function () {
+        $('#timerWidget').addClass('display-none').removeClass('display-block');
+        $('#HideTimer').addClass('display-none').removeClass('display-block');
+        $('#openTimer').removeClass('display-none').addClass('display-block');
+    };
     //end time tracker function
 
 

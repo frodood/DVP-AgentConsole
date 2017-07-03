@@ -11962,7 +11962,7 @@ tr.t-dialer-b > td {
     overflow: hidden;
     position: relative;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 25px;
     padding-bottom: 10px;
 }
 
@@ -11971,12 +11971,24 @@ tr.t-dialer-b > td {
 }
 
 .left-menu-wrapper052017 > ul > li > .left-icon > img.small {
-    width: 25px;
+    width: 22px;
 }
 
 img.small {
     width: 22px;
     cursor: pointer;
+}
+
+i.small-icon {
+    font-size: 26px;
+}
+
+.icon-soft-phone.offline-phone:before {
+    color: #E7855E;
+}
+
+i.small-icon:hover:before {
+    color: #797979;
 }
 
 .icon-status {
@@ -12037,16 +12049,20 @@ ul.m-right-user-info > li {
 
 /*ticket tracker */
 .timer-wrapper052017 {
+    background: #ffffff;
     position: fixed;
     overflow: hidden;
     left: 56px;
     bottom: 12px;
     width: 210px;
     height: 60px;
-    background-image: linear-gradient(-180deg, #DEFFD5 0%, #7BDDBB 100%);
+    /* background-image: linear-gradient(-180deg, #DEFFD5 0%, #7BDDBB 100%); */
     padding: 5px 10px 5px 10px;
     z-index: 100;
     border-radius: 3px;
+    -webkit-box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.2);
 }
 
 .timer-wrapper052017 > .t-ticket-details {
@@ -12068,8 +12084,8 @@ ul.m-right-user-info > li {
     /* Ticket - Duo-40914: */
     /*font-family: Avenir-Medium;*/
     float: left;
-    font-size: 12px;
-    color: #223448;
+    font-size: 10px;
+    color: #9a9e9b;
     letter-spacing: 1.21px;
     text-align: left;
 }
@@ -12077,19 +12093,33 @@ ul.m-right-user-info > li {
 .t-link-icon {
     text-align: right;
     float: right;
+    font-size: 9px;
+    text-decoration: underline;
+    color: #888e82;
+    cursor: pointer;
+}
+
+.t-link-icon:hover {
+    color: #6f7569;
 }
 
 .t-timer-count {
     /* 00:00:03: */
     font-family: 'Avenir-Heavy', sans-serif;
-    font-size: 14px;
-    color: #ffffff;
+    font-size: 15px;
+    color: #223448;
     letter-spacing: 2.22px;
     text-align: left;
     float: left;
 }
 
 .t-action {
+}
+
+.timer-action-menu {
+    position: absolute;
+    right: 5px;
+    top: 16px;
 }
 
 .timer-action-menu > ul > li {
@@ -12108,18 +12138,36 @@ ul.m-right-user-info > li {
 
 .run-timer {
     /* Oval 18: */
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 100%;
-    background: #FFFFFF;
     text-align: center;
     margin: 0 auto;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.50);
-    padding-top: 3px;
+    padding-top: 6px;
+}
+
+.run-timer.active {
+    background: #efffee;
+}
+
+.run-timer.disable {
+    background: #e0ecd3;
 }
 
 .run-timer > i {
-    font-size: 20px;
+    font-size: 19px;
+    color: #91d346;
+    padding-left: 6px;
+    padding-top: 0px;
+}
+
+.run-timer.disable > i {
+    color: #e2e6dd;
+}
+
+.run-timer.active > i {
+    color: #91d346;
 }
 
 .timer-pause,
@@ -12127,4 +12175,20 @@ ul.m-right-user-info > li {
 .timer-stop {
     margin-right: 10px;
     cursor: pointer;
+}
+
+.timer-stop.active > i {
+    color: #e87777;
+}
+
+.timer-stop.disable > i {
+    color: #f9f9f9;
+}
+
+.timer-pause.active > i {
+    color: #747574;
+}
+
+.timer-pause.disable > i {
+    color: #f9f9f9;
 }

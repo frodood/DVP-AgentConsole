@@ -238,7 +238,6 @@
                 <!-- create new profile -->
                 <li style="padding-top: 50px;">
                     <div class="left-icon animated slideInLeft"
-
                          tooltip-placement="right"
                          uib-tooltip="On the right">
                         <img class="bg"
@@ -250,26 +249,25 @@
                 <!-- go to home -->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <img ng-click="addDashBoard();" class="small"
-                             src="assets/img/180x180/home180x180.png">
+                        <i ng-click="addDashBoard();"
+                           class="icon-home small-icon"></i>
                     </div>
                 </li>
 
                 <!-- softphone status -->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <img class="small" src="assets/img/180x180/phone-offline180x180.png">
-
+                        <i ng-click="addDashBoard();"
+                           class="icon-soft-phone small-icon offline-phone"></i>
                         <div class="icon-status left-menu offline"></div>
                     </div>
                 </li>
 
                 <!-- my note --->
                 <li>
-                    <div class="left-icon animated slideInLeft">
+                    <div class="left-icon animated slideInLeft"> 
                         <img ng-click="addMyNote();"
                              class="small" src="assets/img/180x180/mynote180x180.png">
-
                     </div>
                 </li>
                 <!-- ticket inbox -->
@@ -280,9 +278,31 @@
                     </div>
                 </li>
                 <li>
-                    <div class="left-icon animated slideInLeft">
-                        <img class="small" src="assets/img/180x180/time-stop180x180.png">
+                    <div id="openTimer" class="left-icon animated slideInLeft">
+                        <img ng-click="showTimer();"
+                             class="small"
+                             src="assets/img/180x180/time-stop180x180.png">
 
+                    </div>
+                    <div id="HideTimer" class="left-icon animated slideInLeft display-none">
+                        <img ng-click="hideTimer();"
+                             class="small"
+                             src="assets/img/180x180/time-active.png">
+
+                    </div>
+                </li>
+
+                <li>
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="openSettingPage();"
+                           class="icon-setting small-icon"></i>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="logOut();"
+                           class="icon-logout small-icon offline-phone"></i>
                     </div>
                 </li>
 
@@ -309,7 +329,9 @@
         </div>
     </div>
 
-    <div class="timer-wrapper052017">
+    <!-- timer widget -->
+    <div id="timerWidget"
+         class="timer-wrapper052017 display-none">
         <div class="t-ticket-details">
             <ul>
                 <li>
@@ -319,8 +341,9 @@
                 </li>
                 <li>
                     <div class="t-link-icon"
+                         ng-if="status.active"
                          ng-click="openTimerTicket()">
-                        <i class="ti-link"></i>
+                        more
                     </div>
                 </li>
             </ul>
@@ -345,37 +368,35 @@
                     <div class="timer-action-menu">
                         <ul class="customer-style-ul">
                             <li>
-                                <div id="pause" class="timer-pause"
-                                     ng-click="pauseTime()"
-                                     ng-if="status.active && !ttimer.pause">
-                                    <i class="ti-control-pause"></i>
+                                <div id="pauseActive" class="timer-pause active"
+                                     ng-click="pauseTime()">
+                                    <i class="fa fa-pause"></i>
                                 </div>
-
-                                <div class="timer-pause"
-                                     ng-if="!status.active && !ttimer.pause">
-                                    <i class="ti-control-pause"></i>
+                                <div id="pauseDisable"
+                                     class="timer-pause disable display-none">
+                                    <i class="fa fa-pause"></i>
                                 </div>
                             </li>
                             <li>
-                                <div class="run-timer"
-                                     ng-if="!status.active || ttimer.pause"
+                                <div id="startActive"
+                                     class="run-timer active"
                                      ng-click="startTracker()">
-                                    <i class="ti-control-play"></i>
+                                    <i class="fa fa-play"></i>
                                 </div>
-                                <div class="run-timer"
-                                     ng-if="status.active">
-                                    <i class="ti-control-play"></i>
+                                <div id="startDisable"
+                                     class="run-timer disable display-none">
+                                    <i class="fa fa-play"></i>
                                 </div>
                             </li>
                             <li>
-                                <div ng-if="status.active"
+                                <div id="stopActive"
                                      ng-click="stopTime()"
-                                     class="timer-stop">
-                                    <i class="ti-control-stop"></i>
+                                     class="timer-stop active">
+                                    <i class="fa fa-stop"></i>
                                 </div>
-                                <div ng-if="!status.active"
-                                     class="timer-stop">
-                                    <i class="ti-control-stop"></i>
+                                <div id="stopDisable"
+                                     class="timer-stop disable display-none">
+                                    <i class="fa fa-stop"></i>
                                 </div>
                             </li>
                         </ul>
@@ -384,7 +405,6 @@
 
             </ul>
         </div>
-
     </div>
 
 
