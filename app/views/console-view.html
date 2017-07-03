@@ -48,7 +48,7 @@
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                         uib-dropdown
                         uib-dropdown-toggle>
-                        <img class="small" src="assets/img/180x180/register180x180.png">
+                        <i class="icon-d-f-icon-register small"></i>
                         <div id="regStatusNone" class="task-state task-none"></div>
                         <!--<div id="regStatusDone" class="task-state regStatusDone display-none"></div>-->
 
@@ -78,10 +78,8 @@
                     <!-- mode icon -->
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6" uib-dropdown
                         uib-dropdown-toggle>
-                        <img ng-show="currentModeOption!='Inbound' &&
-                        currentModeOption!='Outbound' " class="small"
-                             src="assets/img/180x180/mode180x180.png"
-                             style="width: 25px;">
+                        <i ng-show="currentModeOption!='Inbound' &&
+                        currentModeOption!='Outbound' " class="icon-d-f-icon-mode small"></i>
                         <img ng-show="currentModeOption=='Inbound'" class="small"
                              src="assets/img/180x180/inbound180x180.png" style="width: 25px;">
                         <img ng-show="currentModeOption=='Outbound'" class="small"
@@ -121,9 +119,11 @@
 
                     <!-- break icon -->
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                        style="padding-top: 6px;
+"
                         uib-dropdown
                         uib-dropdown-toggle>
-                        <img class="small" src="assets/img/180x180/break180x180.png">
+                        <i class="icon icon-d-f-icon-break small" style="font-size: 23px;"></i>
 
                         <ul class="dropdown-menu console-drop-menu notification-menu-right"
                             uib-dropdown-menu
@@ -147,10 +147,18 @@
 
                     <!-- notification icon -->
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                        id="notificationAlarm"
                         uib-dropdown
+                        ng-click="checkAndRegister()"
                         uib-dropdown-toggle>
-                        <img class="small" src="assets/img/180x180/notification180x180.png">
-                        <div id="notificationStatus" class="task-state task-none"></div>
+                        <!-- notification icon -->
+
+                        <i id="regNotification" class="icon icon-d-f-icon-notification small"></i>
+
+                        <div id="notificationStatus"
+                             ng-class="{'task-incoming':unredNotifications!=0}"
+                             class="task-state task-none"></div>
+
                         <ul class="dropdown-menu console-drop-menu notification-menu-right notification-widget  "
                             uib-dropdown-menu
                             role="menu">
@@ -208,8 +216,7 @@
 
                     <!-- chat toggle icon -->
                     <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
-                        <img ng-click="openNav()"
-                             class="small" src="assets/img/180x180/chat180x180.png">
+                        <i class="icon icon-d-f-icon-chat small" ng-click="openNav()"></i>
                         <div id="chatStatus" class="task-state task-none"></div>
                     </li>
                     <li>
@@ -247,62 +254,74 @@
                     </div>
                 </li>
                 <!-- go to home -->
-                <li>
+                <li ng-class="activeTab.viewType == 'dashboard'?'selected-tab':''">
                     <div class="left-icon animated slideInLeft">
                         <i ng-click="addDashBoard();"
-                           class="icon-home small-icon"></i>
+                           class="icon icon-d-f-icon-home small-icon" title="dashboard"></i>
                     </div>
                 </li>
 
-                <!-- softphone status -->
+
+                <!-- dialer -->
+                <li id="agentDialerTop" class="display-none">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="consoleTopMenu.openAgentDialer()"
+                           title="Agent Dialer"
+                           class="icon icon-d-f-icon-dialer small-icon offline-phone"></i>
+                    </div>
+                </li>
+
+                <!-- softphone -->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <i ng-click="addDashBoard();"
-                           class="icon-soft-phone small-icon offline-phone"></i>
+                        <i ng-click="consoleTopMenu.Register()"
+                           class="icon icon-d-f-icon-softphone small-icon offline-phone" title="phone"></i>
                         <div class="icon-status left-menu offline"></div>
                     </div>
                 </li>
 
                 <!-- my note --->
-                <li>
-                    <div class="left-icon animated slideInLeft"> 
-                        <img ng-click="addMyNote();"
-                             class="small" src="assets/img/180x180/mynote180x180.png">
+                <li ng-class="activeTab.viewType == 'MyNote'?'selected-tab':''">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="addMyNote();"
+                           class="icon-d-f-icon-mynote small-icon offline-phone" title="my note "></i>
                     </div>
                 </li>
                 <!-- ticket inbox -->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <img class="small" src="assets/img/180x180/inbox180x180.png">
+                        <i ng-click="consoleTopMenu.openTicket()"
+                           class="icon-d-f-icon-ticketinbox small-icon offline-phone" title="ticket inbox"></i>
 
                     </div>
                 </li>
                 <li>
                     <div id="openTimer" class="left-icon animated slideInLeft">
-                        <img ng-click="showTimer();"
-                             class="small"
-                             src="assets/img/180x180/time-stop180x180.png">
-
+                        <i ng-click="showTimer()"
+                           class="icon-d-f-icon-tracker small-icon offline-phone"></i>
+                        <!--<img ng-click="showTimer();"-->
+                        <!--class="small"-->
+                        <!--src="assets/img/180x180/time-stop180x180.png">-->
                     </div>
+
                     <div id="HideTimer" class="left-icon animated slideInLeft display-none">
                         <img ng-click="hideTimer();"
                              class="small"
                              src="assets/img/180x180/time-active.png">
-
                     </div>
                 </li>
 
                 <li>
                     <div class="left-icon animated slideInLeft">
                         <i ng-click="openSettingPage();"
-                           class="icon-setting small-icon"></i>
+                           class="icon-d-f-icon-setting small-icon" title="my setting"></i>
                     </div>
                 </li>
 
                 <li>
                     <div class="left-icon animated slideInLeft">
                         <i ng-click="logOut();"
-                           class="icon-logout small-icon offline-phone"></i>
+                           class="icon-d-f-icon-logout small-icon offline-phone" title="logout"> </i>
                     </div>
                 </li>
 

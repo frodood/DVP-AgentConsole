@@ -2070,6 +2070,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         if (!$scope.isSocketRegistered) {
+            //todo
             $('#regNotification').addClass('display-none').removeClass('display-block');
             $('#regNotificationLoading').addClass('display-block').removeClass('display-none');
             $scope.isLoadingNotifiReg = true;
@@ -2152,9 +2153,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 var nxtIndex = $scope.tabs.length - 1;
                 if (nxtIndex > -1) {
+                    $scope.activeTab = $scope.tabs[nxtIndex];
                     $scope.activeTabIndex = $scope.tabs[nxtIndex].tabReference;
                     $scope.tabSelected(nxtIndex);
                 } else {
+                    $scope.activeTab = undefined;
                     $scope.activeTabIndex = undefined;
                 }
                 $scope.reCalcScroll();
@@ -2762,6 +2765,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //    var elapsed = moment().startOf('day').seconds(seconds).format('HH:mm:ss');
     //    $scope.counter = elapsed;
     //}
+
+
     $scope.startTracker = function () {
         if ($scope.ttimer.pause) {
             ticketService.startTimer().then(function (response) {

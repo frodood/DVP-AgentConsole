@@ -100,6 +100,10 @@ body {
     background: #e4e4e4;
 }
 
+.task-state.task-incoming {
+    background: #ff8c00 !important;
+}
+
 .task-state.reg-status-done {
     background: #74BEFB;
 }
@@ -227,9 +231,15 @@ body {
 }
 
 .console-menu-icon > i {
-    font-size: 16px;
-    color: #97cb04;
+    font-size: 20px;
     cursor: pointer;
+    color: #fff;
+}
+
+.console-menu-icon > i:hover,
+.console-menu-icon > i:active,
+.console-menu-icon > i:focus {
+    color: #36ba45;
 }
 
 .console-left-icon {
@@ -11980,7 +11990,7 @@ img.small {
 }
 
 i.small-icon {
-    font-size: 26px;
+    font-size: 23px;
 }
 
 .icon-soft-phone.offline-phone:before {
@@ -12001,8 +12011,8 @@ i.small-icon:hover:before {
 
 .icon-status.left-menu {
     border: 3px solid #FFFFFF;
-    bottom: 0;
-    right: 8px;
+    bottom: 21px;
+    right: 13px;
 }
 
 .icon-status.left-menu.offline {
@@ -12191,4 +12201,16 @@ ul.m-right-user-info > li {
 
 .timer-pause.disable > i {
     color: #f9f9f9;
+}
+
+.slideInLeft > i {
+    color: #cacbca;
+}
+
+.selected-tab {
+    background: #f7f7f7 !important;
+}
+
+.selected-tab > div > i {
+    color: #747574;
 }
