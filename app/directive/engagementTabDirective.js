@@ -37,7 +37,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             tabReference: "@",
             searchUsers: "=",
             schemaResponseNewTicket: "=",
-            pieChartOption: '='
+            pieChartOption: '=',
+            integrationData: '='
         },
         //templateUrl: 'app/views/profile/engagement-call.html',
         templateUrl: 'app/views/engagement/engagement-console.html',
@@ -1693,22 +1694,23 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             scope.GetIntegrationDetails = function (id) {
-                var postData = {
-                    "PROFILE_ADDITIONAL_DATA": {
-                        "Reference": id
-                    }
-                };
-                integrationAPIService.GetIntegrationDetails("PROFILE_ADDITIONAL_DATA",postData).then(function (response) {
-                   angular.forEach(response,function (item) {
-                       if(item){
-                           angular.extend(scope.profileDetail,item);
-                       }
+                if(scope.integrationData&& scope.integrationData.length){
+                    var postData = {
+                        "PROFILE_ADDITIONAL_DATA": {
+                            "Reference": id
+                        }
+                    };
+                    integrationAPIService.GetIntegrationDetails("PROFILE_ADDITIONAL_DATA",postData).then(function (response) {
+                        angular.forEach(response,function (item) {
+                            if(item){
+                                angular.extend(scope.profileDetail,item);
+                            }
+                        });
+
+                    }, function (err) {
+                        scope.showAlert("User Profile", "error", "Fail To Get Additional Profile Details.")
                     });
-
-                }, function (err) {
-                    scope.showAlert("User Profile", "error", "Fail To Get Additional Profile Details.")
-                });
-
+                }
             };
 
             scope.GetExternalUserProfileByContact = function () {
