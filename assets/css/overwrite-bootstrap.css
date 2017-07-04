@@ -2,9 +2,10 @@
 .navbar {
     border: 0px solid transparent !important;
     border-radius: 0px;
-    min-height: 45px;
-    padding-top: 8px;
-    /* padding-bottom: 1px; */
+    height: 45px;
+    /*overflow: hidden;*/
+    /*padding-top: 7px;*/
+    /*padding-bottom: 5px;*/
 }
 
 .navbar-brand {
@@ -54,19 +55,21 @@
 }
 
 .dropdown-menu {
+    top: 45px;
     font-size: 14px;
     background-color: #fff;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     border: 10px solid #ccc;
     border: 0px solid rgba(0, 0, 0, .15);
-    border-radius: 6px !important;
+    /*border-radius: 2px !important;*/
     -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, .175);
     box-shadow: 0 0px 10px rgba(0, 0, 0, .175);
 }
 
 .dropdown-menu .divider {
     /*margin: 3px 10px 0px 10px;*/
+    margin: 3px 0;
 }
 
 label {
@@ -75,7 +78,8 @@ label {
 }
 
 .navbar-form {
-    margin-top: 7px;
+    margin-top: 13px;
+    margin-left: 0px;
 }
 
 .btn-default {

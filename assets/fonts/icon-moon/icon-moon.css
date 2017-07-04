@@ -1,0 +1,103 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?ymhhhh');
+  src:  url('fonts/icomoon.eot?ymhhhh#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?ymhhhh') format('truetype'),
+    url('fonts/icomoon.woff?ymhhhh') format('woff'),
+    url('fonts/icomoon.svg?ymhhhh#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-break:before {
+  content: "\e900";
+  color: #a0a3a0;
+}
+.icon-chat:before {
+  content: "\e901";
+  color: #aaadaa;
+}
+.icon-home:before {
+  content: "\e902";
+  color: #b3b6b3;
+}
+.icon-inbound:before {
+  content: "\e903";
+  color: #aaadaa;
+}
+.icon-inbox:before {
+  content: "\e904";
+  color: #b3b6b3;
+}
+.icon-logout:before {
+  content: "\e905";
+  color: #b3b6b3;
+}
+.icon-mode:before {
+  content: "\e906";
+  color: #aaadaa;
+}
+.icon-mynote .path1:before {
+  content: "\e907";
+  color: rgb(179, 182, 179);
+}
+.icon-mynote .path2:before {
+  content: "\e908";
+  margin-left: -1em;
+  color: rgb(179, 182, 179);
+}
+.icon-mynote .path3:before {
+  content: "\e909";
+  margin-left: -1em;
+  color: rgb(213, 213, 213);
+}
+.icon-notification .path1:before {
+  content: "\e90a";
+  color: rgb(214, 233, 242);
+}
+.icon-notification .path2:before {
+  content: "\e90b";
+  margin-left: -1em;
+  color: rgb(160, 163, 160);
+}
+.icon-notification .path3:before {
+  content: "\e90c";
+  margin-left: -1em;
+  color: rgb(160, 163, 160);
+}
+.icon-notification .path4:before {
+  content: "\e90d";
+  margin-left: -1em;
+  color: rgb(160, 163, 160);
+}
+.icon-register:before {
+  content: "\e90f";
+  color: #a0a3a0;
+}
+.icon-setting:before {
+  content: "\e910";
+  color: #9b9998;
+}
+.icon-soft-phone:before {
+  content: "\e911";
+  color: #a0a3a0;
+}
+.icon-time-stop:before {
+  content: "\e912";
+  color: #b3b6b3;
+}
