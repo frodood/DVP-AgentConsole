@@ -237,9 +237,10 @@ body {
 }
 
 .console-menu-icon > i:hover,
+.console-menu-icon > i.active-this,
 .console-menu-icon > i:active,
 .console-menu-icon > i:focus {
-    color: #36ba45;
+    color: #8fd539;
 }
 
 .console-left-icon {
@@ -12019,6 +12020,10 @@ i.small-icon:hover:before {
     background: #E7855E;
 }
 
+.icon-status.left-menu.online {
+    background: #91d346;
+}
+
 .header-search052017 {
     width: 350px;
     background: #2F4762;
@@ -12213,4 +12218,8 @@ ul.m-right-user-info > li {
 
 .selected-tab > div > i {
     color: #747574;
+}
+
+#mobile-menu {
+    display: none;
 }

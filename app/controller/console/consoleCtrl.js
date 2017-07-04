@@ -274,6 +274,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             // is show phone
             $('.isOperationPhone').addClass('display-block ').removeClass('display-none');
             $('#softPhone').addClass('display-block ').removeClass('display-none');
+
         } else {
             //is hide phone
             $('.isOperationPhone').addClass('display-none ').removeClass('display-block');
@@ -320,6 +321,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.PhoneOffline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
+        $('#phoneRegister').removeClass('display-none');
         $('#isBtnReg').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isCallOnline').addClass('display-block deactive-menu-icon').removeClass('display-none');
         $('#softPhoneDragElem').addClass('display-none ').removeClass('display-block');
@@ -332,6 +334,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
+        $('#phoneRegister').removeClass('display-none');
         $('#isBtnReg').addClass('display-block active-menu-icon').removeClass('display-none');
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $('#softPhoneDragElem').addClass('display-block').removeClass('display-none ');
@@ -346,7 +349,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.PhoneLoading = function () {
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $('#isLoadingRegPhone').addClass('display-block').removeClass('display-none');
+        $('#phoneRegister').addClass('display-none');
         $('#isBtnReg').addClass('display-none ').removeClass('display-block active-menu-icon');
+        $('#phoneRegister').addClass('display-none');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -576,6 +581,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             resourceService.MapResourceToVeery($scope.profile.publicIdentity);
         },
         Register: function (password) {
+
             $scope.PhoneLoading();
             $scope.phoneStatus = "Registering With Servers";
             $scope.isshowRegistor = false;
@@ -3939,7 +3945,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('active-font').addClass('top-drop-text');
                     $scope.currentModeOption = requestOption;
-                    $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
+                    $('#agentPhone').removeClass('display-none');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
@@ -3961,7 +3967,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     //changeLockScreenView.hide();
                     //$scope.isUnlock = false;
                     //return;
-                    $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
+                    $('#agentPhone').removeClass('display-none');
                 }
             });
         }
@@ -4045,13 +4051,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         if (data.Result.Mode === "Outbound") {
                             $('#userStatus').addClass('offline').removeClass('online');
                             $('#Outbound').addClass('active-font');
-                            $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
+                            $('#agentPhone').removeClass('display-none');
                             $scope.currentModeOption = "Outbound";
                             return;
                         } else if (data.Result.Mode === "Inbound") {
                             $('#userStatus').addClass('online').removeClass('offline');
                             $('#Inbound').addClass('active-font');
-                            $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
+                            $('#agentPhone').removeClass('display-none');
                             $scope.currentModeOption = "Inbound";
                             return;
                         } else {
