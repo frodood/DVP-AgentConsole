@@ -47,10 +47,24 @@
             })
         };
 
+        var getIntegrationAPIDetails = function () {
+            return $http({
+                method: 'GET',
+                url: baseUrls.integrationapi +"IntegrationInfo"
+            }).then(function(response)
+            {
+                if (response.data && response.data.IsSuccess) {
+                    return response.data.Result;
+                } else {
+                    return null;
+                }
+            });
+        };
         return {
             getIntegrationURLMetaData: getIntegrationURLMetaData,
             getIntegrationAPIData: getIntegrationAPIData,
-            GetIntegrationDetails: getIntegrationDetails
+            GetIntegrationDetails: getIntegrationDetails,
+            GetIntegrationAPIDetails: getIntegrationAPIDetails
         };
     };
 

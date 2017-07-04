@@ -9,7 +9,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm, templateService, userImageList) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm, templateService, userImageList,integrationAPIService) {
 
     // call $anchorScroll()
     $anchorScroll();
@@ -4873,6 +4873,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         title: {
             display: true
         }
+    };
+
+    $scope.integrationDataList = [];
+    $scope.loadConfig = function () {
+        integrationAPIService.GetIntegrationAPIDetails().then(function (response) {
+            if (response) {
+                $scope.integrationDataList = response;
+            } else {
+                $scope.showAlert("Integrations", "error", "Fail To Load Integration Configurations.");
+            }
+        }, function (error) {
+            $scope.showAlert("Integrations", "error", "Fail To Load Integration Configurations.");
+        });
+
     };
 
 }).directive("mainScroll", function ($window) {
