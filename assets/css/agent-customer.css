@@ -3030,6 +3030,7 @@ div > div >
     padding: 6px 12px;
     border-radius: 7px;
     color: #ffffff;
+    padding-right: 35px;
 }
 
 .cursor-pointer {
@@ -11114,9 +11115,24 @@ tags-input .tags {
     background: #fff;
 }
 
-.no-result-box {
-    background-color: #f7f7f7;
+.search-no-result-box {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    top: 38px;
+    position: absolute;
+    overflow: hidden;
+    background-color: #ffffff;
+    width: 310px;
+    height: 100px;
+    text-align: center;
+    padding-top: 18px;
+    font-size: 17px;
+    color: #f1f1f1;
+}
 
+.search-no-result-box > i {
+    display: block;
+    font-size: 25px;
+    padding-bottom: 15px;
 }
 
 .temp-done-btn {

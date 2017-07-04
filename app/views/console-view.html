@@ -27,10 +27,11 @@
                                    typeahead-loading="isLoading">
 
                             <!--<span class="fa fa-spinner fa-spin  form-control-feedback left" style="margin-top: 8px; color: white; padding-left: 2px" aria-hidden="true"></span>-->
-                            <span class="fa fa-spinner fa-spin"
-                                  style="margin-top: 3px; color: white; padding-left: 2px" id="searchSpin"></span>
-                            <div class="no-result-box">
-                                <li ng-show="noResults">--- No Results Found ---</li>
+                            <span id="searchSpin" class="fa fa-cog fa-spin"
+                                  style="margin-top: 3px;color: #91d246;padding-left: 2px;position: absolute;top: 5px;right: 10px;"></span>
+                            <div ng-show="noResults" class="search-no-result-box">
+                                <i class="ti-face-sad animated slideInDown"></i>
+                                <span> No Results Found </span>
                             </div>
                         </div>
                     </form>
@@ -127,7 +128,7 @@
                             <ul class="dropdown-menu console-drop-menu notification-menu-right"
                                 uib-dropdown-menu
                                 role="menu">
-                                <li><a class="drop-header">IT'S A Break Time</a></li>
+                                <li><a class="drop-header">Break types</a></li>
                                 <li class="divider"></li>
                                 <li class="menuitem" role="menuitem" ng-repeat="breakType in dynamicBreakTypes"><a
                                         id="breakType.BreakType"
@@ -236,9 +237,9 @@
                                 <div id="userStatus" class="user-state online"></div>
                             </div>
                     </ul>
-                    <div class="mobile-version-message">
-                        mobile version coming soon.
-                    </div>
+                    <!--<div class="mobile-version-message">-->
+                    <!--mobile version coming soon.-->
+                    <!--</div>-->
                 </div>
 
                 <!-- mobile menu -->
