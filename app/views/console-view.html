@@ -330,10 +330,16 @@
                     </div>
                 </li>
                 <!-- ticket inbox -->
-                <li>
+                <li >
                     <div class="left-icon animated slideInLeft">
                         <i ng-click="consoleTopMenu.openTicket()"
-                           class="icon-d-f-icon-ticketinbox small-icon offline-phone" title="ticket inbox"></i>
+                           class="icon-d-f-icon-ticketinbox small-icon offline-phone" title="ticket filter"></i>
+                    </div>
+                </li>
+                <li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="addFilterTab();"
+                           class="ti-filter small-icon offline-phone" title="ticket inbox"></i>
 
                     </div>
                 </li>
