@@ -2740,6 +2740,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response) {
 
                 document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
+                $scope.timerTick = false;
                 $scope.status.active = false;
                 $scope.ttimer.active = false;
                 $scope.ttimer.pause = false;
@@ -2790,6 +2791,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.timerModeActive = false;
+    $scope.timerTick = false;
     $scope.startTracker = function () {
         if ($scope.ttimer.pause) {
             ticketService.startTimer().then(function (response) {
@@ -2801,6 +2803,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     }
 
                     document.getElementById('clock-timer').getElementsByTagName('timer')[0].resume();
+                    $scope.timerTick = true;
                     $scope.ttimer.pause = false;
                     $scope.status.active = true;
                     $scope.ttimer.play = true;
@@ -2846,6 +2849,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         $scope.ttimer.trackerId = response._id;
 
                         document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
+                        $scope.timerTick = true;
                     }
                     else {
                         $scope.showAlert("Tracker", "error", "Timer failed to start ");
@@ -2903,6 +2907,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             timerUIFun.timerActiveMode();
 
                             document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
+                            $scope.timerTick = true;
 
                             if (response.last_event === "pause") {
                                 $timeout(function () {
@@ -2933,16 +2938,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.checkTimerOnLogin();
+    $scope.showTimerWidget = false;
 
     $scope.showTimer = function () {
-        $('#timerWidget').removeClass('display-none').addClass('display-block');
-        $('#HideTimer').removeClass('display-none').addClass('display-block');
-        $('#openTimer').addClass('display-none').removeClass('display-block');
-    };
-    $scope.hideTimer = function () {
-        $('#timerWidget').addClass('display-none').removeClass('display-block');
-        $('#HideTimer').addClass('display-none').removeClass('display-block');
-        $('#openTimer').removeClass('display-none').addClass('display-block');
+        $scope.showTimerWidget = !$scope.showTimerWidget;
     };
     //end time tracker function
 
