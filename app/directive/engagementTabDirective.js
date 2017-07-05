@@ -1711,8 +1711,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                             }
                         });
 
-                        console.log('dsds');
-
                     }, function (err) {
                         scope.showAlert("User Profile", "error", "Fail To Get Additional Profile Details.")
                     });
@@ -1733,10 +1731,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 angular.extend(scope.profileImportantData,item);
                             }
                         });
-
-                        var ss = Object.keys(scope.profileImportantData)[0];
-
-                        console.log('dsds');
 
                     }, function (err) {
                         scope.showAlert("User Profile", "error", "Fail To Get Profile Important Details.")
@@ -2466,6 +2460,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                             });
                         }
                         scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
+                        scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
 
                     },
                     searchProfile: function () {
