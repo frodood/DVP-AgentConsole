@@ -9,7 +9,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm, templateService, userImageList,integrationAPIService) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm,
+                                             templateService, userImageList, integrationAPIService, versionController) {
+
+    ///console version
+
+    $scope.version = versionController.version;
 
     // call $anchorScroll()
     $anchorScroll();
@@ -2682,6 +2687,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $('#stopActive').addClass('display-none').removeClass('display-inline');
                 $('#stopDisable').addClass('display-inline').removeClass('display-none');
             },
+            activeTimerHide: function () {
+                $('#HideActiveTimer').addClass('display-inline').removeClass('display-none');
+                $('#showActiveTimer').addClass('display-none').removeClass('display-inline');
+            },
+            activeTimerShow: function () {
+                $('#HideActiveTimer').addClass('display-inline').removeClass('display-none');
+                $('#showActiveTimer').addClass('display-none').removeClass('display-inline');
+            },
             timerDisableMode: function () {
                 timerUIFun.pauseModeOff();
                 timerUIFun.startTrackerModeOn();
@@ -2692,6 +2705,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 timerUIFun.pauseModeOn();
                 timerUIFun.startTrackerModeOff();
                 timerUIFun.stopTrackerModeOn();
+                timerUIFun.activeTimerHide();
             },
             timerPauseMode: function () {
                 timerUIFun.pauseModeOff();
@@ -2707,6 +2721,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 timerUIFun.pauseModeOn();
                 timerUIFun.startTrackerModeOff();
                 timerUIFun.stopTrackerModeOn();
+                timerUIFun.activeTimerHide();
+
             }
         }
     }();
@@ -2773,6 +2789,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //}
 
 
+    $scope.timerModeActive = false;
     $scope.startTracker = function () {
         if ($scope.ttimer.pause) {
             ticketService.startTimer().then(function (response) {
@@ -2787,6 +2804,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.ttimer.pause = false;
                     $scope.status.active = true;
                     $scope.ttimer.play = true;
+                    $scope.timerModeActive = true;
                     $scope.ttimer.pausedTime = {};
                     timerUIFun.timerStartMode();
                 }
@@ -2876,7 +2894,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                             $scope.status.active = true;
                             $scope.ttimer.active = true;
-
+                            $scope.timerModeActive = true;
                             $scope.ttimer.ticket = ticket;
                             $scope.ttimer.ticketId = response.ticket;
                             $scope.ttimer.ticketRef = ticket.reference;
@@ -2889,6 +2907,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             if (response.last_event === "pause") {
                                 $timeout(function () {
                                     $scope.ttimer.pause = true;
+                                    timerUIFun.activeTimerHide();
                                     $scope.ttimer.pausedTime = moment.utc();
                                     timerUIFun.timerPauseMode();
                                     document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
@@ -2905,6 +2924,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             } else {
                 $('#timerWidget').addClass('display-none').removeClass('display-block');
                 timerUIFun.timerDisableMode();
+                $scope.timerModeActive = false;
             }
         }, function (error) {
             authService.IsCheckResponse(error);
@@ -3588,12 +3608,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //update code damith
     window.onload = function () {
         $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        $scope.windowHeightLeftMenu = jsUpdateSize() - 200 + "px";
         document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+        document.getElementById('windowHeightLeftMenu').style.height = $scope.windowHeight;
     };
 
     window.onresize = function () {
         $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        $scope.windowHeightLeftMenu = jsUpdateSize() - 200 + "px";
         document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+        document.getElementById('windowHeightLeftMenu').style.height = $scope.windowHeight;
     };
     $scope.isUserListOpen = false;
     $scope.navOpen = false;
@@ -3943,7 +3967,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (res) {
                     $('#userStatus').addClass('offline').removeClass('online');
                     $scope.showAlert(requestOption, "success", 'update resource state success');
-                    $('#' + requestOption).addClass('active-font').addClass('top-drop-text');
+                    $('#' + requestOption).addClass('active-font').removeClass('top-drop-text');
                     $scope.currentModeOption = requestOption;
                     $('#agentPhone').removeClass('display-none');
                 }
@@ -3961,7 +3985,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 if (data) {
                     $scope.showAlert("Available", "success", "Update resource state success.");
                     $('#userStatus').addClass('online').removeClass('offline');
-                    $('#Inbound').addClass('active-font');
+                    $('#Inbound').addClass('active-font').removeClass('top-drop-text');
+                    ;
                     $scope.currentModeOption = requestOption;
                     // getCurrentState.breakState();
                     //changeLockScreenView.hide();
