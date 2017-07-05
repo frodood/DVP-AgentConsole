@@ -232,14 +232,31 @@
                             </h5>
 
                         </li>
-                        <li>
-                            <div ng-click="openSettingPage();"
-                                 id="consoleProfileImg" class="console-profile-img cursor-pointer"
+                        <li uib-dropdown
+                            uib-dropdown-toggle>
+                            <div id="consoleProfileImg"
+                                 class="console-profile-img cursor-pointer"
                                  uib-dropdown-toggle>
                                 <img src="assets/img/avatar/default-user.png" ng-src="{{loginAvatar}}">
 
                                 <div id="userStatus" class="user-state online"></div>
                             </div>
+                            <ul class="dropdown-menu console-drop-menu notification-menu-right"
+                                uib-dropdown-menu
+                                role="menu">
+                                <li class="menuitem" role="menuitem">
+                                    <a ng-click="openSettingPage();"
+                                       href="javascript:void(0);">
+                                        My Setting
+                                    </a>
+                                </li>
+                                <li class="menuitem" role="menuitem">
+                                    <a ng-click="logOut();"
+                                       href="javascript:void(0);">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                     <!--<div class="mobile-version-message">-->
@@ -280,9 +297,13 @@
 
 
     <div class="left-menu-wrapper052017">
-
-        <div id="windowHeightLeftMenu"
-             class="left-menu-wrapper052017">
+        <div id="windowHeightLeftMenu" slimscroll="{height: '{{windowHeight}}',
+            railVisible: true,
+            color: '#B6B8B5',
+            size: '6px',
+            distance: '4px',
+            railColor: '#fff',
+            railBorderRadius: 5}">
             <ul>
                 <!-- create new profile -->
                 <li style="padding-top: 50px;">
@@ -351,92 +372,41 @@
                 </li>
                 <li>
                     <!-- deactivate mode -->
-                    <div id="openTimer" class="left-icon animated slideInLeft">
-                        <i ng-click="showTimer()"
-                           class="icon-d-f-icon-tracker small-icon offline-phone" title="Ticket Tracker"></i>
-                    </div>
-                    <div id="HideTimer" class="left-icon animated slideInLeft display-none">
-                        <img ng-click="hideTimer();"
-                             class="small"
-                             src="assets/img/180x180/time-active.png">
+                    <div ng-show="!timerTick">
+
+                        <div id="openTimer" class="left-icon animated slideInLeft">
+                            <i ng-click="showTimer()"
+                               class="icon-d-f-icon-tracker small-icon offline-phone" title="Ticket Tracker"></i>
+                        </div>
                     </div>
 
+                    <div ng-show="timerTick">
+                        <div class="left-icon animated slideInLeft ">
+                            <div class="loading-clock cursor-pointer"
+                                 ng-click="showTimer();">
+                            </div>
 
-                    <div class="left-icon animated slideInLeft display-none">
-                        <img ng-click="hideTimer();"
-                             class="small"
-                             src="assets/img/180x180/time-active.png">
-                    </div>
-
-                    <!--&lt;!&ndash; timer active mode &ndash;&gt;-->
-                    <!--<div id="HideActiveTimer" ng-if="timerModeActive"-->
-                    <!--class="left-icon animated slideInLeft display-none">-->
-                    <!--<img ng-click="hideTimer();"-->
-                    <!--class="small"-->
-                    <!--src="assets/img/180x180/time-active.png">-->
-                    <!--</div>-->
-
-                    <!--<div id="showActiveTimer" ng-if="timerModeActive"-->
-                    <!--class="left-icon animated slideInLeft display-none">-->
-                    <!--<img ng-click="showTimer();"-->
-                    <!--class="small"-->
-                    <!--src="assets/img/180x180/time-active.png">-->
-                    <!--</div>-->
-
-                </li>
-
-                <li>
-                    <div class="left-icon animated slideInLeft">
-                        <i ng-click="openSettingPage();"
-                           class="icon-d-f-icon-setting small-icon" title="My Setting"></i>
+                        </div>
                     </div>
                 </li>
-
-                <li>
-                    <div class="left-icon animated slideInLeft">
-                        <i ng-click="logOut();"
-                           class="icon-d-f-icon-logout small-icon offline-phone" title="Logout"> </i>
-                    </div>
-                </li>
-
             </ul>
-
-
-            <!--<div class="left-menu-bottom">-->
-            <!--<ul>-->
-            <!--<li>-->
-            <!--<div class="left-icon animated slideInLeft">-->
-            <!--<img class="small" src="assets/img/180x180/setting180x180.png">-->
-
-            <!--</div>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<div class="left-icon animated slideInLeft">-->
-            <!--<img class="small" src="assets/img/180x180/logout180x180.png">-->
-
-            <!--</div>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-
         </div>
     </div>
 
     <!-- timer widget -->
-    <div id="timerWidget"
-         class="timer-wrapper052017 display-none">
+    <div ng-show="showTimerWidget"
+         class="timer-wrapper052017">
         <div class="t-ticket-details">
             <ul>
                 <li>
-                    <div class="t-ticket-id">
-                        {{ttimer.ticketRef}}
+                    <div ng-if="!status.active" class="t-ticket-id">
+                        Ticket not found
                     </div>
                 </li>
                 <li>
-                    <div class="t-link-icon"
-                         ng-if="status.active"
-                         ng-click="openTimerTicket()">
-                        more
+                    <div class="t-ticket-id  cursor-pointer ticket-link"
+                         ng-if="status.active" ng-click="openTimerTicket()">
+                        {{ttimer.ticketRef}}
                     </div>
                 </li>
             </ul>
