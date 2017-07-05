@@ -1694,7 +1694,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             scope.GetIntegrationDetails = function (id) {
-                if(scope.integrationData&& scope.integrationData.length){
+                if(scope.integrationData&& scope.integrationData.length&&id){
                     var postData = {
                         "PROFILE_ADDITIONAL_DATA": {
                             "Reference": id
@@ -1814,7 +1814,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                             scope.isEnagagementOpen = true;
                             scope.profileDetails = response;
-                            scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
+                            //scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
                             loadUserData();
                         }, function (err) {
                             scope.isProfileFound = false;
@@ -2432,7 +2432,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                             });
                         }
-
+                        scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
 
                     },
                     searchProfile: function () {
