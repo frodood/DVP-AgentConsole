@@ -4992,7 +4992,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
 
     };
-
+    $scope.loadConfig();
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
         scope.isFiexedTab = false;
