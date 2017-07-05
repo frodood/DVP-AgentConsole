@@ -47,17 +47,17 @@ body {
 }
 
 .console-profile-img {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     overflow: hidden;
     display: inline-block;
-    margin-top: 14px;
+    margin-top: 9px;
 }
 
 .console-profile-img > img {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
 }
 
 .console-profile-header {
@@ -78,11 +78,12 @@ body {
 
 .user-state {
     position: absolute;
-    top: 14px;
+    top: 8px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
     right: -2px;
+
     border: 2px solid #223448;
 }
 
@@ -163,12 +164,12 @@ body {
     margin-top: 4px;
 }
 
-.drop-active-icon > i {
+.drop-active-icon > i.deactivate {
     color: #f0f0f0;
 }
 
 .drop-active-icon > i.active {
-    color: #FFAA00 !important;
+    color: #FFAA00;
 }
 
 .active-font {
@@ -4681,10 +4682,10 @@ input.ps-form-controller[readonly] {
 /*scrollable option*/
 .fix-console-tab > .ui-tabs-scrollable > .spacer > div > ul.nav-tabs {
     position: fixed;
-    top: 53px;
+    top: 50px;
     width: calc(100% - 29px);
     z-index: 100;
-    background-color: rgba(255, 255, 255, 0.98);
+    background-color: rgba(255, 255, 255, 0.8);
     -webkit-box-shadow: 6px 7px 16px -14px rgba(0, 0, 0, 0.98);
     -moz-box-shadow: 6px 7px 16px -14px rgba(0, 0, 0, 0.98);
     box-shadow: 6px 7px 16px -14px rgba(0, 0, 0, 0.98);
@@ -11126,7 +11127,7 @@ tags-input .tags {
     text-align: center;
     padding-top: 18px;
     font-size: 17px;
-    color: #f1f1f1;
+    color: #bdbaba;
 }
 
 .search-no-result-box > i {
@@ -11944,7 +11945,7 @@ tr.t-dialer-b > td {
     font-family: 'AvenirNextLTPro-Regular', sans-serif;
     position: absolute;
     color: #90d246;
-    font-size: 7px;
+    font-size: 8px;
     right: 56px;
     bottom: 5px;
 }
@@ -11970,6 +11971,12 @@ tr.t-dialer-b > td {
     -webkit-box-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.06);
 }
 
+#windowHeightLeftMenu {
+    /*height: 600px;*/
+    /*overflow: auto;*/
+    /*position: relative;*/
+}
+
 .left-menu-wrapper052017 {
 
 }
@@ -11989,8 +11996,8 @@ tr.t-dialer-b > td {
     overflow: hidden;
     position: relative;
     text-align: center;
-    padding-top: 25px;
-    padding-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .left-menu-wrapper052017 > ul > li > .left-icon {
@@ -12238,6 +12245,18 @@ ul.m-right-user-info > li {
 
 #mobile-menu {
     display: none;
+}
+
+.notification-count {
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    right: 1px;
+    text-align: center;
+    font-size: 8px;
+    padding-top: 4px;
+    padding-left: 0px;
+    color: #fff;
 }
 
 /* active timer */

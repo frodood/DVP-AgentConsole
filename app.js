@@ -72,9 +72,15 @@ var phoneSetting = {
     'EtlCode': '#',
     'SwapCode': '1',
     'ConferenceCode': '0',
-    'ExtNumberLength': 5
+    'ExtNumberLength': 6
 };
 agentApp.constant('phoneSetting', phoneSetting);
+
+//myconsole current  version config
+var versionController = {
+    'version': 'v2.6.1.4'
+};
+agentApp.constant('versionController', versionController);
 
 agentApp.config(function (scrollableTabsetConfigProvider) {
     scrollableTabsetConfigProvider.setShowTooltips(true);
