@@ -12129,6 +12129,11 @@ ul.m-right-user-info > li {
     text-align: left;
 }
 
+.ticket-link:hover {
+    text-decoration: underline;
+    color: #6f7569;
+}
+
 .t-link-icon {
     text-align: right;
     float: right;

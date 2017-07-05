@@ -399,15 +399,14 @@
         <div class="t-ticket-details">
             <ul>
                 <li>
-                    <div class="t-ticket-id">
-                        {{ttimer.ticketRef}}
+                    <div ng-if="!status.active" class="t-ticket-id">
+                        Ticket not found
                     </div>
                 </li>
-                <li style="float: right;">
-                    <div class="t-link-icon"
-                         ng-if="status.active"
-                         ng-click="openTimerTicket()">
-                        more
+                <li>
+                    <div class="t-ticket-id  cursor-pointer ticket-link"
+                         ng-if="status.active" ng-click="openTimerTicket()">
+                        {{ttimer.ticketRef}}
                     </div>
                 </li>
             </ul>
