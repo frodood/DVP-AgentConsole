@@ -40,7 +40,7 @@
                         <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                             uib-dropdown
                             uib-dropdown-toggle>
-                            <i class="icon-d-f-icon-register small" title="Register"></i>
+                            <i class="icon-d-f-icon-register small" title="Tasks"></i>
                             <div id="regStatusNone" class="task-state task-none"></div>
                             <!--<div id="regStatusDone" class="task-state regStatusDone display-none"></div>-->
 
@@ -48,7 +48,7 @@
                                 uib-dropdown-menu
                                 role="menu">
                                 <li>
-                                    <a class="drop-header">Register</a>
+                                    <a class="drop-header">Tasks</a>
                                 </li>
                                 <li class="divider"></li>
                                 <li ng-repeat="obj in resourceTaskObj" class="menuitem text-lowercase" srole="menuitem">
@@ -74,7 +74,7 @@
                             <i ng-show="currentModeOption!='Inbound' &&
                         currentModeOption!='Outbound'"
                                class="icon-d-f-icon-mode small"
-                               title="Mode"></i>
+                               title="Modes"></i>
                             <img ng-show="currentModeOption=='Inbound'" class="small"
                                  title="Inbound"
                                  src="assets/img/180x180/inbound180x180.png" style="width: 25px;">
@@ -87,7 +87,7 @@
                             <ul class="dropdown-menu console-drop-menu notification-menu-right"
                                 uib-dropdown-menu
                                 role="menu">
-                                <li><a class="drop-header">Mode</a></li>
+                                <li><a class="drop-header">Modes</a></li>
                                 <li class="divider"></li>
                                 <li class="menuitem" role="menuitem">
                                     <a id="Inbound"
@@ -123,7 +123,7 @@
                             uib-dropdown
                             uib-dropdown-toggle>
                             <i class="icon icon-d-f-icon-break small" style="font-size: 23px;"
-                               title="Break Type"></i>
+                               title="Break Types"></i>
 
                             <ul class="dropdown-menu console-drop-menu notification-menu-right"
                                 uib-dropdown-menu
@@ -154,9 +154,9 @@
                             <!-- notification icon -->
 
                             <i id="regNotification" class="icon icon-d-f-icon-notification small"
-                               title="Notification"></i>
+                               title="Notification Center" style="font-size: 22px;padding-top: 1px;"></i>
 
-                            <div id="notificationStatus"
+                            <div id=" notificationStatus"
                                  ng-class="{'task-incoming':unredNotifications!=0}"
                                  class="task-state task-none notification-count">
                                 {{unredNotifications}}
@@ -211,7 +211,8 @@
                                 </div>
 
                                 <div ng-show="notifications.length>0" id="delBtn" class=" del-all-btn"><span
-                                        onmouseover="this.style.cursor='pointer'" ng-click="RemoveAllNotifications()">Delete All</span>
+                                        onmouseover="this.style.cursor='pointer'"
+                                        ng-click="RemoveAllNotifications()">Delete All</span>
                                 </div>
 
                             </ul>
@@ -221,7 +222,8 @@
                         <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
                             <i ng-class="isUserListOpen==true?'active-this':''"
                                class="icon icon-d-f-icon-chat small"
-                               ng-click="openNav()" title="Chat"></i>
+                               style="font-size: 22px;"
+                               ng-click="openNav()" title="Conversations"></i>
                             <div id="chatStatus" ng-class="{'task-incoming':usercounts!=0}"
                                  class="task-state task-none"
                             ></div>
