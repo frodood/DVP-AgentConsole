@@ -56,6 +56,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.objKeys = Object.keys;
 
+            scope.profileOtherDataObj = {};
+
 
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                 console.info('onWhenAddingFileFailed', item, filter, options);
@@ -1738,6 +1740,27 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
             };
 
+            scope.GetProfileOtherData = function (postData) {
+                if(scope.integrationData&& scope.integrationData.length){
+
+                    var postBody = {
+                        "PROFILE_OTHER_DATA": postData
+                    };
+
+                    integrationAPIService.GetIntegrationDetails("PROFILE_OTHER_DATA",postBody).then(function (response) {
+                        scope.profileOtherDataObj = {};
+                        angular.forEach(response,function (item) {
+                            if(item){
+                                angular.extend(scope.profileOtherDataObj, item);
+                            }
+                        });
+
+                    }, function (err) {
+                        scope.showAlert("User Profile", "error", "Fail To Get Profile Important Details.")
+                    });
+                }
+            };
+
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
 
@@ -1775,6 +1798,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     scope.GetProfileHistory(scope.profileDetail._id);
                     scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
                     scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                    scope.GetProfileOtherData(scope.profileDetail);
 
                     scope.profileLoadin = false;
                     scope.showMultiProfile = false;
@@ -2461,6 +2485,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         }
                         scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
                         scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                        scope.GetProfileOtherData(scope.profileDetail);
 
                     },
                     searchProfile: function () {
