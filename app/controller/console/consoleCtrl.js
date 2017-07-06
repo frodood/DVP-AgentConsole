@@ -9,7 +9,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              userService, tagService, ticketService, mailInboxService, $interval,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
-                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm, templateService, userImageList) {
+                                             Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm,
+                                             templateService, userImageList, integrationAPIService, versionController) {
+
+    ///console version
+
+    $scope.version = versionController.version;
 
     // call $anchorScroll()
     $anchorScroll();
@@ -274,6 +279,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             // is show phone
             $('.isOperationPhone').addClass('display-block ').removeClass('display-none');
             $('#softPhone').addClass('display-block ').removeClass('display-none');
+
         } else {
             //is hide phone
             $('.isOperationPhone').addClass('display-none ').removeClass('display-block');
@@ -320,6 +326,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.PhoneOffline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
+        $('#phoneRegister').removeClass('display-none');
         $('#isBtnReg').addClass('display-none').removeClass('display-block active-menu-icon');
         $('#isCallOnline').addClass('display-block deactive-menu-icon').removeClass('display-none');
         $('#softPhoneDragElem').addClass('display-none ').removeClass('display-block');
@@ -332,6 +339,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.PhoneOnline = function () {
         //is loading done
         $('#isLoadingRegPhone').addClass('display-none').removeClass('display-block active-menu-icon');
+        $('#phoneRegister').removeClass('display-none');
         $('#isBtnReg').addClass('display-block active-menu-icon').removeClass('display-none');
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $('#softPhoneDragElem').addClass('display-block').removeClass('display-none ');
@@ -346,7 +354,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.PhoneLoading = function () {
         $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
         $('#isLoadingRegPhone').addClass('display-block').removeClass('display-none');
+        $('#phoneRegister').addClass('display-none');
         $('#isBtnReg').addClass('display-none ').removeClass('display-block active-menu-icon');
+        $('#phoneRegister').addClass('display-none');
         /*IsRegisterPhone: function (status) {
          if (!status) {
          //is loading
@@ -576,6 +586,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             resourceService.MapResourceToVeery($scope.profile.publicIdentity);
         },
         Register: function (password) {
+
             $scope.PhoneLoading();
             $scope.phoneStatus = "Registering With Servers";
             $scope.isshowRegistor = false;
@@ -1542,11 +1553,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.previewMessage = {};
     $scope.dialerMessage = {
-        sendPreviewReply: function(topicKey, replyMessage){
+        sendPreviewReply: function (topicKey, replyMessage) {
             var replyData = {Tkey: topicKey, Message: replyMessage};
             notificationService.ReplyToNotification(replyData).then(function (response) {
 
-                if(!response.IsSuccess){
+                if (!response.IsSuccess) {
                     $scope.showAlert("Preview Reply", "error", "Error in reply message");
                 }
 
@@ -1567,17 +1578,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         console.log("agentFound");
         /* var values = data.Message.split("|");
-        var direction = values[7].toLowerCase();
-        var notifyData = {
-            company: data.Company,
-            direction: values[7],
-            channelFrom: direction=== 'inbound' ? values[3]:values[5],
-            channelTo: direction=== 'inbound' ? values[5]:values[3],
-            channel: 'call',
-            skill: values[6],
-            sessionId: values[1],
-            displayName: values[4]
-        };*/
+         var direction = values[7].toLowerCase();
+         var notifyData = {
+         company: data.Company,
+         direction: values[7],
+         channelFrom: direction=== 'inbound' ? values[3]:values[5],
+         channelTo: direction=== 'inbound' ? values[5]:values[3],
+         channel: 'call',
+         skill: values[6],
+         sessionId: values[1],
+         displayName: values[4]
+         };*/
         var values = data.Message.split("|");
         var notifyData = {
             company: data.Company,
@@ -1631,15 +1642,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.dialerPreviewMessage = function (data) {
-        if(data) {
+        if (data) {
             console.log('dialerPreviewMessage data :: ' + JSON.stringify(data));
 
             $scope.previewMessage.Tkey = data.TopicKey;
             $scope.previewMessage.Message = "";
 
-            if(data.Message) {
+            if (data.Message) {
                 $scope.previewMessage.PreviewData = JSON.parse(data.Message);
-            }else{
+            } else {
                 $scope.previewMessage.PreviewData = undefined;
             }
 
@@ -1721,7 +1732,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.OnMessage = function (data) {
         console.log("OnMessage");
-        var senderAvatar ="assets/img/avatar/profileAvatar.png";
+        var senderAvatar = "assets/img/avatar/profileAvatar.png";
 
         if (data.From && $scope.users) {
 
@@ -1773,8 +1784,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage) == -1) {
-           // var audio = new Audio('assets/sounds/notification-1.mp3');
-           // audio.play();
+            var audio = new Audio('assets/sounds/notification-1.mp3');
+            audio.play();
             $scope.notifications.unshift(objMessage);
             $('#notificationAlarm').addClass('animated swing');
             $scope.unredNotifications = $scope.getCountOfUnredNotifications();
@@ -1857,7 +1868,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         if (data.TopicKey || data.messageType && $scope.notifications.indexOf(objMessage) == -1) {
             var audio = new Audio('assets/sounds/notification-1.mp3');
-            audio.play();
+            //audio.play();
             $scope.notifications.unshift(objMessage);
             $('#notificationAlarm').addClass('animated swing');
             $scope.unredNotifications = $scope.getCountOfUnredNotifications();
@@ -1912,7 +1923,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         var audio = new Audio('assets/sounds/notification-1.mp3');
-        audio.play();
+        //audio.play();
         $scope.notifications.unshift(objMessage);
         $('#notificationAlarm').addClass('animated swing');
         $scope.unredNotifications = $scope.getCountOfUnredNotifications();
@@ -1947,7 +1958,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     chatService.SubscribeEvents(function (event, data) {
-        console.log('preview_dialer_message :: '+ event);
+        console.log('preview_dialer_message :: ' + event);
         switch (event) {
 
             case 'agent_connected':
@@ -2002,7 +2013,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     });
 
-    var convertToNoticifationObject =function(event){
+    var convertToNoticifationObject = function (event) {
         var data = {};
         angular.copy(event, data);
         var mObject = data.Message;
@@ -2010,7 +2021,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         mObject.From = mObject.UserName;
         if ($scope.users && $scope.users.length) {
             var items = $filter('filter')($scope.users, {resourceid: mObject.ResourceId.toString()});
-            mObject.From = (items&&items.length)?items[0].username : mObject.UserName;
+            mObject.From = (items && items.length) ? items[0].username : mObject.UserName;
         }
 
         mObject.TopicKey = data.eventName;
@@ -2029,8 +2040,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
                         $scope.profile.freezeExceeded = true;
-                        if(event.Message.SessionId){
-                            event.Message.Message = event.Message.Message +" Session : "+event.Message.SessionId;
+                        if (event.Message.SessionId) {
+                            event.Message.Message = event.Message.Message + " Session : " + event.Message.SessionId;
                         }
                         $scope.OnMessage(convertToNoticifationObject(event));
                         phoneFuncion.updateCallStatus('Freeze Exceeded.');
@@ -2070,6 +2081,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
         if (!$scope.isSocketRegistered) {
+            //todo
             $('#regNotification').addClass('display-none').removeClass('display-block');
             $('#regNotificationLoading').addClass('display-block').removeClass('display-none');
             $scope.isLoadingNotifiReg = true;
@@ -2152,9 +2164,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 var nxtIndex = $scope.tabs.length - 1;
                 if (nxtIndex > -1) {
+                    $scope.activeTab = $scope.tabs[nxtIndex];
                     $scope.activeTabIndex = $scope.tabs[nxtIndex].tabReference;
                     $scope.tabSelected(nxtIndex);
                 } else {
+                    $scope.activeTab = undefined;
                     $scope.activeTabIndex = undefined;
                 }
                 $scope.reCalcScroll();
@@ -2491,7 +2505,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addMyNote = function () {
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
-    $scope.addDashBoard();
+
+    //ToDo
+    //$scope.addDashBoard();
 
 
     var openNewEngagementTab = function (args, index) {
@@ -2641,6 +2657,76 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.ttimer.ticketRef = "Start";
     $scope.ttimer.ticket = undefined;
 
+    //update new ui timer function
+    var timerUIFun = function () {
+
+        //.addClass('display-none').removeClass('display-block');
+        //.addClass('display-block').removeClass('display-none');
+        return {
+            pauseModeOn: function () {
+                $('#pauseActive').addClass('display-inline').removeClass('display-none');
+                $('#pauseDisable').addClass('display-none').removeClass('display-inline');
+            },
+            pauseModeOff: function () {
+                $('#pauseActive').addClass('display-none').removeClass('display-inline');
+                $('#pauseDisable').addClass('display-inline').removeClass('display-none');
+            },
+            startTrackerModeOn: function () {
+                $('#startActive').addClass('display-inline').removeClass('display-none');
+                $('#startDisable').addClass('display-none').removeClass('display-inline');
+            },
+            startTrackerModeOff: function () {
+                $('#startActive').addClass('display-none').removeClass('display-inline');
+                $('#startDisable').addClass('display-inline').removeClass('display-none');
+            },
+            stopTrackerModeOn: function () {
+                $('#stopActive').addClass('display-inline').removeClass('display-none');
+                $('#stopDisable').addClass('display-none').removeClass('display-inline');
+            },
+            stopTrackerModeOff: function () {
+                $('#stopActive').addClass('display-none').removeClass('display-inline');
+                $('#stopDisable').addClass('display-inline').removeClass('display-none');
+            },
+            activeTimerHide: function () {
+                $('#HideActiveTimer').addClass('display-inline').removeClass('display-none');
+                $('#showActiveTimer').addClass('display-none').removeClass('display-inline');
+            },
+            activeTimerShow: function () {
+                $('#HideActiveTimer').addClass('display-inline').removeClass('display-none');
+                $('#showActiveTimer').addClass('display-none').removeClass('display-inline');
+            },
+            timerDisableMode: function () {
+                timerUIFun.pauseModeOff();
+                timerUIFun.startTrackerModeOn();
+                timerUIFun.stopTrackerModeOff();
+            },
+            timerActiveMode: function () {
+                $('#timerWidget').removeClass('display-none').addClass('display-block');
+                timerUIFun.pauseModeOn();
+                timerUIFun.startTrackerModeOff();
+                timerUIFun.stopTrackerModeOn();
+                timerUIFun.activeTimerHide();
+            },
+            timerPauseMode: function () {
+                timerUIFun.pauseModeOff();
+                timerUIFun.startTrackerModeOn();
+                timerUIFun.stopTrackerModeOn();
+            },
+            timerStopMode: function () {
+                timerUIFun.pauseModeOff();
+                timerUIFun.startTrackerModeOn();
+                timerUIFun.stopTrackerModeOn();
+            },
+            timerStartMode: function () {
+                timerUIFun.pauseModeOn();
+                timerUIFun.startTrackerModeOff();
+                timerUIFun.stopTrackerModeOn();
+                timerUIFun.activeTimerHide();
+
+            }
+        }
+    }();
+
     $scope.openTimerTicket = function () {
         if ($scope.ttimer.ticket) {
             $scope.ttimer.ticket.tabType = 'ticketView';
@@ -2654,12 +2740,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response) {
 
                 document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
+                $scope.timerTick = false;
                 $scope.status.active = false;
                 $scope.ttimer.active = false;
                 $scope.ttimer.pause = false;
+                $scope.ttimer.play = true;
                 $scope.ttimer.ticketRef = "Start";
                 $scope.ttimer.trackerId = undefined;
                 $scope.ttimer.ticket = undefined;
+                timerUIFun.timerDisableMode();
 
             }
             else {
@@ -2677,6 +2766,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response) {
 
                 $scope.ttimer.pause = true;
+                $scope.ttimer.play = true;
+                timerUIFun.timerPauseMode();
                 $scope.ttimer.pausedTime = moment.utc();
                 document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
 
@@ -2698,6 +2789,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //    $scope.counter = elapsed;
     //}
 
+
+    $scope.timerModeActive = false;
+    $scope.timerTick = false;
     $scope.startTracker = function () {
         if ($scope.ttimer.pause) {
             ticketService.startTimer().then(function (response) {
@@ -2709,10 +2803,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     }
 
                     document.getElementById('clock-timer').getElementsByTagName('timer')[0].resume();
+                    $scope.timerTick = true;
                     $scope.ttimer.pause = false;
                     $scope.status.active = true;
+                    $scope.ttimer.play = true;
+                    $scope.timerModeActive = true;
                     $scope.ttimer.pausedTime = {};
-
+                    timerUIFun.timerStartMode();
                 }
                 else {
                     $scope.showAlert("Tracker", "error", "Timer failed to resume timer ");
@@ -2745,13 +2842,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.status.active = true;
                         $scope.ttimer.active = true;
-
+                        timerUIFun.timerActiveMode();
                         $scope.ttimer.ticket = $scope.activeTab.notificationData;
                         $scope.ttimer.ticketId = $scope.activeTab.notificationData._id;
                         $scope.ttimer.ticketRef = $scope.activeTab.content;
                         $scope.ttimer.trackerId = response._id;
 
                         document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
+                        $scope.timerTick = true;
                     }
                     else {
                         $scope.showAlert("Tracker", "error", "Timer failed to start ");
@@ -2800,18 +2898,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                             $scope.status.active = true;
                             $scope.ttimer.active = true;
-
+                            $scope.timerModeActive = true;
                             $scope.ttimer.ticket = ticket;
                             $scope.ttimer.ticketId = response.ticket;
                             $scope.ttimer.ticketRef = ticket.reference;
                             $scope.ttimer.trackerId = response._id;
 
+                            timerUIFun.timerActiveMode();
+
                             document.getElementById('clock-timer').getElementsByTagName('timer')[0].start();
+                            $scope.timerTick = true;
 
                             if (response.last_event === "pause") {
                                 $timeout(function () {
                                     $scope.ttimer.pause = true;
+                                    timerUIFun.activeTimerHide();
                                     $scope.ttimer.pausedTime = moment.utc();
+                                    timerUIFun.timerPauseMode();
                                     document.getElementById('clock-timer').getElementsByTagName('timer')[0].stop();
                                 }, 1000);
                             }
@@ -2823,6 +2926,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     console.log(error);
                     $scope.showAlert("Tracker", "error", "Timer failed to load ticket details");
                 });
+            } else {
+                $('#timerWidget').addClass('display-none').removeClass('display-block');
+                timerUIFun.timerDisableMode();
+                $scope.timerModeActive = false;
             }
         }, function (error) {
             authService.IsCheckResponse(error);
@@ -2831,6 +2938,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.checkTimerOnLogin();
+    $scope.showTimerWidget = false;
+
+    $scope.showTimer = function () {
+        $scope.showTimerWidget = !$scope.showTimerWidget;
+    };
     //end time tracker function
 
 
@@ -3495,12 +3607,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //update code damith
     window.onload = function () {
         $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        $scope.windowHeightLeftMenu = jsUpdateSize() - 200 + "px";
         document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+        document.getElementById('windowHeightLeftMenu').style.height = $scope.windowHeight;
     };
 
     window.onresize = function () {
         $scope.windowHeight = jsUpdateSize() - 85 + "px";
+        $scope.windowHeightLeftMenu = jsUpdateSize() - 200 + "px";
         document.getElementById('notificationWrapper').style.height = $scope.windowHeight;
+        document.getElementById('windowHeightLeftMenu').style.height = $scope.windowHeight;
     };
     $scope.isUserListOpen = false;
     $scope.navOpen = false;
@@ -3846,15 +3962,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             console.log(requestOption);
             dataParser.userProfile = $scope.profile;
             modeList.forEach(function (option) {
-                $(option).removeClass('font-color-green bold');
+                $(option).removeClass('active-font');
             });
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res) {
                     $('#userStatus').addClass('offline').removeClass('online');
                     $scope.showAlert(requestOption, "success", 'update resource state success');
-                    $('#' + requestOption).addClass('font-color-green bold');
+                    $('#' + requestOption).addClass('active-font').removeClass('top-drop-text');
                     $scope.currentModeOption = requestOption;
-                    $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
+                    $('#agentPhone').removeClass('display-none');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
@@ -3864,19 +3980,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         inboundOption: function (requestOption) {
             dataParser.userProfile = $scope.profile;
             modeList.forEach(function (option) {
-                $(option).removeClass('font-color-green bold');
+                $(option).removeClass('active-font').addClass('top-drop-text');
             });
             resourceService.EndBreakRequest(authService.GetResourceId(), requestOption).then(function (data) {
                 if (data) {
                     $scope.showAlert("Available", "success", "Update resource state success.");
                     $('#userStatus').addClass('online').removeClass('offline');
-                    $('#Inbound').addClass('font-color-green bold');
+                    $('#Inbound').addClass('active-font').removeClass('top-drop-text');
+                    ;
                     $scope.currentModeOption = requestOption;
                     // getCurrentState.breakState();
                     //changeLockScreenView.hide();
                     //$scope.isUnlock = false;
                     //return;
-                    $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
+                    $('#agentPhone').removeClass('display-none');
                 }
             });
         }
@@ -3903,6 +4020,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         getCurrentState.getCurrentRegisterTask();
                         getCurrentState.breakState();
                         $scope.showAlert("Change Register", "success", "Register resource info success.");
+                        $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
                     })
                 } else {
                     console.log(data);
@@ -3958,14 +4076,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         if (data.Result.Mode === "Outbound") {
                             $('#userStatus').addClass('offline').removeClass('online');
-                            $('#Outbound').addClass('font-color-green bold');
-                            $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
+                            $('#Outbound').addClass('active-font');
+                            $('#agentPhone').removeClass('display-none');
                             $scope.currentModeOption = "Outbound";
                             return;
                         } else if (data.Result.Mode === "Inbound") {
                             $('#userStatus').addClass('online').removeClass('offline');
-                            $('#Inbound').addClass('font-color-green bold');
-                            $('#agentPhone').addClass('console-menu-icon m-left-10 m-right-10 m-top-6').removeClass('display-none');
+                            $('#Inbound').addClass('active-font');
+                            $('#agentPhone').removeClass('display-none');
                             $scope.currentModeOption = "Inbound";
                             return;
                         } else {
@@ -4000,6 +4118,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             },
             getResourceTasks: function () {
                 resourceService.GetResourceTasks(authService.GetResourceId()).then(function (data) {
+                    //all task are offline mode
+                    $('#regStatusNone').removeClass('reg-status-done').addClass('task-none');
                     if (data && data.IsSuccess) {
                         data.Result.forEach(function (value, key) {
                             // $scope.resourceTaskObj = [];
@@ -4031,6 +4151,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                         data.Result.obj.LoginTasks.forEach(function (value, key) {
                                             if ($scope.resourceTaskObj[i].task == data.Result.obj.LoginTasks[key]) {
                                                 $scope.resourceTaskObj[i].RegTask = data.Result.obj.LoginTasks[key];
+                                                $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
                                             }
                                         })
 
@@ -4049,6 +4170,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (data && data.IsSuccess) {
                         $scope.resourceTaskObj[index].RegTask = null;
                         // getCurrentState.getCurrentRegisterTask();
+                        $('#regStatusNone').removeClass('reg-status-done').addClass('task-none ');
+                        $scope.resourceTaskObj.forEach(function (value, i) {
+                            if ($scope.resourceTaskObj[i].RegTask != null) {
+                                $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
+                            }
+                        });
+
                         $scope.showAlert("Agent Task", "success", "Delete resource info success.");
                     }
                 }, function (error) {
@@ -4877,6 +5005,20 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
+    $scope.integrationDataList = [];
+    $scope.loadConfig = function () {
+        integrationAPIService.GetIntegrationAPIDetails().then(function (response) {
+            if (response) {
+                $scope.integrationDataList = response;
+            } else {
+                $scope.showAlert("Integrations", "error", "Fail To Load Integration Configurations.");
+            }
+        }, function (error) {
+            $scope.showAlert("Integrations", "error", "Fail To Load Integration Configurations.");
+        });
+
+    };
+    $scope.loadConfig();
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
         scope.isFiexedTab = false;

@@ -18,7 +18,7 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui', 'ui.bootstrap',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
     'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable',
-    'angular-timeline'
+    'angular-timeline','angular-json-tree'
 ]);
 
 
@@ -46,7 +46,7 @@ var baseUrls = {
     'qaModule': 'http://qamodule.app1.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app1.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app1.veery.cloud
     'dialerUrl': 'http://dialerapi.app1.veery.cloud/DVP/DialerAPI/ClickToCall/', //dialerapi.app1.veery.cloud
-    'agentDialerUrl': 'http://localhost:8832/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app1.veery.cloud
+    'agentDialerUrl': 'http://agentdialerservice.app1.veery.cloud/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app1.veery.cloud
     'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud/',//'http://ipmessagingservice.app1.veery.cloud',
     'templateUrl': 'http://templates.app1.veery.cloud/DVP/API/1.0.0.0/' //dialerapi.app1.veery.cloud
 
@@ -72,9 +72,15 @@ var phoneSetting = {
     'EtlCode': '#',
     'SwapCode': '1',
     'ConferenceCode': '0',
-    'ExtNumberLength': 5
+    'ExtNumberLength': 6
 };
 agentApp.constant('phoneSetting', phoneSetting);
+
+//myconsole current  version config
+var versionController = {
+    'version': 'v2.6.1.4'
+};
+agentApp.constant('versionController', versionController);
 
 agentApp.config(function (scrollableTabsetConfigProvider) {
     scrollableTabsetConfigProvider.setShowTooltips(true);
