@@ -1,7 +1,7 @@
 <div class=" view-notification-d-wrapper" ng-if="showMesssageModal">
     <!-- notification send UI -->
     <div class="container">
-        <div class="col-lg-offset-3 col-lg-4">
+        <div class="col-lg-offset-4 col-lg-4">
             <div class="notification-details-wrapper">
                 <div id="uNotifiWrp" class="u-notification-wrp">
                     <div class="u-noti-h b-bottom animated" id="uNotiH ">
@@ -24,21 +24,20 @@
                         </div>
                         <div ng-show="MessageObj.external_user"
                              class="ticket-id" ng-click="openUserProfile(MessageObj.external_user)">
-                           Open profile
+                            Open profile
                         </div>
-
-
 
 
                     </div>
                     <!-- body -->
 
 
-
                     <div class="u-body notification-v">
-                        <h4 style="padding-left: 10px" ng-if="MessageObj.messageType=='notice' || MessageObj.messageType=='todo'">{{MessageObj.title}}</h4>
+                        <h4 style="padding-left: 10px"
+                            ng-if="MessageObj.messageType=='notice' || MessageObj.messageType=='todo'">
+                            {{MessageObj.title}}</h4>
 
-                         <textarea disabled readonly ng-model="MessageObj.header" class="form-control" rows="6">
+                        <textarea disabled readonly ng-model="MessageObj.header" class="form-control" rows="6">
                 </textarea>
                     </div>
                     <!-- footer -->
@@ -48,7 +47,8 @@
                             Keep
                         </button>
                         <button class="btn btn-sm btn-sm-noti btn-green-op btn-min-w"
-                                ng-click="addToTodo(MessageObj)" ng-if="MessageObj.messageType!='notice' " ng-disabled="MessageObj.messageType=='todo'">
+                                ng-click="addToTodo(MessageObj)" ng-if="MessageObj.messageType!='notice' "
+                                ng-disabled="MessageObj.messageType=='todo'">
                             Add to To-Do
                         </button>
                         <button class="btn btn-sm btn-sm-noti btn-red-0p btn-min-w"
