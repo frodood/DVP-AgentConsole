@@ -1236,12 +1236,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     fields: arr,
                     reference: ticket._id
                 };
-                
-                if(scope.currentTicketForm){
-                    
+
+                if (scope.currentTicketForm) {
+
                     obj.form = scope.currentTicketForm.name
                 }
-                
+
                 ticketService.createFormSubmissionData(obj).then(function (response) {
                     //tag submission to ticket
                     if (response && response.Result) {
@@ -2750,31 +2750,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                 scope.isLoadinNextFormWizad = false;
                                 return;
                             } else {
-                                userService.getExternalUserProfileByField("email", profile.email).then(function (resEmail) {
-                                    if (resEmail.IsSuccess && resEmail.Result.length > 0) {
-                                        scope.showAlert("Profile", "error", "Email is already taken");
-                                        profile.email = "";
-                                        scope.isLoadinNextFormWizad = false;
-                                        return;
-                                    }
-                                    else {
-                                        userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
-                                            if (resSSN.IsSuccess && resSSN.Result.length > 0) {
-                                                scope.showAlert("Profile", "error", "SSN is already taken");
-                                                profile.ssn = "";
-                                                scope.isLoadinNextFormWizad = false;
-                                                return;
-                                            } else {
-                                                scope.isLoadinNextFormWizad = false;
-                                                scope.isBasicInfo = false;
-                                                scope.isLocationView = true;
-                                            }
-                                        }, function (errEmail) {
-                                            scope.showAlert("Profile", "error", "SSN is already taken");
-                                        });
-                                    }
-
-                                });
+                                scope.isLoadinNextFormWizad = false;
+                                scope.isBasicInfo = false;
+                                scope.isLocationView = true;
                             }
                         });
                         break;
