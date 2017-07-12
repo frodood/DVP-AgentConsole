@@ -54,8 +54,6 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 headers: fileService.Headers
             });
 
-            scope.objKeys = Object.keys;
-
             scope.profileOtherDataObj = {};
 
 
