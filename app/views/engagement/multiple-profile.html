@@ -38,14 +38,18 @@
                                 <div class="e-d-row-052017">
                                     <ul class="customer-style-ul">
                                         <li class="pull-left desc-052017">channel from</li>
-                                        <li class="pull-right value-052017">{{direction=== 'inbound' ? channelFrom:channelTo}}</li>
+                                        <li class="pull-right value-052017">{{direction=== 'inbound' ?
+                                            channelFrom:channelTo}}
+                                        </li>
                                     </ul>
                                 </div>
                                 <!-- Channel to  -->
                                 <div class="e-d-row-052017">
                                     <ul class="customer-style-ul">
                                         <li class="pull-left desc-052017">channel to</li>
-                                        <li class="pull-right value-052017">{{direction=== 'inbound' ? channelTo:channelFrom}}</li>
+                                        <li class="pull-right value-052017">{{direction=== 'inbound' ?
+                                            channelTo:channelFrom}}
+                                        </li>
                                     </ul>
                                 </div>
                                 <!-- Channel -->
@@ -116,6 +120,8 @@
                                             <div class="li-text-block">
                                                 <div class="li-mu-p-name">
                                                     {{p.firstname}} {{p.lastname}}
+                                                    {{ p.lastname | limitTo: 15 }}{{p.lastname.length > 15 ? '...' :
+                                                    ''}}
                                                 </div>
                                                 <div class="li-mu-p-income-no">
                                                     {{channelFrom}}
