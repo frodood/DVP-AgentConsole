@@ -36,6 +36,7 @@
         width: 100%;
         display: block;
     }
+
 }
 
 @media screen and (min-width: 700px) and (max-width: 1000px) {
@@ -64,9 +65,52 @@
 }
 
 @media (min-width: 1200px) {
+
     .col-lg-3-resize {
         width: 20%;
     }
+
+    .mobile-version-message {
+        display: none;
+    }
+}
+
+/*samll screen*/
+.mobile-version-message {
+    position: absolute;
+    top: 15px;
+    right: -6px;
+    color: rgb(145, 211, 70);
+    z-index: 100;
+    text-transform: capitalize;
+    display: none;
+}
+
+
+
+@media (max-width: 750px) and  (min-width: 150px) {
+    #headerTopMenu {
+        display: none;
+    }
+
+}
+
+@media (max-width: 750px) and  (min-width: 150px) {
+
+    .mobile-version-message {
+        display: block;
+    }
+}
+
+@media (max-width: 980px) and  (min-width: 150px) {
+    #mainSearchBar {
+        display: none;
+    }
+
+    #headerAgentName {
+        display: none;
+    }
+
 }
 
 @media (max-width: 1300px) and (min-width: 150px) {
@@ -86,5 +130,12 @@
     .eng-channel-052017 {
         margin-bottom: 8px;
     }
+
+    /*#desktop_menu {*/
+    /*display: none;*/
+    /*}*/
+    /*#mobile-menu {*/
+    /*display: block;*/
+    /*}*/
 }
 

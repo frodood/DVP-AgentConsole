@@ -37,7 +37,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             tabReference: "@",
             searchUsers: "=",
             schemaResponseNewTicket: "=",
-            pieChartOption: '='
+            pieChartOption: '=',
+            integrationData: '='
         },
         //templateUrl: 'app/views/profile/engagement-call.html',
         templateUrl: 'app/views/engagement/engagement-console.html',
@@ -52,6 +53,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 url: fileService.UploadUrl,
                 headers: fileService.Headers
             });
+
+            scope.profileOtherDataObj = {};
 
 
             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
@@ -150,6 +153,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
             scope.integrationAPIList = [];
             scope.currentTicketForm = null;
+
+            scope.profileImportantData = {};
 
             /*if(!scope.profileDetail){
              scope.profileDetail = {};
@@ -1697,6 +1702,68 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
             };
 
+            scope.GetIntegrationDetails = function (id) {
+                if(scope.integrationData&& scope.integrationData.length&&id){
+                    var postData = {
+                        "PROFILE_ADDITIONAL_DATA": {
+                            "Reference": id
+                        }
+                    };
+                    integrationAPIService.GetIntegrationDetails("PROFILE_ADDITIONAL_DATA",postData).then(function (response) {
+                        angular.forEach(response,function (item) {
+                            if(item){
+                                angular.extend(scope.profileDetail,item);
+                            }
+                        });
+
+                    }, function (err) {
+                        scope.showAlert("User Profile", "error", "Fail To Get Additional Profile Details.")
+                    });
+                }
+            };
+
+            scope.GetIntegrationImportantData = function (id) {
+                if(scope.integrationData&& scope.integrationData.length){
+                    var postData = {
+                        "PROFILE_IMPORTANT_DATA": {
+                            "Reference": id
+                        }
+                    };
+                    integrationAPIService.GetIntegrationDetails("PROFILE_IMPORTANT_DATA",postData).then(function (response) {
+                        scope.profileImportantData = {};
+                        angular.forEach(response,function (item) {
+                            if(item){
+                                angular.extend(scope.profileImportantData,item);
+                            }
+                        });
+
+                    }, function (err) {
+                        scope.showAlert("User Profile", "error", "Fail To Get Profile Important Details.")
+                    });
+                }
+            };
+
+            scope.GetProfileOtherData = function (postData) {
+                if(scope.integrationData&& scope.integrationData.length){
+
+                    var postBody = {
+                        "PROFILE_OTHER_DATA": postData
+                    };
+
+                    integrationAPIService.GetIntegrationDetails("PROFILE_OTHER_DATA",postBody).then(function (response) {
+                        scope.profileOtherDataObj = {};
+                        angular.forEach(response,function (item) {
+                            if(item){
+                                angular.extend(scope.profileOtherDataObj, item);
+                            }
+                        });
+
+                    }, function (err) {
+                        scope.showAlert("User Profile", "error", "Fail To Get Profile Important Details.")
+                    });
+                }
+            };
+
             scope.GetExternalUserProfileByContact = function () {
                 var category = "";
 
@@ -1732,6 +1799,10 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 if (scope.profileDetail) {
                     scope.isEnagagementOpen = true;
                     scope.GetProfileHistory(scope.profileDetail._id);
+                    scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
+                    scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                    scope.GetProfileOtherData(scope.profileDetail);
+
                     scope.profileLoadin = false;
                     scope.showMultiProfile = false;
                     scope.showNewProfile = false;
@@ -1797,6 +1868,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                             scope.isEnagagementOpen = true;
                             scope.profileDetails = response;
+                            //scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
                             loadUserData();
                         }, function (err) {
                             scope.isProfileFound = false;
@@ -2414,7 +2486,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                             });
                         }
-
+                        scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
+                        scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                        scope.GetProfileOtherData(scope.profileDetail);
 
                     },
                     searchProfile: function () {
