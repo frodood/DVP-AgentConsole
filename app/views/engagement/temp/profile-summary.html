@@ -4,7 +4,7 @@
         <section class="user-p-h-s-052017">
             <ul>
                 <li class="profile-id-052017">
-                    ID : {{sessionId}}
+                    ID : {{ sessionId | limitTo: 35 }}{{sessionId.length > 35 ? '...' : ''}}
                 </li>
                 <li class="pull-right right-btn-052017"
                     ng-if="!showNewProfile">
