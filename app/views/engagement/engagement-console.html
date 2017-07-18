@@ -87,20 +87,42 @@
                             <!--profile-->
                             <div ng-include="'app/views/engagement/engagement-other.html'"></div>
                         </uib-tab>
+                        <uib-tab heading="OTHER" classes="btn-sm">
+                            <!--profile-->
+                            <div ng-include="'app/views/engagement/engagement-otherdata.html'"></div>
+                        </uib-tab>
                     </uib-tabset>
 
                     <div class="top-left-tab-btn-052017">
-                        <button type="button"
-                                ng-click="multipleProfile.searchProfile();"
-                                class="btn btn-search-052017">
-                            <i class="ti-search"></i>
-                            SEARCH
-                        </button>
-                        <button class="btn"
-                                ng-click="createNProfile()">
-                            <i class="ti-plus"></i>
-                            new profile
-                        </button>
+                        <div class="quick-action-btn-wrp">
+                            <ul class="list-inline">
+                                <li>
+                                    <div class="action-btn-052017  lg-action-btn active-org"
+                                         ng-click="multipleProfile.searchProfile();">
+                                        <i class="fa fa-search"
+                                           title="Search Profile"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="action-btn-052017 lg-action-btn active-org"
+                                         ng-click="createNProfile()">
+                                        <i class="fa fa-plus"
+                                           title="Create New Profile"></i></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--<button type="button"-->
+                        <!--ng-click="multipleProfile.searchProfile();"-->
+                        <!--class="btn btn-search-052017">-->
+                        <!--<i class="ti-search"></i>-->
+                        <!--SEARCH-->
+                        <!--</button>-->
+                        <!--<button class="btn"-->
+                        <!--ng-click="createNProfile()">-->
+                        <!--<i class="ti-plus"></i>-->
+                        <!--new profile-->
+                        <!--</button>-->
                     </div>
                 </div>
             </div>

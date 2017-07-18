@@ -9,27 +9,43 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     chatService.SubscribeDashboard(function (event) {
 
-        console.log(event);
-        switch (event.roomName) {
+            console.log(event);
+            switch (event.roomName) {
 
-            case 'QUEUE:QueueDetail':
+                case 'QUEUE:QueueDetail':
 
-                if (event.Message) {
+                    if (event.Message) {
 
-                    //
-                    if (event.Message.QueueInfo.CurrentMaxWaitTime) {
-                        var d = moment(event.Message.QueueInfo.CurrentMaxWaitTime).valueOf();
-                        event.Message.QueueInfo.MaxWaitingMS = d;
+                        //
+                        if (event.Message.QueueInfo.CurrentMaxWaitTime) {
+                            var d = moment(event.Message.QueueInfo.CurrentMaxWaitTime).valueOf();
+                            event.Message.QueueInfo.MaxWaitingMS = d;
+                        }
+
+                        var item = event.Message.QueueInfo;
+                        if (item.CurrentMaxWaitTime) {
+                            var d = moment(item.CurrentMaxWaitTime).valueOf();
+                            item.MaxWaitingMS = d;
+
+                            if (item.EventTime) {
+
+                                var serverTime = moment(item.EventTime).valueOf();
+                                tempMaxWaitingMS = serverTime - d;
+                                event.Message.QueueInfo.MaxWaitingMS = moment().valueOf() - tempMaxWaitingMS;
+
+                            }
+                        }
+
+                        $scope.queueDetails[event.Message.QueueName] = event.Message;
+                    } else {
+                        console.log("No Message found");
                     }
-                    $scope.queueDetails[event.Message.QueueName] = event.Message;
-                } else {
-                    console.log("No Message found");
-                }
 
-                break;
+                    break;
+            }
+
         }
-
-    });
+    );
 
 
     // call $anchorScroll()
