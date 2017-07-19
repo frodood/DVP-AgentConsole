@@ -1794,8 +1794,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 if (scope.profileDetail) {
                     scope.isEnagagementOpen = true;
                     scope.GetProfileHistory(scope.profileDetail._id);
-                    scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
-                    scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                    scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
+                    scope.GetIntegrationImportantData(scope.profileDetail.thirdpartyreference);
                     scope.GetProfileOtherData(scope.profileDetail);
 
                     scope.profileLoadin = false;
@@ -1863,7 +1863,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                             scope.isEnagagementOpen = true;
                             scope.profileDetails = response;
-                            //scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
+                            //scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
                             loadUserData();
                         }, function (err) {
                             scope.isProfileFound = false;
@@ -2481,8 +2481,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                             });
                         }
-                        scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
-                        scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                        scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
+                        scope.GetIntegrationImportantData(scope.profileDetail.thirdpartyreference);
                         scope.GetProfileOtherData(scope.profileDetail);
 
                     },
