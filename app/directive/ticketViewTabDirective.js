@@ -1451,10 +1451,14 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             else
                             {
                                 changeState=false;
-                                scope.showAlert("Ticket assigning", "error", "Cannot pick tickets assigned to other groups and their users");
-                                console.log("Error :- Ticket assigned to Other group or their user");
+
                             }
 
+                        }
+
+                        if(!scope.ticket.assignee && !scope.ticket.assignee_group)
+                        {
+                            changeState=true;
                         }
 
 
@@ -1476,6 +1480,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             }, function (error) {
                                 scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
                             });
+                        }
+                        else
+                        {
+                            scope.showAlert("Ticket assigning", "error", "Cannot pick tickets assigned to other groups and their users");
+                            console.log("Error :- Ticket assigned to Other group or their user");
                         }
 
 
