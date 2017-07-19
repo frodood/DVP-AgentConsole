@@ -2989,6 +2989,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             obj: {},
             type: "searchKey",
             value: "#profile:ssn:"
+        }, {
+            obj: {},
+            type: "searchKey",
+            value: "#thirdparty:search:"
         }];
 
     //$scope.searchResult = [];
@@ -3050,6 +3054,99 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     }
 
+    $scope.callIntegrationService = function (query) {
+
+        var searchResult = [];
+
+        var postData = {
+            "PROFILE_SEARCH_DATA": {
+                "SearchFiled": "FIRSTNME",
+                "SearchValue": "CHRISTINE"
+            }
+        };
+        return integrationAPIService.GetIntegrationDetails("PROFILE_SEARCH_DATA", postData).then(function (response) {
+
+            angular.forEach(response, function (item) {
+                if (item && item.firstname) {
+                    searchResult.push({
+                        obj: item,
+                        type: "profile",
+                        value: item.firstname + " " + item.lastname
+                    });
+                }
+            });
+            $scope.states = searchResult;
+            return searchResult;
+
+        }, function (err) {
+            $scope.showAlert("Profile Search", "error", "Fail To Get Profile Details.");
+            return searchResult;
+        });
+
+       /* if ($scope.callIntegrationSearchService) {
+            var searchResult = [];
+            if (query.startsWith("#thirdparty:search:")) {
+                var queryText= query.replace("#thirdparty:search:", "");
+
+                var postData = {
+                    "PROFILE_SEARCH_DATA": {
+                        "SearchFiled": "FIRSTNME",
+                        "SearchValue": queryText
+                    }
+                };
+                return integrationAPIService.GetIntegrationDetails("PROFILE_SEARCH_DATA", postData).then(function (response) {
+
+                    angular.forEach(response, function (item) {
+                        if (item && item.firstname) {
+                            searchResult.push({
+                                obj: item,
+                                type: "profile",
+                                value: item.firstname + " " + item.lastname
+                            });
+                        }
+                    });
+                    return searchResult;
+
+                }, function (err) {
+                    $scope.showAlert("Profile Search", "error", "Fail To Get Profile Details.");
+                    return searchResult;
+                });
+            }
+            else {
+                return searchResult;
+            }
+
+
+        }*/
+        /* case "#thirdparty:search":
+         var searchResult = [];
+         var postData = {
+         "PROFILE_SEARCH_DATA": {
+         "SearchFiled": "FIRSTNME",
+         "SearchValue": queryText
+         }
+         };
+         return integrationAPIService.GetIntegrationDetails("PROFILE_SEARCH_DATA", postData).then(function (response) {
+
+         angular.forEach(response, function (item) {
+         if (item&&item.firstname) {
+         searchResult.push({
+         obj: item,
+         type: "profile",
+         value: item.firstname + " " + item.lastname
+         });
+         }
+         });
+         return searchResult;
+
+         }, function (err) {
+         $scope.showAlert("Profile Search", "error", "Fail To Get Profile Details.");
+         return searchResult;
+         });
+
+         break;*/
+    };
+
 
     $scope.commonSearch = function ($query) {
         $scope.commonSearchQuery = $query;
@@ -3061,6 +3158,42 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     var queryPath = searchItems.join(":");
                     if (queryText) {
                         switch (queryPath) {
+                            case "#thirdparty:search":
+                                var searchResult = [];
+                                if(queryText.indexOf("#") !== -1){
+                                    var postData = {
+                                        "PROFILE_SEARCH_DATA": {
+                                            "SearchFiled": "FIRSTNME",
+                                            "SearchValue": queryText.replace("#","")
+                                        }
+                                    };
+                                    return integrationAPIService.GetIntegrationDetails("PROFILE_SEARCH_DATA", postData).then(function (response) {
+
+                                        angular.forEach(response, function (item) {
+                                            if (item && item.firstname) {
+                                                searchResult.push({
+                                                    obj: item,
+                                                    type: "profile",
+                                                    value: item.firstname + " " + item.lastname
+                                                });
+                                            }
+                                        });
+                                        return searchResult;
+
+                                    }, function (err) {
+                                        $scope.showAlert("Profile Search", "error", "Fail To Get Profile Details.");
+                                        return searchResult;
+                                    });
+                                }else {
+                                    searchResult.push({
+                                        obj: null,
+                                        type: "profile",
+                                        value: "Type # To Search"
+                                    });
+                                    return searchResult;
+                                }
+
+                                break;
                             case "#ticket:tid":
                                 var queryFiledTid = searchItems.pop();
                                 return ticketService.searchTicketByField(queryFiledTid, queryText).then(function (response) {
@@ -3191,6 +3324,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                     }
                                 });
                                 break;
+
                             case "#profile:search":
                                 return userService.searchExternalUsers(queryText).then(function (response) {
                                     if (response.IsSuccess) {
@@ -3206,6 +3340,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                         return searchResult;
                                     }
                                 });
+
                                 break;
                             //case "#eng:profile:search":
                             //    return userService.searchExternalUsers(queryText).then(function (response) {
@@ -3677,7 +3812,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.notificationMsg.From = $scope.loginName;
             $scope.notificationMsg.Direction = "STATELESS";
             $scope.isSendingNotifi = true;
-            $scope.notificationMsg.isPersist=true;
+            $scope.notificationMsg.isPersist = true;
 
             if ($scope.naviSelectedUser.listType === "Group") {
 
@@ -5006,10 +5141,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.integrationDataList = [];
+    $scope.callIntegrationSearchService = false;
     $scope.loadConfig = function () {
         integrationAPIService.GetIntegrationAPIDetails().then(function (response) {
             if (response) {
                 $scope.integrationDataList = response;
+                var data = $filter('filter')(response, {referenceType: 'PROFILE_SEARCH_DATA'});
+                $scope.callIntegrationSearchService = (data && data.length);
+
             } else {
                 $scope.showAlert("Integrations", "error", "Fail To Load Integration Configurations.");
             }

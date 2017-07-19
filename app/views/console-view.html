@@ -18,7 +18,7 @@
                     </div>
                     <form class="form-inline navbar-form navbar-left" id="mainSearchBar">
                         <div class="form-group has-feedback">
-                            <input id="commonSearch" type="text" autocomplete="off"
+                            <input id="commonSearch" type="text" autocomplete="true"
                                    class="main-search-input has-feedback-right"
                                    ng-model="searchText"
                                    typeahead-min-length="0" typeahead-on-select="bindSearchData($item)"
@@ -33,6 +33,13 @@
                                 <i class="ti-face-sad animated slideInDown"></i>
                                 <span> No Results Found </span>
                             </div>
+
+                           <!-- <div class="form-group">
+                                <input id="commonSearch" type="text" class="main-search-input" ng-model="searchText"
+                                       typeahead-min-length="0" typeahead-select-on-exact="true" typeahead-focus-on-select="false" typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
+                                       uib-typeahead="state.value for state in states" placeholder="Search by keyword, #ticker or #profile">
+                            </div>-->
+
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right " id="headerTopMenu" uib-dropdown>
