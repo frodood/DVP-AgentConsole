@@ -4,24 +4,30 @@
     <div class="a-summary05201-left">
 
         <div class="a-summary-avatar">
-            <div class="round-a-3-40">
+            <div class="round-a-3-40" ng-if="popoverSummaryObj.displayName">
                 <img ng-if="popoverSummaryObj.avatar"
                      src="assets/img/avatar/defaultProfile.png"
                      ng-src="{{popoverSummaryObj.avatar}}"
-                     width="20">
+                     width="30">
 
                 <img ng-if="!popoverSummaryObj.avatar"
                      src="assets/img/avatar/defaultProfile.png"
-                     width="20">
+                     width="30">
             </div>
         </div>
 
         <div class="a-summary-desc animated fadeIn">
             <div class="a-summary-name">
-                {{popoverSummaryObj.displayName}}
+
+                {{ popoverSummaryObj.displayName | limitTo: 18 }}
+                {{popoverSummaryObj.displayName.length > 18 ? '...' : ''}}
             </div>
             <div class="a-summary-email">
                 {{popoverSummaryObj.email}}
+            </div>
+
+            <div class="a-summary-error" ng-if="!popoverSummaryObj.displayName">
+                Sorry,Agent Not Found
             </div>
 
             <div class="a-summary-state">
