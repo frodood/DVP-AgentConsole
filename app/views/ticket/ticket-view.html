@@ -70,7 +70,7 @@
                         <span class="btn btn-default" ng-click="goToComment()">Comment</span>
                     </div>
                     <div class="btn-warp " ng-show="!ticket.assignee">
-                        <span class="btn btn-default" ng-click="assignToMe(ticket._id)">Pick</span>
+                        <span class="btn btn-default" ng-click="assignToMe()">Pick</span>
                     </div>
                     <div class="btn-warp ">
                         <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">Close</span>
@@ -580,48 +580,13 @@
                                                  ng-show="isEditAssignee">
                                                 <div class="col-lg-7">
                                                     <div class="form-group">
-                                                        <!--<tags-input
-                                                                ng-model="users"
-                                                                display-property="profileName"
-                                                                placeholder="Search users to assign"
-                                                                replace-spaces-with-dashes="false">
-                                                            <auto-complete source="loadUser($query)"
-                                                                           min-length="0"
-                                                                           load-on-focus="true"
-                                                                           load-on-empty="true"
-                                                                           max-results-to-show="32"
-                                                                           template="my-custom-template">
-                                                            </auto-complete>
-                                                        </tags-input>
-                                                        <script type="text/ng-template"
-                                                                id="my-custom-template">
-                                                            <div class="auto-complete-left-panel">
-                                                                <img ng-src="{{data.img}}"/>
-                                                            </div>
-                                                            <div class="auto-complete-right-panel">
-                                                                <span ng-bind-html="$highlight($getDisplayText())"></span>
-                                                            </div>
-                                                        </script>-->
+
 
                                                         <div class="scrollable-dropdown-menu">
                                                             <input type="text" ng-model="newAssignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
                                                                    class="form-control" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Select user/group" typeahead-template-url="customTemplate.html">
                                                         </div>
 
-                                                        <!--<select class="form-control" placeholder=""
-                                                                ng-model="newAssignee"
-                                                                ng-model-options="{trackBy: '$value'}"
-                                                                style="margin-top: 7px;">
-                                                            <optgroup label="Users"></optgroup>
-                                                            <option ng-repeat="assignee in assigneeUsers"
-                                                                    value="{{assignee}}"> - {{assignee.displayname}}
-                                                            </option>
-                                                            <optgroup label="User Groups"></optgroup>
-                                                            <option ng-repeat="group in assigneeGroups"
-                                                                    value="{{group}}"> - {{group.name}}
-                                                            </option>
-
-                                                        </select>-->
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5">
@@ -668,7 +633,7 @@
                                                         {{ticket.assignee_group.name}}
                                                     </div>
                                                     <a ng-show="(ticket.assignee || ticket.assignee_group) && ticket.assignee._id!=myProfileID"
-                                                       ng-click="setAssigneeAsMe()">Assign to me</a>
+                                                       ng-click="assignToMe()">Assign to me</a>
 
                                                 </div>
 

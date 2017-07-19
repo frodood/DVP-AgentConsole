@@ -1423,9 +1423,33 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 };
 
-                scope.setAssigneeAsMe = function () {
+                scope.assignToMe = function () {
                     try {
+
+                        var changeState=false;
+
                         if (scope.ticket.assignee && profileDataParser.myProfile.group && scope.ticket.assignee.group == profileDataParser.myProfile.group) {
+
+                            changeState=true;
+                        }
+                        else
+                        {
+                            if(scope.ticket.assignee_group && profileDataParser.myProfile.group && scope.ticket.assignee_group._id == profileDataParser.myProfile.group)
+                            {
+                                changeState=true;
+                            }
+                            else
+                            {
+                                changeState=false;
+                                scope.showAlert("Ticket assigning", "error", "Cannot pick tickets assigned to other groups and their users");
+                                console.log("Error :- Ticket assigned to Other group or their user");
+                            }
+
+                        }
+
+
+                        if(changeState)
+                        {
                             ticketService.AssignUserToTicket(scope.ticket._id, profileDataParser.myProfile._id).then(function (response) {
                                 if (response && response.data.IsSuccess) {
                                     scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
@@ -1442,11 +1466,11 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
                             });
                         }
-                        else
-                        {
-                            scope.showAlert("Ticket assigning", "error", "Cannot pick tickets assigned to other groups and their users");
-                            console.log("Error :- Ticket assigned to Other group or their user");
-                        }
+
+
+
+
+
                     }
                     catch(e)
                     {
@@ -1456,7 +1480,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 }
 
-                scope.assignToMe = function (id) {
+               /* scope.assignToMe = function (id) {
 
 
                     try {
@@ -1487,7 +1511,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     }
 
 
-                };
+                };*/
 
                 scope.changeTicketStatus = function (newStatus) {
 
