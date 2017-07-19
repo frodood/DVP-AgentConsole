@@ -10,7 +10,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
                                              Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm,
-                                             templateService, userImageList, integrationAPIService, versionController) {
+                                             templateService, userImageList, integrationAPIService, versionController, $sce) {
 
     ///console version
 
@@ -3677,7 +3677,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.notificationMsg.From = $scope.loginName;
             $scope.notificationMsg.Direction = "STATELESS";
             $scope.isSendingNotifi = true;
-            $scope.notificationMsg.isPersist=true;
+            $scope.notificationMsg.isPersist = true;
 
             if ($scope.naviSelectedUser.listType === "Group") {
 
@@ -5019,6 +5019,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
     $scope.loadConfig();
+
+    //update code
+    //agent summary profile summary
+    //$scope.text = $sce.trustAsHtml("'app/views/ui-components/agent-summary.html'");
+    $scope.getAgentSummaryTooltip = function (model) {
+        var tooltip;
+        // if(model.somedata == 'x') {
+        //     tooltip = 'some content';
+        // }
+        // else {
+        //     tooltip = 'some other content';
+        // }
+        $scope.tooltip = $sce.trustAsHtml("'app/views/ui-components/agent-summary.html'");
+    }
+
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {
         scope.isFiexedTab = false;
@@ -5043,8 +5058,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
         });
     };
-});
-
+})
 
 agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
 
@@ -5054,4 +5068,4 @@ agentApp.controller("notificationModalController", function ($scope, $uibModalIn
     console.log(MessageObj);
 
 
-})
+});
