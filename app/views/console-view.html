@@ -533,13 +533,6 @@
 
     <div class="console-def-img" ng-if="tabs.length==0">
         <img src="assets/img/defulat-console-400x400.png" width="300">
-
-        <div ng-dropover ng-dropover-options="{'triggerEvent':'hover', 'verticalOffset': 0}">
-            <a>Basic Click</a>
-            <div ng-dropover-contents class="arrowed">
-                <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
-            </div>
-        </div>
         <!---->
     </div>
 
@@ -587,7 +580,10 @@
                         <div ng-switch-when="ticketView ">
                             <ticket-tab-view ticket-details="tab" call-customer="veeryPhone.makeCall(callNumber)"
                                              load-tags="reloadTagAndCategories()"
+                                             show-tab-chat-panel="showTabChatPanel(chatUser)"
+                                             set-extention="setExtention(selectedUser)"
                                              tag-category-list="tagCategories"
+
                                              tag-list="tags"></ticket-tab-view>
                             <!--<div ng-include="'app/views/ticket/ticket-view.html'"></div>-->
                         </div>

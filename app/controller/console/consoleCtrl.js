@@ -5023,16 +5023,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //update code
     //agent summary profile summary
     //$scope.text = $sce.trustAsHtml("'app/views/ui-components/agent-summary.html'");
-    $scope.getAgentSummaryTooltip = function (model) {
-        var tooltip;
-        // if(model.somedata == 'x') {
-        //     tooltip = 'some content';
-        // }
-        // else {
-        //     tooltip = 'some other content';
-        // }
-        $scope.tooltip = $sce.trustAsHtml("'app/views/ui-components/agent-summary.html'");
-    }
+
+
+    // $scope.popOverSummary = function (userName, avatar) {
+    //     $scope.popoverSummaryObj = {
+    //         displayName: '',
+    //         avatar: ''
+    //     };
+    //
+    //     $scope.popoverSummaryObj.displayName = userName;
+    //     $scope.popoverSummaryObj.avatar = avatar;
+    //
+    //     //console.log(_userProfile);
+    // };
 
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {

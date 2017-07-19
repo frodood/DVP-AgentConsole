@@ -147,7 +147,7 @@ agentApp.constant('config', {
 });
 
 //Authentication
-agentApp.run(function ($rootScope, loginService, $location, $state) {
+agentApp.run(function ($rootScope, loginService, $location, $state,$document) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         var requireLogin = toState.data.requireLogin;
         if (requireLogin) {
@@ -157,6 +157,8 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
             }
             // get me a login modal!
         }
+
+
     });
     var decodeToken = loginService.getTokenDecode();
     if (!decodeToken) {

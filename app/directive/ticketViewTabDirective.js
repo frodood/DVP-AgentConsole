@@ -2,7 +2,11 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService, $rootScope, authService, profileDataParser, userService, uuid4, FileUploader, baseUrls, fileService,$auth) {
+agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService,
+                                              $rootScope, authService,
+                                              profileDataParser, userService, uuid4,
+                                              FileUploader, baseUrls, fileService,
+                                              $auth, userImageList) {
     return {
         restrict: "EA",
         scope: {
@@ -10,7 +14,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
             callCustomer: "&",
             tagList: "=",
             tagCategoryList: "=",
-            loadTags: '&'
+            loadTags: '&',
+            showTabChatPanel: '&',
+            setExtention: '&'
         },
         templateUrl: 'app/views/ticket/ticket-view.html',
         link: {
@@ -30,7 +36,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.currentSubmission = null;
                 scope.currentForm = null;
 
-                scope.newAssignee ;
+                scope.newAssignee;
                 scope.isOverDue = false;
                 scope.newComment = "";
                 scope.ticketNextLevels = [];
@@ -48,7 +54,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.internalThumbFileUrl = baseUrls.fileService + "InternalFileService/File/Thumbnail/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/";
                 scope.FileServiceUrl = baseUrls.fileService + "InternalFileService/File/Download/" + scope.userCompanyData.tenant + "/" + scope.userCompanyData.company + "/";
 
-                scope.GeneralFileService=baseUrls.fileService + "FileService/File/Download/";
+                scope.GeneralFileService = baseUrls.fileService + "FileService/File/Download/";
 
 
                 scope.slider = {
@@ -790,10 +796,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 scope.assigneeGroups = profileDataParser.assigneeUserGroups;
                 scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
-                    value.displayname=value.name;
+                    value.displayname = value.name;
                     return value;
                 });
-                scope.assigneeUserData=scope.assigneeUsers.concat(scope.assigneeTempGroups);
+                scope.assigneeUserData = scope.assigneeUsers.concat(scope.assigneeTempGroups);
 
                 scope.loadTicketNextLevel = function () {
                     ticketService.getTicketNextLevel(scope.ticket.type, scope.ticket.status).then(function (response) {
@@ -851,8 +857,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         skill: '',
                         sessionId: ticket.engagement_session.engagement_id,
                         userProfile: undefined,
-                        tabType : 'newUserProfile',
-                        index : ticket.requester_displayname
+                        tabType: 'newUserProfile',
+                        index: ticket.requester_displayname
                     };
                     $rootScope.$emit('openNewTab', notifyData);
                 };
@@ -1366,34 +1372,31 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                     if (assigneeObj && scope.ticket) {
-                        if (assigneeObj.listType === "Group" ) {
+                        if (assigneeObj.listType === "Group") {
 
 
-                                ticketService.AssignUserGroupToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
-                                    if (response && response.data.IsSuccess) {
+                            ticketService.AssignUserGroupToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
+                                if (response && response.data.IsSuccess) {
 
-                                        scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
-                                        scope.ticket.assignee = undefined;
-                                        scope.ticket.assignee_group = assigneeObj;
-                                        scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
+                                    scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
+                                    scope.ticket.assignee = undefined;
+                                    scope.ticket.assignee_group = assigneeObj;
+                                    scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
 
-                                        scope.isEditAssignee = false;
+                                    scope.isEditAssignee = false;
 
-                                    }
-                                    else {
-                                        scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                                    }
-                                }, function (error) {
+                                }
+                                else {
                                     scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                                });
-
+                                }
+                            }, function (error) {
+                                scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                            });
 
 
                         } else {
 
-                            if(assigneeObj.group && profileDataParser.myProfile.group && profileDataParser.myProfile.group==assigneeObj.group)
-
-                            {
+                            if (assigneeObj.group && profileDataParser.myProfile.group && profileDataParser.myProfile.group == assigneeObj.group) {
                                 ticketService.AssignUserToTicket(scope.ticket._id, assigneeObj._id).then(function (response) {
                                     if (response && response.data.IsSuccess) {
                                         scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
@@ -1409,8 +1412,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                     scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
                                 });
                             }
-                            else
-                            {
+                            else {
                                 scope.showAlert("Ticket assigning", "error", "Cannot assign tickets to users in other user groups");
                             }
 
@@ -1426,21 +1428,18 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.assignToMe = function () {
                     try {
 
-                        var changeState=false;
+                        var changeState = false;
 
                         if (scope.ticket.assignee && profileDataParser.myProfile.group && scope.ticket.assignee.group == profileDataParser.myProfile.group) {
 
-                            changeState=true;
+                            changeState = true;
                         }
-                        else
-                        {
-                            if(scope.ticket.assignee_group && profileDataParser.myProfile.group && scope.ticket.assignee_group._id == profileDataParser.myProfile.group)
-                            {
-                                changeState=true;
+                        else {
+                            if (scope.ticket.assignee_group && profileDataParser.myProfile.group && scope.ticket.assignee_group._id == profileDataParser.myProfile.group) {
+                                changeState = true;
                             }
-                            else
-                            {
-                                changeState=false;
+                            else {
+                                changeState = false;
                                 scope.showAlert("Ticket assigning", "error", "Cannot pick tickets assigned to other groups and their users");
                                 console.log("Error :- Ticket assigned to Other group or their user");
                             }
@@ -1448,8 +1447,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         }
 
 
-                        if(changeState)
-                        {
+                        if (changeState) {
                             ticketService.AssignUserToTicket(scope.ticket._id, profileDataParser.myProfile._id).then(function (response) {
                                 if (response && response.data.IsSuccess) {
                                     scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
@@ -1468,50 +1466,46 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         }
 
 
-
-
-
                     }
-                    catch(e)
-                    {
+                    catch (e) {
                         scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                        console.log("Exception in picking ticket",e);
+                        console.log("Exception in picking ticket", e);
                     }
 
                 }
 
-               /* scope.assignToMe = function (id) {
+                /* scope.assignToMe = function (id) {
 
 
-                    try {
-                        if (ticket.assignee && profileDataParser.myProfile.group && ticket.assignee.group == profileDataParser.myProfile.group) {
-                            ticketService.PickTicket(id).then(function (response) {
-                                if (response) {
+                 try {
+                 if (ticket.assignee && profileDataParser.myProfile.group && ticket.assignee.group == profileDataParser.myProfile.group) {
+                 ticketService.PickTicket(id).then(function (response) {
+                 if (response) {
 
-                                    scope.showAlert("Ticket assigning", "success", "Successfully assign.");
-                                    scope.ticket.assignee = profileDataParser.myProfile;
-                                    scope.ticket.assignee_displayname = scope.setUserTitles(scope.ticket.assignee);
+                 scope.showAlert("Ticket assigning", "success", "Successfully assign.");
+                 scope.ticket.assignee = profileDataParser.myProfile;
+                 scope.ticket.assignee_displayname = scope.setUserTitles(scope.ticket.assignee);
 
-                                }
-                                else {
-                                    scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                                }
-                            }, function (error) {
-                                scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                                console.log("Exception in picking ticket",error);
-                            });
-                        }
-                        else {
-                            scope.showAlert("Ticket assigning", "error", "Cannot pick tickets assigned to other groups and their users");
-                            console.log("Error :- Ticket assigned to Other group or their user");
-                        }
-                    } catch (e) {
-                        scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
-                        console.log("Exception in picking ticket",e);
-                    }
+                 }
+                 else {
+                 scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                 }
+                 }, function (error) {
+                 scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                 console.log("Exception in picking ticket",error);
+                 });
+                 }
+                 else {
+                 scope.showAlert("Ticket assigning", "error", "Cannot pick tickets assigned to other groups and their users");
+                 console.log("Error :- Ticket assigned to Other group or their user");
+                 }
+                 } catch (e) {
+                 scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
+                 console.log("Exception in picking ticket",e);
+                 }
 
 
-                };*/
+                 };*/
 
                 scope.changeTicketStatus = function (newStatus) {
 
@@ -1544,7 +1538,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     scope.newSubTicket.priority = priority;
                 };
 
-            
+
                 scope.saveSubTicket = function () {
 
                     if (scope.ticket.channel) {
@@ -1597,7 +1591,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             scope.showSubCreateTicket = false;
                             console.log("Sub ticket added successfully");
 
-                            scope.newSubTicket={};
+                            scope.newSubTicket = {};
                             scope.postTags = [];
                         }
                         else {
@@ -1933,7 +1927,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                                 }
-                                if (scope.isNewSlot && scope.updationSlot.slot.fileType==attchmentData.type.split("/")[0]) {
+                                if (scope.isNewSlot && scope.updationSlot.slot.fileType == attchmentData.type.split("/")[0]) {
                                     scope.isNewSlot = false;
                                     scope.isUploading = false;
 
@@ -1964,8 +1958,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                                     //
                                 }
-                                else
-                                {
+                                else {
                                     console.log("Invalid file type added");
                                 }
 
@@ -2076,7 +2069,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                     if (videogularAPI && id) {
                         var info = authService.GetCompanyInfo();
-                        var fileToPlay = baseUrls.fileService + 'FileService/File/DownloadLatest/' + id + '.mp3?Authorization='+$auth.getToken();
+                        var fileToPlay = baseUrls.fileService + 'FileService/File/DownloadLatest/' + id + '.mp3?Authorization=' + $auth.getToken();
 
                         var arr = [
                             {
@@ -2095,10 +2088,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.playAttachment = function (attachment) {
 
 
-
                     if (scope.isImage(attachment.type)) {
 
-                        document.getElementById("image-viewer").href = scope.GeneralFileService + attachment.url + "/SampleAttachment?Authorization="+$auth.getToken();
+                        document.getElementById("image-viewer").href = scope.GeneralFileService + attachment.url + "/SampleAttachment?Authorization=" + $auth.getToken();
 
                         $('#image-viewer').trigger('click');
 
@@ -2108,7 +2100,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         if (videogularAPI && attachment.url) {
                             var info = authService.GetCompanyInfo();
 
-                            var fileToPlay = scope.GeneralFileService + attachment.url + "/SampleAttachment?Authorization="+$auth.getToken();
+                            var fileToPlay = scope.GeneralFileService + attachment.url + "/SampleAttachment?Authorization=" + $auth.getToken();
 
                             console.log(fileToPlay);
 
@@ -2360,9 +2352,40 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 }
 
+
+                //update code
+                //agent summary popover
+
+                scope.getAgentSummaryTooltip = function (dispalyName,
+                                                         userAvatar,
+                                                         userName, _id) {
+                    scope.popoverSummaryObj = {};
+                    scope.currentClientUser;
+
+                    scope.popoverSummaryObj.displayName = dispalyName ? dispalyName : '';
+                    scope.popoverSummaryObj.email = userName;
+                    scope.popoverSummaryObj.avatar = userAvatar ? userAvatar : '';
+
+                    userImageList.getUserDetailsByUserId(_id, function (data) {
+                        scope.popoverSummaryObj.callStatus = data.callstatus;
+                        scope.popoverSummaryObj.status = data.status;
+                        scope.currentClientUser = data;
+                    });
+                    $rootScope.$emit('ngDropover.closeAll');
+                };
+
+                scope.openChatWindow = function () {
+                    scope.showTabChatPanel({chatUser: scope.currentClientUser});
+                };
+
+                scope.clickToCall = function () {
+                    scope.setExtention({selectedUser: scope.currentClientUser});
+                };
+
             }
         }
 
     }
 
-});
+})
+;
