@@ -462,7 +462,7 @@
                                                 <img src="assets/img/avatar/defaultProfile.png"
                                                      ng-mouseover="getAgentSummaryTooltip(sub.assignee_displayname,
                                                          sub.assignee.avatar,
-                                                         sub.assignee.name,
+                                                         sub.assignee.username,
                                                          sub.assignee._id)"
                                                      class="cursor-pointer"
                                                      ng-src={{sub.assignee.avatar}}>
@@ -563,7 +563,7 @@
                                                     <img src="assets/img/avatar/defaultProfile.png"
                                                          ng-mouseover="getAgentSummaryTooltip(ticket.submitter.displayname,
                                                          ticket.submitter.avatar,
-                                                         ticket.submitter.name,
+                                                         ticket.submitter.username,
                                                          ticket.submitter._id)"
                                                          class="cursor-pointer"
                                                          ng-src={{ticket.submitter.avatar}}>
@@ -584,21 +584,10 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="people-view">
-                                                <div class="people-view-img"
-                                                     ng-dropover
-                                                     ng-dropover-options="{'triggerEvent':'hover',
-                                                      'closeOthersOnOpen': false}">
-                                                    <img ng-mouseover="getAgentSummaryTooltip(ticket.requester_displayname,
-                                                    ticket.requester_avatar,
-                                                    ticket.requester.name,
-                                                    ticket.requester._id)"
-
-                                                         src="assets/img/avatar/defaultProfile.png"
-                                                         ng-src={{ticket.requester_avatar}}>
-
-                                                    <div ng-dropover-contents>
-                                                        <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
-                                                    </div>
+                                                <div class="people-view-img">
+                                                    <img
+                                                            src="assets/img/avatar/defaultProfile.png"
+                                                            ng-src={{ticket.requester_avatar}}>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold color-cyan500">
@@ -664,7 +653,7 @@
                                                     <img src="assets/img/avatar/defaultProfile.png"
                                                          ng-mouseover="getAgentSummaryTooltip(ticket.assignee_displayname,
                                                          ticket.assignee.avatar,
-                                                         ticket.assignee.name,
+                                                         ticket.assignee.username,
                                                          ticket.assignee._id)"
                                                          ng-src={{ticket.assignee.avatar}}>
                                                     <i ng-show="isEnableEdit"
@@ -729,7 +718,7 @@
                                             <img src="assets/img/avatar/defaultProfile.png"
                                                  ng-mouseover="getAgentSummaryTooltip(collaborator.displayname,
                                                          collaborator.avatar,
-                                                         collaborator.name,
+                                                         collaborator.username,
                                                          collaborator._id)"
                                                  ng-src="{{collaborator.avatar}}"/>
                                             <div ng-dropover-contents class="arrowed">

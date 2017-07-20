@@ -4,7 +4,7 @@
     <div class="a-summary05201-left">
 
         <div class="a-summary-avatar">
-            <div class="round-a-3-40" ng-if="popoverSummaryObj.displayName">
+            <div class="round-a-3-40">
                 <img ng-if="popoverSummaryObj.avatar"
                      src="assets/img/avatar/defaultProfile.png"
                      ng-src="{{popoverSummaryObj.avatar}}"
@@ -26,9 +26,7 @@
                 {{popoverSummaryObj.email}}
             </div>
 
-            <div class="a-summary-error" ng-if="!popoverSummaryObj.displayName">
-                Sorry,Agent Not Found
-            </div>
+
 
             <div class="a-summary-state">
                 <ul class="inline-list">
