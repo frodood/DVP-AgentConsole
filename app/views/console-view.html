@@ -317,15 +317,20 @@
                 <!-- create new profile -->
                 <li style="padding-top: 50px;">
                     <div class="left-icon animated slideInLeft">
+
                         <img class="bg"
+                             tabindex="0"
                              title="New Profile"
                              ng-click="createNewProfile();"
                              src="assets/img/180x180/profile-create180x180.png"
                              width="40px">
                     </div>
                 </li>
+
+
                 <!-- go to home -->
                 <li ng-class="activeTab.viewType == 'dashboard'?'selected-tab':''">
+
                     <div class="left-icon animated slideInLeft">
                         <i ng-click="addDashBoard();"
                            class="icon icon-d-f-icon-home small-icon" title="Dashboard"></i>
@@ -343,7 +348,7 @@
                 </li>
 
                 <!-- softphone -->
-                <li id="agentPhone" >
+                <li id="agentPhone">
                     <div class="left-icon animated slideInLeft">
                         <i id="phoneRegister"
                            ng-click="consoleTopMenu.Register()"
@@ -529,8 +534,13 @@
     <div ng-include="'app/views/right-side-nav.html'"></div>
 
 
+    <script type="text/ng-template" id="popover">
+        <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
+    </script>
+
     <div class="console-def-img" ng-if="tabs.length==0">
         <img src="assets/img/defulat-console-400x400.png" width="300">
+        <!---->
     </div>
 
 
@@ -577,7 +587,10 @@
                         <div ng-switch-when="ticketView ">
                             <ticket-tab-view ticket-details="tab" call-customer="veeryPhone.makeCall(callNumber)"
                                              load-tags="reloadTagAndCategories()"
+                                             show-tab-chat-panel="showTabChatPanel(chatUser)"
+                                             set-extention="setExtention(selectedUser)"
                                              tag-category-list="tagCategories"
+
                                              tag-list="tags"></ticket-tab-view>
                             <!--<div ng-include="'app/views/ticket/ticket-view.html'"></div>-->
                         </div>

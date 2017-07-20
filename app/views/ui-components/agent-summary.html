@@ -1,0 +1,81 @@
+<section class="section-wrapper05201">
+
+    <!--- ./left main wrapper -->
+    <div class="a-summary05201-left">
+
+        <div class="a-summary-avatar">
+            <div class="round-a-3-40">
+                <img ng-if="popoverSummaryObj.avatar"
+                     src="assets/img/avatar/defaultProfile.png"
+                     ng-src="{{popoverSummaryObj.avatar}}"
+                     width="30">
+
+                <img ng-if="!popoverSummaryObj.avatar"
+                     src="assets/img/avatar/defaultProfile.png"
+                     width="30">
+            </div>
+        </div>
+
+        <div class="a-summary-desc animated fadeIn">
+            <div class="a-summary-name">
+                {{ popoverSummaryObj.displayName | limitTo: 18 }}
+                {{popoverSummaryObj.displayName.length > 18 ? '...' : ''}}
+            </div>
+            <div class="a-summary-email">
+                {{popoverSummaryObj.email}}
+            </div>
+
+            <div class="a-summary-state">
+                <ul class="inline-list">
+                    <li ng-click="clickToCall()"
+                        ng-if="popoverSummaryObj.callStatus=='available'"
+                        class="a-s-connect-option online ">
+                        <i tooltip-placement="top"
+                           uib-tooltip="available"
+                           class="icon icon-d-f-icon-softphone"></i>
+                    </li>
+                    <li ng-if="popoverSummaryObj.callStatus=='offline'"
+                        class="a-s-connect-option offline">
+                        <i tooltip-placement="top"
+                           uib-tooltip="offline"
+                           class="icon icon-d-f-icon-softphone"></i>
+                    </li>
+                    <li ng-if="popoverSummaryObj.callStatus=='busy'"
+                        class="a-s-connect-option busy ">
+                        <i tooltip-placement="top"
+                           uib-tooltip="busy"
+                           class="icon icon-d-f-icon-softphone"></i>
+                    </li>
+                    <li ng-click="openChatWindow()"
+                        ng-if="popoverSummaryObj.status=='online'"
+                        class="a-s-connect-option online ">
+                        <i tooltip-placement="top"
+                           uib-tooltip="online"
+                           class="icon icon-d-f-icon-chat"></i>
+                    </li>
+                    <li ng-if="popoverSummaryObj.status=='offline'"
+                        class="a-s-connect-option offline ">
+                        <i tooltip-placement="top"
+                           uib-tooltip="offline"
+                           class="icon icon-d-f-icon-chat"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!--&lt;!&ndash; ./right main wrapper &ndash;&gt;-->
+    <!--<div class="a-summary05201-right">-->
+    <!--<div class="a-summary-r-wrapper">-->
+
+    <!--<div class="a-summary-r-text animated fadeInDown">-->
+    <!--Connect With Partner-->
+    <!--</div>-->
+
+    <!--</div>-->
+
+    <!--</div>-->
+
+</section>
