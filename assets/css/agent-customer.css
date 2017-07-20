@@ -12670,3 +12670,9 @@ json-tree .branch-preview {
     right: -3px;
     top: 2px;
 }
+
+.btn-grtn-action > span
+{
+    color: white;
+    padding-left: 10px;
+}
