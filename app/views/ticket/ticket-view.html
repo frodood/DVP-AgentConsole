@@ -455,20 +455,11 @@
                                     </div>
                                     <div class="col-lg-5 col-sm-12 text-right  ">
                                         <a class="inline-bt pull-left " href="javascript:void(0);">
-                                            <div class="pull-left commenter-img"
-                                                 ng-dropover
-                                                 ng-dropover-options="{'triggerEvent':'hover',
-                                                      'closeOthersOnOpen': false}">
+                                            <div class="pull-left commenter-img">
                                                 <img src="assets/img/avatar/defaultProfile.png"
-                                                     ng-mouseover="getAgentSummaryTooltip(sub.assignee_displayname,
-                                                         sub.assignee.avatar,
-                                                         sub.assignee.username,
-                                                         sub.assignee._id)"
                                                      class="cursor-pointer"
                                                      ng-src={{sub.assignee.avatar}}>
-                                                <div ng-dropover-contents>
-                                                    <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
-                                                </div>
+
                                                 {{sub.assignee_displayname}}
                                             </div>
                                         </a>

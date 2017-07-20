@@ -12557,7 +12557,6 @@ json-tree .branch-preview {
     height: 15px;
     overflow: hidden;
     position: relative;
-    text-align: center;
     letter-spacing: 0.3px;
 }
 
@@ -12647,6 +12646,10 @@ json-tree .branch-preview {
 
 .a-s-connect-option.offline {
     background: #e4e4e4;
+}
+
+.a-s-connect-option.busy {
+    background: #EA3B3B;
 }
 
 .a-s-connect-option > i {
