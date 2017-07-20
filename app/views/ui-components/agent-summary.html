@@ -30,24 +30,34 @@
                     <li ng-click="clickToCall()"
                         ng-if="popoverSummaryObj.callStatus=='available'"
                         class="a-s-connect-option online ">
-                        <i class="icon icon-d-f-icon-softphone"></i>
+                        <i tooltip-placement="top"
+                           uib-tooltip="available"
+                           class="icon icon-d-f-icon-softphone"></i>
                     </li>
                     <li ng-if="popoverSummaryObj.callStatus=='offline'"
-                        class="a-s-connect-option offline ">
-                        <i class="icon icon-d-f-icon-softphone"></i>
+                        class="a-s-connect-option offline">
+                        <i tooltip-placement="top"
+                           uib-tooltip="offline"
+                           class="icon icon-d-f-icon-softphone"></i>
                     </li>
                     <li ng-if="popoverSummaryObj.callStatus=='busy'"
                         class="a-s-connect-option busy ">
-                        <i class="icon icon-d-f-icon-softphone"></i>
+                        <i tooltip-placement="top"
+                           uib-tooltip="busy"
+                           class="icon icon-d-f-icon-softphone"></i>
                     </li>
                     <li ng-click="openChatWindow()"
                         ng-if="popoverSummaryObj.status=='online'"
                         class="a-s-connect-option online ">
-                        <i class="icon icon-d-f-icon-chat"></i>
+                        <i tooltip-placement="top"
+                           uib-tooltip="online"
+                           class="icon icon-d-f-icon-chat"></i>
                     </li>
                     <li ng-if="popoverSummaryObj.status=='offline'"
                         class="a-s-connect-option offline ">
-                        <i class="icon icon-d-f-icon-chat"></i>
+                        <i tooltip-placement="top"
+                           uib-tooltip="offline"
+                           class="icon icon-d-f-icon-chat"></i>
                     </li>
                 </ul>
             </div>
