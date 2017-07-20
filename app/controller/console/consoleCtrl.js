@@ -611,8 +611,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 return;
             }
 
+
             resourceService.SipUserPassword(values[0]).then(function (reply) {
-                var decrypted = $crypto.decrypt(reply, 'DuoS123');
+
+                var decrypted = $crypto.decrypt(reply, "DuoS123");
                 $scope.profile.password = decrypted;
                 resourceService.GetContactVeeryFormat().then(function (response) {
                     if (response.IsSuccess) {
