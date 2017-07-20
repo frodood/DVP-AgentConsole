@@ -41,7 +41,7 @@ var baseUrls = {
     'toDoUrl': 'http://todolistservice.app1.veery.cloud/DVP/API/1.0.0.0/',    //todolistservice.app1.veery.cloud
     'monitorrestapi': 'http://monitorrestapi.app1.veery.cloud/DVP/API/1.0.0.0/',//monitorrestapi.app1.veery.cloud
     'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
-    'sipuserUrl': 'http://sipuserendpointservice.app1.veery.cloud/DVP/API/1.0.0.0/',
+    'sipuserUrl': 'http://localhost:8086/DVP/API/1.0.0.0/', //sipuserendpointservice.app1.veery.cloud
     'pwdVerifyUrl': 'http://userservice.app1.veery.cloud/auth/verify',
     'qaModule': 'http://qamodule.app1.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app1.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app1.veery.cloud

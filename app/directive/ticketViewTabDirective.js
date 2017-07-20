@@ -790,9 +790,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 angular.forEach(scope.assigneeUsers, function (assignee) {
                     assignee.displayname = scope.setUserTitles(assignee);
-                    if(!assignee.avatar)
-                    {
-                        assignee.avatar='assets/img/avatar/defaultProfile.png';
+                    if (!assignee.avatar) {
+                        assignee.avatar = 'assets/img/avatar/defaultProfile.png';
                     }
 
                 });
@@ -800,10 +799,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                 scope.assigneeGroups = profileDataParser.assigneeUserGroups;
                 scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
-     value.displayname = value.name;
-                    if(!value.avatar)
-                    {
-                        value.avatar='assets/img/avatar/defaultProfile.png';
+                    value.displayname = value.name;
+                    if (!value.avatar) {
+                        value.avatar = 'assets/img/avatar/defaultProfile.png';
                     }
                     return value;
                 });
@@ -1390,7 +1388,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                                     scope.ticket.assignee = {};
-                                    scope.ticket.assignee.avatar="assets/img/avatar/defaultProfile.png";
+                                    scope.ticket.assignee.avatar = "assets/img/avatar/defaultProfile.png";
 
                                     scope.ticket.assignee_group = assigneeObj;
                                     scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
@@ -1406,7 +1404,6 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             });
 
 
-
                         } else {
 
                             if (assigneeObj.group && profileDataParser.myProfile.group && profileDataParser.myProfile.group == assigneeObj.group) {
@@ -1414,7 +1411,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                     if (response && response.data.IsSuccess) {
                                         scope.showAlert("Ticket assigning", "success", "Ticket assignee changed successfully");
                                         scope.ticket.assignee = assigneeObj;
-                                        scope.ticket.assignee_group={};
+                                        scope.ticket.assignee_group = {};
                                         scope.ticket.assignee_displayname = scope.setUserTitles(assigneeObj);
 
                                         scope.isEditAssignee = false;
@@ -1453,16 +1450,14 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 changeState = true;
                             }
 
-                            else
-                            {
-                                changeState=false;
+                            else {
+                                changeState = false;
                             }
 
                         }
 
-                        if(!scope.ticket.assignee && !scope.ticket.assignee_group)
-                        {
-                            changeState=true;
+                        if (!scope.ticket.assignee && !scope.ticket.assignee_group) {
+                            changeState = true;
                         }
 
 
@@ -1473,7 +1468,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                                     scope.ticket.assignee = profileDataParser.myProfile;
                                     scope.ticket.assignee_displayname = scope.setUserTitles(scope.ticket.assignee);
-                                    scope.ticket.assignee_group={};
+                                    scope.ticket.assignee_group = {};
 
                                     scope.isEditAssignee = false;
                                 }
@@ -1484,8 +1479,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                 scope.showAlert("Ticket assigning", "error", "Ticket assignee changing failed");
                             });
                         }
-                        else
-                        {
+                        else {
                             scope.showAlert("Ticket assigning", "error", "Cannot pick tickets assigned to other groups and their users");
                             console.log("Error :- Ticket assigned to Other group or their user");
                         }
@@ -2388,7 +2382,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                     scope.currentClientUser;
 
                     scope.popoverSummaryObj.displayName = dispalyName ? dispalyName : '';
-                    scope.popoverSummaryObj.email = userName;
+                    scope.popoverSummaryObj.email = userName ? userName : '-';
                     scope.popoverSummaryObj.avatar = userAvatar ? userAvatar : '';
 
                     userImageList.getUserDetailsByUserId(_id, function (data) {
