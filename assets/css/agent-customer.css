@@ -6253,7 +6253,7 @@ ul.renote-color-btn > li {
 }
 
 .call-status-busy {
-    color: red;
+    color: #EA3B3B;
 }
 
 .chat-user-status > .status-name.online {
@@ -12641,11 +12641,11 @@ json-tree .branch-preview {
 }
 
 .a-s-connect-option.online {
-    background: #50E3C2;
+    background: #36ba45;
 }
 
 .a-s-connect-option.offline {
-    background: #e4e4e4;
+    background: #D2C249;
 }
 
 .a-s-connect-option.busy {
