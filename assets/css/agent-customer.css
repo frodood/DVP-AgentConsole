@@ -1425,6 +1425,7 @@ ul.info-list-lg > li > h5 {
 }
 
 .twitter-channel > i,
+.fa-twitter,
 .twitter-channel {
     color: #55acee !important;
 }
@@ -1435,8 +1436,17 @@ ul.info-list-lg > li > h5 {
 }
 
 .email-channel > i,
+.fa-envelope-o,
 .email-channel {
     color: #2fb81b !important;
+}
+
+.fa-phone {
+    color: #F5CEBF;
+}
+
+.fa-skype {
+    color: #00AFF0;
 }
 
 .sms-channel > i,
@@ -1445,6 +1455,7 @@ ul.info-list-lg > li > h5 {
 }
 
 .facebook-channel > i,
+.fa-facebook,
 .facebook-channel {
     color: #3b5998 !important;
 }
@@ -12794,7 +12805,7 @@ ul > li > h5.header > i {
 
 .inbox-h-top-left-wrapper {
     display: block;
-    padding: 20px;
+    padding: 23px 20px;
 }
 
 .inbox-header-left05201 {
@@ -12929,7 +12940,7 @@ ul.i-top-navigation > li {
 .t-f-ul > li > .t-item-count {
     float: right;
     margin-right: 16px;
-    margin-top: 9px;
+    margin-top: 12px;
 }
 
 .t-item-count {
@@ -12942,7 +12953,12 @@ ul.i-top-navigation > li {
     text-align: center;
     color: #ffffff;
     font-size: 12px;
-    padding-top: 4px;
+    padding-top: 3px;
+}
+
+.t-item-count.count-loading > i {
+    color: #dfdddc;
+    margin-top: 3px;
 }
 
 .t-item-count.green {
@@ -12965,7 +12981,7 @@ ul.i-top-navigation > li {
     height: 45px;
     background: #ffffff;
     /* Rectangle 49: */
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.09);
+    box-shadow: 9px 7px 10px 0px rgba(0, 0, 0, 0.09);
 }
 
 .t-f-wrp > li {
@@ -13055,7 +13071,19 @@ ul.i-top-navigation > li {
     background: #FFFFFF;
     border: 1px solid #EEEEEE;
     padding-top: 5px;
+    cursor: pointer;
+    transition: all ease 0.8s;
+    box-shadow: inset 0 0 0 0 #fff;
+    background: linear-gradient(to right, #FFFFFF 40%, #F5F2F2 60%);
+    -webkit-transition: all ease 0.8s;
+    -moz-transition: all ease 0.8s;
+    background-size: 200% 100%;
 
+}
+
+.t-list-view-body:hover,
+.t-list-view-body:focus {
+    background-position: right bottom;
 }
 
 .inline-assignee > li {
@@ -13154,6 +13182,7 @@ ul.i-top-navigation > li {
     overflow: hidden;
     position: relative;
     text-align: center;
+    padding-top: 7px;
 }
 
 .t-i-more-wrp {
@@ -13180,4 +13209,33 @@ ul.i-top-navigation > li {
 
 .i-ticket-check {
     padding-top: 13px;
+}
+
+/*ticket pager customer style */
+.ticket-pager.pager {
+    padding: 0;
+    margin: 0;
+}
+
+.ticket-pager.pager li > a,
+.ticket-pager.pager li > span {
+    display: inline-block;
+    padding: 3px 6px 0px 6px;
+    background: rgba(252, 207, 139, 0.26);
+    border: 1px solid #FCCF8B;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #FFAA00;
+    margin-right: 5px;
+    margin-top: 27px;
+    margin-left: 5px;
+}
+
+.pager-count {
+    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-size: 11px;
+    color: #B3B6B3;
+    position: relative;
+    letter-spacing: 0.52px;
+    top: -7px;
 }

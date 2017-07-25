@@ -1,4 +1,4 @@
-<div ng-controller="mailInboxCtrl"
+<div ng-controller="ticketInboxConsoleCtrl"
      class="main-inbox-wrapper05201">
 
     <!-- ./inbox left toggele menu -->
@@ -20,9 +20,9 @@
                                     </h5>
                                 </li>
                                 <!--<li class="count-right">-->
-                                    <!--<div class="inline-t-count gray800 ">-->
-                                        <!--{{jsonInboxObj.length}}-->
-                                    <!--</div>-->
+                                <!--<div class="inline-t-count gray800 ">-->
+                                <!--{{jsonInboxObj.length}}-->
+                                <!--</div>-->
                                 <!--</li>-->
                             </ul>
                         </div>
@@ -32,19 +32,23 @@
                     <section
                             class="i-left-t-filter-wrapper"
                             uib-collapse="isCollapsedInbox">
-                        <div class="ticket-filter-body" ng-repeat="filter in jsonInboxObj">
+                        <div class="ticket-filter-body">
                             <div class="t-f-wrp">
                                 <ul class="customer-style-ul inline-list t-f-ul">
                                     <li>
-                                        <div class="t-filter-name"
-                                             ng-class="filter.count==0?'text-decoration count0':''">
-                                            {{filter.name}}
+                                        <div class="t-filter-name">
+                                            <!--ng-class="filter.count==0?'text-decoration count0':''"-->
+                                            ToDo
                                         </div>
                                     </li>
-                                    <li ng-if="filter.count!=0">
-                                        <div class="t-item-count  {{filter.class}}"
-                                             ng-class="">
-                                            {{filter.count}}
+                                    <!--<li > ng-if="filter.count!=0"
+                                    {{filter.class}} -->
+                                    <li>
+                                        <div id="toDoCount" class="t-item-count red display-none animated fadeInRight">
+                                            2
+                                        </div>
+                                        <div id="todoCountLoading" class="t-item-count count-loading">
+                                            <i class="fa fa-cog fa-spin"></i>
                                         </div>
                                     </li>
                                 </ul>
@@ -68,9 +72,9 @@
                                 </h5>
                             </li>
                             <!--<li class="count-right">-->
-                                <!--<div class="inline-t-count gray800 ">-->
-                                    <!--{{jsonFilterObj.length}}-->
-                                <!--</div>-->
+                            <!--<div class="inline-t-count gray800 ">-->
+                            <!--{{jsonFilterObj.length}}-->
+                            <!--</div>-->
                             <!--</li>-->
                         </ul>
                     </div>
