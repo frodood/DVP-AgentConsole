@@ -468,6 +468,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.addToCallLog($scope.call.number, "Outbound");
         },
         endCall: function () {
+            console.log("click endCall...........");
             sipHangUp();
             $timeout.cancel(autoAnswerTimeTimer);
         },
@@ -749,6 +750,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             try {
 
                 if (!b_connected && !b_connecting) {
+                    console.log("Phone Offline....");
                     $scope.isRegistor = false;
                     $scope.PhoneOffline();
                     if (!$scope.isshowRegistor)
@@ -1015,6 +1017,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             });
         },
         endCall: function () {
+            console.log("click endCall Service Call..........." + $scope.isRegistor);
             if ($scope.isRegistor) return;
             $scope.isWaiting = true;
             resourceService.CallHungup(($scope.call.direction.toLowerCase() === 'outbound') ?
@@ -1393,6 +1396,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
              });*/
 
             document.getElementById('callStatus').innerHTML = status;
+            switch (status) {
+                case 'Dialing':
+                    $scope.startCallTime();
+                    break;
+                case 'In Call':
+                    $scope.stopCallTime();
+                    //$scope.startCallTime();
+                    break;
+                default:
+
+            }
         },
         hideTransfer: function () {
             $('#transferCall').addClass('display-none').removeClass('display-inline');
