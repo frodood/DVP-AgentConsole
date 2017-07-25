@@ -1,0 +1,22 @@
+{
+  "d": [
+    {
+      "id": "1",
+      "name": "ToDo",
+      "count": "3",
+      "class": "red"
+    },
+    {
+      "id": "2",
+      "name": "InProgress",
+      "count": "0",
+      "class": "green"
+    },
+    {
+      "id": "3",
+      "name": "Done",
+      "count": "0",
+      "class": "green"
+    }
+  ]
+}

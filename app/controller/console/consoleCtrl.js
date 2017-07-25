@@ -2537,6 +2537,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 //ToDo
 //$scope.addDashBoard();
 
+    //ToDo
+    var addNewTicketInboxTemp = function () {
+        $scope.addTab('new-ticket-inbox', 'new-ticket-inbox', 'new-ticket-inbox', "new-ticket-inbox", "new-ticket-inbox");
+    };
+    addNewTicketInboxTemp();
 
     var openNewEngagementTab = function (args, index) {
         var notifyData = {

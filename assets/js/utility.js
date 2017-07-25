@@ -209,7 +209,6 @@ window.onload = window.onresize = function () {
 // JavaScript
 var jsUpdateSize = function () {
     // Get the dimensions of the viewport
-
     var height = window.innerHeight ||
         document.documentElement.clientHeight ||
         document.body.clientHeight;
