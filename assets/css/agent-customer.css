@@ -12745,14 +12745,15 @@ ul > li > h5.header > i {
 }
 
 .inline-t-count {
-    min-width: 35px;
-    height: 24px;
+    width: 30px;
+    height: 20px;
     overflow: hidden;
     position: relative;
     text-align: center;
     padding: 4px 7px 0px 7px;
     /* font-size: 13px; */
     margin-top: 2px;
+    font-size: 12px;
 }
 
 .filter-search-wrapper {
@@ -12803,10 +12804,11 @@ ul > li > h5.header > i {
 
 .inbox-title > h4 {
     /* All Tickets -: */
-    font-family: 'AvenirNext-Regular', sans-serif;
-    font-size: 23px;
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 17px;
     color: #91d346;
     letter-spacing: 0.88px;
+    text-transform: uppercase;
 }
 
 .inbox-title > h4 > small {
@@ -12874,7 +12876,7 @@ ul.i-top-navigation > li {
 
 .i-left-inbox-wrapper {
     width: 100%;
-    min-height: 150px;
+    /*min-height: 150px;*/
     overflow: hidden;
     position: relative;
     /*background: #ffffff;*/
@@ -12931,15 +12933,15 @@ ul.i-top-navigation > li {
 
 .t-item-count {
     /* Rectangle 2: */
-    width: 35px;
-    height: 25px;
-
+    width: 30px;
+    height: 20px;
     border-radius: 51px;
     overflow: hidden;
     position: relative;
     text-align: center;
     color: #ffffff;
-    padding-top: 5px;
+    font-size: 12px;
+    padding-top: 4px;
 }
 
 .t-item-count.green {
@@ -12971,7 +12973,7 @@ ul.i-top-navigation > li {
 }
 
 .t-f-wrp > li.check-box-item {
-    padding-top: 13px;
+    /*padding-top: 13px;*/
 }
 
 .i-f-b-wrapper {
@@ -13157,7 +13159,11 @@ ul.i-top-navigation > li {
     border: 0px !important;
 }
 
-.t-i-list-wrapper{
+.t-i-list-wrapper {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.margin-0 {
+    margin: 0 !important;
 }

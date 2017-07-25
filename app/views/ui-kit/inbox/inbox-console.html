@@ -6,6 +6,54 @@
         <div class="row">
             <div id="inboxToggleLeft"
                  class="inbox-left-toggle-wrapper">
+
+                <!-- ./ticket inbox wrapper -->
+                <section class="i-left-inbox-wrapper">
+                    <div class="i-inbox-header-wrp">
+                        <div class="count-inline-row">
+                            <ul class="customer-style-ul">
+                                <li class="float-left">
+                                    <h5 class="header text-uppercase">
+                                        <i ng-click="isCollapsedInbox = !isCollapsedInbox"
+                                           ng-class="!isCollapsedInbox?'ti-angle-up':'ti-angle-down'"></i>
+                                        ticket inbox
+                                    </h5>
+                                </li>
+                                <li class="count-right">
+                                    <div class="inline-t-count gray800 ">
+                                        {{jsonInboxObj.length}}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- ./ ticket inbox wrapper -->
+                    <section
+                            class="i-left-t-filter-wrapper"
+                            uib-collapse="isCollapsedInbox">
+                        <div class="ticket-filter-body" ng-repeat="filter in jsonInboxObj">
+                            <div class="t-f-wrp">
+                                <ul class="customer-style-ul inline-list t-f-ul">
+                                    <li>
+                                        <div class="t-filter-name"
+                                             ng-class="filter.count==0?'text-decoration count0':''">
+                                            {{filter.name}}
+                                        </div>
+                                    </li>
+                                    <li ng-if="filter.count!=0">
+                                        <div class="t-item-count  {{filter.class}}"
+                                             ng-class="">
+                                            {{filter.count}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ./ end -->
+                </section>
+
                 <!-- ./ top wrapper -->
                 <div class="i-left-top-wrapper">
                     <div class="count-inline-row">
@@ -59,52 +107,7 @@
                 </section>
                 <!-- ./ end -->
 
-                <!-- ./ticket inbox wrapper -->
-                <section class="i-left-inbox-wrapper">
-                    <div class="i-inbox-header-wrp">
-                        <div class="count-inline-row">
-                            <ul class="customer-style-ul">
-                                <li class="float-left">
-                                    <h5 class="header text-uppercase">
-                                        <i ng-click="isCollapsedInbox = !isCollapsedInbox"
-                                           ng-class="!isCollapsedInbox?'ti-angle-up':'ti-angle-down'"></i>
-                                        ticket inbox
-                                    </h5>
-                                </li>
-                                <li class="count-right">
-                                    <div class="inline-t-count gray800 ">
-                                        {{jsonInboxObj.length}}
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <!-- ./ ticket inbox wrapper -->
-                    <section
-                            class="i-left-t-filter-wrapper"
-                            uib-collapse="isCollapsedInbox">
-                        <div class="ticket-filter-body" ng-repeat="filter in jsonInboxObj">
-                            <div class="t-f-wrp">
-                                <ul class="customer-style-ul inline-list t-f-ul">
-                                    <li>
-                                        <div class="t-filter-name"
-                                             ng-class="filter.count==0?'text-decoration count0':''">
-                                            {{filter.name}}
-                                        </div>
-                                    </li>
-                                    <li ng-if="filter.count!=0">
-                                        <div class="t-item-count  {{filter.class}}"
-                                             ng-class="">
-                                            {{filter.count}}
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- ./ end -->
-                </section>
             </div>
         </div>
         <!-- ./ end row -->
@@ -169,12 +172,13 @@
                     <div class="i-f-b-wrapper">
                         <ul class="customer-style-ul t-f-wrp">
                             <li class="check-box-item">
-                                <div class="checkbox c-check-box checkbox-default">
-                                    <input id="checkbox6" type="checkbox" checked="">
-                                    <label style="color: transparent !important;;" for="checkbox6">
-                                        s
+                                <div class="checkbox m-checkbox margin-0">
+                                    <label>
+                                        <input type="checkbox" name="languages[]" value="net"/>
                                     </label>
                                 </div>
+
+
                             </li>
                             <li>
                                 <div class="t-f-btn-wrp">
@@ -234,6 +238,7 @@
                         </tr>
                         </thead>
                         <tbody class="t-i-tbody">
+
                         <tr class="t-list-view-body" ng-repeat="filter in jsonFilterObj">
                             <th>
 
