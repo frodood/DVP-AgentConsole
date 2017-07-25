@@ -5834,7 +5834,8 @@ ul.renote-color-btn > li {
 
 .checkbox > label {
     font-family: 'AvenirNextLTPro-Regular', sans-serif !important;
-    color: #7c7b7b;
+    font-size: 10px;
+    color: #b5b8b5 !important;
 }
 
 .confirm-btn-wrapper {
@@ -12978,7 +12979,7 @@ ul.i-top-navigation > li {
 
 .i-f-b-wrapper {
     width: 100%;
-    padding: 0px 5px 10px 15px;
+    padding: 9px 5px 10px 15px;
 }
 
 .t-f-btn-wrp {
@@ -13106,7 +13107,7 @@ ul.i-top-navigation > li {
 }
 
 .priority-view.low,
-.t-status-view.close {
+.t-status-view.closed {
     /* Rectangle 53: */
     background: rgba(130, 152, 174, 0.33);
     color: #8298AE;
@@ -13122,6 +13123,11 @@ ul.i-top-navigation > li {
     color: #EA3C3C;
 }
 
+.priority-view.high {
+    background: rgba(255, 140, 0, 0.33);
+    color: #FF8C00;
+}
+
 .t-status-view.open {
     /* Rectangle 53: */
     background: rgba(173, 231, 118, 0.33);
@@ -13129,11 +13135,11 @@ ul.i-top-navigation > li {
     color: #8FD539;
 }
 
-.t-status-view.close {
-    /* Rectangle 53: */
-    background: rgba(209, 218, 226, 0.40);
-    color: #8298AE;
-}
+/*.t-status-view.close {*/
+/*!* Rectangle 53: *!*/
+/*background: rgba(209, 218, 226, 0.40);*/
+/*color: #8298AE;*/
+/*}*/
 
 .t-i-type-wrp {
     padding-top: 5px;
@@ -13166,4 +13172,12 @@ ul.i-top-navigation > li {
 
 .margin-0 {
     margin: 0 !important;
+}
+
+.top-check-all {
+    margin-top: 1px !important;
+}
+
+.i-ticket-check {
+    padding-top: 13px;
 }

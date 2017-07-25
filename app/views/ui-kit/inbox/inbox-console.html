@@ -172,13 +172,13 @@
                     <div class="i-f-b-wrapper">
                         <ul class="customer-style-ul t-f-wrp">
                             <li class="check-box-item">
-                                <div class="checkbox m-checkbox margin-0">
+                                <div class="checkbox margin-0">
                                     <label>
-                                        <input type="checkbox" name="languages[]" value="net"/>
+                                        <input type="checkbox"
+                                               ng-model="selectedAll"
+                                               class="top-check-all"> Check All
                                     </label>
                                 </div>
-
-
                             </li>
                             <li>
                                 <div class="t-f-btn-wrp">
@@ -239,16 +239,24 @@
                         </thead>
                         <tbody class="t-i-tbody">
 
-                        <tr class="t-list-view-body" ng-repeat="filter in jsonFilterObj">
+                        <tr class="t-list-view-body" ng-repeat="todo in jsonToDoObj">
                             <th>
-
+                                <div class="checkbox margin-0 i-ticket-check">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="selectedAll"
+                                               class="top-check-all">
+                                    </label>
+                                </div>
                             </th>
                             <td> <!-- assignee by -->
                                 <div class="t-list-h">
                                     <ul class="customer-style-ul inline-assignee">
                                         <li>
                                             <div class="t-assignee-avatar">
-                                                <img src="assets/img/avatar/mko.jpg" width="40"/>
+                                                <img src="assets/img/avatar/mko.jpg"
+                                                     ng-src="{{todo.img}}"
+                                                     width="40"/>
                                             </div>
                                         </li>
                                         <li>
@@ -261,20 +269,22 @@
                             </td>
                             <td>
                                 <div class="t-i-desc">
-                                    Retro occupy organic, stumptown shabby chic...
+                                    {{todo.task}}
                                 </div>
                             </td>
                             <td>
                                 <div class="t-i-priority">
-                                    <div class="priority-view low">
-                                        low
+                                    <div class="priority-view "
+                                         ng-class="todo.priority">
+                                        {{todo.priority}}
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="t-status">
-                                    <div class="t-status-view open">
-                                        open
+                                    <div class="t-status-view"
+                                         ng-class="todo.status">
+                                        {{todo.status}}
                                     </div>
                                 </div>
                             </td>
@@ -286,7 +296,8 @@
                             <td>
                                 <div class="t-i-type-wrp">
                                     <div class="t-type-wrapper">
-
+                                        <i class="fa"
+                                           ng-class="todo.type"></i>
                                     </div>
                                 </div>
                             </td>

@@ -762,5 +762,19 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
         $scope.jsonInboxObj = data;
     });
 
-})
-;
+    getJSONData($http, 'toDo', function (data) {
+        $scope.jsonToDoObj = data;
+    });
+
+    $scope.checkAll = function () {
+        if ($scope.selectedAll) {
+            $scope.selectedAll = true;
+        } else {
+            $scope.selectedAll = false;
+        }
+        angular.forEach($scope.Items, function (item) {
+            item.Selected = $scope.selectedAll;
+        });
+
+    };
+});
