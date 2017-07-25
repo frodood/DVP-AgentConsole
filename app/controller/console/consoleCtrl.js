@@ -2511,6 +2511,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //ToDo
     //$scope.addDashBoard();
 
+    //ToDo
+    var addNewTicketInboxTemp = function () {
+        $scope.addTab('new-ticket-inbox', 'new-ticket-inbox', 'new-ticket-inbox', "new-ticket-inbox", "new-ticket-inbox");
+    };
+    addNewTicketInboxTemp();
 
     var openNewEngagementTab = function (args, index) {
         var notifyData = {
@@ -3085,41 +3090,41 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             return searchResult;
         });
 
-       /* if ($scope.callIntegrationSearchService) {
-            var searchResult = [];
-            if (query.startsWith("#thirdparty:search:")) {
-                var queryText= query.replace("#thirdparty:search:", "");
+        /* if ($scope.callIntegrationSearchService) {
+         var searchResult = [];
+         if (query.startsWith("#thirdparty:search:")) {
+         var queryText= query.replace("#thirdparty:search:", "");
 
-                var postData = {
-                    "PROFILE_SEARCH_DATA": {
-                        "SearchFiled": "FIRSTNME",
-                        "SearchValue": queryText
-                    }
-                };
-                return integrationAPIService.GetIntegrationDetails("PROFILE_SEARCH_DATA", postData).then(function (response) {
+         var postData = {
+         "PROFILE_SEARCH_DATA": {
+         "SearchFiled": "FIRSTNME",
+         "SearchValue": queryText
+         }
+         };
+         return integrationAPIService.GetIntegrationDetails("PROFILE_SEARCH_DATA", postData).then(function (response) {
 
-                    angular.forEach(response, function (item) {
-                        if (item && item.firstname) {
-                            searchResult.push({
-                                obj: item,
-                                type: "profile",
-                                value: item.firstname + " " + item.lastname
-                            });
-                        }
-                    });
-                    return searchResult;
+         angular.forEach(response, function (item) {
+         if (item && item.firstname) {
+         searchResult.push({
+         obj: item,
+         type: "profile",
+         value: item.firstname + " " + item.lastname
+         });
+         }
+         });
+         return searchResult;
 
-                }, function (err) {
-                    $scope.showAlert("Profile Search", "error", "Fail To Get Profile Details.");
-                    return searchResult;
-                });
-            }
-            else {
-                return searchResult;
-            }
+         }, function (err) {
+         $scope.showAlert("Profile Search", "error", "Fail To Get Profile Details.");
+         return searchResult;
+         });
+         }
+         else {
+         return searchResult;
+         }
 
 
-        }*/
+         }*/
         /* case "#thirdparty:search":
          var searchResult = [];
          var postData = {
@@ -3162,11 +3167,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         switch (queryPath) {
                             case "#thirdparty:search":
                                 var searchResult = [];
-                                if(queryText.indexOf("#") !== -1){
+                                if (queryText.indexOf("#") !== -1) {
                                     var postData = {
                                         "PROFILE_SEARCH_DATA": {
                                             "SearchFiled": "FIRSTNME",
-                                            "SearchValue": queryText.replace("#","")
+                                            "SearchValue": queryText.replace("#", "")
                                         }
                                     };
                                     return integrationAPIService.GetIntegrationDetails("PROFILE_SEARCH_DATA", postData).then(function (response) {
@@ -3186,7 +3191,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                         $scope.showAlert("Profile Search", "error", "Fail To Get Profile Details.");
                                         return searchResult;
                                     });
-                                }else {
+                                } else {
                                     searchResult.push({
                                         obj: null,
                                         type: "profile",

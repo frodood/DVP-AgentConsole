@@ -1,7 +1,8 @@
 /**
  * Created by Veery Team on 9/12/2016.
  */
-agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService, profileDataParser, authService) {
+agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxService,
+                                               profileDataParser, authService, $http) {
 
 
     $scope.showAlert = function (tittle, type, msg) {
@@ -728,4 +729,38 @@ agentApp.controller('mailInboxCtrl', function ($scope, $rootScope, mailInboxServ
 
     $scope.reloadInboxMessages();
 
-});
+
+    //update new UI code
+    var getWindowHeight = function (callback) {
+        var height = window.innerHeight ||
+            document.documentElement.clientHeight ||
+            document.body.clientHeight;
+        return callback(height);
+    };
+    getWindowHeight(function (height) {
+        document.getElementById('inboxToggleLeft').style.height = height + "px";
+        document.getElementById('inboxRightWrapper').style.height = height + "px";
+
+    });
+
+    window.onresize = function () {
+        getWindowHeight(function (height) {
+            document.getElementById('inboxToggleLeft').style.height = height + "px";
+            document.getElementById('inboxRightWrapper').style.height = height + "px";
+
+        });
+    }
+
+    //todo test
+    $scope.totalItems = 64;
+    $scope.currentPage = 4;
+
+    getJSONData($http, 'filters', function (data) {
+        $scope.jsonFilterObj = data;
+    });
+    getJSONData($http, 'inboxFilters', function (data) {
+        $scope.jsonInboxObj = data;
+    });
+
+})
+;
