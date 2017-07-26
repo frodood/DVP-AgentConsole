@@ -12739,11 +12739,12 @@ json-tree .branch-preview {
     position: relative;
 }
 
-.record-list-wrapper{
+.record-list-wrapper {
     width: 100%;
     height: 40px;
     overflow: hidden;
     position: relative;
+}
 .btn-grtn-action > span {
     color: white;
     padding-left: 10px;
