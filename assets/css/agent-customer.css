@@ -1425,6 +1425,7 @@ ul.info-list-lg > li > h5 {
 }
 
 .twitter-channel > i,
+.fa-twitter,
 .twitter-channel {
     color: #55acee !important;
 }
@@ -1435,8 +1436,17 @@ ul.info-list-lg > li > h5 {
 }
 
 .email-channel > i,
+.fa-envelope-o,
 .email-channel {
     color: #2fb81b !important;
+}
+
+.fa-phone {
+    color: #F5CEBF;
+}
+
+.fa-skype {
+    color: #00AFF0;
 }
 
 .sms-channel > i,
@@ -1445,6 +1455,7 @@ ul.info-list-lg > li > h5 {
 }
 
 .facebook-channel > i,
+.fa-facebook,
 .facebook-channel {
     color: #3b5998 !important;
 }
@@ -5858,7 +5869,8 @@ ul.renote-color-btn > li {
 
 .checkbox > label {
     font-family: 'AvenirNextLTPro-Regular', sans-serif !important;
-    color: #7c7b7b !important;
+    font-size: 10px;
+    color: #b5b8b5 !important;
 }
 
 .confirm-btn-wrapper {
@@ -12732,4 +12744,556 @@ json-tree .branch-preview {
     height: 40px;
     overflow: hidden;
     position: relative;
+.btn-grtn-action > span {
+    color: white;
+    padding-left: 10px;
+}
+
+/*update inbox */
+.main-inbox-wrapper05201 {
+
+}
+
+.inbox-right-wrapper05201 {
+    width: 100%;
+}
+
+.inbox-left-toggle-wrapper {
+    /*position: fixed;*/
+    width: 100%;
+    background: #F9FBFE;
+    float: left;
+    border-right: 1px solid #f7f7f7;
+}
+
+.i-left-top-wrapper {
+    min-height: 35px;
+    background: #f3f2f2;
+    padding: 6px 12px 5px 12px;
+    border-bottom: 1px solid #f7f7f7;
+}
+
+.i-right-top-wrapper {
+    width: 100%;
+    height: 86px;
+    background: #f9fbfe;
+    overflow: hidden;
+    position: relative;
+}
+
+.count-inline-row {
+    width: 100%;
+    min-height: 30px;
+    /*overflow: hidden;*/
+    position: relative;
+}
+
+.count-inline-row > ul > li {
+    display: inline-block;
+}
+
+ul > li > h5.header {
+    /* TICKET FILTER: */
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 13px;
+    color: #223448;
+}
+
+ul > li > h5.header > i {
+    padding-right: 10px;
+    cursor: pointer;
+    color: #9b9998;
+    font-size: 12px;
+}
+
+.ul > li > h5.header > i:hover {
+    color: #223448;
+}
+
+.count-right {
+    float: right;
+}
+
+.inline-t-count {
+    width: 30px;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    padding: 4px 7px 0px 7px;
+    /* font-size: 13px; */
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+.filter-search-wrapper {
+    width: 100%;
+    padding-top: 7px;
+}
+
+.search-txt05201 {
+    /* Rectangle 45: */
+    background: #FAFCFE;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    /* search filter here…: */
+    font-family: 'AvenirNext-Regular', sans-serif;
+    font-size: 13.67px;
+    color: #B3B6B3;
+    letter-spacing: 0.6px;
+    border: 0px;
+}
+
+.gray800 {
+    /* Rectangle 3: */
+    background: #9B9998;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
+    border-radius: 38px;
+    color: #ffffff;
+}
+
+.i-left-wrap {
+    width: 30%;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
+.inbox-h-top-left-wrapper {
+    display: block;
+    padding: 23px 20px;
+}
+
+.inbox-header-left05201 {
+    height: 30px;
+    overflow: hidden;
+    display: block;
+}
+
+.inbox-title > h4 {
+    /* All Tickets -: */
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 17px;
+    color: #91d346;
+    letter-spacing: 0.88px;
+    text-transform: uppercase;
+}
+
+.inbox-title > h4 > small {
+    /* 15 Total: */
+    font-family: 'AvenirNext-Regular', sans-serif;
+    font-size: 10px;
+    color: #B3B6B3;
+    letter-spacing: 0.62px;
+}
+
+.inbox-sort-option {
+    display: block;
+    margin-top: 0px;
+}
+
+.sort-option-select {
+    font-family: 'AvenirNext-Regular', sans-serif;
+    color: #9B9B9B;
+    width: 120px;
+    height: 30px;
+    background: transparent;
+    border: 0px;
+    font-size: 12px;
+}
+
+.sort-option > li {
+    display: inline-block;
+}
+
+.sort-option > li.title > small {
+    /* Sort by :: */
+    font-family: 'AvenirNext-Regular', sans-serif;
+    font-size: 12px;
+    color: #9B9B9B;
+    letter-spacing: 0.42px;
+}
+
+.i-top-navigation {
+    display: block;
+    float: right;
+}
+
+ul.i-top-navigation > li {
+    display: inline-block;
+}
+
+/*ticket filter */
+.i-left-t-filter-wrapper {
+    /*width: 100%;*/
+    /*min-height: 150px;*/
+    /*overflow: hidden;*/
+    /*position: relative;*/
+    /*background: #F9FBFE;*/
+}
+
+.i-inbox-header-wrp {
+    width: 100%;
+    min-height: 35px;
+    overflow: hidden;
+    position: relative;
+    background: #f3f2f2;
+    padding: 6px 12px 5px 12px;
+
+}
+
+.i-left-inbox-wrapper {
+    width: 100%;
+    /*min-height: 150px;*/
+    overflow: hidden;
+    position: relative;
+    /*background: #ffffff;*/
+}
+
+.customer-style-ul > ul > li {
+    display: inline-block;
+}
+
+.ticket-filter-body {
+    width: 100%;
+    min-height: 45px;
+    background: #f9fbfe;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 2px solid #f7f7f7;
+    cursor: pointer;
+
+    box-shadow: inset 0 0 0 0 #fff;
+    -webkit-transition: all ease 0.8s;
+    -moz-transition: all ease 0.8s;
+    transition: all ease 0.8s;
+}
+
+.t-f-wrp {
+    width: 100%;
+    min-height: 42px;
+    overflow: auto;
+    position: relative;
+}
+
+.text-decoration {
+    text-decoration: line-through;
+}
+
+.t-f-ul > li > .t-filter-name {
+    float: left;
+    /* Open Ticket: */
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-size: 13.67px;
+    color: #9B9998;
+    padding: 14px 0px 0px 12px;
+}
+
+.t-f-ul > li > .t-filter-name.count0 {
+    color: #dfdddc;
+}
+
+.t-f-ul > li > .t-item-count {
+    float: right;
+    margin-right: 16px;
+    margin-top: 12px;
+}
+
+.t-item-count {
+    /* Rectangle 2: */
+    width: 30px;
+    height: 20px;
+    border-radius: 51px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    color: #ffffff;
+    font-size: 12px;
+    padding-top: 3px;
+}
+
+.t-item-count.count-loading > i {
+    color: #dfdddc;
+    margin-top: 3px;
+}
+
+.t-item-count.green {
+    background: #82E9A0;
+    box-shadow: 0 2px 6px 0 #82E9A0;
+}
+
+.t-item-count.red {
+    /* Rectangle 2: */
+    background: #F36B5B;
+    box-shadow: 0 2px 7px 0 #F36B5B;
+}
+
+.ticket-filter-body:hover {
+    box-shadow: inset 0 100px 0 0 #ffffff;
+}
+
+.i-filter-bar-wrapper {
+    width: 100%;
+    height: 45px;
+    background: #ffffff;
+    /* Rectangle 49: */
+    box-shadow: 9px 7px 10px 0px rgba(0, 0, 0, 0.09);
+}
+
+.t-f-wrp > li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.t-f-wrp > li.check-box-item {
+    /*padding-top: 13px;*/
+}
+
+.i-f-b-wrapper {
+    width: 100%;
+    padding: 9px 5px 10px 15px;
+}
+
+.t-f-btn-wrp {
+    /* Rectangle 52: */
+    background: rgba(173, 231, 118, 0.33);
+    border-radius: 5px;
+    /* Close: */
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-size: 11px;
+    color: #8FD539;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.c-check-box {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+/* ticket list item wrapper */
+.t-list-header {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 15px 5px 15px;
+}
+
+.t-list-h {
+    /* ASSIGNEE BY: */
+    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-size: 9px;
+    color: #4A4A4A;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.header-check {
+    width: 5%;
+}
+
+.header-assignee {
+    width: 15%;
+}
+
+.header-subject {
+    width: 20%;
+}
+
+.header-pri,
+.header-status {
+    width: 15%;
+}
+
+.header-created,
+.header-type,
+.header-more {
+    width: 9%;
+}
+
+.t-list-view-wrapper {
+    width: 100%;
+    height: 55px;
+    padding: 5px 15px;
+}
+
+.t-list-view-body {
+    width: 100%;
+    height: 55px;
+    overflow: hidden;
+    position: relative;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    padding-top: 5px;
+    cursor: pointer;
+    transition: all ease 0.8s;
+    box-shadow: inset 0 0 0 0 #fff;
+    background: linear-gradient(to right, #FFFFFF 40%, #F5F2F2 60%);
+    -webkit-transition: all ease 0.8s;
+    -moz-transition: all ease 0.8s;
+    background-size: 200% 100%;
+
+}
+
+.t-list-view-body:hover,
+.t-list-view-body:focus {
+    background-position: right bottom;
+}
+
+.inline-assignee > li {
+    display: inline-block;
+}
+
+.t-assignee-avatar {
+}
+
+.t-assignee-avatar > img {
+    border-radius: 100%;
+    box-shadow: 0 3px 7px 0 rgba(150, 150, 150, 0.94);
+}
+
+.t-assignee-name {
+    /* Jessica Greene: */
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-size: 11px;
+    color: #4A4A4A;
+    text-transform: capitalize;
+    padding-left: 5px;
+}
+
+.t-i-desc {
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-size: 11px;
+    color: #4A4A4A;
+    text-transform: none;
+    text-align: left;
+    padding-top: 14px;
+}
+
+.t-i-priority,
+.t-status {
+    padding-top: 9px;
+}
+
+.priority-view,
+.t-status-view {
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    position: relative;
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-size: 11px;
+    border-radius: 4px;
+    padding-top: 4px;
+
+}
+
+.priority-view.low,
+.t-status-view.closed {
+    /* Rectangle 53: */
+    background: rgba(130, 152, 174, 0.33);
+    color: #8298AE;
+}
+
+.priority-view.normal {
+    background: rgba(1, 205, 115, 0.33);
+    color: #01CD74;
+}
+
+.priority-view.urgent {
+    background: rgba(234, 59, 59, 0.33);
+    color: #EA3C3C;
+}
+
+.priority-view.high {
+    background: rgba(255, 140, 0, 0.33);
+    color: #FF8C00;
+}
+
+.t-status-view.open {
+    /* Rectangle 53: */
+    background: rgba(173, 231, 118, 0.33);
+    border-radius: 4px;
+    color: #8FD539;
+}
+
+/*.t-status-view.close {*/
+/*!* Rectangle 53: *!*/
+/*background: rgba(209, 218, 226, 0.40);*/
+/*color: #8298AE;*/
+/*}*/
+
+.t-i-type-wrp {
+    padding-top: 5px;
+}
+
+.t-type-wrapper {
+    width: 30px;
+    height: 30px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 5px 0 rgba(198, 199, 200, 0.40);
+    border-radius: 100%;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    padding-top: 7px;
+}
+
+.t-i-more-wrp {
+    padding-top: 15px;
+}
+
+.t-i-tbody > tr > td,
+.t-i-tbody > tr > th {
+    border: 0px !important;
+}
+
+.t-i-list-wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.margin-0 {
+    margin: 0 !important;
+}
+
+.top-check-all {
+    margin-top: 1px !important;
+}
+
+.i-ticket-check {
+    padding-top: 13px;
+}
+
+/*ticket pager customer style */
+.ticket-pager.pager {
+    padding: 0;
+    margin: 0;
+}
+
+.ticket-pager.pager li > a,
+.ticket-pager.pager li > span {
+    display: inline-block;
+    padding: 3px 6px 0px 6px;
+    background: rgba(252, 207, 139, 0.26);
+    border: 1px solid #FCCF8B;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #FFAA00;
+    margin-right: 5px;
+    margin-top: 27px;
+    margin-left: 5px;
+}
+
+.pager-count {
+    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-size: 11px;
+    color: #B3B6B3;
+    position: relative;
+    letter-spacing: 0.52px;
+    top: -7px;
 }

@@ -34,11 +34,11 @@
                                 <span> No Results Found </span>
                             </div>
 
-                           <!-- <div class="form-group">
-                                <input id="commonSearch" type="text" class="main-search-input" ng-model="searchText"
-                                       typeahead-min-length="0" typeahead-select-on-exact="true" typeahead-focus-on-select="false" typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
-                                       uib-typeahead="state.value for state in states" placeholder="Search by keyword, #ticker or #profile">
-                            </div>-->
+                            <!-- <div class="form-group">
+                                 <input id="commonSearch" type="text" class="main-search-input" ng-model="searchText"
+                                        typeahead-min-length="0" typeahead-select-on-exact="true" typeahead-focus-on-select="false" typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
+                                        uib-typeahead="state.value for state in states" placeholder="Search by keyword, #ticker or #profile">
+                             </div>-->
 
                         </div>
                     </form>
@@ -610,6 +610,11 @@
                         <div ng-switch-when="new-profile">
                             <div
                                     ng-include="'app/views/ui-kit/user-profile/user-engagement-console.html'"></div>
+                        </div>
+
+                        <div ng-switch-when="new-ticket-inbox">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/views/ticket/inbox/inbox-console.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>

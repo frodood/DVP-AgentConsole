@@ -212,10 +212,18 @@
                         </tags-input>
                     </div>
 
-
-                    <div class="form-group">
+                    <div ng-if="schemaw" class="form-group t-custom-form-wrapper"
+                         slimscroll="{height: '200px',
+            railVisible: true,
+            color: '#777',
+            size: '8px',
+            distance: '5px',
+            railColor: '#fff',
+            railBorderRadius: 10}">
                         <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw"
                               ng-submit="onSubmit(customForm)"></form>
+
+
                     </div>
 
                     <div class="form-group" style="margin-top: 20px">

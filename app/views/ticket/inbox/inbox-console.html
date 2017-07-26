@@ -1,0 +1,403 @@
+<div ng-controller="ticketInboxConsoleCtrl"
+     class="main-inbox-wrapper05201">
+
+    <!-- ./inbox left toggele menu -->
+    <div class="col-sm-5 col-md-4 col-xs-12 col-lg-3 ">
+        <div class="row">
+            <div id="inboxToggleLeft"
+                 class="inbox-left-toggle-wrapper">
+
+                <!-- ./ticket inbox wrapper -->
+                <section class="i-left-inbox-wrapper">
+                    <div class="i-inbox-header-wrp">
+                        <div class="count-inline-row">
+                            <ul class="customer-style-ul">
+                                <li class="float-left">
+                                    <h5 class="header text-uppercase">
+                                        <i ng-click="isCollapsedInbox = !isCollapsedInbox"
+                                           ng-class="!isCollapsedInbox?'ti-angle-up':'ti-angle-down'"></i>
+                                        ticket inbox
+                                    </h5>
+                                </li>
+                                <!--<li class="count-right">-->
+                                <!--<div class="inline-t-count gray800 ">-->
+                                <!--{{jsonInboxObj.length}}-->
+                                <!--</div>-->
+                                <!--</li>-->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- ./ ticket inbox wrapper -->
+                    <section
+                            class="i-left-t-filter-wrapper"
+                            uib-collapse="isCollapsedInbox">
+                        <div class="ticket-filter-body">
+                            <div class="t-f-wrp">
+                                <ul class="customer-style-ul inline-list t-f-ul">
+                                    <li>
+                                        <div class="t-filter-name">
+                                            <!--ng-class="filter.count==0?'text-decoration count0':''"-->
+                                            ToDo
+                                        </div>
+                                    </li>
+                                    <!--<li > ng-if="filter.count!=0"
+                                    {{filter.class}} -->
+                                    <li>
+                                        <div id="toDoCount" class="t-item-count red display-none animated fadeInRight">
+                                            2
+                                        </div>
+                                        <div id="todoCountLoading" class="t-item-count count-loading">
+                                            <i class="fa fa-cog fa-spin"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ./ end -->
+                </section>
+
+                <!-- ./ top wrapper -->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i
+                                            ng-click="isCollapsedFilter = !isCollapsedFilter"
+                                            ng-class="!isCollapsedFilter?'ti-angle-up':'ti-angle-down'"></i>
+                                    ticket filter
+
+                                </h5>
+                            </li>
+                            <!--<li class="count-right">-->
+                            <!--<div class="inline-t-count gray800 ">-->
+                            <!--{{jsonFilterObj.length}}-->
+                            <!--</div>-->
+                            <!--</li>-->
+                        </ul>
+                    </div>
+
+                    <!--&lt;!&ndash;  ./ filter search &ndash;&gt;-->
+                    <!--<div class="filter-search-wrapper">-->
+                    <!--<input type="text"-->
+                    <!--class="form-control search-txt05201"-->
+                    <!--placeholder="search filter here...">-->
+                    <!--</div>-->
+
+                </div>
+
+                <!-- ./ ticket filter wrapper -->
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedFilter">
+                    <div class="ticket-filter-body" ng-repeat="filter in jsonFilterObj">
+                        <div class="t-f-wrp">
+                            <ul class="customer-style-ul inline-list t-f-ul">
+                                <li>
+                                    <div class="t-filter-name"
+                                         ng-class="filter.count==0?'text-decoration count0':''">
+                                        {{filter.name}}
+                                    </div>
+                                </li>
+                                <li ng-if="filter.count!=0">
+                                    <div class="t-item-count green">
+                                        {{filter.count}}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- ./ end -->
+
+
+            </div>
+        </div>
+        <!-- ./ end row -->
+    </div>
+
+    <!-- ./ inbox right wrapper -->
+    <div class="col-sm-7 col-md-8 col-xs-12 col-lg-9">
+        <div class="row">
+            <!-- ./inbox right wrapper -->
+            <div id="inboxRightWrapper" class="inbox-right-wrapper05201">
+                <!-- ./ top wrapper -->
+                <div class="i-right-top-wrapper">
+                    <div class="col-lg-3 col-sm-4 col-md-6 col-xs-6">
+                        <div class="row">
+                            <div class="inbox-h-top-left-wrapper">
+                                <div class="inbox-header-left05201">
+                                    <div class="inbox-title">
+                                        <h4> All Tickets -
+                                            <small>15 Total</small>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <!-- ./inbox short option -->
+                                <!--<div class="inbox-sort-option">-->
+                                <!--<ul class="customer-style-ul sort-option">-->
+                                <!--<li class="title">-->
+                                <!--<small>Sort by :</small>-->
+                                <!--</li>-->
+                                <!--<li class="short-drop-down">-->
+                                <!--<select class="form-control sort-option-select">-->
+                                <!--<option value="0"-->
+                                <!--disabled>sort option-->
+                                <!--</option>-->
+                                <!--<option>Created date</option>-->
+                                <!--</select>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ./ top right navigation -->
+                    <div class="col-lg-9 col-sm-8 col-md-6 col-xs-6">
+                        <div class="row">
+                            <div class="i-top-navigation">
+                                <ul class="customer-style-ul i-top-navigation">
+                                    <li>
+                                        <div class="pager-count">
+
+                                            {{currentPage}} - 10 of {{totalItems}}
+                                        </div>
+                                    </li>
+                                    <li class="i-pagination">
+                                        <ul uib-pager
+                                            class="ticket-pager"
+                                            next-text='>'
+                                            previous-text="<"
+                                            total-items="totalItems"
+                                            ng-model="currentPage"></ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./ end top -->
+                <!-- ./ filer bar -->
+                <section class="i-filter-bar-wrapper">
+                    <div class="i-f-b-wrapper">
+                        <ul class="customer-style-ul t-f-wrp">
+                            <li class="check-box-item">
+                                <div class="checkbox margin-0">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="selectedAll"
+                                               class="top-check-all"> Check All
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="t-f-btn-wrp">
+                                    Close
+                                </div>
+                            </li>
+                            <li>
+                                <div class="t-f-btn-wrp">
+                                    Assigne me
+                                </div>
+                            </li>
+                            <li>
+                                <div class="t-f-btn-wrp">
+                                    Done
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- ./ticket details-wrapper -->
+                <section class="t-i-list-wrapper">
+                    <table class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="t-list-h">
+
+                                </div>
+                            </th>
+                            <th>
+
+                                <div class="t-list-h">
+                                    assignee by
+                                </div>
+                            </th>
+                            <th>
+                                <div class="t-list-h">
+                                    subject
+                                </div>
+                            </th>
+                            <th>
+                                <div class="t-list-h">PRIORITY</div>
+                            </th>
+                            <th>
+                                <div class="t-list-h">STATUS</div>
+                            </th>
+                            <th>
+                                <div class="t-list-h">CREATED</div>
+                            </th>
+                            <th>
+                                <div class="t-list-h">TYPE</div>
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="t-i-tbody">
+
+                        <tr class="t-list-view-body" ng-repeat="todo in jsonToDoObj">
+                            <th>
+                                <div class="checkbox margin-0 i-ticket-check">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="selectedAll"
+                                               class="top-check-all">
+                                    </label>
+                                </div>
+                            </th>
+                            <td> <!-- assignee by -->
+                                <div class="t-list-h">
+                                    <ul class="customer-style-ul inline-assignee">
+                                        <li>
+                                            <div class="t-assignee-avatar">
+                                                <img src="assets/img/avatar/mko.jpg"
+                                                     ng-src="{{todo.img}}"
+                                                     width="40"/>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="t-assignee-name">
+                                                Jessica Greene
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="t-i-desc">
+                                    {{todo.task}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="t-i-priority">
+                                    <div class="priority-view "
+                                         ng-class="todo.priority">
+                                        {{todo.priority}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="t-status">
+                                    <div class="t-status-view"
+                                         ng-class="todo.status">
+                                        {{todo.status}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="t-i-desc">
+                                    2 days ago
+                                </div>
+                            </td>
+                            <td>
+                                <div class="t-i-type-wrp">
+                                    <div class="t-type-wrapper">
+                                        <i tooltip-placement="top"
+                                           uib-tooltip="{{todo.type}}"
+                                           class="fa"
+                                           ng-class="todo.type"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="t-i-more-wrp">
+                                    <div class="ticket-more">
+                                        <i class="ti-more-alt"></i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--<div id="ticketListHeader"-->
+                    <!--class="t-list-header">-->
+
+                    <!--<div class="t-list-h header-check">-->
+
+                    <!--</div>-->
+                    <!--<div class="t-list-h header-assignee">-->
+                    <!--assignee by-->
+                    <!--</div>-->
+                    <!--<div class="t-list-h header-subject">-->
+                    <!--subject-->
+                    <!--</div>-->
+                    <!--<div class="t-list-h header-pri">-->
+                    <!--PRIORITY-->
+                    <!--</div>-->
+                    <!--<div class="t-list-h header-status">-->
+                    <!--STATUS-->
+                    <!--</div>-->
+                    <!--<div class="t-list-h header-created">-->
+                    <!--CREATED-->
+                    <!--</div>-->
+                    <!--<div class="t-list-h header-type">-->
+                    <!--TYPE-->
+                    <!--</div>-->
+                    <!--<div class="t-list-h header-more">-->
+
+                    <!--</div>-->
+
+                    <!--</div>-->
+
+                    <!--<div class="t-list-view-wrapper">-->
+                    <!--<div class="t-list-view-body">-->
+                    <!--<div class="t-list-h header-check">-->
+                    <!--<div class="checkbox c-check-box checkbox-default">-->
+                    <!--<input type="checkbox" checked="">-->
+                    <!--<label style="color: transparent !important;;"-->
+                    <!--for="checkbox6">-->
+                    <!--s-->
+                    <!--</label>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+
+                    <!--&lt;!&ndash; subject &ndash;&gt;-->
+                    <!--<div class="t-list-h header-subject">-->
+                    <!--<div class="t-i-subject">-->
+                    <!--Retro occupy organic, stumptown shabby...-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--</div>-->
+                    <!--</div>-->
+                </section>
+            </div>
+            <!-- ./ end -->
+
+
+        </div>
+        <!-- ./ end row -->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+</script>
+
+
+<!--slimscroll="{height: '{{windowHeight}}',-->
+<!--railVisible: true,-->
+<!--color: '#777',-->
+<!--size: '8px',-->
+<!--distance: '5px',-->
+<!--railColor: '#fff',-->
+<!--railBorderRadius: 10}"-->

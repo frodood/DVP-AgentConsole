@@ -5,63 +5,81 @@
       "img": "assets/img/avatar/amarkdalen.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "low",
+      "status":"open",
+      "type":"fa-twitter"
     },
     {
       "id": "A2356464",
       "img": "assets/img/avatar/bobbyjkane.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "urgent",
+      "status": "closed",
+      "type":"fa-facebook"
     },
     {
       "id": "A2356464",
       "img": "assets/img/avatar/coreyweb.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "low",
+      "status": "closed",
+      "type":"fa-skype"
     },
     {
       "id": "A2356464",
       "img": "assets/img/avatar/jaman_01.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "normal",
+      "status": "closed",
+      "type":"fa-envelope-o"
     },
     {
       "id": "A2356464",
       "img": "assets/img/avatar/robertoortiz.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "normal",
+      "status": "closed",
+      "type":"fa-comment-o"
     },
     {
       "id": "A2356464",
       "img": "assets/img/avatar/Kevinthompson.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "low",
+      "status": "closed",
+      "type":"fa-phone"
     },
     {
       "id": "A2356464",
       "img": "assets/img/avatar/mko.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "high",
+      "status": "open",
+      "type":"fa-skype"
     },
     {
       "id": "A2356464",
       "img": "assets/img/avatar/kurafire.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "low",
+      "status": "closed",
+      "type":"fa-facebook"
     },
     {
       "id": "A2356464",
       "img": "assets/img/avatar/joostvanderree.jpg",
       "task": "Lorem Ipsum is simply dummy text of the....",
       "time": "1 day ago",
-      "type": "group"
+      "priority": "high",
+      "status": "closed",
+      "type":"fa-twitter"
     }
   ]
 }
