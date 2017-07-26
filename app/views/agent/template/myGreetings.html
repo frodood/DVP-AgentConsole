@@ -21,7 +21,7 @@
         <div class="col-lg-12">
             <div class="form-group">
 
-                <ng-audio-recorder id="mainAudio" audio-model="recorded" show-player="!recorder.status.isRecording" time-limit="greet_time_limit" on-record-complete="onShowUpload()">
+                <ng-audio-recorder id="mainAudio" audio-model="recorded" show-player="true" time-limit="greet_time_limit" on-record-complete="onShowUpload(recorder.audioModel)">
 
                     <div ng-if="recorder.isAvailable" >
                         <div class="row" >
@@ -83,7 +83,7 @@
                         use this feature.
                     </div>
                 </ng-audio-recorder>
-
+<button ng-click="setDownload(audio-model)"></button>
             </div>
         </div>
 
@@ -328,7 +328,7 @@
 
                     </div>
                     <div class="col-lg-12" style="padding-top: 10px">
-                        <button ng-click="updateUserMeta()" class="btn btn-ps-update pull-right" ng-disabled="isGrtnUploading">
+                        <button ng-click="updateUserMeta()" class="btn btn-ps-update pull-right" ng-disabled="isGrtnUploading || !isUserMetaChanged">
                             Save
                         </button>
                     </div>
