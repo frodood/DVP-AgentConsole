@@ -12916,7 +12916,7 @@ ul.i-top-navigation > li {
 .t-f-wrp {
     width: 100%;
     min-height: 42px;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
 }
 
@@ -13065,7 +13065,7 @@ ul.i-top-navigation > li {
 
 .t-list-view-body {
     width: 100%;
-    height: 55px;
+    height: 60px;
     overflow: hidden;
     position: relative;
     background: #FFFFFF;
@@ -13113,12 +13113,12 @@ ul.i-top-navigation > li {
     color: #4A4A4A;
     text-transform: none;
     text-align: left;
-    padding-top: 14px;
+    padding-top: 16px;
 }
 
 .t-i-priority,
 .t-status {
-    padding-top: 9px;
+    padding-top: 12px;
 }
 
 .priority-view,
@@ -13139,6 +13139,12 @@ ul.i-top-navigation > li {
     /* Rectangle 53: */
     background: rgba(130, 152, 174, 0.33);
     color: #8298AE;
+}
+
+.t-status-view.new {
+    background: rgba(130, 233, 159, 0.19);
+    color: #82E9A0;
+    /*box-shadow: 0 0 15px 0 rgba(130, 233, 159, 0.29);*/
 }
 
 .priority-view.normal {
@@ -13170,7 +13176,7 @@ ul.i-top-navigation > li {
 /*}*/
 
 .t-i-type-wrp {
-    padding-top: 5px;
+    padding-top: 7px;
 }
 
 .t-type-wrapper {
@@ -13186,7 +13192,7 @@ ul.i-top-navigation > li {
 }
 
 .t-i-more-wrp {
-    padding-top: 15px;
+    padding-top: 17px;
 }
 
 .t-i-tbody > tr > td,

@@ -1,0 +1,48 @@
+<!-- new ticket  menu -->
+<div class="t-f-wrp">
+    <ul ng-click="goToTicketList()"
+        class="customer-style-ul inline-list t-f-ul">
+        <li>
+            <div class="t-filter-name"
+                 ng-class="ticketCountObj.new==0?'text-decoration count0':''">
+                <!---->
+                New
+            </div>
+        </li>
+        <li ng-if="ticketCountObj.new!=0">
+            <div id="newCountLoaded" class="t-item-count  display-none animated fadeInRight">
+                {{ticketCountObj.new}}
+            </div>
+            <div id="newCountLoading"
+                 class="t-item-count count-loading">
+                <i class="fa fa-cog fa-spin"></i>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<!-- to do  menu -->
+<div class="t-f-wrp">
+    <ul ng-click="goToTicketList()"
+        class="customer-style-ul inline-list t-f-ul">
+        <li>
+            <div class="t-filter-name"
+                 ng-class="ticketCountObj.toDo==0?'text-decoration count0':''">
+                <!---->
+                ToDo
+            </div>
+        </li>
+        <li ng-if="ticketCountObj.toDo!=0">
+            <div id="toDoCountLoaded" class="t-item-count red display-none animated fadeInRight">
+                {{ticketCountObj.toDo}}
+            </div>
+            <div id="todoCountLoading" class="t-item-count count-loading">
+                <i class="fa fa-cog fa-spin"></i>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+

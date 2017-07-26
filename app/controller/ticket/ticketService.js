@@ -747,6 +747,17 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     };
 
 
+    /*------------ get inbox ticker count -----------*/
+    var getAllCountByTicketStatus = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "Tickets/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket: saveTicket,
@@ -808,7 +819,9 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         GetMyTicketConfig: GetMyTicketConfig,
         SaveMyTicketConfig: SaveMyTicketConfig,
         getFormByIsolatedTag: getFormByIsolatedTag,
-        UpdateTicketSecurityLevel: UpdateTicketSecurityLevel
+        UpdateTicketSecurityLevel: UpdateTicketSecurityLevel,
+
+        getAllCountByTicketStatus:getAllCountByTicketStatus
     }
 });
 
