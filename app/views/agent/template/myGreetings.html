@@ -37,10 +37,10 @@
                                     <div  class="btn-grtn-action"
                                           ng-class="recorder.status.isRecording?'voice-record-active':'voice-record-deactive'">
                                         <i class="ti-microphone"
-                                           title="Record message"
+                                           title="Click here to record your greeting"
                                            ng-click="recorder.status.isRecording ? recorder.stopRecord() : recorder.startRecord()"
                                            type="button"
-                                           ng-disabled="recorder.status.isDenied === true || recorder.status.isRecording" >
+                                           ng-disabled="recorder.status.isDenied === true || recorder.status.isRecording" style=" cursor: pointer" >
                                         </i>
 
 
@@ -148,7 +148,10 @@
 
                                     <input type="file"
                                            nv-file-select="" uploader="greetUploader"
-                                           ng-click="clearGreetQueue('default')" ng-disabled="isGrtnUploading || !userLanguage.name" class="edit-t-input-file-greeting" >
+                                           ng-click="clearGreetQueue('default')"
+                                           ng-disabled="isGrtnUploading || !userLanguage.name"
+                                           class="edit-t-input-file-greeting"
+                                           accept="audio/*">
 
 
 
@@ -192,11 +195,14 @@
                             <div class="col-lg-3">
                                 <div class="ps-p-upload edit-t-input-file-greeting">
 
-                                    <i class="ti-upload "></i>
+                                    <i class="ti-upload" ></i>
 
                                     <input type="file"
                                            nv-file-select="" uploader="greetUploader"
-                                           ng-click="clearGreetQueue('morning')" ng-disabled="isGrtnUploading || !userLanguage.name" class="edit-t-input-file-greeting" >
+                                           ng-click="clearGreetQueue('morning')"
+                                           ng-disabled="isGrtnUploading || !userLanguage.name"
+                                           class="edit-t-input-file-greeting"
+                                           accept="audio/*">
 
 
 
@@ -241,11 +247,14 @@
                             <div class="col-lg-3">
                                 <div class="ps-p-upload edit-t-input-file-greeting">
 
-                                    <i class="ti-upload "></i>
+                                    <i class="ti-upload" ></i>
 
                                     <input type="file"
                                            nv-file-select="" uploader="greetUploader"
-                                           ng-click="clearGreetQueue('afternoon')" ng-disabled="isGrtnUploading || !userLanguage.name" class="edit-t-input-file-greeting" >
+                                           ng-click="clearGreetQueue('afternoon')"
+                                           ng-disabled="isGrtnUploading || !userLanguage.name"
+                                           class="edit-t-input-file-greeting"
+                                           accept="audio/*">
 
 
 
@@ -290,11 +299,13 @@
                             <div class="col-lg-3">
                                 <div class="ps-p-upload edit-t-input-file-greeting">
 
-                                    <i class="ti-upload "></i>
+                                    <i class="ti-upload"  ></i>
 
                                     <input type="file"
                                            nv-file-select="" uploader="greetUploader"
-                                           ng-click="clearGreetQueue('evening')" ng-disabled="isGrtnUploading || !userLanguage.name" class="edit-t-input-file-greeting" >
+                                           ng-click="clearGreetQueue('evening')" ng-disabled="isGrtnUploading || !userLanguage.name"
+                                           class="edit-t-input-file-greeting"
+                                           accept="audio/*" >
 
 
 
