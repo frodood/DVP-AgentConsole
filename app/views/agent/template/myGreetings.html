@@ -8,9 +8,7 @@
                 <div class="col-lg-7">
                     <h5>Voice Recorder</h5>
                 </div>
-                <div class="col-lg-5 pull-right">
-                    <h6>Maximum recording time : {{greet_time_limit}}s</h6>
-                </div>
+
 
 
             </div>
@@ -21,7 +19,8 @@
         <div class="col-lg-12">
             <div class="form-group">
 
-                <ng-audio-recorder id="mainAudio" audio-model="recorded" show-player="true" time-limit="greet_time_limit" on-record-complete="onShowUpload(recorder.audioModel)">
+                <ng-audio-recorder id="mainAudio" audio-model="recorded"
+                                   show-player="true" >
 
                     <div ng-if="recorder.isAvailable" >
                         <div class="row" >
@@ -38,7 +37,10 @@
                                            title="Click here to record your greeting"
                                            ng-click="recorder.status.isRecording ? recorder.stopRecord() : recorder.startRecord()"
                                            type="button"
-                                           ng-disabled="recorder.status.isDenied === true || recorder.status.isRecording" style=" cursor: pointer" >
+                                           ng-disabled="recorder.status.isDenied === true || recorder.status.isRecording" style=" cursor: pointer" ng-show="!recorder.status.isConverting">
+                                        </i>
+                                        <i class="ti-reload"
+                                           title="Converting to MP3" ng-show="recorder.status.isConverting">
                                         </i>
 
 
@@ -62,9 +64,9 @@
                         </div>
 
 
-                        <div style="max-width: 600px ; text-decoration-color: white">
-                            <div ng-show="recorder.status.isConverting">
-                                Please wait while your recording is processed.
+                        <div style="max-width: 600px ; color: white">
+                            <div ng-show="isConverting">
+                                * Please wait while your recording is processed.
                             </div>
 
 
@@ -79,6 +81,10 @@
                             href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Mozilla Firefox</a>. If you're on
                         Safari or Internet Explorer, you can install <a href="https://get.adobe.com/flashplayer/">Adobe Flash</a> to
                         use this feature.
+                    </div>
+
+                    <div ng-if="isConverting">
+                        * Converting to Mp3, Please wait
                     </div>
                 </ng-audio-recorder>
             </div>
