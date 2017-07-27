@@ -9255,6 +9255,18 @@ ul.renote-color-btn > li {
 
 }
 
+.c-ticket-main-wrapper {
+    height: 800px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.c-ticket-footer-wrp {
+    margin-top: 0px;
+    padding: 15px;
+    border-top: 1px solid #eae6e6;
+}
+
 /******* new UI version update 052017
    - user profile
    - engagement
