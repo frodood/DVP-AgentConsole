@@ -52,7 +52,7 @@ var baseUrls = {
 
 };
 
-var recordingTime = 200;
+var recordingTime = 20;
 
 agentApp.constant('baseUrls', baseUrls);
 agentApp.constant('recordingTime', recordingTime);
