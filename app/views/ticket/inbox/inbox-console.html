@@ -1,4 +1,4 @@
-<div ng-controller="mailInboxCtrl"
+<div ng-controller="ticketInboxConsoleCtrl"
      class="main-inbox-wrapper05201">
 
     <!-- ./inbox left toggele menu -->
@@ -20,9 +20,9 @@
                                     </h5>
                                 </li>
                                 <!--<li class="count-right">-->
-                                    <!--<div class="inline-t-count gray800 ">-->
-                                        <!--{{jsonInboxObj.length}}-->
-                                    <!--</div>-->
+                                <!--<div class="inline-t-count gray800 ">-->
+                                <!--{{jsonInboxObj.length}}-->
+                                <!--</div>-->
                                 <!--</li>-->
                             </ul>
                         </div>
@@ -32,23 +32,9 @@
                     <section
                             class="i-left-t-filter-wrapper"
                             uib-collapse="isCollapsedInbox">
-                        <div class="ticket-filter-body" ng-repeat="filter in jsonInboxObj">
-                            <div class="t-f-wrp">
-                                <ul class="customer-style-ul inline-list t-f-ul">
-                                    <li>
-                                        <div class="t-filter-name"
-                                             ng-class="filter.count==0?'text-decoration count0':''">
-                                            {{filter.name}}
-                                        </div>
-                                    </li>
-                                    <li ng-if="filter.count!=0">
-                                        <div class="t-item-count  {{filter.class}}"
-                                             ng-class="">
-                                            {{filter.count}}
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <!-- ./ ng include ticket inbox menu -->
+                        <div class="ticket-filter-body">
+                            <div ng-include="'app/views/ticket/inbox/template/inbox-menu.html'"></div>
                         </div>
                     </section>
                     <!-- ./ end -->
@@ -68,9 +54,9 @@
                                 </h5>
                             </li>
                             <!--<li class="count-right">-->
-                                <!--<div class="inline-t-count gray800 ">-->
-                                    <!--{{jsonFilterObj.length}}-->
-                                <!--</div>-->
+                            <!--<div class="inline-t-count gray800 ">-->
+                            <!--{{jsonFilterObj.length}}-->
+                            <!--</div>-->
                             <!--</li>-->
                         </ul>
                     </div>
@@ -87,7 +73,7 @@
                 <!-- ./ ticket filter wrapper -->
                 <section class="i-left-t-filter-wrapper"
                          uib-collapse="isCollapsedFilter">
-                    <div class="ticket-filter-body" ng-repeat="filter in jsonFilterObj">
+                    <div class="ticket-filter-body" ng-repeat="filter in jsonFilterObj ">
                         <div class="t-f-wrp">
                             <ul class="customer-style-ul inline-list t-f-ul">
                                 <li>
@@ -209,170 +195,7 @@
 
                 <!-- ./ticket details-wrapper -->
                 <section class="t-i-list-wrapper">
-                    <table class="table table-responsive">
-                        <thead>
-                        <tr>
-                            <th>
-                                <div class="t-list-h">
-
-                                </div>
-                            </th>
-                            <th>
-
-                                <div class="t-list-h">
-                                    assignee by
-                                </div>
-                            </th>
-                            <th>
-                                <div class="t-list-h">
-                                    subject
-                                </div>
-                            </th>
-                            <th>
-                                <div class="t-list-h">PRIORITY</div>
-                            </th>
-                            <th>
-                                <div class="t-list-h">STATUS</div>
-                            </th>
-                            <th>
-                                <div class="t-list-h">CREATED</div>
-                            </th>
-                            <th>
-                                <div class="t-list-h">TYPE</div>
-                            </th>
-                            <th>
-
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody class="t-i-tbody">
-
-                        <tr class="t-list-view-body" ng-repeat="todo in jsonToDoObj">
-                            <th>
-                                <div class="checkbox margin-0 i-ticket-check">
-                                    <label>
-                                        <input type="checkbox"
-                                               ng-model="selectedAll"
-                                               class="top-check-all">
-                                    </label>
-                                </div>
-                            </th>
-                            <td> <!-- assignee by -->
-                                <div class="t-list-h">
-                                    <ul class="customer-style-ul inline-assignee">
-                                        <li>
-                                            <div class="t-assignee-avatar">
-                                                <img src="assets/img/avatar/mko.jpg"
-                                                     ng-src="{{todo.img}}"
-                                                     width="40"/>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="t-assignee-name">
-                                                Jessica Greene
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="t-i-desc">
-                                    {{todo.task}}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="t-i-priority">
-                                    <div class="priority-view "
-                                         ng-class="todo.priority">
-                                        {{todo.priority}}
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="t-status">
-                                    <div class="t-status-view"
-                                         ng-class="todo.status">
-                                        {{todo.status}}
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="t-i-desc">
-                                    2 days ago
-                                </div>
-                            </td>
-                            <td>
-                                <div class="t-i-type-wrp">
-                                    <div class="t-type-wrapper">
-                                        <i tooltip-placement="top"
-                                           uib-tooltip="{{todo.type}}"
-                                           class="fa"
-                                           ng-class="todo.type"></i>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="t-i-more-wrp">
-                                    <div class="ticket-more">
-                                        <i class="ti-more-alt"></i>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!--<div id="ticketListHeader"-->
-                    <!--class="t-list-header">-->
-
-                    <!--<div class="t-list-h header-check">-->
-
-                    <!--</div>-->
-                    <!--<div class="t-list-h header-assignee">-->
-                    <!--assignee by-->
-                    <!--</div>-->
-                    <!--<div class="t-list-h header-subject">-->
-                    <!--subject-->
-                    <!--</div>-->
-                    <!--<div class="t-list-h header-pri">-->
-                    <!--PRIORITY-->
-                    <!--</div>-->
-                    <!--<div class="t-list-h header-status">-->
-                    <!--STATUS-->
-                    <!--</div>-->
-                    <!--<div class="t-list-h header-created">-->
-                    <!--CREATED-->
-                    <!--</div>-->
-                    <!--<div class="t-list-h header-type">-->
-                    <!--TYPE-->
-                    <!--</div>-->
-                    <!--<div class="t-list-h header-more">-->
-
-                    <!--</div>-->
-
-                    <!--</div>-->
-
-                    <!--<div class="t-list-view-wrapper">-->
-                    <!--<div class="t-list-view-body">-->
-                    <!--<div class="t-list-h header-check">-->
-                    <!--<div class="checkbox c-check-box checkbox-default">-->
-                    <!--<input type="checkbox" checked="">-->
-                    <!--<label style="color: transparent !important;;"-->
-                    <!--for="checkbox6">-->
-                    <!--s-->
-                    <!--</label>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
-
-                    <!--&lt;!&ndash; subject &ndash;&gt;-->
-                    <!--<div class="t-list-h header-subject">-->
-                    <!--<div class="t-i-subject">-->
-                    <!--Retro occupy organic, stumptown shabby...-->
-                    <!--</div>-->
-                    <!--</div>-->
-
-                    <!--</div>-->
-                    <!--</div>-->
+                    <div ng-include="'app/views/ticket/inbox/template/inbox-list-view.html'"></div>
                 </section>
             </div>
             <!-- ./ end -->

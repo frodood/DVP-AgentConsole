@@ -41,6 +41,7 @@ agentApp.factory("fileService", function ($http, baseUrls, authService, download
 
     return {
         UploadUrl: baseUrls.fileService + "FileService/File/Upload",
+        GreetingUploadUrl: baseUrls.fileService + "FileService/Agent/FileUpload",
         downloadAttachment: downloadAttachment,
 
         Headers: {'Authorization': authService.GetToken()}
