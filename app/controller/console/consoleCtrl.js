@@ -2231,7 +2231,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 // load User List
     $scope.users = [];
-    $scope.externalUsers = [];
+
     $scope.loadUsers = function () {
         userService.LoadUser().then(function (response) {
 
@@ -2289,24 +2289,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.loadUsers();
+    
 
-
-    $scope.loadExternalUsers = function () {
-
-        userService.getsearchExternalUsers().then(function (response) {
-
-            if (response.IsSuccess) {
-                $scope.externalUsers = response.Result;
-            }
-            else {
-                console.log("No external users found");
-            }
-        }, function (error) {
-            console.log("Error in searching external users ", error);
-        });
-    };
-
-    $scope.loadExternalUsers();
 
 //load userGroup list
     $scope.userGroups = [];
@@ -4534,19 +4518,47 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.openUserProfile = function (userID) {
 
         $scope.showMesssageModal = false;
-        var userObj = $scope.externalUsers.filter(function (item) {
-            return userID == item._id;
-        });
+        if(userID)
+        {
+            userService.getExternalUserProfileByID(userID).then(function (resUser) {
 
-        var DataObj = {
-            channel: "appointment",
-            channel_from: profileDataParser.myProfile.username,
-            channel_to: userObj[0].firstname,
-            direction: "OUTBOUND"
+                if(resUser.IsSuccess)
+                {
+                    var userObj=resUser.Result;
+                    if(userObj)
+                    {
+                        var DataObj = {
+                            channel: "appointment",
+                            channel_from: profileDataParser.myProfile.username,
+                            channel_to: userObj.firstname,
+                            direction: "OUTBOUND"
+
+                        }
+
+                        openNewUserProfileTab(userObj, userID, undefined, DataObj);
+                    }
+                    else
+                    {
+                        $scope.showAlert('Error', 'error', 'Cannot open user profile');
+                    }
+                }
+                else
+                {
+                    console.log("Error in loading external user ");
+
+                }
+
+            },function (errUser) {
+                console.log("Error in loading external user ",errUser);
+
+            });
+
 
         }
-
-        openNewUserProfileTab(userObj[0], userID, undefined, DataObj);
+        else
+        {
+            $scope.showAlert('Error', 'error', 'Cannot open user profile');
+        }
     };
 
 

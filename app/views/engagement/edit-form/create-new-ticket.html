@@ -16,185 +16,196 @@
     </div>
 
     <!-- user profile ticket body -->
-    <div class="col-lg-6 col-lg-offset-3">
+    <div class="col-lg-10 col-lg-offset-1">
         <div class="user-p-t-body-052017 create-new-t">
             <div>
-                <form name="addNewTicketForm" novalidate>
-                    <!-- Basic info view -->
-                    <div>
-                        <div class="header-052017 modal-header inline-h">
-                            <ul>
-                                <li class="pull-left">
-                                    BASIC INFO
-                                </li>
-                                <li class="pull-right">
-                                    <div class="header-r-icon-052017 with-text"
-                                         ng-click="closeNewTicket();">
-                                        <i class="ti-close"></i>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="modal-body-052017 animated fadeIn" style="padding-bottom: 0px;">
+                <div class="c-ticket-main-wrapper">
+                    <form name="addNewTicketForm" novalidate>
+                        <!-- Basic info view -->
+                        <div>
+                            <div class="header-052017 modal-header inline-h">
+                                <ul>
+                                    <li class="pull-left">
+                                        BASIC INFO
+                                    </li>
+                                    <li class="pull-right">
+                                        <div class="header-r-icon-052017 with-text"
+                                             ng-click="closeNewTicket();">
+                                            <i class="ti-close"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
 
-                            <!-- subject -->
-                            <div class="form-group"
-                                 ng-class="{ 'validation-on-052017': addNewTicketForm.ticketsubject.$invalid &&
+                            <div class="modal-body-052017 animated fadeIn" style="padding-bottom: 0px;">
+
+                                <!-- subject -->
+                                <div class="form-group"
+                                     ng-class="{ 'validation-on-052017': addNewTicketForm.ticketsubject.$invalid &&
                       addNewTicketForm.ticketsubject.$dirty }">
-                                <label class="label-052017"
-                                       for="exampleInputEmail1">
-                                    SUBJECT*
-                                </label>
-                                <!-- txt-input-052017 -->
-                                <input type="text" class="form-control txt-input-052017"
-                                       id="subject"
-                                       name="ticketsubject"
-                                       ng-model="ticket.subject"
-                                       required placeholder="subject"/>
-                            </div>
+                                    <label class="label-052017"
+                                           for="exampleInputEmail1">
+                                        SUBJECT*
+                                    </label>
+                                    <!-- txt-input-052017 -->
+                                    <input type="text" class="form-control txt-input-052017"
+                                           id="subject"
+                                           name="ticketsubject"
+                                           ng-model="ticket.subject"
+                                           required placeholder="subject"/>
+                                </div>
 
-                            <!-- description -->
-                            <div class="form-group"
-                                 ng-class="{ 'validation-on-052017': addNewTicketForm.ticketDescription.$invalid &&
+                                <!-- description -->
+                                <div class="form-group"
+                                     ng-class="{ 'validation-on-052017': addNewTicketForm.ticketDescription.$invalid &&
                      addNewTicketForm.ticketDescription.$dirty }">
-                                <label class="label-052017"
-                                       for="exampleInputEmail1">
-                                    Description*
-                                </label>
-                                <textarea ng-model="ticket.description" class="form-control txt-input-052017" rows="3"
-                                          name="ticketDescription" required
-                                          placeholder="Description"></textarea>
-                            </div>
+                                    <label class="label-052017"
+                                           for="exampleInputEmail1">
+                                        Description*
+                                    </label>
+                                    <textarea ng-model="ticket.description" class="form-control txt-input-052017"
+                                              rows="3"
+                                              name="ticketDescription" required
+                                              placeholder="Description"></textarea>
+                                </div>
 
 
-                            <div class="form-group">
-                                <label class="label-052017"
-                                       for="exampleInputEmail1">
-                                    Priority
-                                </label>
-                                <div class="user-p-t-tags-052017">
-                                    <ul class="customer-style-ul">
-                                        <li>
-                                            <button class="btn btn-tag-sm"
-                                                    ng-class="{'selected-this low':ticket.priority=='low'}"
-                                                    ng-click="setPriority('low');">
-                                                <i class="fa fa-check"></i>
-                                                LOW
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="btn btn-tag-sm normal"
-                                                    ng-class="{'selected-this':ticket.priority=='normal'}"
-                                                    ng-click="setPriority('normal');">
-                                                <i class="fa fa-check"></i>
-                                                NORMAL
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="btn btn-tag-sm high"
-                                                    ng-class="{'selected-this':ticket.priority=='high'}"
-                                                    ng-click="setPriority('high');">
-                                                <i class="fa fa-check"></i>
-                                                HIGH
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="btn btn-tag-sm"
-                                                    ng-class="{'selected-this urgent':ticket.priority=='urgent'}"
-                                                    ng-click="setPriority('urgent');">
-                                                <i class="fa fa-check"></i>
-                                                URGENT
-                                            </button>
-                                        </li>
-                                    </ul>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+
+                                            <label class="label-052017"
+                                                   for="exampleInputEmail1">
+                                                Priority
+                                            </label>
+                                            <div class="user-p-t-tags-052017">
+                                                <ul class="customer-style-ul">
+                                                    <li>
+                                                        <button class="btn btn-tag-sm"
+                                                                ng-class="{'selected-this low':ticket.priority=='low'}"
+                                                                ng-click="setPriority('low');">
+                                                            <i class="fa fa-check"></i>
+                                                            LOW
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="btn btn-tag-sm normal"
+                                                                ng-class="{'selected-this':ticket.priority=='normal'}"
+                                                                ng-click="setPriority('normal');">
+                                                            <i class="fa fa-check"></i>
+                                                            NORMAL
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="btn btn-tag-sm high"
+                                                                ng-class="{'selected-this':ticket.priority=='high'}"
+                                                                ng-click="setPriority('high');">
+                                                            <i class="fa fa-check"></i>
+                                                            HIGH
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="btn btn-tag-sm"
+                                                                ng-class="{'selected-this urgent':ticket.priority=='urgent'}"
+                                                                ng-click="setPriority('urgent');">
+                                                            <i class="fa fa-check"></i>
+                                                            URGENT
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group"
+                                                 ng-class="{ 'validation-on-052017': addNewTicketForm.ticketType.$invalid && addNewTicketForm.ticketType.$dirty }">
+                                                <label class="label-052017"
+                                                       for="exampleInputEmail1">
+                                                    Type*
+                                                </label>
+                                                <select class="form-control txt-input-052017" ng-model="ticket.type"
+                                                        name="ticketType"
+                                                        required
+                                                        placeholder="Select">availableTicketTypes
+                                                    <option ng-repeat="tType in availableTicketTypes"
+                                                            value="{{tType}}">
+                                                        {{tType}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                    </form>
 
 
-                            <div class="form-group"
-                                 ng-class="{ 'validation-on-052017': addNewTicketForm.ticketType.$invalid && addNewTicketForm.ticketType.$dirty }">
-                                <label class="label-052017"
-                                       for="exampleInputEmail1">
-                                    Type*
-                                </label>
-                                <select class="form-control txt-input-052017" ng-model="ticket.type"
-                                        name="ticketType"
-                                        required
-                                        placeholder="Select">availableTicketTypes
-                                    <option ng-repeat="tType in availableTicketTypes"
-                                            value="{{tType}}">
-                                        {{tType}}
-                                    </option>
-                                </select>
+                    <div class="modal-body-052017" style="padding-top: 0px;">
+                        <!-- tags -->
+                        <div class="form-group">
+                            <label class="label-052017">tags</label>
+                            <div class="tag-reload-052017"
+                                 ng-click="loadTags();"> Reload
                             </div>
 
-
-                        </div>
-                    </div>
-                </form>
-
-                <div class="modal-body-052017" style="padding-top: 0px;">
-                    <!--<div class="form-group">-->
-                    <!--<div class="header-052017 inline-h" style="padding: 6px 2px;">-->
-                    <!--<ul>-->
-                    <!--<li class="pull-left">-->
-                    <!--MORE-->
-                    <!--</li>-->
-                    <!--<li ng-click="isTicketCollapsed =!isTicketCollapsed"-->
-                    <!--class="pull-right">-->
-                    <!--<div class="header-r-icon-052017 ">-->
-                    <!--<i ng-if="isTicketCollapsed" class="fa fa-angle-down"></i>-->
-                    <!--<i ng-if="!isTicketCollapsed" class="fa fa-angle-up"></i>-->
-                    <!--</div>-->
-                    <!--</li>-->
-                    <!--</ul>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
-
-                    <!--<div uib-collapse="isTicketCollapsed">-->
-
-
-                    <!-- tags -->
-                    <div class="form-group">
-                        <label class="label-052017">tags</label>
-                        <div class="tag-reload-052017"
-                             ng-click="loadTags();"> Reload
+                            <tags-input ng-model="postTags" display-property="name" placeholder="..."
+                                        on-tag-removed="onIsolatedTagRemoved()">
+                                <auto-complete source="loadPostTags($query)"></auto-complete>
+                            </tags-input>
+                            <tags-input ng-model="newAddTags" placeholder="choose Tags"
+                                        replace-spaces-with-dashes="false"
+                                        display-property="name"
+                                        add-from-autocomplete-only="true"
+                                        on-tag-added="onChipAddTag($tag)"
+                                        on-tag-removed="onChipDeleteTag($tag)"
+                                        ng-disabled="" min-length="1">
+                                <auto-complete source="queryTagSearch($query)"
+                                               load-on-empty="true"
+                                               load-on-focus="true"
+                                               min-length="1"></auto-complete>
+                            </tags-input>
                         </div>
 
-                        <tags-input ng-model="postTags" display-property="name" placeholder="..."
-                                    on-tag-removed="onIsolatedTagRemoved()">
-                            <auto-complete source="loadPostTags($query)"></auto-complete>
-                        </tags-input>
-                        <tags-input ng-model="newAddTags" placeholder="choose Tags"
-                                    replace-spaces-with-dashes="false"
-                                    display-property="name"
-                                    add-from-autocomplete-only="true"
-                                    on-tag-added="onChipAddTag($tag)"
-                                    on-tag-removed="onChipDeleteTag($tag)"
-                                    ng-disabled="" min-length="1">
-                            <auto-complete source="queryTagSearch($query)"
-                                           load-on-empty="true"
-                                           load-on-focus="true"
-                                           min-length="1"></auto-complete>
-                        </tags-input>
-                    </div>
+                        <!-- assign user -->
+                        <div class="form-group">
+                            <label class="label-052017">
+                                assignee user
+                            </label>
+                            <div class="scrollable-dropdown-menu">
+                                <input type="text" ng-model="ticket.assignee"
+                                       uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
+                                       class="form-control txt-input-052017"
+                                       typeahead-show-hint="true"
+                                       typeahead-min-length="0"
+                                       typeahead-template-url="customTemplate.html">
 
-                    <!-- assign user -->
-                    <div class="form-group">
-                        <label class="label-052017">
-                            assignee user
-                        </label>
-                        <div class="scrollable-dropdown-menu">
-                            <input type="text" ng-model="ticket.assignee"
-                                   uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
-                                   class="form-control txt-input-052017"
-                                   typeahead-show-hint="true"
-                                   typeahead-min-length="0"
-                                   typeahead-template-url="customTemplate.html">
-
+                            </div>
                         </div>
+
+
+                        <!-- related ricket -->
+                        <div class="form-group">
+                            <label class="label-052017">Related Tickets</label>
+                            <tags-input ng-model="ticket.related" placeholder="choose Ticket"
+                                        replace-spaces-with-dashes="false"
+                                        display-property="displayData"
+                                        add-from-autocomplete-only="true"
+                                        ng-disabled="" min-length="1">
+                                <auto-complete source="queryTicketList($query)"
+                                               load-on-empty="true"
+                                               load-on-focus="true"
+                                               min-length="1"></auto-complete>
+                            </tags-input>
+                        </div>
+
+
+                        <div class="form-group create-n-t-dy-frm-wrapper">
+                            <form name="customForm" sf-schema="schemaw" sf-form="formw" sf-model="modelw"
+                                  ng-submit="onSubmit(customForm)"></form>
+                        </div>
+                        <!--</div>-->
                     </div>
+                </div>
 
 
                     <!-- related ricket -->
@@ -238,6 +249,16 @@
                         </button>
                     </div>
                     <!--</div>-->
+                <div class="form-group c-ticket-footer-wrp">
+                    <button ng-if="!isSaveingTicket" ng-click="saveTicket(ticket,customForm);"
+                            ng-disabled="addNewTicketForm.$invalid"
+                            class="btn btn-lg btn-block btn-save-052017">
+                        create ticket
+                    </button>
+                    <button ng-if="isSaveingTicket" disabled
+                            class="btn btn-lg btn-block btn-save-052017">
+                        please wait...
+                    </button>
                 </div>
             </div>
         </div>
