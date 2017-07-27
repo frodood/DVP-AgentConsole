@@ -19,11 +19,11 @@
                                         ticket inbox
                                     </h5>
                                 </li>
-                                <li class="count-right">
-                                    <div class="inline-t-count gray800 ">
-                                        {{jsonInboxObj.length}}
-                                    </div>
-                                </li>
+                                <!--<li class="count-right">-->
+                                    <!--<div class="inline-t-count gray800 ">-->
+                                        <!--{{jsonInboxObj.length}}-->
+                                    <!--</div>-->
+                                <!--</li>-->
                             </ul>
                         </div>
                     </div>
@@ -67,11 +67,11 @@
 
                                 </h5>
                             </li>
-                            <li class="count-right">
-                                <div class="inline-t-count gray800 ">
-                                    {{jsonFilterObj.length}}
-                                </div>
-                            </li>
+                            <!--<li class="count-right">-->
+                                <!--<div class="inline-t-count gray800 ">-->
+                                    <!--{{jsonFilterObj.length}}-->
+                                <!--</div>-->
+                            <!--</li>-->
                         </ul>
                     </div>
 
@@ -131,39 +131,47 @@
                                     </div>
                                 </div>
                                 <!-- ./inbox short option -->
-                                <div class="inbox-sort-option">
-                                    <ul class="customer-style-ul sort-option">
-                                        <li class="title">
-                                            <small>Sort by :</small>
-                                        </li>
-                                        <li class="short-drop-down">
-                                            <select class="form-control sort-option-select">
-                                                <option value="0"
-                                                        disabled>sort option
-                                                </option>
-                                                <option>Created date</option>
-                                            </select>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <!--<div class="inbox-sort-option">-->
+                                <!--<ul class="customer-style-ul sort-option">-->
+                                <!--<li class="title">-->
+                                <!--<small>Sort by :</small>-->
+                                <!--</li>-->
+                                <!--<li class="short-drop-down">-->
+                                <!--<select class="form-control sort-option-select">-->
+                                <!--<option value="0"-->
+                                <!--disabled>sort option-->
+                                <!--</option>-->
+                                <!--<option>Created date</option>-->
+                                <!--</select>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--</div>-->
                             </div>
                         </div>
                     </div>
 
                     <!-- ./ top right navigation -->
                     <div class="col-lg-9 col-sm-8 col-md-6 col-xs-6">
-                        <!--<div class="row">-->
-                        <!--<div class="i-top-navigation">-->
-                        <!--<ul class="customer-style-ul i-top-navigation">-->
-                        <!--<li>-->
-                        <!--{{currentPage}} - 10 of {{totalItems}}-->
-                        <!--</li>-->
-                        <!--<li class="i-pagination">-->
-                        <!--<ul uib-pager total-items="totalItems" ng-model="currentPage"></ul>-->
-                        <!--</li>-->
-                        <!--</ul>-->
-                        <!--</div>-->
-                        <!--</div>-->
+                        <div class="row">
+                            <div class="i-top-navigation">
+                                <ul class="customer-style-ul i-top-navigation">
+                                    <li>
+                                        <div class="pager-count">
+
+                                            {{currentPage}} - 10 of {{totalItems}}
+                                        </div>
+                                    </li>
+                                    <li class="i-pagination">
+                                        <ul uib-pager
+                                            class="ticket-pager"
+                                            next-text='>'
+                                            previous-text="<"
+                                            total-items="totalItems"
+                                            ng-model="currentPage"></ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- ./ end top -->
@@ -296,7 +304,9 @@
                             <td>
                                 <div class="t-i-type-wrp">
                                     <div class="t-type-wrapper">
-                                        <i class="fa"
+                                        <i tooltip-placement="top"
+                                           uib-tooltip="{{todo.type}}"
+                                           class="fa"
                                            ng-class="todo.type"></i>
                                     </div>
                                 </div>

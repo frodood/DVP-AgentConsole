@@ -18,7 +18,7 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui', 'ui.bootstrap',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
     'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable',
-    'angular-timeline', 'angular-json-tree', 'ngDropover','angularAudioRecorder'
+    'angular-timeline', 'angular-json-tree', 'ngDropover','angularAudioRecorder','ngAudio'
 ]);
 
 
@@ -52,7 +52,10 @@ var baseUrls = {
 
 };
 
+var recordingTime = 20;
+
 agentApp.constant('baseUrls', baseUrls);
+agentApp.constant('recordingTime', recordingTime);
 
 agentApp.constant('dashboardRefreshTime', 60000);
 agentApp.constant('turnServers', [{
