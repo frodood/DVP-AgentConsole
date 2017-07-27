@@ -758,6 +758,17 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
+
+    var getTicketByStatus = function (page, status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "Tickets/10/" + page + "?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket: saveTicket,
@@ -821,7 +832,8 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         getFormByIsolatedTag: getFormByIsolatedTag,
         UpdateTicketSecurityLevel: UpdateTicketSecurityLevel,
 
-        getAllCountByTicketStatus:getAllCountByTicketStatus
+        getAllCountByTicketStatus: getAllCountByTicketStatus,
+        getTicketByStatus: getTicketByStatus
     }
 });
 
