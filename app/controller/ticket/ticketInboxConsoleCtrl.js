@@ -31,11 +31,16 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
 
     //ticket view object
     $scope.ticketList = [];
+    $scope.currentSelected = {
+        "name": '',
+        "totalCount": ''
+    };
+
     $scope.ticketCountObj = {
         'toDo': 0,
         'new': 0,
         'done': 0,
-        inProgress: 0
+        'inProgress': 0
     };
     var ticketListObj = {
         '_id': '',
@@ -70,7 +75,24 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             loadedToDo: function () {
                 $('#toDoCountLoaded').removeClass('display-none');
                 $('#todoCountLoading').addClass('display-none');
+            },
+            loadingInProgress: function () {
+                $('#inProgressCountLoaded').addClass('display-none');
+                $('#inProgressCountLoading').removeClass('display-none');
+            },
+            loadedInProgress: function () {
+                $('#inProgressCountLoaded').removeClass('display-none');
+                $('#inProgressCountLoading').addClass('display-none');
+            },
+            loadingDone: function () {
+                $('#doneCountLoaded').addClass('display-none');
+                $('#doneCountLoading').removeClass('display-none');
+            },
+            loadedDone: function () {
+                $('#doneCountLoaded').removeClass('display-none');
+                $('#doneCountLoading').addClass('display-none');
             }
+
         }
     }();
 
@@ -94,23 +116,41 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             //get all _todo count
             toDoListCount: function () {
                 ticketUIFun.loadingToDo();
-                ticketService.getAllCountByTicketStatus('toDo').then(function (res) {
+                ticketService.getAllCountByTicketStatus('open').then(function (res) {
                     ticketUIFun.loadedToDo();
                     $scope.ticketCountObj.toDo = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.toDo = res.data.Result;
+
+                        $scope.currentSelected.name = "todo";
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
+            //get all in progress ticket
             inProgressTicketListCount: function () {
-                ticketService.getAllCountByTicketStatus('inProgress').then(function (res) {
+                ticketUIFun.loadingInProgress();
+                ticketService.getAllCountByTicketStatus('progressing').then(function (res) {
+                    ticketUIFun.loadedInProgress();
                     $scope.ticketCountObj.inProgress = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.inProgress = res.data.Result;
                     }
                 });
             },
-            pickToDoList: function (page) {
+            //get all done ticket
+            doneTicketListCount: function () {
+                ticketUIFun.loadingDone();
+                ticketService.getAllCountByTicketStatus('closed').then(function (res) {
+                    ticketUIFun.loadedDone();
+                    $scope.ticketCountObj.done = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.done = res.data.Result;
+                    }
+                });
+            },
+
+            pickNewList: function (page) {
                 $scope.ticketList = [];
                 ticketService.getNewTickets(page).then(function (response) {
 
@@ -135,6 +175,28 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     authService.IsCheckResponse(error);
                     console.log(error);
                 });
+            },
+            pickToDoList: function (page) {
+                ticketService.getTicketByStatus(page, 'open').then(function (response) {
+                    if (response && response.data && response.data.Result) {
+                        $scope.ticketList = response.data.Result.map(function (item, val) {
+                            ticketListObj = {};
+                            ticketListObj._id = item._id;
+                            ticketListObj.subject = item.subject;
+                            ticketListObj.channel = item.channel;
+                            ticketListObj.priority = item.priority;
+                            ticketListObj.status = item.status;
+                            ticketListObj.type = item.type;
+                            ticketListObj.updated_at = item.updated_at;
+                            ticketListObj.submitter_name = item.submitter.name;
+                            ticketListObj.submitter_avatar = item.submitter.avatar;
+                            return ticketListObj;
+                        });
+                    }
+                }, function (error) {
+                    authService.IsCheckResponse(error);
+                    console.log(error);
+                });
             }
         }
     }();
@@ -143,15 +205,25 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     inboxPrivateFunction.toDoListCount();
     inboxPrivateFunction.newTicketListCount();
     inboxPrivateFunction.inProgressTicketListCount();
+    inboxPrivateFunction.doneTicketListCount();
 
 
-    $scope.goToTicketList = function () {
+    $scope.openTicketView = function (_viewType, _selectedViewObj) {
+        $scope.currentSelected.name = _viewType;
+        $scope.currentSelected.totalCount = _selectedViewObj;
+        switch (_viewType) {
+            case 'new':
+                inboxPrivateFunction.pickNewList(1);
+                break;
+            case 'todo':
+                inboxPrivateFunction.pickToDoList(1);
+                break;
 
+        }
     };
 
 
 //todo test
-    $scope.totalItems = 64;
     $scope.currentPage = 4;
 
     getJSONData($http, 'filters', function (data) {

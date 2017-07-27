@@ -4583,7 +4583,7 @@ input.ps-form-controller[readonly] {
 
 }
 
-.edit-t-input-file-greeting{
+.edit-t-input-file-greeting {
     background: transparent;
     text-align: center;
     overflow: hidden;
@@ -4592,6 +4592,7 @@ input.ps-form-controller[readonly] {
     color: #fff;
     font-size: 16px;
 }
+
 .edit-t-input-file-greeting > input[type=file] {
     cursor: inherit;
     display: block;
@@ -12710,29 +12711,32 @@ json-tree .branch-preview {
     top: 2px;
 }
 
-.btn-grtn-action > i
-{
+.btn-grtn-action > i {
     color: white;
     padding-left: 10px;
     font-size: 50px;
 }
 
-
-.btn-grtn-action.voice-record-active > i{
+.btn-grtn-action.voice-record-active > i {
     color: #EA3B3B;
     animation: leaves 0.5s infinite;
     transform-origin: center;
 }
 
-
 @keyframes leaves {
-    from { transform: none; }
-    50% { transform: scale(1.54); }
-    to { transform: none; }
+    from {
+        transform: none;
+    }
+    50% {
+        transform: scale(1.54);
+    }
+    to {
+        transform: none;
+    }
 }
 
 /* voice record css */
-.voice-record-wrapper{
+.voice-record-wrapper {
     width: 100%;
     height: 50px;
     overflow: hidden;
@@ -12745,6 +12749,7 @@ json-tree .branch-preview {
     overflow: hidden;
     position: relative;
 }
+
 .btn-grtn-action > span {
     color: white;
     padding-left: 10px;
@@ -12769,7 +12774,7 @@ json-tree .branch-preview {
 
 .i-left-top-wrapper {
     min-height: 35px;
-    background: #f3f2f2;
+    background: #f7f7f7;
     padding: 6px 12px 5px 12px;
     border-bottom: 1px solid #f7f7f7;
 }
@@ -12797,7 +12802,7 @@ ul > li > h5.header {
     /* TICKET FILTER: */
     font-family: 'AvenirNextLTPro-Bold', sans-serif;
     font-size: 13px;
-    color: #223448;
+    color: #8B8B8B;
 }
 
 ul > li > h5.header > i {
@@ -12940,7 +12945,7 @@ ul.i-top-navigation > li {
     min-height: 35px;
     overflow: hidden;
     position: relative;
-    background: #f3f2f2;
+    background: #f7f7f7;
     padding: 6px 12px 5px 12px;
 
 }
@@ -12963,7 +12968,7 @@ ul.i-top-navigation > li {
     background: #f9fbfe;
     overflow: hidden;
     position: relative;
-    border-bottom: 2px solid #f7f7f7;
+    border-bottom: 3px solid #f7f7f7;
     cursor: pointer;
 
     box-shadow: inset 0 0 0 0 #fff;
@@ -12987,9 +12992,10 @@ ul.i-top-navigation > li {
     float: left;
     /* Open Ticket: */
     font-family: "AvenirNextLTPro-Regular", Courier, monospace;
-    font-size: 13.67px;
+    font-size: 12px;
     color: #9B9998;
     padding: 14px 0px 0px 12px;
+    text-transform: uppercase;
 }
 
 .t-f-ul > li > .t-filter-name.count0 {
@@ -13031,7 +13037,8 @@ ul.i-top-navigation > li {
     box-shadow: 0 2px 7px 0 #F36B5B;
 }
 
-.ticket-filter-body:hover {
+.ticket-filter-body:hover,
+.ticket-filter-body.t-active-menu {
     box-shadow: inset 0 100px 0 0 #ffffff;
 }
 

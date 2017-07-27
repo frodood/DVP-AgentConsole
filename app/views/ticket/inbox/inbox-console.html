@@ -33,9 +33,9 @@
                             class="i-left-t-filter-wrapper"
                             uib-collapse="isCollapsedInbox">
                         <!-- ./ ng include ticket inbox menu -->
-                        <div class="ticket-filter-body">
-                            <div ng-include="'app/views/ticket/inbox/template/inbox-menu.html'"></div>
-                        </div>
+
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-menu.html'"></div>
+
                     </section>
                     <!-- ./ end -->
                 </section>
@@ -73,7 +73,7 @@
                 <!-- ./ ticket filter wrapper -->
                 <section class="i-left-t-filter-wrapper"
                          uib-collapse="isCollapsedFilter">
-                    <div class="ticket-filter-body" ng-repeat="filter in jsonFilterObj ">
+                    <div class="ticket-filter-body " ng-repeat="filter in jsonFilterObj ">
                         <div class="t-f-wrp">
                             <ul class="customer-style-ul inline-list t-f-ul">
                                 <li>
@@ -106,13 +106,13 @@
             <div id="inboxRightWrapper" class="inbox-right-wrapper05201">
                 <!-- ./ top wrapper -->
                 <div class="i-right-top-wrapper">
-                    <div class="col-lg-3 col-sm-4 col-md-6 col-xs-6">
+                    <div class="col-lg-4 col-sm-4 col-md-6 col-xs-6">
                         <div class="row">
                             <div class="inbox-h-top-left-wrapper">
                                 <div class="inbox-header-left05201">
                                     <div class="inbox-title">
-                                        <h4> All Tickets -
-                                            <small>15 Total</small>
+                                        <h4> {{currentSelected.name }} Ticket
+                                            <!--<small>{{currentSelected.totalCount }} Total</small>-->
                                         </h4>
                                     </div>
                                 </div>
@@ -137,14 +137,14 @@
                     </div>
 
                     <!-- ./ top right navigation -->
-                    <div class="col-lg-9 col-sm-8 col-md-6 col-xs-6">
+                    <div class="col-lg-8 col-sm-8 col-md-6 col-xs-6">
                         <div class="row">
                             <div class="i-top-navigation">
                                 <ul class="customer-style-ul i-top-navigation">
                                     <li>
                                         <div class="pager-count">
 
-                                            {{currentPage}} - 10 of {{totalItems}}
+                                            {{currentPage}} - 10 of {{currentSelected.totalCount}}
                                         </div>
                                     </li>
                                     <li class="i-pagination">
@@ -152,7 +152,7 @@
                                             class="ticket-pager"
                                             next-text='>'
                                             previous-text="<"
-                                            total-items="totalItems"
+                                            total-items="currentSelected.totalCount"
                                             ng-model="currentPage"></ul>
                                     </li>
                                 </ul>
