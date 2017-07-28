@@ -347,7 +347,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         phoneFuncion.idle();
         $('#agentDialerTop').addClass('display-block active-menu-icon').removeClass('display-none');
         //chatService.Status('available', 'call');
-
+        $scope.stopCallTime();
 
     };
 
