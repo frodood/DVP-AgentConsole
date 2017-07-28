@@ -13201,14 +13201,15 @@ ul.i-top-navigation > li {
 
 .priority-view,
 .t-status-view {
-    width: 40px;
-    height: 20px;
+    min-width: 36px;
+    height: 22px;
     text-align: center;
     position: relative;
     font-family: "AvenirNextLTPro-Regular", Courier, monospace;
     font-size: 11px;
     border-radius: 4px;
-    padding-top: 4px;
+    padding-top: 4.2px;
+    overflow: hidden;
 
 }
 

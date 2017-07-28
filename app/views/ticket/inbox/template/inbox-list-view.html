@@ -92,8 +92,8 @@
         <td>
             <div class="t-status">
                 <div class="t-status-view"
-                     ng-class="ticket.status">
-                    {{ticket.status}}
+                     style="text-align: left!important;;">
+                    {{ticket.status | limitTo: 8 }}{{ticket.status.length > 8 ? '...' : ''}}
                 </div>
             </div>
         </td>

@@ -159,15 +159,15 @@
                                     <li>
                                         <div class="pager-count">
 
-                                            {{currentPage}} - 10 of {{currentSelected.totalCount}}
+                                            {{currentPage}} - {{pageSize}} / {{currentSelected.totalCount}}
                                         </div>
                                     </li>
                                     <li class="i-pagination">
+
                                         <ul uib-pager
                                             class="ticket-pager"
-                                            next-text='>'
-                                            previous-text="<"
                                             total-items="currentSelected.totalCount"
+                                            ng-change="goToPagination()"
                                             ng-model="currentPage"></ul>
                                     </li>
                                 </ul>
@@ -180,17 +180,17 @@
                 <section class="i-filter-bar-wrapper">
                     <div class="i-f-b-wrapper">
                         <ul class="customer-style-ul t-f-wrp">
-                            <li class="check-box-item">
-                                <div class="checkbox margin-0">
-                                    <label>
-                                        <input type="checkbox"
-                                               ng-model="selectedAll"
-                                               class="top-check-all"> Check All
-                                    </label>
-                                </div>
-                            </li>
+                            <!--<li class="check-box-item">-->
+                            <!--<div class="checkbox margin-0">-->
+                            <!--<label>-->
+                            <!--<input type="checkbox"-->
+                            <!--ng-model="selectedAll"-->
+                            <!--class="top-check-all"> Check All-->
+                            <!--</label>-->
+                            <!--</div>-->
+                            <!--</li>-->
                             <li>
-                                <div class="t-f-btn-wrp">
+                                <div class="t-f-btn-wrp ">
                                     Close
                                 </div>
                             </li>
@@ -209,10 +209,20 @@
                 </section>
 
                 <!-- ./ticket details-wrapper -->
-                <section class="t-i-list-wrapper">
+                <section id="ticketListView"
+                         class="t-i-list-wrapper"
+                         slimscroll="{height: '{{ticketListHeight}}',
+                    width:'100%',
+                    railVisible: true,
+                    color: '#777',
+                    size: '8px',
+                    distance: '5px',
+                    railColor: '#fff',
+                    railBorderRadius: 10}">
                     <div ng-include="'app/views/ticket/inbox/template/inbox-list-view.html'"></div>
-                    <div ng-include="'app/views/ticket/inbox/template/main-loader.html'"></div>
+
                 </section>
+                <div ng-include="'app/views/ticket/inbox/template/main-loader.html'"></div>
             </div>
             <!-- ./ end -->
 

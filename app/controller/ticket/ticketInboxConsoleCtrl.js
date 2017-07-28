@@ -17,7 +17,9 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     getWindowHeight(function (height) {
         document.getElementById('inboxToggleLeft').style.height = height + "px";
         document.getElementById('inboxRightWrapper').style.height = height + "px";
+        document.getElementById('ticketListView').style.height = height - 220 + "px";
         $scope.mainScrollerHeight = height + "px";
+        $scope.ticketListHeight = height - 220 + "px";
 
     });
 
@@ -25,6 +27,10 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         getWindowHeight(function (height) {
             document.getElementById('inboxToggleLeft').style.height = height + "px";
             document.getElementById('inboxRightWrapper').style.height = height + "px";
+            document.getElementById('ticketListView').style.height = height - 220 + "px";
+            $scope.ticketListHeight = height - 220 + "px";
+
+            $scope.ticketListHeight = height - 220 + "px";
 
         });
     };
@@ -134,11 +140,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.new = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.new = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+
                     }
                 });
             },
             toDoListCount: function () {
-                //open ticket
+                //todo ticket
                 ticketUIFun.loadingToDo();
                 ticketService.getAllCountByTicketStatus('open&status=progressing').then(function (res) {
                     ticketUIFun.loadedToDo();
@@ -157,6 +165,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.inProgress = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.inProgress = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -168,6 +177,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.done = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.done = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -178,6 +188,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.myTicket.myNew = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.myTicket.myNew = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             }, myTicketToDoTicketCount: function () {
@@ -186,6 +197,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.myTicket.myToDo = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.myTicket.myToDo = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -195,6 +207,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.myTicket.myInProgress = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.myTicket.myInProgress = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -204,6 +217,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.myTicket.myDone = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.myTicket.myDone = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -214,6 +228,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.myGroup.new = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.myGroup.new = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -223,6 +238,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.myGroup.toDo = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.myGroup.toDo = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -232,6 +248,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.myGroup.inProgress = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.myGroup.inProgress = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -240,6 +257,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.ticketCountObj.myGroup.done = 0;
                     if (res && res.data && res.data.Result) {
                         $scope.ticketCountObj.myGroup.done = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
                 });
             },
@@ -261,7 +279,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     ticketUIFun.loadedMainLoader();
                     if (response && response.data && response.data.Result) {
                         $scope.ticketList = response.data.Result.map(function (item, val) {
-                            console.log(item);
                             ticketListObj = {};
                             ticketListObj._id = item._id;
                             ticketListObj.subject = item.subject;
@@ -285,7 +302,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     ticketUIFun.loadedMainLoader();
                     if (response && response.data && response.data.Result) {
                         $scope.ticketList = response.data.Result.map(function (item, val) {
-                            console.log(item);
                             ticketListObj = {};
                             ticketListObj._id = item._id;
                             ticketListObj.subject = item.subject;
@@ -310,7 +326,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     ticketUIFun.loadedMainLoader();
                     if (response && response.data && response.data.Result) {
                         $scope.ticketList = response.data.Result.map(function (item, val) {
-                            console.log(item);
                             ticketListObj = {};
                             ticketListObj._id = item._id;
                             ticketListObj.subject = item.subject;
@@ -335,7 +350,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     ticketUIFun.loadedMainLoader();
                     if (response) {
                         $scope.ticketList = response.map(function (item, val) {
-                            console.log(item);
                             ticketListObj = {};
                             ticketListObj._id = item._id;
                             ticketListObj.subject = item.subject;
@@ -357,9 +371,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         }
     }();
 
-
-    //init load todoList
-    inboxPrivateFunction.picketTicketInboxList(1, 'open');
 
     //inbox count
     inboxPrivateFunction.toDoListCount();
@@ -387,57 +398,69 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     //};
 
 
-    $scope.openTicketView = function (_viewType, _selectedViewObj, selectedFilter) {
+    $scope.openTicketView = function (_viewType, _selectedViewObj, selectedFilter, page, clickEvent) {
         $scope.ticketList = [];
         $scope.currentSelected.name = _viewType;
         $scope.currentSelected.totalCount = _selectedViewObj;
+
+        if (clickEvent != 'goToPage') {
+            page = 1;
+            $scope.currentPage = page;
+        } else {
+            page = page ? page : '1';
+        }
+
         switch (_viewType) {
             //ticket inbox
             case 'new':
-                inboxPrivateFunction.picketTicketInboxList(1, 'new');
+                inboxPrivateFunction.picketTicketInboxList(page, 'new');
                 break;
             case 'todo':
-                inboxPrivateFunction.picketTicketInboxList(1, 'open');
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing');
                 break;
             case 'progressing':
-                inboxPrivateFunction.picketTicketInboxList(1, 'progressing');
+                inboxPrivateFunction.picketTicketInboxList(page, 'progressing');
                 break;
             case 'done':
-                inboxPrivateFunction.picketTicketInboxList(1, 'closed');
+                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed');
                 break;
             //my  ticket
             case 'myNew':
-                inboxPrivateFunction.picketMyTicketInboxList(1, 'new');
+                inboxPrivateFunction.picketMyTicketInboxList(page, 'new');
                 break;
             case 'myOpen':
-                inboxPrivateFunction.picketTicketInboxList(1, 'open');
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing');
                 break;
             case 'myProgressing':
-                inboxPrivateFunction.picketTicketInboxList(1, 'progressing');
+                inboxPrivateFunction.picketTicketInboxList(page, 'progressing');
                 break;
             case 'myDone':
-                inboxPrivateFunction.picketTicketInboxList(1, 'closed');
+                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed');
                 break;
             //my Group ticket
             case 'myGroupNew':
-                inboxPrivateFunction.picketMyGroupTicketInboxList(1, 'new');
+                inboxPrivateFunction.picketMyGroupTicketInboxList(page, 'new');
                 break;
             case 'myGroupToDo':
-                inboxPrivateFunction.picketMyGroupTicketInboxList(1, 'open');
+                inboxPrivateFunction.picketMyGroupTicketInboxList(page, 'open&status=progressing');
                 break;
             case 'myGroupInProgress':
-                inboxPrivateFunction.picketMyGroupTicketInboxList(1, 'progressing');
+                inboxPrivateFunction.picketMyGroupTicketInboxList(page, 'progressing');
                 break;
             case 'myGroupDone':
-                inboxPrivateFunction.picketMyGroupTicketInboxList(1, 'closed');
+                inboxPrivateFunction.picketMyGroupTicketInboxList(page, 'parked&status=solved&status=closed');
                 break;
             //ticket filter
             case 'filter':
-                inboxPrivateFunction.picketFilterInboxList(selectedFilter, 1);
+                $scope.selectedFilter = selectedFilter;
+                inboxPrivateFunction.picketFilterInboxList(selectedFilter, page);
                 break;
 
         }
     };
+
+    //init load todoList
+    $scope.openTicketView('todo', $scope.ticketCountObj.toDo, '', 1);
 
 
     //ticket filter
@@ -457,8 +480,28 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     $scope.loadTicketFilterViews();
 
 
+    //ticket list pagination
+    // $scope.getPageData = function () {
+    //    // console.log($scope.currentPage);
+    //
+    //     $scope.openTicketView($scope.currentSelected.name,
+    //         $scope.currentSelected.totalCount,
+    //         '',
+    //         $scope.currentPage, )
+    // };
+
+
+    $scope.currentPage = 1;
+    $scope.pageSize = 10;
+
+    $scope.goToPagination = function () {
+        $scope.openTicketView($scope.currentSelected.name,
+            $scope.currentSelected.totalCount, $scope.selectedFilter,
+            $scope.currentPage, 'goToPage');
+    };
+
 //todo test
-    $scope.currentPage = 4;
+
 
     getJSONData($http, 'filters', function (data) {
         $scope.jsonFilterObj = data;
@@ -482,5 +525,19 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         });
 
     };
-})
-;
+
+    $scope.numberOfPages = function () {
+        return Math.ceil($scope.getData().length / $scope.pageSize);
+    };
+
+    // for (var i = 0; i < 65; i++) {
+    //     $scope.data.push("Item " + i);
+    // };
+
+
+}).filter('startFrom', function () {
+    return function (input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+});
