@@ -5,9 +5,17 @@
     <div class="col-sm-5 col-md-4 col-xs-12 col-lg-3 ">
         <div class="row">
             <div id="inboxToggleLeft"
+                 slimscroll="{height: '{{mainScrollerHeight}}',
+                    width:'100%',
+                    railVisible: true,
+                    color: '#777',
+                    size: '8px',
+                    distance: '5px',
+                    railColor: '#fff',
+                    railBorderRadius: 10}"
                  class="inbox-left-toggle-wrapper">
 
-                <!-- ./ticket inbox wrapper -->
+                <!-- ./ticket inbox menu -->
                 <section class="i-left-inbox-wrapper">
                     <div class="i-inbox-header-wrp">
                         <div class="count-inline-row">
@@ -27,72 +35,79 @@
                             </ul>
                         </div>
                     </div>
-
                     <!-- ./ ticket inbox wrapper -->
                     <section
                             class="i-left-t-filter-wrapper"
                             uib-collapse="isCollapsedInbox">
                         <!-- ./ ng include ticket inbox menu -->
-
                         <div ng-include="'app/views/ticket/inbox/template/inbox-menu.html'"></div>
-
                     </section>
                     <!-- ./ end -->
                 </section>
 
-                <!-- ./ top wrapper -->
+                <!-- ./my ticket menu -->
                 <div class="i-left-top-wrapper">
                     <div class="count-inline-row">
                         <ul class="customer-style-ul">
                             <li class="float-left">
                                 <h5 class="header text-uppercase">
-                                    <i
-                                            ng-click="isCollapsedFilter = !isCollapsedFilter"
-                                            ng-class="!isCollapsedFilter?'ti-angle-up':'ti-angle-down'"></i>
-                                    ticket filter
-
+                                    <i ng-click="isCollapsedMyTicket = !isCollapsedMyTicket"
+                                       ng-class="!isCollapsedMyTicket?'ti-angle-up':'ti-angle-down'"></i>
+                                    my ticket
                                 </h5>
                             </li>
-                            <!--<li class="count-right">-->
-                            <!--<div class="inline-t-count gray800 ">-->
-                            <!--{{jsonFilterObj.length}}-->
-                            <!--</div>-->
-                            <!--</li>-->
                         </ul>
                     </div>
-
-                    <!--&lt;!&ndash;  ./ filter search &ndash;&gt;-->
-                    <!--<div class="filter-search-wrapper">-->
-                    <!--<input type="text"-->
-                    <!--class="form-control search-txt05201"-->
-                    <!--placeholder="search filter here...">-->
-                    <!--</div>-->
-
                 </div>
-
-                <!-- ./ ticket filter wrapper -->
                 <section class="i-left-t-filter-wrapper"
-                         uib-collapse="isCollapsedFilter">
-                    <div class="ticket-filter-body " ng-repeat="filter in jsonFilterObj ">
-                        <div class="t-f-wrp">
-                            <ul class="customer-style-ul inline-list t-f-ul">
-                                <li>
-                                    <div class="t-filter-name"
-                                         ng-class="filter.count==0?'text-decoration count0':''">
-                                        {{filter.name}}
-                                    </div>
-                                </li>
-                                <li ng-if="filter.count!=0">
-                                    <div class="t-item-count green">
-                                        {{filter.count}}
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                         uib-collapse="isCollapsedMyTicket">
+                    <div class="ticket-filter-body">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-my-menu.html'"></div>
                     </div>
                 </section>
                 <!-- ./ end -->
 
+                <!-- ./group ticket menu -->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i ng-click="isCollapsedGroupTicketr = !isCollapsedGroupTicketr"
+                                       ng-class="!isCollapsedGroupTicketr?'ti-angle-up':'ti-angle-down'"></i>
+                                    Group ticket
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedGroupTicketr">
+                    <div class="ticket-filter-body ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-group-menu.html'"></div>
+                    </div>
+                </section>
+                <!-- ./ end -->
+
+                <!-- ./ ticket filter menu-->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i ng-click="isCollapsedFilter = !isCollapsedFilter"
+                                       ng-class="!isCollapsedFilter?'ti-angle-up':'ti-angle-down'"></i>
+                                    ticket filter
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedFilter">
+                    <div ng-include="'app/views/ticket/inbox/template/inbox-filter-menu.html'"></div>
+                </section>
+                <!-- ./ end -->
 
             </div>
         </div>
@@ -196,6 +211,7 @@
                 <!-- ./ticket details-wrapper -->
                 <section class="t-i-list-wrapper">
                     <div ng-include="'app/views/ticket/inbox/template/inbox-list-view.html'"></div>
+                    <div ng-include="'app/views/ticket/inbox/template/main-loader.html'"></div>
                 </section>
             </div>
             <!-- ./ end -->

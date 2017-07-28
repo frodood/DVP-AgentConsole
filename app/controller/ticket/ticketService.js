@@ -758,7 +758,6 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
-
     var getTicketByStatus = function (page, status) {
         var authToken = authService.GetToken();
         return $http({
@@ -768,6 +767,50 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
             return response;
         });
     };
+
+
+    //my ticket
+    var getAllByMyTickes = function (page, status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "MyTickets/10/" + page + "?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    var getCountByMyticketStatus = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "MyTickets/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    // my group
+    var getAllMyGroupTickets = function (page, status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "MyGroupTickets/10/" + page + "?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    var getCountByMyGroupStatus = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "MyGroupTickets/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
@@ -833,7 +876,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         UpdateTicketSecurityLevel: UpdateTicketSecurityLevel,
 
         getAllCountByTicketStatus: getAllCountByTicketStatus,
-        getTicketByStatus: getTicketByStatus
+        getTicketByStatus: getTicketByStatus,
+        getAllCountByMyticketStatus: getCountByMyticketStatus,
+        getAllByMytickes: getAllByMyTickes,
+        getAllMyGroupTickets: getAllMyGroupTickets,
+        getCountByMyGroupStatus: getCountByMyGroupStatus
     }
 });
 

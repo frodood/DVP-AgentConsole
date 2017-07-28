@@ -9,13 +9,16 @@
         <th>
 
             <div class="t-list-h">
-                assignee by
+                submitter by
             </div>
         </th>
         <th>
             <div class="t-list-h">
                 subject
             </div>
+        </th>
+        <th>
+            <div class="t-list-h">TYPE</div>
         </th>
         <th>
             <div class="t-list-h">PRIORITY</div>
@@ -36,7 +39,7 @@
     </thead>
     <tbody id="ticketMainWrp" class="t-i-tbody">
     <tr id="{{ticket._id}}"
-        class="t-list-view-body animated fadeIn"
+        class="t-list-view-body"
         ng-repeat="ticket in ticketList track by $index">
         <th>
             <div class="checkbox margin-0 i-ticket-check">
@@ -53,7 +56,7 @@
                     style="padding-top: 8px;">
                     <li>
                         <div class="t-assignee-avatar">
-                            <img src="assets/img/avatar/mko.jpg"
+                            <img src="assets/img/avatar/defaultProfile.png"
                                  ng-src="{{ticket.submitter_avatar}}"
                                  width="30"/>
                         </div>
@@ -71,6 +74,13 @@
                 {{ticket.subject | limitTo: 45 }}{{ticket.subject.length > 45 ? '...' : ''}}
             </div>
         </td>
+
+        <td>
+            <div class="t-i-desc">
+                {{ticket.type}}
+            </div>
+        </td>
+
         <td>
             <div class="t-i-priority">
                 <div class="priority-view "

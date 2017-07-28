@@ -56,7 +56,7 @@
 <div class="ticket-filter-body"
      ng-class="currentSelected.name=='inProgress'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('inProgress',ticketCountObj.inProgress)">
+         ng-click="openTicketView('progressing',ticketCountObj.inProgress)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
@@ -84,7 +84,7 @@
 <div class="ticket-filter-body"
      ng-class="currentSelected.name=='done'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('done',ticketCountObj.done)">
+         ng-click="openTicketView('closed',ticketCountObj.done)">
         <ul
                 class="customer-style-ul inline-list t-f-ul">
             <li>

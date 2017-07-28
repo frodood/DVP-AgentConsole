@@ -1,0 +1,20 @@
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='myNew'?'t-active-menu':''"
+     ng-repeat="filter in views ">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('filter',filter.count,filter)">
+        <ul class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="filter.count==0?'text-decoration count0':''">
+                    {{filter.title}}
+                </div>
+            </li>
+            <li ng-show="filter.count!=0">
+                <div class="t-item-count green">
+                    {{filter.count}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
