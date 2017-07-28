@@ -38,10 +38,15 @@
                         {{ ticket.subject | limitTo: 80 }}{{ticket.subject.length > 80 ? '...' : ''}}
                     </div>
                 </div>
+
             </div>
 
             <div class="col-md-4 col-sm-4 ">
                 <div class="model-btn-wrapper">
+
+                    <div class="btn-warp ">
+                        <span class="btn btn-default" ng-click="loadTicketSummary(ticket._id);">Refresh</span>
+                    </div>
                     <div class="btn-warp" uib-dropdown>
                         <span class="btn btn-default" uib-dropdown-toggle>
                             <i class="main-icon-2-more-1">

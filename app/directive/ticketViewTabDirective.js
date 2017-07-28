@@ -6,7 +6,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                               $rootScope, authService,
                                               profileDataParser, userService, uuid4,
                                               FileUploader, baseUrls, fileService,
-                                              $auth, userImageList) {
+                                              $auth, userImageList,chatService) {
     return {
         restrict: "EA",
         scope: {
@@ -637,8 +637,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                         findFormForCompanyOrTag(isolatedTags, function (err, ticket_form) {
                             if (ticket_form) {
-                                buildFormSchema(schema, form, response.Result.ticket_form.fields);
-                                scope.currentForm = response.Result.ticket_form;
+                                buildFormSchema(schema, form, ticket_form.fields);
+                                scope.currentForm = ticket_form;
 
                                 form.push({
                                     type: "submit",
@@ -1069,6 +1069,8 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             scope.loadTicketNextLevel();
                             scope.pickCompanyData(scope.ticket.tenant, scope.ticket.company);
 
+                            SE.subscribe({room: 'ticket:'+scope.ticket.reference});
+
 
                         }
                         else {
@@ -1081,6 +1083,34 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 }
 
                 scope.loadTicketSummary(scope.ticketID);
+
+
+                chatService.SubscribeTicketEvents(scope.ticketDetails.notificationData.reference,  function (event, data) {
+                    console.log('preview_dialer_message :: ' + event);
+                    console.log('Ticket Data :: ' + data);
+
+                    if(data && data.Message && data.Message.action && data.From)
+                    {
+                        var action=data.Message.action;
+                        switch (action)
+                        {
+                            case 'comment':
+                                scope.showAlert("Ticket update","info",data.From+" replied to ticket "+scope.scope.ticketDetails.notificationData.reference);
+                            case 'status':
+                                if(data.Message.status)
+                                {
+                                    scope.showAlert("Ticket Status update","info",data.From+" updated the status of ticket ("+scope.ticketDetails.notificationData.reference+") to "+data.Message.status.toUpperCase());
+                                }
+                                else
+                                {
+                                    scope.showAlert("Ticket Status update","info",data.From+" updated the status of ticket ("+scope.ticketDetails.notificationData.reference+")");
+                                }
+
+                        }
+                    }
+
+
+                });
 
 
                 scope.pickCompanyData = function (tenant, company) {
@@ -1240,7 +1270,10 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.closeTicket = function () {
                     $rootScope.$emit('closeTab', scope.ticket._id);
 
+
+
                 };
+
 
                 scope.showCommentDrop = false;
 
@@ -2400,6 +2433,17 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                 scope.clickToCall = function () {
                     scope.setExtention({selectedUser: scope.currentClientUser});
                 };
+
+                scope.$on("$destroy", function () {
+                    if(scope.ticket && scope.ticket.reference)
+                    {
+                        SE.unsubscribe({room: 'ticket:'+scope.ticket.reference});
+                    }
+                    else if(scope.ticketDetails && scope.ticketDetails.notificationData && scope.ticketDetails.notificationData.reference)
+                    {
+                        SE.unsubscribe({room: 'ticket:'+scope.ticketDetails.notificationData.reference});
+                    }
+                });
 
             }
         }
