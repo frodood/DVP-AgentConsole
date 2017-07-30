@@ -13029,8 +13029,8 @@ ul.i-top-navigation > li {
     position: relative;
     text-align: center;
     color: #ffffff;
-    font-size: 12px;
-    padding-top: 3px;
+    font-size: 10px;
+    padding-top: 5px;
 }
 
 .t-item-count.count-loading > i {
@@ -13073,7 +13073,7 @@ ul.i-top-navigation > li {
 
 .i-f-b-wrapper {
     width: 100%;
-    padding: 9px 5px 10px 15px;
+    padding: 4px 5px 10px 15px;
 }
 
 .t-f-btn-wrp {

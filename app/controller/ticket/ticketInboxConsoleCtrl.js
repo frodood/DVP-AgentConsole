@@ -39,6 +39,12 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     $scope.isCollapsedMyTicket = true;
     $scope.isCollapsedGroupTicketr = true;
     $scope.isCollapsedFilter = true;
+    $scope.isCollapsedSubmitted = true;
+    $scope.isCollapsedWatchedByMe = true;
+    $scope.isCollapsedCollaboratedByMe = true;
+
+    //onload sort type
+    $scope.sortType = 'updated_at';
 
 
     //ticket view object
@@ -60,6 +66,24 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             'myInProgress': 0
         },
         myGroup: {
+            'toDo': 0,
+            'new': 0,
+            'done': 0,
+            'inProgress': 0
+        },
+        submittedByMe: {
+            'toDo': 0,
+            'new': 0,
+            'done': 0,
+            'inProgress': 0
+        },
+        watchedByMe: {
+            'toDo': 0,
+            'new': 0,
+            'done': 0,
+            'inProgress': 0
+        },
+        collaboratedByMe: {
             'toDo': 0,
             'new': 0,
             'done': 0,
@@ -233,7 +257,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                 });
             },
             groupTicketToDoTicketCount: function () {
-                //progressing
+                //todo
                 ticketService.getCountByMyGroupStatus('open&status=progressing').then(function (res) {
                     $scope.ticketCountObj.myGroup.toDo = 0;
                     if (res && res.data && res.data.Result) {
@@ -272,60 +296,134 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     $scope.showAlert("Get View Count", "error", "Fail To Count.")
                 });
             },
-            picketTicketInboxList: function (page, status) {
-                $scope.ticketList = [];
-                ticketUIFun.loadingMainloader();
-                ticketService.getTicketByStatus(page, status).then(function (response) {
-                    ticketUIFun.loadedMainLoader();
-                    if (response && response.data && response.data.Result) {
-                        $scope.ticketList = response.data.Result.map(function (item, val) {
-                            ticketListObj = {};
-                            ticketListObj._id = item._id;
-                            ticketListObj.subject = item.subject;
-                            ticketListObj.channel = item.channel;
-                            ticketListObj.priority = item.priority;
-                            ticketListObj.status = item.status;
-                            ticketListObj.type = item.type;
-                            ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.submitter_name = item.submitter.name;
-                            ticketListObj.submitter_avatar = item.submitter.avatar;
-                            return ticketListObj;
-                        });
+            //ticket submitted by me
+            submittedTicketNewCount: function () {
+                //new
+                ticketService.getTicketsCount('TicketsSubmittedByMe', 'new').then(function (res) {
+                    $scope.ticketCountObj.submittedByMe.new = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.submittedByMe.new = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
-                }, function (error) {
-                    authService.IsCheckResponse(error);
-                    console.log(error);
                 });
-            }, picketMyTicketInboxList: function (page, status) {
-                ticketUIFun.loadingMainloader();
-                ticketService.getAllByMytickes(page, status).then(function (response) {
-                    ticketUIFun.loadedMainLoader();
-                    if (response && response.data && response.data.Result) {
-                        $scope.ticketList = response.data.Result.map(function (item, val) {
-                            ticketListObj = {};
-                            ticketListObj._id = item._id;
-                            ticketListObj.subject = item.subject;
-                            ticketListObj.channel = item.channel;
-                            ticketListObj.priority = item.priority;
-                            ticketListObj.status = item.status;
-                            ticketListObj.type = item.type;
-                            ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.submitter_name = item.submitter.name;
-                            ticketListObj.submitter_avatar = item.submitter.avatar;
-                            return ticketListObj;
-                        });
+            },
+            submittedTicketToDoCount: function () {
+                //todo
+                ticketService.getTicketsCount('TicketsSubmittedByMe', 'open&status=progressing').then(function (res) {
+                    $scope.ticketCountObj.submittedByMe.toDo = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.submittedByMe.toDo = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
                     }
-                }, function (error) {
-                    authService.IsCheckResponse(error);
-                    console.log(error);
                 });
-            }, picketMyGroupTicketInboxList: function (page, status) {
-                //get all my ticket
+            },
+            submittedTicketProgressingCount: function () {
+                //progressing
+                ticketService.getTicketsCount('TicketsSubmittedByMe', 'progressing').then(function (res) {
+                    $scope.ticketCountObj.submittedByMe.inProgress = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.submittedByMe.inProgress = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            submittedTicketClosedCount: function () {
+                //closed
+                ticketService.getTicketsCount('TicketsSubmittedByMe', 'parked&status=solved&status=closed').then(function (res) {
+                    $scope.ticketCountObj.submittedByMe.done = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.submittedByMe.done = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            //ticket watched by me
+            watchedTicketNewCount: function () {
+                //new
+                ticketService.getTicketsCount('TicketsWatchedByMe', 'new').then(function (res) {
+                    $scope.ticketCountObj.watchedByMe.new = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.watchedByMe.new = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            }, watchedTicketToDoCount: function () {
+                //todo
+                ticketService.getTicketsCount('TicketsWatchedByMe', 'open&status=progressing').then(function (res) {
+                    $scope.ticketCountObj.watchedByMe.toDo = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.watchedByMe.toDo = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            watchedTicketProgressCount: function () {
+                //in progressing
+                ticketService.getTicketsCount('TicketsWatchedByMe', 'progressing').then(function (res) {
+                    $scope.ticketCountObj.watchedByMe.inProgress = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.watchedByMe.inProgress = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            watchedTicketDoneCount: function () {
+                //done
+                ticketService.getTicketsCount('TicketsWatchedByMe', 'parked&status=solved&status=closed').then(function (res) {
+                    $scope.ticketCountObj.watchedByMe.done = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.watchedByMe.done = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            //ticket collaborated by me
+            collaboratedTicketNewCount: function () {
+                //new
+                ticketService.getTicketsCount('TicketsCollaboratedByMe', 'new').then(function (res) {
+                    $scope.ticketCountObj.collaboratedByMe.new = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.collaboratedByMe.new = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            collaboratedTicketToDoCount: function () {
+                //todo
+                ticketService.getTicketsCount('TicketsCollaboratedByMe', 'open&status=progressing').then(function (res) {
+                    $scope.ticketCountObj.collaboratedByMe.toDo = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.collaboratedByMe.toDo = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            collaboratedTicketInProgressingCount: function () {
+                //todo
+                ticketService.getTicketsCount('TicketsCollaboratedByMe', 'progressing').then(function (res) {
+                    $scope.ticketCountObj.collaboratedByMe.inProgress = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.collaboratedByMe.inProgress = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            collaboratedTicketDoneCount: function () {
+                //todo
+                ticketService.getTicketsCount('TicketsCollaboratedByMe', 'parked&status=solved&status=closed').then(function (res) {
+                    $scope.ticketCountObj.collaboratedByMe.done = 0;
+                    if (res && res.data && res.data.Result) {
+                        $scope.ticketCountObj.collaboratedByMe.done = res.data.Result;
+                        $scope.currentSelected.totalCount = res.data.Result;
+                    }
+                });
+            },
+            picketFilterInboxList: function (currentFilter, page) {
                 ticketUIFun.loadingMainloader();
-                ticketService.getAllMyGroupTickets(page, status).then(function (response) {
+                ticketService.GetTicketsByView(currentFilter._id, page).then(function (response) {
                     ticketUIFun.loadedMainLoader();
-                    if (response && response.data && response.data.Result) {
-                        $scope.ticketList = response.data.Result.map(function (item, val) {
+                    if (response) {
+                        $scope.ticketList = response.map(function (item, val) {
                             ticketListObj = {};
                             ticketListObj._id = item._id;
                             ticketListObj.subject = item.subject;
@@ -344,12 +442,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                     console.log(error);
                 });
             },
-            picketFilterInboxList: function (currentFilter, page) {
+            picketTicketInboxList: function (page, status, ticketType) {
+                console.log($scope.sortType);
                 ticketUIFun.loadingMainloader();
-                ticketService.GetTicketsByView(currentFilter._id, page).then(function (response) {
+                ticketService.getAllTickets(page, status, ticketType).then(function (response) {
                     ticketUIFun.loadedMainLoader();
-                    if (response) {
-                        $scope.ticketList = response.map(function (item, val) {
+                    if (response && response.data && response.data.Result) {
+                        $scope.ticketList = response.data.Result.map(function (item, val) {
                             ticketListObj = {};
                             ticketListObj._id = item._id;
                             ticketListObj.subject = item.subject;
@@ -391,6 +490,23 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     inboxPrivateFunction.groupTicketProgressingTicketCount();
     inboxPrivateFunction.groupTicketClosedicketCount();
 
+    //submitted by me
+    inboxPrivateFunction.submittedTicketNewCount();
+    inboxPrivateFunction.submittedTicketToDoCount();
+    inboxPrivateFunction.submittedTicketProgressingCount();
+    inboxPrivateFunction.submittedTicketClosedCount();
+
+    //watched by me
+    inboxPrivateFunction.watchedTicketNewCount();
+    inboxPrivateFunction.watchedTicketToDoCount();
+    inboxPrivateFunction.watchedTicketProgressCount();
+    inboxPrivateFunction.watchedTicketDoneCount();
+
+    //collaborated by me
+    inboxPrivateFunction.collaboratedTicketNewCount();
+    inboxPrivateFunction.collaboratedTicketToDoCount();
+    inboxPrivateFunction.collaboratedTicketInProgressingCount();
+    inboxPrivateFunction.collaboratedTicketDoneCount();
 
     //myTicket inbox
     //$scope.onClickMyTicket = function () {
@@ -413,47 +529,86 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         switch (_viewType) {
             //ticket inbox
             case 'new':
-                inboxPrivateFunction.picketTicketInboxList(page, 'new');
+                inboxPrivateFunction.picketTicketInboxList(page, 'new', 'Tickets');
                 break;
             case 'todo':
-                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing');
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'Tickets');
                 break;
             case 'progressing':
-                inboxPrivateFunction.picketTicketInboxList(page, 'progressing');
+                inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'Tickets');
                 break;
             case 'done':
-                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed');
+                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'Tickets');
                 break;
             //my  ticket
             case 'myNew':
-                inboxPrivateFunction.picketMyTicketInboxList(page, 'new');
+                inboxPrivateFunction.picketTicketInboxList(page, 'new', 'MyTickets');
                 break;
             case 'myOpen':
-                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing');
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyTickets');
                 break;
             case 'myProgressing':
-                inboxPrivateFunction.picketTicketInboxList(page, 'progressing');
+                inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyTickets');
                 break;
             case 'myDone':
-                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed');
+                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyTickets');
                 break;
             //my Group ticket
             case 'myGroupNew':
-                inboxPrivateFunction.picketMyGroupTicketInboxList(page, 'new');
+                inboxPrivateFunction.picketTicketInboxList(page, 'new', 'MyGroupTickets');
                 break;
             case 'myGroupToDo':
-                inboxPrivateFunction.picketMyGroupTicketInboxList(page, 'open&status=progressing');
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
                 break;
             case 'myGroupInProgress':
-                inboxPrivateFunction.picketMyGroupTicketInboxList(page, 'progressing');
+                inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyGroupTickets');
                 break;
             case 'myGroupDone':
-                inboxPrivateFunction.picketMyGroupTicketInboxList(page, 'parked&status=solved&status=closed');
+                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyGroupTickets');
                 break;
             //ticket filter
             case 'filter':
                 $scope.selectedFilter = selectedFilter;
                 inboxPrivateFunction.picketFilterInboxList(selectedFilter, page);
+                break;
+            //ticket submitted by me
+            case'submittedByMeNew':
+                inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsSubmittedByMe');
+                break;
+            case'submittedByMeTodo':
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsSubmittedByMe');
+                break;
+            case'submittedByMeProgress':
+                inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsSubmittedByMe');
+                break;
+            case'submittedByDone':
+                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsSubmittedByMe');
+                break;
+            //ticket watched by me
+            case'watchedByMeNew':
+                inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsWatchedByMe');
+                break;
+            case'watchedByMeToDo':
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsWatchedByMe');
+                break;
+            case'watchedByMeInProgress':
+                inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsWatchedByMe');
+                break;
+            case'watchedByMeDone':
+                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsWatchedByMe');
+                break;
+            //ticket collaborated by me
+            case'collaboratedByMeMeNew':
+                inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsCollaboratedByMe');
+                break;
+            case'collaboratedByMeMeToDo':
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsCollaboratedByMe');
+                break;
+            case'collaboratedByMeMeInProgress':
+                inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsCollaboratedByMe');
+                break;
+            case'collaboratedByMeMeDone':
+                inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsCollaboratedByMe');
                 break;
 
         }

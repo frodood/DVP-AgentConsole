@@ -812,6 +812,62 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     };
 
 
+    //submitted by me get count
+    var getCountSubmittedByMeTicket = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "TicketsSubmittedByMe/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+
+    var getCountWatchedByMeTicket = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "TicketsWatchedByMe/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    //collaborated by me
+    var getCountCollaboratedByMeTicket = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "TicketsCollaboratedByMe/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    //getAllTickets
+    var getAllTickets = function (page, status, ticketType) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + ticketType + "/10/" + page + "?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    //getTicketCount
+    var getTicketsCount = function (status, ticketType) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + ticketType + "/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
         SaveTicket: saveTicket,
@@ -880,7 +936,12 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         getAllCountByMyticketStatus: getCountByMyticketStatus,
         getAllByMytickes: getAllByMyTickes,
         getAllMyGroupTickets: getAllMyGroupTickets,
-        getCountByMyGroupStatus: getCountByMyGroupStatus
+        getCountByMyGroupStatus: getCountByMyGroupStatus,
+        getCountSubmittedByMeTicket: getCountSubmittedByMeTicket,
+        getCountWatchedByMeTicket: getCountWatchedByMeTicket,
+        getCountCollaboratedByMeTicket: getCountCollaboratedByMeTicket,
+        getAllTickets: getAllTickets,
+        getTicketsCount:getTicketsCount
     }
 });
 
