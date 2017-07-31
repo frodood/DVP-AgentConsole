@@ -445,7 +445,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             picketTicketInboxList: function (page, status, ticketType) {
                 console.log($scope.sortType);
                 ticketUIFun.loadingMainloader();
-                status = status + "?sorted_by=" + $scope.sortType;
+                //status = status + "?sorted_by=" + $scope.sortType;
                 ticketService.getAllTickets(page, status, ticketType).then(function (response) {
                     ticketUIFun.loadedMainLoader();
                     if (response && response.data && response.data.Result) {

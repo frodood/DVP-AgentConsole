@@ -2289,7 +2289,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.loadUsers();
-    
 
 
 //load userGroup list
@@ -2522,10 +2521,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 //$scope.addDashBoard();
 
     //ToDo
-    var addNewTicketInboxTemp = function () {
+    $scope.addNewTicketInboxTemp = function () {
         $scope.addTab('new-ticket-inbox', 'new-ticket-inbox', 'new-ticket-inbox', "new-ticket-inbox", "new-ticket-inbox");
     };
-    addNewTicketInboxTemp();
+
 
     var openNewEngagementTab = function (args, index) {
         var notifyData = {
@@ -4518,15 +4517,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.openUserProfile = function (userID) {
 
         $scope.showMesssageModal = false;
-        if(userID)
-        {
+        if (userID) {
             userService.getExternalUserProfileByID(userID).then(function (resUser) {
 
-                if(resUser.IsSuccess)
-                {
-                    var userObj=resUser.Result;
-                    if(userObj)
-                    {
+                if (resUser.IsSuccess) {
+                    var userObj = resUser.Result;
+                    if (userObj) {
                         var DataObj = {
                             channel: "appointment",
                             channel_from: profileDataParser.myProfile.username,
@@ -4537,26 +4533,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         openNewUserProfileTab(userObj, userID, undefined, DataObj);
                     }
-                    else
-                    {
+                    else {
                         $scope.showAlert('Error', 'error', 'Cannot open user profile');
                     }
                 }
-                else
-                {
+                else {
                     console.log("Error in loading external user ");
 
                 }
 
-            },function (errUser) {
-                console.log("Error in loading external user ",errUser);
+            }, function (errUser) {
+                console.log("Error in loading external user ", errUser);
 
             });
 
 
         }
-        else
-        {
+        else {
             $scope.showAlert('Error', 'error', 'Cannot open user profile');
         }
     };

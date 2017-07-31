@@ -373,17 +373,17 @@
                 <!-- ticket inbox -->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <i ng-click="consoleTopMenu.openTicket()"
+                        <i ng-click="addNewTicketInboxTemp()"
                            class="icon-d-f-icon-ticketinbox small-icon offline-phone" title="Ticket Inbox"></i>
                     </div>
                 </li>
-                <li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">
-                    <div class="left-icon animated slideInLeft">
-                        <i ng-click="addFilterTab();"
-                           class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>
+                <!--<li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">-->
+                    <!--<div class="left-icon animated slideInLeft">-->
+                        <!--<i ng-click="addNewTicketInboxTemp();"-->
+                           <!--class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>-->
 
-                    </div>
-                </li>
+                    <!--</div>-->
+                <!--</li>-->
                 <li>
                     <!-- deactivate mode -->
                     <div ng-show="!timerTick">
