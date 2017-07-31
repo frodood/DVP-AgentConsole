@@ -256,11 +256,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
-    var getTicketsByView = function (id, page,sorted_by) {
+    var getTicketsByView = function (id, page, sorted_by, pageSize) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/100/" + page + '&sorted_by=' + sorted_by
+            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/" + pageSize + "/" + page + '&sorted_by=' + sorted_by
         }).then(function (response) {
             return response.data.Result;
         });
@@ -846,11 +846,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     };
 
     //getAllTickets
-    var getAllTickets = function (page, status, ticketType, sorted_by) {
+    var getAllTickets = function (page, status, ticketType, sorted_by, pageSize) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + ticketType + "/10/" + page + "?status=" + status + '&sorted_by=' + sorted_by
+            url: baseUrls.ticketUrl + ticketType + "/" + pageSize + "/" + page + "?status=" + status + '&sorted_by=' + sorted_by
         }).then(function (response) {
             return response;
         });

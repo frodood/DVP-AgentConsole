@@ -13049,7 +13049,7 @@ ul.i-top-navigation > li {
     box-shadow: 0 2px 6px 0 #82E9A0;
 }
 
-.t-item-count.black{
+.t-item-count.black {
     background: #223448;
     box-shadow: 0 2px 6px 0 #223448;
 }
@@ -13326,7 +13326,7 @@ ul.i-top-navigation > li {
     background: rgba(252, 207, 139, 0.26);
     border: 1px solid #FCCF8B;
     border-radius: 3px;
-    font-size: 15px;
+    font-size: 13px;
     color: #FFAA00;
     margin-right: 5px;
     margin-top: 27px;
@@ -13359,4 +13359,20 @@ ul.i-top-navigation > li {
 
 .disable-scroll {
     overflow: hidden;
+}
+
+.btn-refresh {
+    padding: 3px 6px 0px 6px;
+    background: rgba(252, 207, 139, 0.26);
+    border: 1px solid #FCCF8B;
+    border-radius: 3px;
+    font-size: 13px;
+    color: #FFAA00;
+    padding: 3px 6px 0px 6px;
+    cursor: pointer;
+}
+.btn-refresh:hover{
+    color: #777;
+    /*cursor: not-allowed;*/
+    background-color: #fff;
 }

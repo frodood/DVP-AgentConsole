@@ -3,7 +3,7 @@
     <tr>
         <th>
             <div class="t-list-h">
-
+                #ID
             </div>
         </th>
         <th>
@@ -42,15 +42,11 @@
         ng-click="gotoTicket(ticket)"
         class="t-list-view-body"
         ng-repeat="ticket in ticketList track by $index">
-        <th>
-            <div class="checkbox margin-0 i-ticket-check">
-                <!--<label>-->
-                <!--<input type="checkbox"-->
-                <!--ng-model="selectedAll"-->
-                <!--class="top-check-all">-->
-                <!--</label>-->
+        <td>
+            <div class="t-i-desc">
+                {{ticket.tid}}
             </div>
-        </th>
+        </td>
         <td> <!-- assignee by -->
             <div class="t-list-h">
                 <ul class="customer-style-ul inline-assignee"
@@ -64,7 +60,7 @@
                     </li>
                     <li>
                         <div class="t-assignee-name">
-                            {{ticket.assignee_name| limitTo: 15 }}{{ticket.assignee_name.length > 15 ? '...' : ''}}
+                           {{ticket.assignee_name| limitTo: 15 }}{{ticket.assignee_name.length > 15 ? '...' : ''}}
                         </div>
                     </li>
                 </ul>

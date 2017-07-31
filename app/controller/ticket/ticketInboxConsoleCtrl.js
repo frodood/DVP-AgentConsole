@@ -46,6 +46,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
 
     //onload sort type
     $scope.sortType = 'updated_at';
+    $scope.pageSize = 20;
 
 
     //ticket view object
@@ -146,6 +147,14 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             loadedDone: function () {
                 $('#doneCountLoaded').removeClass('display-none');
                 $('#doneCountLoading').addClass('display-none');
+            },
+            loadingRefreshBtn: function () {
+                $('#btnRefreshLoading').removeClass('display-none');
+                $('#btnRefresh').addClass('display-none');
+            },
+            loadedRefreshBtn: function () {
+                $('#btnRefreshLoading').addClass('display-none');
+                $('#btnRefresh').removeClass('display-none');
             }
 
         }
@@ -421,12 +430,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             },
             picketFilterInboxList: function (currentFilter, page) {
                 ticketUIFun.loadingMainloader();
-                ticketService.GetTicketsByView(currentFilter._id, page, $scope.sortType).then(function (response) {
+                ticketService.GetTicketsByView(currentFilter._id, page, $scope.sortType, $scope.pageSize).then(function (response) {
                     ticketUIFun.loadedMainLoader();
                     if (response) {
                         $scope.ticketList = response.map(function (item, val) {
                             ticketListObj = {};
                             ticketListObj._id = item._id;
+                            ticketListObj.tid = item.tid;
                             ticketListObj.subject = item.subject;
                             ticketListObj.channel = item.channel;
                             ticketListObj.priority = item.priority;
@@ -456,12 +466,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             picketTicketInboxList: function (page, status, ticketType) {
                 console.log($scope.sortType);
                 ticketUIFun.loadingMainloader();
-                ticketService.getAllTickets(page, status, ticketType, $scope.sortType).then(function (response) {
+                ticketService.getAllTickets(page, status, ticketType, $scope.sortType, $scope.pageSize).then(function (response) {
                     ticketUIFun.loadedMainLoader();
                     if (response && response.data && response.data.Result) {
                         $scope.ticketList = response.data.Result.map(function (item, val) {
                             ticketListObj = {};
                             ticketListObj._id = item._id;
+                            ticketListObj.tid = item.tid;
                             ticketListObj.subject = item.subject;
                             ticketListObj.channel = item.channel;
                             ticketListObj.priority = item.priority;
@@ -490,49 +501,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             }
         }
     }();
-
-
-    //inbox count
-    inboxPrivateFunction.toDoListCount();
-    inboxPrivateFunction.newTicketListCount();
-    inboxPrivateFunction.inProgressTicketListCount();
-    inboxPrivateFunction.doneTicketListCount();
-
-    //my ticket inbox count
-    inboxPrivateFunction.myTicketNewTicketCount();
-    inboxPrivateFunction.myTicketToDoTicketCount();
-    inboxPrivateFunction.myTicketInProgressTicketCount();
-    inboxPrivateFunction.myTicketDoneTicketCount();
-
-
-    //my Group inbox count
-    inboxPrivateFunction.groupTicketNewTicketCount();
-    inboxPrivateFunction.groupTicketToDoTicketCount();
-    inboxPrivateFunction.groupTicketProgressingTicketCount();
-    inboxPrivateFunction.groupTicketClosedicketCount();
-
-    //submitted by me
-    inboxPrivateFunction.submittedTicketNewCount();
-    inboxPrivateFunction.submittedTicketToDoCount();
-    inboxPrivateFunction.submittedTicketProgressingCount();
-    inboxPrivateFunction.submittedTicketClosedCount();
-
-    //watched by me
-    inboxPrivateFunction.watchedTicketNewCount();
-    inboxPrivateFunction.watchedTicketToDoCount();
-    inboxPrivateFunction.watchedTicketProgressCount();
-    inboxPrivateFunction.watchedTicketDoneCount();
-
-    //collaborated by me
-    inboxPrivateFunction.collaboratedTicketNewCount();
-    inboxPrivateFunction.collaboratedTicketToDoCount();
-    inboxPrivateFunction.collaboratedTicketInProgressingCount();
-    inboxPrivateFunction.collaboratedTicketDoneCount();
-
-    //myTicket inbox
-    //$scope.onClickMyTicket = function () {
-
-    //};
 
 
     $scope.openTicketView = function (_viewType, _selectedViewObj, selectedFilter, page, clickEvent) {
@@ -602,7 +570,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             case'submitted by me progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsSubmittedByMe');
                 break;
-            case'submitted by done':
+            case'submitted by me done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsSubmittedByMe');
                 break;
             //ticket watched by me
@@ -651,8 +619,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         }
         inboxPrivateFunction.picketFilterInboxList(selectedFilter, '1');
     };
-    //init load todoList
-    $scope.openTicketView('my ToDo', $scope.ticketCountObj.toDo, '', 1);
 
 
     //ticket filter
@@ -684,7 +650,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
 
 
     $scope.currentPage = 1;
-    $scope.pageSize = 10;
 
     $scope.goToPagination = function () {
         $scope.openTicketView($scope.currentSelected.name,
@@ -739,6 +704,64 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
 
     $scope.onChangeSortTicktList = function (sortType) {
         $scope.openTicketView($scope.currentSelected.name, $scope.currentSelected.totalCount, $scope.selectedFilter, '1');
+    };
+
+
+    var loadMyDefulatTicketView = function () {
+
+        ticketUIFun.loadingRefreshBtn();
+        //inbox count
+        inboxPrivateFunction.toDoListCount();
+        inboxPrivateFunction.newTicketListCount();
+        inboxPrivateFunction.inProgressTicketListCount();
+        inboxPrivateFunction.doneTicketListCount();
+
+        //my ticket inbox count
+        inboxPrivateFunction.myTicketNewTicketCount();
+        inboxPrivateFunction.myTicketToDoTicketCount();
+        inboxPrivateFunction.myTicketInProgressTicketCount();
+        inboxPrivateFunction.myTicketDoneTicketCount();
+
+
+        //my Group inbox count
+        inboxPrivateFunction.groupTicketNewTicketCount();
+        inboxPrivateFunction.groupTicketToDoTicketCount();
+        inboxPrivateFunction.groupTicketProgressingTicketCount();
+        inboxPrivateFunction.groupTicketClosedicketCount();
+
+        //submitted by me
+        inboxPrivateFunction.submittedTicketNewCount();
+        inboxPrivateFunction.submittedTicketToDoCount();
+        inboxPrivateFunction.submittedTicketProgressingCount();
+        inboxPrivateFunction.submittedTicketClosedCount();
+
+        //watched by me
+        inboxPrivateFunction.watchedTicketNewCount();
+        inboxPrivateFunction.watchedTicketToDoCount();
+        inboxPrivateFunction.watchedTicketProgressCount();
+        inboxPrivateFunction.watchedTicketDoneCount();
+
+        //collaborated by me
+        inboxPrivateFunction.collaboratedTicketNewCount();
+        inboxPrivateFunction.collaboratedTicketToDoCount();
+        inboxPrivateFunction.collaboratedTicketInProgressingCount();
+        inboxPrivateFunction.collaboratedTicketDoneCount();
+
+        //myTicket inbox
+        //$scope.onClickMyTicket = function () {
+
+        //};
+
+        //init load todoList
+        $scope.openTicketView('my ToDo', $scope.ticketCountObj.toDo, '', 1);
+
+        ticketUIFun.loadedRefreshBtn();
+    };
+    loadMyDefulatTicketView();
+
+    //click event refresh all
+    $scope.ticketViewAllReload = function () {
+        loadMyDefulatTicketView();
     };
 
 

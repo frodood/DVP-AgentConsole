@@ -53,7 +53,7 @@
                                 <h5 class="header text-uppercase">
                                     <i ng-click="isCollapsedMyTicket = !isCollapsedMyTicket"
                                        ng-class="!isCollapsedMyTicket?'ti-angle-up':'ti-angle-down'"></i>
-                                    my ticket
+                                    my tickets
                                 </h5>
                             </li>
                         </ul>
@@ -75,7 +75,7 @@
                                 <h5 class="header text-uppercase">
                                     <i ng-click="isCollapsedGroupTicketr = !isCollapsedGroupTicketr"
                                        ng-class="!isCollapsedGroupTicketr?'ti-angle-up':'ti-angle-down'"></i>
-                                    Group ticket
+                                    Group tickets
                                 </h5>
                             </li>
                         </ul>
@@ -215,7 +215,7 @@
                                     <li>
                                         <div class="pager-count">
 
-                                            {{ (currentPage -1) *10 + 1 }} - {{(currentPage -1) *10 +
+                                            {{ (currentPage -1) * pageSize + 1 }} - {{(currentPage -1) *pageSize +
                                             ticketList.length}} of
                                             {{currentSelected.totalCount}}
                                         </div>
@@ -227,6 +227,18 @@
                                             total-items="currentSelected.totalCount"
                                             ng-change="goToPagination()"
                                             ng-model="currentPage"></ul>
+                                    </li>
+
+                                    <li>
+                                        <div id="btnRefresh" ng-click="ticketViewAllReload()"
+                                             class="btn btn-sm btn-refresh"
+                                             style="margin-top: -17px;">
+                                            Refresh
+                                        </div>
+                                        <div id="btnRefreshLoading" class="btn btn-sm btn-refresh display-none"
+                                             style="margin-top: -17px;">
+                                            Please wait..
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
