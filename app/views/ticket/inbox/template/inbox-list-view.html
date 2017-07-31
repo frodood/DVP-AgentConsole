@@ -39,6 +39,7 @@
     </thead>
     <tbody id="ticketMainWrp" class="t-i-tbody">
     <tr id="{{ticket._id}}"
+        ng-click="gotoTicket(ticket)"
         class="t-list-view-body"
         ng-repeat="ticket in ticketList track by $index">
         <th>

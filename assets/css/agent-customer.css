@@ -2553,6 +2553,12 @@ div > div >
 
 }
 
+.ticket-filter-body-filer {
+    min-height: 50px;
+    overflow: hidden;
+    position: relative;
+}
+
 .ticket-filter-view > .header {
     width: 100%;
     margin-top: 20px;

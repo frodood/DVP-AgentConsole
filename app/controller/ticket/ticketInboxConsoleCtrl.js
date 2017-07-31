@@ -15,23 +15,23 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         return callback(height);
     };
     getWindowHeight(function (height) {
-        document.getElementById('inboxToggleLeft').style.height = height + "px";
+       // document.getElementById('inboxToggleLeft').style.height = height + "px";
         document.getElementById('inboxRightWrapper').style.height = height + "px";
-        document.getElementById('ticketListView').style.height = height - 220 + "px";
-        $scope.mainScrollerHeight = height + "px";
+        document.getElementById('ticketListView').style.height = height - 230 + "px";
+        document.getElementById('inboxToggleLeft').style.height = height - 100 + "px";
         $scope.ticketListHeight = height - 220 + "px";
+
+        $scope.filterMenuScroller = height - 100 + "px";
 
     });
 
     window.onresize = function () {
         getWindowHeight(function (height) {
-            document.getElementById('inboxToggleLeft').style.height = height + "px";
             document.getElementById('inboxRightWrapper').style.height = height + "px";
-            document.getElementById('ticketListView').style.height = height - 220 + "px";
+            document.getElementById('ticketListView').style.height = height - 230 + "px";
+            document.getElementById('inboxToggleLeft').style.height = height - 100 + "px";
             $scope.ticketListHeight = height - 220 + "px";
-
-            $scope.ticketListHeight = height - 220 + "px";
-
+            $scope.filterMenuScroller = height - 100 + "px";
         });
     };
 
@@ -654,6 +654,15 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         $scope.openTicketView($scope.currentSelected.name,
             $scope.currentSelected.totalCount, $scope.selectedFilter,
             $scope.currentPage, 'goToPage');
+    };
+
+
+    //goto ticket view
+    $scope.gotoTicket = function (data) {
+        data.tabType = 'ticketView';
+        data.index = data.reference;
+        $rootScope.$emit('openNewTab', data);
+        $scope.closeTicketInbox();
     };
 
 //todo test
