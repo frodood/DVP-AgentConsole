@@ -267,7 +267,8 @@
                                             <small>Sort by :</small>
                                         </li>
                                         <li class="short-drop-down">
-                                            <select ng-model="sortType"
+                                            <select ng-change="onChangeSortTicktList(sortType)"
+                                                    ng-model="sortType"
                                                     class="form-control ">
                                                 <option value="updated_at">updated_at</option>
                                                 <option value="created_at">created_at</option>

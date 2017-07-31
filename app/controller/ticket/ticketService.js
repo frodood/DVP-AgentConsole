@@ -846,12 +846,13 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     };
 
     //getAllTickets
-    var getAllTickets = function (page, status, ticketType) {
+    var getAllTickets = function (page, status, ticketType, sorted_by) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + ticketType + "/10/" + page + "?status=" + status
-        }).then(function (response) {
+            url: baseUrls.ticketUrl + ticketType + "/10/" + page + "?status=" + status + '&sorted_by=' + sorted_by
+    }).
+        then(function (response) {
             return response;
         });
     };
@@ -941,7 +942,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         getCountWatchedByMeTicket: getCountWatchedByMeTicket,
         getCountCollaboratedByMeTicket: getCountCollaboratedByMeTicket,
         getAllTickets: getAllTickets,
-        getTicketsCount:getTicketsCount
+        getTicketsCount: getTicketsCount
     }
 });
 

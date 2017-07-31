@@ -15,7 +15,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         return callback(height);
     };
     getWindowHeight(function (height) {
-       // document.getElementById('inboxToggleLeft').style.height = height + "px";
+        // document.getElementById('inboxToggleLeft').style.height = height + "px";
         document.getElementById('inboxRightWrapper').style.height = height + "px";
         document.getElementById('ticketListView').style.height = height - 230 + "px";
         document.getElementById('inboxToggleLeft').style.height = height - 100 + "px";
@@ -445,8 +445,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             picketTicketInboxList: function (page, status, ticketType) {
                 console.log($scope.sortType);
                 ticketUIFun.loadingMainloader();
-                //status = status + "?sorted_by=" + $scope.sortType;
-                ticketService.getAllTickets(page, status, ticketType).then(function (response) {
+                ticketService.getAllTickets(page, status, ticketType, $scope.sortType).then(function (response) {
                     ticketUIFun.loadedMainLoader();
                     if (response && response.data && response.data.Result) {
                         $scope.ticketList = response.data.Result.map(function (item, val) {
@@ -698,6 +697,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     // for (var i = 0; i < 65; i++) {
     //     $scope.data.push("Item " + i);
     // };
+
+
+    //on change sort ticket
+
+    $scope.onChangeSortTicktList = function (sortType) {
+        $scope.openTicketView($scope.currentSelected.name, $scope.currentSelected.totalCount, '', '1');
+    };
 
 
 }).filter('startFrom', function () {
