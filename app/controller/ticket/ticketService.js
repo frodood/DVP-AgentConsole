@@ -256,11 +256,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
-    var getTicketsByView = function (id, page) {
+    var getTicketsByView = function (id, page,sorted_by) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/100/" + page
+            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/100/" + page + '&sorted_by=' + sorted_by
         }).then(function (response) {
             return response.data.Result;
         });

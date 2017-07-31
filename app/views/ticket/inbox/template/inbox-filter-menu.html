@@ -2,7 +2,7 @@
      ng-class="currentSelected.name==filter.title?'t-active-menu':''"
      ng-repeat="filter in views ">
     <div class="t-f-wrp"
-         ng-click="openTicketView(filter.title,filter.count,filter)">
+         ng-click="goToFilterTicketView(filter.title,filter.count,filter)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
@@ -11,7 +11,7 @@
                 </div>
             </li>
             <li ng-show="filter.count!=0">
-                <div class="t-item-count green">
+                <div class="t-item-count black">
                     {{filter.count}}
                 </div>
             </li>

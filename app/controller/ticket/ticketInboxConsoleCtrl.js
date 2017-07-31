@@ -421,7 +421,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             },
             picketFilterInboxList: function (currentFilter, page) {
                 ticketUIFun.loadingMainloader();
-                ticketService.GetTicketsByView(currentFilter._id, page).then(function (response) {
+                ticketService.GetTicketsByView(currentFilter._id, page, $scope.sortType).then(function (response) {
                     ticketUIFun.loadedMainLoader();
                     if (response) {
                         $scope.ticketList = response.map(function (item, val) {
@@ -438,6 +438,11 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                                 ticketListObj.assignee_avatar = item.assignee.avatar;
                             } else {
                                 ticketListObj.assignee_name = 'unAssigned';
+                                ticketListObj.assignee_avatar = '';
+                            }
+
+                            if (item.assignee_group) {
+                                ticketListObj.assignee_name = item.assignee_group.name;
                                 ticketListObj.assignee_avatar = '';
                             }
                             return ticketListObj;
@@ -468,6 +473,11 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                                 ticketListObj.assignee_avatar = item.assignee.avatar;
                             } else {
                                 ticketListObj.assignee_name = 'unAssigned';
+                                ticketListObj.assignee_avatar = '';
+                            }
+
+                            if (item.assignee_group) {
+                                ticketListObj.assignee_name = item.assignee_group.name;
                                 ticketListObj.assignee_avatar = '';
                             }
                             return ticketListObj;
@@ -536,7 +546,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         } else {
             page = page ? page : '1';
         }
-
+        _viewType = selectedFilter ? 'filter' : _viewType;
         switch (_viewType) {
             //ticket inbox
             case 'new':
@@ -625,6 +635,22 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         }
     };
 
+
+    //goto view ticket filter
+    $scope.goToFilterTicketView = function (_viewType, _selectedViewObj, selectedFilter, clickEvent) {
+        $scope.selectedFilter = selectedFilter;
+        $scope.ticketList = [];
+        $scope.currentSelected.name = _viewType;
+        $scope.currentSelected.totalCount = _selectedViewObj;
+
+        if (clickEvent != 'goToPage') {
+            page = 1;
+            $scope.currentPage = page;
+        } else {
+            page = page ? page : '1';
+        }
+        inboxPrivateFunction.picketFilterInboxList(selectedFilter, '1');
+    };
     //init load todoList
     $scope.openTicketView('my ToDo', $scope.ticketCountObj.toDo, '', 1);
 
@@ -712,7 +738,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     //on change sort ticket
 
     $scope.onChangeSortTicktList = function (sortType) {
-        $scope.openTicketView($scope.currentSelected.name, $scope.currentSelected.totalCount, '', '1');
+        $scope.openTicketView($scope.currentSelected.name, $scope.currentSelected.totalCount, $scope.selectedFilter, '1');
     };
 
 
