@@ -2212,6 +2212,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isForceFocused = false;
     $scope.currTab = 0;
     $scope.tabSelected = function (tabIndex) {
+        $scope.goToTopScroller();
         if (tabIndex == 'new-ticket-inbox') {
             $('#consoleBody').addClass('disable-scroll');
         } else {

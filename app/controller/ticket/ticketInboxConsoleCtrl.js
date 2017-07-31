@@ -433,8 +433,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.assignee_name = item.assignee.firstname + " " + item.submitter.lastname;
-                            ticketListObj.assignee_avatar = item.assignee.avatar;
+                            if (item.assignee) {
+                                ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
+                                ticketListObj.assignee_avatar = item.assignee.avatar;
+                            } else {
+                                ticketListObj.assignee_name = 'unAssigned';
+                                ticketListObj.assignee_avatar = '';
+                            }
                             return ticketListObj;
                         });
                     }
@@ -458,8 +463,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
-                            ticketListObj.assignee_avatar = item.assignee.avatar;
+                            if (item.assignee) {
+                                ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
+                                ticketListObj.assignee_avatar = item.assignee.avatar;
+                            } else {
+                                ticketListObj.assignee_name = 'unAssigned';
+                                ticketListObj.assignee_avatar = '';
+                            }
                             return ticketListObj;
                         });
                     }
@@ -555,16 +565,16 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyTickets');
                 break;
             //my Group ticket
-            case 'myGroupNew':
+            case 'my group new':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'MyGroupTickets');
                 break;
-            case 'myGroupToDo':
+            case 'my group todo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
                 break;
-            case 'myGroupInProgress':
+            case 'my group in progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyGroupTickets');
                 break;
-            case 'myGroupDone':
+            case 'my group done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyGroupTickets');
                 break;
             //ticket filter
