@@ -36,7 +36,8 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     };
 
     //all left toggle up
-    $scope.isCollapsedMyTicket = true;
+    $scope.isCollapsedInbox = true;
+    $scope.isCollapsedMyTicket = false;
     $scope.isCollapsedGroupTicketr = true;
     $scope.isCollapsedFilter = true;
     $scope.isCollapsedSubmitted = true;
@@ -432,8 +433,8 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.submitter_name = item.submitter.firstname + " " + item.submitter.lastname;
-                            ticketListObj.submitter_avatar = item.submitter.avatar;
+                            ticketListObj.assignee_name = item.assignee.firstname + " " + item.submitter.lastname;
+                            ticketListObj.assignee_avatar = item.assignee.avatar;
                             return ticketListObj;
                         });
                     }
@@ -457,8 +458,8 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.submitter_name = item.submitter.firstname + " " + item.submitter.lastname;
-                            ticketListObj.submitter_avatar = item.submitter.avatar;
+                            ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
+                            ticketListObj.assignee_avatar = item.assignee.avatar;
                             return ticketListObj;
                         });
                     }
@@ -541,16 +542,16 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'Tickets');
                 break;
             //my  ticket
-            case 'myNew':
+            case 'my New':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'MyTickets');
                 break;
-            case 'myOpen':
+            case 'my ToDo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyTickets');
                 break;
-            case 'myProgressing':
+            case 'my in Progressing':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyTickets');
                 break;
-            case 'myDone':
+            case 'my Done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyTickets');
                 break;
             //my Group ticket
@@ -615,7 +616,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     };
 
     //init load todoList
-    $scope.openTicketView('todo', $scope.ticketCountObj.toDo, '', 1);
+    $scope.openTicketView('my ToDo', $scope.ticketCountObj.toDo, '', 1);
 
 
     //ticket filter

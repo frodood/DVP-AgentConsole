@@ -9,7 +9,7 @@
         <th>
 
             <div class="t-list-h">
-                submitter
+                assignee
             </div>
         </th>
         <th>
@@ -58,13 +58,13 @@
                     <li>
                         <div class="t-assignee-avatar">
                             <img src="assets/img/avatar/defaultProfile.png"
-                                 ng-src="{{ticket.submitter_avatar}}"
+                                 ng-src="{{ticket.assignee_avatar}}"
                                  width="30"/>
                         </div>
                     </li>
                     <li>
                         <div class="t-assignee-name">
-                            {{ticket.submitter_name| limitTo: 15 }}{{ticket.submitter_name.length > 15 ? '...' : ''}}
+                            {{ticket.assignee_name| limitTo: 15 }}{{ticket.submitter_name.length > 15 ? '...' : ''}}
                         </div>
                     </li>
                 </ul>

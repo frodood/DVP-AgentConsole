@@ -552,7 +552,8 @@
                            api="scrlTabsApi"
                            tooltip-left-placement="top"
                            id="consoleMainTab">
-            <uib-tabset class="scrollable-tab-overwrite " active="activeTabIndex" id="tab_view">
+            <uib-tabset class="scrollable-tab-overwrite"
+                        active="activeTabIndex" id="tab_view">
                 <uib-tab class="console-main-tab "
                          index="tab.tabReference" ng-repeat="tab in tabs"
                          select="tabSelected(tab.tabReference)">

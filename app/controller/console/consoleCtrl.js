@@ -2212,8 +2212,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isForceFocused = false;
     $scope.currTab = 0;
     $scope.tabSelected = function (tabIndex) {
-
-
+        if (tabIndex == 'new-ticket-inbox') {
+            $('#consoleBody').addClass('disable-scroll');
+        } else {
+            $('#consoleBody').removeClass('disable-scroll');
+        }
         $scope.tabs.filter(function (item) {
             if (item.tabReference == tabIndex) {
 
@@ -2381,6 +2384,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     var openNewUserProfileTab = function (profile, index, sessionObj, data) {
+        $('#consoleBody').removeClass('disable-scroll');
         var engUuid = uuid4.generate();
         var engSessionObj = {
             engagement_id: engUuid,
@@ -2511,13 +2515,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 //add dashboard inside tab
     $scope.addDashBoard = function () {
+        $('#consoleBody').removeClass('disable-scroll');
         $scope.addTab('Dashboard', 'dashboard', 'dashboard', "dashborad", "dashborad");
         $('#consoleBody').removeClass('disable-scroll');
     };
 //add myquick note inside tab
     $scope.addMyNote = function () {
-        $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
         $('#consoleBody').removeClass('disable-scroll');
+        $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
 
 //ToDo
@@ -2525,13 +2530,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     //ToDo
     $scope.addNewTicketInboxTemp = function () {
-        $scope.addTab('new-ticket-inbox', 'new-ticket-inbox', 'new-ticket-inbox', "new-ticket-inbox", "new-ticket-inbox");
         $('#consoleBody').addClass('disable-scroll');
+        $scope.addTab('new-ticket-inbox', 'new-ticket-inbox', 'new-ticket-inbox', "new-ticket-inbox", "new-ticket-inbox");
 
     };
 
 
     var openNewEngagementTab = function (args, index) {
+        $('#consoleBody').removeClass('disable-scroll');
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -2543,7 +2549,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             userProfile: undefined
         };
         $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, args.engagement_id);
-        $('#consoleBody').removeClass('disable-scroll');
+
     };
 
     $rootScope.$on('openNewTab', function (events, args) {
@@ -2561,7 +2567,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'userProfile':
                 openNewUserProfileTab(args, args.index, undefined, undefined);
                 break;
-
             case 'newUserProfile':
                 var data = {
                     Company: args.company,

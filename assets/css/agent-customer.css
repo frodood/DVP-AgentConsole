@@ -13036,7 +13036,7 @@ ul.i-top-navigation > li {
     text-align: center;
     color: #ffffff;
     font-size: 10px;
-    padding-top: 5px;
+    padding-top: 4px;
 }
 
 .t-item-count.count-loading > i {
@@ -13047,6 +13047,11 @@ ul.i-top-navigation > li {
 .t-item-count.green {
     background: #82E9A0;
     box-shadow: 0 2px 6px 0 #82E9A0;
+}
+
+.t-item-count.black{
+    background: #223448;
+    box-shadow: 0 2px 6px 0 #223448;
 }
 
 .t-item-count.red {

@@ -24,7 +24,7 @@
                                     <h5 class="header text-uppercase">
                                         <i ng-click="isCollapsedInbox = !isCollapsedInbox"
                                            ng-class="!isCollapsedInbox?'ti-angle-up':'ti-angle-down'"></i>
-                                        ticket inbox
+                                        all tickets
                                     </h5>
                                 </li>
                                 <!--<li class="count-right">-->
@@ -196,7 +196,7 @@
                             <div class="inbox-h-top-left-wrapper">
                                 <div class="inbox-header-left05201">
                                     <div class="inbox-title">
-                                        <h4> {{currentSelected.name }} Ticket
+                                        <h4> {{currentSelected.name }} Tickets
                                             <!--<small>{{currentSelected.totalCount }} Total</small>-->
                                         </h4>
                                     </div>
@@ -215,7 +215,8 @@
                                     <li>
                                         <div class="pager-count">
 
-                                            {{ (currentPage -1) *10 + 1 }} - {{(currentPage -1) *10 + ticketList.length}} of
+                                            {{ (currentPage -1) *10 + 1 }} - {{(currentPage -1) *10 +
+                                            ticketList.length}} of
                                             {{currentSelected.totalCount}}
                                         </div>
                                     </li>
