@@ -2505,16 +2505,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.addMailInbox = function () {
         $scope.addTab('Mail-Inbox', 'mail-inbox', 'mail-inbox', null, 'mailinbox_agentconsole');
+        $('#consoleBody').removeClass('disable-scroll');
         resizeDiv();
     };
 
 //add dashboard inside tab
     $scope.addDashBoard = function () {
         $scope.addTab('Dashboard', 'dashboard', 'dashboard', "dashborad", "dashborad");
+        $('#consoleBody').removeClass('disable-scroll');
     };
 //add myquick note inside tab
     $scope.addMyNote = function () {
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
+        $('#consoleBody').removeClass('disable-scroll');
     };
 
 //ToDo
@@ -2540,10 +2543,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             userProfile: undefined
         };
         $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, args.engagement_id);
+        $('#consoleBody').removeClass('disable-scroll');
     };
 
     $rootScope.$on('openNewTab', function (events, args) {
-
+        $('#consoleBody').removeClass('disable-scroll');
         switch (args.tabType) {
             case 'ticketView':
                 openNewTicketTab(args, args.reference);
@@ -2575,6 +2579,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /* -------- new UI update user profile tab --------- */
 //add dashboard inside tab
     $scope.addUserProfileTab = function () {
+        $('#consoleBody').removeClass('disable-scroll');
         $scope.addTab('new-profile', 'new-profile', 'new-profile', "new-profile", "new-profile");
     };
 //$scope.addUserProfileTab();
@@ -2598,6 +2603,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
     var openEngagementTabForMailReply = function (args, index) {
+        $('#consoleBody').removeClass('disable-scroll');
         var notifyData = {
             company: args.company,
             direction: args.direction,

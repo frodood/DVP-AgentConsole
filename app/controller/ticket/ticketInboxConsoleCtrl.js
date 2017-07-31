@@ -659,9 +659,8 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     //goto ticket view
     $scope.gotoTicket = function (data) {
         data.tabType = 'ticketView';
-        data.index = data.reference;
+        data.reference = data._id;
         $rootScope.$emit('openNewTab', data);
-        $scope.closeTicketInbox();
     };
 
 //todo test
