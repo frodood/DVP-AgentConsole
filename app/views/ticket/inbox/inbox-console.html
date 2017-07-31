@@ -215,7 +215,7 @@
                                     <li>
                                         <div class="pager-count">
 
-                                            {{currentPage}} - {{pageSize * currentPage}} of
+                                            {{ (currentPage -1) *10 + 1 }} - {{(currentPage -1) *10 + ticketList.length}} of
                                             {{currentSelected.totalCount}}
                                         </div>
                                     </li>

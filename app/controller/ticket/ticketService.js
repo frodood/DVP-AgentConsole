@@ -851,14 +851,13 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         return $http({
             method: 'GET',
             url: baseUrls.ticketUrl + ticketType + "/10/" + page + "?status=" + status + '&sorted_by=' + sorted_by
-    }).
-        then(function (response) {
+        }).then(function (response) {
             return response;
         });
     };
 
     //getTicketCount
-    var getTicketsCount = function (status, ticketType) {
+    var getTicketsCount = function (ticketType, status) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',

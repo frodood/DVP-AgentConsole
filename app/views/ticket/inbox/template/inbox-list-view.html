@@ -32,9 +32,9 @@
         <th>
             <div class="t-list-h">CHANNEL</div>
         </th>
-        <th>
+        <!--<th>-->
 
-        </th>
+        <!--</th>-->
     </tr>
     </thead>
     <tbody id="ticketMainWrp" class="t-i-tbody">
@@ -106,9 +106,7 @@
         <td>
             <div class="t-i-type-wrp">
                 <div class="t-type-wrapper">
-                    <i tooltip-placement="top"
-                       uib-tooltip="{{ticket.type}}"
-                       ng-class="{'fa fa-random':ticket.channel=='api',
+                    <i ng-class="{'fa fa-random':ticket.channel=='api',
                   'fa fa-twitter':ticket.channel=='twitter',
                    'fa fa-facebook':ticket.channel=='facebook-post',
                   'fa fa-phone':ticket.channel=='call',
@@ -119,13 +117,13 @@
                 </div>
             </div>
         </td>
-        <td>
-            <div class="t-i-more-wrp">
-                <div class="ticket-more">
-                    <i class="ti-more-alt animated fadeInRight"></i>
-                </div>
-            </div>
-        </td>
+        <!--<td>-->
+            <!--<div class="t-i-more-wrp">-->
+                <!--<div class="ticket-more">-->
+                    <!--<i class="ti-more-alt animated fadeInRight"></i>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</td>-->
     </tr>
     </tbody>
 </table>

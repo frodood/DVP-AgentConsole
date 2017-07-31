@@ -687,7 +687,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
         $scope.ticketList.toDoSt=false;
         $scope.ticketList.inProgressSt=false;
 
-    };ƒ
+    };
     setToInitiate();
     pickAllUsers();
 

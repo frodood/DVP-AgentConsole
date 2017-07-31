@@ -2523,6 +2523,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //ToDo
     $scope.addNewTicketInboxTemp = function () {
         $scope.addTab('new-ticket-inbox', 'new-ticket-inbox', 'new-ticket-inbox', "new-ticket-inbox", "new-ticket-inbox");
+        $('#consoleBody').addClass('disable-scroll');
+
     };
 
 
