@@ -2213,7 +2213,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.currTab = 0;
     $scope.tabSelected = function (tabIndex) {
         $scope.goToTopScroller();
-        if (tabIndex == 'new-ticket-inbox') {
+        if (tabIndex == 'Ticket-Inbox') {
             $('#consoleBody').addClass('disable-scroll');
         } else {
             $('#consoleBody').removeClass('disable-scroll');
@@ -2532,7 +2532,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     //ToDo
     $scope.addNewTicketInboxTemp = function () {
         $('#consoleBody').addClass('disable-scroll');
-        $scope.addTab('new-ticket-inbox', 'new-ticket-inbox', 'new-ticket-inbox', "new-ticket-inbox", "new-ticket-inbox");
+        $scope.addTab('Ticket-Inbox', 'Ticket-Inbox', 'Ticket-Inbox', "Ticket-Inbox", "Ticket-Inbox");
 
     };
 

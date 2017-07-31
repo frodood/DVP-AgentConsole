@@ -1,8 +1,8 @@
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='myNew'?'t-active-menu':''"
+     ng-class="currentSelected.name==filter.title?'t-active-menu':''"
      ng-repeat="filter in views ">
     <div class="t-f-wrp"
-         ng-click="openTicketView('filter',filter.count,filter)">
+         ng-click="openTicketView(filter.title,filter.count,filter)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
