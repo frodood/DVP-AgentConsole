@@ -256,11 +256,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
-    var getTicketsByView = function (id, page) {
+    var getTicketsByView = function (id, page,sorted_by) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/100/" + page
+            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/100/" + page + '&sorted_by=' + sorted_by
         }).then(function (response) {
             return response.data.Result;
         });
@@ -846,18 +846,18 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     };
 
     //getAllTickets
-    var getAllTickets = function (page, status, ticketType) {
+    var getAllTickets = function (page, status, ticketType, sorted_by) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + ticketType + "/10/" + page + "?status=" + status
+            url: baseUrls.ticketUrl + ticketType + "/10/" + page + "?status=" + status + '&sorted_by=' + sorted_by
         }).then(function (response) {
             return response;
         });
     };
 
     //getTicketCount
-    var getTicketsCount = function (status, ticketType) {
+    var getTicketsCount = function (ticketType, status) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
@@ -941,7 +941,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         getCountWatchedByMeTicket: getCountWatchedByMeTicket,
         getCountCollaboratedByMeTicket: getCountCollaboratedByMeTicket,
         getAllTickets: getAllTickets,
-        getTicketsCount:getTicketsCount
+        getTicketsCount: getTicketsCount
     }
 });
 

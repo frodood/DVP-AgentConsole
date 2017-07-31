@@ -5,7 +5,7 @@
     <div class="col-sm-5 col-md-4 col-xs-12 col-lg-3 ">
         <div class="row">
             <div id="inboxToggleLeft"
-                 slimscroll="{height: '{{mainScrollerHeight}}',
+                 slimscroll="{height: '{{filterMenuScroller}}',
                     width:'100%',
                     railVisible: true,
                     color: '#777',
@@ -24,7 +24,7 @@
                                     <h5 class="header text-uppercase">
                                         <i ng-click="isCollapsedInbox = !isCollapsedInbox"
                                            ng-class="!isCollapsedInbox?'ti-angle-up':'ti-angle-down'"></i>
-                                        ticket inbox
+                                        all tickets
                                     </h5>
                                 </li>
                                 <!--<li class="count-right">-->
@@ -106,7 +106,9 @@
                 </div>
                 <section class="i-left-t-filter-wrapper"
                          uib-collapse="isCollapsedSubmitted">
-                    <div ng-include="'app/views/ticket/inbox/template/inbox-submitted-byme-menu.html'"></div>
+                    <div class="ticket-filter-body ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-submitted-byme-menu.html'"></div>
+                    </div>
                 </section>
                 <!-- ./ end -->
 
@@ -126,7 +128,9 @@
                 </div>
                 <section class="i-left-t-filter-wrapper"
                          uib-collapse="isCollapsedWatchedByMe">
-                    <div ng-include="'app/views/ticket/inbox/template/inbox-watched-byme-menu.html'"></div>
+                    <div class="ticket-filter-body ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-watched-byme-menu.html'"></div>
+                    </div>
                 </section>
                 <!-- ./ end -->
 
@@ -147,7 +151,9 @@
                 </div>
                 <section class="i-left-t-filter-wrapper"
                          uib-collapse="isCollapsedCollaboratedByMe">
-                    <div ng-include="'app/views/ticket/inbox/template/inbox-collaborated-byme-menu.html'"></div>
+                    <div class="ticket-filter-body ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-collaborated-byme-menu.html'"></div>
+                    </div>
                 </section>
                 <!-- ./ end -->
 
@@ -167,7 +173,9 @@
                 </div>
                 <section class="i-left-t-filter-wrapper"
                          uib-collapse="isCollapsedFilter">
-                    <div ng-include="'app/views/ticket/inbox/template/inbox-filter-menu.html'"></div>
+                    <div class="ticket-filter-body-filer ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-filter-menu.html'"></div>
+                    </div>
                 </section>
                 <!-- ./ end -->
 
@@ -183,12 +191,12 @@
             <div id="inboxRightWrapper" class="inbox-right-wrapper05201">
                 <!-- ./ top wrapper -->
                 <div class="i-right-top-wrapper">
-                    <div class="col-lg-4 col-sm-4 col-md-6 col-xs-6">
+                    <div class="col-lg-5 col-sm-4 col-md-6 col-xs-6">
                         <div class="row">
                             <div class="inbox-h-top-left-wrapper">
                                 <div class="inbox-header-left05201">
                                     <div class="inbox-title">
-                                        <h4> {{currentSelected.name }} Ticket
+                                        <h4> {{currentSelected.name }} Tickets
                                             <!--<small>{{currentSelected.totalCount }} Total</small>-->
                                         </h4>
                                     </div>
@@ -200,14 +208,15 @@
 
 
                     <!-- ./ top right navigation -->
-                    <div class="col-lg-8 col-sm-8 col-md-6 col-xs-6">
+                    <div class="col-lg-7 col-sm-8 col-md-6 col-xs-6">
                         <div class="row">
                             <div class="i-top-navigation">
                                 <ul class="customer-style-ul i-top-navigation">
                                     <li>
                                         <div class="pager-count">
 
-                                            {{currentPage}} - {{pageSize * currentPage}} of
+                                            {{ (currentPage -1) *10 + 1 }} - {{(currentPage -1) *10 +
+                                            ticketList.length}} of
                                             {{currentSelected.totalCount}}
                                         </div>
                                     </li>
@@ -259,7 +268,8 @@
                                             <small>Sort by :</small>
                                         </li>
                                         <li class="short-drop-down">
-                                            <select ng-model="sortType"
+                                            <select ng-change="onChangeSortTicktList(sortType)"
+                                                    ng-model="sortType"
                                                     class="form-control ">
                                                 <option value="updated_at">updated_at</option>
                                                 <option value="created_at">created_at</option>

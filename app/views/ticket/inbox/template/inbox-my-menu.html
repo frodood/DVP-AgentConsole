@@ -1,7 +1,7 @@
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='myNew'?'t-active-menu':''">
+     ng-class="currentSelected.name=='my New'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('myNew',ticketCountObj.myTicket.myNew)">
+         ng-click="openTicketView('my New',ticketCountObj.myTicket.myNew)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
@@ -10,7 +10,7 @@
                 </div>
             </li>
             <li ng-show="ticketCountObj.myTicket.myNew!=0">
-                <div class="t-item-count green animated slideInRight">
+                <div class="t-item-count black animated slideInRight">
                     {{ticketCountObj.myTicket.myNew}}
                 </div>
             </li>
@@ -20,18 +20,18 @@
 
 
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='myToDo'?'t-active-menu':''">
+     ng-class="currentSelected.name=='my ToDo'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('myToDo',ticketCountObj.myTicket.myToDo)">
+         ng-click="openTicketView('my ToDo',ticketCountObj.myTicket.myToDo)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.myTicket.myToDo==0?'text-decoration count0':''">
-                    ToDo
+                    Todo
                 </div>
             </li>
             <li ng-show="ticketCountObj.myTicket.myToDo!=0">
-                <div class="t-item-count green animated slideInRight">
+                <div class="t-item-count red animated slideInRight">
                     {{ticketCountObj.myTicket.myToDo}}
                 </div>
             </li>
@@ -39,30 +39,30 @@
     </div>
 </div>
 
-<div class="ticket-filter-body"
-     ng-class="currentSelected.name=='myProgressing'?'t-active-menu':''">
-    <div class="t-f-wrp"
-         ng-click="openTicketView('myProgressing',ticketCountObj.myTicket.myNew)">
-        <ul class="customer-style-ul inline-list t-f-ul">
-            <li>
-                <div class="t-filter-name"
-                     ng-class="ticketCountObj.myTicket.myInProgress==0?'text-decoration count0':''">
-                    In Progress
-                </div>
-            </li>
-            <li ng-show="ticketCountObj.myTicket.myInProgress!=0">
-                <div class="t-item-count green animated slideInRight">
-                    {{ticketCountObj.myTicket.myInProgress}}
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+<!--<div class="ticket-filter-body"-->
+     <!--ng-class="currentSelected.name=='my in Progressing'?'t-active-menu':''">-->
+    <!--<div class="t-f-wrp"-->
+         <!--ng-click="openTicketView('my in Progressing',ticketCountObj.myTicket.myNew)">-->
+        <!--<ul class="customer-style-ul inline-list t-f-ul">-->
+            <!--<li>-->
+                <!--<div class="t-filter-name"-->
+                     <!--ng-class="ticketCountObj.myTicket.myInProgress==0?'text-decoration count0':''">-->
+                    <!--In Progress-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li ng-show="ticketCountObj.myTicket.myInProgress!=0">-->
+                <!--<div class="t-item-count red animated slideInRight">-->
+                    <!--{{ticketCountObj.myTicket.myInProgress}}-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
 
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='myDone'?'t-active-menu':''">
+     ng-class="currentSelected.name=='my Done'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('myDone',ticketCountObj.myTicket.myNew)">
+         ng-click="openTicketView('my Done',ticketCountObj.myTicket.myNew)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
@@ -71,7 +71,7 @@
                 </div>
             </li>
             <li ng-show="ticketCountObj.myTicket.myDone!=0">
-                <div class="t-item-count green animated slideInRight">
+                <div class="t-item-count black animated slideInRight">
                     {{ticketCountObj.myTicket.myDone}}
                 </div>
             </li>

@@ -15,28 +15,29 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         return callback(height);
     };
     getWindowHeight(function (height) {
-        document.getElementById('inboxToggleLeft').style.height = height + "px";
+        // document.getElementById('inboxToggleLeft').style.height = height + "px";
         document.getElementById('inboxRightWrapper').style.height = height + "px";
-        document.getElementById('ticketListView').style.height = height - 220 + "px";
-        $scope.mainScrollerHeight = height + "px";
+        document.getElementById('ticketListView').style.height = height - 230 + "px";
+        document.getElementById('inboxToggleLeft').style.height = height - 100 + "px";
         $scope.ticketListHeight = height - 220 + "px";
+
+        $scope.filterMenuScroller = height - 100 + "px";
 
     });
 
     window.onresize = function () {
         getWindowHeight(function (height) {
-            document.getElementById('inboxToggleLeft').style.height = height + "px";
             document.getElementById('inboxRightWrapper').style.height = height + "px";
-            document.getElementById('ticketListView').style.height = height - 220 + "px";
+            document.getElementById('ticketListView').style.height = height - 230 + "px";
+            document.getElementById('inboxToggleLeft').style.height = height - 100 + "px";
             $scope.ticketListHeight = height - 220 + "px";
-
-            $scope.ticketListHeight = height - 220 + "px";
-
+            $scope.filterMenuScroller = height - 100 + "px";
         });
     };
 
     //all left toggle up
-    $scope.isCollapsedMyTicket = true;
+    $scope.isCollapsedInbox = true;
+    $scope.isCollapsedMyTicket = false;
     $scope.isCollapsedGroupTicketr = true;
     $scope.isCollapsedFilter = true;
     $scope.isCollapsedSubmitted = true;
@@ -420,7 +421,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             },
             picketFilterInboxList: function (currentFilter, page) {
                 ticketUIFun.loadingMainloader();
-                ticketService.GetTicketsByView(currentFilter._id, page).then(function (response) {
+                ticketService.GetTicketsByView(currentFilter._id, page, $scope.sortType).then(function (response) {
                     ticketUIFun.loadedMainLoader();
                     if (response) {
                         $scope.ticketList = response.map(function (item, val) {
@@ -432,8 +433,18 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.submitter_name = item.submitter.name;
-                            ticketListObj.submitter_avatar = item.submitter.avatar;
+                            if (item.assignee) {
+                                ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
+                                ticketListObj.assignee_avatar = item.assignee.avatar;
+                            } else {
+                                ticketListObj.assignee_name = 'unAssigned';
+                                ticketListObj.assignee_avatar = '';
+                            }
+
+                            if (item.assignee_group) {
+                                ticketListObj.assignee_name = item.assignee_group.name;
+                                ticketListObj.assignee_avatar = '';
+                            }
                             return ticketListObj;
                         });
                     }
@@ -445,7 +456,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             picketTicketInboxList: function (page, status, ticketType) {
                 console.log($scope.sortType);
                 ticketUIFun.loadingMainloader();
-                ticketService.getAllTickets(page, status, ticketType).then(function (response) {
+                ticketService.getAllTickets(page, status, ticketType, $scope.sortType).then(function (response) {
                     ticketUIFun.loadedMainLoader();
                     if (response && response.data && response.data.Result) {
                         $scope.ticketList = response.data.Result.map(function (item, val) {
@@ -457,8 +468,18 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.submitter_name = item.submitter.name;
-                            ticketListObj.submitter_avatar = item.submitter.avatar;
+                            if (item.assignee) {
+                                ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
+                                ticketListObj.assignee_avatar = item.assignee.avatar;
+                            } else {
+                                ticketListObj.assignee_name = 'unAssigned';
+                                ticketListObj.assignee_avatar = '';
+                            }
+
+                            if (item.assignee_group) {
+                                ticketListObj.assignee_name = item.assignee_group.name;
+                                ticketListObj.assignee_avatar = '';
+                            }
                             return ticketListObj;
                         });
                     }
@@ -525,7 +546,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         } else {
             page = page ? page : '1';
         }
-
+        _viewType = selectedFilter ? 'filter' : _viewType;
         switch (_viewType) {
             //ticket inbox
             case 'new':
@@ -541,29 +562,29 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'Tickets');
                 break;
             //my  ticket
-            case 'myNew':
+            case 'my New':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'MyTickets');
                 break;
-            case 'myOpen':
+            case 'my ToDo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyTickets');
                 break;
-            case 'myProgressing':
+            case 'my in Progressing':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyTickets');
                 break;
-            case 'myDone':
+            case 'my Done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyTickets');
                 break;
             //my Group ticket
-            case 'myGroupNew':
+            case 'my group new':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'MyGroupTickets');
                 break;
-            case 'myGroupToDo':
+            case 'my group todo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
                 break;
-            case 'myGroupInProgress':
+            case 'my group in progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyGroupTickets');
                 break;
-            case 'myGroupDone':
+            case 'my group done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyGroupTickets');
                 break;
             //ticket filter
@@ -572,50 +593,66 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                 inboxPrivateFunction.picketFilterInboxList(selectedFilter, page);
                 break;
             //ticket submitted by me
-            case'submittedByMeNew':
+            case'submitted by me new':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsSubmittedByMe');
                 break;
-            case'submittedByMeTodo':
+            case'submitted by me todo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsSubmittedByMe');
                 break;
-            case'submittedByMeProgress':
+            case'submitted by me progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsSubmittedByMe');
                 break;
-            case'submittedByDone':
+            case'submitted by done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsSubmittedByMe');
                 break;
             //ticket watched by me
-            case'watchedByMeNew':
+            case'watched by me new':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsWatchedByMe');
                 break;
-            case'watchedByMeToDo':
+            case'watched by me todo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsWatchedByMe');
                 break;
-            case'watchedByMeInProgress':
+            case'watched by me inProgress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsWatchedByMe');
                 break;
-            case'watchedByMeDone':
+            case'watched by me done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsWatchedByMe');
                 break;
             //ticket collaborated by me
-            case'collaboratedByMeMeNew':
+            case'collaborated by me new':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsCollaboratedByMe');
                 break;
-            case'collaboratedByMeMeToDo':
+            case'collaborated by me todo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsCollaboratedByMe');
                 break;
-            case'collaboratedByMeMeInProgress':
+            case'collaborated by me progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsCollaboratedByMe');
                 break;
-            case'collaboratedByMeMeDone':
+            case'collaborated by me done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsCollaboratedByMe');
                 break;
 
         }
     };
 
+
+    //goto view ticket filter
+    $scope.goToFilterTicketView = function (_viewType, _selectedViewObj, selectedFilter, clickEvent) {
+        $scope.selectedFilter = selectedFilter;
+        $scope.ticketList = [];
+        $scope.currentSelected.name = _viewType;
+        $scope.currentSelected.totalCount = _selectedViewObj;
+
+        if (clickEvent != 'goToPage') {
+            page = 1;
+            $scope.currentPage = page;
+        } else {
+            page = page ? page : '1';
+        }
+        inboxPrivateFunction.picketFilterInboxList(selectedFilter, '1');
+    };
     //init load todoList
-    $scope.openTicketView('todo', $scope.ticketCountObj.toDo, '', 1);
+    $scope.openTicketView('my ToDo', $scope.ticketCountObj.toDo, '', 1);
 
 
     //ticket filter
@@ -655,6 +692,14 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             $scope.currentPage, 'goToPage');
     };
 
+
+    //goto ticket view
+    $scope.gotoTicket = function (data) {
+        data.tabType = 'ticketView';
+        data.reference = data._id;
+        $rootScope.$emit('openNewTab', data);
+    };
+
 //todo test
 
 
@@ -688,6 +733,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     // for (var i = 0; i < 65; i++) {
     //     $scope.data.push("Item " + i);
     // };
+
+
+    //on change sort ticket
+
+    $scope.onChangeSortTicktList = function (sortType) {
+        $scope.openTicketView($scope.currentSelected.name, $scope.currentSelected.totalCount, $scope.selectedFilter, '1');
+    };
 
 
 }).filter('startFrom', function () {

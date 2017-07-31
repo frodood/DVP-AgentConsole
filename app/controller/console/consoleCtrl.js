@@ -2212,8 +2212,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.isForceFocused = false;
     $scope.currTab = 0;
     $scope.tabSelected = function (tabIndex) {
-
-
+        $scope.goToTopScroller();
+        if (tabIndex == 'Ticket-Inbox') {
+            $('#consoleBody').addClass('disable-scroll');
+        } else {
+            $('#consoleBody').removeClass('disable-scroll');
+        }
         $scope.tabs.filter(function (item) {
             if (item.tabReference == tabIndex) {
 
@@ -2289,7 +2293,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
     $scope.loadUsers();
-    
 
 
 //load userGroup list
@@ -2382,6 +2385,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     var openNewUserProfileTab = function (profile, index, sessionObj, data) {
+        $('#consoleBody').removeClass('disable-scroll');
         var engUuid = uuid4.generate();
         var engSessionObj = {
             engagement_id: engUuid,
@@ -2506,15 +2510,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.addMailInbox = function () {
         $scope.addTab('Mail-Inbox', 'mail-inbox', 'mail-inbox', null, 'mailinbox_agentconsole');
+        $('#consoleBody').removeClass('disable-scroll');
         resizeDiv();
     };
 
 //add dashboard inside tab
     $scope.addDashBoard = function () {
+        $('#consoleBody').removeClass('disable-scroll');
         $scope.addTab('Dashboard', 'dashboard', 'dashboard', "dashborad", "dashborad");
+        $('#consoleBody').removeClass('disable-scroll');
     };
 //add myquick note inside tab
     $scope.addMyNote = function () {
+        $('#consoleBody').removeClass('disable-scroll');
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
     };
 
@@ -2522,12 +2530,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 //$scope.addDashBoard();
 
     //ToDo
-    var addNewTicketInboxTemp = function () {
-        $scope.addTab('new-ticket-inbox', 'new-ticket-inbox', 'new-ticket-inbox', "new-ticket-inbox", "new-ticket-inbox");
+    $scope.addNewTicketInboxTemp = function () {
+        $('#consoleBody').addClass('disable-scroll');
+        $scope.addTab('Ticket-Inbox', 'Ticket-Inbox', 'Ticket-Inbox', "Ticket-Inbox", "Ticket-Inbox");
+
     };
-    addNewTicketInboxTemp();
+
 
     var openNewEngagementTab = function (args, index) {
+        $('#consoleBody').removeClass('disable-scroll');
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -2539,10 +2550,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             userProfile: undefined
         };
         $scope.addTab('Engagement ' + args.channel_from, 'Engagement', 'engagement', notifyData, args.engagement_id);
+
     };
 
     $rootScope.$on('openNewTab', function (events, args) {
-
+        $('#consoleBody').removeClass('disable-scroll');
         switch (args.tabType) {
             case 'ticketView':
                 openNewTicketTab(args, args.reference);
@@ -2556,7 +2568,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'userProfile':
                 openNewUserProfileTab(args, args.index, undefined, undefined);
                 break;
-
             case 'newUserProfile':
                 var data = {
                     Company: args.company,
@@ -2574,6 +2585,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     /* -------- new UI update user profile tab --------- */
 //add dashboard inside tab
     $scope.addUserProfileTab = function () {
+        $('#consoleBody').removeClass('disable-scroll');
         $scope.addTab('new-profile', 'new-profile', 'new-profile', "new-profile", "new-profile");
     };
 //$scope.addUserProfileTab();
@@ -2597,6 +2609,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     });
 
     var openEngagementTabForMailReply = function (args, index) {
+        $('#consoleBody').removeClass('disable-scroll');
         var notifyData = {
             company: args.company,
             direction: args.direction,
@@ -4518,15 +4531,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.openUserProfile = function (userID) {
 
         $scope.showMesssageModal = false;
-        if(userID)
-        {
+        if (userID) {
             userService.getExternalUserProfileByID(userID).then(function (resUser) {
 
-                if(resUser.IsSuccess)
-                {
-                    var userObj=resUser.Result;
-                    if(userObj)
-                    {
+                if (resUser.IsSuccess) {
+                    var userObj = resUser.Result;
+                    if (userObj) {
                         var DataObj = {
                             channel: "appointment",
                             channel_from: profileDataParser.myProfile.username,
@@ -4537,26 +4547,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         openNewUserProfileTab(userObj, userID, undefined, DataObj);
                     }
-                    else
-                    {
+                    else {
                         $scope.showAlert('Error', 'error', 'Cannot open user profile');
                     }
                 }
-                else
-                {
+                else {
                     console.log("Error in loading external user ");
 
                 }
 
-            },function (errUser) {
-                console.log("Error in loading external user ",errUser);
+            }, function (errUser) {
+                console.log("Error in loading external user ", errUser);
 
             });
 
 
         }
-        else
-        {
+        else {
             $scope.showAlert('Error', 'error', 'Cannot open user profile');
         }
     };
