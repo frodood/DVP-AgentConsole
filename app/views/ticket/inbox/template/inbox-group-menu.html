@@ -26,7 +26,7 @@
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.myGroup.toDo==0?'text-decoration count0':''">
-                    TODO
+                    IN PROGRESS
                 </div>
             </li>
             <li ng-show="ticketCountObj.myGroup.toDo!=0">
@@ -38,25 +38,25 @@
     </div>
 </div>
 
-<div class="ticket-filter-body"
-     ng-class="currentSelected.name=='my group in progress'?'t-active-menu':''">
-    <div class="t-f-wrp"
-         ng-click="openTicketView('my group in progress',ticketCountObj.myGroup.inProgress)">
-        <ul class="customer-style-ul inline-list t-f-ul">
-            <li>
-                <div class="t-filter-name"
-                     ng-class="ticketCountObj.myGroup.inProgress==0?'text-decoration count0':''">
-                    IN PROGRESS
-                </div>
-            </li>
-            <li ng-show="ticketCountObj.myGroup.inProgress!=0">
-                <div class="t-item-count black animated slideInRight">
-                    {{ticketCountObj.myGroup.inProgress}}
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+<!--<div class="ticket-filter-body"-->
+     <!--ng-class="currentSelected.name=='my group in progress'?'t-active-menu':''">-->
+    <!--<div class="t-f-wrp"-->
+         <!--ng-click="openTicketView('my group in progress',ticketCountObj.myGroup.inProgress)">-->
+        <!--<ul class="customer-style-ul inline-list t-f-ul">-->
+            <!--<li>-->
+                <!--<div class="t-filter-name"-->
+                     <!--ng-class="ticketCountObj.myGroup.inProgress==0?'text-decoration count0':''">-->
+                    <!--IN PROGRESS-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li ng-show="ticketCountObj.myGroup.inProgress!=0">-->
+                <!--<div class="t-item-count black animated slideInRight">-->
+                    <!--{{ticketCountObj.myGroup.inProgress}}-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
 
 
 <div class="ticket-filter-body"

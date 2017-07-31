@@ -36,7 +36,7 @@
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.toDo==0?'text-decoration count0':''">
                     <!---->
-                    ToDo
+                    In Progress
                 </div>
             </li>
             <li>
@@ -52,32 +52,32 @@
 </div>
 
 
-<!-- in progree menu -->
-<div class="ticket-filter-body"
-     ng-class="currentSelected.name=='inProgress'?'t-active-menu':''">
-    <div class="t-f-wrp"
-         ng-click="openTicketView('progressing',ticketCountObj.inProgress)">
-        <ul class="customer-style-ul inline-list t-f-ul">
-            <li>
-                <div class="t-filter-name"
-                     ng-class="ticketCountObj.inProgress==0?'text-decoration count0':''">
-                    <!---->
-                    In Progress
-                </div>
-            </li>
-            <li>
-                <div id="inProgressCountLoaded"
-                     class="t-item-count black display-none animated fadeInRight">
-                    {{ticketCountObj.inProgress}}
-                </div>
-                <div id="inProgressCountLoading"
-                     class="t-item-count count-loading">
-                    <i class="fa fa-cog fa-spin"></i>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+<!--&lt;!&ndash; in progree menu &ndash;&gt;-->
+<!--<div class="ticket-filter-body"-->
+     <!--ng-class="currentSelected.name=='inProgress'?'t-active-menu':''">-->
+    <!--<div class="t-f-wrp"-->
+         <!--ng-click="openTicketView('progressing',ticketCountObj.inProgress)">-->
+        <!--<ul class="customer-style-ul inline-list t-f-ul">-->
+            <!--<li>-->
+                <!--<div class="t-filter-name"-->
+                     <!--ng-class="ticketCountObj.inProgress==0?'text-decoration count0':''">-->
+                    <!--&lt;!&ndash;&ndash;&gt;-->
+                    <!--In Progress-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<div id="inProgressCountLoaded"-->
+                     <!--class="t-item-count black display-none animated fadeInRight">-->
+                    <!--{{ticketCountObj.inProgress}}-->
+                <!--</div>-->
+                <!--<div id="inProgressCountLoading"-->
+                     <!--class="t-item-count count-loading">-->
+                    <!--<i class="fa fa-cog fa-spin"></i>-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
 
 
 <!--done menu -->

@@ -1,7 +1,7 @@
 <div class="ticket-filter-body"
-           ng-class="currentSelected.name=='submittedByMeNew'?'t-active-menu':''">
+           ng-class="currentSelected.name=='submitted by me new'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('submittedByMeNew',ticketCountObj.submittedByMe.new)">
+         ng-click="openTicketView('submitted by me new',ticketCountObj.submittedByMe.new)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
@@ -10,7 +10,7 @@
                 </div>
             </li>
             <li ng-show="ticketCountObj.submittedByMe.new!=0">
-                <div class="t-item-count green animated slideInRight">
+                <div class="t-item-count black animated slideInRight">
                     {{ticketCountObj.submittedByMe.new}}
                 </div>
             </li>
@@ -19,18 +19,18 @@
 </div>
 
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='submittedByMeTodo'?'t-active-menu':''">
+     ng-class="currentSelected.name=='submitted by me todo'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('submittedByMeTodo',ticketCountObj.submittedByMe.toDo)">
+         ng-click="openTicketView('submitted by me todo',ticketCountObj.submittedByMe.toDo)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.submittedByMe.toDo==0?'text-decoration count0':''">
-                    ToDo
+                    IN PROGRESS
                 </div>
             </li>
             <li ng-show="ticketCountObj.submittedByMe.toDo!=0">
-                <div class="t-item-count green animated slideInRight">
+                <div class="t-item-count black animated slideInRight">
                     {{ticketCountObj.submittedByMe.toDo}}
                 </div>
             </li>
@@ -38,30 +38,30 @@
     </div>
 </div>
 
-<div class="ticket-filter-body"
-     ng-class="currentSelected.name=='submittedByMeProgress'?'t-active-menu':''">
-    <div class="t-f-wrp"
-         ng-click="openTicketView('submittedByMeProgress',ticketCountObj.submittedByMe.inProgress)">
-        <ul class="customer-style-ul inline-list t-f-ul">
-            <li>
-                <div class="t-filter-name"
-                     ng-class="ticketCountObj.submittedByMe.inProgress==0?'text-decoration count0':''">
-                    IN PROGRESS
-                </div>
-            </li>
-            <li ng-show="ticketCountObj.submittedByMe.inProgress!=0">
-                <div class="t-item-count green animated slideInRight">
-                    {{ticketCountObj.submittedByMe.inProgress}}
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+<!--<div class="ticket-filter-body"-->
+     <!--ng-class="currentSelected.name=='submitted by me progress'?'t-active-menu':''">-->
+    <!--<div class="t-f-wrp"-->
+         <!--ng-click="openTicketView('submitted by me progress',ticketCountObj.submittedByMe.inProgress)">-->
+        <!--<ul class="customer-style-ul inline-list t-f-ul">-->
+            <!--<li>-->
+                <!--<div class="t-filter-name"-->
+                     <!--ng-class="ticketCountObj.submittedByMe.inProgress==0?'text-decoration count0':''">-->
+                    <!--IN PROGRESS-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li ng-show="ticketCountObj.submittedByMe.inProgress!=0">-->
+                <!--<div class="t-item-count black animated slideInRight">-->
+                    <!--{{ticketCountObj.submittedByMe.inProgress}}-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
 
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='submittedByDone'?'t-active-menu':''">
+     ng-class="currentSelected.name=='submitted by done'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('submittedByDone',ticketCountObj.submittedByMe.done)">
+         ng-click="openTicketView('submitted by done',ticketCountObj.submittedByMe.done)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
@@ -70,7 +70,7 @@
                 </div>
             </li>
             <li ng-show="ticketCountObj.submittedByMe.done!=0">
-                <div class="t-item-count green animated slideInRight">
+                <div class="t-item-count black animated slideInRight">
                     {{ticketCountObj.submittedByMe.done}}
                 </div>
             </li>

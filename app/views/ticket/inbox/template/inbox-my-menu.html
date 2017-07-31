@@ -27,7 +27,7 @@
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.myTicket.myToDo==0?'text-decoration count0':''">
-                    ToDo
+                    In Progress
                 </div>
             </li>
             <li ng-show="ticketCountObj.myTicket.myToDo!=0">
@@ -39,25 +39,25 @@
     </div>
 </div>
 
-<div class="ticket-filter-body"
-     ng-class="currentSelected.name=='my in Progressing'?'t-active-menu':''">
-    <div class="t-f-wrp"
-         ng-click="openTicketView('my in Progressing',ticketCountObj.myTicket.myNew)">
-        <ul class="customer-style-ul inline-list t-f-ul">
-            <li>
-                <div class="t-filter-name"
-                     ng-class="ticketCountObj.myTicket.myInProgress==0?'text-decoration count0':''">
-                    In Progress
-                </div>
-            </li>
-            <li ng-show="ticketCountObj.myTicket.myInProgress!=0">
-                <div class="t-item-count red animated slideInRight">
-                    {{ticketCountObj.myTicket.myInProgress}}
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+<!--<div class="ticket-filter-body"-->
+     <!--ng-class="currentSelected.name=='my in Progressing'?'t-active-menu':''">-->
+    <!--<div class="t-f-wrp"-->
+         <!--ng-click="openTicketView('my in Progressing',ticketCountObj.myTicket.myNew)">-->
+        <!--<ul class="customer-style-ul inline-list t-f-ul">-->
+            <!--<li>-->
+                <!--<div class="t-filter-name"-->
+                     <!--ng-class="ticketCountObj.myTicket.myInProgress==0?'text-decoration count0':''">-->
+                    <!--In Progress-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li ng-show="ticketCountObj.myTicket.myInProgress!=0">-->
+                <!--<div class="t-item-count red animated slideInRight">-->
+                    <!--{{ticketCountObj.myTicket.myInProgress}}-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
 
 <div class="ticket-filter-body"
      ng-class="currentSelected.name=='my Done'?'t-active-menu':''">

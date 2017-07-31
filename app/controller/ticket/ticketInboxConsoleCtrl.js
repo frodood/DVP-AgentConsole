@@ -583,42 +583,42 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                 inboxPrivateFunction.picketFilterInboxList(selectedFilter, page);
                 break;
             //ticket submitted by me
-            case'submittedByMeNew':
+            case'submitted by me new':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsSubmittedByMe');
                 break;
-            case'submittedByMeTodo':
+            case'submitted by me todo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsSubmittedByMe');
                 break;
-            case'submittedByMeProgress':
+            case'submitted by me progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsSubmittedByMe');
                 break;
-            case'submittedByDone':
+            case'submitted by done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsSubmittedByMe');
                 break;
             //ticket watched by me
-            case'watchedByMeNew':
+            case'watched by me new':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsWatchedByMe');
                 break;
-            case'watchedByMeToDo':
+            case'watched by me todo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsWatchedByMe');
                 break;
-            case'watchedByMeInProgress':
+            case'watched by me inProgress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsWatchedByMe');
                 break;
-            case'watchedByMeDone':
+            case'watched by me done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsWatchedByMe');
                 break;
             //ticket collaborated by me
-            case'collaboratedByMeMeNew':
+            case'collaborated by me new':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsCollaboratedByMe');
                 break;
-            case'collaboratedByMeMeToDo':
+            case'collaborated by me todo':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsCollaboratedByMe');
                 break;
-            case'collaboratedByMeMeInProgress':
+            case'collaborated by me progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'TicketsCollaboratedByMe');
                 break;
-            case'collaboratedByMeMeDone':
+            case'collaborated by me done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsCollaboratedByMe');
                 break;
 
