@@ -432,7 +432,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.submitter_name = item.submitter.name;
+                            ticketListObj.submitter_name = item.submitter.firstname + " " + item.submitter.lastname;
                             ticketListObj.submitter_avatar = item.submitter.avatar;
                             return ticketListObj;
                         });
@@ -457,7 +457,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
-                            ticketListObj.submitter_name = item.submitter.name;
+                            ticketListObj.submitter_name = item.submitter.firstname + " " + item.submitter.lastname;
                             ticketListObj.submitter_avatar = item.submitter.avatar;
                             return ticketListObj;
                         });
