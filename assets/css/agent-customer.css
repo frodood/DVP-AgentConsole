@@ -12803,6 +12803,7 @@ json-tree .branch-preview {
     background: #f9fbfe;
     overflow: hidden;
     position: relative;
+    padding-right: 13px;
 }
 
 .count-inline-row {
@@ -13084,7 +13085,7 @@ ul.i-top-navigation > li {
 
 .i-f-b-wrapper {
     width: 100%;
-    padding: 4px 5px 10px 15px;
+    padding: 4px 0px 10px 15px;
 }
 
 .t-f-btn-wrp {
@@ -13354,7 +13355,7 @@ ul.i-top-navigation > li {
     position: absolute;
     top: 89px;
     left: 0;
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.99);
 }
 
 .disable-scroll {
@@ -13384,4 +13385,10 @@ ul.i-top-navigation > li {
 
 .console-menu-icon > i.notification-success {
     color: #ffff;
+}
+
+.selected-short{
+    width: 110px;
+    height: 30px;
+    background: #f9fbfe
 }
