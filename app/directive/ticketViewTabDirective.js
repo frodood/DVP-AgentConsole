@@ -1112,7 +1112,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                                     scope.showAlert("Ticket assignee group changed","info",data.From+" updated the assignee group of ticket ("+scope.ticket.reference+") to user group "+data.Message.assignee_group.name);
                                                 }
                                                 else {
-                                                    scope.showAlert("Ticket assignee group changed","info",data.From+" updated the status of ticket ("+scope.ticket.reference+")");
+                                                    scope.showAlert("Ticket assignee group changed","info",data.From+" updated the assignee group of ticket ("+scope.ticket.reference+")");
                                                 }
                                                 break;
 
