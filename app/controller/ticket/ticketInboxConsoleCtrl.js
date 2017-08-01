@@ -591,7 +591,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             case'collaborated by me to do':
                 inboxPrivateFunction.picketTicketInboxList(page, 'new', 'TicketsCollaboratedByMe');
                 break;
-            case'ollaborated by me in progress':
+            case'collaborated by me in progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'TicketsCollaboratedByMe');
                 break;
             // case'collaborated by me progress':
