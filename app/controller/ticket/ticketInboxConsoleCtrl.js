@@ -447,13 +447,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                                 ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
                                 ticketListObj.assignee_avatar = item.assignee.avatar;
                             } else {
-                                ticketListObj.assignee_name = 'unAssigned';
-                                ticketListObj.assignee_avatar = '';
-                            }
-
-                            if (item.assignee_group) {
-                                ticketListObj.assignee_name = item.assignee_group.name;
-                                ticketListObj.assignee_avatar = '';
+                                if (item.assignee_group) {
+                                    ticketListObj.assignee_name = item.assignee_group.name;
+                                    ticketListObj.assignee_avatar = '';
+                                } else {
+                                    ticketListObj.assignee_name = 'unAssigned';
+                                    ticketListObj.assignee_avatar = '';
+                                }
                             }
                             return ticketListObj;
                         });
@@ -483,13 +483,13 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                                 ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
                                 ticketListObj.assignee_avatar = item.assignee.avatar;
                             } else {
-                                ticketListObj.assignee_name = 'unAssigned';
-                                ticketListObj.assignee_avatar = '';
-                            }
-
-                            if (item.assignee_group) {
-                                ticketListObj.assignee_name = item.assignee_group.name;
-                                ticketListObj.assignee_avatar = '';
+                                if (item.assignee_group) {
+                                    ticketListObj.assignee_name = item.assignee_group.name;
+                                    ticketListObj.assignee_avatar = '';
+                                } else {
+                                    ticketListObj.assignee_name = 'unAssigned';
+                                    ticketListObj.assignee_avatar = '';
+                                }
                             }
                             return ticketListObj;
                         });
@@ -546,9 +546,9 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             case 'my group in progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
                 break;
-            // case 'my group todo':
-            //     inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
-            //     break;
+            case 'my group to do':
+                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
+                break;
             // case 'my group in progress':
             //     inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyGroupTickets');
             //     break;
