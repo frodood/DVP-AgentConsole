@@ -443,16 +443,18 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
+                            ticketListObj.assignee_avatar = 'assets/img/avatar/defaultProfile.png';
+                            ticketListObj.assignee_name = '';
                             if (item.assignee) {
                                 ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
                                 ticketListObj.assignee_avatar = item.assignee.avatar;
                             } else {
                                 if (item.assignee_group) {
                                     ticketListObj.assignee_name = item.assignee_group.name;
-                                    ticketListObj.assignee_avatar = '';
+                                    ticketListObj.assignee_avatar = 'assets/img/avatar/defaultProfile.png';
                                 } else {
                                     ticketListObj.assignee_name = 'unAssigned';
-                                    ticketListObj.assignee_avatar = '';
+                                    ticketListObj.assignee_avatar = 'assets/img/avatar/defaultProfile.png';
                                 }
                             }
                             return ticketListObj;
@@ -479,16 +481,18 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                             ticketListObj.status = item.status;
                             ticketListObj.type = item.type;
                             ticketListObj.updated_at = item.updated_at;
+                            ticketListObj.assignee_avatar = 'assets/img/avatar/defaultProfile.png';
+                            ticketListObj.assignee_avatar = 'assets/img/avatar/defaultProfile.png';
                             if (item.assignee) {
                                 ticketListObj.assignee_name = item.assignee.firstname + " " + item.assignee.lastname;
                                 ticketListObj.assignee_avatar = item.assignee.avatar;
                             } else {
                                 if (item.assignee_group) {
                                     ticketListObj.assignee_name = item.assignee_group.name;
-                                    ticketListObj.assignee_avatar = '';
+                                    ticketListObj.assignee_avatar = 'assets/img/avatar/defaultProfile.png';
                                 } else {
                                     ticketListObj.assignee_name = 'unAssigned';
-                                    ticketListObj.assignee_avatar = '';
+                                    ticketListObj.assignee_avatar = 'assets/img/avatar/defaultProfile.png';
                                 }
                             }
                             return ticketListObj;
