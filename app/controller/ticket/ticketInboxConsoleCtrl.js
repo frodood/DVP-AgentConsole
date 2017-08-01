@@ -547,7 +547,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
                 break;
             case 'my group to do':
-                inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
+                inboxPrivateFunction.picketTicketInboxList(page, 'new', 'MyGroupTickets');
                 break;
             // case 'my group in progress':
             //     inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyGroupTickets');
