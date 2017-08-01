@@ -798,13 +798,17 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
 
                 scope.assigneeGroups = profileDataParser.assigneeUserGroups;
-                scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
-                    value.displayname = value.name;
-                    if (!value.avatar) {
-                        value.avatar = 'assets/img/avatar/defaultProfile.png';
-                    }
-                    return value;
-                });
+                if(scope.assigneeGroups)
+                {
+                    scope.assigneeTempGroups = scope.assigneeGroups.map(function (value) {
+                        value.displayname = value.name;
+                        if (!value.avatar) {
+                            value.avatar = 'assets/img/avatar/defaultProfile.png';
+                        }
+                        return value;
+                    });
+                }
+
                 scope.assigneeUserData = scope.assigneeUsers.concat(scope.assigneeTempGroups);
 
                 scope.loadTicketNextLevel = function () {
@@ -1068,6 +1072,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                             scope.getTicketLoggedTime(ticketID);
                             scope.loadTicketNextLevel();
                             scope.pickCompanyData(scope.ticket.tenant, scope.ticket.company);
+                            scope.updateMessage="";
 
                             SE.subscribe({room: 'ticket:'+scope.ticket.reference});
 
@@ -1083,7 +1088,9 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                         switch (action)
                                         {
                                             case 'comment':
+
                                                 scope.showAlert("Ticket update","info",data.From+" replied to ticket "+scope.ticket.reference);
+                                                scope.updateMessage="New comment added, Please refresh";
                                                 break;
                                             case 'status':
                                                 if(data.Message.status)
@@ -1094,6 +1101,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                                 {
                                                     scope.showAlert("Ticket Status update","info",data.From+" updated the status of ticket ("+scope.ticket.reference+")");
                                                 }
+                                                scope.updateMessage="Ticket status updated, Please refresh";
                                                 break;
                                             case 'assignuser':
                                                 if(data.Message.assignee && data.Message.assignee.username)
@@ -1104,6 +1112,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                                 {
                                                     scope.showAlert("Ticket assignee changed","info",data.From+" updated the assignee of ticket ("+scope.ticket.reference+")");
                                                 }
+                                                scope.updateMessage="Ticket assignee changed, Please refresh";
                                                 break;
 
                                             case 'assigngroup':
@@ -1114,6 +1123,12 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                                 else {
                                                     scope.showAlert("Ticket assignee group changed","info",data.From+" updated the assignee group of ticket ("+scope.ticket.reference+")");
                                                 }
+                                                scope.updateMessage="Ticket assignee group changed, Please refresh";
+                                                break;
+                                            case 'contentupdate':
+
+                                                scope.showAlert("Ticket content changed","info",data.From+" updated the Description or Subject of ticket ("+scope.ticket.reference+")");
+                                                scope.updateMessage="Ticket Description or Subject updated, Please refresh";
                                                 break;
 
 
