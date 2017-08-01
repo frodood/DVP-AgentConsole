@@ -253,6 +253,12 @@ window.SE = function (e) {
                 callBack.OnEvent('notice',data);
         });
 
+        socket.on('ticket_event', function (data) {
+
+            if (callBack.OnTickerEvent)
+                callBack.OnTickerEvent('ticket_event',data);
+        });
+
         socket.on('broadcast', function (data) {
 
             data.messageType = "broadcast";
@@ -411,6 +417,20 @@ window.SE = function (e) {
         var r = v(e, "room");
         if (connected) {
             socket.emit('subscribe', {room: r});
+        }
+        else {
+            if (callBack.OnError) {
+                callBack.OnError({method: "connection", message: "Connection Lost."});
+            }
+        }
+    }
+
+    function ub(e) {
+        if (!e)throw g;
+
+        var r = v(e, "room");
+        if (connected) {
+            socket.emit('unsubscribe', {room: r});
         }
         else {
             if (callBack.OnError) {
@@ -590,6 +610,7 @@ window.SE = function (e) {
         "status": o,
         "typingstoped": a,
         "reconnect": rc,
-        "subscribe": sb
+        "subscribe": sb,
+        "unsubscribe": ub
     }
 }();

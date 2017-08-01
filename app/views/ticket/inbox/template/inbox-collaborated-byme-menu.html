@@ -1,0 +1,79 @@
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='collaborated by me new'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('collaborated by me new',ticketCountObj.collaboratedByMe.new)">
+        <ul class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.collaboratedByMe.new==0?'text-decoration count0':''">
+                    New
+                </div>
+            </li>
+            <li ng-show="ticketCountObj.collaboratedByMe.new!=0">
+                <div class="t-item-count black animated slideInRight">
+                    {{ticketCountObj.collaboratedByMe.new}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='collaborated by me todo'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('collaborated by me todo',ticketCountObj.collaboratedByMe.toDo)">
+        <ul class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.collaboratedByMe.toDo==0?'text-decoration count0':''">
+                    Todo
+                </div>
+            </li>
+            <li ng-show="ticketCountObj.collaboratedByMe.toDo!=0">
+                <div class="t-item-count black animated slideInRight">
+                    {{ticketCountObj.collaboratedByMe.toDo}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--<div class="ticket-filter-body"-->
+<!--ng-class="currentSelected.name=='collaborated by me progress'?'t-active-menu':''">-->
+<!--<div class="t-f-wrp"-->
+<!--ng-click="openTicketView('collaborated by me progress',ticketCountObj.collaboratedByMe.inProgress)">-->
+<!--<ul class="customer-style-ul inline-list t-f-ul">-->
+<!--<li>-->
+<!--<div class="t-filter-name"-->
+<!--ng-class="ticketCountObj.collaboratedByMe.inProgress==0?'text-decoration count0':''">-->
+<!--in progress-->
+<!--</div>-->
+<!--</li>-->
+<!--<li ng-show="ticketCountObj.collaboratedByMe.inProgress!=0">-->
+<!--<div class="t-item-count black animated slideInRight">-->
+<!--{{ticketCountObj.collaboratedByMe.inProgress}}-->
+<!--</div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='collaborated by me done'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('collaborated by me done',ticketCountObj.collaboratedByMe.done)">
+        <ul class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.collaboratedByMe.done==0?'text-decoration count0':''">
+                    done
+                </div>
+            </li>
+            <li ng-show="ticketCountObj.collaboratedByMe.done!=0">
+                <div class="t-item-count black animated slideInRight">
+                    {{ticketCountObj.collaboratedByMe.done}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

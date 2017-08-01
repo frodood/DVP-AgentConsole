@@ -156,14 +156,15 @@
                         <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                             id="notificationAlarm"
                             uib-dropdown
-                            ng-click="checkAndRegister()"
                             uib-dropdown-toggle>
                             <!-- notification icon -->
 
                             <i id="regNotification" class="icon icon-d-f-icon-notification small"
+                               ng-class="isSocketRegistered==false?'notification-error':'notification-success'"
                                title="Notification Center" style="font-size: 22px;padding-top: 1px;"></i>
 
                             <div id=" notificationStatus"
+                                 ng-show="unredNotifications!=0"
                                  ng-class="{'task-incoming':unredNotifications!=0}"
                                  class="task-state task-none notification-count">
                                 {{unredNotifications}}
@@ -373,17 +374,17 @@
                 <!-- ticket inbox -->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <i ng-click="consoleTopMenu.openTicket()"
+                        <i ng-click="addNewTicketInboxTemp()"
                            class="icon-d-f-icon-ticketinbox small-icon offline-phone" title="Ticket Inbox"></i>
                     </div>
                 </li>
-                <li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">
-                    <div class="left-icon animated slideInLeft">
-                        <i ng-click="addFilterTab();"
-                           class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>
+                <!--<li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">-->
+                <!--<div class="left-icon animated slideInLeft">-->
+                <!--<i ng-click="addNewTicketInboxTemp();"-->
+                <!--class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>-->
 
-                    </div>
-                </li>
+                <!--</div>-->
+                <!--</li>-->
                 <li>
                     <!-- deactivate mode -->
                     <div ng-show="!timerTick">
@@ -552,7 +553,8 @@
                            api="scrlTabsApi"
                            tooltip-left-placement="top"
                            id="consoleMainTab">
-            <uib-tabset class="scrollable-tab-overwrite " active="activeTabIndex" id="tab_view">
+            <uib-tabset class="scrollable-tab-overwrite"
+                        active="activeTabIndex" id="tab_view">
                 <uib-tab class="console-main-tab "
                          index="tab.tabReference" ng-repeat="tab in tabs"
                          select="tabSelected(tab.tabReference)">
@@ -612,7 +614,7 @@
                                     ng-include="'app/views/ui-kit/user-profile/user-engagement-console.html'"></div>
                         </div>
 
-                        <div ng-switch-when="new-ticket-inbox">
+                        <div ng-switch-when="Ticket-Inbox">
                             <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
                             <div ng-include="'app/views/ticket/inbox/inbox-console.html'"></div>
                         </div>

@@ -2553,6 +2553,12 @@ div > div >
 
 }
 
+.ticket-filter-body-filer {
+    min-height: 50px;
+    overflow: hidden;
+    position: relative;
+}
+
 .ticket-filter-view > .header {
     width: 100%;
     margin-top: 20px;
@@ -5483,7 +5489,7 @@ ul.renote-color-btn > li {
 .spinner-container .path {
     stroke-dasharray: 1, 150; /* 1%, 101% circumference */
     stroke-dashoffset: 0;
-    stroke: rgba(23, 55, 60, 1);
+    stroke: rgb(132, 153, 175);
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
     -webkit-animation: dash 1.5s ease-in-out infinite;
@@ -12892,8 +12898,8 @@ ul > li > h5.header > i {
 
 .inbox-title > h4 {
     /* All Tickets -: */
-    font-family: 'AvenirNext-Bold', sans-serif;
-    font-size: 17px;
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-size: 14px;
     color: #91d346;
     letter-spacing: 0.88px;
     text-transform: uppercase;
@@ -13029,8 +13035,8 @@ ul.i-top-navigation > li {
     position: relative;
     text-align: center;
     color: #ffffff;
-    font-size: 12px;
-    padding-top: 3px;
+    font-size: 10px;
+    padding-top: 4px;
 }
 
 .t-item-count.count-loading > i {
@@ -13041,6 +13047,11 @@ ul.i-top-navigation > li {
 .t-item-count.green {
     background: #82E9A0;
     box-shadow: 0 2px 6px 0 #82E9A0;
+}
+
+.t-item-count.black {
+    background: #223448;
+    box-shadow: 0 2px 6px 0 #223448;
 }
 
 .t-item-count.red {
@@ -13073,7 +13084,7 @@ ul.i-top-navigation > li {
 
 .i-f-b-wrapper {
     width: 100%;
-    padding: 9px 5px 10px 15px;
+    padding: 4px 5px 10px 15px;
 }
 
 .t-f-btn-wrp {
@@ -13105,9 +13116,9 @@ ul.i-top-navigation > li {
 
 .t-list-h {
     /* ASSIGNEE BY: */
-    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-family: "AvenirNextLTPro-Bold", Courier, monospace;
     font-size: 9px;
-    color: #4A4A4A;
+    color: #8b8b8b;
     text-transform: uppercase;
     display: inline-block;
 }
@@ -13179,7 +13190,7 @@ ul.i-top-navigation > li {
 .t-assignee-name {
     /* Jessica Greene: */
     font-family: "AvenirNextLTPro-Regular", Courier, monospace;
-    font-size: 11px;
+    font-size: 12px;
     color: #4A4A4A;
     text-transform: capitalize;
     padding-left: 5px;
@@ -13187,7 +13198,7 @@ ul.i-top-navigation > li {
 
 .t-i-desc {
     font-family: "AvenirNextLTPro-Regular", Courier, monospace;
-    font-size: 11px;
+    font-size: 12px;
     color: #4A4A4A;
     text-transform: none;
     text-align: left;
@@ -13201,14 +13212,15 @@ ul.i-top-navigation > li {
 
 .priority-view,
 .t-status-view {
-    width: 40px;
-    height: 20px;
+    min-width: 36px;
+    height: 22px;
     text-align: center;
     position: relative;
     font-family: "AvenirNextLTPro-Regular", Courier, monospace;
     font-size: 11px;
     border-radius: 4px;
-    padding-top: 4px;
+    padding-top: 4.2px;
+    overflow: hidden;
 
 }
 
@@ -13220,6 +13232,12 @@ ul.i-top-navigation > li {
 }
 
 .t-status-view.new {
+    background: rgba(130, 233, 159, 0.19);
+    color: #82E9A0;
+    /*box-shadow: 0 0 15px 0 rgba(130, 233, 159, 0.29);*/
+}
+
+.t-status-view.progressing {
     background: rgba(130, 233, 159, 0.19);
     color: #82E9A0;
     /*box-shadow: 0 0 15px 0 rgba(130, 233, 159, 0.29);*/
@@ -13308,7 +13326,7 @@ ul.i-top-navigation > li {
     background: rgba(252, 207, 139, 0.26);
     border: 1px solid #FCCF8B;
     border-radius: 3px;
-    font-size: 15px;
+    font-size: 13px;
     color: #FFAA00;
     margin-right: 5px;
     margin-top: 27px;
@@ -13322,4 +13340,48 @@ ul.i-top-navigation > li {
     position: relative;
     letter-spacing: 0.52px;
     top: -7px;
+}
+
+.loading-svg {
+    width: 50px;
+    height: 50px;
+    margin: 200px auto;
+}
+
+.t-i-main-loader {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 89px;
+    left: 0;
+    background: rgba(255, 255, 255, 0.94);
+}
+
+.disable-scroll {
+    overflow: hidden;
+}
+
+.btn-refresh {
+    padding: 3px 6px 0px 6px;
+    background: rgba(252, 207, 139, 0.26);
+    border: 1px solid #FCCF8B;
+    border-radius: 3px;
+    font-size: 13px;
+    color: #FFAA00;
+    padding: 3px 6px 0px 6px;
+    cursor: pointer;
+}
+
+.btn-refresh:hover {
+    color: #777;
+    /*cursor: not-allowed;*/
+    background-color: #fff;
+}
+
+.console-menu-icon > i.notification-error {
+    color: #F36B5B;
+}
+
+.console-menu-icon > i.notification-success {
+    color: #ffff;
 }

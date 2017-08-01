@@ -1,0 +1,79 @@
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='watched by me new'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('watched by me new',ticketCountObj.watchedByMe.new)">
+        <ul class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.watchedByMe.new==0?'text-decoration count0':''">
+                    New
+                </div>
+            </li>
+            <li ng-show="ticketCountObj.watchedByMe.new!=0">
+                <div class="t-item-count black animated slideInRight">
+                    {{ticketCountObj.watchedByMe.new}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='watched by me todo'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('watched by me todo',ticketCountObj.watchedByMe.toDo)">
+        <ul class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.watchedByMe.toDo==0?'text-decoration count0':''">
+                    Todo
+                </div>
+            </li>
+            <li ng-show="ticketCountObj.watchedByMe.toDo!=0">
+                <div class="t-item-count black animated slideInRight">
+                    {{ticketCountObj.watchedByMe.toDo}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--<div class="ticket-filter-body"-->
+     <!--ng-class="currentSelected.name=='watched by me inProgress'?'t-active-menu':''">-->
+    <!--<div class="t-f-wrp"-->
+         <!--ng-click="openTicketView('watched by me inProgress',ticketCountObj.watchedByMe.inProgress)">-->
+        <!--<ul class="customer-style-ul inline-list t-f-ul">-->
+            <!--<li>-->
+                <!--<div class="t-filter-name"-->
+                     <!--ng-class="ticketCountObj.watchedByMe.inProgress==0?'text-decoration count0':''">-->
+                    <!--in progress-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li ng-show="ticketCountObj.watchedByMe.inProgress!=0">-->
+                <!--<div class="t-item-count black animated slideInRight">-->
+                    <!--{{ticketCountObj.watchedByMe.inProgress}}-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='watched by me done'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('watched by me done',ticketCountObj.watchedByMe.inProgress)">
+        <ul class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.watchedByMe.done==0?'text-decoration count0':''">
+                    DONE
+                </div>
+            </li>
+            <li ng-show="ticketCountObj.watchedByMe.done!=0">
+                <div class="t-item-count black animated slideInRight">
+                    {{ticketCountObj.watchedByMe.done}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

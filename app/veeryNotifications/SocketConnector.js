@@ -88,6 +88,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
             });
 
             socket.on('ticket', function (data) {
+
                 data.messageType = "notice";
                 if (notificationEvent.OnTicketNoticeReceived)
                     notificationEvent.OnTicketNoticeReceived(data);
@@ -141,6 +142,7 @@ notificationMod.factory('notificationConnector', function (socketFactory) {
 
 
             });
+
         } catch (ex) {
             console.error("Error In socket.io" + ex);
         }

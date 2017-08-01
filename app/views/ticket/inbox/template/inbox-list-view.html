@@ -3,13 +3,13 @@
     <tr>
         <th>
             <div class="t-list-h">
-
+                #ID
             </div>
         </th>
         <th>
 
             <div class="t-list-h">
-                assignee by
+                assignee
             </div>
         </th>
         <th>
@@ -18,49 +18,49 @@
             </div>
         </th>
         <th>
+            <div class="t-list-h">TYPE</div>
+        </th>
+        <th>
             <div class="t-list-h">PRIORITY</div>
         </th>
         <th>
             <div class="t-list-h">STATUS</div>
         </th>
         <th>
-            <div class="t-list-h">CREATED</div>
+            <div class="t-list-h">UPDATED</div>
         </th>
         <th>
             <div class="t-list-h">CHANNEL</div>
         </th>
-        <th>
+        <!--<th>-->
 
-        </th>
+        <!--</th>-->
     </tr>
     </thead>
     <tbody id="ticketMainWrp" class="t-i-tbody">
     <tr id="{{ticket._id}}"
-        class="t-list-view-body animated fadeIn"
+        ng-click="gotoTicket(ticket)"
+        class="t-list-view-body"
         ng-repeat="ticket in ticketList track by $index">
-        <th>
-            <div class="checkbox margin-0 i-ticket-check">
-                <!--<label>-->
-                <!--<input type="checkbox"-->
-                <!--ng-model="selectedAll"-->
-                <!--class="top-check-all">-->
-                <!--</label>-->
+        <td>
+            <div class="t-i-desc">
+                {{ticket.tid}}
             </div>
-        </th>
+        </td>
         <td> <!-- assignee by -->
             <div class="t-list-h">
                 <ul class="customer-style-ul inline-assignee"
                     style="padding-top: 8px;">
                     <li>
                         <div class="t-assignee-avatar">
-                            <img src="assets/img/avatar/mko.jpg"
-                                 ng-src="{{ticket.submitter_avatar}}"
+                            <img src="assets/img/avatar/defaultProfile.png"
+                                 ng-src="{{ticket.assignee_avatar}}"
                                  width="30"/>
                         </div>
                     </li>
                     <li>
                         <div class="t-assignee-name">
-                            {{ticket.submitter_name| limitTo: 15 }}{{ticket.submitter_name.length > 15 ? '...' : ''}}
+                           {{ticket.assignee_name| limitTo: 15 }}{{ticket.assignee_name.length > 15 ? '...' : ''}}
                         </div>
                     </li>
                 </ul>
@@ -71,6 +71,13 @@
                 {{ticket.subject | limitTo: 45 }}{{ticket.subject.length > 45 ? '...' : ''}}
             </div>
         </td>
+
+        <td>
+            <div class="t-i-desc">
+                {{ticket.type}}
+            </div>
+        </td>
+
         <td>
             <div class="t-i-priority">
                 <div class="priority-view "
@@ -82,8 +89,8 @@
         <td>
             <div class="t-status">
                 <div class="t-status-view"
-                     ng-class="ticket.status">
-                    {{ticket.status}}
+                     style="text-align: left!important;;">
+                    {{ticket.status | limitTo: 8 }}{{ticket.status.length > 8 ? '...' : ''}}
                 </div>
             </div>
         </td>
@@ -95,9 +102,7 @@
         <td>
             <div class="t-i-type-wrp">
                 <div class="t-type-wrapper">
-                    <i tooltip-placement="top"
-                       uib-tooltip="{{ticket.type}}"
-                       ng-class="{'fa fa-random':ticket.channel=='api',
+                    <i ng-class="{'fa fa-random':ticket.channel=='api',
                   'fa fa-twitter':ticket.channel=='twitter',
                    'fa fa-facebook':ticket.channel=='facebook-post',
                   'fa fa-phone':ticket.channel=='call',
@@ -108,13 +113,13 @@
                 </div>
             </div>
         </td>
-        <td>
-            <div class="t-i-more-wrp">
-                <div class="ticket-more">
-                    <i class="ti-more-alt animated fadeInRight"></i>
-                </div>
-            </div>
-        </td>
+        <!--<td>-->
+        <!--<div class="t-i-more-wrp">-->
+        <!--<div class="ticket-more">-->
+        <!--<i class="ti-more-alt animated fadeInRight"></i>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</td>-->
     </tr>
     </tbody>
 </table>

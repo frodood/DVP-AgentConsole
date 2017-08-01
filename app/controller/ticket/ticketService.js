@@ -256,11 +256,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
-    var getTicketsByView = function (id, page) {
+    var getTicketsByView = function (id, page, sorted_by, pageSize) {
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/100/" + page
+            url: baseUrls.ticketUrl + "TicketView/" + id + "/Tickets/" + pageSize + "/" + page + '&sorted_by=' + sorted_by
         }).then(function (response) {
             return response.data.Result;
         });
@@ -758,7 +758,6 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         });
     };
 
-
     var getTicketByStatus = function (page, status) {
         var authToken = authService.GetToken();
         return $http({
@@ -768,6 +767,106 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
             return response;
         });
     };
+
+
+    //my ticket
+    var getAllByMyTickes = function (page, status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "MyTickets/10/" + page + "?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    var getCountByMyticketStatus = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "MyTickets/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    // my group
+    var getAllMyGroupTickets = function (page, status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "MyGroupTickets/10/" + page + "?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    var getCountByMyGroupStatus = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "MyGroupTickets/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+
+    //submitted by me get count
+    var getCountSubmittedByMeTicket = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "TicketsSubmittedByMe/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+
+    var getCountWatchedByMeTicket = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "TicketsWatchedByMe/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    //collaborated by me
+    var getCountCollaboratedByMeTicket = function (status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + "TicketsCollaboratedByMe/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    //getAllTickets
+    var getAllTickets = function (page, status, ticketType, sorted_by, pageSize) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + ticketType + "/" + pageSize + "/" + page + "?status=" + status + '&sorted_by=' + sorted_by
+        }).then(function (response) {
+            return response;
+        });
+    };
+
+    //getTicketCount
+    var getTicketsCount = function (ticketType, status) {
+        var authToken = authService.GetToken();
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl + ticketType + "/count?status=" + status
+        }).then(function (response) {
+            return response;
+        });
+    };
+
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
@@ -833,7 +932,16 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         UpdateTicketSecurityLevel: UpdateTicketSecurityLevel,
 
         getAllCountByTicketStatus: getAllCountByTicketStatus,
-        getTicketByStatus: getTicketByStatus
+        getTicketByStatus: getTicketByStatus,
+        getAllCountByMyticketStatus: getCountByMyticketStatus,
+        getAllByMytickes: getAllByMyTickes,
+        getAllMyGroupTickets: getAllMyGroupTickets,
+        getCountByMyGroupStatus: getCountByMyGroupStatus,
+        getCountSubmittedByMeTicket: getCountSubmittedByMeTicket,
+        getCountWatchedByMeTicket: getCountWatchedByMeTicket,
+        getCountCollaboratedByMeTicket: getCountCollaboratedByMeTicket,
+        getAllTickets: getAllTickets,
+        getTicketsCount: getTicketsCount
     }
 });
 
