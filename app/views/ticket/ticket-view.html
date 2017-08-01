@@ -11,7 +11,7 @@
     <div class="ticket-view-wrapper">
         <!-- MODEL HEADER -->
         <div class="model-header">
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <div class="mode-left-icon  dark float-left ticket-model"
                      ng-class="{'api-channel':ticket.channel=='api',
                   'twitter-channel':ticket.channel=='twitter',
@@ -39,6 +39,9 @@
                     </div>
                 </div>
 
+            </div>
+            <div class="col-md-4">
+                <span ng-if="updateMessage" style="color:red;font-size: 20px;">{{updateMessage}}</span>
             </div>
 
             <div class="col-md-4 col-sm-4 ">
