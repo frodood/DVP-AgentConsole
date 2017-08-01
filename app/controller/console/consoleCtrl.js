@@ -1975,7 +1975,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (isConnected) {
             $scope.agentAuthenticated();
         } else {
-            $scope.agentDisconnected();
+            //$scope.agentDisconnected();
+            $scope.agentUnauthenticate();
         }
     });
 
