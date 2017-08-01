@@ -1077,42 +1077,42 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
 
                                 if(data.From!=profileDataParser.myProfile.username)
                                 {
-                                    if(data && data.Message && data.Message.action && data.From )
+                                    if(data && data.Message && data.Message.action && data.From && scope.ticket.reference)
                                     {
                                         var action=data.Message.action;
                                         switch (action)
                                         {
                                             case 'comment':
-                                                scope.showAlert("Ticket update","info",data.From+" replied to ticket "+scope.ticketDetails.notificationData.reference);
+                                                scope.showAlert("Ticket update","info",data.From+" replied to ticket "+scope.ticket.reference);
                                                 break;
                                             case 'status':
                                                 if(data.Message.status)
                                                 {
-                                                    scope.showAlert("Ticket Status update","info",data.From+" updated the status of ticket ("+scope.ticketDetails.notificationData.reference+") to "+data.Message.status.toUpperCase());
+                                                    scope.showAlert("Ticket Status update","info",data.From+" updated the status of ticket ("+scope.ticket.reference+") to "+data.Message.status.toUpperCase());
                                                 }
                                                 else
                                                 {
-                                                    scope.showAlert("Ticket Status update","info",data.From+" updated the status of ticket ("+scope.ticketDetails.notificationData.reference+")");
+                                                    scope.showAlert("Ticket Status update","info",data.From+" updated the status of ticket ("+scope.ticket.reference+")");
                                                 }
                                                 break;
                                             case 'assignuser':
                                                 if(data.Message.assignee && data.Message.assignee.username)
                                                 {
-                                                    scope.showAlert("Ticket assignee changed","info",data.From+" updated the assignee of ticket ("+scope.ticketDetails.notificationData.reference+") to "+data.Message.assignee.username);
+                                                    scope.showAlert("Ticket assignee changed","info",data.From+" updated the assignee of ticket ("+scope.ticket.reference+") to "+data.Message.assignee.username);
                                                 }
                                                 else
                                                 {
-                                                    scope.showAlert("Ticket assignee changed","info",data.From+" updated the assignee of ticket ("+scope.ticketDetails.notificationData.reference+")");
+                                                    scope.showAlert("Ticket assignee changed","info",data.From+" updated the assignee of ticket ("+scope.ticket.reference+")");
                                                 }
                                                 break;
 
                                             case 'assigngroup':
                                                 if(data.Message.assignee_group && data.Message.assignee_group.name)
                                                 {
-                                                    scope.showAlert("Ticket assignee group changed","info",data.From+" updated the assignee group of ticket ("+scope.ticketDetails.notificationData.reference+") to user group "+data.Message.assignee_group.name);
+                                                    scope.showAlert("Ticket assignee group changed","info",data.From+" updated the assignee group of ticket ("+scope.ticket.reference+") to user group "+data.Message.assignee_group.name);
                                                 }
                                                 else {
-                                                    scope.showAlert("Ticket assignee group changed","info",data.From+" updated the status of ticket ("+scope.ticketDetails.notificationData.reference+")");
+                                                    scope.showAlert("Ticket assignee group changed","info",data.From+" updated the assignee group of ticket ("+scope.ticket.reference+")");
                                                 }
                                                 break;
 
