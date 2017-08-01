@@ -13371,8 +13371,17 @@ ul.i-top-navigation > li {
     padding: 3px 6px 0px 6px;
     cursor: pointer;
 }
-.btn-refresh:hover{
+
+.btn-refresh:hover {
     color: #777;
     /*cursor: not-allowed;*/
     background-color: #fff;
+}
+
+.console-menu-icon > i.notification-error {
+    color: #F36B5B;
+}
+
+.console-menu-icon > i.notification-success {
+    color: #ffff;
 }
