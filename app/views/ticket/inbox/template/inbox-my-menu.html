@@ -1,12 +1,12 @@
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='my New'?'t-active-menu':''">
+     ng-class="currentSelected.name=='my to do'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('my New',ticketCountObj.myTicket.myNew)">
+         ng-click="openTicketView('my to do',ticketCountObj.myTicket.myNew)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.myTicket.myNew==0?'text-decoration count0':''">
-                    New
+                    TO Do
                 </div>
             </li>
             <li ng-show="ticketCountObj.myTicket.myNew!=0">
@@ -20,14 +20,14 @@
 
 
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='my ToDo'?'t-active-menu':''">
+     ng-class="currentSelected.name=='my in progress'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('my ToDo',ticketCountObj.myTicket.myToDo)">
+         ng-click="openTicketView('my in progress',ticketCountObj.myTicket.myToDo)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.myTicket.myToDo==0?'text-decoration count0':''">
-                    Todo
+                    In Progress
                 </div>
             </li>
             <li ng-show="ticketCountObj.myTicket.myToDo!=0">

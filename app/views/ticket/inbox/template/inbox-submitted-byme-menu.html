@@ -1,12 +1,12 @@
 <div class="ticket-filter-body"
-           ng-class="currentSelected.name=='submitted by me new'?'t-active-menu':''">
+           ng-class="currentSelected.name=='submitted by me to do'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('submitted by me new',ticketCountObj.submittedByMe.new)">
+         ng-click="openTicketView('submitted by me to do',ticketCountObj.submittedByMe.new)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.submittedByMe.new==0?'text-decoration count0':''">
-                    New
+                    To Do
                 </div>
             </li>
             <li ng-show="ticketCountObj.submittedByMe.new!=0">
@@ -19,14 +19,14 @@
 </div>
 
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='submitted by me todo'?'t-active-menu':''">
+     ng-class="currentSelected.name=='submitted by me in progress'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('submitted by me todo',ticketCountObj.submittedByMe.toDo)">
+         ng-click="openTicketView('submitted by me in progress',ticketCountObj.submittedByMe.toDo)">
         <ul class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.submittedByMe.toDo==0?'text-decoration count0':''">
-                    Todo
+                    In Progress
                 </div>
             </li>
             <li ng-show="ticketCountObj.submittedByMe.toDo!=0">
