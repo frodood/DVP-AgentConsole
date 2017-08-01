@@ -1098,7 +1098,7 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                                             case 'assignuser':
                                                 if(data.Message.assignee && data.Message.assignee.username)
                                                 {
-                                                    scope.showAlert("Ticket assignee changed","info",data.From+" updated the assignee of ticket ("+scope.ticketDetails.notificationData.reference+") to "+data.Message.assignee.username);
+                                                    scope.showAlert("Ticket assignee changed","info",data.From+" updated the assignee of ticket ("+scope.ticket.reference+") to "+data.Message.assignee.username);
                                                 }
                                                 else
                                                 {
