@@ -196,9 +196,10 @@
                             <div class="inbox-h-top-left-wrapper">
                                 <div class="inbox-header-left05201">
                                     <div class="inbox-title">
-                                        <h4> {{currentSelected.name }} Tickets
+                                        <h4 ng-show="!isFilter"> {{currentSelected.name }} Tickets </h4>
+                                        <h4 ng-show="isFilter"> {{currentSelected.name }}</h4>
                                             <!--<small>{{currentSelected.totalCount }} Total</small>-->
-                                        </h4>
+
                                     </div>
                                 </div>
 

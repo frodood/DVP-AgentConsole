@@ -507,7 +507,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         $scope.ticketList = [];
         $scope.currentSelected.name = _viewType;
         $scope.currentSelected.totalCount = _selectedViewObj;
-
+        $scope.isFilter = false;
         if (clickEvent != 'goToPage') {
             page = 1;
             $scope.currentPage = page;
@@ -536,12 +536,12 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             case 'my in progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyTickets');
                 break;
-            // case 'my in Progressing':
-            //     inboxPrivateFunction.picketTicketInboxList(page, 'progressing', 'MyTickets');
-            //     break;
-            case 'my group to do':
+            case 'my Done':
                 inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyTickets');
                 break;
+            // case 'my group to do':
+            //     inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'MyTickets');
+            //     break;
             //my Group ticket
             case 'my group in progress':
                 inboxPrivateFunction.picketTicketInboxList(page, 'open&status=progressing', 'MyGroupTickets');
@@ -558,6 +558,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             //ticket filter
             case 'filter':
                 $scope.selectedFilter = selectedFilter;
+                $scope.isFilter = true;
                 inboxPrivateFunction.picketFilterInboxList(selectedFilter, page);
                 break;
             //ticket submitted by me
@@ -606,8 +607,9 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
 
     //goto view ticket filter
     $scope.goToFilterTicketView = function (_viewType, _selectedViewObj, selectedFilter, clickEvent) {
+        $scope.isFilter = true;
         $scope.selectedFilter = selectedFilter;
-        $scope.ticketList = [];
+        //$scope.ticketList = [];
         $scope.currentSelected.name = _viewType;
         $scope.currentSelected.totalCount = _selectedViewObj;
 
