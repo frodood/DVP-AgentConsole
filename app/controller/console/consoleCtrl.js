@@ -1712,9 +1712,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (!$scope.isLogingOut) {
             $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
         }
-
-        // $('#regNotification').addClass('display-none').removeClass('display-block');
-        //$('#regNotificationLoading').addClass('display-none').removeClass('display-block');
+       // $('#regNotification').addClass('display-none');
+        //$('#regNotificationLoading').removeClass('display-none');
         $scope.phoneNotificationFunctions.showNotfication(false);
     };
 
@@ -1739,8 +1738,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentAuthenticated = function () {
         console.log("agentAuthenticated");
         $scope.isSocketRegistered = true;
-        $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
-        $('#regNotification').addClass('display-block').removeClass('display-none');
+       // $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
+        //$('#regNotification').addClass('display-block').removeClass('display-none');
         $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
 
 
@@ -1975,7 +1974,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (isConnected) {
             $scope.agentAuthenticated();
         } else {
-            $scope.agentDisconnected();
+            //$scope.agentDisconnected();
+            $scope.agentUnauthenticate();
         }
     });
 
@@ -2110,8 +2110,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
         if (!$scope.isSocketRegistered) {
             //todo
-            $('#regNotification').addClass('display-none').removeClass('display-block');
-            $('#regNotificationLoading').addClass('display-block').removeClass('display-none');
+            //$('#regNotification').addClass('display-none').removeClass('display-block');
+            //$('#regNotificationLoading').addClass('display-block').removeClass('display-none');
             $scope.isLoadingNotifiReg = true;
             //$scope.socketReconnect();
             SE.reconnect();

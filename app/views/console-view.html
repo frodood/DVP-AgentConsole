@@ -156,14 +156,15 @@
                         <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                             id="notificationAlarm"
                             uib-dropdown
-                            ng-click="checkAndRegister()"
                             uib-dropdown-toggle>
                             <!-- notification icon -->
 
                             <i id="regNotification" class="icon icon-d-f-icon-notification small"
+                               ng-class="isSocketRegistered==false?'notification-error':'notification-success'"
                                title="Notification Center" style="font-size: 22px;padding-top: 1px;"></i>
 
                             <div id=" notificationStatus"
+                                 ng-show="unredNotifications!=0"
                                  ng-class="{'task-incoming':unredNotifications!=0}"
                                  class="task-state task-none notification-count">
                                 {{unredNotifications}}
@@ -378,11 +379,11 @@
                     </div>
                 </li>
                 <!--<li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">-->
-                    <!--<div class="left-icon animated slideInLeft">-->
-                        <!--<i ng-click="addNewTicketInboxTemp();"-->
-                           <!--class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>-->
+                <!--<div class="left-icon animated slideInLeft">-->
+                <!--<i ng-click="addNewTicketInboxTemp();"-->
+                <!--class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>-->
 
-                    <!--</div>-->
+                <!--</div>-->
                 <!--</li>-->
                 <li>
                     <!-- deactivate mode -->
