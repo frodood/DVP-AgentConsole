@@ -848,6 +848,11 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     //getAllTickets
     var getAllTickets = function (page, status, ticketType, sorted_by, pageSize) {
         var authToken = authService.GetToken();
+        var url = baseUrls.ticketUrl + ticketType + "/" + pageSize + "/" + page + "?status=" + status + '&sorted_by=' + sorted_by;
+
+
+        console.log(url);
+
         return $http({
             method: 'GET',
             url: baseUrls.ticketUrl + ticketType + "/" + pageSize + "/" + page + "?status=" + status + '&sorted_by=' + sorted_by
