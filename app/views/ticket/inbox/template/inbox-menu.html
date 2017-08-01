@@ -1,15 +1,15 @@
 <!-- new ticket  menu -->
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='new'?'t-active-menu':''">
+     ng-class="currentSelected.name=='to do'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('new',ticketCountObj.new)">
+         ng-click="openTicketView('to do',ticketCountObj.new)">
         <ul
                 class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.new==0?'text-decoration count0':''">
                     <!---->
-                    New
+                    To Do
                 </div>
             </li>
             <li>
@@ -27,16 +27,16 @@
 
 <!-- to do  menu -->
 <div class="ticket-filter-body"
-     ng-class="currentSelected.name=='todo'?'t-active-menu':''">
+     ng-class="currentSelected.name=='in progress'?'t-active-menu':''">
     <div class="t-f-wrp"
-         ng-click="openTicketView('todo',ticketCountObj.toDo)">
+         ng-click="openTicketView('in progress',ticketCountObj.toDo)">
         <ul
                 class="customer-style-ul inline-list t-f-ul">
             <li>
                 <div class="t-filter-name"
                      ng-class="ticketCountObj.toDo==0?'text-decoration count0':''">
                     <!---->
-                    Todo
+                    In Progress
                 </div>
             </li>
             <li>
@@ -54,29 +54,29 @@
 
 <!--&lt;!&ndash; in progree menu &ndash;&gt;-->
 <!--<div class="ticket-filter-body"-->
-     <!--ng-class="currentSelected.name=='inProgress'?'t-active-menu':''">-->
-    <!--<div class="t-f-wrp"-->
-         <!--ng-click="openTicketView('progressing',ticketCountObj.inProgress)">-->
-        <!--<ul class="customer-style-ul inline-list t-f-ul">-->
-            <!--<li>-->
-                <!--<div class="t-filter-name"-->
-                     <!--ng-class="ticketCountObj.inProgress==0?'text-decoration count0':''">-->
-                    <!--&lt;!&ndash;&ndash;&gt;-->
-                    <!--In Progress-->
-                <!--</div>-->
-            <!--</li>-->
-            <!--<li>-->
-                <!--<div id="inProgressCountLoaded"-->
-                     <!--class="t-item-count black display-none animated fadeInRight">-->
-                    <!--{{ticketCountObj.inProgress}}-->
-                <!--</div>-->
-                <!--<div id="inProgressCountLoading"-->
-                     <!--class="t-item-count count-loading">-->
-                    <!--<i class="fa fa-cog fa-spin"></i>-->
-                <!--</div>-->
-            <!--</li>-->
-        <!--</ul>-->
-    <!--</div>-->
+<!--ng-class="currentSelected.name=='inProgress'?'t-active-menu':''">-->
+<!--<div class="t-f-wrp"-->
+<!--ng-click="openTicketView('progressing',ticketCountObj.inProgress)">-->
+<!--<ul class="customer-style-ul inline-list t-f-ul">-->
+<!--<li>-->
+<!--<div class="t-filter-name"-->
+<!--ng-class="ticketCountObj.inProgress==0?'text-decoration count0':''">-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--In Progress-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div id="inProgressCountLoaded"-->
+<!--class="t-item-count black display-none animated fadeInRight">-->
+<!--{{ticketCountObj.inProgress}}-->
+<!--</div>-->
+<!--<div id="inProgressCountLoading"-->
+<!--class="t-item-count count-loading">-->
+<!--<i class="fa fa-cog fa-spin"></i>-->
+<!--</div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
 <!--</div>-->
 
 
