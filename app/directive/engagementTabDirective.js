@@ -2114,6 +2114,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             getYears();
 
 
+            scope.isSavingProfile = false;
             scope.saveNewProfile = function (profile) {
                 profile.tags = [];
                 scope.cutomerTypes.forEach(function (tag) {
@@ -2122,7 +2123,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
 
+                scope.isSavingProfile = true;
                 userService.CreateExternalUser(profile).then(function (response) {
+                    scope.isSavingProfile = false;
                     if (response) {
                         scope.profileDetail = response;
                         scope.showNewProfile = false;
@@ -2150,6 +2153,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
                     }
                 }, function (err) {
+                    cope.isSavingProfile = false;
                     scope.showAlert("Profile", "error", "Fail To Save Profile.");
                 });
 
@@ -2812,12 +2816,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     case '1':
                         scope.isBasicInfo = true;
                         scope.isLocationView = false;
-
+                        scope.isLoadinNextFormWizad = false;
                         break;
                     case '2':
                         //validation on check event
                         scope.isLoadinNextFormWizad = true;
-                        scope.isLoadinNextFormWizad = false;
+                        //scope.isLoadinNextFormWizad = false;
                         scope.isBasicInfo = false;
                         scope.isLocationView = true;
                         break;
