@@ -116,13 +116,13 @@
                             <div class="form-group"
                                  ng-class="{ 'validation-on-052017': newProfileForm.newProfilephone.$invalid &&
                       newProfileForm.newProfilephone.$dirty}">
-                                <label class="label-052017">Phone Number*
+                                <label class="label-052017">Phone Number
                                     {{newProfileForm.newProfilephone.$error.unique}}</label>
                                 <input type="text"
                                        class="form-control txt-input-052017"
                                        name="newProfilephone"
                                        ng-model="newProfile.phone"
-                                       required/>
+                                />
                             </div>
                         </div>
 
@@ -170,7 +170,7 @@
                                    class="form-control txt-input-052017"
                                    name="newProfileemail"
                                    id="newProfileemail"
-                                   ng-model="newProfile.email" />
+                                   ng-model="newProfile.email"/>
                         </div>
 
                         <!-- gender -->
@@ -326,13 +326,15 @@
                             <div class="form-group" style="margin-top: 20px">
                                 <button ng-click="saveNewProfile(newProfile);"
                                         ng-disabled="newProfileForm.$invalid"
+                                        ng-show="!isSavingProfile"
                                         class="btn btn-lg btn-block btn-save-052017">
                                     save
                                 </button>
-                                <!--<button disabled-->
-                                <!--class="btn btn-lg btn-block btn-save-052017">-->
-                                <!--Please wait...-->
-                                <!--</button>-->
+                                <button disabled
+                                        ng-show="isSavingProfile"
+                                        class="btn btn-lg btn-block btn-save-052017">
+                                    Please wait...
+                                </button>
                             </div>
                         </div>
 

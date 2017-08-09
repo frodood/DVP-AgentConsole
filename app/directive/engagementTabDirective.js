@@ -1241,12 +1241,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     fields: arr,
                     reference: ticket._id
                 };
-                
-                if(scope.currentTicketForm){
-                    
+
+                if (scope.currentTicketForm) {
+
                     obj.form = scope.currentTicketForm.name
                 }
-                
+
                 ticketService.createFormSubmissionData(obj).then(function (response) {
                     //tag submission to ticket
                     if (response && response.Result) {
@@ -1703,16 +1703,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             scope.GetIntegrationDetails = function (id) {
-                if(scope.integrationData&& scope.integrationData.length&&id){
+                if (scope.integrationData && scope.integrationData.length && id) {
                     var postData = {
                         "PROFILE_ADDITIONAL_DATA": {
                             "Reference": id
                         }
                     };
-                    integrationAPIService.GetIntegrationDetails("PROFILE_ADDITIONAL_DATA",postData).then(function (response) {
-                        angular.forEach(response,function (item) {
-                            if(item){
-                                angular.extend(scope.profileDetail,item);
+                    integrationAPIService.GetIntegrationDetails("PROFILE_ADDITIONAL_DATA", postData).then(function (response) {
+                        angular.forEach(response, function (item) {
+                            if (item) {
+                                angular.extend(scope.profileDetail, item);
                             }
                         });
 
@@ -1723,17 +1723,17 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             scope.GetIntegrationImportantData = function (id) {
-                if(scope.integrationData&& scope.integrationData.length){
+                if (scope.integrationData && scope.integrationData.length) {
                     var postData = {
                         "PROFILE_IMPORTANT_DATA": {
                             "Reference": id
                         }
                     };
-                    integrationAPIService.GetIntegrationDetails("PROFILE_IMPORTANT_DATA",postData).then(function (response) {
+                    integrationAPIService.GetIntegrationDetails("PROFILE_IMPORTANT_DATA", postData).then(function (response) {
                         scope.profileImportantData = {};
-                        angular.forEach(response,function (item) {
-                            if(item){
-                                angular.extend(scope.profileImportantData,item);
+                        angular.forEach(response, function (item) {
+                            if (item) {
+                                angular.extend(scope.profileImportantData, item);
                             }
                         });
 
@@ -1744,16 +1744,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             };
 
             scope.GetProfileOtherData = function (postData) {
-                if(scope.integrationData&& scope.integrationData.length){
+                if (scope.integrationData && scope.integrationData.length) {
 
                     var postBody = {
                         "PROFILE_OTHER_DATA": postData
                     };
 
-                    integrationAPIService.GetIntegrationDetails("PROFILE_OTHER_DATA",postBody).then(function (response) {
+                    integrationAPIService.GetIntegrationDetails("PROFILE_OTHER_DATA", postBody).then(function (response) {
                         scope.profileOtherDataObj = {};
-                        angular.forEach(response,function (item) {
-                            if(item){
+                        angular.forEach(response, function (item) {
+                            if (item) {
                                 angular.extend(scope.profileOtherDataObj, item);
                             }
                         });
@@ -1799,8 +1799,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 if (scope.profileDetail) {
                     scope.isEnagagementOpen = true;
                     scope.GetProfileHistory(scope.profileDetail._id);
-                    scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
-                    scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                    scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
+                    scope.GetIntegrationImportantData(scope.profileDetail.thirdpartyreference);
                     scope.GetProfileOtherData(scope.profileDetail);
 
                     scope.profileLoadin = false;
@@ -1868,7 +1868,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                             scope.isEnagagementOpen = true;
                             scope.profileDetails = response;
-                            //scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
+                            //scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
                             loadUserData();
                         }, function (err) {
                             scope.isProfileFound = false;
@@ -2114,6 +2114,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             getYears();
 
 
+            scope.isSavingProfile = false;
             scope.saveNewProfile = function (profile) {
                 profile.tags = [];
                 scope.cutomerTypes.forEach(function (tag) {
@@ -2122,7 +2123,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
 
+                scope.isSavingProfile = true;
                 userService.CreateExternalUser(profile).then(function (response) {
+                    scope.isSavingProfile = false;
                     if (response) {
                         scope.profileDetail = response;
                         scope.showNewProfile = false;
@@ -2150,6 +2153,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
                     }
                 }, function (err) {
+                    cope.isSavingProfile = false;
                     scope.showAlert("Profile", "error", "Fail To Save Profile.");
                 });
 
@@ -2486,8 +2490,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                             });
                         }
-                        scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
-                        scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                        scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
+                        scope.GetIntegrationImportantData(scope.profileDetail.thirdpartyreference);
                         scope.GetProfileOtherData(scope.profileDetail);
 
                     },
@@ -2812,51 +2816,20 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     case '1':
                         scope.isBasicInfo = true;
                         scope.isLocationView = false;
-
+                        scope.isLoadinNextFormWizad = false;
                         break;
                     case '2':
                         //validation on check event
                         scope.isLoadinNextFormWizad = true;
-                        userService.getExternalUserProfileByField("phone", profile.phone).then(function (resPhone) {
-                            if (resPhone.IsSuccess && resPhone.Result.length > 0) {
-                                scope.showAlert("Profile", "error", "Phone number is already taken");
-                                profile.phone = "";
-                                scope.isLoadinNextFormWizad = false;
-                                return;
-                            } else {
-                                userService.getExternalUserProfileByField("email", profile.email).then(function (resEmail) {
-                                    if (resEmail.IsSuccess && resEmail.Result.length > 0) {
-                                        scope.showAlert("Profile", "error", "Email is already taken");
-                                        profile.email = "";
-                                        scope.isLoadinNextFormWizad = false;
-                                        return;
-                                    }
-                                    else {
-                                        userService.getExternalUserProfileBySsn(profile.ssn).then(function (resSSN) {
-                                            if (resSSN.IsSuccess && resSSN.Result.length > 0) {
-                                                scope.showAlert("Profile", "error", "SSN is already taken");
-                                                profile.ssn = "";
-                                                scope.isLoadinNextFormWizad = false;
-                                                return;
-                                            } else {
-                                                scope.isLoadinNextFormWizad = false;
-                                                scope.isBasicInfo = false;
-                                                scope.isLocationView = true;
-                                            }
-                                        }, function (errEmail) {
-                                            scope.showAlert("Profile", "error", "SSN is already taken");
-                                        });
-                                    }
-
-                                });
-                            }
-                        });
+                        //scope.isLoadinNextFormWizad = false;
+                        scope.isBasicInfo = false;
+                        scope.isLocationView = true;
                         break;
                 }
             };
 
 
-            //open ticket tab using ticket ref ID
+//open ticket tab using ticket ref ID
             scope.oepnTicketOnNotification = function (obj) {
                 scope.addTab('Ticket - ' + obj.ticketref, 'Ticket - ' + obj.ticket, 'ticketView', {_id: obj.ticket}, obj.ticket);
             };
@@ -2871,8 +2844,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 });
             };
 
-            //upload profile avatar
-            //
+//upload profile avatar
+//
             scope.isAvatarUpload = false;
 
             scope.showUploadModal = function () {
@@ -2884,7 +2857,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.showNewProfile = false;
             };
 
-            //APPOINTMENT pawan
+//APPOINTMENT pawan
             scope.appoiment = {};
             var showAlert = function (title, type, content) {
                 new PNotify({

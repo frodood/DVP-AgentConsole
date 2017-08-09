@@ -1,0 +1,337 @@
+<div ng-controller="ticketInboxConsoleCtrl"
+     class="main-inbox-wrapper05201">
+
+    <!-- ./inbox left toggele menu -->
+    <div class="col-sm-5 col-md-4 col-xs-12 col-lg-3 ">
+        <div class="row">
+            <div id="inboxToggleLeft"
+                 slimscroll="{height: '{{filterMenuScroller}}',
+                    width:'100%',
+                    railVisible: true,
+                    color: '#777',
+                    size: '8px',
+                    distance: '5px',
+                    railColor: '#fff',
+                    railBorderRadius: 10}"
+                 class="inbox-left-toggle-wrapper">
+
+                <!-- ./ticket inbox menu -->
+                <section class="i-left-inbox-wrapper">
+                    <div class="i-inbox-header-wrp">
+                        <div class="count-inline-row">
+                            <ul class="customer-style-ul">
+                                <li class="float-left">
+                                    <h5 class="header text-uppercase">
+                                        <i ng-click="isCollapsedInbox = !isCollapsedInbox"
+                                           ng-class="!isCollapsedInbox?'ti-angle-up':'ti-angle-down'"></i>
+                                        all tickets
+                                    </h5>
+                                </li>
+                                <!--<li class="count-right">-->
+                                <!--<div class="inline-t-count gray800 ">-->
+                                <!--{{jsonInboxObj.length}}-->
+                                <!--</div>-->
+                                <!--</li>-->
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- ./ ticket inbox wrapper -->
+                    <section
+                            class="i-left-t-filter-wrapper"
+                            uib-collapse="isCollapsedInbox">
+                        <!-- ./ ng include ticket inbox menu -->
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-menu.html'"></div>
+                    </section>
+                    <!-- ./ end -->
+                </section>
+
+                <!-- ./my ticket menu -->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i ng-click="isCollapsedMyTicket = !isCollapsedMyTicket"
+                                       ng-class="!isCollapsedMyTicket?'ti-angle-up':'ti-angle-down'"></i>
+                                    my tickets
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedMyTicket">
+                    <div class="ticket-filter-body">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-my-menu.html'"></div>
+                    </div>
+                </section>
+                <!-- ./ end -->
+
+                <!-- ./group ticket menu -->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i ng-click="isCollapsedGroupTicketr = !isCollapsedGroupTicketr"
+                                       ng-class="!isCollapsedGroupTicketr?'ti-angle-up':'ti-angle-down'"></i>
+                                    Group tickets
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedGroupTicketr">
+                    <div class="ticket-filter-body ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-group-menu.html'"></div>
+                    </div>
+                </section>
+                <!-- ./ end -->
+
+
+                <!-- ./ticket submitted by me -->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i ng-click="isCollapsedSubmitted = !isCollapsedSubmitted"
+                                       ng-class="!isCollapsedSubmitted?'ti-angle-up':'ti-angle-down'"></i>
+                                    Submitted by me
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedSubmitted">
+                    <div class="ticket-filter-body ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-submitted-byme-menu.html'"></div>
+                    </div>
+                </section>
+                <!-- ./ end -->
+
+                <!-- ./ticket watched by me -->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i ng-click="isCollapsedWatchedByMe = !isCollapsedWatchedByMe"
+                                       ng-class="!isCollapsedWatchedByMe?'ti-angle-up':'ti-angle-down'"></i>
+                                    watched by me
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedWatchedByMe">
+                    <div class="ticket-filter-body ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-watched-byme-menu.html'"></div>
+                    </div>
+                </section>
+                <!-- ./ end -->
+
+                <!-- ./ticket collaborated by me menu  -->
+                <!-- ./ticket watched by me -->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i ng-click="isCollapsedCollaboratedByMe = !isCollapsedCollaboratedByMe"
+                                       ng-class="!isCollapsedCollaboratedByMe?'ti-angle-up':'ti-angle-down'"></i>
+                                    collaborated by me
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedCollaboratedByMe">
+                    <div class="ticket-filter-body ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-collaborated-byme-menu.html'"></div>
+                    </div>
+                </section>
+                <!-- ./ end -->
+
+                <!-- ./ ticket filter menu-->
+                <div class="i-left-top-wrapper">
+                    <div class="count-inline-row">
+                        <ul class="customer-style-ul">
+                            <li class="float-left">
+                                <h5 class="header text-uppercase">
+                                    <i ng-click="isCollapsedFilter = !isCollapsedFilter"
+                                       ng-class="!isCollapsedFilter?'ti-angle-up':'ti-angle-down'"></i>
+                                    ticket filter
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <section class="i-left-t-filter-wrapper"
+                         uib-collapse="isCollapsedFilter">
+                    <div class="ticket-filter-body-filer ">
+                        <div ng-include="'app/views/ticket/inbox/template/inbox-filter-menu.html'"></div>
+                    </div>
+                </section>
+                <!-- ./ end -->
+
+            </div>
+        </div>
+        <!-- ./ end row -->
+    </div>
+
+    <!-- ./ inbox right wrapper -->
+    <div class="col-sm-7 col-md-8 col-xs-12 col-lg-9">
+        <div class="row">
+            <!-- ./inbox right wrapper -->
+            <div id="inboxRightWrapper" class="inbox-right-wrapper05201">
+                <!-- ./ top wrapper -->
+                <div class="i-right-top-wrapper">
+                    <div class="col-lg-5 col-sm-4 col-md-6 col-xs-6">
+                        <div class="row">
+                            <div class="inbox-h-top-left-wrapper">
+                                <div class="inbox-header-left05201">
+                                    <div class="inbox-title">
+                                        <h4 ng-show="!isFilter"> {{currentSelected.name }} Tickets </h4>
+                                        <h4 ng-show="isFilter"> {{currentSelected.name }}</h4>
+                                        <!--<small>{{currentSelected.totalCount }} Total</small>-->
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- ./ top right navigation -->
+                    <div class="col-lg-7 col-sm-8 col-md-6 col-xs-6">
+                        <div class="row">
+                            <div class="i-top-navigation">
+                                <ul class="customer-style-ul i-top-navigation">
+                                    <li>
+                                        <div class="pager-count">
+
+                                            {{ (currentPage -1) * pageSize + 1 }} - {{(currentPage -1) *pageSize +
+                                            ticketList.length}} of
+                                            {{currentSelected.totalCount}}
+                                        </div>
+                                    </li>
+                                    <li class="i-pagination">
+
+                                        <ul uib-pager
+                                            class="ticket-pager"
+                                            total-items="currentSelected.totalCount"
+                                            ng-change="goToPagination()"
+                                            ng-model="currentPage"></ul>
+                                    </li>
+
+                                    <li>
+                                        <div id="btnRefresh" ng-click="ticketViewAllReload()"
+                                             class="btn btn-sm btn-refresh"
+                                             style="margin-top: -17px;">
+                                            Refresh
+                                        </div>
+                                        <div id="btnRefreshLoading" class="btn btn-sm btn-refresh display-none"
+                                             style="margin-top: -17px;">
+                                            Please wait..
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--./inbox short option-->
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./ end top -->
+                <!-- ./ filer bar -->
+                <section class="i-filter-bar-wrapper">
+                    <div class="i-f-b-wrapper">
+                        <ul class="customer-style-ul t-f-wrp">
+                            <!--<li class="check-box-item">-->
+                            <!--<div class="checkbox margin-0">-->
+                            <!--<label>-->
+                            <!--<input type="checkbox"-->
+                            <!--ng-model="selectedAll"-->
+                            <!--class="top-check-all"> Check All-->
+                            <!--</label>-->
+                            <!--</div>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                            <!--<div class="t-f-btn-wrp ">-->
+                            <!--Close-->
+                            <!--</div>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                            <!--<div class="t-f-btn-wrp">-->
+                            <!--Assigne me-->
+                            <!--</div>-->
+                            <!--</li>-->
+                            <li style="float: right;">
+                                <div class="inbox-sort-option">
+                                    <ul class="customer-style-ul sort-option"
+                                        style="padding-top: 4px;">
+                                        <li class="title">
+                                            <small>Sort By : </small>
+                                        </li>
+                                        <li class="short-drop-down">
+                                            <select ng-change="onChangeSortTicktList(sortType)"
+                                                    ng-model="sortType"
+                                                    class="form-control selected-short ">
+                                                <option value="updated_at">updated_at</option>
+                                                <option value="created_at">created_at</option>
+                                                <option value="due_at">due_at</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- ./ticket details-wrapper -->
+                <section id="ticketListView"
+                         class="t-i-list-wrapper"
+                         slimscroll="{height: '{{ticketListHeight}}',
+                    width:'100%',
+                    railVisible: true,
+                    color: '#777',
+                    size: '8px',
+                    distance: '5px',
+                    railColor: '#fff',
+                    railBorderRadius: 10}">
+                    <div ng-include="'app/views/ticket/inbox/template/inbox-list-view.html'"></div>
+
+                </section>
+                <div ng-include="'app/views/ticket/inbox/template/main-loader.html'"></div>
+            </div>
+            <!-- ./ end -->
+
+
+        </div>
+        <!-- ./ end row -->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+</script>
+
+
+<!--slimscroll="{height: '{{windowHeight}}',-->
+<!--railVisible: true,-->
+<!--color: '#777',-->
+<!--size: '8px',-->
+<!--distance: '5px',-->
+<!--railColor: '#fff',-->
+<!--railBorderRadius: 10}"-->

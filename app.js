@@ -18,7 +18,7 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui', 'ui.bootstrap',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
     'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable',
-    'angular-timeline','angular-json-tree'
+    'angular-timeline', 'angular-json-tree', 'ngDropover','angularAudioRecorder','ngAudio'
 ]);
 
 
@@ -40,8 +40,8 @@ var baseUrls = {
     'dashBordUrl': 'http://dashboardservice.app1.veery.cloud/',
     'toDoUrl': 'http://todolistservice.app1.veery.cloud/DVP/API/1.0.0.0/',    //todolistservice.app1.veery.cloud
     'monitorrestapi': 'http://monitorrestapi.app1.veery.cloud/DVP/API/1.0.0.0/',//monitorrestapi.app1.veery.cloud
-    'integrationapi': 'http://localhost:4334/DVP/API/1.0.0.0/IntegrationAPI/',
-    'sipuserUrl': 'http://sipuserendpointservice.app1.veery.cloud/DVP/API/1.0.0.0/',
+    'integrationapi': 'http://integrationapi.app1.veery.cloud/DVP/API/1.0.0.0/IntegrationAPI/',
+    'sipuserUrl': 'http://sipuserendpointservice.app1.veery.cloud/DVP/API/1.0.0.0/', //sipuserendpointservice.app1.veery.cloud
     'pwdVerifyUrl': 'http://userservice.app1.veery.cloud/auth/verify',
     'qaModule': 'http://qamodule.app1.veery.cloud/DVP/API/1.0.0.0/QAModule/',
     'contactUrl': 'http://contacts.app1.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //campaignmanager.app1.veery.cloud
@@ -52,7 +52,10 @@ var baseUrls = {
 
 };
 
+var recordingTime = 20;
+
 agentApp.constant('baseUrls', baseUrls);
+agentApp.constant('recordingTime', recordingTime);
 
 agentApp.constant('dashboardRefreshTime', 60000);
 agentApp.constant('turnServers', [{
@@ -147,7 +150,7 @@ agentApp.constant('config', {
 });
 
 //Authentication
-agentApp.run(function ($rootScope, loginService, $location, $state) {
+agentApp.run(function ($rootScope, loginService, $location, $state,$document) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         var requireLogin = toState.data.requireLogin;
         if (requireLogin) {
@@ -157,6 +160,8 @@ agentApp.run(function ($rootScope, loginService, $location, $state) {
             }
             // get me a login modal!
         }
+
+
     });
     var decodeToken = loginService.getTokenDecode();
     if (!decodeToken) {

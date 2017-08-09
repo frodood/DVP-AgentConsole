@@ -2,7 +2,8 @@
  * Created by Veery Team on 8/19/2016.
  */
 
-agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $state, ticketService, moment, $rootScope, userService,
+agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $state, ticketService, moment,
+                                            $rootScope, userService,
                                             profileDataParser, authService,$anchorScroll) {
 
 
@@ -835,6 +836,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     $rootScope.$on('reloadInbox', function (events, args) {
         $scope.reloadTickets();
     });
+
 
 
 

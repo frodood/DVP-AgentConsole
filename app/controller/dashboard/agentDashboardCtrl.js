@@ -545,8 +545,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     };
 
     var getAllRealTime = function () {
-        GetQueueDetails();
-        //getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
+        //GetQueueDetails();
+        getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
     };
 
 
@@ -579,6 +579,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         getAllRealTime();
         loadRecentData();
         loadGrapData();
+        GetQueueDetails();
         $scope.isLoadinDashboard = false;
     };
     $scope.dashboardReload();
