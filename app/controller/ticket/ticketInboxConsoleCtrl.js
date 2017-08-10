@@ -14,19 +14,10 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             document.body.clientHeight;
         return callback(height);
     };
-    getWindowHeight(function (height) {
-        // document.getElementById('inboxToggleLeft').style.height = height + "px";
-        document.getElementById('inboxRightWrapper').style.height = height + "px";
-        document.getElementById('ticketListView').style.height = height - 230 + "px";
-        document.getElementById('inboxToggleLeft').style.height = height - 100 + "px";
-        $scope.ticketListHeight = height - 220 + "px";
 
-        $scope.filterMenuScroller = height - 100 + "px";
-
-    });
-
-    window.onresize = function () {
+    var ticketWindowDynamicHeight = function () {
         getWindowHeight(function (height) {
+            document.getElementById('inboxToggleLeft').style.height = height + "px";
             document.getElementById('inboxRightWrapper').style.height = height + "px";
             document.getElementById('ticketListView').style.height = height - 230 + "px";
             document.getElementById('inboxToggleLeft').style.height = height - 100 + "px";
@@ -34,8 +25,18 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
             $scope.filterMenuScroller = height - 100 + "px";
         });
     };
+    ticketWindowDynamicHeight();
 
-    //all left toggle up
+
+    $(function () {
+        $(window).resize(function () {
+            ticketWindowDynamicHeight();
+        });
+
+
+    });
+
+//all left toggle up
     $scope.isCollapsedInbox = true;
     $scope.isCollapsedMyTicket = false;
     $scope.isCollapsedGroupTicketr = true;
@@ -44,12 +45,12 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     $scope.isCollapsedWatchedByMe = true;
     $scope.isCollapsedCollaboratedByMe = true;
 
-    //onload sort type
+//onload sort type
     $scope.sortType = 'updated_at';
     $scope.pageSize = 20;
 
 
-    //ticket view object
+//ticket view object
     $scope.ticketList = [];
     $scope.currentSelected = {
         "name": '',
@@ -105,8 +106,8 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     };
 
 
-    //UI funtion
-    //ticket inbox UI funtion
+//UI funtion
+//ticket inbox UI funtion
 
     var ticketUIFun = function () {
         return {
@@ -161,8 +162,8 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     }();
 
 
-    //Ticket Inbox
-    //private function
+//Ticket Inbox
+//private function
     var inboxPrivateFunction = function () {
         return {
             //get all new ticket count
@@ -609,7 +610,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     };
 
 
-    //goto view ticket filter
+//goto view ticket filter
     $scope.goToFilterTicketView = function (_viewType, _selectedViewObj, selectedFilter, clickEvent) {
         $scope.isFilter = true;
         $scope.selectedFilter = selectedFilter;
@@ -627,7 +628,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     };
 
 
-    //ticket filter
+//ticket filter
 
 
     $scope.loadTicketFilterViews = function (e) {
@@ -644,15 +645,15 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     $scope.loadTicketFilterViews();
 
 
-    //ticket list pagination
-    // $scope.getPageData = function () {
-    //    // console.log($scope.currentPage);
-    //
-    //     $scope.openTicketView($scope.currentSelected.name,
-    //         $scope.currentSelected.totalCount,
-    //         '',
-    //         $scope.currentPage, )
-    // };
+//ticket list pagination
+// $scope.getPageData = function () {
+//    // console.log($scope.currentPage);
+//
+//     $scope.openTicketView($scope.currentSelected.name,
+//         $scope.currentSelected.totalCount,
+//         '',
+//         $scope.currentPage, )
+// };
 
 
     $scope.currentPage = 1;
@@ -664,7 +665,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     };
 
 
-    //goto ticket view
+//goto ticket view
     $scope.gotoTicket = function (data) {
         data.tabType = 'ticketView';
         data.reference = data._id;
@@ -701,12 +702,12 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
         return Math.ceil($scope.getData().length / $scope.pageSize);
     };
 
-    // for (var i = 0; i < 65; i++) {
-    //     $scope.data.push("Item " + i);
-    // };
+// for (var i = 0; i < 65; i++) {
+//     $scope.data.push("Item " + i);
+// };
 
 
-    //on change sort ticket
+//on change sort ticket
 
     $scope.onChangeSortTicktList = function (sortType) {
         $scope.openTicketView($scope.currentSelected.name, $scope.currentSelected.totalCount, $scope.selectedFilter, '1');
@@ -765,7 +766,7 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope, mail
     };
     loadMyDefulatTicketView();
 
-    //click event refresh all
+//click event refresh all
     $scope.ticketViewAllReload = function () {
         loadMyDefulatTicketView();
     };
