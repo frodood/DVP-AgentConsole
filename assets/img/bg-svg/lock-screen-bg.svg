@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="600px" viewBox="0 0 800 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>user-summary-modal</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="user-summary-modal">
+            <polygon id="Path-3" points="278 603.128287 433.5 352.63745 731 -63 875.5 -60.7832669 872.5 626.958167 243 632.5"></polygon>
+            <circle id="Oval-3" stroke-opacity="0.101449275" stroke="#82E9A0" stroke-width="18" fill="#82E9A0" cx="102.5" cy="125.5" r="4.5"></circle>
+            <circle id="Oval-3-Copy" stroke-opacity="0.101449275" stroke="#82E9A0" stroke-width="18" fill="#82E9A0" cx="707.5" cy="501.5" r="4.5"></circle>
+            <circle id="Oval-3-Copy-2" stroke-opacity="0.101449275" stroke="#82E9A0" stroke-width="10" fill="#82E9A0" cx="555.5" cy="123.5" r="2.5"></circle>
+            <circle id="Oval-19" stroke-opacity="0.234148551" stroke="#FCCF8B" stroke-width="18" fill="#FCCF8B" cx="48" cy="12" r="10"></circle>
+            <circle id="Oval-19-Copy-4" stroke-opacity="0.234148551" stroke="#FCCF8B" stroke-width="18" fill="#FCCF8B" cx="394" cy="297" r="4"></circle>
+            <circle id="Oval-19-Copy" stroke-opacity="0.144786005" stroke="#F36B5B" stroke-width="10" fill="#F36B5B" cx="66.5" cy="361.5" r="4.5"></circle>
+            <circle id="Oval-19-Copy-3" stroke-opacity="0.144786005" stroke="#F36B5B" stroke-width="10" fill="#F36B5B" cx="251.5" cy="111.5" r="4.5"></circle>
+            <circle id="Oval-19-Copy-2" stroke-opacity="0.234148551" stroke="#FCCF8B" stroke-width="9" fill="#FCCF8B" cx="243" cy="502" r="4"></circle>
+        </g>
+    </g>
+</svg>

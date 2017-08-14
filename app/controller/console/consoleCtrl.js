@@ -5233,7 +5233,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 
     $scope.$on('$locationChangeStart', function (event, next, current) {
-        $scope.showAlert("Disable", "warning", "Sorry ! Back Button is disabled");
+        //$scope.showAlert("Disable", "warning", "Sorry ! Back Button is disabled");
         event.preventDefault();
     });
 
