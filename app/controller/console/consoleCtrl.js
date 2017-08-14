@@ -12,9 +12,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm,
                                              templateService, userImageList, integrationAPIService, versionController, $sce) {
 
-    ///console version
-
-    $scope.version = versionController.version;
 
     // call $anchorScroll()
     $anchorScroll();
@@ -1712,7 +1709,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (!$scope.isLogingOut) {
             $scope.showAlert("Registration failed", "error", "Disconnected from notifications, Please re-register");
         }
-       // $('#regNotification').addClass('display-none');
+        // $('#regNotification').addClass('display-none');
         //$('#regNotificationLoading').removeClass('display-none');
         $scope.phoneNotificationFunctions.showNotfication(false);
     };
@@ -1738,7 +1735,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.agentAuthenticated = function () {
         console.log("agentAuthenticated");
         $scope.isSocketRegistered = true;
-       // $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
+        // $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
         //$('#regNotification').addClass('display-block').removeClass('display-none');
         $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
 
@@ -4045,6 +4042,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     }();
 
+    //changeLockScreenView.show();
     $scope.currentBerekOption = null;
     var breakList = ['#Available'];
 
@@ -4074,6 +4072,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
+            $scope.currentBreak = requestOption;
             $('#loginScreeen').removeClass('display-none').addClass('display-block');
             $('body').addClass('overflow-hidden');
             dataParser.userProfile = $scope.profile;
@@ -4205,6 +4204,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             breakState: function () {
                 resourceService.GetResourceState(authService.GetResourceId()).then(function (data) {
                     if (data && data.IsSuccess) {
+                        if (data.Result && data.Result.Reason) {
+                            $scope.currentBreak = data.Result.Reason;
+                        }
+
                         if (data.Result.State == "Available") {
                             $scope.currentBerekOption = "Available";
                             $('#userStatus').addClass('online').removeClass('offline');
@@ -5227,6 +5230,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 //
 //     //console.log(_userProfile);
 // };
+
+
+    $scope.$on('$locationChangeStart', function (event, next, current) {
+        $scope.showAlert("Disable", "warning", "Sorry ! Back Button is disabled");
+        event.preventDefault();
+    });
+
 
 }).directive("mainScroll", function ($window) {
     return function (scope, element, attrs) {

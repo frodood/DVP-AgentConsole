@@ -21,12 +21,6 @@
 
 
 
-function getJSONData(http, file, callback) {
-    http.get('assets/json/' + file + '.json').success(function (data) {
-        callback(data.d);
-    })
-}
-
 ///* Set the width of the side navigation to 250px */
 //function openNav() {
 //    document.getElementById("mySidenav").style.width = "300px";
@@ -138,13 +132,13 @@ function removePin() {
     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
 };
 
-function enablePin(){
+function enablePin() {
     $('#phoneDialpad').removeClass('display-block').addClass('display-none');
     $('#pinScreen').removeClass('display-block').addClass('display-none');
     $('#removePinScreen').removeClass('display-none').addClass('display-block');
 }
 
-function disablePin(){
+function disablePin() {
     $('#pinScreen').removeClass('display-none').addClass('display-block');
     $('#removePinScreen').removeClass('display-block').addClass('display-none');
     $('#phoneDialpad').removeClass('display-none').addClass('display-block');
