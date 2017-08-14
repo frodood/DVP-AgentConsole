@@ -26,7 +26,7 @@ agentApp.constant('moment', moment);
 
 var baseUrls = {
     'authUrl': 'http://userservice.app1.veery.cloud',//http://userservice.app1.veery.cloud
-    'userServiceBaseUrl': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',
+    'userServiceBaseUrl': 'http://localhost:3638/DVP/API/1.0.0.0/',
     'notification': 'http://notificationservice.app1.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app1.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.app1.veery.cloud
     'engagementUrl': 'http://interactions.app1.veery.cloud/DVP/API/1.0.0.0/',//interactions.app1.veery.cloud

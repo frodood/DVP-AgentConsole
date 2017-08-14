@@ -1619,7 +1619,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     "avatar": "assets/img/avatar/profileAvatar.png",
                     "birthday": "",
                     "gender": "",
-                    "firstname": "",
+                    "firstname": scope.channel != 'call' ? scope.channelFrom : '',
                     "lastname": "",
                     "locale": 0,
                     "ssn": "",
@@ -1782,9 +1782,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         }
                         break;
                     case 'chat':
+                    case 'webchat':
                         category = 'email';
                         break;
-
+                    case 'viber':
+                        category = 'viber';
+                        break;
                     default :
                         if (scope.channel.includes("facebook")) {
                             category = "facebook"
@@ -1859,7 +1862,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.mapProfile.isShowConfirm = true;
                     }
 
-                } else {
+                }
+                else {
                     if (category === 'direct') {
                         scope.isEnagagementOpen = true;
                         scope.createNProfile();
@@ -2124,6 +2128,46 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 profile.birthday = new Date(collectionDate);
 
                 scope.isSavingProfile = true;
+
+                if (scope.channel != 'call') {
+                    profile.contacts = [];
+                    profile.contacts.push({
+                        contact: scope.channelFrom,
+                        type: (scope.channel==='chat'||scope.channel==='webchat')?'email':scope.channel,
+                        display: scope.channelFrom,
+                        verified: false,
+                        raw: {}
+                    });
+                }
+
+                /*switch (scope.channel) {
+                 case 'viber':
+                 profile.contacts.push(new {
+                 contact:profile.phone,
+                 type:'viber',
+                 display: profile.phone,
+                 verified: false,
+                 raw: {}
+                 });
+                 break;
+                 case 'facebook':
+                 profile.facebook = profile.phone;
+                 break;
+                 case 'twitter':
+                 profile.twitter = profile.phone;
+                 break;
+                 case 'linkedin':
+                 profile.linkedin = profile.phone;
+                 break;
+                 case 'googleplus':
+                 profile.googleplus = profile.phone;
+                 break;
+                 case 'skype':
+                 profile.skype = profile.phone;
+                 break;
+
+                 }*/
+
                 userService.CreateExternalUser(profile).then(function (response) {
                     scope.isSavingProfile = false;
                     if (response) {
