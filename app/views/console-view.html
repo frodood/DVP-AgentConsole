@@ -255,7 +255,7 @@
                                 uib-dropdown-menu
                                 role="menu">
                                 <li class="menuitem" role="menuitem">
-                                    <a ng-click="openSettingPage();"
+                                    <a ng-click="addTabProfileSetting();"
                                        href="javascript:void(0);">
                                         My Setting
                                     </a>
@@ -617,6 +617,12 @@
                         <div ng-switch-when="Ticket-Inbox">
                             <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
                             <div ng-include="'app/views/ticket/inbox/inbox-console.html'"></div>
+                        </div>
+
+                        <!-- setting page --->
+                        <div ng-switch-when="profile-setting">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/views/user-profile/profile-setting.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>

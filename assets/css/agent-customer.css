@@ -3429,8 +3429,8 @@ tags-input .tags .input {
 .agent-settings-wrapper {
     width: 100%;
     height: 100%;
-    position: fixed;
-    background: rgba(0, 0, 0, 0.5);
+    /*position: fixed;*/
+    /*background: rgba(0, 0, 0, 0.5);*/
     z-index: 2000;
     top: 0;
 }
@@ -3441,7 +3441,7 @@ tags-input .tags .input {
     background: #17373c;
     width: 100%;
     height: 600px;
-    border-radius: 5px;
+    border-radius: 0px;
     padding: 30px 30px 20px 30px;
 }
 
@@ -13411,7 +13411,7 @@ ul.i-top-navigation > li {
     position: relative;
     text-align: center;
     padding-top: 7px;
-    font-size: 1px;
+    font-size: 15px;
 }
 
 .t-i-more-wrp {

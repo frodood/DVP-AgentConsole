@@ -20,7 +20,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $scope.$on('$locationChangeStart', function(event, next, current){
+    $scope.$on('$locationChangeStart', function (event, next, current) {
         // Here you can take the control and call your own functions:
         // Prevent the browser default action (Going back):
         event.preventDefault();
@@ -2542,6 +2542,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addMyNote = function () {
         $('#consoleBody').removeClass('disable-scroll');
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
+    };
+
+    //add setting tab
+    $scope.addTabProfileSetting = function () {
+        $('#consoleBody').removeClass('disable-scroll');
+        $scope.addTab('profile-setting', 'profile-setting', 'profile-setting', "profile-setting", "profile-setting");
     };
 
 //ToDo
