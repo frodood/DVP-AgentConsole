@@ -10757,7 +10757,7 @@ timeline-panel {
     overflow: hidden;
     position: relative;
     background: #FFFFFF;
-    border: 1px solid #F8F8F8;
+    border: 0px solid #F8F8F8;
 }
 
 .user-p-t-h-wrapper-052017 {
@@ -10767,6 +10767,7 @@ timeline-panel {
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid #F0F0F0;
+    box-shadow: 9px 7px 10px 0px rgba(0, 0, 0, 0.09);
 }
 
 .user-p-t-type-052017 {
