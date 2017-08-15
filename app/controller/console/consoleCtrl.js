@@ -20,9 +20,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $rootScope.$on("$locationChangeStart", function (event, next, current) {
-        alert('back...');
-        event.preventDefault();
+    $rootScope.$on("$locationChangeStart", function (e) {
+        e.preventDefault();
     });
 
     //safe apply

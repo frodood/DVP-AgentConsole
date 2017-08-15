@@ -37,7 +37,6 @@
 
 
 window.onbeforeunload = function () {
-    return "Back button is not available!";
     window.history.forward(1);
 };
 
