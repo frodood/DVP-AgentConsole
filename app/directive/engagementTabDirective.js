@@ -1477,6 +1477,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         response.map(function (item, index) {
                             item.displayData = "[" + item.reference + "] " + item.subject;
                             scope.ticketList.push(item);
+
                         });
 
                         if (scope.currentTicketPage == 1)
@@ -2133,7 +2134,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     profile.contacts = [];
                     profile.contacts.push({
                         contact: scope.channelFrom,
-                        type: (scope.channel==='chat'||scope.channel==='webchat')?'email':scope.channel,
+                        type: (scope.channel === 'chat' || scope.channel === 'webchat') ? 'email' : scope.channel,
                         display: scope.channelFrom,
                         verified: false,
                         raw: {}
