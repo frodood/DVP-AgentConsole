@@ -35,11 +35,18 @@
 //    //  document.getElementById("navBar").style.marginRight = "0";
 //}
 
+
+window.onbeforeunload = function () {
+    return "Back button is not available!";
+    window.history.forward(1);
+};
+
 function getJSONData(http, file, callback) {
     http.get('assets/json/' + file + '.json').success(function (data) {
         callback(data.d);
     })
 }
+
 
 /// div none and block
 var divModel = function () {

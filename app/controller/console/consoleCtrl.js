@@ -19,6 +19,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         chatService.Status('offline', 'call');
     };
 
+
+    $rootScope.$on("$locationChangeStart", function (event, next, current) {
+        alert('back...');
+        event.preventDefault();
+    });
+
     //safe apply
     $scope.safeApply = function (fn) {
         var phase = this.$root.$$phase;
@@ -5245,12 +5251,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 //
 //     //console.log(_userProfile);
 // };
-
-
-    $scope.$on('$locationChangeStart', function (event, next, current) {
-        //$scope.showAlert("Disable", "warning", "Sorry ! Back Button is disabled");
-        event.preventDefault();
-    });
 
 
 }).directive("mainScroll", function ($window) {

@@ -6151,7 +6151,7 @@ ul.renote-color-btn > li {
 
 /*new lock screen UI update */
 .lock-screen-wrp {
-    width: 50%;
+
     margin: 10em auto;
 }
 
@@ -6225,6 +6225,7 @@ ul.renote-color-btn > li {
 
 .screen-unlock-wrapper {
     /*width: 80%;*/
+    width: 50%;
     margin: 60px auto;
 }
 

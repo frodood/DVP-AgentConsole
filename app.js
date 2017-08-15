@@ -18,7 +18,7 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui', 'ui.bootstrap',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
     'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable',
-    'angular-timeline', 'angular-json-tree', 'ngDropover','angularAudioRecorder','ngAudio'
+    'angular-timeline', 'angular-json-tree', 'ngDropover', 'angularAudioRecorder', 'ngAudio'
 ]);
 
 
@@ -150,7 +150,7 @@ agentApp.constant('config', {
 });
 
 //Authentication
-agentApp.run(function ($rootScope, loginService, $location, $state,$document) {
+agentApp.run(function ($rootScope, loginService, $location, $state, $document) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         var requireLogin = toState.data.requireLogin;
         if (requireLogin) {
@@ -168,7 +168,12 @@ agentApp.run(function ($rootScope, loginService, $location, $state,$document) {
         $state.go('login');
         return
     }
+
+
 });
+
+
+
 
 
 //agentApp.directive('scrollable', function ($document, $interval, $timeout, $window) {
