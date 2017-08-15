@@ -19,6 +19,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         chatService.Status('offline', 'call');
     };
 
+    //safe apply
+    $scope.safeApply = function (fn) {
+        var phase = this.$root.$$phase;
+        if (phase == '$apply' || phase == '$digest') {
+            if (fn && (typeof(fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
+
     $scope.safeApply = function (fn) {
         var phase = this.$root.$$phase;
         if (phase == '$apply' || phase == '$digest') {
@@ -2079,7 +2091,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
-                        $scope.profile.break_exceeded = true;
+                        $scope.safeApply(function () {
+                            $scope.profile.break_exceeded = true;
+                        });
                         $scope.OnMessage(convertToNoticifationObject(event));
                     }
                 }
@@ -4627,6 +4641,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         document.getElementById("lockPwd").value = "";
                         $scope.breakOption.endBreakOption('Available');
                         $scope.profile.break_exceeded = false;
+
                     } else {
                         $scope.lockPwd = "";
                         $scope.showAlert('Error', 'error', 'Invalid authentication..');

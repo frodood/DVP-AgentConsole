@@ -6193,7 +6193,7 @@ ul.renote-color-btn > li {
 }
 
 .lck-screen-des > .lck-agent-name {
-    font-family: 'AvenirNextLTPro-Bold', sans-serif;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
     text-align: center;
     font-size: 20px;
 }
@@ -6204,8 +6204,9 @@ ul.renote-color-btn > li {
 }
 
 .lck-screen-des > .break-type {
+    font-family: 'AvenirNextLTPro-Bold', sans-serif;
     text-align: center;
-    font-size: 20px;
+    font-size: 26px;
     text-transform: lowercase;
     letter-spacing: 1.3px;
     color: #6c6d6c;
