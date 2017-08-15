@@ -20,8 +20,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 
-    $rootScope.$on("$locationChangeStart", function (e) {
-        e.preventDefault();
+    $scope.$on('$locationChangeStart', function(event, next, current){
+        // Here you can take the control and call your own functions:
+        // Prevent the browser default action (Going back):
+        event.preventDefault();
     });
 
     //safe apply
@@ -4640,7 +4642,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 param.password = pwd;
                 $scope.isUnlock = true;
+
+                $('#btnUnlock').addClass('display-none');
+                $('#btnUnlockLoading').removeClass('display-none');
                 loginService.VerifyPwd(param, function (res) {
+                    $('#btnUnlock').removeClass('display-none');
+                    $('#btnUnlockLoading').addClass('display-none');
                     if (res) {
                         $scope.lockPwd = "";
                         document.getElementById("lockPwd").value = "";

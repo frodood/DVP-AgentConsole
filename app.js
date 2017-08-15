@@ -160,20 +160,15 @@ agentApp.run(function ($rootScope, loginService, $location, $state, $document) {
             }
             // get me a login modal!
         }
-
-
     });
+
     var decodeToken = loginService.getTokenDecode();
     if (!decodeToken) {
         $state.go('login');
         return
     }
 
-
 });
-
-
-
 
 
 //agentApp.directive('scrollable', function ($document, $interval, $timeout, $window) {
