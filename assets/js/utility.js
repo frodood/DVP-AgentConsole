@@ -20,7 +20,6 @@
 // });
 
 
-
 ///* Set the width of the side navigation to 250px */
 //function openNav() {
 //    document.getElementById("mySidenav").style.width = "300px";
@@ -35,6 +34,18 @@
 //    document.getElementById("main").style.marginRight = "0";
 //    //  document.getElementById("navBar").style.marginRight = "0";
 //}
+
+
+window.onbeforeunload = function () {
+    window.history.forward(1);
+};
+
+function getJSONData(http, file, callback) {
+    http.get('assets/json/' + file + '.json').success(function (data) {
+        callback(data.d);
+    })
+}
+
 
 /// div none and block
 var divModel = function () {

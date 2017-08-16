@@ -19,6 +19,25 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         chatService.Status('offline', 'call');
     };
 
+
+    $scope.$on('$locationChangeStart', function (event, next, current) {
+        // Here you can take the control and call your own functions:
+        // Prevent the browser default action (Going back):
+        event.preventDefault();
+    });
+
+    //safe apply
+    $scope.safeApply = function (fn) {
+        var phase = this.$root.$$phase;
+        if (phase == '$apply' || phase == '$digest') {
+            if (fn && (typeof(fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
+
     $scope.safeApply = function (fn) {
         var phase = this.$root.$$phase;
         if (phase == '$apply' || phase == '$digest') {
@@ -2079,7 +2098,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                     var resourceId = authService.GetResourceId();
                     if ($scope.profile && event.Message.ResourceId === resourceId) {
-                        $scope.profile.break_exceeded = true;
+                        $scope.safeApply(function () {
+                            $scope.profile.break_exceeded = true;
+                        });
                         $scope.OnMessage(convertToNoticifationObject(event));
                     }
                 }
@@ -2521,6 +2542,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.addMyNote = function () {
         $('#consoleBody').removeClass('disable-scroll');
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
+    };
+
+    //add setting tab
+    $scope.addTabProfileSetting = function () {
+        $('#consoleBody').removeClass('disable-scroll');
+        $scope.addTab('profile-setting', 'profile-setting', 'profile-setting', "profile-setting", "profile-setting");
     };
 
 //ToDo
@@ -4621,12 +4648,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
                 param.password = pwd;
                 $scope.isUnlock = true;
+
+                $('#btnUnlock').addClass('display-none');
+                $('#btnUnlockLoading').removeClass('display-none');
                 loginService.VerifyPwd(param, function (res) {
+                    $('#btnUnlock').removeClass('display-none');
+                    $('#btnUnlockLoading').addClass('display-none');
                     if (res) {
                         $scope.lockPwd = "";
                         document.getElementById("lockPwd").value = "";
                         $scope.breakOption.endBreakOption('Available');
                         $scope.profile.break_exceeded = false;
+
                     } else {
                         $scope.lockPwd = "";
                         $scope.showAlert('Error', 'error', 'Invalid authentication..');
@@ -5230,12 +5263,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 //
 //     //console.log(_userProfile);
 // };
-
-
-    $scope.$on('$locationChangeStart', function (event, next, current) {
-        //$scope.showAlert("Disable", "warning", "Sorry ! Back Button is disabled");
-        event.preventDefault();
-    });
 
 
 }).directive("mainScroll", function ($window) {

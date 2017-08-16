@@ -1210,6 +1210,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         addDynamicDataToTicket(ticket);
                         scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
                         scope.postTags = [];
+                        scope.GetAllTicketsByRequester(scope.profileDetail._id, 1);
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -1474,9 +1475,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.isLoadingTicke = true;
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
                     if (response) {
+                        scope.ticketList = [];
                         response.map(function (item, index) {
                             item.displayData = "[" + item.reference + "] " + item.subject;
                             scope.ticketList.push(item);
+
                         });
 
                         if (scope.currentTicketPage == 1)
@@ -2133,7 +2136,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     profile.contacts = [];
                     profile.contacts.push({
                         contact: scope.channelFrom,
-                        type: (scope.channel==='chat'||scope.channel==='webchat')?'email':scope.channel,
+                        type: (scope.channel === 'chat' || scope.channel === 'webchat') ? 'email' : scope.channel,
                         display: scope.channelFrom,
                         verified: false,
                         raw: {}
