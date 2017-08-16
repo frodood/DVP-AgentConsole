@@ -1849,7 +1849,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                         }
 
-                        if (scope.channelFrom != "direct" && scope.channel === "call" && scope.channel === "chat" && setContact) {
+                        if (scope.channelFrom != "direct"  && setContact) {
 
                             scope.mapProfile.showNumberd = true;
                             // var r = confirm("Add to Contact");
