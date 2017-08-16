@@ -1584,12 +1584,13 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 if (scope.mapProfile.addNumber) {
                     var contactInfo = {
                         contact: scope.channelFrom,
-                        type: 'phone',
+                        type: scope.channel,
                         display: scope.channelFrom
                     };
                     userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
                         if (response.IsSuccess) {
                             scope.showAlert('Profile Contact', 'success', response.CustomMessage);
+                            scope.profileDetail.contacts.push(contactInfo);
                         } else {
                             scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                         }
@@ -1835,30 +1836,28 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         }
                     }
 
-                    if (scope.profileDetail.phone && scope.profileDetail.phone != scope.channelFrom) {
-                        var setContact = true;
-                        if (scope.profileDetail.contacts && scope.profileDetail.contacts.length > 0) {
+                    var setContact = true;
+                    if (scope.profileDetail.contacts && scope.profileDetail.contacts.length > 0) {
 
-                            for (var i = 0; i < scope.profileDetail.contacts.length; i++) {
-                                var contact = scope.profileDetail.contacts[i];
-                                if (contact.type === category && contact.contact === scope.channelFrom) {
-                                    setContact = false;
-                                    break;
-                                }
+                        for (var i = 0; i < scope.profileDetail.contacts.length; i++) {
+                            var contact = scope.profileDetail.contacts[i];
+                            if (contact.type === category && contact.contact === scope.channelFrom) {
+                                setContact = false;
+                                break;
                             }
-
                         }
 
-                        if (scope.channelFrom != "direct"  && setContact) {
+                    }
 
-                            scope.mapProfile.showNumberd = true;
-                            // var r = confirm("Add to Contact");
-                            //if (r == true) {
-                            //
-                            //} else {
-                            //    console.log("You pressed Cancel!");
-                            //}
-                        }
+                    if (scope.channelFrom != "direct"  && setContact) {
+
+                        scope.mapProfile.showNumberd = true;
+                        // var r = confirm("Add to Contact");
+                        //if (r == true) {
+                        //
+                        //} else {
+                        //    console.log("You pressed Cancel!");
+                        //}
                     }
 
                     if (scope.mapProfile && (scope.mapProfile.showEngagement || scope.mapProfile.showNumberd)) {
