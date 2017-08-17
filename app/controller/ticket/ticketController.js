@@ -169,81 +169,94 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 // ................. All Tickets ..............................
     var pickToDoList = function (page) {
 
-        ticketService.getNewTickets(page).then(function (response) {
+
+       if(profileDataParser.statusNodes["NEW"] && profileDataParser.statusNodes["NEW"].length>0)
+       {
+           var checkStatus = "";
+
+           angular.forEach(profileDataParser.statusNodes["NEW"],function (node) {
+               checkStatus+="status="+node+"&";
+           });
+
+           ticketService.getNewTickets(page,checkStatus).then(function (response) {
 
 
-            if (response.data.IsSuccess) {
-                if (response.data.Result.length == 0) {
-                    $scope.isNewTicketLoadComplete = true;
-                    $scope.ticketList.toDoSt=true;
-                }
-                else {
-                    for (var i = 0; i < response.data.Result.length; i++) {
+               if (response.data.IsSuccess) {
+                   if (response.data.Result.length == 0) {
+                       $scope.isNewTicketLoadComplete = true;
+                       $scope.ticketList.toDoSt=true;
+                   }
+                   else {
+                       for (var i = 0; i < response.data.Result.length; i++) {
 
-                        response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
-                        response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
+                           response.data.Result[i].timeDelay = moment(response.data.Result[i].updated_at).fromNow();
+                           response.data.Result[i].displayname=$scope.setUserTitle(response.data.Result[i]);
 
-                        if (response.data.Result[i].status.length > 20) {
-                            response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
-
-
+                           if (response.data.Result[i].status.length > 20) {
+                               response.data.Result[i].stateTitle = response.data.Result[i].status.substring(0, 20) + "....";
 
 
 
-                        }
 
 
-                        /* if(response.data.Result[i].assignee)
-                         {
-
-                         var assigneeData = $filter('filter')( $scope.userList, {
-                         _id: response.data.Result[i].assignee
-
-                         });
-
-                         response.data.Result[i].assignee_name=assigneeData[0].name;
-                         }*/
-
-                        /*if(response.data.Result[i].assignee_group)
-                         {
-
-                         var assigneeGroupData = $filter('filter')( $scope.userGroupList, {
-                         _id: response.data.Result[i].assignee_group
-
-                         });
+                           }
 
 
-                         response.data.Result[i].assignee_group_name=assigneeGroupData[0].name;
-                         }*/
+                           /* if(response.data.Result[i].assignee)
+                            {
+
+                            var assigneeData = $filter('filter')( $scope.userList, {
+                            _id: response.data.Result[i].assignee
+
+                            });
+
+                            response.data.Result[i].assignee_name=assigneeData[0].name;
+                            }*/
+
+                           /*if(response.data.Result[i].assignee_group)
+                            {
+
+                            var assigneeGroupData = $filter('filter')( $scope.userGroupList, {
+                            _id: response.data.Result[i].assignee_group
+
+                            });
 
 
-                        if (i == response.data.Result.length - 1) {
-
-                            $scope.ticketList.toDo = $scope.ticketList.toDo.concat(response.data.Result);
-                            $scope.ticketList.toDoSt=true;
+                            response.data.Result[i].assignee_group_name=assigneeGroupData[0].name;
+                            }*/
 
 
-                        }
-                    }
-                }
+                           if (i == response.data.Result.length - 1) {
 
-            }
-            else {
-                if (response.data.Exception) {
-                    console.log("Error in loading New tickets " + response.data.Exception);
-                }
-                else {
-                    console.log("Empty response for new tickets");
-                }
-                $scope.ticketList.toDoSt=true;
-            }
+                               $scope.ticketList.toDo = $scope.ticketList.toDo.concat(response.data.Result);
+                               $scope.ticketList.toDoSt=true;
 
 
-        }, function (error) {
-            authService.IsCheckResponse(error);
-            console.log(error);
-            $scope.ticketList.toDoSt=true;
-        });
+                           }
+                       }
+                   }
+
+               }
+               else {
+                   if (response.data.Exception) {
+                       console.log("Error in loading New tickets " + response.data.Exception);
+                   }
+                   else {
+                       console.log("Empty response for new tickets");
+                   }
+                   $scope.ticketList.toDoSt=true;
+               }
+
+
+           }, function (error) {
+               authService.IsCheckResponse(error);
+               console.log(error);
+               $scope.ticketList.toDoSt=true;
+           });
+       }
+
+
+
 
     };
 

@@ -5247,6 +5247,63 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.loadConfig();
 
+
+
+    // status node
+
+
+
+    $scope.categorizeStatusNodes = function (nodes) {
+
+        angular.forEach(nodes,function (node) {
+
+            if(!node.category) {
+                node.category="NEW"
+            }
+
+
+            if(profileDataParser.statusNodes[node.category] )
+            {
+                if(profileDataParser.statusNodes[node.category].indexOf(node.name)==-1)
+                {
+                    profileDataParser.statusNodes[node.category].push(node.name);
+                }
+            }
+            else
+            {
+                profileDataParser.statusNodes[node.category] =[];
+                profileDataParser.statusNodes[node.category].push(node.name);
+            }
+
+
+
+
+
+
+        });
+
+    }
+
+    $scope.getStatusNodes = function()
+    {
+        ticketService.getStatusNodes().then(function(resStatus)
+        {
+            if(resStatus)
+            {
+                $scope.categorizeStatusNodes(resStatus);
+            }
+            else
+            {
+
+            }
+        },function(errStatus)
+        {
+
+        });
+    };
+
+    $scope.getStatusNodes();
+
 //update code
 //agent summary profile summary
 //$scope.text = $sce.trustAsHtml("'app/views/ui-components/agent-summary.html'");
