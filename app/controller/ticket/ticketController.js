@@ -350,7 +350,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     var pickMyToDoList = function (page) {
         ticketService.getMyNewTickets(page).then(function (response) {
             if (response.data.IsSuccess) {
-                console.log("My New tickets", response.data.Result);
+
                 if (response.data.Result.length == 0) {
                     $scope.isNewTicketLoadComplete = true;
                     $scope.ticketList.toDoSt=true;
@@ -395,7 +395,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
 
     var pickMyProcessingTickets = function (page) {
         ticketService.getMyOpenTickets(page).then(function (response) {
-            console.log("My open tickets", response.data.Result);
+
 
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
@@ -444,7 +444,7 @@ agentApp.controller('ticketCtrl', function ($scope, $http, $filter, $timeout, $s
     var pickMyCompletedTickets = function (page) {
         ticketService.getMyClosedTickets(page).then(function (response) {
 
-            console.log("My Completed tickets", response.data.Result);
+
             if (response.data.IsSuccess) {
                 if (response.data.Result.length == 0) {
                     $scope.isCompletedTicketLoadComplete = true;
