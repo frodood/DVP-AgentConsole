@@ -4131,7 +4131,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
-                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+                $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
             });
         },
         endBreakOption: function (requestOption) {
@@ -4180,7 +4180,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
-                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+                $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
             });
         },
         inboundOption: function (requestOption) {
