@@ -552,6 +552,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (callNumber == "") {
                 return
             }
+            if($scope.currentModeOption.toLowerCase() !== 'outbound'){
+                $scope.showAlert("Soft Phone", "error", "Cannot make outbound call while you are in inbound mode.");
+                return
+            }
             $scope.call.number = callNumber;
             sipCall('call-audio', callNumber);
             phoneFuncion.updateCallStatus('Dialing');
@@ -4173,29 +4177,35 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
-            $scope.currentBreak = requestOption;
-            $('#loginScreeen').removeClass('display-none').addClass('display-block');
-            $('body').addClass('overflow-hidden');
-            dataParser.userProfile = $scope.profile;
-            breakList.forEach(function (option) {
-                $(option).removeClass('font-color-green bold');
-            });
 
-            $scope.breakTimeStart = moment.utc();
-            document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
 
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res) {
+
+                    $scope.currentBreak = requestOption;
+                    $('#loginScreeen').removeClass('display-none').addClass('display-block');
+                    $('body').addClass('overflow-hidden');
+                    dataParser.userProfile = $scope.profile;
+                    breakList.forEach(function (option) {
+                        $(option).removeClass('font-color-green bold');
+                    });
+
+                    $scope.breakTimeStart = moment.utc();
+                    document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
+
+
                     $('#userStatus').addClass('offline').removeClass('online');
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('font-color-green bold');
                     $scope.currentBerekOption = requestOption;
 
                     chatService.Status('offline', 'chat');
+                }else{
+                    $scope.showAlert(requestOption, "warn", 'break request failed');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
-                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+                $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
             });
         },
         endBreakOption: function (requestOption) {
@@ -4225,30 +4235,38 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.modeOption = {
         outboundOption: function (requestOption) {
             console.log(requestOption);
-            dataParser.userProfile = $scope.profile;
-            modeList.forEach(function (option) {
-                $(option).removeClass('active-font');
-            });
+
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res) {
+                    dataParser.userProfile = $scope.profile;
+                    modeList.forEach(function (option) {
+                        $(option).removeClass('active-font');
+                    });
+
+
                     $('#userStatus').addClass('offline').removeClass('online');
                     $scope.showAlert(requestOption, "success", 'update resource state success');
                     $('#' + requestOption).addClass('active-font').removeClass('top-drop-text');
                     $scope.currentModeOption = requestOption;
                     $('#agentPhone').removeClass('display-none');
+                }else{
+                    $scope.showAlert(requestOption, "warn", 'mode change request failed');
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
-                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+                $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
             });
         },
         inboundOption: function (requestOption) {
-            dataParser.userProfile = $scope.profile;
-            modeList.forEach(function (option) {
-                $(option).removeClass('active-font').addClass('top-drop-text');
-            });
+
             resourceService.EndBreakRequest(authService.GetResourceId(), requestOption).then(function (data) {
                 if (data) {
+                    dataParser.userProfile = $scope.profile;
+                    modeList.forEach(function (option) {
+                        $(option).removeClass('active-font').addClass('top-drop-text');
+                    });
+
+
                     $scope.showAlert("Available", "success", "Update resource state success.");
                     $('#userStatus').addClass('online').removeClass('offline');
                     $('#Inbound').addClass('active-font').removeClass('top-drop-text');
@@ -4276,7 +4294,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     return;
                 }
             }
-            ;
+
 
             //get veery format
             resourceService.GetContactVeeryFormat().then(function (res) {
