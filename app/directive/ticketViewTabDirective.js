@@ -2,7 +2,7 @@
  * Created by Veery Team on 9/9/2016.
  */
 
-agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketService,
+agentApp.directive("ticketTabView", function ($filter, $sce, $http, moment, ticketService,
                                               $rootScope, authService,
                                               profileDataParser, userService, uuid4,
                                               FileUploader, baseUrls, fileService,
@@ -2170,16 +2170,32 @@ agentApp.directive("ticketTabView", function ($filter, $sce, moment, ticketServi
                         var info = authService.GetCompanyInfo();
                         var fileToPlay = baseUrls.fileService + 'FileService/File/DownloadLatest/' + id + '.mp3?Authorization=' + $auth.getToken();
 
-                        var arr = [
+                        $http({
+                            method: 'GET',
+                            url: fileToPlay,
+                            responseType: 'blob'
+                        }).then(function successCallback(response)
+                        {
+                            if(response.data)
                             {
-                                src: $sce.trustAsResourceUrl(fileToPlay),
-                                type: 'audio/mp3'
-                            }
-                        ];
+                                var url = URL.createObjectURL(response.data);
+                                var arr = [
+                                    {
+                                        src: $sce.trustAsResourceUrl(url),
+                                        type: 'audio/mp3'
+                                    }
+                                ];
 
-                        scope.config.sources = arr;
-                        videogularAPI.play();
-                        scope.isPlay = true;
+                                scope.config.sources = arr;
+                                videogularAPI.play();
+                                scope.isPlay = true;
+                            }
+                        }, function errorCallback(response) {
+
+
+                        });
+
+
                     }
 
 
