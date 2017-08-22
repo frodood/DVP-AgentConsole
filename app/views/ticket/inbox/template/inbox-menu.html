@@ -1,0 +1,112 @@
+<!-- new ticket  menu -->
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='to do'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('to do',ticketCountObj.new)">
+        <ul
+                class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.new==0?'text-decoration count0':''">
+                    <!---->
+                    To Do
+                </div>
+            </li>
+            <li>
+                <div id="newCountLoaded" class="t-item-count black  display-none animated fadeInRight">
+                    {{ticketCountObj.new}}
+                </div>
+                <div id="newCountLoading"
+                     class="t-item-count   count-loading">
+                    <i class="fa fa-cog fa-spin"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- to do  menu -->
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='in progress'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('in progress',ticketCountObj.toDo)">
+        <ul
+                class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.toDo==0?'text-decoration count0':''">
+                    <!---->
+                    In Progress
+                </div>
+            </li>
+            <li>
+                <div id="toDoCountLoaded" class="t-item-count black display-none animated fadeInRight">
+                    {{ticketCountObj.toDo}}
+                </div>
+                <div id="todoCountLoading" class="t-item-count count-loading">
+                    <i class="fa fa-cog fa-spin"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<!--&lt;!&ndash; in progree menu &ndash;&gt;-->
+<!--<div class="ticket-filter-body"-->
+<!--ng-class="currentSelected.name=='inProgress'?'t-active-menu':''">-->
+<!--<div class="t-f-wrp"-->
+<!--ng-click="openTicketView('progressing',ticketCountObj.inProgress)">-->
+<!--<ul class="customer-style-ul inline-list t-f-ul">-->
+<!--<li>-->
+<!--<div class="t-filter-name"-->
+<!--ng-class="ticketCountObj.inProgress==0?'text-decoration count0':''">-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--In Progress-->
+<!--</div>-->
+<!--</li>-->
+<!--<li>-->
+<!--<div id="inProgressCountLoaded"-->
+<!--class="t-item-count black display-none animated fadeInRight">-->
+<!--{{ticketCountObj.inProgress}}-->
+<!--</div>-->
+<!--<div id="inProgressCountLoading"-->
+<!--class="t-item-count count-loading">-->
+<!--<i class="fa fa-cog fa-spin"></i>-->
+<!--</div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--done menu -->
+<div class="ticket-filter-body"
+     ng-class="currentSelected.name=='done'?'t-active-menu':''">
+    <div class="t-f-wrp"
+         ng-click="openTicketView('done',ticketCountObj.done)">
+        <ul
+                class="customer-style-ul inline-list t-f-ul">
+            <li>
+                <div class="t-filter-name"
+                     ng-class="ticketCountObj.done==0?'text-decoration count0':''">
+                    <!---->
+                    Done
+                </div>
+            </li>
+            <li>
+                <div id="doneCountLoaded"
+                     class="t-item-count black display-none animated fadeInRight">
+                    {{ticketCountObj.done}}
+                </div>
+                <div id="doneCountLoading"
+                     class="t-item-count count-loading">
+                    <i class="fa fa-cog fa-spin"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+

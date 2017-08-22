@@ -1,4 +1,3 @@
-
 <script type="text/ng-template" id="customTemplate.html">
     <a>
         <img class="assignee-icon" src="assets/img/avatar/defaultProfile.png" ng-src="{{match.model.avatar}}">
@@ -12,7 +11,7 @@
     <div class="ticket-view-wrapper">
         <!-- MODEL HEADER -->
         <div class="model-header">
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <div class="mode-left-icon  dark float-left ticket-model"
                      ng-class="{'api-channel':ticket.channel=='api',
                   'twitter-channel':ticket.channel=='twitter',
@@ -39,10 +38,18 @@
                         {{ ticket.subject | limitTo: 80 }}{{ticket.subject.length > 80 ? '...' : ''}}
                     </div>
                 </div>
+
+            </div>
+            <div class="col-md-4">
+                <span ng-if="updateMessage" style="color:red;font-size: 20px;">{{updateMessage}}</span>
             </div>
 
             <div class="col-md-4 col-sm-4 ">
                 <div class="model-btn-wrapper">
+
+                    <div class="btn-warp ">
+                        <span class="btn btn-default" ng-click="loadTicketSummary(ticket._id);">Refresh</span>
+                    </div>
                     <div class="btn-warp" uib-dropdown>
                         <span class="btn btn-default" uib-dropdown-toggle>
                             <i class="main-icon-2-more-1">
@@ -70,7 +77,7 @@
                         <span class="btn btn-default" ng-click="goToComment()">Comment</span>
                     </div>
                     <div class="btn-warp " ng-show="!ticket.assignee">
-                        <span class="btn btn-default" ng-click="assignToMe(ticket._id)">Pick</span>
+                        <span class="btn btn-default" ng-click="assignToMe()">Pick</span>
                     </div>
                     <div class="btn-warp ">
                         <span class="btn btn-default btn-close" id="closeTicket" ng-click="closeTicket()">Close</span>
@@ -160,9 +167,14 @@
                                     <h5>{{ticket.due_at}}</h5>
                                 </li>
                                 <li>
-                                    <small>Channel</small> <a style="margin-left: 10px" href="javascript:void(0);"ng-show="ticket.engagement_session && ( ticket.engagement_session.channel=='voicemail' || ticket.engagement_session.channel== 'call')"><i class="fa fa-play"  ng-click="playFile(ticket.engagement_session._id)"></i></a>
+                                    <small>Channel</small>
+                                    <a style="margin-left: 10px" href="javascript:void(0);"
+                                       ng-show="ticket.engagement_session && ( ticket.engagement_session.channel=='voicemail' || ticket.engagement_session.channel== 'call')"><i
+                                            class="fa fa-play"
+                                            ng-click="playFile(ticket.engagement_session._id)"></i></a>
 
-                                    <h5 ng-if="ticket.engagement_session.channel">{{ticket.engagement_session.channel}} </h5>
+                                    <h5 ng-if="ticket.engagement_session.channel">
+                                        {{ticket.engagement_session.channel}} </h5>
                                     <h5 ng-if="!ticket.engagement_session.channel">Other</h5>
                                 </li>
 
@@ -213,7 +225,8 @@
                                                      on-error-src="assets/img/noimage.jpg"
                                                      ng-if="isImage(slot.attachment.type)"/>
                                                 <img style="width: 100%; display: block;"
-                                                     src="assets/img/noimage.jpg" ng-if="!isImage(slot.attachment.type)"/>
+                                                     src="assets/img/noimage.jpg"
+                                                     ng-if="!isImage(slot.attachment.type)"/>
 
 
                                                 <div class="mask">
@@ -221,18 +234,23 @@
 
                                                     <div class="tools tools-bottom">
                                                         <a href="javascript:void(0);"><i
-                                                                ng-if="isViewable(slot.attachment.type)" class="fa fa-play"
+                                                                ng-if="isViewable(slot.attachment.type)"
+                                                                class="fa fa-play"
                                                                 ng-click="playAttachment(slot.attachment)"></i>
 
-                                                            <i ng-if="isImage(slot.attachment.type)" class="fa fa-expand"
+                                                            <i ng-if="isImage(slot.attachment.type)"
+                                                               class="fa fa-expand"
                                                                ng-click="playAttachment(slot.attachment)"></i>
 
-                                                            <i ng-if="!slot.attachment && !isSlotUploading" class="fa fa-cloud-upload"
+                                                            <i ng-if="!slot.attachment && !isSlotUploading"
+                                                               class="fa fa-cloud-upload"
                                                                ng-click="uploadAttachmentToSlot(slot)"></i>
                                                         </a>
-                                                        <a href="javascript:void(0);"><i ng-if="slot.attachment" class="fa fa-cloud-download"
+                                                        <a href="javascript:void(0);"><i ng-if="slot.attachment"
+                                                                                         class="fa fa-cloud-download"
                                                                                          ng-click="downloadAttachment(slot.attachment)"></i></a>
-                                                        <a href="javascript:void(0);"><i ng-if="slot.attachment" class="fa fa-times"
+                                                        <a href="javascript:void(0);"><i ng-if="slot.attachment"
+                                                                                         class="fa fa-times"
                                                                                          ng-click="deleteSlotAttachment(slot)"></i></a>
                                                     </div>
 
@@ -240,17 +258,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4"> </div>
+                                            <div class="col-sm-4"></div>
                                             <div class="col-sm-4"> {{slot.slot.name}}/{{slot.slot.fileType}}</div>
-                                            <div class="col-sm-4"> </div>
-
-
-
-
+                                            <div class="col-sm-4"></div>
 
 
                                         </div>
-                                        <i class="fa fa-spinner fa-spin" ng-if="isSlotUploading && (updationSlot.slot.name==slot.slot.name)">
+                                        <i class="fa fa-spinner fa-spin"
+                                           ng-if="isSlotUploading && (updationSlot.slot.name==slot.slot.name)">
                                         </i><label ng-if="isSlotUploading && (updationSlot.slot.name==slot.slot.name)">Uploading........</label>
                                     </div>
 
@@ -450,7 +465,9 @@
                                         <a class="inline-bt pull-left " href="javascript:void(0);">
                                             <div class="pull-left commenter-img">
                                                 <img src="assets/img/avatar/defaultProfile.png"
+                                                     class="cursor-pointer"
                                                      ng-src={{sub.assignee.avatar}}>
+
                                                 {{sub.assignee_displayname}}
                                             </div>
                                         </a>
@@ -536,9 +553,23 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="people-view">
-                                                <div class="people-view-img ">
+                                                <div class="people-view-img cursor-pointer"
+                                                     ng-dropover
+
+                                                     ng-dropover-options="{'triggerEvent':'hover',
+                                                      'closeOthersOnOpen': true}">
+
                                                     <img src="assets/img/avatar/defaultProfile.png"
+                                                         ng-mouseover="getAgentSummaryTooltip(ticket.submitter.displayname,
+                                                         ticket.submitter.avatar,
+                                                         ticket.submitter.username,
+                                                         ticket.submitter._id)"
+                                                         class="cursor-pointer"
                                                          ng-src={{ticket.submitter.avatar}}>
+
+                                                    <div ng-dropover-contents>
+                                                        <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
+                                                    </div>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold">
@@ -552,9 +583,10 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="people-view">
-                                                <div class="people-view-img ">
-                                                    <img src="assets/img/avatar/defaultProfile.png"
-                                                         ng-src={{ticket.requester_avatar}}>
+                                                <div class="people-view-img">
+                                                    <img
+                                                            src="assets/img/avatar/defaultProfile.png"
+                                                            ng-src={{ticket.requester_avatar}}>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold color-cyan500">
@@ -563,7 +595,9 @@
                                                     <div class="notification-text">
                                                         {{ticket.requester_displayname}}
 
-                                                        <i ng-show="ticket.showProfileAddButton" class="fa fa-plus-square cursor-pointer" ng-click="goToNewProfile(ticket);"></i>
+                                                        <i ng-show="ticket.showProfileAddButton"
+                                                           class="fa fa-plus-square cursor-pointer"
+                                                           ng-click="goToNewProfile(ticket);"></i>
                                                     </div>
                                                     <!--<ul class="nav navbar-right panel_toolbox">
                                                         <li><i class="fa fa-plus-square" ng-click="deleteSocialContact('facebook');"></i>
@@ -580,48 +614,17 @@
                                                  ng-show="isEditAssignee">
                                                 <div class="col-lg-7">
                                                     <div class="form-group">
-                                                        <!--<tags-input
-                                                                ng-model="users"
-                                                                display-property="profileName"
-                                                                placeholder="Search users to assign"
-                                                                replace-spaces-with-dashes="false">
-                                                            <auto-complete source="loadUser($query)"
-                                                                           min-length="0"
-                                                                           load-on-focus="true"
-                                                                           load-on-empty="true"
-                                                                           max-results-to-show="32"
-                                                                           template="my-custom-template">
-                                                            </auto-complete>
-                                                        </tags-input>
-                                                        <script type="text/ng-template"
-                                                                id="my-custom-template">
-                                                            <div class="auto-complete-left-panel">
-                                                                <img ng-src="{{data.img}}"/>
-                                                            </div>
-                                                            <div class="auto-complete-right-panel">
-                                                                <span ng-bind-html="$highlight($getDisplayText())"></span>
-                                                            </div>
-                                                        </script>-->
+
 
                                                         <div class="scrollable-dropdown-menu">
-                                                            <input type="text" ng-model="newAssignee"  uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
-                                                                   class="form-control" typeahead-show-hint="true" typeahead-min-length="0" placeholder="Select user/group" typeahead-template-url="customTemplate.html">
+                                                            <input type="text" ng-model="newAssignee"
+                                                                   uib-typeahead="assignee as assignee.displayname for assignee in assigneeUserData | filter:{displayname:$viewValue}"
+                                                                   class="form-control" typeahead-show-hint="true"
+                                                                   typeahead-min-length="0"
+                                                                   placeholder="Select user/group"
+                                                                   typeahead-template-url="customTemplate.html">
                                                         </div>
 
-                                                        <!--<select class="form-control" placeholder=""
-                                                                ng-model="newAssignee"
-                                                                ng-model-options="{trackBy: '$value'}"
-                                                                style="margin-top: 7px;">
-                                                            <optgroup label="Users"></optgroup>
-                                                            <option ng-repeat="assignee in assigneeUsers"
-                                                                    value="{{assignee}}"> - {{assignee.displayname}}
-                                                            </option>
-                                                            <optgroup label="User Groups"></optgroup>
-                                                            <option ng-repeat="group in assigneeGroups"
-                                                                    value="{{group}}"> - {{group.name}}
-                                                            </option>
-
-                                                        </select>-->
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5">
@@ -642,33 +645,48 @@
                                                  ng-show="!isEditAssignee"
                                                  ng-mouseleave="isEnableEdit=false"
                                                  ng-mouseover="isEnableEdit=true">
-                                                <div class="people-view-img ">
+                                                <div class="people-view-img "
+                                                     ng-dropover
+                                                     ng-dropover-options="{'triggerEvent':'hover',
+                                                      'closeOthersOnOpen': true}">
                                                     <img src="assets/img/avatar/defaultProfile.png"
+                                                         ng-mouseover="getAgentSummaryTooltip(ticket.assignee_displayname,
+                                                         ticket.assignee.avatar,
+                                                         ticket.assignee.username,
+                                                         ticket.assignee._id)"
                                                          ng-src={{ticket.assignee.avatar}}>
                                                     <i ng-show="isEnableEdit"
                                                        ng-click="editAssignee()"
                                                        class="fa fa-pencil"></i>
+
+                                                    <div ng-dropover-contents>
+                                                        <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
+                                                    </div>
                                                 </div>
                                                 <div class="row people-view-details">
                                                     <div class="notification-time text-uppercase bold color-green500"
                                                          ng-show="ticket.assignee_displayname">
                                                         ASSIGNEE
                                                     </div>
-                                                    <div class="notification-text" ng-show="ticket.assignee">
-                                                        {{ticket.assignee_displayname}}
-                                                    </div>
-
                                                     <div class="notification-time text-uppercase bold color-green500"
-                                                         ng-if="!ticket.assignee.name"
                                                          ng-show="ticket.assignee_group.name">
                                                         GROUP
                                                     </div>
+                                                    <div class="notification-text" ng-show="ticket.assignee.name">
+                                                        {{ticket.assignee_displayname}}
+                                                    </div>
+
+                                                    <!--<div class="notification-time text-uppercase bold color-green500"
+                                                         ng-if="!ticket.assignee.name"
+                                                         ng-show="ticket.assignee_group.name">
+                                                        GROUP
+                                                    </div>-->
                                                     <div class="notification-text" ng-if="!ticket.assignee.name"
                                                          ng-show="ticket.assignee_group">
                                                         {{ticket.assignee_group.name}}
                                                     </div>
                                                     <a ng-show="(ticket.assignee || ticket.assignee_group) && ticket.assignee._id!=myProfileID"
-                                                       ng-click="setAssigneeAsMe()">Assign to me</a>
+                                                       ng-click="assignToMe()">Assign to me</a>
 
                                                 </div>
 
@@ -692,9 +710,19 @@
                             <div ng-repeat="collaborator in ticket.collaborators">
                                 <div class="sub-task">
                                     <div class="pull-left  ">
-                                        <div class="pull-left commenter-img">
+                                        <div class="pull-left commenter-img"
+                                             ng-dropover
+                                             ng-dropover-options="{'triggerEvent':'hover',
+                                                      'closeOthersOnOpen': true}">
                                             <img src="assets/img/avatar/defaultProfile.png"
+                                                 ng-mouseover="getAgentSummaryTooltip(collaborator.displayname,
+                                                         collaborator.avatar,
+                                                         collaborator.username,
+                                                         collaborator._id)"
                                                  ng-src="{{collaborator.avatar}}"/>
+                                            <div ng-dropover-contents class="arrowed">
+                                                <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
+                                            </div>
                                             {{collaborator.displayname}}
                                         </div>
                                     </div>

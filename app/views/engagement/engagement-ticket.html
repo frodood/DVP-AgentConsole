@@ -48,6 +48,11 @@
 
             <!-- user profile ticket body -->
             <div class="user-p-t-body-052017">
+
+                <div>
+
+                </div>
+
                 <div class="user-p-t-b-wrapper-052017"
                      slimscroll="{height: '870px',
                                     railVisible: true,
@@ -58,14 +63,21 @@
                                     railBorderRadius: 10}">
                     <table class="table tbl-t-052017">
                         <tbody>
+
                         <tr ng-repeat="ticket in ticketList"
                             class="ticket-tbl-row-052017">
                             <th scope="row">
-                                <div class="t-c-img-052017">
+                                <div ng-dropover
+                                     ng-dropover-options="{'triggerEvent':'hover', 'verticalOffset': 0}"
+                                     class="t-c-img-052017 cursor-pointer tooltip-transparent">
                                     <img src="assets/img/avatar/profileAvatar.png"
                                          ng-src="{{ticket.submitter.avatar}}"
                                          width="40">
+                                    <div ng-dropover-contents class="arrowed">
+                                        <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
+                                    </div>
                                 </div>
+
                             </th>
                             <td class="t-td-type-052017">
                                 <!-- ticket status group wrapper -->

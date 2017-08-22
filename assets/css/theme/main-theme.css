@@ -311,7 +311,12 @@
     color: #d34836 !important;;
 }
 
+.table > thead > tr > th {
+    border: 0px;
+}
 
+/*update check box stytle{
+/* .slideTwo */
 
-
+/* end .slideTwo */
 

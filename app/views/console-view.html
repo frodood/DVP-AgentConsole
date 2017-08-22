@@ -18,7 +18,7 @@
                     </div>
                     <form class="form-inline navbar-form navbar-left" id="mainSearchBar">
                         <div class="form-group has-feedback">
-                            <input id="commonSearch" type="text" autocomplete="off"
+                            <input id="commonSearch" type="text" autocomplete="true"
                                    class="main-search-input has-feedback-right"
                                    ng-model="searchText"
                                    typeahead-min-length="0" typeahead-on-select="bindSearchData($item)"
@@ -33,6 +33,13 @@
                                 <i class="ti-face-sad animated slideInDown"></i>
                                 <span> No Results Found </span>
                             </div>
+
+                            <!-- <div class="form-group">
+                                 <input id="commonSearch" type="text" class="main-search-input" ng-model="searchText"
+                                        typeahead-min-length="0" typeahead-select-on-exact="true" typeahead-focus-on-select="false" typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
+                                        uib-typeahead="state.value for state in states" placeholder="Search by keyword, #ticker or #profile">
+                             </div>-->
+
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right " id="headerTopMenu" uib-dropdown>
@@ -149,14 +156,15 @@
                         <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
                             id="notificationAlarm"
                             uib-dropdown
-                            ng-click="checkAndRegister()"
                             uib-dropdown-toggle>
                             <!-- notification icon -->
 
                             <i id="regNotification" class="icon icon-d-f-icon-notification small"
+                               ng-class="isSocketRegistered==false?'notification-error':'notification-success'"
                                title="Notification Center" style="font-size: 22px;padding-top: 1px;"></i>
 
                             <div id=" notificationStatus"
+                                 ng-show="unredNotifications!=0"
                                  ng-class="{'task-incoming':unredNotifications!=0}"
                                  class="task-state task-none notification-count">
                                 {{unredNotifications}}
@@ -310,15 +318,20 @@
                 <!-- create new profile -->
                 <li style="padding-top: 50px;">
                     <div class="left-icon animated slideInLeft">
+
                         <img class="bg"
+                             tabindex="0"
                              title="New Profile"
                              ng-click="createNewProfile();"
                              src="assets/img/180x180/profile-create180x180.png"
                              width="40px">
                     </div>
                 </li>
+
+
                 <!-- go to home -->
                 <li ng-class="activeTab.viewType == 'dashboard'?'selected-tab':''">
+
                     <div class="left-icon animated slideInLeft">
                         <i ng-click="addDashBoard();"
                            class="icon icon-d-f-icon-home small-icon" title="Dashboard"></i>
@@ -336,7 +349,7 @@
                 </li>
 
                 <!-- softphone -->
-                <li id="agentPhone" >
+                <li id="agentPhone">
                     <div class="left-icon animated slideInLeft">
                         <i id="phoneRegister"
                            ng-click="consoleTopMenu.Register()"
@@ -361,17 +374,17 @@
                 <!-- ticket inbox -->
                 <li>
                     <div class="left-icon animated slideInLeft">
-                        <i ng-click="consoleTopMenu.openTicket()"
+                        <i ng-click="addNewTicketInboxTemp()"
                            class="icon-d-f-icon-ticketinbox small-icon offline-phone" title="Ticket Inbox"></i>
                     </div>
                 </li>
-                <li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">
-                    <div class="left-icon animated slideInLeft">
-                        <i ng-click="addFilterTab();"
-                           class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>
+                <!--<li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">-->
+                <!--<div class="left-icon animated slideInLeft">-->
+                <!--<i ng-click="addNewTicketInboxTemp();"-->
+                <!--class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>-->
 
-                    </div>
-                </li>
+                <!--</div>-->
+                <!--</li>-->
                 <li>
                     <!-- deactivate mode -->
                     <div ng-show="!timerTick">
@@ -477,7 +490,7 @@
     <div ng-include="'app/views/myNote/temp/my-note-noti-me.html'"></div>
 
     <!-- New call notification UI update -1652017-->
-    <div ng-include="'app/views/ui-components/call-notification-panel.html'"></div>
+    <div ng-hide="isRegistor" ng-include="'app/views/ui-components/call-notification-panel.html'"></div>
 
     <!-- New preview notification UI update -1652017-->
     <div ng-include="'app/views/ui-components/preview-notification-panel.html'"></div>
@@ -522,8 +535,13 @@
     <div ng-include="'app/views/right-side-nav.html'"></div>
 
 
+    <script type="text/ng-template" id="popover">
+        <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
+    </script>
+
     <div class="console-def-img" ng-if="tabs.length==0">
         <img src="assets/img/defulat-console-400x400.png" width="300">
+        <!---->
     </div>
 
 
@@ -535,7 +553,8 @@
                            api="scrlTabsApi"
                            tooltip-left-placement="top"
                            id="consoleMainTab">
-            <uib-tabset class="scrollable-tab-overwrite " active="activeTabIndex" id="tab_view">
+            <uib-tabset class="scrollable-tab-overwrite"
+                        active="activeTabIndex" id="tab_view">
                 <uib-tab class="console-main-tab "
                          index="tab.tabReference" ng-repeat="tab in tabs"
                          select="tabSelected(tab.tabReference)">
@@ -570,7 +589,10 @@
                         <div ng-switch-when="ticketView ">
                             <ticket-tab-view ticket-details="tab" call-customer="veeryPhone.makeCall(callNumber)"
                                              load-tags="reloadTagAndCategories()"
+                                             show-tab-chat-panel="showTabChatPanel(chatUser)"
+                                             set-extention="setExtention(selectedUser)"
                                              tag-category-list="tagCategories"
+
                                              tag-list="tags"></ticket-tab-view>
                             <!--<div ng-include="'app/views/ticket/ticket-view.html'"></div>-->
                         </div>
@@ -590,6 +612,11 @@
                         <div ng-switch-when="new-profile">
                             <div
                                     ng-include="'app/views/ui-kit/user-profile/user-engagement-console.html'"></div>
+                        </div>
+
+                        <div ng-switch-when="Ticket-Inbox">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/views/ticket/inbox/inbox-console.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>

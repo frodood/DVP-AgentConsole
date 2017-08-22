@@ -45,7 +45,7 @@ agentApp.controller('ticketFilterCtrl', function ($scope, $http, $rootScope, tic
         }
 
         return title;
-    }
+    };
 
     var getTicketViewCount = function (item, e) {
         item.count = 0;

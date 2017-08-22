@@ -1799,8 +1799,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 if (scope.profileDetail) {
                     scope.isEnagagementOpen = true;
                     scope.GetProfileHistory(scope.profileDetail._id);
-                    scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
-                    scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                    scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
+                    scope.GetIntegrationImportantData(scope.profileDetail.thirdpartyreference);
                     scope.GetProfileOtherData(scope.profileDetail);
 
                     scope.profileLoadin = false;
@@ -1868,7 +1868,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         userService.GetExternalUserProfileByContact(category, scope.channelFrom).then(function (response) {
                             scope.isEnagagementOpen = true;
                             scope.profileDetails = response;
-                            //scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
+                            //scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
                             loadUserData();
                         }, function (err) {
                             scope.isProfileFound = false;
@@ -2114,6 +2114,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             getYears();
 
 
+            scope.isSavingProfile = false;
             scope.saveNewProfile = function (profile) {
                 profile.tags = [];
                 scope.cutomerTypes.forEach(function (tag) {
@@ -2122,7 +2123,9 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 var collectionDate = profile.dob.year + '-' + profile.dob.month.index + '-' + profile.dob.day;
                 profile.birthday = new Date(collectionDate);
 
+                scope.isSavingProfile = true;
                 userService.CreateExternalUser(profile).then(function (response) {
+                    scope.isSavingProfile = false;
                     if (response) {
                         scope.profileDetail = response;
                         scope.showNewProfile = false;
@@ -2150,6 +2153,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         scope.showAlert("Profile", "error", "Fail To Save Profile.");
                     }
                 }, function (err) {
+                    cope.isSavingProfile = false;
                     scope.showAlert("Profile", "error", "Fail To Save Profile.");
                 });
 
@@ -2486,8 +2490,8 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                             });
                         }
-                        scope.GetIntegrationDetails(scope.profileDetail.threadpartyreference);
-                        scope.GetIntegrationImportantData(scope.profileDetail.threadpartyreference);
+                        scope.GetIntegrationDetails(scope.profileDetail.thirdpartyreference);
+                        scope.GetIntegrationImportantData(scope.profileDetail.thirdpartyreference);
                         scope.GetProfileOtherData(scope.profileDetail);
 
                     },
@@ -2812,12 +2816,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     case '1':
                         scope.isBasicInfo = true;
                         scope.isLocationView = false;
-
+                        scope.isLoadinNextFormWizad = false;
                         break;
                     case '2':
                         //validation on check event
                         scope.isLoadinNextFormWizad = true;
-                        scope.isLoadinNextFormWizad = false;
+                        //scope.isLoadinNextFormWizad = false;
                         scope.isBasicInfo = false;
                         scope.isLocationView = true;
                         break;
