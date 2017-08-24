@@ -1726,6 +1726,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
+    $scope.transferFailed = function (data) {
+        if(data && data.Message)
+        {
+            var splitMsg = data.Message.split('|');
+
+            if(splitMsg.length > 5)
+            {
+                $scope.showAlert('Transfer Failed', 'warn', 'Call transfer failed for agent ' + splitMsg[4]);
+            }
+        }
+    };
+
     $scope.agentUnauthenticate = function (data) {
         console.log("agentUnauthenticate");
         $scope.isSocketRegistered = false;
@@ -1983,6 +1995,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onAgentConnected: $scope.agentConnected,
         onAgentRejected: $scope.agentRejected,
         onAgentDisconnected: $scope.agentDisconnected,
+        onTransferFailed: $scope.transferFailed,
         OnAgentUnauthenticate: $scope.agentUnauthenticate,
         onAgentAuthenticated: $scope.agentAuthenticated,
         onToDoRemind: $scope.todoRemind,
@@ -2013,6 +2026,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'agent_disconnected':
 
                 $scope.agentDisconnected(data);
+
+                break;
+            case 'transfer_failed':
+
+                $scope.transferFailed(data);
 
                 break;
 
