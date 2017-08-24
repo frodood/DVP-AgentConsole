@@ -192,46 +192,122 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.callLog = [];
     $scope.callLogEmpty = false;
     $scope.callLogSessionId = uuid4.generate();
-    $scope.addToCallLog = function (number, type) {
-        var calltype = 'Missed Call';
-        $scope.callLogEmpty = true;
-        if (type) {
-            calltype = type;
-        }
-        else {
-            if ($scope.sessionData[$scope.callLogSessionId]) {
-                calltype = 'Answered';
-            }
+    $scope.addToCallLog = function (number, callType) {
+
+        if (callType === 'Outbound' || callType === 'Incoming' || callType === 'Missed Call') {
+            $scope.callLogSessionId = uuid4.generate();
         }
 
-        $scope.sessionData[$scope.callLogSessionId] = {
-            'number': number,
-            'calltype': calltype
-        };
+        //var tempData = $scope.callLog[$scope.callLogSessionId];
+        var tempData = $filter('filter')($scope.callLog, {'callLogSessionId':$scope.callLogSessionId},true);
 
-        $scope.callLog.push({
-            key: $scope.callLogSessionId,
+        if (tempData[0] && tempData[0].data.callType === 'Outbound') {
+            return;
+        }
+
+        var log = {
+            created_at :new Date().toISOString(),
+            callLogSessionId: $scope.callLogSessionId,
             count: i++,
             data: {
                 'number': number,
-                'calltype': calltype,
+                'callType': callType,
                 'time': moment().format('LT')
             }
+        };
+        var index = $scope.callLog.indexOf(tempData[0]);
+
+        if (index != -1){
+            $scope.callLog[index] = log;
+        }
+        else{
+            $scope.callLog.push( log);
+            //$scope.callLog.splice(0, 0, log);
+        }
+
+        $scope.callLog.reverse();
+        $scope.SaveCallLogs(log);
+
+
+
+    };
+
+    $scope.SaveCallLogs = function (log) {
+        contactService.SaveCallLog(log).then(function (response) {
+            console.log(response);
         });
+    };
 
+        $scope.callLogPage = 0;
+    $scope.isLoadingCallLog = false;
+    $scope.callLogLength = 0;
+    $scope.GetCallLogs = function () {
+        $scope.callLogPage++;
+        $scope.isLoadingCallLog = true;
+        contactService.GetCallLogs($scope.callLogPage).then(function (response) {
+            if (response) {
+                /*response.map(function (item) {
+                    if (item.logs) {
+                        $scope.callLog[item.logs.callLogSessionId] = item.logs;
+                    }
+                });*/
 
-        /*$scope.colors = [];
-         angular.forEach(occurrences, function(value, key) {
-         $scope.colors.push({
-         color: key,
-         count : value,
-         data: {
-         'number': value,
-         'calltype': 'calltype'
-         }
-         });
-         });*/
+                response.map(function (item) {
+                    if (item.logs) {
+                        var index = $scope.callLog.indexOf(item.logs);
 
+                        if (index != -1){
+                            $scope.callLog[index] = item.logs;
+                        }
+                        else{
+                            $scope.callLog.push(item.logs);
+                        }
+                    }
+                });
+
+               // $scope.callLogLength = Object.keys($scope.callLog).length;
+
+               /* var field = "count";
+                var filtered = [];
+                angular.forEach($scope.callLog, function (item) {
+                    filtered.push(item);
+                });
+                filtered.sort(function (a, b) {
+                    return (a[field] > b[field] ? 1 : -1);
+                });
+                $scope.callLog = filtered.reverse();*/
+            }
+
+            $scope.isLoadingCallLog = false;
+        });
+    };
+    $scope.GetCallLogs();
+
+    $scope.doSearch = function (number) {
+        if(number.toString()==="reload"){
+            $scope.callLogPage = 0;
+            $scope.callLog = [];
+            $scope.GetCallLogs();
+        }
+        $scope.isLoadingCallLog = true;
+        contactService.SearchCallLogs(number).then(function (response) {
+            if (response) {
+                response.map(function (item) {
+                    if (item.logs) {
+                        var index = $scope.callLog.indexOf(item.logs);
+
+                        if (index != -1){
+                            $scope.callLog[index] = item.logs;
+                        }
+                        else{
+                            $scope.callLog.push(item.logs);
+                        }
+                    }
+                });
+
+            }
+            $scope.isLoadingCallLog = false;
+        });
     };
 
     $scope.makeCallHistory = function (caller, type) {
@@ -484,7 +560,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sipCall('call-audio', callNumber);
             phoneFuncion.updateCallStatus('Dialing');
             $scope.$broadcast('timer-set-countdown');
-            $scope.callLogSessionId = uuid4.generate();
             $scope.addToCallLog($scope.call.number, "Outbound");
         },
         endCall: function () {
@@ -730,7 +805,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.ShowIncomeingNotification(false);
                     $scope.startCallTime();
 
-                    $scope.addToCallLog($scope.call.number, undefined);
+                    $scope.addToCallLog($scope.call.number, 'Answered');
 
                     chatService.Status('busy', 'call');
                 }
@@ -815,10 +890,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         onIncomingCall: function (sRemoteNumber) {
             try {
+                $scope.addToCallLog($scope.call.number, 'Missed Call');
                 if ($scope.isAcw || $scope.freeze) {
                     console.info("Reject Call...........................");
                     rejectCall();
-                    $scope.callLogSessionId = uuid4.generate();
                     $scope.addToCallLog($scope.call.number, 'Rejected');
                     return;
                 }
@@ -833,7 +908,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 /*addCallToHistory(sRemoteNumber, 2);*/
                 phoneFuncion.updateCallStatus('Incoming Call');
                 $scope.veeryPhone.autoAnswer();
-                $scope.addToCallLog($scope.call.number, undefined);
                 chatService.Status('busy', 'call');
 
             }
@@ -1313,7 +1387,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             phoneFuncion.hideIvrList();
             phoneFuncion.hideIvrBtn();
             phoneFuncion.hideSwap();
-            $scope.callLogSessionId = uuid4.generate();
+
 
             if ($scope.agentDialerOn) { // start only if dialer start
                 $rootScope.$emit('dialnextnumber', undefined);
@@ -4149,7 +4223,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
-                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+                $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
             });
         },
         endBreakOption: function (requestOption) {
@@ -4198,7 +4272,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
             }, function (error) {
                 authService.IsCheckResponse(error);
-                $scope.showAlert("Break Request", "error", "Fail To Register With" + requestOption);
+                $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
             });
         },
         inboundOption: function (requestOption) {
@@ -5283,6 +5357,63 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
     $scope.loadConfig();
 
+
+
+    // status node
+
+
+
+    $scope.categorizeStatusNodes = function (nodes) {
+
+        angular.forEach(nodes,function (node) {
+
+            if(!node.category) {
+                node.category="NEW"
+            }
+
+
+            if(profileDataParser.statusNodes[node.category] )
+            {
+                if(profileDataParser.statusNodes[node.category].indexOf(node.name)==-1)
+                {
+                    profileDataParser.statusNodes[node.category].push(node.name);
+                }
+            }
+            else
+            {
+                profileDataParser.statusNodes[node.category] =[];
+                profileDataParser.statusNodes[node.category].push(node.name);
+            }
+
+
+
+
+
+
+        });
+
+    }
+
+    $scope.getStatusNodes = function()
+    {
+        ticketService.getStatusNodes().then(function(resStatus)
+        {
+            if(resStatus)
+            {
+                $scope.categorizeStatusNodes(resStatus);
+            }
+            else
+            {
+
+            }
+        },function(errStatus)
+        {
+
+        });
+    };
+
+    $scope.getStatusNodes();
+
 //update code
 //agent summary profile summary
 //$scope.text = $sce.trustAsHtml("'app/views/ui-components/agent-summary.html'");
@@ -5325,7 +5456,22 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
         });
     };
-})
+});
+
+/*agentApp.filter('orderObjectBy', function () {
+ return function (items, field, reverse) {
+ var filtered = [];
+ angular.forEach(items, function (item) {
+ filtered.push(item);
+ });
+ filtered.sort(function (a, b) {
+ return (a[field] > b[field] ? 1 : -1);
+ });
+ if (reverse) filtered.reverse();
+ return filtered;
+ };
+ });*/
+
 
 agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
 

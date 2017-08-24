@@ -752,7 +752,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "Tickets/count?status=" + status
+            url: baseUrls.ticketUrl + "Tickets/count?"+ status
         }).then(function (response) {
             return response;
         });
@@ -784,7 +784,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "MyTickets/count?status=" + status
+            url: baseUrls.ticketUrl + "MyTickets/count?"+ status
         }).then(function (response) {
             return response;
         });
@@ -805,7 +805,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + "MyGroupTickets/count?status=" + status
+            url: baseUrls.ticketUrl + "MyGroupTickets/count?" + status
         }).then(function (response) {
             return response;
         });
@@ -848,14 +848,14 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
     //getAllTickets
     var getAllTickets = function (page, status, ticketType, sorted_by, pageSize) {
         var authToken = authService.GetToken();
-        var url = baseUrls.ticketUrl + ticketType + "/" + pageSize + "/" + page + "?status=" + status + '&sorted_by=' + sorted_by;
+        var url = baseUrls.ticketUrl + ticketType + "/" + pageSize + "/" + page + "?" + status + '&sorted_by=' + sorted_by;
 
 
         console.log(url);
 
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + ticketType + "/" + pageSize + "/" + page + "?status=" + status + '&sorted_by=' + sorted_by
+            url: baseUrls.ticketUrl + ticketType + "/" + pageSize + "/" + page + "?" + status + '&sorted_by=' + sorted_by
         }).then(function (response) {
             return response;
         });
@@ -866,11 +866,26 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         var authToken = authService.GetToken();
         return $http({
             method: 'GET',
-            url: baseUrls.ticketUrl + ticketType + "/count?status=" + status
+            url: baseUrls.ticketUrl + ticketType + "/count?" + status
         }).then(function (response) {
             return response;
         });
     };
+
+    var getStatusNodes = function () {
+
+        return $http({
+            method: 'GET',
+            url: baseUrls.ticketUrl +'TicketStatusNodes'
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response.data.Result;
+            } else {
+                return null;
+            }
+        });
+    };
+
 
 
     return {
@@ -946,7 +961,10 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
         getCountWatchedByMeTicket: getCountWatchedByMeTicket,
         getCountCollaboratedByMeTicket: getCountCollaboratedByMeTicket,
         getAllTickets: getAllTickets,
-        getTicketsCount: getTicketsCount
+        getTicketsCount: getTicketsCount,
+
+
+        getStatusNodes: getStatusNodes
     }
 });
 
