@@ -4464,6 +4464,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             }
                         });
 
+                        getCurrentState.breakState();
+
                         $scope.showAlert("Agent Task", "success", "Delete resource info success.");
                     }
                 }, function (error) {
