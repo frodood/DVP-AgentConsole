@@ -181,10 +181,31 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /*# console top menu */
     var getALlPhoneContact = function () {
-        $scope.contactObj = [];
+        $scope.contactObj = {};
         contactService.getAllContacts().then(function (response) {
-            $scope.contactObj = response.Result;
+            if (response && response.Result) {
+                var previousCategory = "";
+                var contacts = [];
+                response.Result.map(function (item) {
+                    if (item && !item.category) {
+                        item.category = "Others"
+                    }
+                    if (previousCategory === item.category || previousCategory === '') {
+                        contacts.push(item);
+                        previousCategory = item.category;
+                    }
+                    else {
+                        $scope.contactObj[previousCategory] = contacts;
+                        contacts = [];
+                        contacts.push(item);
+                        previousCategory = item.category;
+
+                    }
+                })
+            }
+            //$scope.contactObj = response.Result;
         });
+        $scope.GetCallLogs(new Date().toLocaleDateString());
     };
 
     var i = 1;
@@ -199,17 +220,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
         //var tempData = $scope.callLog[$scope.callLogSessionId];
-        var tempData = $filter('filter')($scope.callLog, {'callLogSessionId':$scope.callLogSessionId},true);
+        var tempData = $filter('filter')($scope.callLog, {'callLogSessionId': $scope.callLogSessionId}, true);
 
         if (tempData[0] && tempData[0].data.callType === 'Outbound') {
             return;
         }
 
         var log = {
-            created_at :new Date().toISOString(),
+            created_at: new Date().toISOString(),
             callLogSessionId: $scope.callLogSessionId,
             count: i++,
             data: {
+                'callLogSessionId': $scope.callLogSessionId,
                 'number': number,
                 'callType': callType,
                 'time': moment().format('LT')
@@ -217,17 +239,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         };
         var index = $scope.callLog.indexOf(tempData[0]);
 
-        if (index != -1){
+        if (index != -1) {
             $scope.callLog[index] = log;
         }
-        else{
-            $scope.callLog.push( log);
+        else {
+            $scope.callLog.push(log);
             //$scope.callLog.splice(0, 0, log);
         }
 
         $scope.callLog.reverse();
         $scope.SaveCallLogs(log);
-
 
 
     };
@@ -238,56 +259,56 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
-        $scope.callLogPage = 0;
+    $scope.callLogPage = 0;
     $scope.isLoadingCallLog = false;
     $scope.callLogLength = 0;
-    $scope.GetCallLogs = function () {
+    $scope.GetCallLogs = function (date) {
         $scope.callLogPage++;
         $scope.isLoadingCallLog = true;
-        contactService.GetCallLogs($scope.callLogPage).then(function (response) {
+        contactService.GetCallLogs($scope.callLogPage,date).then(function (response) {
             if (response) {
                 /*response.map(function (item) {
-                    if (item.logs) {
-                        $scope.callLog[item.logs.callLogSessionId] = item.logs;
-                    }
-                });*/
+                 if (item.logs) {
+                 $scope.callLog[item.logs.callLogSessionId] = item.logs;
+                 }
+                 });*/
 
                 response.map(function (item) {
                     if (item.logs) {
                         var index = $scope.callLog.indexOf(item.logs);
 
-                        if (index != -1){
+                        if (index != -1) {
                             $scope.callLog[index] = item.logs;
                         }
-                        else{
+                        else {
                             $scope.callLog.push(item.logs);
                         }
                     }
                 });
 
-               // $scope.callLogLength = Object.keys($scope.callLog).length;
+                // $scope.callLogLength = Object.keys($scope.callLog).length;
 
-               /* var field = "count";
-                var filtered = [];
-                angular.forEach($scope.callLog, function (item) {
-                    filtered.push(item);
-                });
-                filtered.sort(function (a, b) {
-                    return (a[field] > b[field] ? 1 : -1);
-                });
-                $scope.callLog = filtered.reverse();*/
+                /* var field = "count";
+                 var filtered = [];
+                 angular.forEach($scope.callLog, function (item) {
+                 filtered.push(item);
+                 });
+                 filtered.sort(function (a, b) {
+                 return (a[field] > b[field] ? 1 : -1);
+                 });
+                 $scope.callLog = filtered.reverse();*/
             }
 
             $scope.isLoadingCallLog = false;
         });
     };
-    $scope.GetCallLogs();
+
 
     $scope.doSearch = function (number) {
-        if(number.toString()==="reload"){
+        if (number.toString() === "reload") {
             $scope.callLogPage = 0;
             $scope.callLog = [];
-            $scope.GetCallLogs();
+            $scope.GetCallLogs(new Date());
         }
         $scope.isLoadingCallLog = true;
         contactService.SearchCallLogs(number).then(function (response) {
@@ -296,10 +317,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (item.logs) {
                         var index = $scope.callLog.indexOf(item.logs);
 
-                        if (index != -1){
+                        if (index != -1) {
                             $scope.callLog[index] = item.logs;
                         }
-                        else{
+                        else {
                             $scope.callLog.push(item.logs);
                         }
                     }
@@ -552,7 +573,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (callNumber == "") {
                 return
             }
-            if($scope.currentModeOption.toLowerCase() !== 'outbound'){
+            if ($scope.currentModeOption.toLowerCase() !== 'outbound') {
                 $scope.showAlert("Soft Phone", "error", "Cannot make outbound call while you are in inbound mode.");
                 return
             }
@@ -4200,7 +4221,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.currentBerekOption = requestOption;
 
                     chatService.Status('offline', 'chat');
-                }else{
+                } else {
                     $scope.showAlert(requestOption, "warn", 'break request failed');
                 }
             }, function (error) {
@@ -4249,7 +4270,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $('#' + requestOption).addClass('active-font').removeClass('top-drop-text');
                     $scope.currentModeOption = requestOption;
                     $('#agentPhone').removeClass('display-none');
-                }else{
+                } else {
                     $scope.showAlert(requestOption, "warn", 'mode change request failed');
                 }
             }, function (error) {
