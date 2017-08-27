@@ -1821,6 +1821,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
+    $scope.transferFailed = function (data) {
+        if(data && data.Message)
+        {
+            var splitMsg = data.Message.split('|');
+
+            if(splitMsg.length > 5)
+            {
+                $scope.showAlert('Transfer Failed', 'warn', 'Call transfer failed for agent ' + splitMsg[4]);
+            }
+        }
+    };
+
     $scope.agentUnauthenticate = function (data) {
         console.log("agentUnauthenticate");
         $scope.isSocketRegistered = false;
@@ -2078,6 +2090,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         onAgentConnected: $scope.agentConnected,
         onAgentRejected: $scope.agentRejected,
         onAgentDisconnected: $scope.agentDisconnected,
+        onTransferFailed: $scope.transferFailed,
         OnAgentUnauthenticate: $scope.agentUnauthenticate,
         onAgentAuthenticated: $scope.agentAuthenticated,
         onToDoRemind: $scope.todoRemind,
@@ -2108,6 +2121,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             case 'agent_disconnected':
 
                 $scope.agentDisconnected(data);
+
+                break;
+            case 'transfer_failed':
+
+                $scope.transferFailed(data);
 
                 break;
 
@@ -4485,6 +4503,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             }
                         });
 
+                        getCurrentState.breakState();
+
                         $scope.showAlert("Agent Task", "success", "Delete resource info success.");
                     }
                 }, function (error) {
@@ -5359,6 +5379,63 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
     $scope.loadConfig();
+
+
+
+    // status node
+
+
+
+    $scope.categorizeStatusNodes = function (nodes) {
+
+        angular.forEach(nodes,function (node) {
+
+            if(!node.category) {
+                node.category="NEW"
+            }
+
+
+            if(profileDataParser.statusNodes[node.category] )
+            {
+                if(profileDataParser.statusNodes[node.category].indexOf(node.name)==-1)
+                {
+                    profileDataParser.statusNodes[node.category].push(node.name);
+                }
+            }
+            else
+            {
+                profileDataParser.statusNodes[node.category] =[];
+                profileDataParser.statusNodes[node.category].push(node.name);
+            }
+
+
+
+
+
+
+        });
+
+    }
+
+    $scope.getStatusNodes = function()
+    {
+        ticketService.getStatusNodes().then(function(resStatus)
+        {
+            if(resStatus)
+            {
+                $scope.categorizeStatusNodes(resStatus);
+            }
+            else
+            {
+
+            }
+        },function(errStatus)
+        {
+
+        });
+    };
+
+    $scope.getStatusNodes();
 
 //update code
 //agent summary profile summary
