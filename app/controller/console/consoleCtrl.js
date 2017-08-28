@@ -205,7 +205,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
             //$scope.contactObj = response.Result;
         });
-        $scope.GetCallLogs(new Date().toLocaleDateString());
+        $scope.callLogPage = 0;
+        $scope.GetCallLogs($scope.contactSearchDate);
     };
 
     var i = 1;
@@ -261,67 +262,66 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.callLogPage = 0;
     $scope.isLoadingCallLog = false;
+    $scope.isLastPage = false;
     $scope.callLogLength = 0;
     $scope.GetCallLogs = function (date) {
         $scope.callLogPage++;
         $scope.isLoadingCallLog = true;
-        contactService.GetCallLogs($scope.callLogPage,date).then(function (response) {
-            if (response) {
+        $scope.isLastPage = false;
+        contactService.GetCallLogs($scope.callLogPage, date).then(function (response) {
+            if (response && response.length != 0) {
                 /*response.map(function (item) {
-                 if (item.logs) {
-                 $scope.callLog[item.logs.callLogSessionId] = item.logs;
+                 if (item.data) {
+                 $scope.callLog[item.data.callLogSessionId] = item.data;
                  }
                  });*/
 
                 response.map(function (item) {
-                    if (item.logs) {
-                        var index = $scope.callLog.indexOf(item.logs);
+                    if (item.data) {
+                        var index = $scope.callLog.indexOf(item.data);
 
                         if (index != -1) {
-                            $scope.callLog[index] = item.logs;
+                            $scope.callLog[index] = item.data;
                         }
                         else {
-                            $scope.callLog.push(item.logs);
+                            $scope.callLog.push(item.data);
                         }
                     }
                 });
-
-                // $scope.callLogLength = Object.keys($scope.callLog).length;
-
-                /* var field = "count";
-                 var filtered = [];
-                 angular.forEach($scope.callLog, function (item) {
-                 filtered.push(item);
-                 });
-                 filtered.sort(function (a, b) {
-                 return (a[field] > b[field] ? 1 : -1);
-                 });
-                 $scope.callLog = filtered.reverse();*/
+            }
+            else {
+                $scope.isLastPage = true;
             }
 
             $scope.isLoadingCallLog = false;
         });
     };
 
+    $scope.contactSearchDate = "Today";
+    $scope.GetLogByDate = function (date) {
+        $scope.callLogPage = 0;
+        $scope.callLog = [];
+        $scope.GetCallLogs(date);
+    };
 
     $scope.doSearch = function (number) {
         if (number.toString() === "reload") {
             $scope.callLogPage = 0;
             $scope.callLog = [];
-            $scope.GetCallLogs(new Date());
+            $scope.GetCallLogs($scope.contactSearchDate);
         }
         $scope.isLoadingCallLog = true;
         contactService.SearchCallLogs(number).then(function (response) {
             if (response) {
                 response.map(function (item) {
-                    if (item.logs) {
-                        var index = $scope.callLog.indexOf(item.logs);
+                    if (item.data) {
+                        var index = $scope.callLog.indexOf(item.data);
 
                         if (index != -1) {
-                            $scope.callLog[index] = item.logs;
+                            $scope.callLog[index] = item.data;
                         }
                         else {
-                            $scope.callLog.push(item.logs);
+                            $scope.callLog.push(item.data);
                         }
                     }
                 });
@@ -1822,12 +1822,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.transferFailed = function (data) {
-        if(data && data.Message)
-        {
+        if (data && data.Message) {
             var splitMsg = data.Message.split('|');
 
-            if(splitMsg.length > 5)
-            {
+            if (splitMsg.length > 5) {
                 $scope.showAlert('Transfer Failed', 'warn', 'Call transfer failed for agent ' + splitMsg[4]);
             }
         }
@@ -5381,56 +5379,42 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.loadConfig();
 
 
-
     // status node
-
 
 
     $scope.categorizeStatusNodes = function (nodes) {
 
-        angular.forEach(nodes,function (node) {
+        angular.forEach(nodes, function (node) {
 
-            if(!node.category) {
-                node.category="NEW"
+            if (!node.category) {
+                node.category = "NEW"
             }
 
 
-            if(profileDataParser.statusNodes[node.category] )
-            {
-                if(profileDataParser.statusNodes[node.category].indexOf(node.name)==-1)
-                {
+            if (profileDataParser.statusNodes[node.category]) {
+                if (profileDataParser.statusNodes[node.category].indexOf(node.name) == -1) {
                     profileDataParser.statusNodes[node.category].push(node.name);
                 }
             }
-            else
-            {
-                profileDataParser.statusNodes[node.category] =[];
+            else {
+                profileDataParser.statusNodes[node.category] = [];
                 profileDataParser.statusNodes[node.category].push(node.name);
             }
-
-
-
-
 
 
         });
 
     }
 
-    $scope.getStatusNodes = function()
-    {
-        ticketService.getStatusNodes().then(function(resStatus)
-        {
-            if(resStatus)
-            {
+    $scope.getStatusNodes = function () {
+        ticketService.getStatusNodes().then(function (resStatus) {
+            if (resStatus) {
                 $scope.categorizeStatusNodes(resStatus);
             }
-            else
-            {
+            else {
 
             }
-        },function(errStatus)
-        {
+        }, function (errStatus) {
 
         });
     };
