@@ -596,6 +596,12 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                         notifyData.channel = scope.chatUser.channel;
                     }
 
+                    if (scope.chatUser.contact) {
+                        notifyData.raw_contact = scope.chatUser.contact;
+                    }
+
+
+
                     //var notifyData = {
                     //    tabType: 'engagement',
                     //    index: scope.chatUser.jti,

@@ -2683,6 +2683,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelFrom: args.channel_from,
             channelTo: args.channel_to,
             channel: args.channel,
+            raw_contact:args.raw_contact,
             skill: '',
             sessionId: args.engagement_id,
             userProfile: undefined

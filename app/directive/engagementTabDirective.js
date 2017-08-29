@@ -25,6 +25,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             company: "@",
             direction: "@",
             channelFrom: "@",
+            notificationData: "@",
             channelTo: "@",
             channel: "@",
             skill: "@",
@@ -1586,7 +1587,16 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         contact: scope.channelFrom,
                         type: scope.channel,
                         display: scope.channelFrom
+
                     };
+
+                    if(scope.notificationData){
+                        scope.notificationData = JSON.parse(scope.notificationData );
+                        if(scope.notificationData && scope.notificationData.raw_contact){
+                            contactInfo.raw_contact = scope.notificationData.raw_contact;
+                        }
+                    }
+
                     userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
                         if (response.IsSuccess) {
                             scope.showAlert('Profile Contact', 'success', response.CustomMessage);
