@@ -39,14 +39,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.safeApply = function (fn) {
-        var phase = this.$root.$$phase;
-        if (phase == '$apply' || phase == '$digest') {
-            if (fn && (typeof(fn) === 'function')) {
-                fn();
+        if(this.$root){
+            var phase = this.$root.$$phase;
+            if (phase == '$apply' || phase == '$digest') {
+                if (fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                this.$apply(fn);
             }
-        } else {
+        }else{
             this.$apply(fn);
         }
+
     };
 
     $window.onbeforeunload = $scope.onExit;
@@ -241,14 +246,14 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         var index = $scope.callLog.indexOf(tempData[0]);
 
         if (index != -1) {
-            $scope.callLog[index] = log;
+            $scope.callLog[index] = log.data;
         }
         else {
-            $scope.callLog.push(log);
+            $scope.callLog.push(log.data);
             //$scope.callLog.splice(0, 0, log);
         }
 
-        $scope.callLog.reverse();
+        //$scope.callLog.reverse();
         $scope.SaveCallLogs(log);
 
 
@@ -2683,7 +2688,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelFrom: args.channel_from,
             channelTo: args.channel_to,
             channel: args.channel,
-            raw_contact:args.raw_contact,
+            raw_contact: args.raw_contact,
             skill: '',
             sessionId: args.engagement_id,
             userProfile: undefined
@@ -5187,38 +5192,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 //show OnExistingclient
     chatService.SubscribeChatAll(function (message) {
+        var userObj;
         if (message.who && message.who == 'client') {
-            var userObj = $scope.onlineClientUser.filter(function (item) {
+            userObj = $scope.onlineClientUser.filter(function (item) {
                 return message.from == item.username;
             });
-            if (Array.isArray(userObj)) {
-                userObj.forEach(function (obj, index) {
-                    if (obj.chatcount) {
-                        obj.chatcount += 1;
-                    } else {
-                        obj.chatcount = 1;
-
-                        if ($scope.usercounts) {
-
-                            $scope.usercounts += 1;
-                        } else {
-
-                            $scope.usercounts = 1;
-                        }
-                    }
-                });
-            }
         }
-        ;
+        else {
+            userObj = $scope.users.filter(function (item) {
+                return message.from == item.username;
+            });
+        }
 
-        var userObj = $scope.users.filter(function (item) {
-            return message.from == item.username;
-        });
         if (Array.isArray(userObj)) {
             userObj.forEach(function (obj, index) {
                 if (obj.chatcount) {
                     obj.chatcount += 1;
-                } else {
+                }
+                else {
                     obj.chatcount = 1;
 
                     if ($scope.usercounts) {
@@ -5228,6 +5219,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.usercounts = 1;
                     }
+                    if(message.who != 'client'){
+                        var user = {};
+                        user.type = 'agent';
+                        user.status = 'online';
+                        user.username = obj.username;
+                        user._id = obj.username;
+                        user.firstname =obj.firstname;
+                        user.company = obj.company;
+                        user.tenant = obj.tenant;
+                        user.lastname = obj.lastname;
+                        user.isNewChat = true;
+                        user.profile = null;
+
+                        $scope.showTabChatPanel(user);
+                    }
+
+
                 }
             });
         }
@@ -5276,8 +5284,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $rootScope.$on("updates", function () {
-        $scope.selectedChatUser = chatService.GetCurrentChatUser();
-        $scope.onlineClientUser = chatService.GetClientUsers();
+        $scope.safeApply(function () {
+            $scope.selectedChatUser = chatService.GetCurrentChatUser();
+            $scope.onlineClientUser = chatService.GetClientUsers();
+        });
     });
 
     $scope.chatUserTypeFilter = function (user) {

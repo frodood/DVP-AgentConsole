@@ -16,7 +16,7 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
             templateUrl: 'app/views/chat/chat-view.html',
             link: function (scope, ele, attr) {
 
-                console.log(scope.chatTemplates);
+                //console.log(scope.chatTemplates);
                 scope.uploadedFile = undefined;
                 scope.userCompanyData = authService.GetCompanyInfo();
                 scope.fileNameChanged = function (element) {
@@ -130,7 +130,7 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
 
                     code: {
                         highlight: false,        // highlight code written in 100+ languages supported by highlight
-                                                // requires highlight.js (https://highlightjs.org/) as dependency.
+                        // requires highlight.js (https://highlightjs.org/) as dependency.
                         lineNumbers: false        // display line numbers
                     },
                     codepenEmbed: true,
@@ -216,7 +216,8 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                         },
                         goToScrollDown: function () {
                             var objDiv = document.getElementById(scope.chatUser._id);
-                            objDiv.scrollTop = objDiv.scrollHeight;
+                            if (objDiv)
+                                objDiv.scrollTop = objDiv.scrollHeight;
                         },
                         goToNewMsgScroller: function (msg) {
                             var objDiv = document.getElementById(msg._id);
@@ -247,14 +248,14 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                                 message.status = 'seen';
                             }
                             scope.chatUser.messageThread.push(message);
-                            console.log(scope.chatUser.messageThread);
+                            //console.log(scope.chatUser.messageThread);
                             break;
                         case 'typing':
                             scope.chatUser.typing = true;
                             break;
 
                         case 'chatstatus':
-                            console.log(message);
+                            //console.log(message);
                             if (message && message.lastseen) {
                                 scope.chatUser.lastseen = message.lastseen;
                             }
@@ -264,7 +265,7 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                             scope.chatUser.typing = false;
                             break;
                         case 'seen':
-                            console.log(message);
+                            //console.log(message);
                             var seenMess = scope.chatUser.messageThread.filter(function (mes) {
                                 return mes.id == message.id;
                             });
@@ -449,12 +450,12 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
 
                 scope.updateSmilies = function (code) {
 
-                    console.log(code);
+                    //console.log(code);
                     scope.msgObj.chatText += code;
                 };
 
                 scope.addChatTemplate = function (code) {
-                    //console.log(code);
+                    ////console.log(code);
                     scope.showTemplatePanel();
                     scope.msgObj.chatText += code;
 
@@ -463,7 +464,7 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
 
                 scope.getMoreChats = function () {
 
-                    console.log('more chats');
+                    //console.log('more chats');
 
                     if (scope.chatUser.messageThread && scope.chatUser.messageThread.length > 0) {
                         if (!scope.loadingOld) {
@@ -510,10 +511,7 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                         document.body.clientWidth;
 
                     scope.chatUser.position = position + "px";
-                    if (width > position + 400) {
-                        console.log(position);
-
-                    } else {
+                    if (width <= position + 400) {
                         chatService.DelFirstUser();
                     }
                 };
@@ -599,7 +597,6 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                     if (scope.chatUser.contact) {
                         notifyData.raw_contact = scope.chatUser.contact;
                     }
-
 
 
                     //var notifyData = {
