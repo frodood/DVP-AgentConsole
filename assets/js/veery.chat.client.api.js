@@ -294,6 +294,13 @@ window.SE = function (e) {
 
         });
 
+        socket.on('transfer_failed', function (data) {
+            data.messageType = "transfer_failed";
+            if (callBack.OnEvent)
+                callBack.OnEvent('transfer_failed',data);
+
+        });
+
         socket.on('todo_reminder', function (data) {
 
             if (callBack.OnEvent)
