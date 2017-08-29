@@ -1778,7 +1778,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
-
     $scope.dialerPreviewMessage = function (data) {
         if (data) {
             console.log('dialerPreviewMessage data :: ' + JSON.stringify(data));
@@ -5464,21 +5463,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 });
-
-/*agentApp.filter('orderObjectBy', function () {
- return function (items, field, reverse) {
- var filtered = [];
- angular.forEach(items, function (item) {
- filtered.push(item);
- });
- filtered.sort(function (a, b) {
- return (a[field] > b[field] ? 1 : -1);
- });
- if (reverse) filtered.reverse();
- return filtered;
- };
- });*/
-
 
 agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
 
