@@ -39,7 +39,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.safeApply = function (fn) {
-        if(this.$root){
+        if (this.$root) {
             var phase = this.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
                 if (fn && (typeof(fn) === 'function')) {
@@ -48,7 +48,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             } else {
                 this.$apply(fn);
             }
-        }else{
+        } else {
             this.$apply(fn);
         }
 
@@ -191,7 +191,29 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (response && response.Result) {
                 var previousCategory = "";
                 var contacts = [];
-                response.Result.map(function (item) {
+                var total = response.Result.length;
+                for (var i = 0; i < total; i++) {
+                    var item = response.Result[i];
+                    if (item && !item.category) {
+                        item.category = "Others"
+                    }
+                    if ((previousCategory === item.category || previousCategory === '') && (i != total-1)) {
+                        contacts.push(item);
+                        previousCategory = item.category;
+                    }
+                    else {
+                        if (i === total) {
+                            contacts.push(item);
+                        }
+                        $scope.contactObj[previousCategory] = contacts;
+                        contacts = [];
+                        contacts.push(item);
+                        previousCategory = item.category;
+
+                    }
+                }
+
+                /*response.Result.map(function (item) {
                     if (item && !item.category) {
                         item.category = "Others"
                     }
@@ -206,7 +228,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         previousCategory = item.category;
 
                     }
-                })
+                })*/
             }
             //$scope.contactObj = response.Result;
         });
@@ -228,7 +250,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         //var tempData = $scope.callLog[$scope.callLogSessionId];
         var tempData = $filter('filter')($scope.callLog, {'callLogSessionId': $scope.callLogSessionId}, true);
 
-        if (tempData[0] && tempData[0].data.callType === 'Outbound') {
+        if (tempData[0] && tempData[0].callType === 'Outbound') {
             return;
         }
 
@@ -289,7 +311,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                             $scope.callLog[index] = item.data;
                         }
                         else {
-                            $scope.callLog.push(item.data);
+                            $scope.callLog.splice(0, 0, item.data);
+                            //$scope.callLog.push(item.data);
                         }
                     }
                 });
@@ -5219,13 +5242,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.usercounts = 1;
                     }
-                    if(message.who != 'client'){
+                    if (message.who != 'client') {
                         var user = {};
                         user.type = 'agent';
                         user.status = 'online';
                         user.username = obj.username;
                         user._id = obj.username;
-                        user.firstname =obj.firstname;
+                        user.firstname = obj.firstname;
                         user.company = obj.company;
                         user.tenant = obj.tenant;
                         user.lastname = obj.lastname;
