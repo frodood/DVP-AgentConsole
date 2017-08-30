@@ -432,22 +432,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.ShowHideDialpad = function () {
 
-        var $wrapper = $('.dial-pad-wrapper'),
-            animateTime = 500,
-            height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 90 || $wrapper.height() === 88) {
-            phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
-                if (res) {
-                    $('#phoneDialpad').removeClass('display-none').addClass('display-block');
-                    disablePin();
-                }
-            });
-
-        } else {
-
-            $wrapper.stop().animate({height: '90'}, animateTime);
-            $('#phoneDialpad').removeClass('display-block').addClass('display-none');
-            enablePin();
+        if (pinHeight != 0) {
+            removePin();
+        }
+        else {
+            pinScreen();
         }
     };
     // $scope.ShowHideDialpad();
@@ -1055,6 +1044,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
             return false;
         }, showPhoneBook: function () {
+            if (pinHeight != 0)
+                removePin();
             $('#phoneBook').animate({
                 left: '0'
             }, 500);
