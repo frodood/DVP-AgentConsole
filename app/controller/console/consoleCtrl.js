@@ -1856,7 +1856,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             var splitMsg = data.Message.split('|');
 
             if (splitMsg.length > 5) {
-                $scope.showAlert('Transfer Failed', 'warn', 'Call transfer failed for agent ' + splitMsg[4]);
+                $scope.showAlert('Transfer Failed', 'warn', 'Call transfer failed for ' + splitMsg[4]);
             }
         }
     };
