@@ -39,14 +39,19 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.safeApply = function (fn) {
-        var phase = this.$root.$$phase;
-        if (phase == '$apply' || phase == '$digest') {
-            if (fn && (typeof(fn) === 'function')) {
-                fn();
+        if (this.$root) {
+            var phase = this.$root.$$phase;
+            if (phase == '$apply' || phase == '$digest') {
+                if (fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                this.$apply(fn);
             }
         } else {
             this.$apply(fn);
         }
+
     };
 
     $window.onbeforeunload = $scope.onExit;
@@ -181,10 +186,55 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     /*# console top menu */
     var getALlPhoneContact = function () {
-        $scope.contactObj = [];
+        $scope.contactObj = {};
         contactService.getAllContacts().then(function (response) {
-            $scope.contactObj = response.Result;
+            if (response && response.Result) {
+                var previousCategory = "";
+                var contacts = [];
+                var total = response.Result.length;
+                var lastIndex = total - 1;
+                for (var i = 0; i < total; i++) {
+                    var item = response.Result[i];
+                    if (item && !item.category) {
+                        item.category = "Others"
+                    }
+                    if ((previousCategory === item.category || previousCategory === '') && (i != lastIndex)) {
+                        contacts.push(item);
+                        previousCategory = item.category;
+                    }
+                    else {
+                        if (i === lastIndex) {
+                            contacts.push(item);
+                        }
+                        $scope.contactObj[previousCategory] = contacts;
+                        contacts = [];
+                        contacts.push(item);
+                        previousCategory = item.category;
+
+                    }
+                }
+
+                /*response.Result.map(function (item) {
+                 if (item && !item.category) {
+                 item.category = "Others"
+                 }
+                 if (previousCategory === item.category || previousCategory === '') {
+                 contacts.push(item);
+                 previousCategory = item.category;
+                 }
+                 else {
+                 $scope.contactObj[previousCategory] = contacts;
+                 contacts = [];
+                 contacts.push(item);
+                 previousCategory = item.category;
+
+                 }
+                 })*/
+            }
+            //$scope.contactObj = response.Result;
         });
+        $scope.callLogPage = 0;
+        $scope.GetCallLogs($scope.contactSearchDate);
     };
 
     var i = 1;
@@ -199,17 +249,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
 
         //var tempData = $scope.callLog[$scope.callLogSessionId];
-        var tempData = $filter('filter')($scope.callLog, {'callLogSessionId':$scope.callLogSessionId},true);
+        var tempData = $filter('filter')($scope.callLog, {'callLogSessionId': $scope.callLogSessionId}, true);
 
-        if (tempData[0] && tempData[0].data.callType === 'Outbound') {
+        if (tempData[0] && tempData[0].callType === 'Outbound') {
             return;
         }
 
         var log = {
-            created_at :new Date().toISOString(),
+            created_at: new Date().toISOString(),
             callLogSessionId: $scope.callLogSessionId,
             count: i++,
             data: {
+                'callLogSessionId': $scope.callLogSessionId,
                 'number': number,
                 'callType': callType,
                 'time': moment().format('LT')
@@ -217,17 +268,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         };
         var index = $scope.callLog.indexOf(tempData[0]);
 
-        if (index != -1){
-            $scope.callLog[index] = log;
+        if (index != -1) {
+            $scope.callLog[index] = log.data;
         }
-        else{
-            $scope.callLog.push( log);
+        else {
+            $scope.callLog.push(log.data);
             //$scope.callLog.splice(0, 0, log);
         }
 
-        $scope.callLog.reverse();
+        //$scope.callLog.reverse();
         $scope.SaveCallLogs(log);
-
 
 
     };
@@ -238,69 +288,69 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
-        $scope.callLogPage = 0;
+    $scope.callLogPage = 0;
     $scope.isLoadingCallLog = false;
+    $scope.isLastPage = false;
     $scope.callLogLength = 0;
-    $scope.GetCallLogs = function () {
+    $scope.GetCallLogs = function (date) {
         $scope.callLogPage++;
         $scope.isLoadingCallLog = true;
-        contactService.GetCallLogs($scope.callLogPage).then(function (response) {
-            if (response) {
+        $scope.isLastPage = false;
+        contactService.GetCallLogs($scope.callLogPage, date).then(function (response) {
+            if (response && response.length != 0) {
                 /*response.map(function (item) {
-                    if (item.logs) {
-                        $scope.callLog[item.logs.callLogSessionId] = item.logs;
-                    }
-                });*/
+                 if (item.data) {
+                 $scope.callLog[item.data.callLogSessionId] = item.data;
+                 }
+                 });*/
 
                 response.map(function (item) {
-                    if (item.logs) {
-                        var index = $scope.callLog.indexOf(item.logs);
+                    if (item.data) {
+                        var index = $scope.callLog.indexOf(item.data);
 
-                        if (index != -1){
-                            $scope.callLog[index] = item.logs;
+                        if (index != -1) {
+                            $scope.callLog[index] = item.data;
                         }
-                        else{
-                            $scope.callLog.push(item.logs);
+                        else {
+                            $scope.callLog.splice(0, 0, item.data);
+                            //$scope.callLog.push(item.data);
                         }
                     }
                 });
-
-               // $scope.callLogLength = Object.keys($scope.callLog).length;
-
-               /* var field = "count";
-                var filtered = [];
-                angular.forEach($scope.callLog, function (item) {
-                    filtered.push(item);
-                });
-                filtered.sort(function (a, b) {
-                    return (a[field] > b[field] ? 1 : -1);
-                });
-                $scope.callLog = filtered.reverse();*/
+            }
+            else {
+                $scope.isLastPage = true;
             }
 
             $scope.isLoadingCallLog = false;
         });
     };
-    $scope.GetCallLogs();
+
+    $scope.contactSearchDate = "Today";
+    $scope.GetLogByDate = function (date) {
+        $scope.callLogPage = 0;
+        $scope.callLog = [];
+        $scope.GetCallLogs(date);
+    };
 
     $scope.doSearch = function (number) {
-        if(number.toString()==="reload"){
+        if (number.toString() === "reload") {
             $scope.callLogPage = 0;
             $scope.callLog = [];
-            $scope.GetCallLogs();
+            $scope.GetCallLogs($scope.contactSearchDate);
         }
         $scope.isLoadingCallLog = true;
         contactService.SearchCallLogs(number).then(function (response) {
             if (response) {
                 response.map(function (item) {
-                    if (item.logs) {
-                        var index = $scope.callLog.indexOf(item.logs);
+                    if (item.data) {
+                        var index = $scope.callLog.indexOf(item.data);
 
-                        if (index != -1){
-                            $scope.callLog[index] = item.logs;
+                        if (index != -1) {
+                            $scope.callLog[index] = item.data;
                         }
-                        else{
-                            $scope.callLog.push(item.logs);
+                        else {
+                            $scope.callLog.push(item.data);
                         }
                     }
                 });
@@ -382,22 +432,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     $scope.ShowHideDialpad = function () {
 
-        var $wrapper = $('.dial-pad-wrapper'),
-            animateTime = 500,
-            height = 310;
-        if ($wrapper.height() === 0 || $wrapper.height() === 90 || $wrapper.height() === 88) {
-            phoneAnimation.autoHeightAnimate($wrapper, animateTime, height, function (res) {
-                if (res) {
-                    $('#phoneDialpad').removeClass('display-none').addClass('display-block');
-                    disablePin();
-                }
-            });
-
-        } else {
-
-            $wrapper.stop().animate({height: '90'}, animateTime);
-            $('#phoneDialpad').removeClass('display-block').addClass('display-none');
-            enablePin();
+        if (pinHeight != 0) {
+            removePin();
+        }
+        else {
+            pinScreen();
         }
     };
     // $scope.ShowHideDialpad();
@@ -552,7 +591,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (callNumber == "") {
                 return
             }
-            if($scope.currentModeOption.toLowerCase() !== 'outbound'){
+            if ($scope.currentModeOption.toLowerCase() !== 'outbound') {
                 $scope.showAlert("Soft Phone", "error", "Cannot make outbound call while you are in inbound mode.");
                 return
             }
@@ -560,7 +599,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sipCall('call-audio', callNumber);
             phoneFuncion.updateCallStatus('Dialing');
             $scope.$broadcast('timer-set-countdown');
-            $scope.addToCallLog($scope.call.number, "Outbound");
+            $scope.addToCallLog(callNumber, "Outbound");
         },
         endCall: function () {
             console.log("click endCall...........");
@@ -890,11 +929,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         onIncomingCall: function (sRemoteNumber) {
             try {
-                $scope.addToCallLog($scope.call.number, 'Missed Call');
+                $scope.addToCallLog(sRemoteNumber, 'Missed Call');
                 if ($scope.isAcw || $scope.freeze) {
                     console.info("Reject Call...........................");
                     rejectCall();
-                    $scope.addToCallLog($scope.call.number, 'Rejected');
+                    $scope.addToCallLog(sRemoteNumber, 'Rejected');
                     return;
                 }
 
@@ -1005,6 +1044,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
             return false;
         }, showPhoneBook: function () {
+            if (pinHeight != 0)
+                removePin();
             $('#phoneBook').animate({
                 left: '0'
             }, 500);
@@ -1757,7 +1798,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
     };
 
-
     $scope.dialerPreviewMessage = function (data) {
         if (data) {
             console.log('dialerPreviewMessage data :: ' + JSON.stringify(data));
@@ -1801,13 +1841,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $scope.transferFailed = function (data) {
-        if(data && data.Message)
-        {
+        if (data && data.Message) {
             var splitMsg = data.Message.split('|');
 
-            if(splitMsg.length > 5)
-            {
-                $scope.showAlert('Transfer Failed', 'warn', 'Call transfer failed for ' + splitMsg[4]);
+            if (splitMsg.length > 5) {
+                $scope.showAlert('Transfer Failed', 'warn', 'Call transfer failed for agent ' + splitMsg[4]);
             }
         }
     };
@@ -2665,6 +2703,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             channelFrom: args.channel_from,
             channelTo: args.channel_to,
             channel: args.channel,
+            raw_contact: args.raw_contact,
             skill: '',
             sessionId: args.engagement_id,
             userProfile: undefined
@@ -4218,7 +4257,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $scope.currentBerekOption = requestOption;
 
                     chatService.Status('offline', 'chat');
-                }else{
+                } else {
                     $scope.showAlert(requestOption, "warn", 'break request failed');
                 }
             }, function (error) {
@@ -4267,7 +4306,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     $('#' + requestOption).addClass('active-font').removeClass('top-drop-text');
                     $scope.currentModeOption = requestOption;
                     $('#agentPhone').removeClass('display-none');
-                }else{
+                } else {
                     $scope.showAlert(requestOption, "warn", 'mode change request failed');
                 }
             }, function (error) {
@@ -4481,6 +4520,8 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                 $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
                             }
                         });
+
+                        getCurrentState.breakState();
 
                         $scope.showAlert("Agent Task", "success", "Delete resource info success.");
                     }
@@ -5166,38 +5207,24 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
 //show OnExistingclient
     chatService.SubscribeChatAll(function (message) {
+        var userObj;
         if (message.who && message.who == 'client') {
-            var userObj = $scope.onlineClientUser.filter(function (item) {
+            userObj = $scope.onlineClientUser.filter(function (item) {
                 return message.from == item.username;
             });
-            if (Array.isArray(userObj)) {
-                userObj.forEach(function (obj, index) {
-                    if (obj.chatcount) {
-                        obj.chatcount += 1;
-                    } else {
-                        obj.chatcount = 1;
-
-                        if ($scope.usercounts) {
-
-                            $scope.usercounts += 1;
-                        } else {
-
-                            $scope.usercounts = 1;
-                        }
-                    }
-                });
-            }
         }
-        ;
+        else {
+            userObj = $scope.users.filter(function (item) {
+                return message.from == item.username;
+            });
+        }
 
-        var userObj = $scope.users.filter(function (item) {
-            return message.from == item.username;
-        });
         if (Array.isArray(userObj)) {
             userObj.forEach(function (obj, index) {
                 if (obj.chatcount) {
                     obj.chatcount += 1;
-                } else {
+                }
+                else {
                     obj.chatcount = 1;
 
                     if ($scope.usercounts) {
@@ -5207,6 +5234,23 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.usercounts = 1;
                     }
+                    if (message.who != 'client') {
+                        var user = {};
+                        user.type = 'agent';
+                        user.status = 'online';
+                        user.username = obj.username;
+                        user._id = obj.username;
+                        user.firstname = obj.firstname;
+                        user.company = obj.company;
+                        user.tenant = obj.tenant;
+                        user.lastname = obj.lastname;
+                        user.isNewChat = true;
+                        user.profile = null;
+
+                        $scope.showTabChatPanel(user);
+                    }
+
+
                 }
             });
         }
@@ -5255,8 +5299,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
     $rootScope.$on("updates", function () {
-        $scope.selectedChatUser = chatService.GetCurrentChatUser();
-        $scope.onlineClientUser = chatService.GetClientUsers();
+        $scope.safeApply(function () {
+            $scope.selectedChatUser = chatService.GetCurrentChatUser();
+            $scope.onlineClientUser = chatService.GetClientUsers();
+        });
     });
 
     $scope.chatUserTypeFilter = function (user) {
@@ -5358,56 +5404,42 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     $scope.loadConfig();
 
 
-
     // status node
-
 
 
     $scope.categorizeStatusNodes = function (nodes) {
 
-        angular.forEach(nodes,function (node) {
+        angular.forEach(nodes, function (node) {
 
-            if(!node.category) {
-                node.category="NEW"
+            if (!node.category) {
+                node.category = "NEW"
             }
 
 
-            if(profileDataParser.statusNodes[node.category] )
-            {
-                if(profileDataParser.statusNodes[node.category].indexOf(node.name)==-1)
-                {
+            if (profileDataParser.statusNodes[node.category]) {
+                if (profileDataParser.statusNodes[node.category].indexOf(node.name) == -1) {
                     profileDataParser.statusNodes[node.category].push(node.name);
                 }
             }
-            else
-            {
-                profileDataParser.statusNodes[node.category] =[];
+            else {
+                profileDataParser.statusNodes[node.category] = [];
                 profileDataParser.statusNodes[node.category].push(node.name);
             }
-
-
-
-
 
 
         });
 
     }
 
-    $scope.getStatusNodes = function()
-    {
-        ticketService.getStatusNodes().then(function(resStatus)
-        {
-            if(resStatus)
-            {
+    $scope.getStatusNodes = function () {
+        ticketService.getStatusNodes().then(function (resStatus) {
+            if (resStatus) {
                 $scope.categorizeStatusNodes(resStatus);
             }
-            else
-            {
+            else {
 
             }
-        },function(errStatus)
-        {
+        }, function (errStatus) {
 
         });
     };
@@ -5457,21 +5489,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 });
-
-/*agentApp.filter('orderObjectBy', function () {
- return function (items, field, reverse) {
- var filtered = [];
- angular.forEach(items, function (item) {
- filtered.push(item);
- });
- filtered.sort(function (a, b) {
- return (a[field] > b[field] ? 1 : -1);
- });
- if (reverse) filtered.reverse();
- return filtered;
- };
- });*/
-
 
 agentApp.controller("notificationModalController", function ($scope, $uibModalInstance, MessageObj, DiscardNotifications, AddToDoList) {
 

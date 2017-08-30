@@ -26,7 +26,7 @@ agentApp.constant('moment', moment);
 
 var baseUrls = {
     'authUrl': 'http://userservice.app1.veery.cloud',//http://userservice.app1.veery.cloud
-    'userServiceBaseUrl': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',
+    'userServiceBaseUrl': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',//http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/
     'notification': 'http://notificationservice.app1.veery.cloud',
     'ardsliteserviceUrl': 'http://ardsliteservice.app1.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.app1.veery.cloud
     'engagementUrl': 'http://interactions.app1.veery.cloud/DVP/API/1.0.0.0/',//interactions.app1.veery.cloud
@@ -44,7 +44,7 @@ var baseUrls = {
     'sipuserUrl': 'http://sipuserendpointservice.app1.veery.cloud/DVP/API/1.0.0.0/', //sipuserendpointservice.app1.veery.cloud
     'pwdVerifyUrl': 'http://userservice.app1.veery.cloud/auth/verify',
     'qaModule': 'http://qamodule.app1.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-    'contactUrl': 'http://localhost:8827/DVP/API/1.0.0.0/ContactManager/', //contacts.app1.veery.cloud
+    'contactUrl': 'http://contacts.app1.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //contacts.app1.veery.cloud
     'dialerUrl': 'http://dialerapi.app1.veery.cloud/DVP/DialerAPI/ClickToCall/', //dialerapi.app1.veery.cloud
     'agentDialerUrl': 'http://agentdialerservice.app1.veery.cloud/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app1.veery.cloud
     'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud/',//'http://ipmessagingservice.app1.veery.cloud',
@@ -122,6 +122,12 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
         }).state('reset-password', {
             url: "/reset-password",
             templateUrl: "app/auth/password-reset.html",
+            data: {
+                requireLogin: false
+            }
+        }).state("activate", {
+            url: "/activate/:token",
+            templateUrl: "app/auth/activateAccount.html",
             data: {
                 requireLogin: false
             }
