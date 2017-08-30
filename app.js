@@ -125,6 +125,12 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
             data: {
                 requireLogin: false
             }
+        }).state("activate", {
+            url: "/activate/:token",
+            templateUrl: "app/auth/activateAccount.html",
+            data: {
+                requireLogin: false
+            }
         }).state('reset-password-email', {
             url: "/reset-password-email",
             templateUrl: "app/auth/password-reset-email.html",
