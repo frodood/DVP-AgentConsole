@@ -586,7 +586,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             sipCall('call-audio', callNumber);
             phoneFuncion.updateCallStatus('Dialing');
             $scope.$broadcast('timer-set-countdown');
-            $scope.addToCallLog($scope.call.number, "Outbound");
+            $scope.addToCallLog(callNumber, "Outbound");
         },
         endCall: function () {
             console.log("click endCall...........");
@@ -916,11 +916,11 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         },
         onIncomingCall: function (sRemoteNumber) {
             try {
-                $scope.addToCallLog($scope.call.number, 'Missed Call');
+                $scope.addToCallLog(sRemoteNumber, 'Missed Call');
                 if ($scope.isAcw || $scope.freeze) {
                     console.info("Reject Call...........................");
                     rejectCall();
-                    $scope.addToCallLog($scope.call.number, 'Rejected');
+                    $scope.addToCallLog(sRemoteNumber, 'Rejected');
                     return;
                 }
 
