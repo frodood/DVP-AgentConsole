@@ -198,7 +198,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (item && !item.category) {
                         item.category = "Others"
                     }
-                    if ((previousCategory === item.category || previousCategory === '') && (i != lastIndex)) {
+
+                    if (previousCategory === item.category )  {
+                        $scope.contactObj[previousCategory].push(item);
+                    }
+                    else {
+                        previousCategory = item.category;
+                        $scope.contactObj[previousCategory] = [];
+                        $scope.contactObj[previousCategory].push(item);
+
+                    }
+
+                    /*if ((previousCategory === item.category || previousCategory === '') && (i != lastIndex)) {
                         contacts.push(item);
                         previousCategory = item.category;
                     }
@@ -211,7 +222,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         contacts.push(item);
                         previousCategory = item.category;
 
-                    }
+                    }*/
                 }
 
                 /*response.Result.map(function (item) {
