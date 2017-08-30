@@ -192,17 +192,18 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 var previousCategory = "";
                 var contacts = [];
                 var total = response.Result.length;
+                var lastIndex = total - 1;
                 for (var i = 0; i < total; i++) {
                     var item = response.Result[i];
                     if (item && !item.category) {
                         item.category = "Others"
                     }
-                    if ((previousCategory === item.category || previousCategory === '') && (i != total-1)) {
+                    if ((previousCategory === item.category || previousCategory === '') && (i != lastIndex)) {
                         contacts.push(item);
                         previousCategory = item.category;
                     }
                     else {
-                        if (i === total) {
+                        if (i === lastIndex) {
                             contacts.push(item);
                         }
                         $scope.contactObj[previousCategory] = contacts;
@@ -214,21 +215,21 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 }
 
                 /*response.Result.map(function (item) {
-                    if (item && !item.category) {
-                        item.category = "Others"
-                    }
-                    if (previousCategory === item.category || previousCategory === '') {
-                        contacts.push(item);
-                        previousCategory = item.category;
-                    }
-                    else {
-                        $scope.contactObj[previousCategory] = contacts;
-                        contacts = [];
-                        contacts.push(item);
-                        previousCategory = item.category;
+                 if (item && !item.category) {
+                 item.category = "Others"
+                 }
+                 if (previousCategory === item.category || previousCategory === '') {
+                 contacts.push(item);
+                 previousCategory = item.category;
+                 }
+                 else {
+                 $scope.contactObj[previousCategory] = contacts;
+                 contacts = [];
+                 contacts.push(item);
+                 previousCategory = item.category;
 
-                    }
-                })*/
+                 }
+                 })*/
             }
             //$scope.contactObj = response.Result;
         });
