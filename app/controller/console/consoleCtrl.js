@@ -198,20 +198,31 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (item && !item.category) {
                         item.category = "Others"
                     }
-                    if ((previousCategory === item.category || previousCategory === '') && (i != lastIndex)) {
-                        contacts.push(item);
-                        previousCategory = item.category;
+
+                    if (previousCategory === item.category) {
+                        $scope.contactObj[previousCategory].push(item);
                     }
                     else {
-                        if (i === lastIndex) {
-                            contacts.push(item);
-                        }
-                        $scope.contactObj[previousCategory] = contacts;
-                        contacts = [];
-                        contacts.push(item);
                         previousCategory = item.category;
+                        $scope.contactObj[previousCategory] = [];
+                        $scope.contactObj[previousCategory].push(item);
 
                     }
+
+                    /*if ((previousCategory === item.category || previousCategory === '') && (i != lastIndex)) {
+                     contacts.push(item);
+                     previousCategory = item.category;
+                     }
+                     else {
+                     if (i === lastIndex) {
+                     contacts.push(item);
+                     }
+                     $scope.contactObj[previousCategory] = contacts;
+                     contacts = [];
+                     contacts.push(item);
+                     previousCategory = item.category;
+
+                     }*/
                 }
 
                 /*response.Result.map(function (item) {
@@ -5235,21 +5246,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                         $scope.usercounts = 1;
                     }
                     if (message.who != 'client') {
-                        var user = {};
-                        user.type = 'agent';
-                        user.status = 'online';
-                        user.username = obj.username;
-                        user._id = obj.username;
-                        user.firstname = obj.firstname;
-                        user.company = obj.company;
-                        user.tenant = obj.tenant;
-                        user.lastname = obj.lastname;
-                        user.isNewChat = true;
-                        user.profile = null;
 
-                        $scope.showTabChatPanel(user);
+                        $scope.showTabChatPanel(obj);
                     }
+                    else {
 
+                    }
 
                 }
             });
