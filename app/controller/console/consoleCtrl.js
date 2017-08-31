@@ -1840,12 +1840,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     };
 
-    $scope.transferFailed = function (data) {
+    $scope.transferEnded = function (data) {
         if (data && data.Message) {
             var splitMsg = data.Message.split('|');
 
             if (splitMsg.length > 5) {
-                $scope.showAlert('Transfer Failed', 'warn', 'Call transfer failed for ' + splitMsg[4]);
+                $scope.showAlert('Transfer Call Ended', 'warn', 'Call transfer ended for ' + splitMsg[4]);
             }
         }
     };
@@ -2140,9 +2140,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.agentDisconnected(data);
 
                 break;
-            case 'transfer_failed':
+            case 'transfer_ended':
 
-                $scope.transferFailed(data);
+                $scope.transferEnded(data);
 
                 break;
 
