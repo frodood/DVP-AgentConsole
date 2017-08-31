@@ -285,7 +285,10 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                                 message.message = message.data;
                                 message.id = message.uuid;
                                 message['time'] = moment(message.created_at).format('hh:mm:ss a');
-                                scope.chatUser.messageThread.push(message);
+
+                                scope.$apply(function(){
+                                    scope.chatUser.messageThread.push(message);
+                                });
                                 if (message.status != 'seen' && message.from == scope.chatUser.username) {
                                     SE.seen({to: scope.chatUser.username, id: message.uuid});
                                 }
@@ -322,7 +325,7 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                 if (!userType)
                     userType = "agent";
 
-                chatService.LatestMessages('latestmessages', scope.chatUser.username, userType)
+                chatService.LatestMessages('latestmessages', scope.chatUser.username, userType);
 
                 chatService.Request('chatstatus', scope.chatUser.username);
 
@@ -565,6 +568,8 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
 
                     SE.acceptclient(clientObj);
                     client.isNewChat = false;
+
+                    //chatService.LatestMessages('latestmessages', scope.chatUser.username, userType);
                 };
 
                 scope.ignoreChat = function (currentChtW) {
