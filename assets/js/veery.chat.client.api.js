@@ -294,10 +294,10 @@ window.SE = function (e) {
 
         });
 
-        socket.on('transfer_failed', function (data) {
-            data.messageType = "transfer_failed";
+        socket.on('transfer_ended', function (data) {
+            data.messageType = "transfer_ended";
             if (callBack.OnEvent)
-                callBack.OnEvent('transfer_failed',data);
+                callBack.OnEvent('transfer_ended',data);
 
         });
 
