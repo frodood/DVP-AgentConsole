@@ -5248,14 +5248,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (message.who != 'client') {
 
                         $scope.showTabChatPanel(obj);
+                        if(obj){
+                            var audio = new Audio('assets/sounds/chattone.mp3');
+                            audio.play();
+                        }
                     }
 
 
                 }
-                if(obj){
-                    var audio = new Audio('assets/sounds/chattone.mp3');
-                    audio.play();
-                }
+
             });
         }
     });
