@@ -196,15 +196,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 for (var i = 0; i < total; i++) {
                     var item = response.Result[i];
                     if (item && !item.category) {
-                        item.category = "Others"
+                        item.category = "others"
                     }
 
-                    if (previousCategory === item.category) {
+                    if (previousCategory === item.category.toLowerCase()) {
                         $scope.contactObj[previousCategory].push(item);
                     }
                     else {
-                        previousCategory = item.category;
-                        $scope.contactObj[previousCategory] = [];
+                        previousCategory = item.category.toLowerCase();
+                        if(!Array.isArray($scope.contactObj[previousCategory])){
+                            $scope.contactObj[previousCategory] = [];
+                        }
                         $scope.contactObj[previousCategory].push(item);
 
                     }
