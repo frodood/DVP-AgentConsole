@@ -5249,10 +5249,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                         $scope.showTabChatPanel(obj);
                     }
-                    else {
 
-                    }
 
+                }
+                if(obj){
+                    var audio = new Audio('assets/sounds/chattone.mp3');
+                    audio.play();
                 }
             });
         }
