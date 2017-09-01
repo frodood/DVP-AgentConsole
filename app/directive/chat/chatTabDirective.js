@@ -243,6 +243,8 @@ agentApp.directive('chatTabDirective', function ($rootScope, chatService, authSe
                             if (!scope.chatUser.windowMimOption) {
                                 $('#' + scope.chatWindowId + " .cht-header").addClass('rec-new-msg-blink');
                                 message.status = 'delivered';
+                                var audio = new Audio('assets/sounds/chattone.mp3');
+                                audio.play();
                             } else {
                                 SE.seen({to: scope.chatUser.username, id: message.id});
                                 message.status = 'seen';
