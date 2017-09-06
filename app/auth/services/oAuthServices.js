@@ -17,12 +17,22 @@
         service.UpdateMyPwd = UpdateMyPwd;
         service.forgetPassword = forgetPassword;
         service.resetPassword =resetPassword;
+        service.activateAccount = activateAccount;
         return service;
         var mynavigations = {};
 
         //set cookie
         function setCookie(key, val) {
             localStorageService.set(key, val);
+        }
+
+        function activateAccount(token, callback) {
+            $http.get(baseUrls.authUrl + "/auth/activate/" + token).success(function (data, status, headers, config) {
+                callback(data.IsSuccess);
+
+            }).error(function (data, status, headers, config) {
+                callback(data.IsSuccess);
+            });
         }
 
         //get token
