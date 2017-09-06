@@ -208,7 +208,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     }
                     else {
                         previousCategory = item.category.toLowerCase();
-                        if(!Array.isArray($scope.contactObj[previousCategory])){
+                        if (!Array.isArray($scope.contactObj[previousCategory])) {
                             $scope.contactObj[previousCategory] = [];
                         }
                         $scope.contactObj[previousCategory].push(item);
@@ -1824,13 +1824,37 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
             if (data.Message) {
                 $scope.previewMessage.PreviewData = JSON.parse(data.Message);
+
             } else {
                 $scope.previewMessage.PreviewData = undefined;
             }
 
+
+
             $('#previewMessage').addClass('display-block fadeIn').removeClass('display-none zoomOut');
 
         }
+    };
+
+    $scope.test = {
+        "name": 'sdsdsdsdsdsdsd',
+        "address": "3434343 dsd",
+        "location": "bandarawela",
+        "location1": "bandarawela2",
+        "location2": "bandarawela2",
+        "location3": "bandarawela3",
+        "location4": "bandarawela4",
+        "location5": "bandarawela5",
+        "location6": "bandarawela6",
+        "location7": "bandarawela7",
+        "location8": "bandarawela8",
+        "location9": "bandarawela9",
+        "location10": "bandarawela10",
+        "location11": "bandarawela11",
+        "location12": "bandarawela12",
+        "location13": "bandarawela13",
+        "location14": "bandarawela14",
+        "contactNo": "test"
     };
 
     $scope.agentConnected = function (data) {
@@ -5250,7 +5274,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                     if (message.who != 'client') {
 
                         $scope.showTabChatPanel(obj);
-                        if(obj){
+                        if (obj) {
                             var audio = new Audio('assets/sounds/chattone.mp3');
                             audio.play();
                         }

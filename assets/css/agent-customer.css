@@ -7407,6 +7407,7 @@ ul.renote-color-btn > li {
     margin-top: -14px;
     cursor: pointer;
 }
+
 .c-details {
     width: 160px;
     display: inline-block;
@@ -13932,3 +13933,69 @@ header.widget-main-header > .d-header-wrp > i:hover {
     background: #f7f5f5;
     padding: 10px;
 }
+
+/* preview notification wrapper*/
+.preview-notification-wrapper {
+    position: fixed;
+    width: 300px;
+    right: 10px;
+    top: 20%;
+    border-radius: 0;
+    overflow: hidden;
+    z-index: 2000;
+    background: #ffffff;
+    border: 1px solid #EEEEEE;
+}
+
+.p-ndata-wrp {
+    width: 300px;
+    height: 200px;
+    padding: 0px 10px;
+    overflow: auto;
+}
+
+.p-noti-action-panel {
+    width: 300px;
+    height: 40px;
+    background: #f7f7f7;
+    text-align: center;
+    padding-top: 11px;
+    font-family: 'AvenirNext-Regular', sans-serif;
+}
+
+.p-noti-action-panel > div {
+    display: block;
+    color: #223448;
+    font-size: 13px;
+    cursor: pointer;
+    letter-spacing: 0.9px;
+}
+
+.p-noti-action-panel > div.accepted {
+    border-right: 1px solid #7c7d7c;
+    color: #45bf55;
+}
+
+.p-noti-action-panel > div.reject {
+    color: #d90000;
+}
+
+.p-noti-action-panel > div:hover {
+    font-family: 'AvenirNext-Bold', sans-serif;
+}
+
+.p-ndata-header {
+    width: 300px;
+    height: 50px;
+    overflow: hidden;
+    padding: 0px 10px 0 10px;
+}
+
+.p-ndata-header > h3 {
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+}
+
+

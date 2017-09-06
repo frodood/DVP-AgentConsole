@@ -495,6 +495,9 @@
     <!-- New preview notification UI update -1652017-->
     <div ng-include="'app/views/ui-components/preview-notification-panel.html'"></div>
 
+    <!-- preview notification UI -->
+    <div ng-include="'app/views/ui-components/preview-panel.html'"></div>
+
     <!-- incoming call notification display-none-->
     <div id="incomingNotification" class="console-phone-wrapper display-none   Phone is-animating "
          id="phoneWidget">
@@ -603,7 +606,7 @@
                         <div ng-switch-when="mail-inbox">
                             <div ng-include="'app/views/mail-inbox/inbox-view.html'"></div>
                         </div>
-                        <div ng-switch-when="dashboard"  class="bg-gray-200" >
+                        <div ng-switch-when="dashboard" class="bg-gray-200">
                             <div ng-include="'app/views/dashboard/agentDashboard1.html'"></div>
                         </div>
                         <div ng-switch-when="MyNote">
