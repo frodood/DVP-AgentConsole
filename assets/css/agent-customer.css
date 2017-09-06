@@ -1081,7 +1081,7 @@ body {
 }
 
 .tab-content {
-    background: #fff;
+    /*background: #fff;*/
     min-height: 100vh;
     height: auto;
     width: 100%;
@@ -8508,7 +8508,7 @@ ul.renote-color-btn > li {
     /* -webkit-box-shadow: 0px 0px 17px -12px rgba(0,0,0,0.75); */
     -moz-box-shadow: 0px 0px 17px -12px rgba(0, 0, 0, 0.75);
     /* box-shadow: 0px 0px 17px -12spx rgba(0,0,0,0.75); */
-    border-right: 1px solid #e3e8ea;
+    /*border-right: 1px solid #e3e8ea;*/
 }
 
 .note-d-h-1,
@@ -13519,3 +13519,408 @@ ul.i-top-navigation > li {
     background: #f9fbfe
 }
 
+/*update new dashboard UI */
+.d-main-wrapper05201 {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.d-widget-main-wrp {
+    width: 100%;
+    min-height: 200px;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+header.widget-main-header {
+    /* MY PRODUCTIVITY: */
+    width: auto;
+    min-height: 30px;
+    overflow: hidden;
+    position: relative;
+    /*padding-top: 15px;*/
+    padding-bottom: 15px;
+
+}
+
+header.widget-main-header > .d-header-wrp {
+    /* MY PRODUCTIVITY: */
+    display: inline-block;
+
+}
+
+header.widget-main-header > .d-header-wrp > h3 {
+    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-size: 14px;
+    color: rgba(150, 150, 150, 0.26);
+    letter-spacing: 0.71px;
+    /*text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);*/
+    display: inline-block;
+    margin: 0;
+}
+
+header.widget-main-header > .d-header-wrp > i {
+    display: inline-block;
+    color: rgba(150, 150, 150, 0.26);
+    font-size: 15px;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+header.widget-main-header > .d-header-wrp > i:hover {
+    color: rgba(150, 150, 150, 1);
+}
+
+.d-widget-w {
+    width: 100%;
+    min-height: 250px;
+    background: #ffffff;
+    box-shadow: 0 1px 17px 0 rgba(170, 170, 170, 0.18);
+    border-radius: 2px;
+}
+
+.d-call-s-wrap05201 {
+    width: 100%;
+    min-height: 130px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    padding: 15px 15px 0px 15px;
+}
+
+.d-call-count-w {
+    display: inline-block;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    width: 100%;
+    padding: 17px;
+    margin-bottom: 10px;
+}
+
+.d-call-count-w > .d-c-count,
+.d-call-count-w > .d-c-name,
+.d-call-count-w > .d-c-type {
+    display: block;
+    text-transform: uppercase;
+}
+
+..d-call-count-w > .d-c-count,
+.d-call-count-w > .d-c-name {
+    font-family: "AvenirNext-Regular", Courier, monospace;
+}
+
+.d-call-count-w > .d-c-count {
+    /* 00:00:00: */
+    font-size: 14px;
+    color: #74BEFB;
+    letter-spacing: 1.26px;
+    height: 20px;
+}
+
+.d-call-count-w > .d-c-name {
+    /* On Call Time: */
+    font-size: 14px;
+    color: #9B9998;
+    letter-spacing: 1.62px;
+}
+
+.d-call-count-w > .d-c-type {
+    /* Inbound: */
+    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-size: 6px;
+    letter-spacing: 0.72px;
+}
+
+.d-call-count-w > .d-c-type.outbound {
+    /* outbound: */
+    color: #F6A623;
+}
+
+.d-call-count-w > .d-c-type.inbound {
+    /* outbound: */
+    color: #8FD539;
+}
+
+.d-performance-wrapper {
+    width: 100%;
+    min-height: 55px;
+}
+
+.d-call-performance05201 {
+    width: 100%;
+    /*min-height: 50px;*/
+    overflow: hidden;
+    position: relative;
+    /*border-top: 1px solid #EEEEEE;*/
+    background: #fdfdfd;
+    border-radius: 5px;
+}
+
+.w-inside-h {
+    /* SUMMARY: */
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-size: 11px;
+    color: rgba(150, 150, 150, 0.26);
+    letter-spacing: 1.32px;
+    display: block;
+    text-transform: uppercase;
+    padding-left: 15px;
+    padding-bottom: 7px;
+    padding-top: 10px;
+}
+
+.d-call-performance05201 > .d-call-performance05201 {
+    display: block;
+    width: 100%;
+}
+
+.d-p-s-count > .d-p-s-value,
+.d-p-s-count > .d-p-s-header {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.d-p-s-count > .d-p-s-value {
+    /* 80%: */
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-size: 15px;
+    color: #B3B6B3;
+    letter-spacing: 1.8px;
+}
+
+.d-p-s-count > .d-p-s-header {
+    /* MISSED: */
+    font-family: "AvenirNextLTPro-Demi", Courier, monospace;
+    font-size: 13px;
+    color: #B3B6B3;
+    letter-spacing: 1.56px;
+}
+
+.d-p-s-value > .d-performance-status {
+    display: inline-block;
+}
+
+.d-performance-status > i {
+    font-size: 15px;
+}
+
+.d-performance-status.down > i {
+    color: #EA3B3B;
+}
+
+.d-performance-status.up > i {
+    color: #82E9A0;
+}
+
+.d-performance-status.up > i.ti-arrow-down {
+    display: none;
+}
+
+.d-performance-status.down > i.ti-arrow-up {
+    display: none;
+}
+
+.d-w-boarder-left {
+    border-right: 1px solid #EEEEEE;
+}
+
+.d-p-wrapper {
+    width: 100%;
+    min-height: 100px;
+    overflow: hidden;
+    position: relative;
+    /*padding-bottom: 15px;*/
+    background: #FAFBFD;
+}
+
+.d-p-chart-wrp {
+    padding-top: 25px;
+    background: #fff;
+    padding-bottom: 10px;
+}
+
+.widget-h {
+    /* PRODUCTIVITY - HOURS: */
+    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-size: 13px;
+    color: #9B9998;
+    letter-spacing: 1.02px;
+    text-transform: uppercase;
+    /*padding: 15px;*/
+}
+
+.widget-h.p-15 {
+    padding: 15px;
+}
+
+.p-grph {
+    width: 230px;
+    height: 230px;
+    text-align: center;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+.d-productivity-s-right {
+    width: 100%;
+
+}
+
+.d-p-inline-summary {
+    width: 100%;
+    min-height: 50px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    padding: 15px;
+}
+
+.d-p-inline-summary.gray-row {
+    background: rgba(150, 150, 150, 0.04);
+}
+
+.d-p-inline-summary.white-row {
+    background: #FFFFFF;
+}
+
+.d-p-inline-summary > .d-left-header,
+.d-p-inline-summary > .d-right-value {
+    display: inline-block;
+    font-family: "AvenirNextLTPro-Demi", Courier, monospace;
+    font-size: 13px;
+    letter-spacing: 1.22px;
+    text-transform: capitalize;
+}
+
+.d-p-inline-summary > .d-left-header {
+    text-align: left;
+}
+
+.d-p-inline-summary > .d-right-value {
+    text-align: right;
+    float: right;
+}
+
+.d-left-header.d-missed,
+.d-right-value.d-missed {
+    color: #EA3B3B;
+}
+
+.d-left-header.d-inbound,
+.d-right-value.d-inbound {
+    color: #8A8E86;
+}
+
+.d-note-widget05201 {
+
+}
+
+.widget-header-wrapper {
+    width: 100%;
+    min-height: 20px;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid #EEEEEE;
+    padding: 15px;
+}
+
+.widget-scr-body-note {
+    width: 100%;
+    height: 235px;
+    overflow: hidden;
+    position: relative;
+    /*padding: 5px 10px 5px 14px;*/
+}
+
+.widget-scr-body-call-s {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.d-note-row-wrapper {
+    width: 100%;
+    min-height: 50px;
+    overflow: hidden;
+    display: block;
+    /* Rectangle 57: */
+    border-bottom: 1px solid #EEEEEE;
+    /*margin-bottom: 5px;*/
+    padding-bottom: 5px;
+
+}
+
+.d-note-des-wrp > .d-note-subject {
+    /* Why Do We Use It?: */
+    font-family: "AvenirNextLTPro-Demi", Courier, monospace;
+    font-size: 12px;
+    color: #B3B6B3;
+    letter-spacing: 0.36px;
+    padding-top: 10px;
+    padding-bottom: 2px;
+}
+
+.d-note-des-wrp > .d-note-body {
+    font-family: "AvenirNext-Regular", Courier, monospace;
+    font-size: 10px;
+    color: #9B9998;
+    letter-spacing: 0.76px;
+    line-height: 10px;
+}
+
+.note-d-h-1.d-note-1,
+.note-d-h-3.d-note-1 {
+    /* FRI 24: */
+    font-size: 11px;
+    color: #223448;
+    letter-spacing: 0.36px;
+    text-align: left;
+}
+
+.note-p05201 {
+    left: 82%;
+    top: 24px;
+}
+
+.note-p05201 > .note-type {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.note-p05201 > .note-type.low {
+    background: #ffa918;
+    box-shadow: 0 2px 24px 0 #ffa918;
+}
+
+.note-p05201 > .note-type.normal {
+    background: #37dba9;
+    box-shadow: 0 2px 24px 0 rgb(55, 219, 169);
+}
+
+.note-p05201 > .note-type.urgent {
+    background: #4383c4;
+    box-shadow: 0 2px 24px 0 #4383c4;
+}
+
+.note-p05201 > .note-type.high {
+    background: #fb5f21;
+    box-shadow: 0 2px 24px 0 #fb5f21;
+}
+
+.d-t-grph {
+    padding: 0px 20px 20px 15px;
+    margin: 0 auto;
+}
+
+.widget-r-header {
+    font-size: 10px;
+    text-transform: uppercase;
+    height: 33px;
+    overflow: hidden;
+    background: #f7f5f5;
+    padding: 10px;
+}

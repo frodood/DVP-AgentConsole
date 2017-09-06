@@ -19,6 +19,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         chatService.Status('offline', 'call');
     };
 
+    $scope.goToTopScroller = function () {
+        $('html, body').animate({scrollTop: 0}, 'fast');
+    };
+
 
     $scope.$on('$locationChangeStart', function (event, next, current) {
         // Here you can take the control and call your own functions:
@@ -2551,7 +2555,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
     };
 
 //ToDo
-//$scope.addDashBoard();
+    $scope.addDashBoard();
 
     //ToDo
     $scope.addNewTicketInboxTemp = function () {
@@ -4434,10 +4438,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         catch (ex) {
 
         }
-    };
-
-    $scope.goToTopScroller = function () {
-        $('html, body').animate({scrollTop: 0}, 'fast');
     };
 
 
