@@ -255,7 +255,7 @@
                                 uib-dropdown-menu
                                 role="menu">
                                 <li class="menuitem" role="menuitem">
-                                    <a ng-click="openSettingPage();"
+                                    <a ng-click="addTabProfileSetting();"
                                        href="javascript:void(0);">
                                         My Setting
                                     </a>
@@ -495,6 +495,9 @@
     <!-- New preview notification UI update -1652017-->
     <div ng-include="'app/views/ui-components/preview-notification-panel.html'"></div>
 
+    <!-- preview notification UI -->
+    <div ng-include="'app/views/ui-components/preview-panel.html'"></div>
+
     <!-- incoming call notification display-none-->
     <div id="incomingNotification" class="console-phone-wrapper display-none   Phone is-animating "
          id="phoneWidget">
@@ -570,6 +573,7 @@
                             <engagement-tab load-tags="reloadTagAndCategories()"
                                             tag-category-list="tagCategories"
                                             tag-list="tags" users="users"
+                                            notification_data="{{tab.notificationData}}"
                                             session-id="{{tab.notificationData.sessionId}}"
                                             skill="{{tab.notificationData.skill}}"
                                             company="{{tab.notificationData.company}}"
@@ -617,6 +621,12 @@
                         <div ng-switch-when="Ticket-Inbox">
                             <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
                             <div ng-include="'app/views/ticket/inbox/inbox-console.html'"></div>
+                        </div>
+
+                        <!-- setting page --->
+                        <div ng-switch-when="profile-setting">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/views/user-profile/profile-setting.html'"></div>
                         </div>
                         <!--<div ng-switch-when="userProfile">
                             <div ng-include="'app/views/profile/user-profile.html'"></div>

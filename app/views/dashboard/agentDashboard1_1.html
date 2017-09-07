@@ -1,0 +1,389 @@
+<div class="agent-dashboard-wrapper d-main-wrapper05201"
+     ng-controller="agentDashboardCtrl">
+    <!-- dashboard productivity wrapper -->
+    <section class="d-widget-main-wrp">
+        <header class="widget-main-header">
+            <div class="d-header-wrp">
+                <h3>
+                    PRODUCTIVITY
+                </h3>
+            </div>
+
+            <div class="d-header-wrp d-h-r-icon">
+                <i class="ti-arrow-circle-up"></i>
+            </div>
+        </header>
+
+        <!-- call summary dsh productivity wrapper -->
+        <div class="row">
+            <!-- ./ call summary -->
+            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+                <section class="d-widget-w d-call-summary">
+                    <div class="d-call-s-wrap05201">
+                        <div class="row">
+                            <!-- on call time -->
+                            <div class="col-lg-6">
+                                <div class="d-call-count-w">
+                                    <div class="d-c-count animated slideInDown">
+                                        {{productivity.OnCallTime| date:'HH:mm:ss'}}
+                                    </div>
+                                    <div class="d-c-name">
+                                        On Call Time
+                                    </div>
+                                    <div class="d-c-type inbound">
+                                        inbound
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- On Call Time - outbound-->
+                            <div class="col-lg-6">
+                                <div class="d-call-count-w">
+                                    <div class="d-c-count animated slideInDown">
+                                        {{productivity.OutboundCallTime| date:'HH:mm:ss'}}
+                                    </div>
+                                    <div class="d-c-name">
+                                        On Call Time
+                                    </div>
+                                    <div class="d-c-type outbound">
+                                        outbound
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Staffed time -->
+                            <div class="col-lg-6">
+                                <div class="d-call-count-w">
+                                    <div class="d-c-count animated slideInDown">
+                                        {{productivity.StaffedTime| date:'HH:mm:ss'}}
+                                    </div>
+                                    <div class="d-c-name">
+                                        Staffed Time
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- break type -->
+                            <div class="col-lg-6">
+                                <div class="d-call-count-w">
+                                    <div class="d-c-count animated slideInDown">
+                                        {{productivity.BreakTime| date:'HH:mm:ss'}}
+                                    </div>
+                                    <div class="d-c-name">
+                                        Break Time
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- call performance -->
+                    <div class="d-call-performance05201">
+                        <header class="w-inside-h">
+                            summary
+                        </header>
+
+                        <div class="d-performance-wrapper">
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="d-p-s-count d-w-boarder-left">
+                                        <div class="d-p-s-value">
+                                            80%
+                                            <div class="d-performance-status up">
+                                                <i class="ti-arrow-up"></i>
+                                                <i class="ti-arrow-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="d-p-s-header">
+                                            answered
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="d-p-s-count d-w-boarder-left">
+                                        <div class="d-p-s-value ">
+                                            80%
+                                            <div class="d-performance-status down">
+                                                <i class="ti-arrow-up"></i>
+                                                <i class="ti-arrow-down "></i>
+                                            </div>
+                                        </div>
+                                        <div class="d-p-s-header">
+                                            missed
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="d-p-s-count">
+                                        <div class="d-p-s-value">
+                                            80%
+                                            <div class="d-performance-status up">
+                                                <i class="ti-arrow-up"></i>
+                                                <i class="ti-arrow-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="d-p-s-header">
+                                            answered
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- ./ productivity summary -->
+            <div class="col-lg-5 col-sm-5 col-md-5 col-xs-5">
+                <section class="d-widget-w d-productivity-summary">
+                    <div class="d-p-wrapper">
+                        <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7">
+                            <div class="row">
+                                <div class="d-p-chart-wrp">
+                                    <div class="widget-h text-center">
+                                        PRODUCTIVITY - HOURS
+                                    </div>
+
+                                    <div class="p-grph">
+                                        <canvas class="chart chart-doughnut"
+                                                width="230" height="230"
+                                                chart-data="doughnutObj.data"
+                                                chart-labels="doughnutObj.labels"
+                                                chart-legend="true"
+                                                chart-options="options">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-5 col-md-5 col-xs-5">
+                            <div class="row">
+                                <div class="d-productivity-s-right">
+                                    <div class="d-productivity-s-wrp">
+                                        <div class="d-p-inline-summary gray-row">
+                                            <div class="d-left-header d-inbound ">
+                                                inbound calls
+                                            </div>
+                                            <div class="d-right-value d-inbound">
+                                                {{productivity.IncomingCallCount}}
+                                            </div>
+                                        </div>
+                                        <div class="d-p-inline-summary white-row">
+                                            <div class="d-left-header d-missed ">
+                                                Missed Calls
+                                            </div>
+                                            <div class="d-right-value d-missed">
+                                                {{productivity.MissCallCount}}
+                                            </div>
+                                        </div>
+                                        <div class="d-p-inline-summary gray-row">
+                                            <div class="d-left-header ">
+                                                Outbound Calls
+                                            </div>
+                                            <div class="d-right-value">
+                                                {{productivity.OutgoingCallCount}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ./ note summary -->
+            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3">
+                <section class="d-widget-w d-note-summary">
+                    <div class="d-note-widget05201">
+                        <div class="widget-header-wrapper">
+                            <div class="widget-h text-left">
+                                my note
+                            </div>
+                        </div>
+
+                        <div class="widget-scr-body-note"
+                             slimscroll="{height: '235px',
+                        railVisible: true,
+                        color: '#777',
+                        size: '8px',
+                        distance: '15px',
+                        railColor: '#fff',
+            railBorderRadius: 10}">
+                            <div class="d-note-row-wrapper" ng-repeat="note in noteLists track by $index ">
+                                <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+                                    <div class="d-note-date-wrp">
+                                        <div class="note-date-wrp">
+
+                                            <div class="d-note-priority note-p05201 animated slideInLeft">
+                                                <div class="note-type {{note.priority}}">
+                                                </div>
+                                            </div>
+
+                                            <div class="note-d-h-1 d-note-1" ng-if="note.dueDate==true">
+                                                {{note.due_at | date:'EEE'}} {{note.due_at | date:'dd'}}
+                                            </div>
+                                            <div class="note-d-h-3 d-note-1" ng-if="note.dueDate==true">
+                                                {{note.due_at | date:'hh:mm a'}}
+                                            </div>
+
+
+                                            <!-- create due_at date -->
+                                            <div class="create_due-at-wrp" ng-if="note.dueDate==false">
+                                                <div class="icon-round active">
+                                                    <i class="fa fa-calendar" tooltip-placement="top"
+                                                       uib-tooltip="Due Date not found"></i>
+                                                </div>
+
+                                                <!--<div class="cre-due-text">-->
+                                                <!--Create due date-->
+                                                <!--</div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-8 col-sm-8 col-md-8 col-xs-8">
+                                    <div class="d-note-des-wrp">
+                                        <div class="d-note-subject"
+                                             ng-class="note.check==true?'active-text':'none'">
+                                            {{note.title}}
+                                        </div>
+                                        <div class="d-note-body"
+                                             ng-class="note.check==true?'active-text':'none'">
+                                            {{note.note}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+    <!-- ./ end productivity -->
+
+
+    <!-- activity and real time -->
+    <section class="d-widget-main-wrp">
+        <header class="widget-main-header">
+            <div class="d-header-wrp">
+                <h3>
+                    ACTIVITY AND REAL LTIME
+                </h3>
+            </div>
+
+            <div class="d-header-wrp d-h-r-icon">
+                <i class="ti-arrow-circle-up"></i>
+            </div>
+        </header>
+
+
+        <div class="row">
+            <div class="col-lg-4">
+                <section class="d-widget-w d-note-summary">
+                    <div class="d-note-widget05201">
+                        <div class="widget-header-wrapper">
+                            <div class="widget-h text-left">
+                                CALL STATUS
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-scr-body-call-s">
+                        <div class="widget-r-header">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="w-t-header">
+                                        Queue Name
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="w-t-header">
+                                        Current Waiting
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="w-t-header">
+                                        Max Wait Time
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-note-row-wrapper" style="padding: 10px;"
+                             ng-repeat="(qkey, queue) in queueDetails">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="w-t-header">
+                                        {{queue.QueueName}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="w-t-header">
+                                        {{queue.QueueInfo.CurrentWaiting}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="w-t-header">
+                                        {{queue.QueueInfo.MaxWaitTime}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- dashboard ticket wrapper -->
+    <section class="d-widget-main-wrp">
+        <header class="widget-main-header">
+            <div class="d-header-wrp">
+                <h3>
+                    TICKET SUMMARY
+                </h3>
+            </div>
+
+            <div class="d-header-wrp d-h-r-icon">
+                <i class="ti-arrow-circle-up"></i>
+            </div>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-7">
+                <section class="d-widget-w">
+                    <div class="d-ticket-grph-wrapper">
+                        <div class="widget-h p-15 text-left">
+                            CREATED VS CLOSED
+                        </div>
+
+                        <div class="d-t-grph">
+                            <canvas style="position: relative;" id="openclosecanvas" width="600px"
+                                    height="200px"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-lg-5">
+                <!--<section class="d-widget-w ">-->
+                <!--</section>-->
+            </div>
+        </div>
+    </section>
+
+
+</div>
+<!-- ./ end -->

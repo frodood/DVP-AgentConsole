@@ -25,6 +25,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             company: "@",
             direction: "@",
             channelFrom: "@",
+            notificationData: "@",
             channelTo: "@",
             channel: "@",
             skill: "@",
@@ -1210,6 +1211,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         addDynamicDataToTicket(ticket);
                         scope.showAlert('Ticket', 'success', 'Ticket Saved successfully');
                         scope.postTags = [];
+                        scope.GetAllTicketsByRequester(scope.profileDetail._id, 1);
                     } else {
                         scope.showAlert("Ticket", "error", "Fail To Save Ticket.")
 
@@ -1474,9 +1476,11 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 scope.isLoadingTicke = true;
                 ticketService.GetAllTicketsByRequester(requester, page).then(function (response) {
                     if (response) {
+                        scope.ticketList = [];
                         response.map(function (item, index) {
                             item.displayData = "[" + item.reference + "] " + item.subject;
                             scope.ticketList.push(item);
+
                         });
 
                         if (scope.currentTicketPage == 1)
@@ -1581,12 +1585,22 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 if (scope.mapProfile.addNumber) {
                     var contactInfo = {
                         contact: scope.channelFrom,
-                        type: 'phone',
+                        type: scope.channel,
                         display: scope.channelFrom
+
                     };
+
+                    if(scope.notificationData){
+                        scope.notificationData = JSON.parse(scope.notificationData );
+                        if(scope.notificationData && scope.notificationData.raw_contact){
+                            contactInfo.raw_contact = scope.notificationData.raw_contact;
+                        }
+                    }
+
                     userService.UpdateExternalUserProfileContact(scope.profileDetail._id, contactInfo).then(function (response) {
                         if (response.IsSuccess) {
                             scope.showAlert('Profile Contact', 'success', response.CustomMessage);
+                            scope.profileDetail.contacts.push(contactInfo);
                         } else {
                             scope.showAlert('Profile Contact', 'error', response.CustomMessage);
                         }
@@ -1619,7 +1633,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                     "avatar": "assets/img/avatar/profileAvatar.png",
                     "birthday": "",
                     "gender": "",
-                    "firstname": "",
+                    "firstname": scope.channel != 'call' ? scope.channelFrom : '',
                     "lastname": "",
                     "locale": 0,
                     "ssn": "",
@@ -1782,9 +1796,12 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         }
                         break;
                     case 'chat':
+                    case 'webchat':
                         category = 'email';
                         break;
-
+                    case 'viber':
+                        category = 'viber';
+                        break;
                     default :
                         if (scope.channel.includes("facebook")) {
                             category = "facebook"
@@ -1829,37 +1846,36 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         }
                     }
 
-                    if (scope.profileDetail.phone && scope.profileDetail.phone != scope.channelFrom) {
-                        var setContact = true;
-                        if (scope.profileDetail.contacts && scope.profileDetail.contacts.length > 0) {
+                    var setContact = true;
+                    if (scope.profileDetail.contacts && scope.profileDetail.contacts.length > 0) {
 
-                            for (var i = 0; i < scope.profileDetail.contacts.length; i++) {
-                                var contact = scope.profileDetail.contacts[i];
-                                if (contact.type === category && contact.contact === scope.channelFrom) {
-                                    setContact = false;
-                                    break;
-                                }
+                        for (var i = 0; i < scope.profileDetail.contacts.length; i++) {
+                            var contact = scope.profileDetail.contacts[i];
+                            if (contact.type === category && contact.contact === scope.channelFrom) {
+                                setContact = false;
+                                break;
                             }
-
                         }
 
-                        if (scope.channelFrom != "direct" && scope.channel === "call" && setContact) {
+                    }
 
-                            scope.mapProfile.showNumberd = true;
-                            // var r = confirm("Add to Contact");
-                            //if (r == true) {
-                            //
-                            //} else {
-                            //    console.log("You pressed Cancel!");
-                            //}
-                        }
+                    if (scope.channelFrom != "direct"  && setContact) {
+
+                        scope.mapProfile.showNumberd = true;
+                        // var r = confirm("Add to Contact");
+                        //if (r == true) {
+                        //
+                        //} else {
+                        //    console.log("You pressed Cancel!");
+                        //}
                     }
 
                     if (scope.mapProfile && (scope.mapProfile.showEngagement || scope.mapProfile.showNumberd)) {
                         scope.mapProfile.isShowConfirm = true;
                     }
 
-                } else {
+                }
+                else {
                     if (category === 'direct') {
                         scope.isEnagagementOpen = true;
                         scope.createNProfile();
@@ -2124,6 +2140,46 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 profile.birthday = new Date(collectionDate);
 
                 scope.isSavingProfile = true;
+
+                if (scope.channel != 'call') {
+                    profile.contacts = [];
+                    profile.contacts.push({
+                        contact: scope.channelFrom,
+                        type: (scope.channel === 'chat' || scope.channel === 'webchat') ? 'email' : scope.channel,
+                        display: scope.channelFrom,
+                        verified: false,
+                        raw: {}
+                    });
+                }
+
+                /*switch (scope.channel) {
+                 case 'viber':
+                 profile.contacts.push(new {
+                 contact:profile.phone,
+                 type:'viber',
+                 display: profile.phone,
+                 verified: false,
+                 raw: {}
+                 });
+                 break;
+                 case 'facebook':
+                 profile.facebook = profile.phone;
+                 break;
+                 case 'twitter':
+                 profile.twitter = profile.phone;
+                 break;
+                 case 'linkedin':
+                 profile.linkedin = profile.phone;
+                 break;
+                 case 'googleplus':
+                 profile.googleplus = profile.phone;
+                 break;
+                 case 'skype':
+                 profile.skype = profile.phone;
+                 break;
+
+                 }*/
+
                 userService.CreateExternalUser(profile).then(function (response) {
                     scope.isSavingProfile = false;
                     if (response) {

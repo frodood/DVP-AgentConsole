@@ -294,6 +294,13 @@ window.SE = function (e) {
 
         });
 
+        socket.on('transfer_ended', function (data) {
+            data.messageType = "transfer_ended";
+            if (callBack.OnEvent)
+                callBack.OnEvent('transfer_ended',data);
+
+        });
+
         socket.on('todo_reminder', function (data) {
 
             if (callBack.OnEvent)

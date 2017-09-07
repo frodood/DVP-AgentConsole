@@ -103,6 +103,12 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     /* -------------------- Chart Configurations -----------------------------------------*/
     /*Open Vs Close Chart Configurations*/
+
+
+    // var gradientFill = openclose.createLinearGradient(500, 0, 100, 0);
+    // gradientFill.addColorStop(0, "rgba(143,213,57, 0.6)");
+    // gradientFill.addColorStop(1, "rgba(244, 144, 128, 0.0)");
+
     $scope.createVsOpenConfig = {
         type: 'line',
         data: {
@@ -111,24 +117,26 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 label: "Created Ticket",
                 data: [],
                 fill: true,
+                lineTension: 0,
                 /*lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(14,23,86,1)",
-                backgroundColor: "rgba(14,23,86,0)",
-                pointBorderColor: "rgba(14,23,86,1)",
-                pointBackgroundColor: "rgba(14,23,86,1)",
-                pointBorderWidth: 1
+                borderColor: "rgba(143,213,57,1)",
+                backgroundColor: "rgba(143,213,57,0.2)",
+                pointBorderColor: "rgba(143,213,57,0.2)",
+                pointBackgroundColor: "rgba(143,213,57,1)",
+                pointBorderWidth: 6
             }, {
                 label: "Resolved Ticket",
                 data: [],
+                lineTension: 0,
                 fill: true,
                 /* lineTension: 0,*/
                 borderDash: [0, 0],
-                borderColor: "rgba(0,205,115,1)",
+                borderColor: "rgba(43,201,226,1)",
                 backgroundColor: "rgba(70,205,115,0)",
-                pointBorderColor: "rgba(0,205,115,1)",
-                pointBackgroundColor: "rgba(0,205,115,1)",
-                pointBorderWidth: 1
+                pointBorderColor: "rgba(43,201,226,0.2)",
+                pointBackgroundColor: "rgba(43,201,226,1)",
+                pointBorderWidth: 6
             }]
         },
         options: {
@@ -145,29 +153,43 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                 xAxes: [{
                     display: true,
                     gridLines: {
-                        color: "rgba(244,245,244,0.5)",
+                        color: "rgba(244,245,244,0)",
                         zeroLineColor: "rgba(244,245,244,1)"
                     },
                     ticks: {
                         userCallback: function (dataLabel, index) {
-                            return ''; //index % 2 === 0 ? dataLabel : '';
-                        }
+                            return index % 3 === 0 ? dataLabel : '';
+                        },
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     },
                     scaleLabel: {
-                        display: false,
-                        labelString: 'Days'
+                        display: true,
+                        labelString: 'DAYS'
+                        // fontFamily: 'AvenirNextLTPro-Regular',
+                        // fontColor: '#ebdfc7',
+                        // fontSize: 13
                     }
-                }],
-                yAxes: [{
+                }], yAxes: [{
                     display: true,
                     beginAtZero: false,
                     gridLines: {
-                        color: "rgba(244,245,244,0.5)",
+                        color: "rgba(244,245,244,1)",
                         zeroLineColor: "rgba(244,245,244,1)"
+
                     },
                     scaleLabel: {
                         display: true,
                         labelString: 'COUNT'
+                        // fontFamily: 'AvenirNextLTPro-Regular',
+                        // fontColor: '#ebdfc7',
+                        // fontSize: 13
+                    },
+                    ticks: {
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     }
                 }]
             }
@@ -187,6 +209,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     var openclose = document.getElementById("openclosecanvas").getContext("2d");
     window.opencloseChart = new Chart(openclose, $scope.createVsOpenConfig);
+
 
     /* Deference  Chart Configurations*/
     $scope.deferenceConfig = {
@@ -247,7 +270,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     gridLines: {
                         color: "rgba(244,245,244,0)",
                         zeroLineColor: "rgba(244,245,244,1)"
-
                     },
                     scaleLabel: {
                         display: true,
@@ -273,8 +295,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dataset.pointBackgroundColor = "rgba(24,141,242,0.5)";
         dataset.pointBorderWidth = 1;
     });
-    var deference = document.getElementById("deferencecanvas").getContext("2d");
-    window.deferenceChart = new Chart(deference, $scope.deferenceConfig);
+    // var deference = document.getElementById("deferencecanvas").getContext("2d");
+    // window.deferenceChart = new Chart(deference, $scope.deferenceConfig);
 
     /*productivity*/
     $scope.doughnutData = {
@@ -437,7 +459,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
-    GetCreatedicketSeries();
+    //ToDo
+    //GetCreatedicketSeries();
 
     var GetResolvedTicketSeries = function () {
         dashboradService.GetResolvedTicketSeries().then(function (response) {
@@ -544,9 +567,10 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         loadProductivity(authService.GetResourceId());
     };
 
+    //ToDo
     var getAllRealTime = function () {
         //GetQueueDetails();
-        getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
+        //getAllRealTimeTimer = $timeout(getAllRealTime, 5000);
     };
 
 
@@ -974,3 +998,5 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             '#CAB63C']
     });
 }]);
+
+
