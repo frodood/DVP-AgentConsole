@@ -1646,7 +1646,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                         "country": "",
                         "locationUrl": ""
                     },
-                    "phone": scope.channelFrom,
+                    "phone": scope.channel === 'call' ? scope.channelFrom:"",
                     "email": "",
                     "dob": {
                         "day": 0,
