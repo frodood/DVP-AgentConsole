@@ -1813,6 +1813,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (notifyData.direction.toLowerCase() === 'inbound' || notifyData.direction.toLowerCase() === 'outbound') {
             $scope.phoneNotificationFunctions.showNotfication(true);
         }
+        callNotification($scope.firstName,notifyData.channelFrom,notifyData.skill);
     };
 
     $scope.dialerPreviewMessage = function (data) {
