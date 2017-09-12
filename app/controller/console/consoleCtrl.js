@@ -10,7 +10,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              profileDataParser, loginService, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
                                              Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, $window, notificationService, $ngConfirm,
-                                             templateService, userImageList, integrationAPIService, versionController, $sce) {
+                                             templateService, userImageList, integrationAPIService, hotkeys) {
+
+
 
 
     // call $anchorScroll()
@@ -30,17 +32,17 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         event.preventDefault();
     });
 
-    //safe apply
-    $scope.safeApply = function (fn) {
-        var phase = this.$root.$$phase;
-        if (phase == '$apply' || phase == '$digest') {
-            if (fn && (typeof(fn) === 'function')) {
-                fn();
-            }
-        } else {
-            this.$apply(fn);
-        }
-    };
+    /*//safe apply
+     $scope.safeApply = function (fn) {
+     var phase = this.$root.$$phase;
+     if (phase == '$apply' || phase == '$digest') {
+     if (fn && (typeof(fn) === 'function')) {
+     fn();
+     }
+     } else {
+     this.$apply(fn);
+     }
+     };*/
 
     $scope.safeApply = function (fn) {
         if (this.$root) {
@@ -79,6 +81,67 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         });
     };
 
+    /*----------------------------enable shortcut keys-----------------------------------------------*/
+    hotkeys.add({
+        combo: 'alt+a',
+        description: 'Answer Call',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.veeryPhone.answerCall();
+        }
+    });
+
+    hotkeys.add(
+        {
+            combo: 'alt+c',
+            description: 'Drop Call',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            callback: function () {
+                $scope.veeryPhone.endCall();
+            }
+        });
+
+    hotkeys.add(
+        {
+            combo: 'alt+r',
+            description: 'reject Call',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            callback: function () {
+                $scope.veeryPhone.rejectCall();
+            }
+        });
+
+    hotkeys.add(
+        {
+            combo: 'alt+h',
+            description: 'Hold Call',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            callback: function () {
+                $scope.veeryPhone.holdResumeCall();
+            }
+        });
+
+    hotkeys.add(
+        {
+            combo: 'alt+z',
+            description: 'freezeAcw Call',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            callback: function () {
+                if ($scope.isAcw||$scope.freeze)
+                    $scope.veeryPhone.freezeAcw();
+            }
+        });
+
+    hotkeys.add(
+        {
+            combo: 'alt+i',
+            description: 'Initiate Soft phone',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            callback: function () {
+                $scope.consoleTopMenu.Register();
+            }
+        });
+    /*---------------------------- shortcut keys-----------------------------------------------*/
 
     function startRingTone() {
         try {
@@ -1813,7 +1876,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (notifyData.direction.toLowerCase() === 'inbound' || notifyData.direction.toLowerCase() === 'outbound') {
             $scope.phoneNotificationFunctions.showNotfication(true);
         }
-        callNotification($scope.firstName,notifyData.channelFrom,notifyData.skill);
+        callNotification($scope.firstName, notifyData.channelFrom, notifyData.skill);
     };
 
     $scope.dialerPreviewMessage = function (data) {
@@ -1829,7 +1892,6 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             } else {
                 $scope.previewMessage.PreviewData = undefined;
             }
-
 
 
             $('#previewMessage').addClass('display-block fadeIn').removeClass('display-none zoomOut');
