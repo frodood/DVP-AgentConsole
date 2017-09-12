@@ -13938,13 +13938,13 @@ header.widget-main-header > .d-header-wrp > i:hover {
 .preview-notification-wrapper {
     position: fixed;
     width: 300px;
-    right: 10px;
+    right: 30px;
     top: 20%;
-    border-radius: 0;
     overflow: hidden;
     z-index: 2000;
-    background: #ffffff;
-    border: 1px solid #EEEEEE;
+    background: #FFFFFF;
+    box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.48);
+    border-radius: 5px;
 }
 
 .p-ndata-wrp {
@@ -13957,7 +13957,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 .p-noti-action-panel {
     width: 300px;
     height: 40px;
-    background: #f7f7f7;
+    background: #2f4762;
     text-align: center;
     padding-top: 11px;
     font-family: 'AvenirNext-Regular', sans-serif;
@@ -13986,9 +13986,13 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .p-ndata-header {
     width: 300px;
-    height: 50px;
+    height: 40px;
     overflow: hidden;
-    padding: 0px 10px 0 10px;
+    padding: 13px 10px 0 10px;
+    background: #2f4762;
+    margin-bottom: 4px;
+    border-radius-topleft: 0;
+    border-radius-topright: 0;
 }
 
 .p-ndata-header > h3 {
@@ -13996,6 +14000,36 @@ header.widget-main-header > .d-header-wrp > i:hover {
     font-size: 15px;
     letter-spacing: 0.9px;
     text-transform: uppercase;
+    color: #fff;
+    margin: 0px;
 }
 
+/* animation priview panel */
+.preview-animation-outer {
+    animation: phone-outer 3000ms infinite;
+}
 
+@keyframes phone-outer {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+        box-shadow: 0 0 0 0em rgba(#3498db, 0),
+        0em 0.05em 0.1em rgba(#000000, 0.2);
+    }
+    33.3333% {
+        transform: translate3d(0, 0, 0) scale(1.1);
+        box-shadow: 0 0 0 0em rgba(#3498db, 0.1),
+        0em 0.05em 0.1em rgba(#000000, 0.5);
+    }
+    66.6666% {
+        transform: translate3d(0, 0, 0) scale(1.1);
+        box-shadow: 0 0 0 0.5em rgba(#3498db, 0),
+        0em 0.05em 0.1em rgba(#000000, 0.2);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+        box-shadow: 0 0 0 0em rgba(#3498db, 0),
+        0em 0.05em 0.1em rgba(#000000, 0.2);
+    }
+}
+
+/*end preview */
