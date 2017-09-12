@@ -14006,27 +14006,18 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 /* animation priview panel */
 .preview-animation-outer {
-    animation: phone-outer 3000ms infinite;
+    animation: phone-outer 7000ms infinite;
 }
 
 @keyframes phone-outer {
     0% {
-        transform: translateY(0%);
-    }
-    10% {
-        transform: translateY(5%);
-    }
-    25% {
-        transform: translateX(5%);
+        transform: scale(1);
     }
     50% {
-        transform: translateY(5%);
+        transform: scale(1.1);
     }
-    75% {
-        transform: translateY(0%);
-    }
-    85% {
-        transform: translateX(5%);
+    100% {
+        transform: scale(1);
     }
 }
 

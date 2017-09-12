@@ -127,7 +127,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             description: 'freezeAcw Call',
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
             callback: function () {
-                if ($scope.isAcw||$scope.freeze)
+                if ($scope.isAcw || $scope.freeze)
                     $scope.veeryPhone.freezeAcw();
             }
         });
@@ -1893,9 +1893,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.previewMessage.PreviewData = undefined;
             }
 
-
+            //display enable preview dialer
+            var audio = new Audio('assets/sounds/previewtone.mp3');
+            audio.play();
             $('#previewMessage').addClass('display-block').removeClass('display-none');
-
         }
     };
 
