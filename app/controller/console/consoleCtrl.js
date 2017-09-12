@@ -123,11 +123,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
     hotkeys.add(
         {
-            combo: 'alt+f',
+            combo: 'alt+z',
             description: 'freezeAcw Call',
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
             callback: function () {
-                $scope.veeryPhone.freezeAcw();
+                if ($scope.isAcw||$scope.freeze)
+                    $scope.veeryPhone.freezeAcw();
             }
         });
 
