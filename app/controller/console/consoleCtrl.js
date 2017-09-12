@@ -1796,7 +1796,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 $scope.showAlert("Preview Reply", "error", "Error in reply message");
             });
 
-            $('#previewMessage').addClass('display-none fadeIn').removeClass('display-block  zoomOut');
+            $('#previewMessage').addClass('display-none').removeClass('display-block');
         }
     };
 
@@ -1894,7 +1894,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             }
 
 
-            $('#previewMessage').addClass('display-block fadeIn').removeClass('display-none zoomOut');
+            $('#previewMessage').addClass('display-block').removeClass('display-none');
 
         }
     };
