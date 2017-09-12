@@ -19,7 +19,7 @@ function callNotification(name, number,skill) {
     else {
         var notification = new Notification('Facetone', {
             icon: 'assets/img/logo_130x130yellow.png',
-            body: "Hey "+name+", You Are Receiving "+skill+" Call. " +number
+            body: "Hello "+name+" you are receiving a "+skill+" call from "+number
         });
         setTimeout(notification.close.bind(notification), 15000);
         notification.onclick = function () {
