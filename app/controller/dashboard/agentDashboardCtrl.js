@@ -273,8 +273,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dataset.pointBackgroundColor = "rgba(24,141,242,0.5)";
         dataset.pointBorderWidth = 1;
     });
-    var deference = document.getElementById("deferencecanvas").getContext("2d");
-    window.deferenceChart = new Chart(deference, $scope.deferenceConfig);
+//    var deference = document.getElementById("deferencecanvas").getContext("2d");
+    //  window.deferenceChart = new Chart(deference, $scope.deferenceConfig);
 
     /*productivity*/
     $scope.doughnutData = {

@@ -13587,7 +13587,11 @@ header.widget-main-header > .d-header-wrp > i:hover {
     min-height: 250px;
     background: #ffffff;
     box-shadow: 0 1px 17px 0 rgba(170, 170, 170, 0.18);
-    border-radius: 2px;
+    border-radius: 5px;
+}
+
+.d-widget-w.light-blue{
+    background: #fafcfe;
 }
 
 .d-call-s-wrap05201 {
@@ -13852,14 +13856,17 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .d-note-row-wrapper {
     width: 100%;
-    min-height: 50px;
+    min-height: 40px;
     overflow: hidden;
     display: block;
     /* Rectangle 57: */
     border-bottom: 1px solid #EEEEEE;
     /*margin-bottom: 5px;*/
     padding-bottom: 5px;
+}
 
+.even-row:nth-child(even) {
+    background: #FAFCFE;
 }
 
 .d-note-des-wrp > .d-note-subject {

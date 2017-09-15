@@ -289,12 +289,13 @@
 
 
         <div class="row">
+            <!-- queue status wrapper -->
             <div class="col-lg-4">
                 <section class="d-widget-w d-note-summary">
                     <div class="d-note-widget05201">
                         <div class="widget-header-wrapper">
                             <div class="widget-h text-left">
-                                CALL STATUS
+                                Queue STATUS - {{queueDetails.length}}
                             </div>
                         </div>
                     </div>
@@ -308,34 +309,43 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="w-t-header">
+                                    <div class="w-t-header text-center">
                                         Current Waiting
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="w-t-header">
+                                    <div class="w-t-header text-center">
                                         Max Wait Time
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="d-note-row-wrapper" style="padding: 10px;"
-                             ng-repeat="(qkey, queue) in queueDetails">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="w-t-header">
-                                        {{queue.QueueName}}
+                        <div slimscroll="{height: '240px',
+                        railVisible: true,
+                        color: '#777',
+                        size: '8px',
+                        distance: '15px',
+                        railColor: '#fff',
+            railBorderRadius: 10}">
+                            <div class="d-note-row-wrapper even-row" style="padding: 10px;"
+                                 ng-repeat="(qkey, queue) in queueDetails">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="w-t-header">
+                                            {{queue.QueueName | limitTo: 22}}{{queue.QueueName.length>22 ?'....':''}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="w-t-header">
-                                        {{queue.QueueInfo.CurrentWaiting}}
+                                    <div class="col-lg-4">
+                                        <div class="w-t-header text-center">
+                                            {{queue.QueueInfo.CurrentWaiting}}
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="w-t-header">
-                                        {{queue.QueueInfo.MaxWaitTime}}
+                                    <div class="col-lg-4">
+                                        <div class="w-t-header text-center">
+                                            {{queue.QueueInfo.MaxWaitTime}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -343,7 +353,26 @@
                     </div>
                 </section>
             </div>
+
+            <!-- agent activity wrapper -->
+            <div class="col-lg-4">
+                <section class="d-widget-w d-note-summary light-blue">
+                    <div class="d-note-widget05201">
+                        <div class="widget-header-wrapper">
+                            <div class="widget-h text-left">
+                                Activity
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-scr-body-call-s">
+
+
+                    </div>
+                </section>
+            </div>
         </div>
+
     </section>
 
 
