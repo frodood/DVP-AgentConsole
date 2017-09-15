@@ -513,14 +513,14 @@
                 <div class="incoming-action-wrapper">
                     <div class="row">
                         <div class="col-md-6 p-left-40">
-                            <div class="anz-btn  ">
-                                <div class="sonar-wave-green"></div>
+                            <div class="anz-btn  " ng-click="veeryPhone.answerCall();">
+                                <div class="sonar-wave-green" ></div>
                                 <i class="veery-phone-icon-1-call-answer"
                                    ng-click="veeryPhone.answerCall();"></i>
                             </div>
                         </div>
                         <div class="col-md-6 p-left-40">
-                            <div class="hangout-btn">
+                            <div class="hangout-btn" ng-click="veeryPhone.rejectCall();">
                                 <i class="veery-phone-icon-1-end-call-button"
                                    ng-click="veeryPhone.rejectCall();"></i>
                             </div>

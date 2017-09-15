@@ -744,7 +744,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                 });
                 sipSendDTMF('#');
             }, 1000);
-            //phoneFuncion.hideTransfer();
+            phoneFuncion.hideTransfer();
             phoneFuncion.showSwap();
             phoneFuncion.showEtl();
             phoneFuncion.showConference();
@@ -1858,6 +1858,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         }
         else {
             $scope.sayIt("you are receiving " + values[6] + " call");
+            callNotification($scope.firstName, notifyData.channelFrom, notifyData.skill);
         }
         //$scope.call.number = notifyData.channelFrom;
         $scope.call.skill = notifyData.skill;
@@ -1876,7 +1877,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
         if (notifyData.direction.toLowerCase() === 'inbound' || notifyData.direction.toLowerCase() === 'outbound') {
             $scope.phoneNotificationFunctions.showNotfication(true);
         }
-        callNotification($scope.firstName, notifyData.channelFrom, notifyData.skill);
+
     };
 
     $scope.dialerPreviewMessage = function (data) {
@@ -1897,6 +1898,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             var audio = new Audio('assets/sounds/previewtone.mp3');
             audio.play();
             $('#previewMessage').addClass('display-block').removeClass('display-none');
+
         }
     };
 
@@ -1952,6 +1954,9 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             if (splitMsg.length > 5) {
                 $scope.showAlert('Transfer Call Ended', 'warn', 'Call transfer ended for ' + splitMsg[4]);
             }
+            phoneFuncion.showTransfer();
+            phoneFuncion.hideConference();
+            phoneFuncion.hideEtl();
         }
     };
 
