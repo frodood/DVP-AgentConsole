@@ -1019,7 +1019,10 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
 
                 startRingTone();
                 /*UIStateChange.inIncomingState();*/
-                $scope.call.number = sRemoteNumber;
+                $scope.safeApply(function () {
+                    $scope.call.number = sRemoteNumber;
+                });
+
                 $scope.ShowIncomeingNotification(true);
                 phoneFuncion.showEndButton();
                 phoneFuncion.hideHoldButton();
@@ -1887,12 +1890,15 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             $scope.previewMessage.Tkey = data.TopicKey;
             $scope.previewMessage.Message = "";
 
-            if (data.Message) {
-                $scope.previewMessage.PreviewData = JSON.parse(data.Message);
+            $scope.safeApply(function () {
+                if (data.Message) {
+                    $scope.previewMessage.PreviewData = JSON.parse(data.Message);
 
-            } else {
-                $scope.previewMessage.PreviewData = undefined;
-            }
+                } else {
+                    $scope.previewMessage.PreviewData = undefined;
+                }
+            });
+
 
             //display enable preview dialer
             var audio = new Audio('assets/sounds/previewtone.mp3');
