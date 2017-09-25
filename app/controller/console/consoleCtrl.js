@@ -3,7 +3,7 @@
  */
 
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
+agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope, $http,
                                              $base64, $timeout, $q, $crypto, jwtHelper,
                                              resourceService, baseUrls, dataParser, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
@@ -13,6 +13,13 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              templateService, userImageList, integrationAPIService, hotkeys) {
 
 
+
+// check Agent Console is focus or not.
+    angular.element($window).bind('focus', function() {
+        console.log('Console Focus......................');
+    }).bind('blur', function() {
+        console.log('Console Lost Focus......................');
+    });
 
 
     // call $anchorScroll()
