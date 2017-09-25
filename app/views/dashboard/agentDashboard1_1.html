@@ -366,9 +366,51 @@
                     </div>
 
                     <div class="widget-scr-body-call-s">
+                        <div class="user-p-tl-wrapper-052017">
+                            <ul class="user-p-timeline-052017 disable-timeline-agent-activity left"
+                                slimscroll="{height: '320px',
+                        railVisible: true,
+                        color: '#777',
+                        size: '8px',
+                        distance: '15px',
+                        railColor: '#fff',
+            railBorderRadius: 10}">
+                                <li class="agent-activity agent-activity-t-line"
+                                    ng-repeat="activity in agentActivitysObj">
+                                    <div class="r-timeline-052017-badge left r-timeline-052017-badge-activity">
+                                    </div>
+                                    <section class="user-p-r-timeline-panel-052017
+                                     agent-panel">
+                                        <div class="left-t-l-wrapper-052017 height0">
+                                            <div class="small-t-l-header-052017">
+                                                <ul>
+                                                    <li class="date-052017">
+                                                        {{activity.Reason}}
+                                                    </li>
 
+                                                    <li class="right-act-date">
+                                                        {{activity.createdAt | date:'h:mm:ss a'}}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!--<div class="small-t-l-body-052017">-->
+                                            <!--{{activity.Reason}}-->
+                                            <!--</div>-->
+                                        </div>
+                                    </section>
+                                </li>
+                            </ul>
+                        </div>
 
                     </div>
+                </section>
+            </div>
+
+            <!-- agent activity wrapper -->
+            <div class="col-lg-4">
+                <section class="d-widget-w d-note-summary gradient-green d-widget-w-340 ">
+
+
                 </section>
             </div>
         </div>
@@ -407,8 +449,8 @@
             </div>
 
             <div class="col-lg-5">
-                <!--<section class="d-widget-w ">-->
-                <!--</section>-->
+                <section class="d-widget-w d-widget-w-340 ">
+                </section>
             </div>
         </div>
     </section>

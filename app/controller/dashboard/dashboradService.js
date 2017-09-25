@@ -133,14 +133,14 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
 
     };
 
-    // var getAgentActivity = function () {
-    //     return $http({
-    //         method: 'GET',
-    //         url: baseUrls.notification + "/DVP/API/1.0.0.0/NotificationService/NoticeBoard"
-    //     }).then(function (response) {
-    //         return response.data;
-    //     });
-    // };
+    var getAgentActivity = function () {
+        return $http({
+            method: 'GET',
+            url: baseUrls.cdrProcessor + "CallCDR/MyAgentStatus"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
 
     return {
         ProductivityByResourceId: productivityByResourceId,
@@ -149,8 +149,8 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
         GetTotalTicketCount: getTotalTicketCount,
         GetDeferenceResolvedTicketSeries: getDeferenceResolvedTicketSeries,
         GetQueueDetails: getQueueDetails,
-        getStoredNotices: getStoredNotices
-
+        getStoredNotices: getStoredNotices,
+        GetAgentActivity: getAgentActivity
     }
 });
 
