@@ -171,7 +171,6 @@
     <script type="text/javascript" src="bower_components/ngDropover/dist/ngdropover.min.js"></script>
 
 
-
     <!-- main app.js -->
     <script type="text/javascript" src="app.js"></script>
 
@@ -218,6 +217,7 @@
     <script type="text/javascript" src="app/auth/controller/loginCtrl.js"></script>
     <script type="text/javascript" src="app/auth/controller/pwdResetEmailCtrl.js"></script>
     <script type="text/javascript" src="app/auth/controller/pwdResetToken.js"></script>
+    <script type="text/javascript" src="app/auth/controller/activateCtrl.js"></script>
 
 
     <script type="text/javascript" src="bower_components/angular-ui-tab-scroll/angular-ui-tab-scroll.js"></script>
@@ -225,7 +225,8 @@
 
 </head>
 
-<body id="consoleBody">
+<body
+        id="consoleBody">
 <!--<link type="text/css" href="bower_components/ng-img-crop/source/scss/ng-img-crop.scss" rel="stylesheet"/>-->
 <!-- style area -->
 <link type="text/css" href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
@@ -430,5 +431,10 @@
 <!-- Organization details services -->
 <script src="bower_components/angularAudioRecorder/dist/angular-audio-recorder.min.js"></script>
 <script src="bower_components/angular-audio/app/angular.audio.js"></script>
+
+
+<script src="app/directive/enterKeyPress.js"></script>
+
+
 
 </html>

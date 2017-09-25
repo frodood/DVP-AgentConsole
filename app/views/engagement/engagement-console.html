@@ -11,15 +11,15 @@
                         <li ng-show="mapProfile.showNumberd">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="mapProfile.addNumber"> add phone number to contacts
+                                    <input type="checkbox" ng-model="mapProfile.addNumber"> Add Contact To Profile
                                 </label>
                             </div>
                         </li>
                         <li ng-show="mapProfile.showEngagement">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="mapProfile.mapEngagement"> map interaction to
-                                    profile
+                                    <input type="checkbox" ng-model="mapProfile.mapEngagement"> Map Interaction To
+                                    Profile
                                 </label>
                             </div>
                         </li>
@@ -29,7 +29,7 @@
                     <div class="ok-btn" ng-click="mapProfileAndNumber()">
                         OK
                     </div>
-                    <div class="cancel-btn">
+                    <div class="cancel-btn" ng-click="mapProfile.isShowConfirm=false">
                         CANCEL
                     </div>
                 </div>
