@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function callNotification(name, number,skill) {
-    if (!Notification) {
+
+    showNotification("Hello "+name+" You Are Receiving a "+skill+" Call From "+number,15000);
+    /*if (!Notification) {
         alert('Desktop notifications not available in your browser. Try Chromium.');
         return;
     }
@@ -27,6 +29,26 @@ function callNotification(name, number,skill) {
             //this.cancel();
         };
 
+    }*/
+
+}
+
+function showNotification(msg,durations) {
+    if (!Notification) {
+        alert('Desktop notifications not available in your browser. Try Chromium.');
+        return;
     }
 
+    if (Notification.permission !== "granted")
+        Notification.requestPermission();
+    else {
+        var notification = new Notification('Facetone', {
+            icon: 'assets/img/logo_130x130yellow.png',
+            body: msg
+        });
+        setTimeout(notification.close.bind(notification), durations);
+        notification.onclick = function () {
+            window.focus();
+        };
+    }
 }

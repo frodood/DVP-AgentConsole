@@ -3,7 +3,7 @@
  */
 
 
-agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
+agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope, $http,
                                              $base64, $timeout, $q, $crypto, jwtHelper,
                                              resourceService, baseUrls, dataParser, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
@@ -13,6 +13,16 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
                                              templateService, userImageList, integrationAPIService, hotkeys) {
 
 
+
+// check Agent Console is focus or not.
+    $scope.focusOnTab = true;
+    angular.element($window).bind('focus', function() {
+        $scope.focusOnTab = true;
+        console.log('Console Focus......................');
+    }).bind('blur', function() {
+        $scope.focusOnTab = false;
+        console.log('Console Lost Focus......................');
+    });
 
 
     // call $anchorScroll()
@@ -79,6 +89,12 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             type: type,
             styling: 'bootstrap3',
         });
+    };
+
+    $scope.showChromeNotification = function (msg,duration) {
+        if(!$scope.focusOnTab){
+            showNotification(msg,duration);
+        }
     };
 
     /*----------------------------enable shortcut keys-----------------------------------------------*/
@@ -2082,6 +2098,7 @@ agentApp.controller('consoleCtrl', function ($filter, $rootScope, $scope, $http,
             setTimeout(function () {
                 $('#notificationAlarm').removeClass('animated swing');
             }, 500);
+            $scope.showChromeNotification(data.Message,10000);
         }
     };
 

@@ -156,7 +156,7 @@ agentApp.constant('config', {
 });
 
 //Authentication
-agentApp.run(function ($rootScope, loginService, $location, $state, $document) {
+agentApp.run(function ($rootScope, loginService, $location, $state, $document,$window) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         var requireLogin = toState.data.requireLogin;
         if (requireLogin) {
@@ -174,6 +174,14 @@ agentApp.run(function ($rootScope, loginService, $location, $state, $document) {
         return
     }
 
+
+    angular.element($window).bind('focus', function() {
+
+        console.log('Console Focus......................');
+    }).bind('blur', function() {
+
+        console.log('Console Lost Focus......................');
+    });
 });
 
 
