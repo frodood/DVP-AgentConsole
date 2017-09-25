@@ -273,8 +273,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         dataset.pointBackgroundColor = "rgba(24,141,242,0.5)";
         dataset.pointBorderWidth = 1;
     });
-    var deference = document.getElementById("deferencecanvas").getContext("2d");
-    window.deferenceChart = new Chart(deference, $scope.deferenceConfig);
+//    var deference = document.getElementById("deferencecanvas").getContext("2d");
+    //  window.deferenceChart = new Chart(deference, $scope.deferenceConfig);
 
     /*productivity*/
     $scope.doughnutData = {
@@ -467,7 +467,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             //$scope.showAlert("Ticket", "error", "Fail To Load Tickets Data.");
         });
     };
-    GetDeferenceResolvedTicketSeries();
+    //ToDo
+    //GetDeferenceResolvedTicketSeries();
 
     //
     $scope.queueDetails = {};
@@ -955,9 +956,22 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     $scope.hideNoticeDetails = function () {
         $scope.showNoticeModal = false;
-    }
+    };
 
     //**** END NOTICE *******//
+
+
+    //get user activity
+
+    var getUserActivityList = function () {
+        dashboradService.GetAgentActivity().then(function (res) {
+            console.log(res);
+            if (res && res.Result) {
+                $scope.agentActivitysObj = res.Result;
+            }
+        });
+    };
+    getUserActivityList();
 
 
 }).config(['ChartJsProvider', function (ChartJsProvider) {
