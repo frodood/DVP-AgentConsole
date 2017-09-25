@@ -15,9 +15,12 @@ agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope
 
 
 // check Agent Console is focus or not.
+    $scope.focusOnTab = true;
     angular.element($window).bind('focus', function() {
+        $scope.focusOnTab = true;
         console.log('Console Focus......................');
     }).bind('blur', function() {
+        $scope.focusOnTab = false;
         console.log('Console Lost Focus......................');
     });
 
@@ -86,6 +89,12 @@ agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope
             type: type,
             styling: 'bootstrap3',
         });
+    };
+
+    $scope.showChromeNotification = function (msg,duration) {
+        if(!$scope.focusOnTab){
+            showNotification(msg,duration);
+        }
     };
 
     /*----------------------------enable shortcut keys-----------------------------------------------*/
@@ -2081,6 +2090,7 @@ agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope
             setTimeout(function () {
                 $('#notificationAlarm').removeClass('animated swing');
             }, 500);
+            $scope.showChromeNotification(data.Message,10000);
         }
     };
 
