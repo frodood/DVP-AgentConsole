@@ -13654,7 +13654,11 @@ header.widget-main-header > .d-header-wrp > i:hover {
 }
 
 .d-widget-w-340 {
-    min-height: 340px;
+    min-height: 351px;
+}
+
+.d-widget-w-308 {
+    min-height: 308px;
 }
 
 .d-widget-w.light-blue {
@@ -13707,7 +13711,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 .d-call-count-w > .d-c-name {
     /* On Call Time: */
     font-size: 14px;
-    color: #9B9998;
+    color: #223448;
     letter-spacing: 1.62px;
 }
 
@@ -13779,7 +13783,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
     /* MISSED: */
     font-family: "AvenirNextLTPro-Demi", Courier, monospace;
     font-size: 13px;
-    color: #B3B6B3;
+    color: #223448;
     letter-spacing: 1.56px;
 }
 
@@ -14101,3 +14105,30 @@ header.widget-main-header > .d-header-wrp > i:hover {
 }
 
 /*end preview */
+
+.d-ticket-summary-row {
+    width: 100%;
+    min-height: 30px;
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.d-ticket-summary {
+    /* CREATED TICKETS: */
+    font-family: 'AvenirNext-Bold', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.02px;
+}
+
+.d-ticket-summary.create {
+    color: #2DE1AA;
+}
+
+.d-ticket-summary.close-t {
+    color: #76DDFB;
+}
+.d-ticket-summary.in-progress-t {
+    color: #FFAA00;
+}

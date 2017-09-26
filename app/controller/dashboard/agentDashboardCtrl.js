@@ -266,15 +266,91 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }
     };
 
-    $.each($scope.deferenceConfig.data.datasets, function (i, dataset) {
+    $scope.ticketDeferenceConfig = {
+        type: 'line',
+        data: {
+            labels: $scope.dataRange,
+            datasets: [{
+                label: "Deference",
+                data: [],
+                fill: true,
+                /*lineTension: 0,*/
+                borderDash: [0, 0]
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false,
+                labels: {
+                    fontColor: 'red'
+                }
+            },
+            title: {
+                display: false
+            }, tooltips: {
+                mode: 'label'
+            },
+            hover: {
+                mode: 'label'
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(244,245,244,0)",
+                        zeroLineColor: "rgba(244,245,244,1)"
+                    },
+                    ticks: {
+                        userCallback: function (dataLabel, index) {
+                            return index % 3 === 0 ? dataLabel : '';
+                        },
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
+                    },
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'DAYS'
+                        // fontFamily: 'AvenirNextLTPro-Regular',
+                        // fontColor: '#ebdfc7',
+                        // fontSize: 13
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    beginAtZero: false,
+                    gridLines: {
+                        color: "rgba(244,245,244,0)",
+                        zeroLineColor: "rgba(244,245,244,1)"
+
+                    },
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'COUNT'
+                        // fontFamily: 'AvenirNextLTPro-Regular',
+                        // fontColor: '#ebdfc7',
+                        // fontSize: 13
+                    },
+                    ticks: {
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
+                    }
+                }]
+            }
+        }
+    };
+
+    $.each($scope.ticketDeferenceConfig.data.datasets, function (i, dataset) {
         dataset.borderColor = "rgba(24,141,242,1)";
         dataset.backgroundColor = "rgba(24,141,242,0.6)";
         dataset.pointBorderColor = "rgba(24,141,242,1)";
         dataset.pointBackgroundColor = "rgba(24,141,242,0.5)";
         dataset.pointBorderWidth = 1;
     });
-//    var deference = document.getElementById("deferencecanvas").getContext("2d");
-    //  window.deferenceChart = new Chart(deference, $scope.deferenceConfig);
+    var deference = document.getElementById("deferencecanvas").getContext("2d");
+    window.deferenceChart = new Chart(deference, $scope.ticketDeferenceConfig);
 
     /*productivity*/
     $scope.doughnutData = {
@@ -972,6 +1048,17 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         });
     };
     getUserActivityList();
+
+
+    //update screen resize
+
+    window.onload = window.onresize = function () {
+        var height = $("#grphCreateVsOpen").outerHeight();
+        //console.log(height);
+
+        $('#ticketSummary').css('height', height);
+
+    };
 
 
 }).config(['ChartJsProvider', function (ChartJsProvider) {

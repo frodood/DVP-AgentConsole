@@ -1887,8 +1887,17 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
     /*--------------------------Dialer Message---------------------------------------*/
 
     $scope.previewMessage = {};
+    var audioDialerMessage = new Audio('assets/sounds/previewtone.mp3');
     $scope.dialerMessage = {
         sendPreviewReply: function (topicKey, replyMessage) {
+            try {
+                audioDialerMessage.pause();
+                audioDialerMessage.currentTime = 0;
+            } catch (e) {
+                
+            }
+
+
             var replyData = {Tkey: topicKey, Message: replyMessage};
             notificationService.ReplyToNotification(replyData).then(function (response) {
 
@@ -2002,8 +2011,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
 
 
             //display enable preview dialer
-            var audio = new Audio('assets/sounds/previewtone.mp3');
-            audio.play();
+            audioDialerMessage.play();
             $('#previewMessage').addClass('display-block').removeClass('display-none');
 
         }
