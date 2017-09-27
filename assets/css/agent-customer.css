@@ -13609,7 +13609,7 @@ ul.i-top-navigation > li {
 
 .d-widget-main-wrp {
     width: 100%;
-    min-height: 200px;
+    /*min-height: 200px;*/
     overflow: hidden;
     position: relative;
     padding-bottom: 15px;
@@ -14223,12 +14223,12 @@ header.widget-main-header > .d-header-wrp > i:hover {
     display: block;
     padding-left: 21px;
     /* Rectangle 64: */
-    border-top: 1px solid #37DBA9;
+    border-top: 1px solid #f7f5f5;
     margin-top: 10px;
 }
 
 .notice-footer-item {
-    border-right: 1px solid #37DBA9;
+    border-top: 1px solid #f7f5f5;
     padding-right: 15px;
     padding-top: 10px;
     padding-bottom: 6px;
@@ -14286,7 +14286,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
     background: #91d346;
     color: #fff;
     font-size: 12px;
-    box-shadow: 0 2px 14px 0 rgb(145, 211, 70);
+    box-shadow: 0 2px 25px 0 rgba(145, 211, 70, 0.37);
 }
 
 .d-new-note-wrapper {

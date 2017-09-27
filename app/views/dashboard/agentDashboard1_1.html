@@ -9,13 +9,15 @@
                 </h3>
             </div>
 
-            <div class="d-header-wrp d-h-r-icon">
-                <i class="ti-arrow-circle-up"></i>
+            <div class="d-header-wrp d-h-r-icon"
+                 ng-click="isNavProductivity = !isNavProductivity">
+                <i ng-if="!isNavProductivity" class="ti-arrow-circle-up"></i>
+                <i ng-if="isNavProductivity" class="ti-arrow-circle-down"></i>
             </div>
         </header>
 
         <!-- call summary dsh productivity wrapper -->
-        <div class="row">
+        <div class="row" uib-collapse="isNavProductivity">
             <!-- ./ call summary -->
             <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
                 <section class="d-widget-w d-call-summary">
@@ -302,13 +304,14 @@
                 </h3>
             </div>
 
-            <div class="d-header-wrp d-h-r-icon">
-                <i class="ti-arrow-circle-up"></i>
+            <div class="d-header-wrp d-h-r-icon" ng-click="isNavRealTime = !isNavRealTime">
+                <i ng-if="!isNavRealTime" class="ti-arrow-circle-up"></i>
+                <i ng-if="isNavRealTime" class="ti-arrow-circle-down"></i>
             </div>
         </header>
 
 
-        <div class="row">
+        <div class="row" uib-collapse="isNavRealTime">
             <!-- queue status wrapper -->
             <div class="col-lg-4 col-xs-12">
                 <section class="d-widget-w d-note-summary">
@@ -502,56 +505,110 @@
                 </h3>
             </div>
 
-            <div class="d-header-wrp d-h-r-icon">
-                <i class="ti-arrow-circle-up"></i>
+            <div class="d-header-wrp d-h-r-icon"
+                 ng-click="isNavTicketSummary = !isNavTicketSummary">
+                <i ng-if="!isNavTicketSummary" class="ti-arrow-circle-up"></i>
+                <i ng-if="isNavTicketSummary" class="ti-arrow-circle-down"></i>
             </div>
         </header>
 
-        <div class="row">
-            <div class="col-lg-7">
-                <section class="d-widget-w">
-                    <div class="d-ticket-grph-wrapper">
-                        <div class="widget-h p-15 text-left">
-                            CREATED VS CLOSED
+        <div class="row" uib-collapse="isNavTicketSummary">
+            <div class="col-lg-12">
+
+                <section class="d-widget-w" style="overflow: hidden">
+
+                    <div class="col-lg-7">
+                        <div class="d-ticket-grph-wrapper">
+                            <div class="widget-h p-15 text-left">
+                                CREATED VS CLOSED
+                            </div>
+
+                            <div class="d-t-grph" id="grphCreateVsOpen">
+                                <canvas style="position: relative;" id="openclosecanvas" width="716px"
+                                        height="200px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+
+                        <div class="d-ticket-summary-row">
+                            <ul class="customer-style-ul">
+                                <li class="float-left d-ticket-summary create">CREATED TICKETS</li>
+                                <li class="float-right text-right d-ticket-summary create">{{newTicketCount}}</li>
+                            </ul>
                         </div>
 
-                        <div class="d-t-grph" id="grphCreateVsOpen">
-                            <canvas style="position: relative;" id="openclosecanvas" width="716px"
-                                    height="200px"></canvas>
+                        <div class="d-ticket-summary-row">
+                            <ul class="customer-style-ul">
+                                <li class="float-left d-ticket-summary close-t">CLOSED TICKETS</li>
+                                <li class="float-right text-right d-ticket-summary close-t">{{closeTicketCount}}</li>
+                            </ul>
                         </div>
-                    </div>
-                </section>
-            </div>
 
-            <div class="col-lg-5">
-                <section class="d-widget-w d-widget-w-308 " id="ticketSummary">
-                    <div class="d-ticket-summary-row">
-                        <ul class="customer-style-ul">
-                            <li class="float-left d-ticket-summary create">CREATED TICKETS</li>
-                            <li class="float-right text-right d-ticket-summary create">{{newTicketCount}}</li>
-                        </ul>
-                    </div>
+                        <div class="d-ticket-summary-row">
+                            <ul class="customer-style-ul">
+                                <li class="float-left d-ticket-summary in-progress-t">IN PROGRESS TICKETS</li>
+                                <li class="float-right text-right d-ticket-summary in-progress-t">
+                                    {{ProgressTicketCount}}
+                                </li>
+                            </ul>
+                        </div>
 
-                    <div class="d-ticket-summary-row">
-                        <ul class="customer-style-ul">
-                            <li class="float-left d-ticket-summary close-t">CLOSED TICKETS</li>
-                            <li class="float-right text-right d-ticket-summary close-t">{{closeTicketCount}}</li>
-                        </ul>
-                    </div>
+                        <div class="d-ticet-deference-wrp">
+                            <canvas id="deferencecanvas" width="436px" height="100px"></canvas>
+                        </div>
 
-                    <div class="d-ticket-summary-row">
-                        <ul class="customer-style-ul">
-                            <li class="float-left d-ticket-summary in-progress-t">IN PROGRESS TICKETS</li>
-                            <li class="float-right text-right d-ticket-summary in-progress-t"> {{ProgressTicketCount}}
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="d-ticet-deference-wrp">
-                        <canvas id="deferencecanvas" width="436px" height="100px"></canvas>
                     </div>
 
                 </section>
+
+
+                <!--<div class="col-lg-7">-->
+                <!--<section class="d-widget-w">-->
+                <!--<div class="d-ticket-grph-wrapper">-->
+                <!--<div class="widget-h p-15 text-left">-->
+                <!--CREATED VS CLOSED-->
+                <!--</div>-->
+
+                <!--<div class="d-t-grph" id="grphCreateVsOpen">-->
+                <!--<canvas style="position: relative;" id="openclosecanvas" width="716px"-->
+                <!--height="200px"></canvas>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</section>-->
+                <!--</div>-->
+
+                <!--<div class="col-lg-5">-->
+                <!--<section class="d-widget-w d-widget-w-308 " id="ticketSummary">-->
+                <!--<div class="d-ticket-summary-row">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="float-left d-ticket-summary create">CREATED TICKETS</li>-->
+                <!--<li class="float-right text-right d-ticket-summary create">{{newTicketCount}}</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+
+                <!--<div class="d-ticket-summary-row">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="float-left d-ticket-summary close-t">CLOSED TICKETS</li>-->
+                <!--<li class="float-right text-right d-ticket-summary close-t">{{closeTicketCount}}</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+
+                <!--<div class="d-ticket-summary-row">-->
+                <!--<ul class="customer-style-ul">-->
+                <!--<li class="float-left d-ticket-summary in-progress-t">IN PROGRESS TICKETS</li>-->
+                <!--<li class="float-right text-right d-ticket-summary in-progress-t">-->
+                <!--{{ProgressTicketCount}}-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+
+                <!--<div class="d-ticet-deference-wrp">-->
+                <!--<canvas id="deferencecanvas" width="436px" height="100px"></canvas>-->
+                <!--</div>-->
+
+                <!--</section>-->
+                <!--</div>-->
             </div>
         </div>
     </section>
