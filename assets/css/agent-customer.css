@@ -13633,9 +13633,9 @@ header.widget-main-header > .d-header-wrp {
 }
 
 header.widget-main-header > .d-header-wrp > h3 {
-    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-family: "AvenirNext-Bold", sans-serif;
     font-size: 14px;
-    color: rgba(150, 150, 150, 0.26);
+    color: rgba(150, 150, 150, 0.81);
     letter-spacing: 0.71px;
     /*text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);*/
     display: inline-block;
@@ -13644,7 +13644,7 @@ header.widget-main-header > .d-header-wrp > h3 {
 
 header.widget-main-header > .d-header-wrp > i {
     display: inline-block;
-    color: rgba(150, 150, 150, 0.26);
+    color: rgb(145, 211, 70);
     font-size: 15px;
     cursor: pointer;
     padding-left: 20px;
@@ -13677,7 +13677,10 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .d-note-summary.gradient-green {
     /* Rectangle 21: */
-    background-image: linear-gradient(-180deg, #8FD539 0%, #00F8AC 100%);
+    /* Rectangle 21: */
+    /* Rectangle 21: */
+    /* Rectangle 21: */
+    background-image: linear-gradient(-180deg, #2DE1AA 0%, #8ED439 100%);
 }
 
 .d-call-s-wrap05201 {
@@ -13761,7 +13764,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
     /* SUMMARY: */
     font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 11px;
-    color: rgba(150, 150, 150, 0.26);
+    color: rgba(150, 150, 150, 1);
     letter-spacing: 1.32px;
     display: block;
     text-transform: uppercase;
