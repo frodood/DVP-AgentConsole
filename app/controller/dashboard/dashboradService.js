@@ -142,6 +142,15 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
         });
     };
 
+    var getAgentPerformance = function (id) {
+        return $http({
+            method: 'GET',
+            url: baseUrls.resourceService + "Resource/" + id + "/AgentPerformance"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
     return {
         ProductivityByResourceId: productivityByResourceId,
         GetCreatedTicketSeries: getCreatedTicketSeries,
@@ -150,7 +159,8 @@ agentApp.factory("dashboradService", function ($http, baseUrls, authService, $st
         GetDeferenceResolvedTicketSeries: getDeferenceResolvedTicketSeries,
         GetQueueDetails: getQueueDetails,
         getStoredNotices: getStoredNotices,
-        GetAgentActivity: getAgentActivity
+        GetAgentActivity: getAgentActivity,
+        GetAgentPerformance: getAgentPerformance
     }
 });
 

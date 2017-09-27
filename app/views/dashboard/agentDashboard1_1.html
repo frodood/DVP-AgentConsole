@@ -90,31 +90,34 @@
                                 <div class="row">
                                     <div class="d-p-s-count d-w-boarder-left">
                                         <div class="d-p-s-value">
-                                            80%
-                                            <div class="d-performance-status up">
+                                            {{agentPerformance.TotalRejectCount | number:0}}%
+                                            <div class="d-performance-status up"
+                                                 ng-class="isCheckPerfomance(agentPerformance.TotalRejectCount) ?'up':'down'">
                                                 <i class="ti-arrow-up"></i>
                                                 <i class="ti-arrow-down"></i>
                                             </div>
                                         </div>
                                         <div class="d-p-s-header">
-                                            answered
+                                            Reject
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+
                             <div class="col-lg-4">
                                 <div class="row">
                                     <div class="d-p-s-count d-w-boarder-left">
                                         <div class="d-p-s-value ">
-                                            80%
-                                            <div class="d-performance-status down">
+                                            {{agentPerformance.OnCallTime | number:0}}%
+                                            <div class="d-performance-status"
+                                                 ng-class="isCheckPerfomance(agentPerformance.OnCallTime)?'up':'down'">
                                                 <i class="ti-arrow-up"></i>
                                                 <i class="ti-arrow-down "></i>
                                             </div>
                                         </div>
                                         <div class="d-p-s-header">
-                                            missed
+                                            On Call Time
                                         </div>
                                     </div>
                                 </div>
@@ -124,8 +127,9 @@
                                 <div class="row">
                                     <div class="d-p-s-count">
                                         <div class="d-p-s-value">
-                                            80%
-                                            <div class="d-performance-status up">
+                                            {{agentPerformance.TotalAnswered | number:0}}%
+                                            <div class="d-performance-status"
+                                                 ng-class="isCheckPerfomance(agentPerformance.TotalAnswered) ?'up':'down'">
                                                 <i class="ti-arrow-up"></i>
                                                 <i class="ti-arrow-down"></i>
                                             </div>
@@ -295,7 +299,7 @@
                     <div class="d-note-widget05201">
                         <div class="widget-header-wrapper">
                             <div class="widget-h text-left">
-                                Queue STATUS - {{queueDetails.length}}
+                                Queue STATUS
                             </div>
                         </div>
                     </div>
@@ -409,13 +413,47 @@
             <!-- agent activity wrapper -->
             <div class="col-lg-4">
                 <section class="d-widget-w d-note-summary gradient-green d-widget-w-340 ">
+                    <div class="d-note-widget05201">
+                        <div class="widget-header-wrapper">
+                            <div class="widget-h text-left white-txt float-left" style="padding-top: 6px;">
+                                NOTICE ({{NoticeListTemp.length}})
+                            </div>
 
+                        </div>
+
+                        <div class="widget-scr-body-note">
+
+                            <ul rn-carousel
+                                rn-carousel-buffered
+                                rn-carousel-controls-allow-loop="false"
+                                rn-carousel-auto-slide="5"
+                                class="notice-b-m-outer my-slider">
+                                <li ng-repeat="notice in NoticeListTemp track by $index">
+                                    <!-- attachment wrapper -->
+                                    <div ng-show="notice.attachments.length!=0">
+                                        <!-- is image -->
+                                        <div ng-show="notice.type=='image'"
+                                             ng-include="'app/views/dashboard/notice/image-view.html'"></div>
+                                        <div ng-show="notice.type=='application'"
+                                             ng-include="'app/views/dashboard/notice/application-view.html'"></div>
+                                    </div>
+
+                                    <!-- text file show -->
+                                    <div ng-show="notice.attachments.length==0">
+                                        <!-- is image -->
+                                        <div ng-include="'app/views/dashboard/notice/text-view.html'"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
 
                 </section>
             </div>
         </div>
 
     </section>
+    <a href="" id="image-viewer" data-lightbox="image-1" data-title=""></a>
 
 
     <!-- dashboard ticket wrapper -->
@@ -440,7 +478,7 @@
                             CREATED VS CLOSED
                         </div>
 
-                        <div class="d-t-grph" id="grphCreateVsOpen" >
+                        <div class="d-t-grph" id="grphCreateVsOpen">
                             <canvas style="position: relative;" id="openclosecanvas" width="716px"
                                     height="200px"></canvas>
                         </div>
@@ -467,7 +505,8 @@
                     <div class="d-ticket-summary-row">
                         <ul class="customer-style-ul">
                             <li class="float-left d-ticket-summary in-progress-t">IN PROGRESS TICKETS</li>
-                            <li class="float-right text-right d-ticket-summary in-progress-t"> {{ProgressTicketCount}}</li>
+                            <li class="float-right text-right d-ticket-summary in-progress-t"> {{ProgressTicketCount}}
+                            </li>
                         </ul>
                     </div>
 

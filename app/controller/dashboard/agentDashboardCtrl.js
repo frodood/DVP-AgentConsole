@@ -988,8 +988,11 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                         angular.forEach(notice.attachments, function (attachment) {
 
                             attachment.linkData = $scope.internalThumbFileUrl + "" + attachment.url + "/SampleAttachment";
-                            console.log(attachment.linkData);
                             notice.linkData = $scope.internalThumbFileUrl + "" + attachment.url + "/SampleAttachment";
+
+                            var _type = attachment.type.split('/');
+                            notice.type = _type[0];
+                            notice.extension = _type[1];
                         });
 
 
@@ -997,6 +1000,8 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
                     return notice;
                 });
+
+                console.log($scope.NoticeListTemp);
             }
             else {
                 $scope.showAlert("Error", "error", "Failed to load notices");
@@ -1038,7 +1043,6 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
 
     //get user activity
-
     var getUserActivityList = function () {
         dashboradService.GetAgentActivity().then(function (res) {
             console.log(res);
@@ -1060,6 +1064,24 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
 
     };
 
+    //get agent performance
+    var getAgentPerformance = function (id) {
+        dashboradService.GetAgentPerformance(id).then(function (res) {
+            if (res && res.Result) {
+                $scope.agentPerformance = res.Result;
+            }
+        });
+    };
+    getAgentPerformance(authService.GetResourceId());
+
+    $scope.isCheckPerfomance = function (val) {
+        var intValue = parseInt(val);
+        if (intValue > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
 }).config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
