@@ -588,9 +588,18 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
     };
     /*--------------------------Veery Phone---------------------------------------*/
 
-    $scope.ShowIncomeingNotification = function (status) {
+    $scope.ShowIncomingNotification = function (status, no) {
         if (status) {
             $('#incomingNotification').addClass('display-block fadeIn').removeClass('display-none zoomOut');
+
+            var msg = "Hello " + $scope.firstName + " you are receiving a call";
+            if (no) {
+                msg = msg + " From " + no;
+            }
+            if ($scope.call.skill && $scope.call.displayNumber) {
+                msg = "Hello " + $scope.firstName + " You Are Receiving a " + $scope.call.skill + " Call From " + no;
+            }
+            showNotification(msg, 15000);
         } else {
             $('#incomingNotification').addClass('display-none fadeIn').removeClass('display-block  zoomOut');
         }
@@ -789,14 +798,14 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
         },
         answerCall: function () {
             answerCall();
-            $scope.ShowIncomeingNotification(false);
+            $scope.ShowIncomingNotification(false, null);
         },
         rejectCall: function () {
             //UIStateChange.inIdleState();
             rejectCall();
             stopRingbackTone();
             stopRingTone();
-            $scope.ShowIncomeingNotification(false);
+            $scope.ShowIncomingNotification(false, null);
             phoneFuncion.updateCallStatus('');
             $timeout.cancel(autoAnswerTimeTimer);
         },
@@ -1022,7 +1031,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                     phoneFuncion.showIvrBtn();
                     phoneFuncion.hideAnswerButton();
                     phoneFuncion.updateCallStatus('In Call');
-                    $scope.ShowIncomeingNotification(false);
+                    $scope.ShowIncomingNotification(false, null);
                     $scope.startCallTime();
 
                     $scope.addToCallLog($scope.call.number, 'Answered');
@@ -1124,7 +1133,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                     $scope.call.number = sRemoteNumber;
                 });
 
-                $scope.ShowIncomeingNotification(true);
+                $scope.ShowIncomingNotification(true, sRemoteNumber);
                 phoneFuncion.showEndButton();
                 phoneFuncion.hideHoldButton();
                 phoneFuncion.hideMuteButton();
@@ -1161,7 +1170,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                 $scope.inCall = false;
                 $scope.$broadcast('timer-set-countdown');
                 $scope.stopCallTime();
-                $scope.ShowIncomeingNotification(false);
+                $scope.ShowIncomingNotification(false, null);
 
 
                 /*phoneFuncion.hideHoldButton();
@@ -1894,7 +1903,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                 audioDialerMessage.pause();
                 audioDialerMessage.currentTime = 0;
             } catch (e) {
-                
+
             }
 
 
@@ -1971,7 +1980,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
         }
         else {
             $scope.sayIt("you are receiving " + values[6] + " call");
-            callNotification($scope.firstName, notifyData.channelFrom, notifyData.skill);
+            //callNotification($scope.firstName, notifyData.channelFrom, notifyData.skill);
         }
         //$scope.call.number = notifyData.channelFrom;
         $scope.call.skill = notifyData.skill;
@@ -2013,7 +2022,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             //display enable preview dialer
             audioDialerMessage.play();
             $('#previewMessage').addClass('display-block').removeClass('display-none');
-
+            showNotification("Hello " + $scope.firstName + " you are allocated to campaign call", 10000);
         }
     };
 
@@ -2183,7 +2192,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             setTimeout(function () {
                 $('#notificationAlarm').removeClass('animated swing');
             }, 500);
-            $scope.showChromeNotification(data.Message, 10000);
+            $scope.showChromeNotification("Notification Received From "+ objMessage.from, 10000);
         }
     };
 
