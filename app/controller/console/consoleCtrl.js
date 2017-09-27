@@ -3,7 +3,7 @@
  */
 
 
-agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope, $http,
+agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scope, $http,
                                              $base64, $timeout, $q, $crypto, jwtHelper,
                                              resourceService, baseUrls, dataParser, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
@@ -16,10 +16,10 @@ agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope
 
 // check Agent Console is focus or not.
     $scope.focusOnTab = true;
-    angular.element($window).bind('focus', function() {
+    angular.element($window).bind('focus', function () {
         $scope.focusOnTab = true;
         console.log('Console Focus......................');
-    }).bind('blur', function() {
+    }).bind('blur', function () {
         $scope.focusOnTab = false;
         console.log('Console Lost Focus......................');
     });
@@ -91,13 +91,78 @@ agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope
         });
     };
 
-    $scope.showChromeNotification = function (msg,duration) {
-        if(!$scope.focusOnTab){
-            showNotification(msg,duration);
+    $scope.showChromeNotification = function (msg, duration) {
+        if (!$scope.focusOnTab) {
+            showNotification(msg, duration);
         }
     };
 
     /*----------------------------enable shortcut keys-----------------------------------------------*/
+
+
+    hotkeys.add({
+        combo: 'ctrl+alt+w',
+        description: 'showTimer',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.showTimer();
+        }
+    });
+    hotkeys.add({
+        combo: 'ctrl+alt+t',
+        description: 'addNewTicketInboxTemp',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.addNewTicketInboxTemp();
+        }
+    });
+
+    hotkeys.add({
+        combo: 'ctrl+alt+n',
+        description: 'addMyNote',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.addMyNote();
+        }
+    });
+    hotkeys.add({
+        combo: 'ctrl+alt+x',
+        description: 'addDashBoard',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.consoleTopMenu.Register();
+        }
+    });
+
+    hotkeys.add({
+        combo: 'ctrl+alt+d',
+        description: 'addDashBoard',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.addDashBoard();
+        }
+    });
+
+    hotkeys.add({
+        combo: 'ctrl+alt+p',
+        description: 'createNewProfile',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.createNewProfile();
+        }
+    });
+
+    hotkeys.add({
+        combo: 'ctrl+alt+s',
+        description: 'focusToSearchBox',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            var element = $window.document.getElementById('commonSearch');
+            if (element)
+                element.focus();
+        }
+    });
+
     hotkeys.add({
         combo: 'alt+a',
         description: 'Answer Call',
@@ -148,13 +213,33 @@ agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope
             }
         });
 
+    /*hotkeys.add(
+     {
+     combo: 'alt+p',
+     description: 'Initiate Soft phone',
+     allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+     callback: function () {
+     $scope.consoleTopMenu.Register();
+     }
+     });*/
+
     hotkeys.add(
         {
             combo: 'alt+i',
             description: 'Initiate Soft phone',
             allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
             callback: function () {
-                $scope.consoleTopMenu.Register();
+                $scope.modeOption.inboundOption('Inbound');
+            }
+        });
+
+    hotkeys.add(
+        {
+            combo: 'alt+o',
+            description: 'Initiate Soft phone',
+            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+            callback: function () {
+                $scope.modeOption.outboundOption('Outbound');
             }
         });
     /*---------------------------- shortcut keys-----------------------------------------------*/
@@ -2098,7 +2183,7 @@ agentApp.controller('consoleCtrl', function ($window,$filter, $rootScope, $scope
             setTimeout(function () {
                 $('#notificationAlarm').removeClass('animated swing');
             }, 500);
-            $scope.showChromeNotification(data.Message,10000);
+            $scope.showChromeNotification(data.Message, 10000);
         }
     };
 
