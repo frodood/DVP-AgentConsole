@@ -888,6 +888,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                             return;
                         }
                         //uiFuntions.foundMyNote();
+                        $("#newTicket").removeClass('elastic');
                         showAlert('Reminder Note', 'success', 'Note Created Successfully.');
                     }
                 }, function (err) {
@@ -1080,6 +1081,27 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             return true;
         } else {
             return false;
+        }
+    };
+
+    $scope.changeQueueView = function (_queueView) {
+        switch (_queueView) {
+            case 'all':
+                $('#allQueue').addClass('active');
+                $('#myQueue').removeClass('active');
+                break;
+            case 'my':
+                $('#allQueue').removeClass('active');
+                $('#myQueue').addClass('active');
+                break;
+        }
+    };
+
+    $scope.createNewNote = function (_windowType) {
+        if (_windowType == 'close') {
+            $("#newTicket").removeClass('elastic');
+        } else {
+            $("#newTicket").addClass('elastic');
         }
     };
 

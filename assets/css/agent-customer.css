@@ -5258,7 +5258,7 @@ input[type="text"].take-note-title-text::-webkit-input-placeholder {
 
 .take-note-text {
     color: #000 !important;
-    font-size: 20px;
+    font-size: 15px;
     font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
 }
 
@@ -5266,7 +5266,7 @@ input[type="text"].take-note-title-text::-webkit-input-placeholder {
     color: #000 !important;
     font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 15px;
 }
 
 .note-title {
@@ -5286,10 +5286,11 @@ input[type="text"].take-note-title-text::-webkit-input-placeholder {
 }
 
 .renote-done {
+    font-family: "AvenirNextLTPro-Bold", Courier, monospace;
     text-align: right;
     /* padding-right: 5px; */
     cursor: pointer;
-    padding-top: 3px;
+    padding-top: 2px;
 }
 
 ul.renote-color-btn {
@@ -5306,14 +5307,14 @@ ul.renote-color-btn > li {
 }
 
 .note-color-btn {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
     overflow: hidden;
     text-align: center;
-    padding-top: 6px;
+    padding-top: 3px;
 }
 
 .note-color-btn.high,
@@ -8695,13 +8696,17 @@ ul.renote-color-btn > li {
 
 .create-note-wrp {
     width: 100%;
-    min-height: 215px;
+    height: 228px;
     overflow: hidden;
     position: relative;
     background: #fff;
-    border-radius: 5px;
+    border-radius: 0px;
     margin-bottom: 10px;
 
+}
+
+.renote-footer{
+    padding-top: 15px;
 }
 
 .create_due-at-wrp {
@@ -8821,7 +8826,7 @@ ul.renote-color-btn > li {
     position: absolute;
     top: 23px;
     left: 29px;
-    z-index: 100;
+    z-index: 0;
 }
 
 .d-refresh-btn {
@@ -10103,6 +10108,10 @@ ul.renote-color-btn > li {
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+.customer-style-ul.inline > li {
+    display: inline-block;
 }
 
 .user-p-location-d-052017 > ul > li {
@@ -13651,6 +13660,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
     background: #ffffff;
     box-shadow: 0 1px 17px 0 rgba(170, 170, 170, 0.18);
     border-radius: 5px;
+    position: relative;
 }
 
 .d-widget-w-340 {
@@ -13667,7 +13677,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .d-note-summary.gradient-green {
     /* Rectangle 21: */
-    background-image: linear-gradient(-180deg, #37DBA9 0%, #00F8AC 100%);
+    background-image: linear-gradient(-180deg, #8FD539 0%, #00F8AC 100%);
 }
 
 .d-call-s-wrap05201 {
@@ -13695,7 +13705,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
     text-transform: uppercase;
 }
 
-..d-call-count-w > .d-c-count,
+.d-call-count-w > .d-c-count,
 .d-call-count-w > .d-c-name {
     font-family: "AvenirNext-Regular", Courier, monospace;
 }
@@ -13718,7 +13728,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 .d-call-count-w > .d-c-type {
     /* Inbound: */
     font-family: "AvenirNext-Bold", Courier, monospace;
-    font-size: 6px;
+    font-size: 10px;
     letter-spacing: 0.72px;
 }
 
@@ -14259,4 +14269,53 @@ header.widget-main-header > .d-header-wrp > i:hover {
 .notice-footer-icon {
     margin-top: 5px;
     margin-right: 5px;
+}
+
+.h-button {
+    padding: 5px 10px 3px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    text-transform: capitalizes;
+    cursor: pointer;
+}
+
+.h-button.active {
+    background: #91d346;
+    color: #fff;
+    font-size: 12px;
+    box-shadow: 0 2px 14px 0 rgb(145, 211, 70);
+}
+
+.d-new-note-wrapper {
+    width: 100%;
+    height: 285px;
+    background: #fafcfe;
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 1;
+
+}
+
+.elastic {
+    animation: elastic 1s;
+    left: 0px;
+}
+
+@keyframes elastic {
+    0% {
+        -webkit-transform: scale3d(0, 0, 1);
+    }
+    25% {
+        -webkit-transform: scale3d(1, 1.2, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1, 0.85, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1, 1.05, 1)
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+    }
 }

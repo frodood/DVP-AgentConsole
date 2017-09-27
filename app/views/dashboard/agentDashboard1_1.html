@@ -17,7 +17,7 @@
         <!-- call summary dsh productivity wrapper -->
         <div class="row">
             <!-- ./ call summary -->
-            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
+            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
                 <section class="d-widget-w d-call-summary">
                     <div class="d-call-s-wrap05201">
                         <div class="row">
@@ -145,7 +145,7 @@
                 </section>
             </div>
             <!-- ./ productivity summary -->
-            <div class="col-lg-5 col-sm-5 col-md-5 col-xs-5">
+            <div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
                 <section class="d-widget-w d-productivity-summary">
                     <div class="d-p-wrapper">
                         <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7">
@@ -205,17 +205,33 @@
             </div>
 
             <!-- ./ note summary -->
-            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3">
+            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-12">
                 <section class="d-widget-w d-note-summary">
                     <div class="d-note-widget05201">
+                        <!-- create new note -->
+                        <div
+                                ng-include="'app/views/dashboard/note/create-new-note.html'"></div>
+
                         <div class="widget-header-wrapper">
-                            <div class="widget-h text-left">
+                            <div class="widget-h text-left float-left"
+                                 style="padding-top: 6px;">
                                 my note
+                            </div>
+
+                            <div class="float-right">
+                                <ul class="customer-style-ul inline">
+                                    <li>
+                                        <div class="h-button active"
+                                             ng-click="createNewNote('open')">
+                                            Create New
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 
                         <div class="widget-scr-body-note"
-                             slimscroll="{height: '235px',
+                             slimscroll="{height: '228px',
                         railVisible: true,
                         color: '#777',
                         size: '8px',
@@ -294,12 +310,33 @@
 
         <div class="row">
             <!-- queue status wrapper -->
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-xs-12">
                 <section class="d-widget-w d-note-summary">
                     <div class="d-note-widget05201">
                         <div class="widget-header-wrapper">
-                            <div class="widget-h text-left">
+                            <div class="widget-h text-left float-left"
+                                 style="padding-top: 7px;">
                                 Queue STATUS
+                            </div>
+
+                            <div class="float-right">
+                                <ul class="customer-style-ul inline">
+                                    <li>
+                                        <div class="h-button active"
+                                             id="allQueue"
+                                             ng-click="changeQueueView('all')">
+                                            All Queue
+                                        </div>
+
+                                    </li>
+                                    <li>
+                                        <div class="h-button"
+                                             id="myQueue"
+                                             ng-click="changeQueueView('my')">
+                                            My Queue
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
