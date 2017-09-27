@@ -2192,7 +2192,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             setTimeout(function () {
                 $('#notificationAlarm').removeClass('animated swing');
             }, 500);
-            $scope.showChromeNotification(data.Message, 10000);
+            $scope.showChromeNotification("Notification Received From "+ objMessage.from, 10000);
         }
     };
 
