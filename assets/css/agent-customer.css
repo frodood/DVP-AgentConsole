@@ -8705,7 +8705,7 @@ ul.renote-color-btn > li {
 
 }
 
-.renote-footer{
+.renote-footer {
     padding-top: 15px;
 }
 
@@ -13707,7 +13707,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .d-call-count-w > .d-c-count,
 .d-call-count-w > .d-c-name {
-    font-family: "AvenirNext-Regular", Courier, monospace;
+    font-family: 'AvenirNext-Regular', sans-serif;
 }
 
 .d-call-count-w > .d-c-count {
@@ -13727,7 +13727,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .d-call-count-w > .d-c-type {
     /* Inbound: */
-    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-family: "AvenirNext-Bold", sans-serif;
     font-size: 10px;
     letter-spacing: 0.72px;
 }
@@ -13759,7 +13759,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .w-inside-h {
     /* SUMMARY: */
-    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 11px;
     color: rgba(150, 150, 150, 0.26);
     letter-spacing: 1.32px;
@@ -13783,7 +13783,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .d-p-s-count > .d-p-s-value {
     /* 80%: */
-    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 15px;
     color: #B3B6B3;
     letter-spacing: 1.8px;
@@ -13791,7 +13791,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .d-p-s-count > .d-p-s-header {
     /* MISSED: */
-    font-family: "AvenirNextLTPro-Demi", Courier, monospace;
+    font-family: 'AvenirNextLTPro-Demi', sans-serif;
     font-size: 13px;
     color: #223448;
     letter-spacing: 1.56px;
@@ -13842,7 +13842,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .widget-h {
     /* PRODUCTIVITY - HOURS: */
-    font-family: "AvenirNext-Bold", Courier, monospace;
+    font-family: "AvenirNext-Bold", sans-serif;
     font-size: 13px;
     color: #9B9998;
     letter-spacing: 1.02px;
@@ -13891,7 +13891,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 .d-p-inline-summary > .d-left-header,
 .d-p-inline-summary > .d-right-value {
     display: inline-block;
-    font-family: "AvenirNextLTPro-Demi", Courier, monospace;
+    font-family: "AvenirNextLTPro-Demi", sans-serif;
     font-size: 13px;
     letter-spacing: 1.22px;
     text-transform: capitalize;
@@ -13961,7 +13961,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 
 .d-note-des-wrp > .d-note-subject {
     /* Why Do We Use It?: */
-    font-family: "AvenirNextLTPro-Demi", Courier, monospace;
+    font-family: "AvenirNextLTPro-Demi", sans-serif;
     font-size: 12px;
     color: #B3B6B3;
     letter-spacing: 0.36px;
@@ -13970,7 +13970,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 }
 
 .d-note-des-wrp > .d-note-body {
-    font-family: "AvenirNext-Regular", Courier, monospace;
+    font-family: "AvenirNext-Regular", sans-serif;
     font-size: 10px;
     color: #9B9998;
     letter-spacing: 0.76px;
@@ -14198,7 +14198,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 }
 
 .notice-title {
-    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
+    font-family: "AvenirNextLTPro-UltLt", sans-serif;
     font-weight: bold;
     font-size: 20px;
     display: block;
@@ -14212,7 +14212,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 .notice-message {
     display: block;
     font-size: 24px;
-    font-family: "AvenirNextLTPro-UltLt", Courier, monospace;
+    font-family: "AvenirNextLTPro-UltLt", sans-serif;
     padding-left: 7px;
 }
 
@@ -14232,7 +14232,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 }
 
 .time-ago {
-    font-family: "AvenirNextLTPro-Bold", Courier, monospace;
+    font-family: "AvenirNextLTPro-Bold", sans-serif;
     color: #ffffff;
     font-size: 12px;
 }
@@ -14254,7 +14254,7 @@ header.widget-main-header > .d-header-wrp > i:hover {
 }
 
 .download-text {
-    font-family: "AvenirNextLTPro-Bold", Courier, monospace;
+    font-family: "AvenirNextLTPro-Bold", sans-serif;
     color: #ffffff;
     font-size: 12px;
     text-align: center;
