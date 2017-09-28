@@ -150,11 +150,14 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     },
                     ticks: {
                         userCallback: function (dataLabel, index) {
-                            return ''; //index % 2 === 0 ? dataLabel : '';
-                        }
+                            return index % 3 === 0 ? dataLabel : '';
+                        },
+                        fontColor: '#223448',
+                        fontFamily: 'AvenirNextLTPro-Regular',
+                        fontSize: 10
                     },
                     scaleLabel: {
-                        display: false,
+                        display: true,
                         labelString: 'Days'
                     }
                 }],
@@ -299,21 +302,21 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     display: true,
                     gridLines: {
                         color: "rgba(244,245,244,0)",
-                        zeroLineColor: "rgba(244,245,244,1)"
+                        zeroLineColor: "rgba(244,245,244,0)"
                     },
                     ticks: {
                         userCallback: function (dataLabel, index) {
                             return index % 3 === 0 ? dataLabel : '';
                         },
-                        fontColor: '#223448',
+                        fontColor: '#fff',
                         fontFamily: 'AvenirNextLTPro-Regular',
                         fontSize: 10
                     },
                     scaleLabel: {
                         display: false,
-                        labelString: 'DAYS'
+                        labelString: 'DAYS',
                         // fontFamily: 'AvenirNextLTPro-Regular',
-                        // fontColor: '#ebdfc7',
+                        fontColor: '#fff'
                         // fontSize: 13
                     }
                 }],
@@ -321,7 +324,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                     display: false,
                     beginAtZero: false,
                     gridLines: {
-                        color: "rgba(244,245,244,0)",
+                        color: "rgba(244,245,244,0.3)",
                         zeroLineColor: "rgba(244,245,244,1)"
 
                     },
@@ -888,6 +891,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
                             return;
                         }
                         //uiFuntions.foundMyNote();
+                        $("#newTicket").removeClass('elastic');
                         showAlert('Reminder Note', 'success', 'Note Created Successfully.');
                     }
                 }, function (err) {
@@ -1080,6 +1084,27 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
             return true;
         } else {
             return false;
+        }
+    };
+
+    $scope.changeQueueView = function (_queueView) {
+        switch (_queueView) {
+            case 'all':
+                $('#allQueue').addClass('active');
+                $('#myQueue').removeClass('active');
+                break;
+            case 'my':
+                $('#allQueue').removeClass('active');
+                $('#myQueue').addClass('active');
+                break;
+        }
+    };
+
+    $scope.createNewNote = function (_windowType) {
+        if (_windowType == 'close') {
+            $("#newTicket").removeClass('elastic');
+        } else {
+            $("#newTicket").addClass('elastic');
         }
     };
 
