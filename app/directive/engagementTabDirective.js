@@ -17,6 +17,17 @@ agentApp.directive('scrolly', function () {
     };
 });
 
+agentApp.directive('ngFocus', ['$parse', function($parse) {
+    return function(scope, element, attr) {
+        var fn = $parse(attr['ngFocus']);
+        element.on('focus', function(event) {
+            scope.$apply(function() {
+                fn(scope, {$event:event});
+            });
+        });
+    };
+}]);
+
 agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q, engagementService, ivrService,hotkeys,
                                               userService, ticketService, tagService, $http, authService, integrationAPIService, profileDataParser, jwtHelper, $sce, userImageList, $anchorScroll, myNoteServices, templateService, FileUploader, fileService) {
     return {
@@ -56,32 +67,37 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 }
             });*/
 
-            hotkeys.add({
-                combo: 'alt+shift+t',
-                description: 'closeNewTicket',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                callback: function () {
-                    scope.closeNewTicket();
-                }
-            });
+            scope.configHotKey = function () {
+                hotkeys.add({
+                    combo: 'alt+shift+t',
+                    description: 'closeNewTicket',
+                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                    callback: function () {
+                        scope.closeNewTicket();
+                    }
+                });
 
-            hotkeys.add({
-                combo: 'alt+shift+s',
-                description: 'searchProfile',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                callback: function () {
-                    scope.multipleProfile.searchProfile();
-                }
-            });
+                hotkeys.add({
+                    combo: 'alt+shift+s',
+                    description: 'searchProfile',
+                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                    callback: function () {
+                        scope.multipleProfile.searchProfile();
+                    }
+                });
 
-            hotkeys.add({
-                combo: 'alt+t',
-                description: 'showNewTicket',
-                allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-                callback: function () {
-                    scope.showNewTicket();
-                }
-            });
+                hotkeys.add({
+                    combo: 'alt+t',
+                    description: 'showNewTicket',
+                    allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+                    callback: function () {
+                        scope.showNewTicket();
+                    }
+                });
+            };
+
+            scope.configHotKey();
+
             //--------------- shortcuts ----------------------------------
 
             //update code damith
