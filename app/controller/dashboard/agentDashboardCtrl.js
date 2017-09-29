@@ -1113,7 +1113,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
     // Configure all charts
     ChartJsProvider.setOptions({
         chartColors: ['#66597D',
-            '#1C93B3',
+            '#42B4AF',
             '#E86F7D',
             '#62D292',
             '#2B82BE',
